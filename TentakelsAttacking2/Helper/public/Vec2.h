@@ -30,7 +30,7 @@ struct Vec2 {
 		double Y = static_cast<double>(y);
 		return std::sqrt((X * X) + (Y * Y));
 	}
-	[[nodiscard]] std::string ToString() const {
+	[[nodiscard]] std::string Display() const {
 		return std::format("x -> {} / y -> {}", x, y);
 	}
 
