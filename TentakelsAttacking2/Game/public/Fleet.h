@@ -8,26 +8,17 @@
 #include "GroupTarget.h"
 #include <memory>
 
-class Player;
-
 class Fleet : public SpaceObject {
 private:
-	std::shared_ptr<GroupTarget*> m_target;
-	int m_ships;
-	int m_index;
-	Player const* m_player;
+	std::shared_ptr<GroupTarget> m_target;
 public:
-	Fleet(double x, double y, int ships, int index, Player const* player, GroupTarget& target);
+	Fleet(int id, double x, double y, int ships, std::weak_ptr<Player> player, GroupTarget& target);
 
-	void Move(GameManager const& gameManager);
+	void Move(Galaxy const& galaxy);
 
-	void PreUpdate(GameManager const& gameManager) override;
-	void Update(GameManager const& gameManager) override;
-	void PostUpdate(GameManager const& gameManager) override;
+	void PreUpdate(Galaxy const& galaxy) override;
+	void Update(Galaxy const& galaxy) override;
+	void PostUpdate(Galaxy const& galaxy) override;
 
-	void Display() const override;
-
-	void operator+=(int ships);
-	void operator-=(int ships);
-	[[nodiscard]] bool operator==(Fleet const& other);
+	[[nodiscard]] std::string ToString() const override;
 };

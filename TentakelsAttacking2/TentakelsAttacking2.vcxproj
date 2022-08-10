@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
@@ -85,7 +85,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -102,7 +102,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
@@ -116,7 +116,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -132,18 +132,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Game\public\Galaxy.h" />
+    <ClInclude Include="Game\public\GameManager.h" />
     <ClInclude Include="Game\public\Fleet.h" />
     <ClInclude Include="Game\public\GroupTarget.h" />
+    <ClInclude Include="Game\public\PlayerType.h" />
     <ClInclude Include="Helper\public\Random.h" />
     <ClInclude Include="Helper\public\Vec2.h" />
     <ClInclude Include="Game\public\SpaceObject.h" />
+    <ClInclude Include="Game\public\Player.h" />
+    <ClInclude Include="Game\public\Planet.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game\private\Galaxy.cpp" />
+    <ClCompile Include="Game\private\GameManager.cpp" />
     <ClCompile Include="Game\private\Fleet.cpp" />
     <ClCompile Include="Game\private\GroupTarget.cpp" />
     <ClCompile Include="Helper\private\Random.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Game\private\Player.cpp" />
+    <ClCompile Include="Game\private\Planet.cpp" />
+    <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

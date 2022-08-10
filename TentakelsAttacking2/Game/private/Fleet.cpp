@@ -4,20 +4,26 @@
 //
 
 #include "Fleet.h"
+#include "Galaxy.h"
+#include <memory>
 
-Fleet::Fleet(double x, double y, int ships, int index, Player const* player, GroupTarget& target)
-	: SpaceObject(x, y), m_ships(ships), m_index(index), m_player(player), m_target(std::make_shared<GroupTarget*>(target)) { }
+Fleet::Fleet(int id, double x, double y, int ships, std::weak_ptr<Player> player, GroupTarget& target)
+	: SpaceObject(id,x, y, ships, player), m_target(std::make_shared<GroupTarget>(target)) { }
 
-void Fleet::PreUpdate(GameManager const& gameManager) {
-	Move();
+void Fleet::Move(Galaxy const& galaxy) {
+
 }
 
-void Fleet::operator+=(int ships) {
-	m_ships += ships;
+void Fleet::PreUpdate(Galaxy const& galaxy) {
+	Move(galaxy);
 }
-void Fleet::operator-=(int ships) {
-	m_ships -= ships;
+void Fleet::Update(Galaxy const& galaxy) {
+
 }
-bool Fleet::operator==(Fleet const& other) {
-	m_index == other.m_index;
+void Fleet::PostUpdate(Galaxy const& galaxy) {
+
+}
+
+std::string Fleet::ToString() const {
+	return "Fleet // " + std::to_string(m_id) + " // " + m_position.ToString();
 }

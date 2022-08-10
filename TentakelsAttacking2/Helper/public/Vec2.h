@@ -52,6 +52,9 @@ struct Vec2 {
 		static_assert(std::is_floating_point_v<To>, "floting point required");
 		return Vec2<To>(static_cast<To>(x), static_cast<To>(y));
 	}
+	[[nodiscard]] std::string ToString() const {
+		return "X: " + std::to_string(x) + " Y: " + std::to_string(y);
+	}
 };
 
 template <typename T>

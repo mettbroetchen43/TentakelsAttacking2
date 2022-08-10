@@ -4,22 +4,12 @@
 //
 
 #pragma once
-#include "SpaceObject.h"
+#include "Vec2.h"
 
-class GroupTarget: public SpaceObject {
-private:
+struct GroupTarget {
+	int id;
+	Vec2<double> position;
 
-public:
-	using SpaceObject::SpaceObject;
-
-	void UpdatePosition(double x, double y);
-
-	void PreUpdate(GameManager const& gameManager) override;
-	void Update(GameManager const& gameManager) override;
-	void PostUpdate(GameManager const& gameManager) override;
-
-	void Display() const override;
-
-
+	GroupTarget(int id, double x, double y);
+	friend bool operator== (GroupTarget const& lhs, GroupTarget const& rhs);
 };
-

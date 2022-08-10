@@ -3,24 +3,33 @@
 // 08.08.22
 //
 
-class GameManager;
-
 #pragma once
 #include "Vec2.h"
 #include <string>
 
+class Galaxy;
+class Player;
+
 class SpaceObject {
 protected:
+	int m_id;
+	int m_ships;
 	Vec2<double> m_position;
 
 public:
-	SpaceObject(double x, double y);
+	std::weak_ptr<Player> player;
+	SpaceObject(int id,double x, double y,int ships, std::weak_ptr<Player> player);
 
-	virtual void PreUpdate(GameManager const& gameManager) = 0;
-	virtual void Update(GameManager const& gameManager) = 0;
-	virtual void PostUpdate(GameManager const& gameManager) = 0;
+	virtual void PreUpdate(Galaxy const& galaxy) = 0; // bevor main update -> z.B. move
+	virtual void Update(Galaxy const& galaxy) = 0; // main update
+	virtual void PostUpdate(Galaxy const& galaxy) = 0; // after main update
+	[[nodiscard]] virtual std::string ToString() const = 0; // debug Print
 
-	virtual void Display() const = 0;
-	Vec2<double> GetPosition() const;
+	[[nodiscard]] Vec2<double> GetPosition() const;
+	[[nodiscard]] int GetId() const;
+
+	friend void operator+=(SpaceObject& lhs, int ships);
+	friend void operator-=(SpaceObject& lhs, int ships);
+	friend bool operator==(SpaceObject const& lhs, SpaceObject const& rhs);
 };
 
