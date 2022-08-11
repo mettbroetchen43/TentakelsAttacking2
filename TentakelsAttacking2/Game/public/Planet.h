@@ -12,7 +12,7 @@ private:
 	size_t m_maxShips;
 public:
 	Planet(int id, double x, double y, int ships, std::weak_ptr<Player> player, int production);
-
+	
 	void PreUpdate(Galaxy const& gameManager) override;
 	void Update(Galaxy const& gameManager) override;
 	void PostUpdate(Galaxy const& gameManager) override;
