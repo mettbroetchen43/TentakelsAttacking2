@@ -7,6 +7,7 @@
 
 #include "Button.h"
 #include <raylib.h>
+#include <vector>
 #include <iostream>
 
 void test() {
@@ -14,26 +15,34 @@ void test() {
 }
 
 int main() {
-    int width= 800;
+    int width = 800;
     int height = 450;
     InitWindow(width, height, "raylib [core] example - basic window");
     int display = GetCurrentMonitor();
     height = GetMonitorHeight(display);
     width = GetMonitorWidth(display);
     SetWindowSize(width, height);
-    //ToggleFullscreen();
+    ToggleFullscreen();
     SetTargetFPS(60);
 
-    Button button("Assets/discord.png", 100.0f, 100.0f, test);
+    std::vector<Button> buttons;
+    buttons.reserve(2);
+    buttons.emplace_back("Assets/discord.png", 100.0f, 100.0f, "Super Testtext", test);
+    buttons.emplace_back("Assets/thumbs_up.png", 100.0f, 300.0f, "Super Testtext 2", test);
+
     Vector2 mousePosition = GetMousePosition();
 
     while (!WindowShouldClose()) {
         mousePosition = GetMousePosition();
-        button.CheckAndUpdate(mousePosition);
+        for (auto& button : buttons) {
+            button.CheckAndUpdate(mousePosition);
+        }
 
         BeginDrawing();
         ClearBackground(BLACK);
-        button.Render();
+        for (auto& button : buttons) {
+            button.Render();
+        }
         EndDrawing();
     }
 
