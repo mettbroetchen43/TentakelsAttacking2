@@ -12,6 +12,7 @@
 
 void test() {
     std::cout << "clicked" << '\n';
+    exit(0);
 }
 
 int main() {
@@ -28,7 +29,10 @@ int main() {
     std::vector<Button> buttons;
     buttons.reserve(2);
     buttons.emplace_back("Assets/btn_f_default.png", 100.0f, 100.0f, "Super Testtext", test);
-    buttons.emplace_back("Assets/btn_f_default.png", 100.0f, 300.0f, "Super Testtext 2", test);
+    buttons.emplace_back("Assets/btn_f_default.png", 100.0f, 300.0f, "Quit", test);
+    buttons.at(0).SetEnabled(false);
+    std::cout << "btn 0: " << buttons.at(0).IsEnabled() << '\n';
+    std::cout << "btn 1: " << buttons.at(1).IsEnabled() << '\n';
 
     Vector2 mousePosition = GetMousePosition();
 

@@ -21,8 +21,12 @@ Button::Button(std::string const& file, float posX, float posY, std::string cons
 }
 
 void Button::CheckAndUpdate(Vector2 const& mousePosition) {
+	if (m_state == State::DISABLED) {
+		return;
+	}
+
 	if (!CheckCollisionPointRec(mousePosition, m_colider)) {
-		m_state = State::CLEAR;
+		m_state = State::ENABLED;
 		return;
 	}
 
@@ -42,4 +46,17 @@ void Button::Render() {
 	m_textureRec.y = static_cast<int>(m_state) * m_textureRec.height;
 	DrawTextureRec(m_texture, m_textureRec, Vector2(m_colider.x, m_colider.y),WHITE);
 	DrawText(m_text.c_str(), static_cast<int>(m_textPosition.x), static_cast<int>(m_textPosition.y), m_textSize, WHITE);
+}
+
+void Button::SetEnabled(bool enabled) {
+	if (enabled) {
+		m_state = State::ENABLED;
+	}
+	else {
+		m_state = State::DISABLED;
+	}
+}
+
+bool Button::IsEnabled() const {
+	return m_state == State::ENABLED;
 }

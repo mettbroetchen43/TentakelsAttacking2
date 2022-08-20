@@ -13,15 +13,16 @@
 class Button {
 private:
 	enum class State {
-		CLEAR,
+		ENABLED,
 		HOVER,
 		PRESSED,
+		DISABLED,
 	};
 	std::string m_file;
 	Texture2D m_texture;
 	Rectangle m_textureRec;
 	Rectangle m_colider;
-	State m_state = State::CLEAR;
+	State m_state = State::ENABLED;
 	int m_buttonParts = 4;
 
 	int m_textSize = 24;
@@ -40,4 +41,7 @@ public:
 
 	void CheckAndUpdate(Vector2 const& mousePosition);
 	void Render();
+
+	void SetEnabled(bool enabled);
+	[[nodiscard]] bool IsEnabled() const;
 };
