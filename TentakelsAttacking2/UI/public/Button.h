@@ -22,7 +22,7 @@ private:
 	Rectangle m_textureRec;
 	Rectangle m_colider;
 	State m_state = State::CLEAR;
-	int m_buttonParts = 3;
+	int m_buttonParts = 4;
 
 	int m_textSize = 24;
 	std::string m_text;

@@ -27,8 +27,8 @@ int main() {
 
     std::vector<Button> buttons;
     buttons.reserve(2);
-    buttons.emplace_back("Assets/discord.png", 100.0f, 100.0f, "Super Testtext", test);
-    buttons.emplace_back("Assets/thumbs_up.png", 100.0f, 300.0f, "Super Testtext 2", test);
+    buttons.emplace_back("Assets/btn_f_default.png", 100.0f, 100.0f, "Super Testtext", test);
+    buttons.emplace_back("Assets/btn_f_default.png", 100.0f, 300.0f, "Super Testtext 2", test);
 
     Vector2 mousePosition = GetMousePosition();
 
