@@ -31,6 +31,8 @@ private:
 
 	std::function<void()> m_onClick;
 
+	void SetTextSizeAndPosition(Vector2 resolution);
+
 public:
 	Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text, std::function<void()> onClick);
 	~Button() override;

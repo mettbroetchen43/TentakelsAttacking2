@@ -7,13 +7,13 @@
 #include <raylib.h>
 
 class UIElement {
-private:
-	Vector2 m_size, m_pos, m_resolution;
+protected:
+	Vector2 m_size, m_pos;
 
 public:
 	virtual ~UIElement() = default;
-	UIElement(Vector2 size, Vector2 pos, Vector2 resolution)
-		: m_size(size), m_pos(pos), m_resolution(resolution) { }
+	UIElement(Vector2 size, Vector2 pos)
+		: m_size(size), m_pos(pos) { }
 
 	virtual void CheckAndUpdate(Vector2 const& mousePosition) = 0;
 	virtual void Render() = 0;
