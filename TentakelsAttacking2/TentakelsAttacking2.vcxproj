@@ -143,7 +143,10 @@
     <ClInclude Include="Game\public\Player.h" />
     <ClInclude Include="Game\public\Planet.h" />
     <ClInclude Include="UI\public\Button.h" />
+    <ClInclude Include="UI\public\SoundManager.h" />
+    <ClInclude Include="UI\public\SoundType.h" />
     <ClInclude Include="UI\public\UIElement.h" />
+    <ClInclude Include="UI\public\UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\private\Galaxy.cpp" />
@@ -154,6 +157,7 @@
     <ClCompile Include="Game\private\Player.cpp" />
     <ClCompile Include="Game\private\Planet.cpp" />
     <ClCompile Include="UI\private\Button.cpp" />
+    <ClCompile Include="UI\private\UIManager.cpp" />
     <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
   </ItemGroup>

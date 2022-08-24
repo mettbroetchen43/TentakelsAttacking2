@@ -4,6 +4,7 @@
 //
 
 #pragma once
+#include "SoundType.h"
 #include <raylib.h>
 
 class UIElement {

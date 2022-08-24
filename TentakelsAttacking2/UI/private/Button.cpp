@@ -8,6 +8,7 @@
 Button::~Button() {
 	UnloadTexture(m_texture);
 }
+
 void Button::SetTextSizeAndPosition(Vector2 resolution) {
 	m_textSize = m_collider.height / 3;
 	int textWidth = MeasureText(m_text.c_str(), m_textSize);
@@ -23,6 +24,7 @@ void Button::SetTextSizeAndPosition(Vector2 resolution) {
 	m_textPosition.x = resolution.x * m_pos.x + (resolution.x * m_size.x / 2 - textWidth / 2);
 	m_textPosition.y = resolution.y * m_pos.y + (resolution.y * m_size.y / 2 - m_textSize / 2);
 }
+
 Button::Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text, std::function<void()> onClick)
 	: UIElement(size, pos), m_file(file), m_text(text), m_onClick(onClick) {
 	m_texture = LoadTexture(file.c_str());
