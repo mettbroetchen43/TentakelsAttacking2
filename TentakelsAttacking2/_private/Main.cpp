@@ -29,8 +29,8 @@ int main() {
 
     std::vector<Button> buttons;
     buttons.reserve(2);
-    buttons.emplace_back("Assets/btn_f_default.png", Vector2(0.6f, 0.2f), Vector2(0.2f, 0.13f), resolution, "Super Testtext", test);
-    buttons.emplace_back("Assets/btn_f_default.png", Vector2(0.4f, 0.4f), Vector2(0.2f, 0.13f), resolution, "Quit", test);
+    buttons.emplace_back("Assets/btn_f_default.png", Vector2(0.6f, 0.2f), Vector2(0.2f, 0.13f), resolution, "Super Testtext, viel besser Text", test);
+    buttons.emplace_back("Assets/btn_f_default.png", Vector2(0.4f, 0.4f), Vector2(0.3f, 0.2f), resolution, "Quit", test);
     buttons.at(0).SetEnabled(false);
     std::cout << "btn 0: " << buttons.at(0).IsEnabled() << '\n';
     std::cout << "btn 1: " << buttons.at(1).IsEnabled() << '\n';

@@ -14,8 +14,18 @@ Button::Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resol
 	m_textureRec = { 0,0, static_cast<float>(m_texture.width) ,static_cast<float>(m_texture.height / m_buttonParts)};
 	m_collider = { resolution.x * pos.x, resolution.y * pos.y, resolution.x * size.x, resolution.y * size.y };
 
-	int textWith = MeasureText(m_text.c_str(), m_textSize);
-	m_textPosition.x = resolution.x * pos.x + (resolution.x * size.x / 2 - textWith / 2);
+	m_textSize = m_collider.height / 3;
+	int textWidth = MeasureText(m_text.c_str(), m_textSize);
+	while (textWidth > m_collider.width) {
+		if (m_textSize == 1) {
+			break;
+		}
+
+		m_textSize -= 1;
+		textWidth = MeasureText(m_text.c_str(), m_textSize);
+	}
+
+	m_textPosition.x = resolution.x * pos.x + (resolution.x * size.x / 2 - textWidth / 2);
 	m_textPosition.y = resolution.y * pos.y + (resolution.y * size.y / 2 - m_textSize / 2);
 }
 
