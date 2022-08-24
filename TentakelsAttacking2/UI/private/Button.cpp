@@ -8,16 +8,15 @@
 Button::~Button() {
 	UnloadTexture(m_texture);
 }
-Button::Button(std::string const& file, float posX, float posY, std::string const& text, std::function<void()> onClick)
-	: m_file(file), m_text(text), m_onClick(onClick) {
+Button::Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text, std::function<void()> onClick)
+	: UIElement(pos, size, resolution), m_file(file), m_text(text), m_onClick(onClick) {
 	m_texture = LoadTexture(file.c_str());
-	float frameHight = static_cast<float>(m_texture.height) / m_buttonParts;
-	m_textureRec = { 0,0,static_cast<float>(m_texture.width),frameHight };
-	m_colider = { posX, posY, static_cast<float>(m_texture.width), frameHight };
+	m_textureRec = { 0,0, static_cast<float>(m_texture.width) ,static_cast<float>(m_texture.height / m_buttonParts)};
+	m_collider = { resolution.x * pos.x, resolution.y * pos.y, resolution.x * size.x, resolution.y * size.y };
 
 	int textWith = MeasureText(m_text.c_str(), m_textSize);
-	m_textPosition.x = posX + (m_texture.width / 2 - textWith / 2);
-	m_textPosition.y = posY +(m_texture.height / m_buttonParts / 2 - m_textSize / 2);
+	m_textPosition.x = resolution.x * pos.x + (resolution.x * size.x / 2 - textWith / 2);
+	m_textPosition.y = resolution.y * pos.y + (resolution.y * size.y / 2 - m_textSize / 2);
 }
 
 void Button::CheckAndUpdate(Vector2 const& mousePosition) {
@@ -25,7 +24,7 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition) {
 		return;
 	}
 
-	if (!CheckCollisionPointRec(mousePosition, m_colider)) {
+	if (!CheckCollisionPointRec(mousePosition, m_collider)) {
 		m_state = State::ENABLED;
 		return;
 	}
@@ -44,8 +43,12 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition) {
 
 void Button::Render() {
 	m_textureRec.y = static_cast<int>(m_state) * m_textureRec.height;
-	DrawTextureRec(m_texture, m_textureRec, Vector2(m_colider.x, m_colider.y),WHITE);
+	DrawTexturePro(m_texture, m_textureRec, m_collider, Vector2(0.0f, 0.0f), 0, WHITE);
 	DrawText(m_text.c_str(), static_cast<int>(m_textPosition.x), static_cast<int>(m_textPosition.y), m_textSize, WHITE);
+}
+
+void Button::Resize(Vector2 resolution) {
+	// TODO
 }
 
 void Button::SetEnabled(bool enabled) {

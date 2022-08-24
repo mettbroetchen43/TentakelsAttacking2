@@ -143,6 +143,7 @@
     <ClInclude Include="Game\public\Player.h" />
     <ClInclude Include="Game\public\Planet.h" />
     <ClInclude Include="UI\public\Button.h" />
+    <ClInclude Include="UI\public\UIElement.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\private\Galaxy.cpp" />

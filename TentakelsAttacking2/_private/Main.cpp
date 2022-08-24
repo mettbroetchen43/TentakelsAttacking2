@@ -16,20 +16,21 @@ void test() {
 }
 
 int main() {
-    int width = 800;
-    int height = 450;
-    InitWindow(width, height, "raylib [core] example - basic window");
-    int display = GetCurrentMonitor();
-    height = GetMonitorHeight(display);
-    width = GetMonitorWidth(display);
-    SetWindowSize(width, height);
-    ToggleFullscreen();
+    Vector2 resolution = { 800.0f, 450.0f };
+    InitWindow(resolution.x, resolution.y, "raylib [core] example - basic window");
+    if (false) {
+        int display = GetCurrentMonitor();
+        resolution.x = GetMonitorWidth(display);
+        resolution.y = GetMonitorHeight(display);
+        SetWindowSize(resolution.x, resolution.y);
+    }
+    //ToggleFullscreen();
     SetTargetFPS(60);
 
     std::vector<Button> buttons;
     buttons.reserve(2);
-    buttons.emplace_back("Assets/btn_f_default.png", 100.0f, 100.0f, "Super Testtext", test);
-    buttons.emplace_back("Assets/btn_f_default.png", 100.0f, 300.0f, "Quit", test);
+    buttons.emplace_back("Assets/btn_f_default.png", Vector2(0.6f, 0.2f), Vector2(0.2f, 0.13f), resolution, "Super Testtext", test);
+    buttons.emplace_back("Assets/btn_f_default.png", Vector2(0.4f, 0.4f), Vector2(0.2f, 0.13f), resolution, "Quit", test);
     buttons.at(0).SetEnabled(false);
     std::cout << "btn 0: " << buttons.at(0).IsEnabled() << '\n';
     std::cout << "btn 1: " << buttons.at(1).IsEnabled() << '\n';

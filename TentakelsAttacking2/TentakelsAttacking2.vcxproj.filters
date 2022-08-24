@@ -48,6 +48,9 @@
     <ClInclude Include="UI\public\Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\public\UIElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\Random.cpp">
