@@ -13,15 +13,16 @@
 
 void test() {
     std::cout << "clicked" << '\n';
-    exit(0);
+    // exit(0);
 }
 
 int main() {
     UIManager uiManager;
 
-    auto ptr = std::make_shared<Button>("Assets/btn_f_default.png", Vector2(0.6f, 0.2f), Vector2(0.2f, 0.13f), uiManager.GetResolution(), "Super Testtext, viel besser Text", test);
+    auto ptr = std::make_shared<Button>("Assets/btn_f_default.png", Vector2(0.6f, 0.2f), Vector2(0.2f, 0.13f), uiManager.GetResolution(), "Super Testtext, viel besser Text", SoundType::ACCEPTED, test);
     uiManager.AddElement(ptr);
-    ptr = std::make_shared<Button>("Assets/btn_f_default.png", Vector2(0.4f, 0.4f), Vector2(0.3f, 0.2f), uiManager.GetResolution(), "Quit", test);
+    ptr = std::make_shared<Button>("Assets/btn_f_default.png", Vector2(0.4f, 0.4f), Vector2(0.3f, 0.2f), uiManager.GetResolution(), "Quit",SoundType::CLICKED_RELEASE_STD, test);
+    ptr->SetEnabled(false);
     uiManager.AddElement(ptr);
 
     uiManager.UILoop();

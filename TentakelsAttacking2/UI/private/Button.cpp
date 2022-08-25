@@ -4,6 +4,7 @@
 //
 
 #include "Button.h"
+#include "SoundManager.h"
 
 Button::~Button() {
 	UnloadTexture(m_texture);
@@ -25,8 +26,12 @@ void Button::SetTextSizeAndPosition(Vector2 resolution) {
 	m_textPosition.y = resolution.y * m_pos.y + (resolution.y * m_size.y / 2 - m_textSize / 2);
 }
 
-Button::Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text, std::function<void()> onClick)
-	: UIElement(size, pos), m_file(file), m_text(text), m_onClick(onClick) {
+bool Button::IsSameState(State state) const {
+	return m_state == state;
+}
+
+Button::Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text, SoundType releaseSound, std::function<void()> onClick)
+	: UIElement(size, pos), m_file(file), m_text(text),m_sound(releaseSound), m_onClick(onClick) {
 	m_texture = LoadTexture(file.c_str());
 	m_textureRec = { 0,0, static_cast<float>(m_texture.width) ,static_cast<float>(m_texture.height / m_buttonParts)};
 	m_collider = { resolution.x * pos.x, resolution.y * pos.y, resolution.x * size.x, resolution.y * size.y };
@@ -34,24 +39,38 @@ Button::Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resol
 	SetTextSizeAndPosition(resolution);
 }
 
-void Button::CheckAndUpdate(Vector2 const& mousePosition) {
+void Button::CheckAndUpdate(Vector2 const& mousePosition, SoundManager const& soundManager) {
+	bool const hover = CheckCollisionPointRec(mousePosition, m_collider);
 	if (m_state == State::DISABLED) {
+		if (hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+			soundManager.PlaySound(SoundType::CLICKED_DISABLED_STD);
+		}
 		return;
 	}
 
-	if (!CheckCollisionPointRec(mousePosition, m_collider)) {
+	if (!hover) {
+		if (IsSameState(State::HOVER)) {
+			soundManager.PlaySound(SoundType::HOVER_STD);
+		}
 		m_state = State::ENABLED;
 		return;
 	}
 
 	if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+		if (!IsSameState(State::PRESSED)) {
+			soundManager.PlaySound(SoundType::CLICKED_PRESS_STD);
+		}
 		m_state = State::PRESSED;
 	}
 	else {
+		if (IsSameState(State::ENABLED)) {
+			soundManager.PlaySound(SoundType::HOVER_STD);
+		}
 		m_state = State::HOVER;
 	}
 
 	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+		soundManager.PlaySound(m_sound);
 		m_onClick();
 	}
 }

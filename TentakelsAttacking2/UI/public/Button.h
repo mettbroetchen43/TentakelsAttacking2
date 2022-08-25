@@ -8,8 +8,6 @@
 #include <string>
 #include <functional>
 
-
-
 class Button : public UIElement {
 private:
 	enum class State {
@@ -29,19 +27,22 @@ private:
 	std::string m_text;
 	Vector2 m_textPosition;
 
+	SoundType m_sound;
+
 	std::function<void()> m_onClick;
 
 	void SetTextSizeAndPosition(Vector2 resolution);
+	[[nodiscard]] bool IsSameState(State state) const;
 
 public:
-	Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text, std::function<void()> onClick);
+	Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text, SoundType releaseSound, std::function<void()> onClick);
 	~Button() override;
 	Button(Button const&) = delete;
 	Button(Button&&) = default;
 	Button& operator= (Button const&) = delete;
 	Button& operator= (Button&&) = default;
 
-	void CheckAndUpdate(Vector2 const& mousePosition) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, SoundManager const& soundManager) override;
 	void Render() override;
 	void Resize(Vector2 resolution) override;
 

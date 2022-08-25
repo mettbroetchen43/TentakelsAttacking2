@@ -28,7 +28,7 @@ void UIManager::CheckAndUpdateResolution() {
 void UIManager::CheckAndUpdate() {
 	Vector2 mousePosition = GetMousePosition();
 	for (auto element : m_elements) {
-		element->CheckAndUpdate(mousePosition);
+		element->CheckAndUpdate(mousePosition, m_soundManager);
 	}
 }
 

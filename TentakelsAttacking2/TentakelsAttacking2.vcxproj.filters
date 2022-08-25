@@ -95,6 +95,9 @@
     <ClCompile Include="UI\private\UIManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UI\private\SoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
