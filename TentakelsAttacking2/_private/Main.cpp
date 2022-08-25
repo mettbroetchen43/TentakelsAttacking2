@@ -6,6 +6,7 @@
 
 // original Random by coder2k (https://gist.github.com/mgerhold/353e39da27ae9b22c614bc264c8a3d18)
 
+#include "AppContext.h"
 #include "UIManager.h"
 #include "Button.h"
 #include <vector>
@@ -17,7 +18,9 @@ void test() {
 }
 
 int main() {
-    UIManager uiManager;
+    AppContext appContext;
+    appContext.eventManager.AddListener(&appContext.soundManager);
+    UIManager uiManager(appContext);
 
     auto ptr = std::make_shared<Button>("Assets/btn_f_default.png", Vector2(0.6f, 0.2f), Vector2(0.2f, 0.13f), uiManager.GetResolution(), "Super Testtext, viel besser Text", SoundType::ACCEPTED, test);
     uiManager.AddElement(ptr);

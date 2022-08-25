@@ -5,9 +5,10 @@
 
 #pragma once
 #include "SoundType.h"
+#include "Events.h"
 #include <raylib.h>
 
-class SoundManager;
+class AppContext;
 
 class UIElement {
 protected:
@@ -18,7 +19,7 @@ public:
 	UIElement(Vector2 size, Vector2 pos)
 		: m_size(size), m_pos(pos) { }
 
-	virtual void CheckAndUpdate(Vector2 const& mousePosition, SoundManager const& soundManager) = 0;
+	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) = 0;
 	virtual void Render() = 0;
 	virtual void Resize(Vector2 resolution) = 0;
 };

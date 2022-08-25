@@ -5,15 +5,13 @@
 
 #pragma once
 #include "UIElement.h"
-#include "SoundManager.h"
+#include "AppContext.h"
 #include <vector>
 #include <memory>
 
-
-
 class UIManager {
 private:
-	SoundManager m_soundManager;
+	AppContext& m_appContext;
 	std::vector<std::shared_ptr<UIElement>> m_elements;
 	Vector2 m_resolution;
 
@@ -22,7 +20,7 @@ private:
 	void Render();
 
 public:
-	UIManager();
+	UIManager(AppContext& appContext);
 
 	void UILoop();
 	void AddElement(std::shared_ptr<UIElement> newElement);

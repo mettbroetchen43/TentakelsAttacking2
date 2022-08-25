@@ -42,7 +42,7 @@ public:
 	Button& operator= (Button const&) = delete;
 	Button& operator= (Button&&) = default;
 
-	void CheckAndUpdate(Vector2 const& mousePosition, SoundManager const& soundManager) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render() override;
 	void Resize(Vector2 resolution) override;
 

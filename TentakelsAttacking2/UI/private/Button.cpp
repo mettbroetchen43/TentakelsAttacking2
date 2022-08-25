@@ -4,14 +4,14 @@
 //
 
 #include "Button.h"
-#include "SoundManager.h"
+#include "AppContext.h"
 
 Button::~Button() {
 	UnloadTexture(m_texture);
 }
 
 void Button::SetTextSizeAndPosition(Vector2 resolution) {
-	m_textSize = m_collider.height / 3;
+	m_textSize = static_cast<int>(m_collider.height / 3);
 	int textWidth = MeasureText(m_text.c_str(), m_textSize);
 	while (textWidth > m_collider.width) {
 		if (m_textSize == 1) {
@@ -39,18 +39,20 @@ Button::Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resol
 	SetTextSizeAndPosition(resolution);
 }
 
-void Button::CheckAndUpdate(Vector2 const& mousePosition, SoundManager const& soundManager) {
+void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	bool const hover = CheckCollisionPointRec(mousePosition, m_collider);
 	if (m_state == State::DISABLED) {
 		if (hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-			soundManager.PlaySound(SoundType::CLICKED_DISABLED_STD);
+			auto event = PlaySoundEvent(SoundType::CLICKED_DISABLED_STD);
+			appContext.eventManager.InvokeEvent(event);
 		}
 		return;
 	}
 
 	if (!hover) {
 		if (IsSameState(State::HOVER)) {
-			soundManager.PlaySound(SoundType::HOVER_STD);
+			auto event = PlaySoundEvent(SoundType::HOVER_STD);
+			appContext.eventManager.InvokeEvent(event);
 		}
 		m_state = State::ENABLED;
 		return;
@@ -58,19 +60,22 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, SoundManager const& so
 
 	if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
 		if (!IsSameState(State::PRESSED)) {
-			soundManager.PlaySound(SoundType::CLICKED_PRESS_STD);
+			auto event = PlaySoundEvent(SoundType::CLICKED_PRESS_STD);
+			appContext.eventManager.InvokeEvent(event);
 		}
 		m_state = State::PRESSED;
 	}
 	else {
 		if (IsSameState(State::ENABLED)) {
-			soundManager.PlaySound(SoundType::HOVER_STD);
+			auto event = PlaySoundEvent(SoundType::HOVER_STD);
+			appContext.eventManager.InvokeEvent(event);
 		}
 		m_state = State::HOVER;
 	}
 
 	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-		soundManager.PlaySound(m_sound);
+		auto event = PlaySoundEvent(m_sound);
+		appContext.eventManager.InvokeEvent(event);
 		m_onClick();
 	}
 }

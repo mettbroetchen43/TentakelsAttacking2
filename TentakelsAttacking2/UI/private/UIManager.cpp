@@ -28,7 +28,7 @@ void UIManager::CheckAndUpdateResolution() {
 void UIManager::CheckAndUpdate() {
 	Vector2 mousePosition = GetMousePosition();
 	for (auto element : m_elements) {
-		element->CheckAndUpdate(mousePosition, m_soundManager);
+		element->CheckAndUpdate(mousePosition, m_appContext);
 	}
 }
 
@@ -41,11 +41,11 @@ void UIManager::Render() {
 	EndDrawing();
 }
 
-UIManager::UIManager()
-	: m_resolution(Vector2(0.0f,0.0f)), m_soundManager(SoundManager()) {
+UIManager::UIManager(AppContext& appContext)
+	: m_appContext(appContext), m_resolution(Vector2(0.0f,0.0f)) {
 	SetTargetFPS(60);
 
-	InitWindow(100.0f, 100.0f, "raylib [core] example - basic window");
+	InitWindow(100, 100, "raylib [core] example - basic window");
 	m_resolution = GetResolution();
 	SetWindowSize(m_resolution.x, m_resolution.y);
 }

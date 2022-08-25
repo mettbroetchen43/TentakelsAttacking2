@@ -4,13 +4,14 @@
 //
 
 #pragma once
+#include "EventListener.h"
 #include "SoundType.h"
 #include <raylib.h>
 #include <unordered_map>
 #include <array>
 
 
-class SoundManager {
+class SoundManager : public EventListener {
 private:
 	std::unordered_map<SoundType, Sound> m_sounds;
 	const std::array<std::string, 5> m_files = {
@@ -22,6 +23,7 @@ private:
 	};
 
 	void LoadSounds();
+	void OnEvent(Event const& event) override;
 
 public:
 	SoundManager();

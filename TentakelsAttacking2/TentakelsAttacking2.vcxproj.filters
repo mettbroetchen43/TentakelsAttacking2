@@ -60,6 +60,21 @@
     <ClInclude Include="UI\public\SoundType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Events\public\MainEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\public\EventManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\public\Events.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\public\EventListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_public\AppContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\Random.cpp">

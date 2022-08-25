@@ -4,6 +4,7 @@
 //
 
 #include "SoundManager.h"
+#include "Events.h"
 #include <iostream>
 #include <filesystem>
 
@@ -14,11 +15,16 @@ void SoundManager::LoadSounds() {
 	}
 }
 
+void SoundManager::OnEvent(Event const& event) {
+	if (auto const soundEvent = dynamic_cast<const PlaySoundEvent*>(&event)) {
+		PlaySound(soundEvent->GetSoundType());
+	}
+}
+
 SoundManager::SoundManager() {
 	InitAudioDevice();
 	LoadSounds();
 }
-
 SoundManager::~SoundManager() {
 	for (auto& [_,sound] : m_sounds) {
 		UnloadSound(sound);

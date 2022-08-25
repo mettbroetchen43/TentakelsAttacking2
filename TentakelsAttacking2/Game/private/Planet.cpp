@@ -33,6 +33,6 @@ void Planet::ResetMaxShips() {
 		return;
 	}
 	if (m_ships > m_maxShips) {
-		m_ships = m_maxShips;
+		m_ships = static_cast<int>(m_maxShips);
 	}
 }
