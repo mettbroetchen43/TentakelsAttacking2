@@ -8,7 +8,7 @@
 #include "Events.h"
 #include <raylib.h>
 
-class AppContext;
+struct AppContext;
 
 class UIElement {
 protected:

@@ -16,7 +16,6 @@ private:
 		PRESSED,
 		DISABLED,
 	};
-	std::string m_file;
 	Texture2D m_texture;
 	Rectangle m_textureRec;
 	Rectangle m_collider;
@@ -29,16 +28,18 @@ private:
 
 	SoundType m_sound;
 
-	std::function<void()> m_onClick;
+	std::function<void()> m_onClick = []() {};
+	std::function<void()> m_onPress = []() {};
 
 	void SetTextSizeAndPosition(Vector2 resolution);
 	[[nodiscard]] bool IsSameState(State state) const;
 
 public:
-	Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text, SoundType releaseSound, std::function<void()> onClick);
+	Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text,
+		SoundType releaseSound);
 	~Button() override;
 	Button(Button const&) = delete;
-	Button(Button&&) = default;
+	Button(Button&& old) noexcept;
 	Button& operator= (Button const&) = delete;
 	Button& operator= (Button&&) = default;
 
@@ -46,6 +47,11 @@ public:
 	void Render() override;
 	void Resize(Vector2 resolution) override;
 
+	void SetOnClick(std::function<void()> onClick);
+	void SetOnPress(std::function<void()> onPress);
+
 	void SetEnabled(bool enabled);
 	[[nodiscard]] bool IsEnabled() const;
+	[[nodiscard]] Rectangle GetCollider() const;
+	void SetCollider(Rectangle collider);
 };

@@ -75,6 +75,9 @@
     <ClInclude Include="_public\AppContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\public\Slider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\Random.cpp">
@@ -111,6 +114,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\private\SoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\private\Slider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
