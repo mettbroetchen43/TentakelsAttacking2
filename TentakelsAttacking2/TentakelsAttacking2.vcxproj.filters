@@ -84,6 +84,9 @@
     <ClInclude Include="UI\public\AssetType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\public\SliderButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\Random.cpp">
@@ -126,6 +129,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\private\AssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\private\SliderButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -150,6 +150,7 @@
     <ClInclude Include="UI\public\AssetType.h" />
     <ClInclude Include="UI\public\Button.h" />
     <ClInclude Include="UI\public\Slider.h" />
+    <ClInclude Include="UI\public\SliderButton.h" />
     <ClInclude Include="UI\public\SoundManager.h" />
     <ClInclude Include="UI\public\SoundType.h" />
     <ClInclude Include="UI\public\UIElement.h" />
@@ -169,6 +170,7 @@
     <ClCompile Include="UI\private\Slider.cpp" />
     <ClCompile Include="UI\private\UIManager.cpp" />
     <ClCompile Include="UI\private\SoundManager.cpp" />
+    <ClCompile Include="UI\private\SliderButton.cpp" />
     <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
   </ItemGroup>

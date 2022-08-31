@@ -9,13 +9,14 @@
 #include <functional>
 
 class Button : public UIElement {
-private:
+protected:
 	enum class State {
 		ENABLED,
 		HOVER,
 		PRESSED,
 		DISABLED,
 	};
+	bool m_isPressed = false;
 	Texture2D* m_texture;
 	Rectangle m_textureRec;
 	Rectangle m_collider;

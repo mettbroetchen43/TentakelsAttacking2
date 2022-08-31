@@ -46,6 +46,15 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 	}
 
 	if (!hover) {
+		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+			m_isPressed = false;
+		}
+
+		if (m_isPressed) {
+			m_state = State::ENABLED;
+			return;
+		}
+
 		if (IsSameState(State::HOVER)) {
 			auto event = PlaySoundEvent(SoundType::HOVER_STD);
 			appContext.eventManager.InvokeEvent(event);
@@ -53,28 +62,40 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		m_state = State::ENABLED;
 		return;
 	}
-
-	if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-		if (!IsSameState(State::PRESSED)) {
-			auto event = PlaySoundEvent(SoundType::CLICKED_PRESS_STD);
-			appContext.eventManager.InvokeEvent(event);
-		}
-		m_state = State::PRESSED;
+	
+	if (m_isPressed) {
 		m_onPress();
+		if (!IsSameState(State::PRESSED)) {
+			m_state = State::PRESSED;
+			return;
+		}
+
+		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+			auto event = PlaySoundEvent(m_sound);
+			appContext.eventManager.InvokeEvent(event);
+			m_onClick();
+			m_state = State::ENABLED;
+			m_isPressed = false;
+			return;
+		}
 	}
 	else {
-		if (IsSameState(State::ENABLED)) {
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			m_isPressed = true;
+			m_state = State::PRESSED;
+			auto event = PlaySoundEvent(SoundType::CLICKED_PRESS_STD);
+			appContext.eventManager.InvokeEvent(event);
+			m_onPress();
+			return;
+		}
+		if (!IsSameState(State::HOVER)) {
+			m_state = State::HOVER;
 			auto event = PlaySoundEvent(SoundType::HOVER_STD);
 			appContext.eventManager.InvokeEvent(event);
+			return;
 		}
-		m_state = State::HOVER;
 	}
 
-	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-		auto event = PlaySoundEvent(m_sound);
-		appContext.eventManager.InvokeEvent(event);
-		m_onClick();
-	}
 }
 void Button::Render() {
 	m_textureRec.y = static_cast<int>(m_state) * m_textureRec.height;
@@ -99,6 +120,7 @@ void Button::SetEnabled(bool enabled) {
 	}
 	else {
 		m_state = State::DISABLED;
+		m_isPressed = false;
 	}
 }
 bool Button::IsEnabled() const {
