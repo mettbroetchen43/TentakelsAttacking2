@@ -6,8 +6,10 @@
 #pragma once
 #include "SoundManager.h"
 #include "EventManager.h"
+#include "AssetManager.h"
 
 struct AppContext {
 	SoundManager soundManager;
+	AssetManager assetManager;
 	EventManager eventManager;
 };

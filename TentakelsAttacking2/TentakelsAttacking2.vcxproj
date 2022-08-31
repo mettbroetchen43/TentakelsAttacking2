@@ -146,6 +146,8 @@
     <ClInclude Include="Game\public\SpaceObject.h" />
     <ClInclude Include="Game\public\Player.h" />
     <ClInclude Include="Game\public\Planet.h" />
+    <ClInclude Include="UI\public\AssetManager.h" />
+    <ClInclude Include="UI\public\AssetType.h" />
     <ClInclude Include="UI\public\Button.h" />
     <ClInclude Include="UI\public\Slider.h" />
     <ClInclude Include="UI\public\SoundManager.h" />
@@ -162,6 +164,7 @@
     <ClCompile Include="Helper\private\Random.cpp" />
     <ClCompile Include="Game\private\Player.cpp" />
     <ClCompile Include="Game\private\Planet.cpp" />
+    <ClCompile Include="UI\private\AssetManager.cpp" />
     <ClCompile Include="UI\private\Button.cpp" />
     <ClCompile Include="UI\private\Slider.cpp" />
     <ClCompile Include="UI\private\UIManager.cpp" />

@@ -45,7 +45,6 @@ UIManager::UIManager(AppContext& appContext)
 	: m_appContext(appContext), m_resolution(Vector2(0.0f,0.0f)) {
 	SetTargetFPS(60);
 
-	InitWindow(100, 100, "raylib [core] example - basic window");
 	m_resolution = GetResolution();
 	SetWindowSize(m_resolution.x, m_resolution.y);
 }

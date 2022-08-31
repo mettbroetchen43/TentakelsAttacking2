@@ -5,27 +5,27 @@
 
 #include "Slider.h"
 
-Button Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension, std::string const& file) {
+Button Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension, Texture2D* texture) {
 	float sizeX = m_isHorizontal ? m_size.x / absoluteDimension : m_size.x;
 	float sizeY = m_isHorizontal ? m_size.y : m_size.y / absoluteDimension;
-	Button btn = Button(file, m_pos, Vector2(sizeX, sizeY), resolution, "", SoundType::CLICKED_RELEASE_STD);
+	Button btn = Button(texture, m_pos, Vector2(sizeX, sizeY), resolution, "", SoundType::CLICKED_RELEASE_STD);
 	btn.SetOnPress([&]() {Slide();});
 	return btn;
 }
 
-Slider::Slider(std::string const& slideFile, Vector2 pos, Vector2 size, Vector2 resolution,
-	float absoluteDimension, bool isHorizontal, std::string const& btnFile)
-	: UIElement(size, pos),m_isHorizontal(isHorizontal), m_texture(LoadTexture(slideFile.c_str())),
-	m_textureRec(Rectangle(0, 0, static_cast<float>(m_texture.width), static_cast<float>(m_texture.height))),
+Slider::Slider(Texture2D* slideTexture, Vector2 pos, Vector2 size, Vector2 resolution,
+	float absoluteDimension, bool isHorizontal, Texture2D* btnTexture)
+	: UIElement(size, pos),m_isHorizontal(isHorizontal), m_texture(slideTexture),
+	m_textureRec(Rectangle(0, 0, static_cast<float>(m_texture->width), static_cast<float>(m_texture->height))),
 	m_collider(Rectangle(resolution.x* pos.x, resolution.y* pos.y, resolution.x* size.x, resolution.y* size.y)),
-	m_btn(CalculateInitialButton(resolution, absoluteDimension, btnFile)) { }
+	m_btn(CalculateInitialButton(resolution, absoluteDimension, btnTexture)) { }
 
 void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	m_btn.CheckAndUpdate(mousePosition, appContext);
 	SlideIfPressed();
 }
 void Slider::Render() {
-	DrawTexturePro(m_texture, m_textureRec, m_collider, Vector2(0.0f, 0.0f), 0, WHITE);
+	DrawTexturePro(*m_texture, m_textureRec, m_collider, Vector2(0.0f, 0.0f), 0, WHITE);
 	m_btn.Render();
 }
 void Slider::Resize(Vector2 resolution) {

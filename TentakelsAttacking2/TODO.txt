@@ -4,7 +4,8 @@
 // 
 
 UI:
-	- map for Assets
+	- lock selected slider button
+	- scrole slider extern
 
 To Implement:
 	Player -> Fleet

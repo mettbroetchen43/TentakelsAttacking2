@@ -16,7 +16,7 @@ private:
 		PRESSED,
 		DISABLED,
 	};
-	Texture2D m_texture;
+	Texture2D* m_texture;
 	Rectangle m_textureRec;
 	Rectangle m_collider;
 	State m_state = State::ENABLED;
@@ -35,12 +35,11 @@ private:
 	[[nodiscard]] bool IsSameState(State state) const;
 
 public:
-	Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text,
+	Button(Texture2D* texture, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text,
 		SoundType releaseSound);
-	~Button() override;
-	Button(Button const&) = delete;
-	Button(Button&& old) noexcept;
-	Button& operator= (Button const&) = delete;
+	Button(Button const&) = default;
+	Button(Button&& old) = default;
+	Button& operator= (Button const&) = default;
 	Button& operator= (Button&&) = default;
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;

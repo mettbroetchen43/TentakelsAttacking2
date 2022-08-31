@@ -14,7 +14,7 @@
 class SoundManager : public EventListener {
 private:
 	std::unordered_map<SoundType, Sound> m_sounds;
-	const std::array<std::string, 5> m_files = {
+	std::array<std::string, 5> m_files = {
 		"clicked_accepted_std.mp3",
 		"clicked_press_std.mp3",
 		"clicked_release_std.mp3",

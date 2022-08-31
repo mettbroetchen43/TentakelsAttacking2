@@ -6,16 +6,6 @@
 #include "Button.h"
 #include "AppContext.h"
 
-Button::~Button() {
-	UnloadTexture(m_texture);
-}
-Button::Button(Button&& old) noexcept
-	: UIElement(old.m_size, old.m_pos), m_text(old.m_text), m_sound(old.m_sound), m_textureRec(old.m_textureRec),
-	m_collider(old.m_collider),m_texture(Texture2D()), m_textSize(old.m_textSize),
-	m_textPosition(old.m_textPosition), m_onClick(old.m_onClick), m_onPress(old.m_onPress) {
-	m_texture = LoadTexture("Assets/btn_f_default.png");
-}
-
 void Button::SetTextSizeAndPosition(Vector2 resolution) {
 	m_textSize = static_cast<int>(m_collider.height / 3);
 	int textWidth = MeasureText(m_text.c_str(), m_textSize);
@@ -36,11 +26,10 @@ bool Button::IsSameState(State state) const {
 	return m_state == state;
 }
 
-Button::Button(std::string const& file, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text,
+Button::Button(Texture2D* texture, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text,
 	SoundType releaseSound)
-	: UIElement(size, pos), m_text(text), m_sound(releaseSound) {
-	m_texture = LoadTexture(file.c_str());
-	m_textureRec = { 0,0, static_cast<float>(m_texture.width) ,static_cast<float>(m_texture.height / m_buttonParts)};
+	: UIElement(size, pos), m_texture(texture),m_text(text), m_sound(releaseSound) {
+	m_textureRec = { 0,0, static_cast<float>(m_texture->width) ,static_cast<float>(m_texture->height / m_buttonParts)};
 	m_collider = { resolution.x * pos.x, resolution.y * pos.y, resolution.x * size.x, resolution.y * size.y };
 
 	SetTextSizeAndPosition(resolution);
@@ -89,7 +78,7 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 }
 void Button::Render() {
 	m_textureRec.y = static_cast<int>(m_state) * m_textureRec.height;
-	DrawTexturePro(m_texture, m_textureRec, m_collider, Vector2(0.0f, 0.0f), 0, WHITE);
+	DrawTexturePro(*m_texture, m_textureRec, m_collider, Vector2(0.0f, 0.0f), 0, WHITE);
 	DrawText(m_text.c_str(), static_cast<int>(m_textPosition.x), static_cast<int>(m_textPosition.y), m_textSize, WHITE);
 }
 void Button::Resize(Vector2 resolution) {
