@@ -18,6 +18,10 @@ private:
 
 	SliderButton CalculateInitialButton(Vector2 resolution, float absolutDimension, Texture2D* texture);
 
+	void Slide();
+	void SlideIfPressed();
+	void MoveButtonIfColiderIsPressed(Vector2 const& mousePosition);
+
 public:
 	Slider(Texture2D* slideTexture, Vector2 pos, Vector2 size, Vector2 resolution,
 		float absoluteDimension, bool isHorizontal, Texture2D* btnTexture);
@@ -29,7 +33,4 @@ public:
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render() override;
 	void Resize(Vector2 resolution) override;
-
-	void Slide();
-	void SlideIfPressed();
 };
