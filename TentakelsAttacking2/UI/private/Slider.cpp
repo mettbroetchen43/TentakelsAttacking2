@@ -5,10 +5,10 @@
 
 #include "Slider.h"
 
-Button Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension, Texture2D* texture) {
+SliderButton Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension, Texture2D* texture) {
 	float sizeX = m_isHorizontal ? m_size.x / absoluteDimension : m_size.x;
 	float sizeY = m_isHorizontal ? m_size.y : m_size.y / absoluteDimension;
-	Button btn = Button(texture, m_pos, Vector2(sizeX, sizeY), resolution, "", SoundType::CLICKED_RELEASE_STD);
+	SliderButton btn = SliderButton(texture, m_pos, Vector2(sizeX, sizeY), resolution, "", SoundType::CLICKED_RELEASE_STD);
 	btn.SetOnPress([&]() {Slide();});
 	return btn;
 }

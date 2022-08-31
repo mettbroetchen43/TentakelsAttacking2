@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#include "Button.h"
+#include "SliderButton.h"
 
 class Slider: public UIElement {
 private:
@@ -14,9 +14,9 @@ private:
 	Rectangle m_textureRec;
 	Rectangle m_collider;
 
-	Button m_btn;
+	SliderButton m_btn;
 
-	Button CalculateInitialButton(Vector2 resolution, float absolutDimension, Texture2D* texture);
+	SliderButton CalculateInitialButton(Vector2 resolution, float absolutDimension, Texture2D* texture);
 
 public:
 	Slider(Texture2D* slideTexture, Vector2 pos, Vector2 size, Vector2 resolution,
