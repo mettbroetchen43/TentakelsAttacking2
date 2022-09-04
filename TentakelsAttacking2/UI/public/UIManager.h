@@ -6,12 +6,14 @@
 #pragma once
 #include "UIElement.h"
 #include "AppContext.h"
+#include "Focus.h"
 #include <vector>
 #include <memory>
 
 class UIManager {
 private:
 	AppContext& m_appContext;
+	Focus m_focus;
 	std::vector<std::shared_ptr<UIElement>> m_elements;
 	Vector2 m_resolution;
 

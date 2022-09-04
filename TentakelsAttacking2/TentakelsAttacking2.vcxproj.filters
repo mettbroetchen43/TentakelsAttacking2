@@ -45,7 +45,7 @@
     <ClInclude Include="Game\public\Planet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\public\Button.h">
+    <ClInclude Include="UI\btn\public\Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\public\UIElement.h">
@@ -84,7 +84,16 @@
     <ClInclude Include="UI\public\AssetType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\public\SliderButton.h">
+    <ClInclude Include="UI\btn\public\SliderButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\public\Focusable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\public\Focus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\btn\public\ClassicButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -116,7 +125,7 @@
     <ClCompile Include="Game\private\Planet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\private\Button.cpp">
+    <ClCompile Include="UI\btn\private\Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\private\UIManager.cpp">
@@ -131,7 +140,19 @@
     <ClCompile Include="UI\private\AssetManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\private\SliderButton.cpp">
+    <ClCompile Include="UI\btn\private\SliderButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="_private\AppContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\private\Focusable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\private\Focus.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\btn\private\ClassicButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

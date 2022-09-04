@@ -27,6 +27,7 @@ void UIManager::CheckAndUpdateResolution() {
 
 void UIManager::CheckAndUpdate() {
 	Vector2 mousePosition = GetMousePosition();
+	m_focus.CheckAndUpdate();
 	for (auto element : m_elements) {
 		element->CheckAndUpdate(mousePosition, m_appContext);
 	}
@@ -35,6 +36,7 @@ void UIManager::CheckAndUpdate() {
 void UIManager::Render() {
 	BeginDrawing();
 	ClearBackground(BLACK);
+	m_focus.Render();
 	for (auto element : m_elements) {
 		element->Render();
 	}
