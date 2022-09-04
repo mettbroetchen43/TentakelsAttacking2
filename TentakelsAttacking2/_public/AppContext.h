@@ -12,4 +12,10 @@ struct AppContext {
 	SoundManager soundManager;
 	AssetManager assetManager;
 	EventManager eventManager;
+
+	[[nodiscard]] static AppContext& GetInstance();
+
+private:
+	AppContext();
+
 };

@@ -18,9 +18,8 @@ void test() {
 }
 
 int main() {
-    AppContext appContext;
-    appContext.eventManager.AddListener(&appContext.soundManager);
-    UIManager uiManager(appContext);
+    UIManager uiManager;
+    AppContext& appContext = AppContext::GetInstance();
 
     auto ptr = std::make_shared<Button>(appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
         Vector2(0.6f, 0.2f), Vector2(0.2f, 0.13f), uiManager.GetResolution(),

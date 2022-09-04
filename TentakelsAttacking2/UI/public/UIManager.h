@@ -20,7 +20,7 @@ private:
 	void Render();
 
 public:
-	UIManager(AppContext& appContext);
+	UIManager();
 
 	void UILoop();
 	void AddElement(std::shared_ptr<UIElement> newElement);

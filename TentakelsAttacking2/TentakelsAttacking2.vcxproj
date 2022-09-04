@@ -173,6 +173,7 @@
     <ClCompile Include="UI\private\SliderButton.cpp" />
     <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
+    <ClCompile Include="_private\AppContext.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />

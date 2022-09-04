@@ -41,8 +41,8 @@ void UIManager::Render() {
 	EndDrawing();
 }
 
-UIManager::UIManager(AppContext& appContext)
-	: m_appContext(appContext), m_resolution(Vector2(0.0f,0.0f)) {
+UIManager::UIManager()
+	: m_appContext(AppContext::GetInstance()), m_resolution(Vector2(0.0f,0.0f)) {
 	SetTargetFPS(60);
 
 	m_resolution = GetResolution();
