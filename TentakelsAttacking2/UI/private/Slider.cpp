@@ -62,7 +62,7 @@ void Slider::MoveButtonIfColiderIsPressed(Vector2 const& mousePosition) {
 
 Slider::Slider(Texture2D* slideTexture, Vector2 pos, Vector2 size, Vector2 resolution,
 	float absoluteDimension, bool isHorizontal, Texture2D* btnTexture)
-	: UIElement(size, pos),m_isHorizontal(isHorizontal), m_texture(slideTexture),
+	: UIElement(pos, size),m_isHorizontal(isHorizontal), m_texture(slideTexture),
 	m_textureRec(Rectangle(0, 0, static_cast<float>(m_texture->width), static_cast<float>(m_texture->height))),
 	m_collider(Rectangle(resolution.x* pos.x, resolution.y* pos.y, resolution.x* size.x, resolution.y* size.y)),
 	m_btn(CalculateInitialButton(resolution, absoluteDimension, btnTexture)) { }

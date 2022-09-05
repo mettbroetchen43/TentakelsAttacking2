@@ -28,7 +28,7 @@ bool Button::IsSameState(State state) const {
 
 Button::Button(Texture2D* texture, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text,
 	SoundType releaseSound)
-	: UIElement(size, pos), m_texture(texture),m_text(text), m_sound(releaseSound) {
+	: UIElement(pos, size), m_texture(texture),m_text(text), m_sound(releaseSound) {
 	m_textureRec = { 0,0, static_cast<float>(m_texture->width) ,static_cast<float>(m_texture->height / m_buttonParts)};
 	m_collider = { resolution.x * pos.x, resolution.y * pos.y, resolution.x * size.x, resolution.y * size.y };
 
