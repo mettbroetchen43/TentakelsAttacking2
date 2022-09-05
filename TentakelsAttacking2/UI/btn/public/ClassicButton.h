@@ -16,6 +16,7 @@ public:
 	ClassicButton(ClassicButton&& old) = default;
 	ClassicButton& operator= (ClassicButton const&) = default;
 	ClassicButton& operator= (ClassicButton&&) = default;
+	~ClassicButton() = default;
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	[[nodiscard]] Rectangle GetCollider() const override;
