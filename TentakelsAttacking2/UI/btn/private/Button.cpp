@@ -74,7 +74,7 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 			auto event = PlaySoundEvent(m_sound);
 			appContext.eventManager.InvokeEvent(event);
 			m_onClick();
-			m_state = State::ENABLED;
+			m_state = hover? State::HOVER : State::ENABLED;
 			m_isPressed = false;
 			return;
 		}
