@@ -22,36 +22,7 @@ int main() {
     UIManager uiManager;
     AppContext& appContext = AppContext::GetInstance();
 
-    auto ptr = std::make_shared<ClassicButton>(1,appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
-        Vector2(0.6f, 0.2f), Vector2(0.2f, 0.13f), uiManager.GetResolution(),
-        "Super Testtext, viel besser Text", SoundType::ACCEPTED);
-    ptr->SetOnClick(test);
-    uiManager.AddElement(ptr);
-
-    ptr = std::make_shared<ClassicButton>(2,appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
-        Vector2(0.4f, 0.4f), Vector2(0.3f, 0.2f), uiManager.GetResolution(),
-        "Quit",SoundType::CLICKED_RELEASE_STD);
-    ptr->SetEnabled(false);
-    ptr->SetOnClick(test);
-    uiManager.AddElement(ptr);
-
-    ptr = std::make_shared<ClassicButton>(3, appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
-        Vector2(0.5f, 0.7f), Vector2(0.2f, 0.13f), uiManager.GetResolution(),
-        "Super Testtext, viel besser Text", SoundType::CLICKED_RELEASE_STD);
-    ptr->SetOnClick(test);
-    uiManager.AddElement(ptr);
-
-    auto ptr2 = std::make_shared<Slider>(appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
-        Vector2(0.1f, 0.1f), Vector2(0.025f, 0.7f), uiManager.GetResolution(),
-        6.0f, false, appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT));
-    uiManager.AddElement(ptr2);
-
-    ptr2 = std::make_shared<Slider>(appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
-        Vector2(0.1f, 0.85f), Vector2(0.7f, 0.025f), uiManager.GetResolution(),
-        6.0f, true, appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT));
-    uiManager.AddElement(ptr2);
-
-    uiManager.UILoop();
+    uiManager.StartUI();
 
     return 0;
 }

@@ -10,23 +10,25 @@
 #include <vector>
 #include <memory>
 
+class Scene;
+
 class UIManager {
 private:
 	AppContext& m_appContext;
 	Focus m_focus;
-	std::vector<std::shared_ptr<UIElement>> m_elements;
+	std::vector<std::shared_ptr<Scene>> m_scenes;
 	Vector2 m_resolution;
 
 	void CheckAndUpdateResolution();
 	void CheckAndUpdate();
 	void Render();
 
+	void UILoop();
+
 public:
 	UIManager();
 
-	void UILoop();
-	void AddElement(std::shared_ptr<UIElement> newElement);
-
+	void StartUI();
 
 	[[nodiscard]] Vector2 GetResolution() const;
 };

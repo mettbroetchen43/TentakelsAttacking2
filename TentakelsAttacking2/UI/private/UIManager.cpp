@@ -4,6 +4,7 @@
 //
 
 #include "UIManager.h"
+#include "TestScene.h"
 
 Vector2 UIManager::GetResolution() const {
 	Vector2 newResolution;
@@ -12,15 +13,14 @@ Vector2 UIManager::GetResolution() const {
 	newResolution.y = GetMonitorHeight(display);
 	return newResolution;
 }
-
 void UIManager::CheckAndUpdateResolution() {
 	Vector2 newResolution = GetResolution();
 	if (m_resolution.x != newResolution.x ||
 		m_resolution.y != newResolution.y) {
 		m_resolution = newResolution;
 		SetWindowSize(m_resolution.x, m_resolution.y);
-		for (auto element : m_elements) {
-			element->Resize(m_resolution);
+		for (auto scene : m_scenes) {
+			scene->Resize(m_resolution);
 		}
 	}
 }
@@ -28,27 +28,18 @@ void UIManager::CheckAndUpdateResolution() {
 void UIManager::CheckAndUpdate() {
 	Vector2 mousePosition = GetMousePosition();
 	m_focus.CheckAndUpdate();
-	for (auto element : m_elements) {
-		element->CheckAndUpdate(mousePosition, m_appContext);
+	for (auto scene : m_scenes) {
+		scene->CheckAndUpdate(mousePosition, m_appContext);
 	}
 }
-
 void UIManager::Render() {
 	BeginDrawing();
 	ClearBackground(BLACK);
 	m_focus.Render();
-	for (auto element : m_elements) {
-		element->Render();
+	for (auto scene : m_scenes) {
+		scene->Render();
 	}
 	EndDrawing();
-}
-
-UIManager::UIManager()
-	: m_appContext(AppContext::GetInstance()), m_resolution(Vector2(0.0f,0.0f)) {
-	SetTargetFPS(60);
-
-	m_resolution = GetResolution();
-	SetWindowSize(m_resolution.x, m_resolution.y);
 }
 
 void UIManager::UILoop() {
@@ -61,6 +52,17 @@ void UIManager::UILoop() {
 
 }
 
-void UIManager::AddElement(std::shared_ptr<UIElement> newElement) {
-	m_elements.push_back(newElement);
+UIManager::UIManager()
+	: m_appContext(AppContext::GetInstance()), m_resolution(Vector2(0.0f,0.0f)) {
+	SetTargetFPS(60);
+
+	m_resolution = GetResolution();
+	SetWindowSize(m_resolution.x, m_resolution.y);
 }
+
+void UIManager::StartUI() {
+	auto scene = std::make_shared<TestScene>(Vector2(1.0f,1.0f), Vector2(0.0f,0.0f), true, *this);
+	m_scenes.emplace_back(scene);
+	UILoop();
+}
+

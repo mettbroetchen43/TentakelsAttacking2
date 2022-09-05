@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Helper/public;Game/public;UI/public;UI/btn/public;Events/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Helper/public;Game/public;UI/public;UI/btn/public;UI/Szene/public;Events/public</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -91,7 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Helper/public;Game/public;UI/public;UI/btn/public;Events/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Helper/public;Game/public;UI/public;UI/btn/public;UI/Szene/public;Events/public</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -107,7 +107,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>_public;Helper/public;Game/public;UI/public;UI/btn/public;Events/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Helper/public;Game/public;UI/public;UI/btn/public;UI/Szene/public;Events/public</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Helper/public;Game/public;UI/public;UI/btn/public;Events/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Helper/public;Game/public;UI/public;UI/btn/public;UI/Szene/public;Events/public</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -158,6 +158,8 @@
     <ClInclude Include="UI\public\SoundType.h" />
     <ClInclude Include="UI\public\UIElement.h" />
     <ClInclude Include="UI\public\UIManager.h" />
+    <ClInclude Include="UI\Szene\public\Scene.h" />
+    <ClInclude Include="UI\Szene\public\TestScene.h" />
     <ClInclude Include="_public\AppContext.h" />
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +179,8 @@
     <ClCompile Include="UI\btn\private\SliderButton.cpp" />
     <ClCompile Include="UI\private\Focusable.cpp" />
     <ClCompile Include="UI\private\Focus.cpp" />
+    <ClCompile Include="UI\Szene\private\Scene.cpp" />
+    <ClCompile Include="UI\Szene\private\TestScene.cpp" />
     <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="_private\AppContext.cpp" />
