@@ -111,22 +111,6 @@ void Focus::SetPreviousFocus() {
 	m_currentFocus->SetFocus(true);
 }
 
-void Focus::AddElement(Focusable* focusable) {
-	CheckNewID(focusable->GetFocusID());
-	m_focus.AddElement(focusable);
-
-	if (!m_currentFocus) {
-		SetInitialFocus();
-	}
-}
-void Focus::DeleteElement(Focusable* focusable) {
-	if (m_currentFocus == focusable) {
-		m_currentFocus = GetNextFocus();
-	}
-
-	m_focus.RemoveElement(focusable);
-}
-
 void Focus::CheckNewID(unsigned int newID) {
 	for (auto focus : m_focus) {
 		if (focus->GetFocusID() == newID) {
@@ -148,6 +132,22 @@ void Focus::AddLayer() {
 void Focus::DeleteLayer() {
 	m_focus.RemoveLayer();
 	SetInitialFocus();
+}
+
+void Focus::AddElement(Focusable* focusable) {
+	CheckNewID(focusable->GetFocusID());
+	m_focus.AddElement(focusable);
+
+	if (!m_currentFocus) {
+		SetInitialFocus();
+	}
+}
+void Focus::DeleteElement(Focusable* focusable) {
+	if (m_currentFocus == focusable) {
+		m_currentFocus = GetNextFocus();
+	}
+
+	m_focus.RemoveElement(focusable);
 }
 
 void Focus::OnEvent(Event const& event) {

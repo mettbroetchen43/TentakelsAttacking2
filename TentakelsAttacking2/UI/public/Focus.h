@@ -23,9 +23,6 @@ private:
 	void SetNextFocus();
 	void SetPreviousFocus();
 
-	void AddElement(Focusable* focusable);
-	void DeleteElement(Focusable* focusable);
-
 	void CheckNewID(unsigned int newID);
 
 public:
@@ -33,6 +30,9 @@ public:
 
 	void AddLayer();
 	void DeleteLayer();
+
+	void AddElement(Focusable* focusable);
+	void DeleteElement(Focusable* focusable);
 
 	void OnEvent(Event const& event) override;
 
