@@ -43,7 +43,7 @@ void SliderButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext const
 			auto event = PlaySoundEvent(SoundType::CLICKED_RELEASE_STD);
 			appContext.eventManager.InvokeEvent(event);
 			m_isPressed = false;
-			m_state = State::ENABLED;
+			m_state = hover? State::HOVER : State::ENABLED;
 			m_onClick();
 			return;
 		}
