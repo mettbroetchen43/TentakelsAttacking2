@@ -19,6 +19,9 @@ protected:
 	virtual void InitializeSzene(UIManager const& uiManager) = 0;
 	void SetFocusActive(Focus& focus);
 
+	Vector2 GetElementPosition(float x, float y);
+	Vector2 GetElementSize(float x, float y);
+
 public:
 	Scene(Vector2 pos, Vector2 size, bool active);
 	Scene(Scene const&) = default;

@@ -19,6 +19,13 @@ void Scene::SetFocusActive(Focus& focus) {
 	}
 }
 
+Vector2 Scene::GetElementPosition(float x, float y) {
+	return {m_pos.x + x * m_size.x, m_pos.y + y * m_size.y };
+}
+Vector2 Scene::GetElementSize(float x, float y) {
+	return {x * m_size.x, y * m_size.y};
+}
+
 Scene::Scene(Vector2 pos, Vector2 size, bool active)
 	:UIElement(pos, size), m_active(active) { 
 	
