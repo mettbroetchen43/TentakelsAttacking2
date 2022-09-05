@@ -14,27 +14,38 @@ void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext cons
 
 	if (IsFocused()) {
 		if (m_state == State::DISABLED) {
-			if (IsKeyPressed(KEY_ENTER)) {
+			if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_SPACE)) {
 				auto event = PlaySoundEvent(SoundType::CLICKED_DISABLED_STD);
 				appContext.eventManager.InvokeEvent(event);
+				return;
 			}
-			return;
+
+			bool disabledAction =
+				IsKeyDown(KEY_ENTER) or
+				IsKeyDown(KEY_SPACE) or
+				IsKeyReleased(KEY_ENTER) or
+				IsKeyReleased(KEY_SPACE);
+			if (disabledAction) {
+				return;
+			}
 		}
 
-		if (IsKeyPressed(KEY_ENTER)) {
-			m_state = State::PRESSED;
-			auto event = PlaySoundEvent(SoundType::CLICKED_PRESS_STD);
-			appContext.eventManager.InvokeEvent(event);
-			return;
+		if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_SPACE)) {
+			if (m_state != State::PRESSED) {
+				m_state = State::PRESSED;
+				auto event = PlaySoundEvent(SoundType::CLICKED_PRESS_STD);
+				appContext.eventManager.InvokeEvent(event);
+				return;
+			}
 		}
 
-		if (IsKeyDown(KEY_ENTER)) {
+		if (IsKeyDown(KEY_ENTER) or IsKeyDown(KEY_SPACE)) {
 			m_state = State::PRESSED;
 			m_onPress();
 			return;
 		}
 
-		if (IsKeyReleased(KEY_ENTER)) {
+		if (IsKeyReleased(KEY_ENTER) or IsKeyReleased(KEY_SPACE)) {
 			bool hover = CheckCollisionPointRec(mousePosition, m_collider);
 			m_state = hover ? State::HOVER : State::ENABLED;
 
