@@ -9,8 +9,8 @@
 #include "AppContext.h"
 #include "UIManager.h"
 
-TestScene::TestScene(Vector2 size, Vector2 pos, bool active, UIManager const& uiManager)
-    : Scene(size, pos, active) {
+TestScene::TestScene(Vector2 pos, Vector2 size, bool active, UIManager const& uiManager)
+    : Scene(pos, size, active) {
     InitializeSzene(uiManager);
 }
 

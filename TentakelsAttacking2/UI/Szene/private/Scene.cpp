@@ -9,7 +9,7 @@
 
 void Scene::SetFocusActive(Focus& focus) {
 	for (auto& element : m_elements) {
-		if (auto focusable = dynamic_cast<Focusable*>(&*element)) {
+		if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
 			if (m_active) {
 				focus.AddElement(focusable);
 				continue;
@@ -19,8 +19,8 @@ void Scene::SetFocusActive(Focus& focus) {
 	}
 }
 
-Scene::Scene(Vector2 size, Vector2 pos, bool active)
-	:UIElement(size, pos), m_active(active) { 
+Scene::Scene(Vector2 pos, Vector2 size, bool active)
+	:UIElement(pos, size), m_active(active) { 
 	
 }
 

@@ -20,7 +20,7 @@ protected:
 	void SetFocusActive(Focus& focus);
 
 public:
-	Scene(Vector2 size, Vector2 pos, bool active);
+	Scene(Vector2 pos, Vector2 size, bool active);
 	Scene(Scene const&) = default;
 	Scene(Scene&&) = default;
 	Scene& operator= (Scene const&) = default;

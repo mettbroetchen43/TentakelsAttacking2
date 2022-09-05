@@ -13,32 +13,29 @@ Vector2 UIManager::GetResolution() const {
 	newResolution.y = GetMonitorHeight(display);
 	return newResolution;
 }
+Focus& UIManager::GetFocus() {
+	return m_focus;
+}
 void UIManager::CheckAndUpdateResolution() {
 	Vector2 newResolution = GetResolution();
 	if (m_resolution.x != newResolution.x ||
 		m_resolution.y != newResolution.y) {
 		m_resolution = newResolution;
 		SetWindowSize(m_resolution.x, m_resolution.y);
-		for (auto scene : m_scenes) {
-			scene->Resize(m_resolution);
-		}
+		m_sceneManager.Resize(newResolution);
 	}
 }
 
 void UIManager::CheckAndUpdate() {
 	Vector2 mousePosition = GetMousePosition();
 	m_focus.CheckAndUpdate();
-	for (auto scene : m_scenes) {
-		scene->CheckAndUpdate(mousePosition, m_appContext);
-	}
+	m_sceneManager.CheckAndUpdate(mousePosition, m_appContext);
 }
 void UIManager::Render() {
 	BeginDrawing();
 	ClearBackground(BLACK);
 	m_focus.Render();
-	for (auto scene : m_scenes) {
-		scene->Render();
-	}
+	m_sceneManager.Render();
 	EndDrawing();
 }
 
@@ -53,7 +50,7 @@ void UIManager::UILoop() {
 }
 
 UIManager::UIManager()
-	: m_appContext(AppContext::GetInstance()), m_resolution(Vector2(0.0f,0.0f)) {
+	: m_appContext(AppContext::GetInstance()), m_resolution({ 0.0f,0.0f }), m_sceneManager(this) {
 	SetTargetFPS(60);
 
 	m_resolution = GetResolution();
@@ -61,8 +58,7 @@ UIManager::UIManager()
 }
 
 void UIManager::StartUI() {
-	auto scene = std::make_shared<TestScene>(Vector2(1.0f,1.0f), Vector2(0.0f,0.0f), true, *this);
-	m_scenes.emplace_back(scene);
+	m_sceneManager.SwitchScene(SceneType::TEST);
 	UILoop();
 }
 

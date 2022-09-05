@@ -6,6 +6,7 @@
 #pragma once
 #include "UIElement.h"
 #include "AppContext.h"
+#include "SceneManager.h"
 #include "Focus.h"
 #include <vector>
 #include <memory>
@@ -16,7 +17,7 @@ class UIManager {
 private:
 	AppContext& m_appContext;
 	Focus m_focus;
-	std::vector<std::shared_ptr<Scene>> m_scenes;
+	SceneManager m_sceneManager;
 	Vector2 m_resolution;
 
 	void CheckAndUpdateResolution();
@@ -31,4 +32,5 @@ public:
 	void StartUI();
 
 	[[nodiscard]] Vector2 GetResolution() const;
+	[[nodiscard]] Focus& GetFocus();
 };
