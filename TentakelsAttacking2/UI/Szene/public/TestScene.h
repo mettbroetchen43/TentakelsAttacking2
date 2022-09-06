@@ -4,9 +4,9 @@
 //
 
 #pragma once
-#include "Scene.h"
+#include "BaseMainScene.h"
 
-class TestScene : public Scene {
+class TestScene : public BaseMainScene {
 private:
 
 public:

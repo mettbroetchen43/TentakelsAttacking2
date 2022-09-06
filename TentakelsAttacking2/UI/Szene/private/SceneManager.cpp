@@ -8,7 +8,7 @@
 #include <raylib.h>
 
 void SceneManager::InitializeScenes() {
-	auto ptr = std::make_shared<TestScene>(Vector2(0.1f, 0.25f), Vector2(0.8f, 0.5f), true, *m_uiManager);
+	auto ptr = std::make_shared<TestScene>(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), true, *m_uiManager);
 	m_scenes[SceneType::TEST] = ptr;
 }
 
