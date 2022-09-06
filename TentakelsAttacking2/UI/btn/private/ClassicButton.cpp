@@ -33,6 +33,7 @@ void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext cons
 		if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_SPACE)) {
 			if (m_state != State::PRESSED) {
 				m_state = State::PRESSED;
+				m_isPressed = true;
 				auto event = PlaySoundEvent(SoundType::CLICKED_PRESS_STD);
 				appContext.eventManager.InvokeEvent(event);
 				return;
@@ -47,14 +48,16 @@ void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext cons
 
 		if (IsKeyReleased(KEY_ENTER) or IsKeyReleased(KEY_SPACE)) {
 			bool hover = CheckCollisionPointRec(mousePosition, m_collider);
-			m_state = hover ? State::HOVER : State::ENABLED;
+			if (!hover or !IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+				m_state = hover ? State::HOVER : State::ENABLED;
+				m_isPressed = false;
 
-			auto event = PlaySoundEvent(m_sound);
-			appContext.eventManager.InvokeEvent(event);
-			m_onClick();
-			return;
+				auto event = PlaySoundEvent(m_sound);
+				appContext.eventManager.InvokeEvent(event);
+				m_onClick();
+				return;
+			}
 		}
-
 	}
 
 	Button::CheckAndUpdate(mousePosition, appContext);
