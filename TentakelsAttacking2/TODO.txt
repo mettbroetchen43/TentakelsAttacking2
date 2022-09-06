@@ -1,4 +1,4 @@
-// 
+d// 
 // Purpur Tentakel
 // 10.08.2022
 // 
@@ -7,6 +7,13 @@ UI:
 	- implement Scene Manager
 	- scrole slider extern
 
+	- Actiate Focus Event -> Input Line
+	- Popup Event -> Input Line
+	- break by e.g. "ä,ü,ö,ß" -> Input Line
+
 To Implement:
 	Player -> Fleet
 	GameManager -> SpaceObject
+
+Layerd Vector
+	- const end() broken

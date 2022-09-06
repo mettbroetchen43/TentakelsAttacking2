@@ -7,6 +7,8 @@
 #include "Slider.h"
 #include "AppContext.h"
 #include "UIManager.h"
+#include "StringInputLine.h"
+#include "Events.h"
 
 TestScene::TestScene(Vector2 pos, Vector2 size, bool active, UIManager const& uiManager)
     : BaseMainScene(pos, size, active) {
@@ -17,14 +19,40 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
     AppContext& appContext = AppContext::GetInstance();
 
     BaseMainScene::InitializeSzene(uiManager);
+    // focus ID > 3!
 
-    auto ptr2 = std::make_shared<Slider>(appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
-        GetElementPosition(0.05f, 0.1f), GetElementSize(0.025f, 0.75f), uiManager.GetResolution(),
-        6.0f, false, appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT));
+    auto ptr = std::make_shared<StringInputLine>(
+        4,
+        appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
+        GetElementPosition(0.4f, 0.5f),
+        GetElementSize(0.2f, 0.05f),
+        40,
+        uiManager.GetResolution()
+        );
+    m_elements.push_back(ptr);
+
+    auto ptr2 = std::make_shared<Slider>(
+        appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
+        GetElementPosition(0.05f, 0.1f),
+        GetElementSize(0.025f, 0.75f),
+        uiManager.GetResolution(),
+        6.0f,
+        false,
+        appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT)
+        );
     m_elements.push_back(ptr2);
 
-    ptr2 = std::make_shared<Slider>(appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
-        GetElementPosition(0.05f, 0.9f), GetElementSize(0.9f, 0.025f), uiManager.GetResolution(),
-        6.0f, true, appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT));
+    ptr2 = std::make_shared<Slider>(
+        appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
+        GetElementPosition(0.05f, 0.9f),
+        GetElementSize(0.9f, 0.025f),
+        uiManager.GetResolution(),
+        6.0f,
+        true,
+        appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT)
+        );
     m_elements.push_back(ptr2);
+
+    auto event = SelectFocusEvent(ptr.get());
+    appContext.eventManager.InvokeEvent(event);
 }

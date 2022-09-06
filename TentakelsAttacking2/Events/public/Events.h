@@ -24,21 +24,24 @@ private:
 class FocusEvent : public Event {
 protected:
 	Focusable* m_focusable;
+	
+public:
 	FocusEvent(Focusable* focusable)
 		: m_focusable(focusable) { }
 
-public:
 	[[nodiscard]] Focusable* GetFocusable() const {
 		return m_focusable;
 	}
 };
 class NewFocusEvent : public FocusEvent {
 public:
-	NewFocusEvent(Focusable* focusable)
-		: FocusEvent(focusable) { }
+	using FocusEvent::FocusEvent;
 };
 class DeleteFocusEvent : public FocusEvent {
 public:
-	DeleteFocusEvent(Focusable* focusable)
-		: FocusEvent(focusable) { }
+	using FocusEvent::FocusEvent;
+};
+class SelectFocusEvent : public FocusEvent {
+public:
+	using FocusEvent::FocusEvent;
 };

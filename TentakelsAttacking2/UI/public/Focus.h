@@ -22,6 +22,8 @@ private:
 	void SetInitialFocus();
 	void SetNextFocus();
 	void SetPreviousFocus();
+	void SetSpecificFocus(Focusable* focusable);
+	[[nodiscard]] bool IsExistingFocus(Focusable* focusable);
 
 	void CheckNewID(unsigned int newID);
 

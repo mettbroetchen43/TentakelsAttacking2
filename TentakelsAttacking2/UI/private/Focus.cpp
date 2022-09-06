@@ -7,6 +7,7 @@
 #include "Focusable.h"
 #include "Events.h"
 #include "AppContext.h"
+#include <iostream>
 #include <stdexcept>
 
 void Focus::UnfocusAllAtTopLayer() {
@@ -110,6 +111,23 @@ void Focus::SetPreviousFocus() {
 	m_currentFocus = previousFocus;
 	m_currentFocus->SetFocus(true);
 }
+void Focus::SetSpecificFocus(Focusable* focusable) {
+	if (!IsExistingFocus(focusable)) { return; }
+
+	if (m_currentFocus) {
+		m_currentFocus->SetFocus(false);
+	}
+	m_currentFocus = focusable;
+	m_currentFocus->SetFocus(true);
+}
+bool Focus::IsExistingFocus(Focusable* focusable) {
+	for (auto focus : m_focus) {
+		if (focus == focusable) {
+			return true;
+		}
+	}
+	return false;
+}
 
 void Focus::CheckNewID(unsigned int newID) {
 	for (auto focus : m_focus) {
@@ -151,12 +169,16 @@ void Focus::DeleteElement(Focusable* focusable) {
 }
 
 void Focus::OnEvent(Event const& event) {
-	if (auto const focusEvent = dynamic_cast<const NewFocusEvent*>(&event)) {
+	if (auto const focusEvent = dynamic_cast<NewFocusEvent const*>(&event)) {
 		AddElement(focusEvent->GetFocusable());
 	}
 
-	if (auto const focusEvent = dynamic_cast<const DeleteFocusEvent*>(&event)) {
+	if (auto const focusEvent = dynamic_cast<DeleteFocusEvent const*>(&event)) {
 		DeleteElement(focusEvent->GetFocusable());
+	}
+
+	if (auto const focusEvent = dynamic_cast<SelectFocusEvent const*>(&event)) {
+		SetSpecificFocus(focusEvent->GetFocusable());
 	}
 }
 
