@@ -4,12 +4,8 @@
 // 
 
 UI:
-	- implement Scene Manager
 	- scrole slider extern
-
-	- Actiate Focus Event -> Input Line
 	- Popup Event -> Input Line
-	- implement DoubleInputLine -> Input Line
 
 To Implement:
 	Player -> Fleet

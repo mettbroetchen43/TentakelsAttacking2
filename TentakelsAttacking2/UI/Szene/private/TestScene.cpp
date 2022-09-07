@@ -31,6 +31,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
         10,
         uiManager.GetResolution()
         );
+    ptr4->SetPlaceholderText("Double Input List");
     m_elements.push_back(ptr4);
 
     auto ptr3 = std::make_shared < IntInputLine>(
@@ -41,6 +42,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
         10,
         uiManager.GetResolution()
         );
+    ptr3->SetPlaceholderText("Integer Input List");
     m_elements.push_back(ptr3);
 
     auto ptr = std::make_shared<StringInputLine>(
@@ -51,6 +53,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
         40,
         uiManager.GetResolution()
         );
+    ptr->SetPlaceholderText("String Input List");
     m_elements.push_back(ptr);
 
     auto ptr2 = std::make_shared<Slider>(

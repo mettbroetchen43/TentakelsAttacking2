@@ -14,6 +14,7 @@ protected:
 	unsigned int m_charLimit;
 	Rectangle m_collider;
 	std::string m_input;
+	std::string m_placeholderText;
 	Texture* m_texture;
 	double m_backspacePressTime = 0.0;
 
@@ -21,8 +22,9 @@ protected:
 	void RemoveChar();
 	[[nodiscard]] bool IsAnyKeyPressed();
 	[[nodiscard]] virtual bool IsValidKey(int key) = 0;
-	[[nodiscard]] std::string GetPritableInput(std::string const& enter, std::string const& Prefix, int fontSize,
+	[[nodiscard]] std::string GetPritableInput(std::string const& enter, std::string const& prefix, int fontSize,
 		int cursorOffset) const;
+	[[nodiscard]] std::string GetPritablePlaceholder(std::string const& prefix, int fontSize, int cursorOffset) const;
 public:
 	InputLine(unsigned int focusID, Texture2D* texture, Vector2 pos, Vector2 size, unsigned int charLimit,
 		Vector2 resolution);
@@ -34,6 +36,8 @@ public:
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render() override;
 	void Resize(Vector2 resolution) override;
+
+	void SetPlaceholderText(std::string placeholderText);
 
 	[[nodiscard]] Rectangle GetCollider() const override;
 };

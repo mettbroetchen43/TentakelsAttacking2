@@ -33,7 +33,7 @@ bool InputLine::IsAnyKeyPressed() {
 
 std::string InputLine::GetPritableInput(std::string const& enter, std::string const& prefix, int fontSize,
 	int cursorOffset) const {
-	cursorOffset += 5; // Just to make shure
+	cursorOffset += 5; // Just to make shure that the curor didnt bounce out
 
 	if (MeasureText((m_input + enter).c_str(), fontSize) + cursorOffset < m_collider.width) {
 		return m_input;
@@ -48,6 +48,24 @@ std::string InputLine::GetPritableInput(std::string const& enter, std::string co
 	}
 
 	return prefix + toReturn;
+}
+
+std::string InputLine::GetPritablePlaceholder(std::string const& prefix, int fontSize, int cursorOffset) const {
+	cursorOffset += 5; // Just to make shure that the curor didnt bounce out
+
+	if (MeasureText(m_placeholderText.c_str(), fontSize) + cursorOffset < m_collider.width) {
+		return m_placeholderText;
+	}
+
+	std::string toReturn = m_placeholderText;
+	std::string toCheck = prefix + m_placeholderText;
+
+	while (MeasureText(toCheck.c_str(), fontSize) + cursorOffset >= m_collider.width) {
+		toReturn = toReturn.substr(0, toReturn.size()-1);
+		toCheck = prefix + toReturn;
+	}
+
+	return  toReturn + prefix;
 }
 
 InputLine::InputLine(unsigned int focusID, Texture2D* texture, Vector2 pos, Vector2 size,
@@ -103,16 +121,24 @@ void InputLine::Render() {
 	DrawTexturePro(*m_texture, textureRec, m_collider, Vector2(0.0f, 0.0f), 0, WHITE);
 	DrawRectangleLines(m_collider.x, m_collider.y, m_collider.width, m_collider.height, WHITE);
 
-	std::string enter = "_";
-	std::string prefix = "...";
-
 	int posX = m_collider.x + 10;
 	int posY = m_collider.y + m_collider.height * 0.1;
 	int fontSize = m_collider.height * 0.8;
 	int cursorOffset = 8;
 
-	std::string printableInput = GetPritableInput(enter, prefix, fontSize, cursorOffset);
-	DrawText(printableInput.c_str(), posX, posY, fontSize, WHITE);
+	std::string enter = "_";
+	std::string prefix = "...";
+	std::string printableInput;
+
+	if (m_input.size() > 0) {
+		printableInput = GetPritableInput(enter, prefix, fontSize, cursorOffset);
+		DrawText(printableInput.c_str(), posX, posY, fontSize, WHITE);
+	}
+	else {
+		std::string printablePlaceholder = GetPritablePlaceholder(prefix, fontSize, cursorOffset);
+		DrawText(printablePlaceholder.c_str(), posX, posY, fontSize, GRAY);
+	}
+
 
 	if (IsFocused()) {
 		int time = static_cast<int>(GetTime());
@@ -126,6 +152,10 @@ void InputLine::Render() {
 void InputLine::Resize(Vector2 resolution) {
 	m_collider = { resolution.x * m_pos.x, resolution.y * m_pos.y,
 		resolution.x * m_size.x, resolution.y * m_size.y };
+}
+
+void InputLine::SetPlaceholderText(std::string placeholderText) {
+	m_placeholderText = placeholderText;
 }
 
 Rectangle InputLine::GetCollider() const {
