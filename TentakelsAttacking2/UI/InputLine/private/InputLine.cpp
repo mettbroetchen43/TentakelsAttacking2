@@ -24,8 +24,9 @@ void InputLine::RemoveChar() {
 }
 bool InputLine::IsAnyKeyPressed() {
 	int key = GetKeyPressed();
-	bool valid = key >= 32 and
-		key <= 126;
+	bool valid = (key >= 32 and key <= 126) or
+		(key >= 320 and key <= 329) or
+		key == 330;
 
 	return valid;
 }
@@ -69,7 +70,7 @@ void InputLine::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& a
 
 	if (IsKeyPressed(KEY_BACKSPACE)) {
 		RemoveChar();
-		m_backspacePressTime = GetTime(); 
+		m_backspacePressTime = GetTime();
 		return;
 	}
 
@@ -112,7 +113,7 @@ void InputLine::Render() {
 
 	std::string printableInput = GetPritableInput(enter, prefix, fontSize, cursorOffset);
 	DrawText(printableInput.c_str(), posX, posY, fontSize, WHITE);
-	
+
 	if (IsFocused()) {
 		int time = static_cast<int>(GetTime());
 		int textLength = MeasureText(printableInput.c_str(), fontSize);
