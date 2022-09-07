@@ -9,7 +9,7 @@ UI:
 
 	- Actiate Focus Event -> Input Line
 	- Popup Event -> Input Line
-	- implement IntInputLine -> Input Line
+	- implement DoubleInputLine -> Input Line
 
 To Implement:
 	Player -> Fleet

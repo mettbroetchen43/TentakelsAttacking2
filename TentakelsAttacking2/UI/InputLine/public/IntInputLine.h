@@ -7,6 +7,8 @@
 #include "InputLine.h"
 
 class IntInputLine : public InputLine {
-
+public:
+	using InputLine::InputLine;
+	[[nodiscard]] bool IsValidKey(int key) override;
 };
 
