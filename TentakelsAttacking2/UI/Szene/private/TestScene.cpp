@@ -9,6 +9,7 @@
 #include "UIManager.h"
 #include "StringInputLine.h"
 #include "IntInputLine.h"
+#include "DoubleInputLine.h"
 #include "Events.h"
 
 TestScene::TestScene(Vector2 pos, Vector2 size, bool active, UIManager const& uiManager)
@@ -21,6 +22,16 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 
     BaseMainScene::InitializeSzene(uiManager);
     // focus ID > 3!
+
+    auto ptr4 = std::make_shared < DoubleInputLine>(
+        6,
+        appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
+        GetElementPosition(0.4f, 0.7f),
+        GetElementSize(0.2f, 0.05f),
+        10,
+        uiManager.GetResolution()
+        );
+    m_elements.push_back(ptr4);
 
     auto ptr3 = std::make_shared < IntInputLine>(
         5,

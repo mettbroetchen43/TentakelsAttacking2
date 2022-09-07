@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="UI\InputLine\public\DoubleInputLine.h" />
     <ClInclude Include="Events\public\EventListener.h" />
     <ClInclude Include="Events\public\EventManager.h" />
     <ClInclude Include="Events\public\Events.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="_public\AppContext.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="UI\InputLine\private\DoubleInputLine.cpp" />
     <ClCompile Include="Game\private\Galaxy.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />
     <ClCompile Include="Game\private\Fleet.cpp" />
