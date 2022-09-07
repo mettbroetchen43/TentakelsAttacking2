@@ -84,7 +84,10 @@ void InputLine::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& a
 
 	int key = GetCharPressed();
 	while (key > 0) {
-		if (!IsValidKey(key)) { continue; }
+		if (!IsValidKey(key)) {
+			key = GetKeyPressed();
+			continue;
+		}
 
 		if (!AddChar(key)) {
 			// Popup Event -> TODO
