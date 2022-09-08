@@ -7,9 +7,7 @@
 #include "Slider.h"
 #include "AppContext.h"
 #include "UIManager.h"
-#include "StringInputLine.h"
-#include "IntInputLine.h"
-#include "DoubleInputLine.h"
+#include "InputLine.h"
 #include "Events.h"
 
 TestScene::TestScene(Vector2 pos, Vector2 size, bool active, UIManager const& uiManager)
@@ -23,10 +21,10 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
     BaseMainScene::InitializeSzene(uiManager);
     // focus ID > 3!
 
-    auto ptr4 = std::make_shared < DoubleInputLine>(
+    auto ptr4 = std::make_shared<InputLine<double>>(
         6,
         appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
-        GetElementPosition(0.4f, 0.7f),
+        GetElementPosition(0.15f, 0.7f),
         GetElementSize(0.2f, 0.05f),
         10,
         uiManager.GetResolution()
@@ -34,10 +32,10 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
     ptr4->SetPlaceholderText("Double Input List");
     m_elements.push_back(ptr4);
 
-    auto ptr3 = std::make_shared < IntInputLine>(
+    auto ptr3 = std::make_shared<InputLine<int>>(
         5,
         appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
-        GetElementPosition(0.4f, 0.6f),
+        GetElementPosition(0.15f, 0.6f),
         GetElementSize(0.2f, 0.05f),
         10,
         uiManager.GetResolution()
@@ -45,10 +43,10 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
     ptr3->SetPlaceholderText("Integer Input List");
     m_elements.push_back(ptr3);
 
-    auto ptr = std::make_shared<StringInputLine>(
+    auto ptr = std::make_shared<InputLine<std::string>>(
         4,
         appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
-        GetElementPosition(0.4f, 0.5f),
+        GetElementPosition(0.15f, 0.5f),
         GetElementSize(0.2f, 0.05f),
         40,
         uiManager.GetResolution()

@@ -114,15 +114,6 @@
     <ClInclude Include="UI\InputLine\public\InputLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\InputLine\public\StringInputLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\InputLine\public\IntInputLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\InputLine\public\DoubleInputLine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\Random.cpp">
@@ -192,18 +183,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Szene\private\BaseMainScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\InputLine\private\InputLine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\InputLine\private\StringInputLine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\InputLine\private\IntInputLine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\InputLine\private\DoubleInputLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

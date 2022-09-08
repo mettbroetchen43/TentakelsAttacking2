@@ -132,7 +132,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="UI\InputLine\public\DoubleInputLine.h" />
     <ClInclude Include="Events\public\EventListener.h" />
     <ClInclude Include="Events\public\EventManager.h" />
     <ClInclude Include="Events\public\Events.h" />
@@ -148,8 +147,6 @@
     <ClInclude Include="Game\public\Player.h" />
     <ClInclude Include="Game\public\Planet.h" />
     <ClInclude Include="UI\InputLine\public\InputLine.h" />
-    <ClInclude Include="UI\InputLine\public\IntInputLine.h" />
-    <ClInclude Include="UI\InputLine\public\StringInputLine.h" />
     <ClInclude Include="UI\Szene\public\BaseMainScene.h" />
     <ClInclude Include="UI\Szene\public\SceneManager.h" />
     <ClInclude Include="UI\Button\public\ClassicButton.h" />
@@ -170,7 +167,6 @@
     <ClInclude Include="_public\AppContext.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="UI\InputLine\private\DoubleInputLine.cpp" />
     <ClCompile Include="Game\private\Galaxy.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />
     <ClCompile Include="Game\private\Fleet.cpp" />
@@ -178,9 +174,6 @@
     <ClCompile Include="Helper\private\Random.cpp" />
     <ClCompile Include="Game\private\Player.cpp" />
     <ClCompile Include="Game\private\Planet.cpp" />
-    <ClCompile Include="UI\InputLine\private\InputLine.cpp" />
-    <ClCompile Include="UI\InputLine\private\IntInputLine.cpp" />
-    <ClCompile Include="UI\InputLine\private\StringInputLine.cpp" />
     <ClCompile Include="UI\Szene\private\BaseMainScene.cpp" />
     <ClCompile Include="UI\Szene\private\SceneManager.cpp" />
     <ClCompile Include="UI\Button\private\ClassicButton.cpp" />
