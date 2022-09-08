@@ -20,7 +20,7 @@ void test() {
 
 int main() {
     UIManager uiManager;
-    AppContext& appContext = AppContext::GetInstance();
+    [[maybe_unused]] AppContext& appContext = AppContext::GetInstance();
 
     uiManager.StartUI();
 

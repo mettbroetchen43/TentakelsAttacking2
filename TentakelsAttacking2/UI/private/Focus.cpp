@@ -66,7 +66,8 @@ Focusable* Focus::GetNextFocus() {
 	return nextFocus;
 }
 Focusable* Focus::GetPreviousFocus() {
-	unsigned int currentID = m_currentFocus ? m_currentFocus->GetFocusID() : m_focus.size();
+	unsigned int currentID = m_currentFocus ? m_currentFocus->GetFocusID() 
+		: static_cast<unsigned int>(m_focus.size());
 	Focusable* previousFocus = nullptr;
 
 	for (auto focus : m_focus) {
@@ -205,10 +206,10 @@ void Focus::Render() {
 	Rectangle const& f_colider = m_currentFocus->GetCollider();
 	int offset = 2;
 	DrawRectangle(
-		f_colider.x - offset,
-		f_colider.y - offset,
-		f_colider.width + 2 * offset,
-		f_colider.height + 2 * offset,
+		static_cast<int>(f_colider.x) - offset,
+		static_cast<int>(f_colider.y) - offset,
+		static_cast<int>(f_colider.width) + 2 * offset,
+		static_cast<int>(f_colider.height) + 2 * offset,
 		PURPLE
 	);
 }

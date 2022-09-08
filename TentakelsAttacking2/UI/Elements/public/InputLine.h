@@ -131,14 +131,21 @@ public:
 		}
 	}
 	void Render() override {
-		Rectangle textureRec = { 0.0f,0.0f,m_texture->width, m_texture->height };
+		Rectangle textureRec = { 
+			0.0f,
+			0.0f,
+			static_cast<float>(m_texture->width), 
+			static_cast<float>(m_texture->height) 
+		};
 
-		DrawTexturePro(*m_texture, textureRec, m_collider, Vector2(0.0f, 0.0f), 0, WHITE);
-		DrawRectangleLines(m_collider.x, m_collider.y, m_collider.width, m_collider.height, WHITE);
+		DrawTexturePro(*m_texture, textureRec,	m_collider,	Vector2(0.0f, 0.0f), 0,	WHITE);
 
-		int posX = m_collider.x + 10;
-		int posY = m_collider.y + m_collider.height * 0.1;
-		int fontSize = m_collider.height * 0.8;
+		DrawRectangleLines(static_cast<int>(m_collider.x), static_cast<int>(m_collider.y),
+			static_cast<int>(m_collider.width), static_cast<int>(m_collider.height), WHITE);
+
+		int posX = static_cast<int>(m_collider.x) + 10;
+		int posY = static_cast<int>(m_collider.y + m_collider.height * 0.1);
+		int fontSize = static_cast<int>(m_collider.height * 0.8);
 		int cursorOffset = 8;
 
 		std::string enter = "_";
@@ -160,7 +167,7 @@ public:
 			int textLength = MeasureText(printableInput.c_str(), fontSize);
 
 			if (time % 2 == 0) {
-				DrawText(enter.c_str(), posX + cursorOffset + textLength, posY + m_collider.height * 0.05, fontSize, PURPLE);
+				DrawText(enter.c_str(), posX + cursorOffset + textLength, posY + static_cast<int>(m_collider.height * 0.05), fontSize, PURPLE);
 			}
 		}
 	}
