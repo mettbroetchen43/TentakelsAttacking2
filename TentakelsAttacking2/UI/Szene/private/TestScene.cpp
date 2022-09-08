@@ -22,7 +22,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
     // focus ID > 3!
 
     auto ptr4 = std::make_shared<InputLine<double>>(
-        6,
+        7,
         appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
         GetElementPosition(0.15f, 0.7f),
         GetElementSize(0.2f, 0.05f),
@@ -33,7 +33,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
     m_elements.push_back(ptr4);
 
     auto ptr3 = std::make_shared<InputLine<int>>(
-        5,
+        6,
         appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
         GetElementPosition(0.15f, 0.6f),
         GetElementSize(0.2f, 0.05f),
@@ -46,12 +46,25 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
     auto ptr = std::make_shared<InputLine<std::string>>(
         4,
         appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
+        GetElementPosition(0.15f, 0.4f),
+        GetElementSize(0.2f, 0.05f),
+        40,
+        uiManager.GetResolution()
+        );
+    ptr->SetPlaceholderText("into for");
+    m_elements.push_back(ptr);
+
+    auto event = SelectFocusEvent(ptr.get());
+
+    ptr = std::make_shared<InputLine<std::string>>(
+        5,
+        appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
         GetElementPosition(0.15f, 0.5f),
         GetElementSize(0.2f, 0.05f),
         40,
         uiManager.GetResolution()
         );
-    ptr->SetPlaceholderText("String Input List");
+    ptr->SetPlaceholderText("copy to");
     m_elements.push_back(ptr);
 
     auto ptr2 = std::make_shared<Slider>(
@@ -76,6 +89,30 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
         );
     m_elements.push_back(ptr2);
 
-    auto event = SelectFocusEvent(ptr.get());
+
     appContext.eventManager.InvokeEvent(event);
+}
+
+void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+    if (!m_active) { return; }
+
+    InputLine<std::string>* ForCopy = nullptr;
+    InputLine<std::string>* ForSave = nullptr;
+
+    for (auto e : m_elements) {
+        if (auto element = dynamic_cast<InputLine<std::string>*>(e.get())) {
+            if (element->GetFocusID() == 4) {
+                ForCopy = element;
+            }
+            if (element->GetFocusID() == 5) {
+                ForSave = element;
+            }
+        }
+    }
+    if (ForCopy and ForCopy->HasInputChanced()) {
+        ForSave->SetValue(ForCopy->GetValue());
+    }
+
+
+    Scene::CheckAndUpdate(mousePosition, appContext);
 }

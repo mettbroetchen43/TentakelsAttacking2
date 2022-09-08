@@ -5,7 +5,12 @@
 
 UI:
 	- scrole slider extern
-	- Popup Event -> Input Line
+
+	-> InputLine
+		- Popup Event
+		- onEnter
+		- HasInputChanced
+
 
 To Implement:
 	Player -> Fleet

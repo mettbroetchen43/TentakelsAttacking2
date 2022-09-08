@@ -15,6 +15,7 @@ protected:
 	unsigned int m_charLimit;
 	Rectangle m_collider;
 	std::string m_input;
+	std::string m_oldInput;
 	std::string m_placeholderText;
 	Texture* m_texture;
 	double m_backspacePressTime = 0.0;
@@ -131,6 +132,9 @@ public:
 		}
 	}
 	void Render() override {
+		// Update here to make shure its after call of HasInputChanced();
+		m_oldInput = m_input;
+
 		Rectangle textureRec = { 
 			0.0f,
 			0.0f,
@@ -186,6 +190,9 @@ public:
 
 	[[nodiscard]] Rectangle GetCollider() const override {
 		return m_collider;
+	}
+	[[nodiscard]] bool HasInputChanced() const {
+		return m_input == m_oldInput;
 	}
 };
 

@@ -13,4 +13,5 @@ public:
 	TestScene(Vector2 pos, Vector2 size, bool active, UIManager const& uiManager);
 	~TestScene() = default;
 	void InitializeSzene(UIManager const& uiManager) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 };
