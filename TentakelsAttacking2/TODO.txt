@@ -8,9 +8,6 @@ UI:
 
 	-> InputLine
 		- Popup Event
-		- onEnter
-		- HasInputChanced
-
 
 To Implement:
 	Player -> Fleet

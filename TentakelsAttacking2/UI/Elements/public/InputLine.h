@@ -8,6 +8,7 @@
 #include "Focusable.h"
 #include <raylib.h>
 #include <string>
+#include <functional>
 
 template <class T>
 class InputLine : public UIElement, public Focusable {
@@ -19,6 +20,7 @@ protected:
 	std::string m_placeholderText;
 	Texture* m_texture;
 	double m_backspacePressTime = 0.0;
+	std::function<void()> m_onEnter = []() {};
 
 	bool AddChar(int key) {
 		bool validAdd = m_charLimit > m_input.size();
@@ -101,6 +103,10 @@ public:
 		}
 
 		if (!IsFocused()) { return; }
+
+		if (IsKeyPressed(KEY_ENTER)) {
+			m_onEnter();
+		}
 
 		if (IsKeyPressed(KEY_BACKSPACE)) {
 			RemoveChar();
@@ -193,6 +199,9 @@ public:
 	}
 	[[nodiscard]] bool HasInputChanced() const {
 		return m_input == m_oldInput;
+	}
+	void SetOnEnter(std::function<void()> onEnter) {
+		m_onEnter = onEnter;
 	}
 };
 
