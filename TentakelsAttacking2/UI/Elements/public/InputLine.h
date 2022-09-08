@@ -180,7 +180,7 @@ public:
 		m_placeholderText = placeholderText;
 	}
 	void SetValue(T value) {
-		m_input = std::to_string(T);
+		m_input = std::to_string(value);
 	}
 	[[nodiscard]] T GetValue() = delete;
 
@@ -244,5 +244,11 @@ template<>
 template<>
 [[nodiscard]] std::string InputLine<std::string>::GetValue() {
 	return m_input;
+}
+
+// need because std::to_string() has so overload for std::string
+template<>
+void InputLine<std::string>::SetValue(std::string value) {
+	m_input = value;
 }
 
