@@ -15,25 +15,25 @@ class InputLine : public UIElement, public Focusable {
 protected:
 	unsigned int m_charLimit;
 	Rectangle m_collider;
-	std::string m_input;
-	std::string m_oldInput;
+	std::string m_value;
+	std::string m_oldValue;
 	std::string m_placeholderText;
 	Texture* m_texture;
 	double m_backspacePressTime = 0.0;
 	std::function<void()> m_onEnter = []() {};
 
 	bool AddChar(int key) {
-		bool validAdd = m_charLimit > m_input.size();
+		bool validAdd = m_charLimit > m_value.size();
 
 		if (validAdd) {
-			m_input += static_cast<char>(key);
+			m_value += static_cast<char>(key);
 		}
 
 		return validAdd;
 	}
 	void RemoveChar() {
-		if (m_input.size() != 0) {
-			m_input.pop_back();
+		if (m_value.size() != 0) {
+			m_value.pop_back();
 		}
 	}
 	[[nodiscard]] bool IsAnyKeyPressed() {
@@ -49,12 +49,12 @@ protected:
 		int cursorOffset) const {
 		cursorOffset += 5; // Just to make shure that the curor didnt bounce out
 
-		if (MeasureText((m_input + enter).c_str(), fontSize) + cursorOffset < m_collider.width) {
-			return m_input;
+		if (MeasureText((m_value + enter).c_str(), fontSize) + cursorOffset < m_collider.width) {
+			return m_value;
 		}
 
-		std::string toReturn = m_input;
-		std::string toCheck = prefix + m_input + enter;
+		std::string toReturn = m_value;
+		std::string toCheck = prefix + m_value + enter;
 
 		while (MeasureText(toCheck.c_str(), fontSize) + cursorOffset >= m_collider.width) {
 			toReturn = toReturn.substr(1, toReturn.size());
@@ -138,8 +138,8 @@ public:
 		}
 	}
 	void Render() override {
-		// Update here to make shure its after call of HasInputChanced();
-		m_oldInput = m_input;
+		// Update here to make shure its after call of HasValueChanced();
+		m_oldValue = m_value;
 
 		Rectangle textureRec = { 
 			0.0f,
@@ -162,7 +162,7 @@ public:
 		std::string prefix = "...";
 		std::string printableInput;
 
-		if (m_input.size() > 0) {
+		if (m_value.size() > 0) {
 			printableInput = GetPritableInput(enter, prefix, fontSize, cursorOffset);
 			DrawText(printableInput.c_str(), posX, posY, fontSize, WHITE);
 		}
@@ -190,15 +190,15 @@ public:
 		m_placeholderText = placeholderText;
 	}
 	void SetValue(T value) {
-		m_input = std::to_string(value);
+		m_value = std::to_string(value);
 	}
 	[[nodiscard]] T GetValue() = delete;
 
 	[[nodiscard]] Rectangle GetCollider() const override {
 		return m_collider;
 	}
-	[[nodiscard]] bool HasInputChanced() const {
-		return m_input == m_oldInput;
+	[[nodiscard]] bool HasValueChanced() const {
+		return m_value == m_oldValue;
 	}
 	void SetOnEnter(std::function<void()> onEnter) {
 		m_onEnter = onEnter;
@@ -220,11 +220,11 @@ bool InputLine<double>::IsValidKey(int key) {
 
 	//check for multiple commas/dots
 	if ('.' == key or ',' == key) {
-		if (m_input.size() == 0) {
+		if (m_value.size() == 0) {
 			valid = false;
 		}
 
-		for (char c : m_input) {
+		for (char c : m_value) {
 			if ('.' == c or ',' == c) {
 				valid = false;
 				break;
@@ -244,11 +244,11 @@ bool InputLine<std::string>::IsValidKey(int key) {
 
 template<>
 [[nodiscard]] int InputLine<int>::GetValue() {
-	return std::stoi(m_input);
+	return std::stoi(m_value);
 }
 template<>
 [[nodiscard]] double InputLine<double>::GetValue() {
-	std::string toReturn = m_input;
+	std::string toReturn = m_value;
 	for (char& c : toReturn) {
 		if (c == ',') {
 			c = '.';
@@ -259,12 +259,12 @@ template<>
 }
 template<>
 [[nodiscard]] std::string InputLine<std::string>::GetValue() {
-	return m_input;
+	return m_value;
 }
 
 // need because std::to_string() has so overload for std::string
 template<>
 void InputLine<std::string>::SetValue(std::string value) {
-	m_input = value;
+	m_value = value;
 }
 

@@ -117,7 +117,7 @@ void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& a
 			}
 		}
 	}
-	if (ForCopy and ForCopy->HasInputChanced()) {
+	if (ForCopy and ForCopy->HasValueChanced()) {
 		ForSave->SetValue(ForCopy->GetValue());
 	}
 
