@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Helper/public;Game/public;UI/public;UI/Button/public;UI/InputLine/public;UI/Szene/public;Events/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Szene/public;UI/Elements/public;UI/Elements/Button/public;Events/public;Helper/public</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -91,7 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Helper/public;Game/public;UI/public;UI/Button/public;UI/InputLine/public;UI/Szene/public;Events/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Szene/public;UI/Elements/public;UI/Elements/Button/public;Events/public;Helper/public</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -107,7 +107,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>_public;Helper/public;Game/public;UI/public;UI/Button/public;UI/InputLine/public;UI/Szene/public;Events/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Szene/public;UI/Elements/public;UI/Elements/Button/public;Events/public;Helper/public</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Helper/public;Game/public;UI/public;UI/Button/public;UI/InputLine/public;UI/Szene/public;Events/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Szene/public;UI/Elements/public;UI/Elements/Button/public;Events/public;Helper/public</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -146,17 +146,17 @@
     <ClInclude Include="Game\public\SpaceObject.h" />
     <ClInclude Include="Game\public\Player.h" />
     <ClInclude Include="Game\public\Planet.h" />
-    <ClInclude Include="UI\InputLine\public\InputLine.h" />
+    <ClInclude Include="UI\Elements\public\InputLine.h" />
     <ClInclude Include="UI\Szene\public\BaseMainScene.h" />
     <ClInclude Include="UI\Szene\public\SceneManager.h" />
-    <ClInclude Include="UI\Button\public\ClassicButton.h" />
+    <ClInclude Include="UI\Elements\Button\public\ClassicButton.h" />
     <ClInclude Include="UI\public\AssetManager.h" />
     <ClInclude Include="UI\public\AssetType.h" />
-    <ClInclude Include="UI\Button\public\Button.h" />
+    <ClInclude Include="UI\Elements\Button\public\Button.h" />
     <ClInclude Include="UI\public\Focus.h" />
     <ClInclude Include="UI\public\Focusable.h" />
-    <ClInclude Include="UI\public\Slider.h" />
-    <ClInclude Include="UI\Button\public\SliderButton.h" />
+    <ClInclude Include="UI\Elements\public\Slider.h" />
+    <ClInclude Include="UI\Elements\Button\public\SliderButton.h" />
     <ClInclude Include="UI\public\SoundManager.h" />
     <ClInclude Include="UI\public\SoundType.h" />
     <ClInclude Include="UI\public\UIElement.h" />
@@ -176,13 +176,13 @@
     <ClCompile Include="Game\private\Planet.cpp" />
     <ClCompile Include="UI\Szene\private\BaseMainScene.cpp" />
     <ClCompile Include="UI\Szene\private\SceneManager.cpp" />
-    <ClCompile Include="UI\Button\private\ClassicButton.cpp" />
+    <ClCompile Include="UI\Elements\Button\private\ClassicButton.cpp" />
     <ClCompile Include="UI\private\AssetManager.cpp" />
-    <ClCompile Include="UI\Button\private\Button.cpp" />
-    <ClCompile Include="UI\private\Slider.cpp" />
+    <ClCompile Include="UI\Elements\Button\private\Button.cpp" />
+    <ClCompile Include="UI\Elements\private\Slider.cpp" />
     <ClCompile Include="UI\private\UIManager.cpp" />
     <ClCompile Include="UI\private\SoundManager.cpp" />
-    <ClCompile Include="UI\Button\private\SliderButton.cpp" />
+    <ClCompile Include="UI\Elements\Button\private\SliderButton.cpp" />
     <ClCompile Include="UI\private\Focusable.cpp" />
     <ClCompile Include="UI\private\Focus.cpp" />
     <ClCompile Include="UI\Szene\private\Scene.cpp" />
