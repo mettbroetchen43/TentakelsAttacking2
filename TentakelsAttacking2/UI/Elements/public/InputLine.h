@@ -126,7 +126,7 @@ public:
 		int key = GetCharPressed();
 		while (key > 0) {
 			if (!IsValidKey(key)) {
-				key = GetKeyPressed();
+				key = GetCharPressed();
 				continue;
 			}
 
@@ -134,7 +134,7 @@ public:
 				// Popup Event -> TODO
 			}
 
-			key = GetKeyPressed();
+			key = GetCharPressed();
 		}
 	}
 	void Render() override {
