@@ -128,6 +128,8 @@ public:
 
 			if (key <= 0) { return; }
 
+			if (!IsValidKey(key)) { continue; }
+
 			if (!AddChar(key)) {
 				auto event = ShowMessagePopUpEvent("Max Input", "Maximum number of input values reached");
 				appContext.eventManager.InvokeEvent(event);
