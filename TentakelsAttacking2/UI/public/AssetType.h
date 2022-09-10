@@ -7,5 +7,6 @@
 
 enum class AssetType {
 	BUTTON_DEFAULT,
-	GREY_SQUARE,
+	GREY,
+	GREY_50,
 };

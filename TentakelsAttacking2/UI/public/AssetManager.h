@@ -13,9 +13,10 @@
 
 class AssetManager {
 private:
-	std::array<std::string, 2> m_files = {
+	std::array<std::string, 3> m_files = {
 		"Assets/btn_f_default.png",
-		"Assets/grey.png"
+		"Assets/grey.png",
+		"Assets/grey_50.png",
 	};
 	std::unordered_map<AssetType, Texture2D> m_assets;
 public:

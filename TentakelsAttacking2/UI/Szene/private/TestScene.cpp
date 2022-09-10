@@ -30,7 +30,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 
 	auto ptr4 = std::make_shared<InputLine<double>>(
 		7,
-		appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
+		appContext.assetManager.GetTexture(AssetType::GREY),
 		GetElementPosition(0.15f, 0.7f),
 		GetElementSize(0.2f, 0.05f),
 		10,
@@ -41,7 +41,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 
 	auto ptr3 = std::make_shared<InputLine<int>>(
 		6,
-		appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
+		appContext.assetManager.GetTexture(AssetType::GREY),
 		GetElementPosition(0.15f, 0.6f),
 		GetElementSize(0.2f, 0.05f),
 		10,
@@ -52,7 +52,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 
 	auto ptr = std::make_shared<InputLine<std::string>>(
 		4,
-		appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
+		appContext.assetManager.GetTexture(AssetType::GREY),
 		GetElementPosition(0.15f, 0.4f),
 		GetElementSize(0.2f, 0.05f),
 		40,
@@ -66,7 +66,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 
 	ptr = std::make_shared<InputLine<std::string>>(
 		5,
-		appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
+		appContext.assetManager.GetTexture(AssetType::GREY),
 		GetElementPosition(0.15f, 0.5f),
 		GetElementSize(0.2f, 0.05f),
 		40,
@@ -76,7 +76,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 	m_elements.push_back(ptr);
 
 	auto ptr2 = std::make_shared<Slider>(
-		appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
+		appContext.assetManager.GetTexture(AssetType::GREY),
 		GetElementPosition(0.05f, 0.1f),
 		GetElementSize(0.025f, 0.75f),
 		uiManager.GetResolution(),
@@ -87,7 +87,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 	m_elements.push_back(ptr2);
 
 	ptr2 = std::make_shared<Slider>(
-		appContext.assetManager.GetTexture(AssetType::GREY_SQUARE),
+		appContext.assetManager.GetTexture(AssetType::GREY),
 		GetElementPosition(0.05f, 0.9f),
 		GetElementSize(0.9f, 0.025f),
 		uiManager.GetResolution(),
