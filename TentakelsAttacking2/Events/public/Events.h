@@ -33,15 +33,15 @@ public:
 		return m_focusable;
 	}
 };
-class NewFocusEvent : public FocusEvent {
+class NewFocusElementEvent : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
-class DeleteFocusEvent : public FocusEvent {
+class DeleteFocusElementEvent : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
-class SelectFocusEvent : public FocusEvent {
+class SelectFocusElementEvent : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };

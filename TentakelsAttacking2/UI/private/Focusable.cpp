@@ -10,12 +10,12 @@
 Focusable::Focusable(unsigned int ID)
 	: m_focusID(ID) {
 	AppContext& appContext = AppContext::GetInstance();
-	auto event = NewFocusEvent(this);
+	auto event = NewFocusElementEvent(this);
 	appContext.eventManager.InvokeEvent(event);
 }
 Focusable::~Focusable() {
 	AppContext& appContext = AppContext::GetInstance();
-	auto event = DeleteFocusEvent(this);
+	auto event = DeleteFocusElementEvent(this);
 	appContext.eventManager.InvokeEvent(event);
 }
 

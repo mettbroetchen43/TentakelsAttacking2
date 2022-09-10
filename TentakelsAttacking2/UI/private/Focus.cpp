@@ -170,15 +170,15 @@ void Focus::DeleteElement(Focusable* focusable) {
 }
 
 void Focus::OnEvent(Event const& event) {
-	if (auto const focusEvent = dynamic_cast<NewFocusEvent const*>(&event)) {
+	if (auto const focusEvent = dynamic_cast<NewFocusElementEvent const*>(&event)) {
 		AddElement(focusEvent->GetFocusable());
 	}
 
-	if (auto const focusEvent = dynamic_cast<DeleteFocusEvent const*>(&event)) {
+	if (auto const focusEvent = dynamic_cast<DeleteFocusElementEvent const*>(&event)) {
 		DeleteElement(focusEvent->GetFocusable());
 	}
 
-	if (auto const focusEvent = dynamic_cast<SelectFocusEvent const*>(&event)) {
+	if (auto const focusEvent = dynamic_cast<SelectFocusElementEvent const*>(&event)) {
 		SetSpecificFocus(focusEvent->GetFocusable());
 	}
 }

@@ -98,7 +98,7 @@ public:
 			hover and IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 
 		if (validSelect) {
-			auto event = SelectFocusEvent(this);
+			auto event = SelectFocusElementEvent(this);
 			appContext.eventManager.InvokeEvent(event);
 		}
 
@@ -131,7 +131,7 @@ public:
 			}
 
 			if (!AddChar(key)) {
-				// Popup Event -> TODO
+
 			}
 
 			key = GetCharPressed();

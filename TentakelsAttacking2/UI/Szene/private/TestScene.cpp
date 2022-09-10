@@ -62,7 +62,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 	ptr->SetOnEnter(std::bind(&TestScene::Test,*this));
 	m_elements.push_back(ptr);
 
-	auto event = SelectFocusEvent(ptr.get());
+	auto event = SelectFocusElementEvent(ptr.get());
 
 	ptr = std::make_shared<InputLine<std::string>>(
 		5,
