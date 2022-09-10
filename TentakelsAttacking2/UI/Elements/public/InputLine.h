@@ -123,18 +123,16 @@ public:
 
 		if (!IsAnyKeyPressed()) { return; }
 
+		while (true) {
 		int key = GetCharPressed();
-		while (key > 0) {
-			if (!IsValidKey(key)) {
-				key = GetCharPressed();
-				continue;
-			}
+
+			if (key <= 0) { return; }
 
 			if (!AddChar(key)) {
-
+				auto event = ShowMessagePopUpEvent("Max Input", "Maximum number of input values reached");
+				appContext.eventManager.InvokeEvent(event);
+				return;
 			}
-
-			key = GetCharPressed();
 		}
 	}
 	void Render() override {
