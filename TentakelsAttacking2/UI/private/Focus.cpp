@@ -214,12 +214,14 @@ void Focus::Render() {
 	}
 
 	Rectangle const& f_colider = m_currentFocus->GetCollider();
-	int offset = 2;
-	DrawRectangleLines(
-		static_cast<int>(f_colider.x) - offset,
-		static_cast<int>(f_colider.y) - offset,
-		static_cast<int>(f_colider.width) + 2 * offset,
-		static_cast<int>(f_colider.height) + 2 * offset,
+	 float offset = 5.0;
+	DrawRectangleLinesEx(
+		Rectangle(
+			static_cast<int>(f_colider.x) - offset,
+			static_cast<int>(f_colider.y) - offset,
+			static_cast<int>(f_colider.width) + 2.0f * offset,
+			static_cast<int>(f_colider.height) + 2.0f * offset),
+		offset,
 		PURPLE
 	);
 }
