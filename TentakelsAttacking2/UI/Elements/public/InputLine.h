@@ -173,7 +173,7 @@ public:
 
 
 		if (IsFocused()) {
-			int time = static_cast<int>(GetTime());
+			size_t time = static_cast<size_t>(GetTime() * 2.0);
 			int textLength = MeasureText(printableInput.c_str(), fontSize);
 
 			if (time % 2 == 0) {
