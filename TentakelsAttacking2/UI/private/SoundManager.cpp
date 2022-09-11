@@ -16,7 +16,7 @@ void SoundManager::LoadSounds() {
 }
 
 void SoundManager::OnEvent(Event const& event) {
-	if (auto const soundEvent = dynamic_cast<const PlaySoundEvent*>(&event)) {
+	if (auto const soundEvent = dynamic_cast<PlaySoundEvent const*>(&event)) {
 		PlaySound(soundEvent->GetSoundType());
 	}
 }

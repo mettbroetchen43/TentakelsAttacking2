@@ -9,6 +9,7 @@
 #include <string>
 
 class Focusable;
+class PopUp;
 
 class PlaySoundEvent : public Event {
 public:
@@ -46,15 +47,22 @@ class SelectFocusElementEvent : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
-class NewFocusLayerEvent :public FocusEvent {
-public:
-	using FocusEvent::FocusEvent;
+class NewFocusLayerEvent :public Event {
 };
-class DeleteFocusLayerEvent : public FocusEvent {
-public:
-	using FocusEvent::FocusEvent;
+class DeleteFocusLayerEvent : public Event {
 };
 
+class ClosePopUpEvent : public Event {
+private:
+	PopUp* m_popUp;
+
+public:
+	ClosePopUpEvent(PopUp* popUp)
+		:m_popUp(popUp) {}
+	PopUp* GetPop() const {
+		return m_popUp;
+	}
+};
 class PopUpEvent : public Event {
 private:
 	std::string m_title;

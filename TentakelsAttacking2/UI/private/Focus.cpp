@@ -7,7 +7,6 @@
 #include "Focusable.h"
 #include "Events.h"
 #include "AppContext.h"
-#include <iostream>
 #include <stdexcept>
 
 void Focus::UnfocusAllAtTopLayer() {
@@ -145,12 +144,17 @@ Focus::Focus() {
 }
 
 void Focus::AddLayer() {
+	m_lastFocus.push_back(m_currentFocus);
 	m_focus.AddLayer();
 	m_currentFocus = nullptr;
 }
 void Focus::DeleteLayer() {
 	m_focus.RemoveLayer();
-	SetInitialFocus();
+	if (m_lastFocus.size() > 0) {
+		SetSpecificFocus(m_lastFocus.at(m_lastFocus.size() - 1));
+		m_lastFocus.pop_back();
+	}
+
 }
 
 void Focus::AddElement(Focusable* focusable) {
@@ -181,6 +185,14 @@ void Focus::OnEvent(Event const& event) {
 	if (auto const focusEvent = dynamic_cast<SelectFocusElementEvent const*>(&event)) {
 		SetSpecificFocus(focusEvent->GetFocusable());
 	}
+
+	if (auto const focusEvent = dynamic_cast<NewFocusLayerEvent const*>(&event)) {
+		AddLayer();
+	}
+
+	if (auto const focusEvent = dynamic_cast<DeleteFocusLayerEvent const*>(&event)) {
+		DeleteLayer();
+	}
 }
 
 void Focus::CheckAndUpdate() {
@@ -193,10 +205,8 @@ void Focus::CheckAndUpdate() {
 			SetPreviousFocus();
 			return;
 		}
-
 		SetNextFocus();
 	}
-
 }
 void Focus::Render() {
 	if (!m_currentFocus) {
@@ -205,7 +215,7 @@ void Focus::Render() {
 
 	Rectangle const& f_colider = m_currentFocus->GetCollider();
 	int offset = 2;
-	DrawRectangle(
+	DrawRectangleLines(
 		static_cast<int>(f_colider.x) - offset,
 		static_cast<int>(f_colider.y) - offset,
 		static_cast<int>(f_colider.width) + 2 * offset,

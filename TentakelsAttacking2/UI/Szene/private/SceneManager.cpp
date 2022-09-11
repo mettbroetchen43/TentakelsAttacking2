@@ -1,10 +1,17 @@
-
+//
+// Purpur Tentakel
+// 05.09.2022
+//
 
 #include "SceneManager.h"
 #include "Scene.h"
+#include "PopUp.h"
+#include "MessagePopUp.h"
+#include "Events.h"
 #include "TestScene.h"
 #include "UIManager.h"
 #include "AppContext.h"
+#include "AssetType.h"
 #include <raylib.h>
 
 void SceneManager::InitializeScenes() {
@@ -12,9 +19,38 @@ void SceneManager::InitializeScenes() {
 	m_scenes[SceneType::TEST] = ptr;
 }
 
+void SceneManager::NewMessagePopUp(std::string const& title, std::string const& subTitle) {
+	AppContext& appContext = AppContext::GetInstance();
+	auto event = NewFocusLayerEvent();
+	appContext.eventManager.InvokeEvent(event);
+
+	m_popUp.push_back(std::make_shared<MessagePopUp>(
+		Vector2(0.4f, 0.4f),
+		Vector2(0.3f, 0.3f),
+		m_uiManager->GetResolution(),
+		title,
+		subTitle,
+		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
+		appContext.assetManager.GetTexture(AssetType::GREY_50),
+		appContext.assetManager.GetTexture(AssetType::GREY),
+		appContext.assetManager.GetTexture(AssetType::EXCLAMATION_MARK)
+	));
+}
+void SceneManager::DeleteLastPopUp() {
+	AppContext& appContext = AppContext::GetInstance();
+	auto event = DeleteFocusLayerEvent();
+	appContext.eventManager.InvokeEvent(event);
+
+	if (m_popUp.size() > 0) {
+		m_popUp.pop_back();
+	}
+}
+
 SceneManager::SceneManager(UIManager* uiManager)
 	: m_uiManager(uiManager){
 	InitializeScenes();
+	AppContext& appContext = AppContext::GetInstance();
+	appContext.eventManager.AddListener(this);
 }
 
 void SceneManager::SwitchScene(SceneType sceneType) {
@@ -28,13 +64,35 @@ void SceneManager::SwitchScene(SceneType sceneType) {
 }
 
 void SceneManager::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
-	m_currentScene->CheckAndUpdate(mousePosition, appContext);
+	if (m_popUp.size() == 0){
+		m_currentScene->CheckAndUpdate(mousePosition, appContext);
+	}
+	for (auto p : m_popUp) {
+		p->CheckAndUpdate(mousePosition, appContext);
+	}
 }
 void SceneManager::Render() {
 	m_currentScene->Render();
+	for (auto p : m_popUp) {
+		p->Render();
+	}
 }
 void SceneManager::Resize(Vector2 resolution) {
 	for (auto [sceneType, scene] : m_scenes) {
 		scene->Resize(resolution);
+	}
+
+	for (auto p : m_popUp) {
+		p->Resize(resolution);
+	}
+}
+
+void SceneManager::OnEvent(Event const& event) {
+
+	if (auto const PopUpEvent = dynamic_cast<ShowMessagePopUpEvent const*>(&event)) {
+		NewMessagePopUp(PopUpEvent->GetTitle(), PopUpEvent->GetSubTitle());
+	}
+	if (auto const PopUpEvent = dynamic_cast<ClosePopUpEvent const*>(&event)) {
+		DeleteLastPopUp();
 	}
 }

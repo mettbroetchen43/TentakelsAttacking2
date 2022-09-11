@@ -6,6 +6,7 @@
 #pragma once
 #include "LayeredVector.h"
 #include "EventListener.h"
+#include <vector>
 
 class Focusable;
 
@@ -13,6 +14,7 @@ class Focus : public EventListener {
 private:
 	Focusable* m_currentFocus = nullptr;
 	LayeredVector<Focusable> m_focus;
+	std::vector<Focusable*> m_lastFocus;
 
 	void UnfocusAllAtTopLayer();
 	[[nodiscard]] Focusable* GetFirstFocus();

@@ -114,6 +114,12 @@
     <ClInclude Include="UI\Elements\public\InputLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Elements\PopUp\public\PopUp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\Random.cpp">
@@ -183,6 +189,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Szene\private\BaseMainScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\PopUp\private\PopUp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\PopUp\private\MessagePopUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

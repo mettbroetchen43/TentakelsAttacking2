@@ -9,4 +9,6 @@ enum class AssetType {
 	BUTTON_DEFAULT,
 	GREY,
 	GREY_50,
+	EXCLAMATION_MARK,
+	QUESTION_MARK,
 };

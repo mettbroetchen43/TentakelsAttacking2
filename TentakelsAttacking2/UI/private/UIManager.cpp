@@ -37,8 +37,8 @@ void UIManager::CheckAndUpdate() {
 void UIManager::Render() {
 	BeginDrawing();
 	ClearBackground(BLACK);
-	m_focus.Render();
 	m_sceneManager.Render();
+	m_focus.Render();
 	EndDrawing();
 }
 
