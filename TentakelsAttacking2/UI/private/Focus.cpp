@@ -147,12 +147,14 @@ void Focus::AddLayer() {
 	m_lastFocus.push_back(m_currentFocus);
 	m_focus.AddLayer();
 	m_currentFocus = nullptr;
+	m_renderFocus = false;
 }
 void Focus::DeleteLayer() {
 	m_focus.RemoveLayer();
 	if (m_lastFocus.size() > 0) {
 		SetSpecificFocus(m_lastFocus.at(m_lastFocus.size() - 1));
 		m_lastFocus.pop_back();
+		m_renderFocus = false;
 	}
 
 }
@@ -201,6 +203,7 @@ void Focus::CheckAndUpdate() {
 	}
 
 	if (IsKeyPressed(KEY_TAB)) {
+		m_renderFocus = true;
 		if (IsKeyDown(KEY_LEFT_SHIFT) or IsKeyDown(KEY_RIGHT_SHIFT)) {
 			SetPreviousFocus();
 			return;
@@ -209,9 +212,8 @@ void Focus::CheckAndUpdate() {
 	}
 }
 void Focus::Render() {
-	if (!m_currentFocus) {
-		return;
-	}
+	if (!m_currentFocus) { return; }
+	if (!m_renderFocus) { return; }
 
 	Rectangle const& f_colider = m_currentFocus->GetCollider();
 	 float offset = 5.0;

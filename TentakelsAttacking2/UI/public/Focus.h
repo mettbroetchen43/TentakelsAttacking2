@@ -15,6 +15,7 @@ private:
 	Focusable* m_currentFocus = nullptr;
 	LayeredVector<Focusable> m_focus;
 	std::vector<Focusable*> m_lastFocus;
+	bool m_renderFocus = false;
 
 	void UnfocusAllAtTopLayer();
 	[[nodiscard]] Focusable* GetFirstFocus();
