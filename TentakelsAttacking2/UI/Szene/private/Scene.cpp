@@ -52,13 +52,13 @@ void Scene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 		element->CheckAndUpdate(mousePosition, appContext);
 	}
 }
-void Scene::Render() {
+void Scene::Render(AppContext const& appContext) {
 	if (!m_active) {
 		return;
 	}
 
 	for (auto& element : m_elements) {
-		element->Render();
+		element->Render(appContext);
 	}
 }
 void Scene::Resize(Vector2 resolution) {

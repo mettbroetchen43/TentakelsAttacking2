@@ -16,7 +16,6 @@ protected:
 	std::vector<std::shared_ptr<UIElement>> m_elements;
 	bool m_active;
 
-	virtual void InitializeSzene(UIManager const& uiManager) = 0;
 	void SetFocusActive(Focus& focus);
 
 	Vector2 GetElementPosition(float x, float y);
@@ -34,6 +33,6 @@ public:
 	void SetActive(bool active, Focus& focus);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
-	void Render() override;
+	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution) override;
 };

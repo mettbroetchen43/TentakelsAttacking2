@@ -37,7 +37,7 @@ public:
 	void SwitchScene(SceneType sceneType);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
-	void Render();
+	void Render(AppContext const& appContext);
 	void Resize(Vector2 resolution);
 
 	void OnEvent(Event const& event);

@@ -120,6 +120,9 @@
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Szene\public\Intro.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\Random.cpp">
@@ -197,8 +200,12 @@
     <ClCompile Include="UI\Elements\PopUp\private\MessagePopUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UI\Szene\private\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
+    <Text Include="Assets\title.txt" />
   </ItemGroup>
 </Project>

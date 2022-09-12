@@ -154,6 +154,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h" />
     <ClInclude Include="UI\Elements\public\InputLine.h" />
     <ClInclude Include="UI\Szene\public\BaseMainScene.h" />
+    <ClInclude Include="UI\Szene\public\Intro.h" />
     <ClInclude Include="UI\Szene\public\SceneManager.h" />
     <ClInclude Include="UI\Elements\Button\public\ClassicButton.h" />
     <ClInclude Include="UI\public\AssetManager.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="UI\Elements\PopUp\private\PopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\MessagePopUp.cpp" />
     <ClCompile Include="UI\Szene\private\BaseMainScene.cpp" />
+    <ClCompile Include="UI\Szene\private\Intro.cpp" />
     <ClCompile Include="UI\Szene\private\SceneManager.cpp" />
     <ClCompile Include="UI\Elements\Button\private\ClassicButton.cpp" />
     <ClCompile Include="UI\private\AssetManager.cpp" />
@@ -200,6 +202,7 @@
     <ClCompile Include="_private\AppContext.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Assets\title.txt" />
     <Text Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

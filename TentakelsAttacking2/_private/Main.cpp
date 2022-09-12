@@ -13,11 +13,6 @@
 #include <vector>
 #include <iostream>
 
-void test() {
-    std::cout << "clicked" << '\n';
-    // exit(0);
-}
-
 int main() {
     UIManager uiManager;
     [[maybe_unused]] AppContext& appContext = AppContext::GetInstance();

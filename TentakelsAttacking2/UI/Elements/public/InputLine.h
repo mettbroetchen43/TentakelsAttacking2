@@ -45,8 +45,8 @@ protected:
 		return valid;
 	}
 	[[nodiscard]] bool IsValidKey(int key) = delete;
-	[[nodiscard]] std::string GetPritableInput(std::string const& enter, std::string const& prefix, int fontSize,
-		int cursorOffset) const {
+	[[nodiscard]] std::string GetPritableInput(std::string const& enter, std::string const& prefix,
+		int fontSize, int cursorOffset) const {
 		cursorOffset += 5; // Just to make shure that the curor didnt bounce out
 
 		if (MeasureText((m_value + enter).c_str(), fontSize) + cursorOffset < m_collider.width) {
@@ -63,7 +63,8 @@ protected:
 
 		return prefix + toReturn;
 	}
-	[[nodiscard]] std::string GetPritablePlaceholder(std::string const& prefix, int fontSize, int cursorOffset) const {
+	[[nodiscard]] std::string GetPritablePlaceholder(std::string const& prefix, int fontSize,
+		int cursorOffset) const {
 		cursorOffset += 5; // Just to make shure that the curor didnt bounce out
 
 		if (MeasureText(m_placeholderText.c_str(), fontSize) + cursorOffset < m_collider.width) {
@@ -82,8 +83,8 @@ protected:
 	}
 
 public:
-	InputLine(unsigned int focusID, Texture2D* texture, Vector2 pos, Vector2 size, unsigned int charLimit,
-		Vector2 resolution)
+	InputLine(unsigned int focusID, Texture2D* texture, Vector2 pos, Vector2 size,
+		unsigned int charLimit, Vector2 resolution)
 		: UIElement(pos, size), Focusable(focusID), m_charLimit(charLimit), m_texture(texture) {
 		m_collider = { resolution.x * pos.x, resolution.y * pos.y, resolution.x * size.x, resolution.y * size.y };
 	}
@@ -137,7 +138,7 @@ public:
 			}
 		}
 	}
-	void Render() override {
+	void Render(AppContext const& appContext) override {
 		// Update here to make shure its after call of HasValueChanced();
 		m_oldValue = m_value;
 
@@ -153,9 +154,9 @@ public:
 		DrawRectangleLines(static_cast<int>(m_collider.x), static_cast<int>(m_collider.y),
 			static_cast<int>(m_collider.width), static_cast<int>(m_collider.height), WHITE);
 
-		int posX = static_cast<int>(m_collider.x) + 10;
-		int posY = static_cast<int>(m_collider.y + m_collider.height * 0.1);
-		int fontSize = static_cast<int>(m_collider.height * 0.8);
+		float posX = m_collider.x + 10.0f;
+		float posY = m_collider.y + m_collider.height * 0.1f;
+		float fontSize = m_collider.height * 0.8f;
 		int cursorOffset = 8;
 
 		std::string enter = "_";
@@ -163,21 +164,39 @@ public:
 		std::string printableInput;
 
 		if (m_value.size() > 0) {
-			printableInput = GetPritableInput(enter, prefix, fontSize, cursorOffset);
-			DrawText(printableInput.c_str(), posX, posY, fontSize, WHITE);
+			printableInput = GetPritableInput(enter, prefix, static_cast<int>(fontSize), cursorOffset);
+			DrawTextEx(
+				*(appContext.assetManager.GetFont()),
+				printableInput.c_str(),
+				Vector2(posX, posY),
+				fontSize,
+				0,
+				WHITE);
 		}
 		else {
-			std::string printablePlaceholder = GetPritablePlaceholder(prefix, fontSize, cursorOffset);
-			DrawText(printablePlaceholder.c_str(), posX, posY, fontSize, GRAY);
+			std::string printablePlaceholder = GetPritablePlaceholder(prefix, static_cast<int>(fontSize), cursorOffset);
+			DrawTextEx(
+				*(appContext.assetManager.GetFont()),
+				printablePlaceholder.c_str(),
+				Vector2(posX, posY),
+				fontSize,
+				0,
+				GRAY);
 		}
 
 
 		if (IsFocused()) {
 			size_t time = static_cast<size_t>(GetTime() * 2.0);
-			int textLength = MeasureText(printableInput.c_str(), fontSize);
+			int textLength = MeasureText(printableInput.c_str(), static_cast<int>(fontSize));
 
 			if (time % 2 == 0) {
-				DrawText(enter.c_str(), posX + cursorOffset + textLength, posY + static_cast<int>(m_collider.height * 0.05), fontSize, PURPLE);
+				DrawTextEx(
+					*(appContext.assetManager.GetFont()),
+					enter.c_str(),
+					Vector2(posX + cursorOffset + textLength, posY + m_collider.height * 0.05f),
+					fontSize,
+					0,
+					PURPLE);
 			}
 		}
 	}

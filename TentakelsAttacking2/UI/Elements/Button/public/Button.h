@@ -44,7 +44,7 @@ public:
 	Button& operator= (Button&&) = default;
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
-	void Render() override;
+	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution) override;
 
 	void SetOnClick(std::function<void()> onClick);

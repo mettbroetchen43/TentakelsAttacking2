@@ -31,6 +31,6 @@ public:
 	Slider& operator= (Slider&&) = default;
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
-	void Render() override;
+	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution) override;
 };

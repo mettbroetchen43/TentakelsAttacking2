@@ -8,7 +8,7 @@
 
 class BaseMainScene : public Scene {
 protected:
-	void InitializeSzene(UIManager const& uiManager) override;
+	void InitializeSzene(UIManager const& uiManager);
 
 public:
 	using Scene::Scene;

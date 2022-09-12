@@ -21,6 +21,6 @@ public:
 		: m_pos(pos), m_size(size) { }
 
 	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) = 0;
-	virtual void Render() = 0;
+	virtual void Render(AppContext const& appContext) = 0;
 	virtual void Resize(Vector2 resolution) = 0;
 };

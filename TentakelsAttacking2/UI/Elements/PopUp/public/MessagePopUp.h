@@ -19,6 +19,6 @@ public:
 		Texture2D* fullBackground, Texture2D* popUpBackground, Texture2D* m_infoTexture);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
-	void Render();
+	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution);
 };

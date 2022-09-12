@@ -29,7 +29,7 @@ MessagePopUp::MessagePopUp(Vector2 pos, Vector2 size, Vector2 resolution,
 void MessagePopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	m_btn.CheckAndUpdate(mousePosition, appContext);
 }
-void MessagePopUp::Render() {
+void MessagePopUp::Render(AppContext const& appContext) {
 	Rectangle textureRec = { 0.0f,0.0f,
 		static_cast<float>(m_fullBackground->width), static_cast<float>(m_fullBackground->height) };
 	DrawTexturePro(*m_fullBackground, textureRec, m_backgroundColider, { 0.0f, 0.0f }, 0, WHITE);
@@ -50,16 +50,22 @@ void MessagePopUp::Render() {
 	colider.y = m_colider.y + m_colider.height * 0.025f;
 	DrawTexturePro(*m_infoTexture, textureRec, colider, { 0.0f, 0.0f }, 0.0f, WHITE);
 
-	DrawText(m_title.c_str(),
-		static_cast<int>(m_colider.x + m_colider.width * 0.3f),
-		static_cast<int>(m_colider.y + m_colider.height * 0.1f),
-		static_cast<int>(m_colider.height * 0.2f), WHITE);
-	DrawText(m_subTitle.c_str(),
-		static_cast<int>(m_colider.x + m_colider.width * 0.05f),
-		static_cast<int>(m_colider.y + m_colider.height * 0.40f),
-		static_cast<int>(m_colider.height * 0.1), WHITE);
+	DrawTextEx(
+		*(appContext.assetManager.GetFont()),
+		m_title.c_str(),
+		Vector2(m_colider.x + m_colider.width * 0.3f, m_colider.y + m_colider.height * 0.1f),
+		m_colider.height * 0.2f,
+		0,
+		WHITE);
+	DrawTextEx(
+		*(appContext.assetManager.GetFont()),
+		m_subTitle.c_str(),
+		Vector2(m_colider.x + m_colider.width * 0.05f, m_colider.y + m_colider.height * 0.40f),
+		m_colider.height * 0.1f,
+		0,
+		WHITE);
 
-	m_btn.Render();
+	m_btn.Render(appContext);
 }
 void MessagePopUp::Resize(Vector2 resolution) {
 	PopUp::Resize(resolution);

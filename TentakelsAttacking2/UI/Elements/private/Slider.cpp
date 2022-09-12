@@ -76,9 +76,9 @@ void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 	}
 	m_btn.CheckAndUpdate(mousePosition, appContext);
 }
-void Slider::Render() {
+void Slider::Render(AppContext const& appContext) {
 	DrawTexturePro(*m_texture, m_textureRec, m_collider, Vector2(0.0f, 0.0f), 0, WHITE);
-	m_btn.Render();
+	m_btn.Render(appContext);
 }
 void Slider::Resize(Vector2 resolution) {
 	m_collider = { m_pos.x * resolution.x, m_pos.y * resolution.y, m_size.x * resolution.x, m_size.y * resolution.y };

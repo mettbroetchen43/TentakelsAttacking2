@@ -71,10 +71,10 @@ void SceneManager::CheckAndUpdate(Vector2 const& mousePosition, AppContext const
 		p->CheckAndUpdate(mousePosition, appContext);
 	}
 }
-void SceneManager::Render() {
-	m_currentScene->Render();
+void SceneManager::Render(AppContext const& appContext) {
+	m_currentScene->Render(appContext);
 	for (auto p : m_popUp) {
-		p->Render();
+		p->Render(appContext);
 	}
 }
 void SceneManager::Resize(Vector2 resolution) {

@@ -10,6 +10,7 @@
 #include <array>
 #include <unordered_map>
 #include <string>
+#include <vector>
 
 class AssetManager {
 private:
@@ -21,9 +22,17 @@ private:
 		"Assets/question_mark.png",
 	};
 	std::unordered_map<AssetType, Texture2D> m_assets;
+	std::vector<std::string> m_title;
+	Font m_font;
+
+	void LoadTitle();
+	void LoadFont();
+
 public:
 	AssetManager();
 	~AssetManager();
 
 	[[nodiscard]] Texture* GetTexture(AssetType assetType);
+	std::vector<std::string>* GetTitle();
+	[[nodiscard]] Font const* GetFont() const;
 };

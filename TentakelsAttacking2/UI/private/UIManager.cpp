@@ -37,7 +37,7 @@ void UIManager::CheckAndUpdate() {
 void UIManager::Render() {
 	BeginDrawing();
 	ClearBackground(BLACK);
-	m_sceneManager.Render();
+	m_sceneManager.Render(m_appContext);
 	m_focus.Render();
 	EndDrawing();
 }
@@ -61,7 +61,7 @@ UIManager::UIManager()
 }
 
 void UIManager::StartUI() {
-	m_sceneManager.SwitchScene(SceneType::TEST);
+	m_sceneManager.SwitchScene(SceneType::INTRO);
 	UILoop();
 }
 
