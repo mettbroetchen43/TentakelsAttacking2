@@ -9,14 +9,17 @@
 #include "MessagePopUp.h"
 #include "Events.h"
 #include "TestScene.h"
+#include "Intro.h"
 #include "UIManager.h"
 #include "AppContext.h"
 #include "AssetType.h"
 #include <raylib.h>
 
 void SceneManager::InitializeScenes() {
-	auto ptr = std::make_shared<TestScene>(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), true, *m_uiManager);
-	m_scenes[SceneType::TEST] = ptr;
+	//auto ptr = std::make_shared<TestScene>(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), false, *m_uiManager);
+	//m_scenes[SceneType::TEST] = ptr;
+	auto ptr2 = std::make_shared<Intro>(Vector2(0.0f,0.0f), Vector2(1.0f,1.0f), false, *m_uiManager);
+	m_scenes[SceneType::INTRO] = ptr2;
 }
 
 void SceneManager::NewMessagePopUp(std::string const& title, std::string const& subTitle) {

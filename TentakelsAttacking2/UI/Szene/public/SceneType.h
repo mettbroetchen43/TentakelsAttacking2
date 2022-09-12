@@ -7,4 +7,5 @@
 
 enum class SceneType {
 	TEST,
+	INTRO,
 };

@@ -4,10 +4,15 @@
 // 
 
 UI:
+	-> Text aglinment
 	- scrole slider extern
 
 	-> InputLine
 		-> holding key 
+
+Sound:
+	- implement sounds for text -> intro -> new Event -> multiple Sounds
+	- implement sounds for button movment -> intro
 
 To Implement:
 	Player -> Fleet

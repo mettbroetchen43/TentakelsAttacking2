@@ -5,7 +5,6 @@
 
 #include "SoundManager.h"
 #include "Events.h"
-#include <iostream>
 #include <filesystem>
 
 void SoundManager::LoadSounds() {
