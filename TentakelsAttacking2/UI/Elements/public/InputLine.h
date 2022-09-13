@@ -177,7 +177,7 @@ public:
 		float posX = m_collider.x + 10.0f;
 		float posY = m_collider.y + m_collider.height * 0.1f;
 		float fontSize = m_collider.height * 0.8f;
-		int cursorOffset = 8;
+		int cursorOffset = 1;
 
 		std::string enter = "_";
 		std::string prefix = "...";
