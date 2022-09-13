@@ -41,6 +41,10 @@ public:
 		m_elements.pop_back();
 		m_layer = m_elements.size() - 1;
 	}
+	void Clear() {
+		m_elements.clear();
+		AddLayer();
+	}
 
 	void AddElement(T* element) {
 		CurrentLayer().push_back(element);
