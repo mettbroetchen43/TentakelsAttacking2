@@ -28,16 +28,17 @@ private:
 	void SetSpecificFocus(Focusable* focusable);
 	[[nodiscard]] bool IsExistingFocus(Focusable* focusable);
 
+	void AddLayer();
+	void DeleteLayer();
+	void Clear();
+
+	void AddElement(Focusable* focusable);
+	void DeleteElement(Focusable* focusable);
+
 	void CheckNewID(unsigned int newID);
 
 public:
 	Focus();
-
-	void AddLayer();
-	void DeleteLayer();
-
-	void AddElement(Focusable* focusable);
-	void DeleteElement(Focusable* focusable);
 
 	void OnEvent(Event const& event) override;
 

@@ -34,9 +34,10 @@ private:
 	void BtnMoveFinish();
 
 public:
-	Intro(Vector2 pos, Vector2 size, bool active, UIManager const& uiManager);
+	Intro(Vector2 pos, Vector2 size, UIManager const& uiManager);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);
 	void Resize(Vector2 resolution);
+	void SetActive(bool active, AppContext const& appContext) override;
 };

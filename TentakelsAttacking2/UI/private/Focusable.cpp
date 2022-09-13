@@ -8,11 +8,7 @@
 #include "Events.h"
 
 Focusable::Focusable(unsigned int ID)
-	: m_focusID(ID) {
-	AppContext& appContext = AppContext::GetInstance();
-	auto event = NewFocusElementEvent(this);
-	appContext.eventManager.InvokeEvent(event);
-}
+	: m_focusID(ID) { }
 Focusable::~Focusable() {
 	AppContext& appContext = AppContext::GetInstance();
 	auto event = DeleteFocusElementEvent(this);

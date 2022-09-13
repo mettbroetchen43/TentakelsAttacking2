@@ -29,7 +29,7 @@ class PlayTextSoundEvent :public Event {
 class FocusEvent : public Event {
 protected:
 	Focusable* m_focusable;
-	
+
 public:
 	FocusEvent(Focusable* focusable)
 		: m_focusable(focusable) { }
@@ -53,6 +53,8 @@ public:
 class NewFocusLayerEvent :public Event {
 };
 class DeleteFocusLayerEvent : public Event {
+};
+class ClearFocusEvent : public Event {
 };
 
 class ClosePopUpEvent : public Event {

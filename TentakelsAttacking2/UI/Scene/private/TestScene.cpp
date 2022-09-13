@@ -16,9 +16,18 @@ void TestScene::Test() {
 	std::cout << "ENTER!\n";
 }
 
+void TestScene::SetActive(bool active, AppContext const& appContext) {
+	Scene::SetActive(active, appContext);
+	auto firstFocus = GetFocusableByFocusID(m_firstFocusID);
+	if (firstFocus) {
+		auto event = SelectFocusElementEvent(firstFocus);
+		appContext.eventManager.InvokeEvent(event);
+	}
+}
 
-TestScene::TestScene(Vector2 pos, Vector2 size, bool active, UIManager const& uiManager)
-	: BaseMainScene(pos, size, active) {
+
+TestScene::TestScene(Vector2 pos, Vector2 size, UIManager const& uiManager)
+	: BaseMainScene(pos, size) {
 	InitializeSzene(uiManager);
 }
 
@@ -61,8 +70,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 	ptr->SetPlaceholderText("into for");
 	ptr->SetOnEnter(std::bind(&TestScene::Test,*this));
 	m_elements.push_back(ptr);
-
-	auto event = SelectFocusElementEvent(ptr.get());
+	m_firstFocusID = ptr->GetFocusID();
 
 	ptr = std::make_shared<InputLine<std::string>>(
 		5,
@@ -96,9 +104,6 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT)
 		);
 	m_elements.push_back(ptr2);
-
-
-	appContext.eventManager.InvokeEvent(event);
 }
 
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {

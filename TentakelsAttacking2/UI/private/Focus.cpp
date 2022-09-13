@@ -129,20 +129,6 @@ bool Focus::IsExistingFocus(Focusable* focusable) {
 	return false;
 }
 
-void Focus::CheckNewID(unsigned int newID) {
-	for (auto focus : m_focus) {
-		if (focus->GetFocusID() == newID) {
-			throw std::invalid_argument("ID already exists, ID: " + newID);
-		}
-	}
-}
-
-Focus::Focus() {
-	AddLayer();
-	AppContext& appContext = AppContext::GetInstance();
-	appContext.eventManager.AddListener(this);
-}
-
 void Focus::AddLayer() {
 	m_lastFocus.push_back(m_currentFocus);
 	m_focus.AddLayer();
@@ -175,25 +161,54 @@ void Focus::DeleteElement(Focusable* focusable) {
 	m_focus.RemoveElement(focusable);
 }
 
+void Focus::CheckNewID(unsigned int newID) {
+	for (auto focus : m_focus) {
+		if (focus->GetFocusID() == newID) {
+			throw std::invalid_argument("ID already exists, ID: " + newID);
+		}
+	}
+}
+
+Focus::Focus() {
+	AddLayer();
+	AppContext& appContext = AppContext::GetInstance();
+	appContext.eventManager.AddListener(this);
+}
+
+void Focus::Clear() {
+	m_focus.Clear();
+	m_currentFocus = nullptr;
+}
+
 void Focus::OnEvent(Event const& event) {
 	if (auto const focusEvent = dynamic_cast<NewFocusElementEvent const*>(&event)) {
 		AddElement(focusEvent->GetFocusable());
+		return;
 	}
 
 	if (auto const focusEvent = dynamic_cast<DeleteFocusElementEvent const*>(&event)) {
 		DeleteElement(focusEvent->GetFocusable());
+		return;
 	}
 
 	if (auto const focusEvent = dynamic_cast<SelectFocusElementEvent const*>(&event)) {
 		SetSpecificFocus(focusEvent->GetFocusable());
+		return;
 	}
 
 	if (auto const focusEvent = dynamic_cast<NewFocusLayerEvent const*>(&event)) {
 		AddLayer();
+		return;
 	}
 
 	if (auto const focusEvent = dynamic_cast<DeleteFocusLayerEvent const*>(&event)) {
 		DeleteLayer();
+		return;
+	}
+
+	if (auto const focusEvent = dynamic_cast<ClearFocusEvent const*>(&event)) {
+		Clear();
+		return;
 	}
 }
 

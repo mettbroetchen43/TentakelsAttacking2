@@ -16,10 +16,10 @@
 #include <raylib.h>
 
 void SceneManager::InitializeScenes() {
-	//auto ptr = std::make_shared<TestScene>(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), false, *m_uiManager);
-	//m_scenes[SceneType::TEST] = ptr;
-	auto ptr2 = std::make_shared<Intro>(Vector2(0.0f,0.0f), Vector2(1.0f,1.0f), false, *m_uiManager);
-	m_scenes[SceneType::INTRO] = ptr2;
+	auto test = std::make_shared<TestScene>(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), *m_uiManager);
+	m_scenes[SceneType::TEST] = test;
+	auto intro = std::make_shared<Intro>(Vector2(0.0f,0.0f), Vector2(1.0f,1.0f), *m_uiManager);
+	m_scenes[SceneType::INTRO] = intro;
 }
 
 void SceneManager::NewMessagePopUp(std::string const& title, std::string const& subTitle) {
@@ -56,14 +56,19 @@ SceneManager::SceneManager(UIManager* uiManager)
 	appContext.eventManager.AddListener(this);
 }
 
-void SceneManager::SwitchScene(SceneType sceneType) {
-	auto& focus = m_uiManager->GetFocus();
-
+void SceneManager::SwitchScene(SceneType sceneType, AppContext const& appCpntext) {
 	if (m_currentScene) {
-		m_currentScene->SetActive(false, focus);
+		auto event = ClearFocusEvent();
+		appCpntext.eventManager.InvokeEvent(event);
+
+		m_currentScene->SetActive(false, appCpntext);
 	}
 	m_currentScene = m_scenes.at(sceneType);
-	m_currentScene->SetActive(true, focus);
+
+	auto event = NewFocusLayerEvent();
+	appCpntext.eventManager.InvokeEvent(event);
+
+	m_currentScene->SetActive(true, appCpntext);
 }
 
 void SceneManager::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {

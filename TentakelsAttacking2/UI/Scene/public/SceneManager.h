@@ -34,7 +34,7 @@ private:
 public:
 	SceneManager(UIManager* uiManager);
 
-	void SwitchScene(SceneType sceneType);
+	void SwitchScene(SceneType sceneType, AppContext const& appContext);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);

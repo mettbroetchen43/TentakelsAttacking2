@@ -102,8 +102,8 @@ void Intro::BtnMoveFinish(){
 	appContext.eventManager.InvokeEvent(event);
 }
 
-Intro::Intro(Vector2 pos, Vector2 size, bool active, UIManager const& uiManager)
-	:Scene(pos, size, active) {
+Intro::Intro(Vector2 pos, Vector2 size, UIManager const& uiManager)
+	:Scene(pos, size) {
 	AppContext& appContext = AppContext::GetInstance();
 	m_title = appContext.assetManager.GetTitle();
 
@@ -161,4 +161,8 @@ void Intro::Render(AppContext const& appContext) {
 void Intro::Resize(Vector2 resolution) {
 	m_btn->Resize(resolution);
 	ResizeText(AppContext::GetInstance(), resolution);
+}
+
+void Intro::SetActive(bool active, AppContext const& appContext) {
+	Scene::SetActive(active, appContext);
 }

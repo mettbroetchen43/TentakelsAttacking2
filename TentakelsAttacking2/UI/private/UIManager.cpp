@@ -69,7 +69,8 @@ UIManager::UIManager()
 }
 
 void UIManager::StartUI() {
-	m_sceneManager.SwitchScene(SceneType::INTRO);
+	m_sceneManager.SwitchScene(SceneType::TEST, m_appContext);
+	m_sceneManager.SwitchScene(SceneType::INTRO, m_appContext);
 	UILoop();
 }
 
