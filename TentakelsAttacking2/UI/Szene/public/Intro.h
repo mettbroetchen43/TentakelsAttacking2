@@ -29,7 +29,7 @@ private:
 	void MeasureTitleLength();
 	void ResizeText(AppContext const& appContext, Vector2 resolution);
 
-	void SetBtnEnabled();
+	void TitleFinish(AppContext const& appContext);
 	void MoveBtn();
 
 public:

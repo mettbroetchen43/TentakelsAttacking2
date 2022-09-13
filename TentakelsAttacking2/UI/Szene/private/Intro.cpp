@@ -56,10 +56,7 @@ void Intro::RenderTitleSequens(AppContext const& appContext) {
 
 	++m_charCount;
 	if (m_charCount >= m_maxCharCount) {
-		m_titleFinish = true;
-		auto event = PlaySoundEvent(SoundType::ACCEPTED); // TODO
-		appContext.eventManager.InvokeEvent(event);
-		SetBtnEnabled();
+		TitleFinish(appContext);
 	}
 }
 void Intro::MeasureTitleLength() {
@@ -81,8 +78,11 @@ void Intro::ResizeText(AppContext const& appContext, Vector2 resolution) {
 	m_maxBtnPosition = static_cast<size_t>(resolution.y * 0.4f);
 }
 
-void Intro::SetBtnEnabled() {
+void Intro::TitleFinish(AppContext const& appContext) {
 	m_btn->SetEnabled(true);
+	m_titleFinish = true;
+	auto event = PlaySoundEvent(SoundType::ACCEPTED); // TODO
+	appContext.eventManager.InvokeEvent(event);
 }
 void Intro::MoveBtn() {
 	auto colider = m_btn->GetCollider();
@@ -122,6 +122,13 @@ Intro::Intro(Vector2 pos, Vector2 size, bool active, UIManager const& uiManager)
 }
 
 void Intro::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	bool skipTile = 
+		IsKeyPressed(KEY_ESCAPE)
+		and !m_titleFinish;
+	if (skipTile) {
+		TitleFinish(appContext);
+	}
+
 	if (m_titleFinish and !m_btnMovmendFinish) {
 		MoveBtn();
 	}
