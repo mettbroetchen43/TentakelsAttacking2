@@ -10,6 +10,7 @@
 #include "AssetType.h"
 #include "SoundType.h"
 #include "Events.h"
+#include "random.h"
 
 #define THERTY_FIFE 35.0f
 #define BTN_SPEED 2.5f
@@ -28,7 +29,8 @@ void Intro::RenderTitle(AppContext const& appContext) {
 void Intro::RenderTitleSequens(AppContext const& appContext) {
 	size_t localCharCount = 0;
 	std::string dummyText;
-	for (int i = 0;i < m_title->size();++i) {
+	int i = 0;
+	for (;i < m_title->size();++i) {
 		dummyText = m_title->at(i);
 		if (localCharCount + dummyText.size() > m_charCount) {
 			dummyText = dummyText.substr(0, m_charCount - localCharCount);
@@ -46,6 +48,25 @@ void Intro::RenderTitleSequens(AppContext const& appContext) {
 			break;
 		}
 	}
+
+	// TODO Move To Helper
+	Random& random = Random::GetInstance();
+	float prefixPosition = m_textPosition.x +
+		(dummyText.size() *
+		MeasureTextEx(
+			*(appContext.assetManager.GetFont()),
+			"a",
+			m_fontSize,
+			0.0f).x);
+	
+	DrawTextEx(
+		*(appContext.assetManager.GetFont()),
+		m_postFixes.at(random.random(m_postFixes.size())).c_str(),
+		Vector2(prefixPosition, m_textPosition.y + m_fontSize * i),
+		m_fontSize,
+		0.0f,
+		WHITE);
+
 	if (dummyText.size() > 0) {
 		if (dummyText.at(dummyText.size() - 1) != ' ') {
 			auto event = PlayTextSoundEvent();

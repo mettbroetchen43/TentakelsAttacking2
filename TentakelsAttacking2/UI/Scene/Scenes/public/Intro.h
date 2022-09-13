@@ -8,11 +8,24 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <array>
 
 class ClassicButton;
 
 class Intro : public Scene {
 private:
+	std::array<std::string, 10> m_postFixes = {
+		"  /-\\-",
+		"  \\--/",
+		"  -/--/",
+		"  -\\_-\\",
+		"  _/_\\",
+		"  -_/\\-",
+		"  --__-",
+		"  __\\\\/",
+		"  \\__-/",
+		"  \\/-__",
+	};
 	std::vector<std::string>* m_title;
 	std::shared_ptr<ClassicButton> m_btn = nullptr;
 	Vector2 m_textPosition;
