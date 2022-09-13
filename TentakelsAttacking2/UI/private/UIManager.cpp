@@ -30,6 +30,13 @@ void UIManager::CheckAndUpdateResolution() {
 }
 
 void UIManager::CheckAndUpdate() {
+	bool quit = 
+		IsKeyDown(KeyboardKey::KEY_LEFT_ALT)
+		and IsKeyPressed(KeyboardKey::KEY_F4);
+	if (quit) {
+		CloseWindow();
+	}
+
 	Vector2 mousePosition = GetMousePosition();
 	m_focus.CheckAndUpdate();
 	m_sceneManager.CheckAndUpdate(mousePosition, m_appContext);
@@ -55,6 +62,7 @@ void UIManager::UILoop() {
 UIManager::UIManager()
 	: m_appContext(AppContext::GetInstance()), m_resolution({ 0.0f,0.0f }), m_sceneManager(this) {
 	SetTargetFPS(60);
+	SetExitKey(KeyboardKey::KEY_NULL);
 
 	m_resolution = GetResolution();
 	SetWindowSize(static_cast<int>(m_resolution.x), static_cast<int>(m_resolution.y));
