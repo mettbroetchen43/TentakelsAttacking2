@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Szene/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Szene/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -109,7 +109,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Szene/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -125,7 +125,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Szene/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -154,9 +154,9 @@
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h" />
     <ClInclude Include="UI\Elements\public\InputLine.h" />
-    <ClInclude Include="UI\Szene\public\BaseMainScene.h" />
-    <ClInclude Include="UI\Szene\public\Intro.h" />
-    <ClInclude Include="UI\Szene\public\SceneManager.h" />
+    <ClInclude Include="UI\Scene\public\BaseMainScene.h" />
+    <ClInclude Include="UI\Scene\Scenes\public\Intro.h" />
+    <ClInclude Include="UI\Scene\public\SceneManager.h" />
     <ClInclude Include="UI\Elements\Button\public\ClassicButton.h" />
     <ClInclude Include="Helper\public\AssetManager.h" />
     <ClInclude Include="Helper\public\AssetType.h" />
@@ -169,9 +169,9 @@
     <ClInclude Include="Helper\public\SoundType.h" />
     <ClInclude Include="UI\public\UIElement.h" />
     <ClInclude Include="UI\public\UIManager.h" />
-    <ClInclude Include="UI\Szene\public\Scene.h" />
-    <ClInclude Include="UI\Szene\public\SceneType.h" />
-    <ClInclude Include="UI\Szene\public\TestScene.h" />
+    <ClInclude Include="UI\Scene\public\Scene.h" />
+    <ClInclude Include="UI\Scene\public\SceneType.h" />
+    <ClInclude Include="UI\Scene\public\TestScene.h" />
     <ClInclude Include="_public\AppContext.h" />
   </ItemGroup>
   <ItemGroup>
@@ -184,9 +184,9 @@
     <ClCompile Include="Game\private\Planet.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\PopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\MessagePopUp.cpp" />
-    <ClCompile Include="UI\Szene\private\BaseMainScene.cpp" />
-    <ClCompile Include="UI\Szene\private\Intro.cpp" />
-    <ClCompile Include="UI\Szene\private\SceneManager.cpp" />
+    <ClCompile Include="UI\Scene\private\BaseMainScene.cpp" />
+    <ClCompile Include="UI\Scene\Scenes\private\Intro.cpp" />
+    <ClCompile Include="UI\Scene\private\SceneManager.cpp" />
     <ClCompile Include="UI\Elements\Button\private\ClassicButton.cpp" />
     <ClCompile Include="Helper\private\AssetManager.cpp" />
     <ClCompile Include="UI\Elements\Button\private\Button.cpp" />
@@ -196,8 +196,8 @@
     <ClCompile Include="UI\Elements\Button\private\SliderButton.cpp" />
     <ClCompile Include="UI\private\Focusable.cpp" />
     <ClCompile Include="UI\private\Focus.cpp" />
-    <ClCompile Include="UI\Szene\private\Scene.cpp" />
-    <ClCompile Include="UI\Szene\private\TestScene.cpp" />
+    <ClCompile Include="UI\Scene\private\Scene.cpp" />
+    <ClCompile Include="UI\Scene\private\TestScene.cpp" />
     <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="_private\AppContext.cpp" />

@@ -96,19 +96,19 @@
     <ClInclude Include="UI\Elements\Button\public\ClassicButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Szene\public\Scene.h">
+    <ClInclude Include="UI\Scene\public\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Szene\public\TestScene.h">
+    <ClInclude Include="UI\Scene\public\TestScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Szene\public\SceneManager.h">
+    <ClInclude Include="UI\Scene\public\SceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Szene\public\SceneType.h">
+    <ClInclude Include="UI\Scene\public\SceneType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Szene\public\BaseMainScene.h">
+    <ClInclude Include="UI\Scene\public\BaseMainScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\public\InputLine.h">
@@ -120,7 +120,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Szene\public\Intro.h">
+    <ClInclude Include="UI\Scene\Scenes\public\Intro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Helper\public\LayeredVector.h">
@@ -185,16 +185,16 @@
     <ClCompile Include="UI\Elements\Button\private\ClassicButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Szene\private\Scene.cpp">
+    <ClCompile Include="UI\Scene\private\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Szene\private\TestScene.cpp">
+    <ClCompile Include="UI\Scene\private\TestScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Szene\private\SceneManager.cpp">
+    <ClCompile Include="UI\Scene\private\SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Szene\private\BaseMainScene.cpp">
+    <ClCompile Include="UI\Scene\private\BaseMainScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\PopUp\private\PopUp.cpp">
@@ -203,7 +203,7 @@
     <ClCompile Include="UI\Elements\PopUp\private\MessagePopUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Szene\private\Intro.cpp">
+    <ClCompile Include="UI\Scene\Scenes\private\Intro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
