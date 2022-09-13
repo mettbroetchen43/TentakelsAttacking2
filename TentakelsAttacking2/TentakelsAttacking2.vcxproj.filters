@@ -54,10 +54,10 @@
     <ClInclude Include="UI\public\UIManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\public\SoundManager.h">
+    <ClInclude Include="Helper\public\SoundManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\public\SoundType.h">
+    <ClInclude Include="Helper\public\SoundType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Events\public\MainEvent.h">
@@ -78,10 +78,10 @@
     <ClInclude Include="UI\Elements\public\Slider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\public\AssetManager.h">
+    <ClInclude Include="Helper\public\AssetManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\public\AssetType.h">
+    <ClInclude Include="Helper\public\AssetType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\Button\public\SliderButton.h">
@@ -123,6 +123,9 @@
     <ClInclude Include="UI\Szene\public\Intro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Helper\public\LayeredVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\Random.cpp">
@@ -158,13 +161,13 @@
     <ClCompile Include="UI\private\UIManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\private\SoundManager.cpp">
+    <ClCompile Include="Helper\private\SoundManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\private\Slider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\private\AssetManager.cpp">
+    <ClCompile Include="Helper\private\AssetManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Button\private\SliderButton.cpp">
