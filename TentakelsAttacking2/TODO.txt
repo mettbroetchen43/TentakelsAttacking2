@@ -11,7 +11,7 @@ UI:
 		-> holding key 
 
 Sound:
-	- implement sounds for text -> intro -> new Event -> multiple Sounds
+	- implement sounds for text -> new sounds in directory
 	- implement sounds for button movment -> intro
 
 To Implement:

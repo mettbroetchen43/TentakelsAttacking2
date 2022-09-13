@@ -10,7 +10,6 @@
 #include "AssetType.h"
 #include "SoundType.h"
 #include "Events.h"
-#include <iostream>
 
 #define THERTY_FIFE 35.0f
 #define BTN_SPEED 2.5f
@@ -49,7 +48,7 @@ void Intro::RenderTitleSequens(AppContext const& appContext) {
 	}
 	if (dummyText.size() > 0) {
 		if (dummyText.at(dummyText.size() - 1) != ' ') {
-			auto event = PlaySoundEvent(SoundType::CLICKED_DISABLED_STD); // TODO
+			auto event = PlayTextSoundEvent();
 			appContext.eventManager.InvokeEvent(event);
 		}
 	}
