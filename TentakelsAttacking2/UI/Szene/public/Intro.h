@@ -31,6 +31,7 @@ private:
 
 	void TitleFinish(AppContext const& appContext);
 	void MoveBtn();
+	void BtnMoveFinish();
 
 public:
 	Intro(Vector2 pos, Vector2 size, bool active, UIManager const& uiManager);

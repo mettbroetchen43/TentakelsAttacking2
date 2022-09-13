@@ -87,15 +87,20 @@ void Intro::TitleFinish(AppContext const& appContext) {
 void Intro::MoveBtn() {
 	auto colider = m_btn->GetCollider();
 	if (colider.y - BTN_SPEED < m_maxBtnPosition) {
-		colider.y = static_cast<float>(m_maxBtnPosition);
-		m_btnMovmendFinish = true;
-		AppContext& appContext = AppContext::GetInstance();
-		auto event = PlaySoundEvent(SoundType::ACCEPTED); // TODO
-		appContext.eventManager.InvokeEvent(event);
+		BtnMoveFinish();
 		return;
 	}
 	colider.y -= BTN_SPEED;
 	m_btn->SetCollider(colider);
+}
+void Intro::BtnMoveFinish(){
+	auto colider = m_btn->GetCollider();
+	colider.y = static_cast<float>(m_maxBtnPosition);
+	m_btn->SetCollider(colider);
+	m_btnMovmendFinish = true;
+	AppContext& appContext = AppContext::GetInstance();
+	auto event = PlaySoundEvent(SoundType::ACCEPTED); // TODO
+	appContext.eventManager.InvokeEvent(event);
 }
 
 Intro::Intro(Vector2 pos, Vector2 size, bool active, UIManager const& uiManager)
@@ -127,6 +132,16 @@ void Intro::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 		and !m_titleFinish;
 	if (skipTile) {
 		TitleFinish(appContext);
+		return;
+	}
+
+	bool skipBtn =
+		IsKeyPressed(KEY_ESCAPE)
+		and m_titleFinish
+		and !m_btnMovmendFinish;
+	if (skipBtn) {
+		BtnMoveFinish();
+		return;
 	}
 
 	if (m_titleFinish and !m_btnMovmendFinish) {
