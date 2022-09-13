@@ -14,7 +14,7 @@ protected:
 	Rectangle m_backgroundColider, m_colider;
 
 	void Close();
-	virtual void Initialize() = 0;
+	virtual void Initialize(AppContext const& appContext) = 0;
 
 	Vector2 GetElementPosition(float x, float y);
 	Vector2 GetElementSize(float x, float y);

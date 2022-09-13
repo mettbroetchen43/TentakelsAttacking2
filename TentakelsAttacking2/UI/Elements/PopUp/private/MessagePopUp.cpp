@@ -7,9 +7,12 @@
 #include "AppContext.h"
 #include "AssetType.h"
 #include "SoundType.h"
+#include "Events.h"
 
-void MessagePopUp::Initialize() {
+void MessagePopUp::Initialize(AppContext const& appContext) {
 	m_btn.SetOnClick(std::bind(&MessagePopUp::Close, *this));
+	auto event = NewFocusElementEvent(&m_btn);
+	appContext.eventManager.InvokeEvent(event);
 }
 
 MessagePopUp::MessagePopUp(Vector2 pos, Vector2 size, Vector2 resolution,
@@ -23,7 +26,7 @@ MessagePopUp::MessagePopUp(Vector2 pos, Vector2 size, Vector2 resolution,
 		resolution,
 		"OK",
 		SoundType::CLICKED_RELEASE_STD) {
-	Initialize();
+	Initialize(AppContext::GetInstance());
 }
 
 void MessagePopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {

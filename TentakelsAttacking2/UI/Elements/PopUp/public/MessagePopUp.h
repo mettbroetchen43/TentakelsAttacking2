@@ -11,7 +11,7 @@ class MessagePopUp : public PopUp {
 private:
 	ClassicButton m_btn;
 
-	void Initialize() override;
+	void Initialize(AppContext const& appContext) override;
 
 public:
 	MessagePopUp(Vector2 pos, Vector2 size, Vector2 resolution,
