@@ -44,15 +44,14 @@ SoundManager::~SoundManager() {
 void SoundManager::PlaySound(SoundType soundType) const {
 	::PlaySound(m_sounds.at(soundType));
 }
-
 void SoundManager::PlayTextSound() const {
 	static unsigned long long lastIndex = 0;
 	Random& random = Random::GetInstance();
 
 	unsigned long long nextIndex;
 	do {
-		nextIndex = random.random(static_cast<unsigned long long>(m_textSounds.size()));
-	} while (lastIndex != nextIndex);
+		nextIndex = random.random(m_textSounds.size());
+	} while (lastIndex == nextIndex);
 
 	::PlaySound(m_textSounds.at(nextIndex));
 	lastIndex = nextIndex;
