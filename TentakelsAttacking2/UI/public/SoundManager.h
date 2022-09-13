@@ -9,6 +9,7 @@
 #include <raylib.h>
 #include <unordered_map>
 #include <array>
+#include <vector>
 
 
 class SoundManager : public EventListener {
@@ -22,6 +23,8 @@ private:
 		"hovered_std.mp3",
 	};
 
+	std::vector<Sound> m_textSounds;
+
 	void LoadSounds();
 	void OnEvent(Event const& event) override;
 
@@ -29,4 +32,5 @@ public:
 	SoundManager();
 	~SoundManager();
 	void PlaySound(SoundType soundType) const;
+	void PlayTextSound() const;
 };

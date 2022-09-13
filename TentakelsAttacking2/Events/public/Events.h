@@ -22,6 +22,9 @@ public:
 private:
 	SoundType m_soundType;
 };
+class PlayTextSoundEvent :public Event {
+
+};
 
 class FocusEvent : public Event {
 protected:
