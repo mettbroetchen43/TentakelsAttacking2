@@ -71,8 +71,8 @@ void Scene::Render(AppContext const& appContext) {
 		element->Render(appContext);
 	}
 }
-void Scene::Resize(Vector2 resolution) {
+void Scene::Resize(Vector2 resolution, AppContext const& appContext) {
 	for (auto& element : m_elements) {
-		element->Resize(resolution);
+		element->Resize(resolution, appContext);
 	}
 }

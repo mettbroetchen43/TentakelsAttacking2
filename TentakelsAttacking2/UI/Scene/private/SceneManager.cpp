@@ -85,13 +85,13 @@ void SceneManager::Render(AppContext const& appContext) {
 		p->Render(appContext);
 	}
 }
-void SceneManager::Resize(Vector2 resolution) {
+void SceneManager::Resize(Vector2 resolution, AppContext const& appContext) {
 	for (auto [sceneType, scene] : m_scenes) {
-		scene->Resize(resolution);
+		scene->Resize(resolution, appContext);
 	}
 
 	for (auto p : m_popUp) {
-		p->Resize(resolution);
+		p->Resize(resolution, appContext);
 	}
 }
 

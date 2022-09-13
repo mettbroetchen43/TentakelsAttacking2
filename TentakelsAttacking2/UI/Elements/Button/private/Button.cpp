@@ -107,7 +107,7 @@ void Button::Render(AppContext const& appContext) {
 		0,
 		WHITE);
 }
-void Button::Resize(Vector2 resolution) {
+void Button::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) {
 	m_collider = { resolution.x * m_pos.x, resolution.y * m_pos.y, resolution.x * m_size.x, resolution.y * m_size.y };
 	SetTextSizeAndPosition(resolution);
 }

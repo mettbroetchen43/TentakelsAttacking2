@@ -45,7 +45,7 @@ public:
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
-	void Resize(Vector2 resolution) override;
+	void Resize(Vector2 resolution, AppContext const& appContext) override;
 
 	void SetOnClick(std::function<void()> onClick);
 	void SetOnPress(std::function<void()> onPress);

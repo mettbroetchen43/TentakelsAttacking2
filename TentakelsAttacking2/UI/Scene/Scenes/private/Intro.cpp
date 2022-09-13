@@ -158,8 +158,8 @@ void Intro::Render(AppContext const& appContext) {
 
 	m_btn->Render(appContext);
 }
-void Intro::Resize(Vector2 resolution) {
-	m_btn->Resize(resolution);
+void Intro::Resize(Vector2 resolution, AppContext const& appContext) {
+	m_btn->Resize(resolution, appContext);
 	ResizeText(AppContext::GetInstance(), resolution);
 }
 

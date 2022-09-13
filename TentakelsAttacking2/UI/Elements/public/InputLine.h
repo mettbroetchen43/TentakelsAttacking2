@@ -200,7 +200,7 @@ public:
 			}
 		}
 	}
-	void Resize(Vector2 resolution) override {
+	void Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) override {
 		m_collider = { resolution.x * m_pos.x, resolution.y * m_pos.y,
 			resolution.x * m_size.x, resolution.y * m_size.y };
 	}

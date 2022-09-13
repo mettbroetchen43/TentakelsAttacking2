@@ -20,5 +20,5 @@ public:
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext) override;
-	void Resize(Vector2 resolution);
+	void Resize(Vector2 resolution, AppContext const& appContext) override;
 };

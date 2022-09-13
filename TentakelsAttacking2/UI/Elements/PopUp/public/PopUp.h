@@ -32,5 +32,5 @@ public:
 
 	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) = 0;
 	virtual void Render(AppContext const& appContext) = 0;
-	void Resize(Vector2 resolution);
+	void Resize(Vector2 resolution, AppContext const& appContext) override;
 };

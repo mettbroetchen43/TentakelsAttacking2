@@ -80,7 +80,7 @@ void Slider::Render(AppContext const& appContext) {
 	DrawTexturePro(*m_texture, m_textureRec, m_collider, Vector2(0.0f, 0.0f), 0, WHITE);
 	m_btn.Render(appContext);
 }
-void Slider::Resize(Vector2 resolution) {
+void Slider::Resize(Vector2 resolution, AppContext const& appContext) {
 	m_collider = { m_pos.x * resolution.x, m_pos.y * resolution.y, m_size.x * resolution.x, m_size.y * resolution.y };
-	m_btn.Resize(resolution);
+	m_btn.Resize(resolution, appContext);
 }

@@ -25,7 +25,7 @@ void UIManager::CheckAndUpdateResolution() {
 	if (isNewResolution) {
 		m_resolution = newResolution;
 		SetWindowSize(static_cast<int>(m_resolution.x), static_cast<int>(m_resolution.y));
-		m_sceneManager.Resize(newResolution);
+		m_sceneManager.Resize(newResolution, m_appContext);
 	}
 }
 

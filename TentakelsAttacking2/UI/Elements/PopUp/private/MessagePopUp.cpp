@@ -67,7 +67,7 @@ void MessagePopUp::Render(AppContext const& appContext) {
 
 	m_btn.Render(appContext);
 }
-void MessagePopUp::Resize(Vector2 resolution) {
-	PopUp::Resize(resolution);
-	m_btn.Resize(resolution);
+void MessagePopUp::Resize(Vector2 resolution, AppContext const& appContext) {
+	PopUp::Resize(resolution, appContext);
+	m_btn.Resize(resolution, appContext);
 }

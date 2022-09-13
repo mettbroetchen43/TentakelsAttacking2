@@ -50,7 +50,7 @@ PopUp::PopUp(Vector2 pos, Vector2 size, Vector2 resolution,
 	m_colider = { resolution.x * pos.x, resolution.y * pos.y , resolution.x * size.x, resolution.y * size.y };
 }
 
-void PopUp::Resize(Vector2 resolution) {
+void PopUp::Resize(Vector2 resolution,[[maybe_unused]] AppContext const& appContext) {
 	m_backgroundColider = { 0.0f, 0.0f, resolution.x, resolution.y };
 	m_colider = { resolution.x * m_pos.x, resolution.y * m_pos.y,
 		resolution.x * m_size.x, resolution.y * m_size.y };
