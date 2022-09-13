@@ -23,7 +23,7 @@ protected:
 	State m_state = State::ENABLED;
 	int m_buttonParts = 4;
 
-	int m_textSize = 24;
+	float m_textSize = 24;
 	std::string m_text;
 	Vector2 m_textPosition;
 
@@ -32,7 +32,7 @@ protected:
 	std::function<void()> m_onClick = []() {};
 	std::function<void()> m_onPress = []() {};
 
-	void SetTextSizeAndPosition(Vector2 resolution);
+	void SetTextSizeAndPosition(Vector2 resolution, AppContext const& appContext);
 	[[nodiscard]] bool IsSameState(State state) const;
 
 public:

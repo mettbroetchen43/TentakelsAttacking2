@@ -6,19 +6,27 @@
 #include "Button.h"
 #include "AppContext.h"
 
-void Button::SetTextSizeAndPosition(Vector2 resolution) {
-	m_textSize = static_cast<int>(m_collider.height / 3);
-	int textWidth = MeasureText(m_text.c_str(), m_textSize);
-	while (textWidth > m_collider.width) {
+void Button::SetTextSizeAndPosition(Vector2 resolution, AppContext const& appContext) {
+	m_textSize = m_collider.height / 2;
+	Vector2 textSize= MeasureTextEx(
+		*(appContext.assetManager.GetFont()),
+		m_text.c_str(),
+		m_textSize,
+		0.0f);
+	while (textSize.x > m_collider.width) {
 		if (m_textSize == 1) {
 			break;
 		}
 
 		m_textSize -= 1;
-		textWidth = MeasureText(m_text.c_str(), m_textSize);
+		textSize = MeasureTextEx(
+			*(appContext.assetManager.GetFont()),
+			m_text.c_str(),
+			m_textSize,
+			0.0f);
 	}
 
-	m_textPosition.x = resolution.x * m_pos.x + (resolution.x * m_size.x / 2 - textWidth / 2);
+	m_textPosition.x = resolution.x * m_pos.x + (resolution.x * m_size.x / 2 - textSize.x / 2);
 	m_textPosition.y = resolution.y * m_pos.y + (resolution.y * m_size.y / 2 - m_textSize / 2);
 }
 
@@ -32,7 +40,7 @@ Button::Button(Texture2D* texture, Vector2 pos, Vector2 size, Vector2 resolution
 	m_textureRec = { 0,0, static_cast<float>(m_texture->width) ,static_cast<float>(m_texture->height / m_buttonParts)};
 	m_collider = { resolution.x * pos.x, resolution.y * pos.y, resolution.x * size.x, resolution.y * size.y };
 
-	SetTextSizeAndPosition(resolution);
+	SetTextSizeAndPosition(resolution, AppContext::GetInstance());
 }
 
 void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
@@ -107,9 +115,9 @@ void Button::Render(AppContext const& appContext) {
 		0,
 		WHITE);
 }
-void Button::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) {
+void Button::Resize(Vector2 resolution, AppContext const& appContext) {
 	m_collider = { resolution.x * m_pos.x, resolution.y * m_pos.y, resolution.x * m_size.x, resolution.y * m_size.y };
-	SetTextSizeAndPosition(resolution);
+	SetTextSizeAndPosition(resolution, appContext);
 }
 
 void Button::SetOnClick(std::function<void()> onClick) {
