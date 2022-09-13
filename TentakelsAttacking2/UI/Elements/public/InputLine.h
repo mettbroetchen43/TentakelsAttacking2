@@ -46,38 +46,58 @@ protected:
 	}
 	[[nodiscard]] bool IsValidKey(int key) = delete;
 	[[nodiscard]] std::string GetPritableInput(std::string const& enter, std::string const& prefix,
-		int fontSize, int cursorOffset) const {
+		float fontSize, int cursorOffset, AppContext const& appContext) const {
 		cursorOffset += 5; // Just to make shure that the curor didnt bounce out
 
-		if (MeasureText((m_value + enter).c_str(), fontSize) + cursorOffset < m_collider.width) {
+		Vector2 textSize = MeasureTextEx(
+			*(appContext.assetManager.GetFont()),
+			(m_value + enter).c_str(),
+			fontSize,
+			0.0f);
+		if (textSize.x + cursorOffset < m_collider.width) {
 			return m_value;
 		}
 
 		std::string toReturn = m_value;
 		std::string toCheck = prefix + m_value + enter;
 
-		while (MeasureText(toCheck.c_str(), fontSize) + cursorOffset >= m_collider.width) {
+		do {
 			toReturn = toReturn.substr(1, toReturn.size());
 			toCheck = prefix + toReturn + enter;
-		}
+			textSize = MeasureTextEx(
+				*(appContext.assetManager.GetFont()),
+				toCheck.c_str(),
+				fontSize,
+				0.0f);
+		} while (textSize.x + cursorOffset >= m_collider.width);
 
 		return prefix + toReturn;
 	}
-	[[nodiscard]] std::string GetPritablePlaceholder(std::string const& prefix, int fontSize,
-		int cursorOffset) const {
+	[[nodiscard]] std::string GetPritablePlaceholder(std::string const& prefix, float fontSize,
+		int cursorOffset, AppContext const& appContext) const {
 		cursorOffset += 5; // Just to make shure that the curor didnt bounce out
 
-		if (MeasureText(m_placeholderText.c_str(), fontSize) + cursorOffset < m_collider.width) {
+		Vector2 textSize = MeasureTextEx(
+			*(appContext.assetManager.GetFont()),
+			m_placeholderText.c_str(),
+			fontSize,
+			0.0f);
+		if (textSize.x + cursorOffset < m_collider.width) {
 			return m_placeholderText;
 		}
 
 		std::string toReturn = m_placeholderText;
 		std::string toCheck = prefix + m_placeholderText;
 
-		while (MeasureText(toCheck.c_str(), fontSize) + cursorOffset >= m_collider.width) {
+		do {
 			toReturn = toReturn.substr(0, toReturn.size() - 1);
 			toCheck = prefix + toReturn;
-		}
+			textSize = MeasureTextEx(
+				*(appContext.assetManager.GetFont()),
+				toCheck.c_str(),
+				fontSize,
+				0.0f);
+		} while (textSize.x + cursorOffset >= m_collider.width);
 
 		return  toReturn + prefix;
 	}
@@ -164,7 +184,7 @@ public:
 		std::string printableInput;
 
 		if (m_value.size() > 0) {
-			printableInput = GetPritableInput(enter, prefix, static_cast<int>(fontSize), cursorOffset);
+			printableInput = GetPritableInput(enter, prefix, fontSize, cursorOffset, appContext);
 			DrawTextEx(
 				*(appContext.assetManager.GetFont()),
 				printableInput.c_str(),
@@ -174,7 +194,7 @@ public:
 				WHITE);
 		}
 		else {
-			std::string printablePlaceholder = GetPritablePlaceholder(prefix, static_cast<int>(fontSize), cursorOffset);
+			std::string printablePlaceholder = GetPritablePlaceholder(prefix, fontSize, cursorOffset, appContext);
 			DrawTextEx(
 				*(appContext.assetManager.GetFont()),
 				printablePlaceholder.c_str(),
@@ -187,13 +207,17 @@ public:
 
 		if (IsFocused()) {
 			size_t time = static_cast<size_t>(GetTime() * 2.0);
-			int textLength = MeasureText(printableInput.c_str(), static_cast<int>(fontSize));
+			Vector2 textLength = MeasureTextEx(
+				*(appContext.assetManager.GetFont()),
+				printableInput.c_str(),
+				fontSize,
+				0.0f);
 
 			if (time % 2 == 0) {
 				DrawTextEx(
 					*(appContext.assetManager.GetFont()),
 					enter.c_str(),
-					Vector2(posX + cursorOffset + textLength, posY + m_collider.height * 0.05f),
+					Vector2(posX + cursorOffset + textLength.x, posY + m_collider.height * 0.05f),
 					fontSize,
 					0,
 					PURPLE);

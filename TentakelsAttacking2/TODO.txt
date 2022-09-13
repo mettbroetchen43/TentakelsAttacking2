@@ -10,6 +10,8 @@ UI:
 	-> InputLine
 		-> holding key 
 
+Focus:
+	-> Pop Up
 Sound:
 	- implement sounds for text -> new sounds in directory
 	- implement sounds for button movment -> intro
