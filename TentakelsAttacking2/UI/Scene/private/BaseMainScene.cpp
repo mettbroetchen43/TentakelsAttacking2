@@ -11,21 +11,18 @@
 void BaseMainScene::InitializeSzene(UIManager const& uiManager) {
 	AppContext& appContext = AppContext::GetInstance();
 
-    auto ptr = std::make_shared<ClassicButton>(1, appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
+    auto btnLeft = std::make_shared<ClassicButton>(1, appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
         GetElementPosition(0.15f, 0.025f), GetElementSize(0.2f, 0.1f), uiManager.GetResolution(),
         "Super Testtext, viel besser Text", SoundType::ACCEPTED);
-    //ptr->SetOnClick(test);
-    m_elements.push_back(ptr);
+    m_elements.push_back(btnLeft);
 
-    ptr = std::make_shared<ClassicButton>(2, appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
+    auto btnMid = std::make_shared<ClassicButton>(2, appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
         GetElementPosition(0.4f, 0.025f), GetElementSize(0.2f, 0.1f), uiManager.GetResolution(),
         "Quit", SoundType::CLICKED_RELEASE_STD);
-    //ptr->SetOnClick(test);
-    m_elements.push_back(ptr);
+    m_elements.push_back(btnMid);
 
-    ptr = std::make_shared<ClassicButton>(3, appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
+    auto btnRight = std::make_shared<ClassicButton>(3, appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
         GetElementPosition(0.65f, 0.025f), GetElementSize(0.2f, 0.1f), uiManager.GetResolution(),
         "Super Testtext, viel besser Text", SoundType::CLICKED_RELEASE_STD);
-    //ptr->SetOnClick(test);
-    m_elements.push_back(ptr);
+    m_elements.push_back(btnRight);
 }
