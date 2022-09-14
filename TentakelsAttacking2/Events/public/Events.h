@@ -10,6 +10,7 @@
 
 class Focusable;
 class PopUp;
+enum class SceneType;
 
 class PlaySoundEvent : public Event {
 public:
@@ -57,6 +58,16 @@ class DeleteFocusLayerEvent : public Event {
 class ClearFocusEvent : public Event {
 };
 
+class SwitchSceneEvent :public Event {
+private:
+	SceneType m_sceneType;
+public:
+	SwitchSceneEvent(SceneType sceneType)
+		:m_sceneType(sceneType) { }
+	[[nodiscard]] SceneType GetSceneType() const {
+		return m_sceneType;
+	}
+};
 class ClosePopUpEvent : public Event {
 private:
 	PopUp* m_popUp;

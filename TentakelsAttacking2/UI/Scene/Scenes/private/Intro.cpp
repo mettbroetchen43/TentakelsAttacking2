@@ -9,6 +9,7 @@
 #include "ClassicButton.h"
 #include "AssetType.h"
 #include "SoundType.h"
+#include "SceneType.h"
 #include "Events.h"
 #include "random.h"
 
@@ -123,8 +124,13 @@ void Intro::BtnMoveFinish(){
 	appContext.eventManager.InvokeEvent(event);
 }
 
-Intro::Intro(Vector2 pos, Vector2 size, UIManager const& uiManager)
-	:Scene(pos, size) {
+void Intro::StartGame() {
+	auto event = SwitchSceneEvent(m_nextScene);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+
+Intro::Intro(Vector2 pos, Vector2 size, UIManager const& uiManager, SceneType nextScene)
+	:Scene(pos, size), m_nextScene(nextScene) {
 	AppContext& appContext = AppContext::GetInstance();
 	m_title = appContext.assetManager.GetTitle();
 
@@ -142,6 +148,11 @@ Intro::Intro(Vector2 pos, Vector2 size, UIManager const& uiManager)
 	m_btn->SetEnabled(false);
 	auto event = SelectFocusElementEvent(m_btn.get());
 	appContext.eventManager.InvokeEvent(event);
+
+	std::function<void()> gameStart = [&]() {
+		StartGame();
+	};
+	m_btn->SetOnClick(gameStart);
 
 	MeasureTitleLength();
 }

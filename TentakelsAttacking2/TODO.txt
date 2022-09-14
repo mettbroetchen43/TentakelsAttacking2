@@ -10,10 +10,7 @@ UI:
 	-> InputLine
 		-> holding key 
 
-PopUp:
-	-> Check Text after font Change
 Sound:
-	- implement sounds for text -> new sounds in directory
 	- implement sounds for button movment -> intro
 
 To Implement:

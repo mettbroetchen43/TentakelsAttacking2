@@ -41,5 +41,6 @@ public:
 	void Resize(Vector2 resolution, AppContext const& appContext);
 
 	void OnEvent(Event const& event);
+		
 };
 

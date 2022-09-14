@@ -10,15 +10,30 @@
 #include "Events.h"
 #include "TestScene.h"
 #include "Intro.h"
+#include "Logos.h"
 #include "UIManager.h"
 #include "AppContext.h"
 #include "AssetType.h"
 #include <raylib.h>
 
 void SceneManager::InitializeScenes() {
-	auto test = std::make_shared<TestScene>(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), *m_uiManager);
+	auto test = std::make_shared<TestScene>(
+		Vector2(0.0f, 0.0f),
+		Vector2(1.0f, 1.0f),
+		*m_uiManager);
 	m_scenes[SceneType::TEST] = test;
-	auto intro = std::make_shared<Intro>(Vector2(0.0f,0.0f), Vector2(1.0f,1.0f), *m_uiManager);
+
+	auto logo = std::make_shared<LogoScene>(
+		Vector2(0.0f, 0.0f),
+		Vector2(1.0f, 1.0f),
+		SceneType::INTRO);
+	m_scenes[SceneType::LOGO] = logo;
+
+	auto intro = std::make_shared<Intro>(
+		Vector2(0.0f,0.0f),
+		Vector2(1.0f,1.0f),
+		*m_uiManager,
+		SceneType::TEST);
 	m_scenes[SceneType::INTRO] = intro;
 }
 
@@ -99,8 +114,14 @@ void SceneManager::OnEvent(Event const& event) {
 
 	if (auto const PopUpEvent = dynamic_cast<ShowMessagePopUpEvent const*>(&event)) {
 		NewMessagePopUp(PopUpEvent->GetTitle(), PopUpEvent->GetSubTitle());
+		return;
 	}
 	if (auto const PopUpEvent = dynamic_cast<ClosePopUpEvent const*>(&event)) {
 		DeleteLastPopUp();
+		return;
+	}
+	if (auto const SceneEvent = dynamic_cast<SwitchSceneEvent const*>(&event)) {
+		SwitchScene(SceneEvent->GetSceneType(), AppContext::GetInstance());
+		return;
 	}
 }

@@ -5,10 +5,12 @@
 
 #pragma once
 #include "Scene.h"
+#include "AppContext.h"
 #include <string>
 #include <vector>
 #include <memory>
 #include <array>
+#include <functional>
 
 class ClassicButton;
 
@@ -35,6 +37,7 @@ private:
 	bool m_titleFinish = false;
 	bool m_btnMovmendFinish = false;
 	size_t m_maxBtnPosition;
+	SceneType m_nextScene;
 	
 	void RenderTitle(AppContext const& appContext);
 	void RenderTitleSequens(AppContext const& appContext);
@@ -46,8 +49,10 @@ private:
 	void MoveBtn();
 	void BtnMoveFinish();
 
+	void StartGame();
+
 public:
-	Intro(Vector2 pos, Vector2 size, UIManager const& uiManager);
+	Intro(Vector2 pos, Vector2 size, UIManager const& uiManager, SceneType sceneType);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);

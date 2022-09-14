@@ -7,5 +7,6 @@
 
 enum class SceneType {
 	TEST,
+	LOGO,
 	INTRO,
 };
