@@ -26,7 +26,8 @@ void SceneManager::InitializeScenes() {
 	auto logo = std::make_shared<LogoScene>(
 		Vector2(0.0f, 0.0f),
 		Vector2(1.0f, 1.0f),
-		SceneType::INTRO);
+		SceneType::INTRO,
+		*m_uiManager);
 	m_scenes[SceneType::LOGO] = logo;
 
 	auto intro = std::make_shared<Intro>(

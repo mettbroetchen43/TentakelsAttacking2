@@ -5,6 +5,7 @@
 
 #pragma once
 #include "Scene.h"
+#include "Text.h"
 #include <functional>
 
 struct AppContext;
@@ -16,11 +17,11 @@ private:
 	SceneType m_nextScene;
 	double m_time;
 	Texture2D* m_logo;
-	std::string m_text = "A Purpur Tentakel production";
-	std::string m_skipText = "skip with [ESC]";
+
+	void Initialize(UIManager const& uiManager);
 
 public:
-	LogoScene(Vector2 pos, Vector2 size, SceneType nextScene);
+	LogoScene(Vector2 pos, Vector2 size, SceneType nextScene, UIManager const& uiManager);
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
