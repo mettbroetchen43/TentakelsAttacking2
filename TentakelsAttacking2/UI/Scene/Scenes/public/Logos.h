@@ -5,18 +5,16 @@
 
 #pragma once
 #include "Scene.h"
-#include "Text.h"
 #include <functional>
 
 struct AppContext;
 enum class SceneType;
-#define SCENE_LENGTH 10.0
+#define SCENE_LENGTH 5.0
 
 class LogoScene : public Scene {
 private:
 	SceneType m_nextScene;
 	double m_time;
-	Texture2D* m_logo;
 
 	void Initialize(UIManager const& uiManager);
 
