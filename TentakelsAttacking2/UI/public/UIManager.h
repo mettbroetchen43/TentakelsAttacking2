@@ -20,6 +20,8 @@ private:
 	SceneManager m_sceneManager;
 	Vector2 m_resolution;
 
+	void ToggleFullScreen();
+
 	void CheckAndUpdateResolution();
 	void CheckAndUpdate();
 	void Render();

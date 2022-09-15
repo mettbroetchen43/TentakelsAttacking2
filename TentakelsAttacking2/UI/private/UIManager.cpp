@@ -16,6 +16,9 @@ Vector2 UIManager::GetResolution() const {
 Focus& UIManager::GetFocus() {
 	return m_focus;
 }
+void UIManager::ToggleFullScreen() {
+	ToggleFullscreen();
+}
 void UIManager::CheckAndUpdateResolution() {
 	Vector2 newResolution = GetResolution();
 
@@ -35,6 +38,10 @@ void UIManager::CheckAndUpdate() {
 		and IsKeyPressed(KeyboardKey::KEY_F4);
 	if (quit) {
 		CloseWindow();
+	}
+
+	if (IsKeyPressed(KEY_F11)) {
+		ToggleFullScreen();
 	}
 
 	Vector2 mousePosition = GetMousePosition();

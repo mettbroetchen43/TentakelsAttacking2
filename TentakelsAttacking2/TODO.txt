@@ -4,11 +4,13 @@
 // 
 
 UI:
-	-> Text aglinment
 	- scrole slider extern
 
 	-> InputLine
-		-> holding key 
+		-> holding key
+
+	-> Text
+		-> implement Break Lines
 
 Sound:
 	- implement sounds for button movment -> intro
