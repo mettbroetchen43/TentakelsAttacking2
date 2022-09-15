@@ -11,4 +11,5 @@ enum class AssetType {
 	GREY_50,
 	EXCLAMATION_MARK,
 	QUESTION_MARK,
+	LOGO,
 };
