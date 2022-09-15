@@ -146,13 +146,14 @@ Intro::Intro(Vector2 pos, Vector2 size, UIManager const& uiManager, SceneType ne
 		SoundType::ACCEPTED
 		);
 	m_btn->SetEnabled(false);
-	auto event = SelectFocusElementEvent(m_btn.get());
-	appContext.eventManager.InvokeEvent(event);
+
 
 	std::function<void()> gameStart = [&]() {
 		StartGame();
 	};
 	m_btn->SetOnClick(gameStart);
+
+	m_elements.push_back(m_btn);
 
 	MeasureTitleLength();
 }
@@ -197,4 +198,6 @@ void Intro::Resize(Vector2 resolution, AppContext const& appContext) {
 
 void Intro::SetActive(bool active, AppContext const& appContext) {
 	Scene::SetActive(active, appContext);
+	auto event = SelectFocusElementEvent(m_btn.get());
+	appContext.eventManager.InvokeEvent(event);
 }
