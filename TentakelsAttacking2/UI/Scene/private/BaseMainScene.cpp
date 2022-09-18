@@ -13,7 +13,7 @@ void BaseMainScene::InitializeSzene(UIManager const& uiManager) {
 
     auto btnLeft = std::make_shared<ClassicButton>(
         1,
-        GetElementPosition(0.15f, 0.025f),
+        GetElementPosition(0.25f, 0.025f),
         GetElementSize(0.2f, 0.1f),
         Alignment::TOP_MID,
         uiManager.GetResolution(),
@@ -24,7 +24,7 @@ void BaseMainScene::InitializeSzene(UIManager const& uiManager) {
 
     auto btnMid = std::make_shared<ClassicButton>(
         2,
-        GetElementPosition(0.4f, 0.025f),
+        GetElementPosition(0.5f, 0.025f),
         GetElementSize(0.2f, 0.1f),
         Alignment::TOP_MID,
         uiManager.GetResolution(),
@@ -35,7 +35,7 @@ void BaseMainScene::InitializeSzene(UIManager const& uiManager) {
 
     auto btnRight = std::make_shared<ClassicButton>(
         3,
-        GetElementPosition(0.65f, 0.025f),
+        GetElementPosition(0.75f, 0.025f),
         GetElementSize(0.2f, 0.1f),
         Alignment::TOP_MID,
         uiManager.GetResolution(),

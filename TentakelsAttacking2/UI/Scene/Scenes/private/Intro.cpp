@@ -139,7 +139,7 @@ Intro::Intro(Vector2 pos, Vector2 size, Alignment alignment,
 
 	m_btn = std::make_shared<ClassicButton>(
 		1,
-		GetElementPosition(0.35f, 1.1f),
+		GetElementPosition(0.5f, 1.1f),
 		GetElementSize(0.3f, 0.2f),
 		Alignment::MID_MID,
 		uiManager.GetResolution(),

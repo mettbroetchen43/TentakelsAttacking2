@@ -41,7 +41,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 		7,
 		GetElementPosition(0.15f, 0.7f),
 		GetElementSize(0.2f, 0.05f),
-		Alignment::TOP_MID,
+		Alignment::TOP_LEFT,
 		10,
 		appContext.assetManager.GetTexture(AssetType::GREY),
 		uiManager.GetResolution()
@@ -53,7 +53,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 		6,
 		GetElementPosition(0.15f, 0.6f),
 		GetElementSize(0.2f, 0.05f),
-		Alignment::TOP_MID,
+		Alignment::TOP_LEFT,
 		10,
 		appContext.assetManager.GetTexture(AssetType::GREY),
 		uiManager.GetResolution()
@@ -65,7 +65,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 		4,
 		GetElementPosition(0.15f, 0.4f),
 		GetElementSize(0.2f, 0.05f),
-		Alignment::TOP_MID,
+		Alignment::TOP_LEFT,
 		40,
 		appContext.assetManager.GetTexture(AssetType::GREY),
 		uiManager.GetResolution()
@@ -79,7 +79,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 		5,
 		GetElementPosition(0.15f, 0.5f),
 		GetElementSize(0.2f, 0.05f),
-		Alignment::TOP_MID,
+		Alignment::TOP_LEFT,
 		40,
 		appContext.assetManager.GetTexture(AssetType::GREY),
 		uiManager.GetResolution()
@@ -90,7 +90,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 	auto ptr2 = std::make_shared<Slider>(
 		GetElementPosition(0.05f, 0.1f),
 		GetElementSize(0.025f, 0.75f),
-		Alignment::TOP_MID,
+		Alignment::TOP_LEFT,
 		false,
 		appContext.assetManager.GetTexture(AssetType::GREY),
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
@@ -100,7 +100,7 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 	m_elements.push_back(ptr2);
 
 	ptr2 = std::make_shared<Slider>(
-		GetElementPosition(0.05f, 0.9f),
+		GetElementPosition(0.5f, 0.9f),
 		GetElementSize(0.9f, 0.025f),
 		Alignment::TOP_MID,
 		true,

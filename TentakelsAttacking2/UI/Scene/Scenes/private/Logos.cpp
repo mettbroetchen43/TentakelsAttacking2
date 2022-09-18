@@ -15,8 +15,8 @@
 
 void LogoScene::Initialize(UIManager const& uiManager) {
 	auto logo = std::make_shared<Picture>(
-		GetElementPosition(0.4f, 0.1f),
-		GetElementSize(0.0f, 0.5f),
+		GetElementPosition(0.5f, 0.25f),
+		GetElementSize(0.5f, 0.5f),
 		Alignment::MID_MID,
 		AssetType::LOGO,
 		uiManager
@@ -25,7 +25,7 @@ void LogoScene::Initialize(UIManager const& uiManager) {
 	m_elements.push_back(logo);
 
 	auto mainText = std::make_shared<Text>(
-		GetElementPosition(0.3f, 0.65f),
+		GetElementPosition(0.5f, 0.5f),
 		GetElementSize(0.5f, 0.1f),
 		Alignment::TOP_MID,
 		0.07f,
@@ -35,7 +35,7 @@ void LogoScene::Initialize(UIManager const& uiManager) {
 	m_elements.push_back(mainText);
 
 	auto skipText = std::make_shared<Text>(
-		GetElementPosition(0.89f, 0.95f),
+		GetElementPosition(0.95f, 0.95f),
 		GetElementSize(0.11f, 0.03f),
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
