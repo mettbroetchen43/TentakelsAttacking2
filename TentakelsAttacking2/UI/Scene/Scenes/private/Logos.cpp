@@ -17,6 +17,7 @@ void LogoScene::Initialize(UIManager const& uiManager) {
 	auto logo = std::make_shared<Picture>(
 		GetElementPosition(0.4f, 0.1f),
 		GetElementSize(0.0f, 0.5f),
+		Alignment::MID_MID,
 		AssetType::LOGO,
 		uiManager
 		);
@@ -26,6 +27,7 @@ void LogoScene::Initialize(UIManager const& uiManager) {
 	auto mainText = std::make_shared<Text>(
 		GetElementPosition(0.3f, 0.65f),
 		GetElementSize(0.5f, 0.1f),
+		Alignment::TOP_MID,
 		0.07f,
 		"A Purpur Tentakel production",
 		uiManager.GetResolution()
@@ -35,6 +37,7 @@ void LogoScene::Initialize(UIManager const& uiManager) {
 	auto skipText = std::make_shared<Text>(
 		GetElementPosition(0.89f, 0.95f),
 		GetElementSize(0.11f, 0.03f),
+		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		"skip with [ESC]",
 		uiManager.GetResolution()
@@ -42,8 +45,9 @@ void LogoScene::Initialize(UIManager const& uiManager) {
 	m_elements.push_back(skipText);
 }
 
-LogoScene::LogoScene(Vector2 pos, Vector2 size,SceneType nextScene, UIManager const& uiManager)
-	:Scene(pos, size), m_nextScene(nextScene), m_time(GetTime()) {
+LogoScene::LogoScene(Vector2 pos, Vector2 size, Alignment alignment,
+	SceneType nextScene, UIManager const& uiManager)
+	:Scene(pos, size, alignment), m_nextScene(nextScene), m_time(GetTime()) {
 	Initialize(uiManager);
 }
 void LogoScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {

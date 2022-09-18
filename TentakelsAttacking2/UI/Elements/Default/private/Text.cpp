@@ -13,16 +13,12 @@ std::string Text::BreakLines(std::string toBreak, AppContext const& appContext) 
 	return toBreak; // TODO
 }
 
-Text::Text(Vector2 pos, Vector2 size, float textHeight, std::string text, Vector2 resolution)
-	: UIElement(pos, size), m_textSize(textHeight * resolution.y),
-	m_text(text), m_collider({ 0.0f,0.0f,0.0f,0.0f }), m_textHeight(textHeight) {
+Text::Text(Vector2 pos, Vector2 size, Alignment alignment, float textHeight,
+	std::string text, Vector2 resolution)
+	: UIElement(pos, size, alignment), m_textSize(textHeight * resolution.y),
+	m_text(text), m_textHeight(textHeight) {
 	CreateToRender(AppContext::GetInstance());
-	m_collider = {
-		pos.x * resolution.x,
-		pos.y * resolution.y,
-		size.x * resolution.x,
-		size.y * resolution.y
-	};
+	m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 }
 
 void Text::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition, [[maybe_unused]] AppContext const& appContext) {

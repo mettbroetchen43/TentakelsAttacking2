@@ -4,14 +4,24 @@
 //
 
 #include "Slider.h"
+#include "Allignment.h"
 #include <iostream>
 
-SliderButton Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension, Texture2D* texture) {
+void Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension,
+	Texture2D* texture) {
 	float sizeX = m_isHorizontal ? m_size.x / absoluteDimension : m_size.x;
 	float sizeY = m_isHorizontal ? m_size.y : m_size.y / absoluteDimension;
-	SliderButton btn = SliderButton(texture, m_pos, Vector2(sizeX, sizeY), resolution, "", SoundType::CLICKED_RELEASE_STD);
-	btn.SetOnPress([&]() {Slide();});
-	return btn;
+
+	m_btn = SliderButton(
+		m_pos,
+		Vector2(sizeX, sizeY),
+		Alignment::TOP_LEFT,
+		"",
+		texture,
+		SoundType::CLICKED_RELEASE_STD,
+		resolution
+	);
+	m_btn.SetOnPress([&]() {Slide();});
 }
 
 void Slider::Slide() {
@@ -26,11 +36,11 @@ void Slider::Slide() {
 	float sliderColliderLength = m_isHorizontal ? m_collider.width : m_collider.height;
 
 	float maxValue = sliderColliderPoint + btnColliderLength / 2;
-	float mminValue = sliderColliderPoint + sliderColliderLength - btnColliderLength / 2;
+	float minValue = sliderColliderPoint + sliderColliderLength - btnColliderLength / 2;
 	if (mousePoint < maxValue) {
 		*btnColliderPoint = sliderColliderPoint;
 	}
-	else if (mousePoint > mminValue) {
+	else if (mousePoint > minValue) {
 		*btnColliderPoint = sliderColliderPoint + sliderColliderLength - btnColliderLength;
 	}
 	else {
@@ -60,12 +70,18 @@ void Slider::MoveButtonIfColiderIsPressed(Vector2 const& mousePosition) {
 	Slide();
 }
 
-Slider::Slider(Texture2D* slideTexture, Vector2 pos, Vector2 size, Vector2 resolution,
-	float absoluteDimension, bool isHorizontal, Texture2D* btnTexture)
-	: UIElement(pos, size),m_isHorizontal(isHorizontal), m_texture(slideTexture),
-	m_textureRec(Rectangle(0, 0, static_cast<float>(m_texture->width), static_cast<float>(m_texture->height))),
-	m_collider(Rectangle(resolution.x* pos.x, resolution.y* pos.y, resolution.x* size.x, resolution.y* size.y)),
-	m_btn(CalculateInitialButton(resolution, absoluteDimension, btnTexture)) { }
+Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal,
+	Texture2D* slideTexture, Texture2D* btnTexture, float absoluteDimension, Vector2 resolution)
+	: UIElement(pos, size, alignment), m_isHorizontal(isHorizontal), m_texture(slideTexture) {
+	m_textureRec = {
+		0.0f,
+		0.0f,
+		static_cast<float>(m_texture->width),
+		static_cast<float>(m_texture->height)
+	};
+	m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+	CalculateInitialButton(resolution, absoluteDimension, btnTexture);
+}
 
 void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	if (!m_isPressed) {

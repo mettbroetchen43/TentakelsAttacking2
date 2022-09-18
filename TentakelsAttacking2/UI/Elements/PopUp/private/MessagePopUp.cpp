@@ -8,26 +8,33 @@
 #include "AssetType.h"
 #include "SoundType.h"
 #include "Events.h"
+#include "memory"
 
-void MessagePopUp::Initialize(AppContext const& appContext) {
+void MessagePopUp::Initialize() {
+	AppContext& appContext = AppContext::GetInstance();
 	m_btn.SetOnClick(std::bind(&MessagePopUp::Close, *this));
 	auto event = NewFocusElementEvent(&m_btn);
 	appContext.eventManager.InvokeEvent(event);
 }
 
-MessagePopUp::MessagePopUp(Vector2 pos, Vector2 size, Vector2 resolution,
-	std::string const& title, std::string const& subTitle, Texture2D* btnTexture,
-	Texture2D* fullBackground, Texture2D* popUpBackground, Texture2D* m_infoTexture)
-	: PopUp(pos, size, resolution, title, subTitle, fullBackground, popUpBackground, m_infoTexture),
-	m_btn(1,
-		btnTexture,
-		GetElementPosition(0.65f, 0.7f),
-		GetElementSize(0.3f, 0.2f),
-		resolution,
-		"OK",
-		SoundType::CLICKED_RELEASE_STD) {
-	Initialize(AppContext::GetInstance());
+MessagePopUp::MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	std::string const& title, std::string const& subTitle, AssetType btnTexture,
+	AssetType fullBackground, AssetType popUpBackground, AssetType m_infoTexture)
+	: PopUp(pos, size, alignment, resolution, title, subTitle, fullBackground, popUpBackground, m_infoTexture),
+		m_btn(
+			1,
+			GetElementPosition(0.65f, 0.7f),
+			GetElementSize(0.3f, 0.2f),
+			Alignment::BOTTOM_RIGHT,
+			resolution,
+			"OK",
+			AppContext::GetInstance().assetManager.GetTexture(btnTexture),
+			SoundType::CLICKED_RELEASE_STD
+		) {
+
+	Initialize();
 }
+	
 
 void MessagePopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	m_btn.CheckAndUpdate(mousePosition, appContext);

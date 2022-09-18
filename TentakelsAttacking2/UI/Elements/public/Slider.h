@@ -16,15 +16,15 @@ private:
 
 	SliderButton m_btn;
 
-	SliderButton CalculateInitialButton(Vector2 resolution, float absolutDimension, Texture2D* texture);
+	void CalculateInitialButton(Vector2 resolution, float absolutDimension, Texture2D* texture);
 
 	void Slide();
 	void SlideIfPressed();
 	void MoveButtonIfColiderIsPressed(Vector2 const& mousePosition);
 
 public:
-	Slider(Texture2D* slideTexture, Vector2 pos, Vector2 size, Vector2 resolution,
-		float absoluteDimension, bool isHorizontal, Texture2D* btnTexture);
+	Slider(Vector2 pos,Vector2 size, Alignment alignment, bool isHorizontal, 
+		Texture2D* slideTexture, Texture2D* btnTexture, float absoluteDimension, Vector2 resolution);
 	Slider(Slider const&) = default;
 	Slider(Slider&&) = default;
 	Slider& operator=(Slider const&) = default;

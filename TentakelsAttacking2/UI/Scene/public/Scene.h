@@ -23,7 +23,7 @@ protected:
 	Focusable* GetFocusableByFocusID(unsigned int ID) const;
 
 public:
-	Scene(Vector2 pos, Vector2 size);
+	Scene(Vector2 pos, Vector2 size, Alignment alignment);
 	Scene(Scene const&) = default;
 	Scene(Scene&&) = default;
 	Scene& operator= (Scene const&) = default;

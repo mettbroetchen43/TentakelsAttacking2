@@ -7,18 +7,20 @@
 #include "SoundType.h"
 #include "AssetType.h"
 #include "Events.h"
-#include <raylib.h>
+#include "Allignment.h"
+
 
 struct AppContext;
 
 class UIElement {
 protected:
 	Vector2 m_pos, m_size;
+	Alignment m_alignment;
 
 public:
 	virtual ~UIElement() = default;
-	UIElement(Vector2 pos, Vector2 size)
-		: m_pos(pos), m_size(size) { }
+	UIElement(Vector2 pos, Vector2 size, Alignment alignment)
+		: m_pos(pos), m_size(size), m_alignment(alignment) { }
 
 	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) = 0;
 	virtual void Render(AppContext const& appContext) = 0;

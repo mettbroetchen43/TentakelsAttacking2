@@ -8,7 +8,7 @@
 
 void Button::SetTextSizeAndPosition(Vector2 resolution, AppContext const& appContext) {
 	m_textSize = m_collider.height / 2;
-	Vector2 textSize= MeasureTextEx(
+	Vector2 textSize = MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_text.c_str(),
 		m_textSize,
@@ -34,14 +34,24 @@ bool Button::IsSameState(State state) const {
 	return m_state == state;
 }
 
-Button::Button(Texture2D* texture, Vector2 pos, Vector2 size, Vector2 resolution,
-	std::string const& text, SoundType releaseSound)
-	: UIElement(pos, size), m_texture(texture), m_text(text), m_sound(releaseSound) {
-	m_textureRec = { 0,0, static_cast<float>(m_texture->width) ,static_cast<float>(m_texture->height / m_buttonParts)};
-	m_collider = { resolution.x * pos.x, resolution.y * pos.y, resolution.x * size.x, resolution.y * size.y };
+Button::Button(Vector2 pos, Vector2 size, Alignment alignment, std::string const& text,
+	Texture2D* texture, SoundType releaseSound, Vector2 resolution)
+	: UIElement(pos, size, alignment), m_texture(texture), m_text(text), m_sound(releaseSound) {
+	m_textureRec = {
+		0.0f,
+		0.0f,
+		static_cast<float>(m_texture->width),
+		static_cast<float>(m_texture->height / m_buttonParts)
+	};
+	m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 
 	SetTextSizeAndPosition(resolution, AppContext::GetInstance());
 }
+
+Button::Button()
+	: UIElement(Vector2(0.0f,0.0f), Vector2(0.0f,0.0f), Alignment::TOP_LEFT),
+	m_collider({ 0.0f,0.0f,0.0f,0.0f }), m_sound(SoundType::CLICKED_RELEASE_STD),
+	m_textPosition({ 0.0f,0.0f }),m_texture(nullptr), m_textureRec({0.0f,0.0f,0.0f,0.0f}) {}
 
 void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	bool const hover = CheckCollisionPointRec(mousePosition, m_collider);
@@ -70,7 +80,7 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		m_state = State::ENABLED;
 		return;
 	}
-	
+
 	if (m_isPressed) {
 		m_onPress();
 		if (!IsSameState(State::PRESSED)) {
@@ -82,7 +92,7 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 			auto event = PlaySoundEvent(m_sound);
 			appContext.eventManager.InvokeEvent(event);
 			m_onClick();
-			m_state = hover? State::HOVER : State::ENABLED;
+			m_state = hover ? State::HOVER : State::ENABLED;
 			m_isPressed = false;
 			return;
 		}
@@ -116,7 +126,11 @@ void Button::Render(AppContext const& appContext) {
 		WHITE);
 }
 void Button::Resize(Vector2 resolution, AppContext const& appContext) {
-	m_collider = { resolution.x * m_pos.x, resolution.y * m_pos.y, resolution.x * m_size.x, resolution.y * m_size.y };
+	m_collider = {
+		resolution.x * m_pos.x,
+		resolution.y * m_pos.y,
+		resolution.x * m_size.x,
+		resolution.y * m_size.y };
 	SetTextSizeAndPosition(resolution, appContext);
 }
 

@@ -38,8 +38,8 @@ Focusable* Scene::GetFocusableByFocusID(unsigned int ID) const {
 	return nullptr;
 }
 
-Scene::Scene(Vector2 pos, Vector2 size)
-	:UIElement(pos, size), m_firstFocusID(0) { }
+Scene::Scene(Vector2 pos, Vector2 size, Alignment alignment)
+	:UIElement(pos, size, alignment), m_firstFocusID(0) { }
 
 bool Scene::IsActive() const {
 	return m_active;

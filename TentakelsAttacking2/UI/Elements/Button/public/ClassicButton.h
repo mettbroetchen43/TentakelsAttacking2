@@ -10,8 +10,8 @@
 class ClassicButton : public Button, public Focusable {
 private:
 public:
-	ClassicButton(unsigned int focusID, Texture2D* texture, Vector2 pos, Vector2 size, Vector2 resolution,
-		std::string const& text, SoundType releaseSound);
+	ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
+		Vector2 resolution, std::string const& text, Texture2D* texture, SoundType releaseSound);
 	ClassicButton(ClassicButton const&) = default;
 	ClassicButton(ClassicButton&& old) = default;
 	ClassicButton& operator= (ClassicButton const&) = default;

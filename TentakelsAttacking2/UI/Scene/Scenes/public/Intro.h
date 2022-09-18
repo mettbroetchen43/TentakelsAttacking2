@@ -52,7 +52,8 @@ private:
 	void StartGame();
 
 public:
-	Intro(Vector2 pos, Vector2 size, UIManager const& uiManager, SceneType sceneType);
+	Intro(Vector2 pos, Vector2 size, Alignment alignment,
+		UIManager const& uiManager, SceneType nextScene);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);

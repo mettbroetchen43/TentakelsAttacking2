@@ -10,13 +10,12 @@
 class MessagePopUp : public PopUp {
 private:
 	ClassicButton m_btn;
-
-	void Initialize(AppContext const& appContext) override;
+	void Initialize();
 
 public:
-	MessagePopUp(Vector2 pos, Vector2 size, Vector2 resolution,
-		std::string const& title, std::string const& subTitle, Texture2D* btnTexture,
-		Texture2D* fullBackground, Texture2D* popUpBackground, Texture2D* m_infoTexture);
+	MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+		std::string const& title, std::string const& subTitle, AssetType btnTexture,
+		AssetType fullBackground, AssetType popUpBackground, AssetType m_infoTexture);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext) override;

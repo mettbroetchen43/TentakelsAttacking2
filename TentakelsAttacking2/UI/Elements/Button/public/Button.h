@@ -36,8 +36,9 @@ protected:
 	[[nodiscard]] bool IsSameState(State state) const;
 
 public:
-	Button(Texture2D* texture, Vector2 pos, Vector2 size, Vector2 resolution, std::string const& text,
-		SoundType releaseSound);
+	Button(Vector2 pos, Vector2 size, Alignment alignment, std::string const& text,
+		Texture2D* texture, SoundType releaseSound, Vector2 resolution);
+	Button();
 	Button(Button const&) = default;
 	Button(Button&& old) = default;
 	Button& operator= (Button const&) = default;

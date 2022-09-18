@@ -10,7 +10,7 @@ class TestScene : public BaseMainScene {
 private:
 
 public:
-	TestScene(Vector2 pos, Vector2 size, UIManager const& uiManager);
+	TestScene(Vector2 pos, Vector2 size, Alignment alignment, UIManager const& uiManager);
 	~TestScene() = default;
 	void InitializeSzene(UIManager const& uiManager);
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;

@@ -20,12 +20,14 @@ void SceneManager::InitializeScenes() {
 	auto test = std::make_shared<TestScene>(
 		Vector2(0.0f, 0.0f),
 		Vector2(1.0f, 1.0f),
+		Alignment::DEFAULT,
 		*m_uiManager);
 	m_scenes[SceneType::TEST] = test;
 
 	auto logo = std::make_shared<LogoScene>(
 		Vector2(0.0f, 0.0f),
 		Vector2(1.0f, 1.0f),
+		Alignment::DEFAULT,
 		SceneType::INTRO,
 		*m_uiManager);
 	m_scenes[SceneType::LOGO] = logo;
@@ -33,6 +35,7 @@ void SceneManager::InitializeScenes() {
 	auto intro = std::make_shared<Intro>(
 		Vector2(0.0f,0.0f),
 		Vector2(1.0f,1.0f),
+		Alignment::DEFAULT,
 		*m_uiManager,
 		SceneType::TEST);
 	m_scenes[SceneType::INTRO] = intro;
@@ -46,13 +49,14 @@ void SceneManager::NewMessagePopUp(std::string const& title, std::string const& 
 	m_popUp.push_back(std::make_shared<MessagePopUp>(
 		Vector2(0.4f, 0.4f),
 		Vector2(0.3f, 0.3f),
+		Alignment::DEFAULT,
 		m_uiManager->GetResolution(),
 		title,
 		subTitle,
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
-		appContext.assetManager.GetTexture(AssetType::GREY_50),
-		appContext.assetManager.GetTexture(AssetType::GREY),
-		appContext.assetManager.GetTexture(AssetType::EXCLAMATION_MARK)
+		AssetType::BUTTON_DEFAULT,
+		AssetType::GREY_50,
+		AssetType::GREY,
+		AssetType::EXCLAMATION_MARK
 	));
 }
 void SceneManager::DeleteLastPopUp() {

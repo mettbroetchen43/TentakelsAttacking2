@@ -13,7 +13,7 @@ private:
 	std::string m_toRender;
 	float m_textHeight;
 	float m_textSize;
-	Rectangle m_collider;
+	Rectangle m_collider = { 0.0f,0.0f,0.0f,0.0f };
 	bool m_lineBreaks = true;
 	bool m_renderRectangle = false;
 
@@ -21,7 +21,8 @@ private:
 	std::string BreakLines(std::string toBreak, AppContext const& appContext) const;
 
 public:
-	Text(Vector2 pos, Vector2 size, float textSize, std::string text, Vector2 resolution);
+	Text(Vector2 pos, Vector2 size, Alignment alignment, float textHeight,
+		std::string text, Vector2 resolution);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);

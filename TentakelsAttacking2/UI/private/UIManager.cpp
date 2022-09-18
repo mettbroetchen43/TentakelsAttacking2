@@ -77,6 +77,7 @@ UIManager::UIManager()
 
 void UIManager::StartUI() {
 	m_sceneManager.SwitchScene(SceneType::LOGO, m_appContext);
+	ToggleFullScreen();
 	UILoop();
 }
 

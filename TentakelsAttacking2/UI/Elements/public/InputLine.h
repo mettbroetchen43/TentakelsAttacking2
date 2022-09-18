@@ -103,10 +103,10 @@ protected:
 	}
 
 public:
-	InputLine(unsigned int focusID, Texture2D* texture, Vector2 pos, Vector2 size,
-		unsigned int charLimit, Vector2 resolution)
-		: UIElement(pos, size), Focusable(focusID), m_charLimit(charLimit), m_texture(texture) {
-		m_collider = { resolution.x * pos.x, resolution.y * pos.y, resolution.x * size.x, resolution.y * size.y };
+	InputLine(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
+		unsigned int charLimit, Texture2D* texture, Vector2 resolution)
+		: UIElement(pos, size, alignment), Focusable(focusID), m_charLimit(charLimit), m_texture(texture) {
+		m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	}
 	InputLine(InputLine const&) = default;
 	InputLine(InputLine&&) = default;

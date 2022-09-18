@@ -19,7 +19,8 @@ private:
 	void Initialize(UIManager const& uiManager);
 
 public:
-	LogoScene(Vector2 pos, Vector2 size, SceneType nextScene, UIManager const& uiManager);
+	LogoScene(Vector2 pos, Vector2 size, Alignment alignment,
+		SceneType nextScene, UIManager const& uiManager);
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution, AppContext const& appContext) override;

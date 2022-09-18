@@ -26,8 +26,8 @@ void TestScene::SetActive(bool active, AppContext const& appContext) {
 }
 
 
-TestScene::TestScene(Vector2 pos, Vector2 size, UIManager const& uiManager)
-	: BaseMainScene(pos, size) {
+TestScene::TestScene(Vector2 pos, Vector2 size, Alignment alignment, UIManager const& uiManager)
+	: BaseMainScene(pos, size, alignment) {
 	InitializeSzene(uiManager);
 }
 
@@ -39,10 +39,11 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 
 	auto ptr4 = std::make_shared<InputLine<double>>(
 		7,
-		appContext.assetManager.GetTexture(AssetType::GREY),
 		GetElementPosition(0.15f, 0.7f),
 		GetElementSize(0.2f, 0.05f),
+		Alignment::TOP_MID,
 		10,
+		appContext.assetManager.GetTexture(AssetType::GREY),
 		uiManager.GetResolution()
 		);
 	ptr4->SetPlaceholderText("Double Input List");
@@ -50,10 +51,11 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 
 	auto ptr3 = std::make_shared<InputLine<int>>(
 		6,
-		appContext.assetManager.GetTexture(AssetType::GREY),
 		GetElementPosition(0.15f, 0.6f),
 		GetElementSize(0.2f, 0.05f),
+		Alignment::TOP_MID,
 		10,
+		appContext.assetManager.GetTexture(AssetType::GREY),
 		uiManager.GetResolution()
 		);
 	ptr3->SetPlaceholderText("Integer Input List");
@@ -61,10 +63,11 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 
 	auto ptr = std::make_shared<InputLine<std::string>>(
 		4,
-		appContext.assetManager.GetTexture(AssetType::GREY),
 		GetElementPosition(0.15f, 0.4f),
 		GetElementSize(0.2f, 0.05f),
+		Alignment::TOP_MID,
 		40,
+		appContext.assetManager.GetTexture(AssetType::GREY),
 		uiManager.GetResolution()
 		);
 	ptr->SetPlaceholderText("into for");
@@ -74,34 +77,37 @@ void TestScene::InitializeSzene(UIManager const& uiManager) {
 
 	ptr = std::make_shared<InputLine<std::string>>(
 		5,
-		appContext.assetManager.GetTexture(AssetType::GREY),
 		GetElementPosition(0.15f, 0.5f),
 		GetElementSize(0.2f, 0.05f),
+		Alignment::TOP_MID,
 		40,
+		appContext.assetManager.GetTexture(AssetType::GREY),
 		uiManager.GetResolution()
 		);
 	ptr->SetPlaceholderText("copy to");
 	m_elements.push_back(ptr);
 
 	auto ptr2 = std::make_shared<Slider>(
-		appContext.assetManager.GetTexture(AssetType::GREY),
 		GetElementPosition(0.05f, 0.1f),
 		GetElementSize(0.025f, 0.75f),
-		uiManager.GetResolution(),
-		6.0f,
+		Alignment::TOP_MID,
 		false,
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT)
+		appContext.assetManager.GetTexture(AssetType::GREY),
+		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
+		6.0f,
+		uiManager.GetResolution()
 		);
 	m_elements.push_back(ptr2);
 
 	ptr2 = std::make_shared<Slider>(
-		appContext.assetManager.GetTexture(AssetType::GREY),
 		GetElementPosition(0.05f, 0.9f),
 		GetElementSize(0.9f, 0.025f),
-		uiManager.GetResolution(),
-		6.0f,
+		Alignment::TOP_MID,
 		true,
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT)
+		appContext.assetManager.GetTexture(AssetType::GREY),
+		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
+		6.0f,
+		uiManager.GetResolution()
 		);
 	m_elements.push_back(ptr2);
 }

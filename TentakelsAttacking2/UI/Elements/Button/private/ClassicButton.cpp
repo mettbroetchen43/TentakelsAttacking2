@@ -6,9 +6,9 @@
 #include "ClassicButton.h"
 #include "AppContext.h"
 
-ClassicButton::ClassicButton(unsigned int focusID, Texture2D* texture, Vector2 pos, Vector2 size,
-	Vector2 resolution, std::string const& text, SoundType releaseSound)
-	: Button(texture, pos, size, resolution, text, releaseSound), Focusable(focusID) { }
+ClassicButton::ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size, Alignment allignment,
+	Vector2 resolution, std::string const& text, Texture2D* texture, SoundType releaseSound)
+	: Focusable(focusID), Button(pos, size, allignment, text, texture, releaseSound, resolution) { }
 
 void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 

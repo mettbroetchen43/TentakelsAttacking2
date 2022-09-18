@@ -129,8 +129,9 @@ void Intro::StartGame() {
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
-Intro::Intro(Vector2 pos, Vector2 size, UIManager const& uiManager, SceneType nextScene)
-	:Scene(pos, size), m_nextScene(nextScene) {
+Intro::Intro(Vector2 pos, Vector2 size, Alignment alignment,
+	UIManager const& uiManager, SceneType nextScene)
+	:Scene(pos, size, alignment), m_nextScene(nextScene) {
 	AppContext& appContext = AppContext::GetInstance();
 	m_title = appContext.assetManager.GetTitle();
 
@@ -138,11 +139,12 @@ Intro::Intro(Vector2 pos, Vector2 size, UIManager const& uiManager, SceneType ne
 
 	m_btn = std::make_shared<ClassicButton>(
 		1,
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		GetElementPosition(0.35f, 1.1f),
 		GetElementSize(0.3f, 0.2f),
+		Alignment::MID_MID,
 		uiManager.GetResolution(),
 		"Start Game",
+		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
 		);
 	m_btn->SetEnabled(false);

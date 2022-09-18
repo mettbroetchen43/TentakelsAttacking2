@@ -16,7 +16,8 @@ private:
 	bool m_isScaleToFit = false;
 
 public:
-	Picture(Vector2 pos, Vector2 size, AssetType assetType, UIManager const& uiManager);
+	Picture(Vector2 pos, Vector2 size, Alignment alignment,
+		AssetType assetType, UIManager const& uiManager);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);

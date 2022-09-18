@@ -14,7 +14,6 @@ protected:
 	Rectangle m_backgroundColider, m_colider;
 
 	void Close();
-	virtual void Initialize(AppContext const& appContext) = 0;
 
 	Vector2 GetElementPosition(float x, float y);
 	Vector2 GetElementSize(float x, float y);
@@ -22,9 +21,9 @@ protected:
 	Rectangle GetColiderWithMaxValues(Texture2D* texture, float maxWidth, float maxHeight) const;
 
 public:
-	PopUp(Vector2 pos, Vector2 size, Vector2 resolution, 
+	PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, 
 		std::string const& title, std::string const& subTitle,
-		Texture2D *fullBackground, Texture2D *popUpBackground, Texture2D *m_infoTexture);
+		AssetType fullBackground, AssetType popUpBackground, AssetType infoTexture);
 	PopUp(PopUp const&) = default;
 	PopUp(PopUp&&) = default;
 	PopUp& operator= (PopUp const&) = default;

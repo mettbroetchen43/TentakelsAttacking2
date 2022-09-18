@@ -28,7 +28,7 @@ Rectangle PopUp::GetColiderWithMaxValues(Texture2D* texture, float maxWidth, flo
 	}
 
 	float ratio = static_cast<float>(texture->width) / static_cast<float>(texture->height);
-	Rectangle rectangle(0.0f,0.0f,0.0f,0.0f);
+	Rectangle rectangle(0.0f, 0.0f, 0.0f, 0.0f);
 	if (texture->width > maxWidth) {
 		rectangle.width = maxWidth;
 		rectangle.height = maxWidth * ratio;
@@ -41,16 +41,27 @@ Rectangle PopUp::GetColiderWithMaxValues(Texture2D* texture, float maxWidth, flo
 	return rectangle;
 }
 
-PopUp::PopUp(Vector2 pos, Vector2 size, Vector2 resolution,
+PopUp::PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, std::string const& subTitle,
-	Texture2D* fullBackground, Texture2D* popUpBackground, Texture2D* infoTexture)
-	: UIElement(pos, size), m_title(title), m_subTitle(subTitle),
-	m_fullBackground(fullBackground), m_popUpBackground(popUpBackground), m_infoTexture(infoTexture) {
-	m_backgroundColider = { 0.0f, 0.0f,  resolution.x, resolution.y };
-	m_colider = { resolution.x * pos.x, resolution.y * pos.y , resolution.x * size.x, resolution.y * size.y };
+	AssetType fullBackground, AssetType popUpBackground, AssetType infoTexture)
+	: UIElement(pos, size, alignment), m_title(title), m_subTitle(subTitle) {
+	AppContext& appContext = AppContext::GetInstance();
+
+	m_fullBackground  = appContext.assetManager.GetTexture(fullBackground);
+	m_popUpBackground = appContext.assetManager.GetTexture(popUpBackground);
+	m_infoTexture     = appContext.assetManager.GetTexture(infoTexture);
+
+	m_backgroundColider = {
+		0.0f,
+		0.0f,
+		resolution.x,
+		resolution.y
+	};
+
+	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 }
 
-void PopUp::Resize(Vector2 resolution,[[maybe_unused]] AppContext const& appContext) {
+void PopUp::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) {
 	m_backgroundColider = { 0.0f, 0.0f, resolution.x, resolution.y };
 	m_colider = { resolution.x * m_pos.x, resolution.y * m_pos.y,
 		resolution.x * m_size.x, resolution.y * m_size.y };
