@@ -1,0 +1,144 @@
+//
+// Purpur Tentakel
+// 19.09.2022
+//
+
+#include "Title.h"
+#include "AppContext.h"
+#include "Random.h"
+
+void Title::RenderTitle(AppContext const& appContext) {
+	for (int i = 0;i < m_title->size();++i) {
+		DrawTextEx(
+			*(appContext.assetManager.GetFont()),
+			m_title->at(i).c_str(),
+			Vector2(m_textPosition.x, m_textPosition.y + m_fontSize * i),
+			m_fontSize,
+			0.0f,
+			WHITE);
+	}
+}
+void Title::RenderTitleSequens(AppContext const& appContext) {
+	size_t localCharCount = 0;
+	std::string dummyText;
+	int i = 0;
+	for (;i < m_title->size();++i) {
+		dummyText = m_title->at(i);
+		if (localCharCount + dummyText.size() > m_charCount) {
+			dummyText = dummyText.substr(0, m_charCount - localCharCount);
+		}
+
+		DrawTextEx(
+			*(appContext.assetManager.GetFont()),
+			dummyText.c_str(),
+			Vector2(m_textPosition.x, m_textPosition.y + m_fontSize * i),
+			m_fontSize,
+			0.0f,
+			WHITE);
+		localCharCount += dummyText.size();
+		if (localCharCount >= m_charCount) {
+			break;
+		}
+	}
+
+	Random& random = Random::GetInstance();
+	float prefixPosition = m_textPosition.x +
+		(dummyText.size() *
+			MeasureTextEx(
+				*(appContext.assetManager.GetFont()),
+				"a",
+				m_fontSize,
+				0.0f).x);
+
+	DrawTextEx(
+		*(appContext.assetManager.GetFont()),
+		m_postFixes.at(random.random(m_postFixes.size())).c_str(),
+		Vector2(prefixPosition, m_textPosition.y + m_fontSize * i),
+		m_fontSize,
+		0.0f,
+		WHITE);
+
+	if (dummyText.size() > 0) {
+		if (dummyText.at(dummyText.size() - 1) != ' ') {
+			auto event = PlayTextSoundEvent();
+			appContext.eventManager.InvokeEvent(event);
+		}
+	}
+
+	++m_charCount;
+	if (m_charCount >= m_maxCharCount) {
+		TitleFinish(appContext);
+	}
+}
+void Title::MeasureTitleLength() {
+	m_maxCharCount = 0;
+	for (auto const& s : *m_title) {
+		m_maxCharCount += s.size();
+	}
+}
+void Title::ResizeText(AppContext const& appContext, Vector2 resolution) {
+	m_fontSize = resolution.y / ThirtyFife;
+	Vector2 textSize = MeasureTextEx(
+		*(appContext.assetManager.GetFont()),
+		m_title->at(0).c_str(),
+		m_fontSize,
+		0.0f
+	);
+	m_textPosition.x = (resolution.x - textSize.x) / 2;
+	m_textPosition.y = m_fontSize * 2;
+}
+
+void Title::TitleFinish(AppContext const& appContext) {
+	m_titleFinish = true;
+	auto event = PlaySoundEvent(SoundType::ACCEPTED);
+	appContext.eventManager.InvokeEvent(event);
+}
+
+Title::Title(Vector2 pos, Vector2 size, Alignment alignment, float fontSize, bool drawTitle,
+	Vector2 resolution, AppContext& appContext)
+	: UIElement(pos, size, alignment), m_fontSize(fontSize), m_titleFinish(!drawTitle) {
+
+	m_title = appContext.assetManager.GetTitle();
+	MeasureTitleLength();
+	Vector2 textSize = MeasureTextEx(
+		*(appContext.assetManager.GetFont()),
+		m_title->at(0).c_str(),
+		fontSize,
+		0.0f
+	);
+	m_size.x = textSize.x / resolution.x;
+
+	m_textPosition = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+
+}
+
+void Title::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	bool skipTitle =
+		IsKeyPressed(KEY_ESCAPE)
+		and !m_titleFinish;
+	if (skipTitle) {
+		TitleFinish(appContext);
+		return;
+	}
+}
+void Title::Render(AppContext const& appContext) {
+	// Update here to make shure the value ist correct
+	m_lastFinishedTitle = m_titleFinish;
+
+	if (!m_titleFinish) {
+		RenderTitleSequens(appContext);
+	}
+	else {
+		RenderTitle(appContext);
+	}
+}
+void Title::Resize(Vector2 resolution, AppContext const& appContext) {
+	ResizeText(AppContext::GetInstance(), resolution);
+}
+
+bool Title::HasFinishedTitle() const {
+	return m_titleFinish;
+}
+bool Title::IsTitleFinished() const {
+	return m_lastFinishedTitle != m_titleFinish;
+}
