@@ -10,9 +10,13 @@
 Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment,
 	AssetType assetType, UIManager const& uiManager)
 	: UIElement(pos, size, alignment) {
-
+	Vector2 resolution = uiManager.GetResolution();
 	m_texture = AppContext::GetInstance().assetManager.GetTexture(assetType);
-	m_collider = GetAlignedCollider(m_pos, m_size, alignment, uiManager.GetResolution());
+	m_size.x =
+		static_cast<float>(m_texture->width) / m_texture->height
+		* resolution.y / resolution.x
+		* m_size.y;
+	m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 }
 
 void Picture::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
@@ -40,21 +44,4 @@ void Picture::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appC
 		m_size.x * resolution.x,
 		m_size.y * resolution.y
 	};
-	if (m_isScaleToFit) {
-		ScaleToFit();
-	}
-}
-
-void Picture::ScaleToFit() {
-	int ratio = m_texture->width / m_texture->height;
-	m_collider.width = m_collider.height * ratio;
-	m_isScaleToFit = true;
-}
-
-void Picture::SetTexture(AssetType assetType, bool scaleToFit) {
-	m_texture = AppContext::GetInstance().assetManager.GetTexture(assetType);
-	m_isScaleToFit = scaleToFit;
-	if (m_isScaleToFit) {
-		ScaleToFit();
-	}
 }

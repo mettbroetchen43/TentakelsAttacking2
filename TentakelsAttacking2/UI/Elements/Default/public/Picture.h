@@ -22,8 +22,4 @@ public:
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);
 	void Resize(Vector2 resolution, AppContext const& appContext);
-
-	void ScaleToFit();
-
-	void SetTexture(AssetType assetType, bool scaleToFit = true);
 };

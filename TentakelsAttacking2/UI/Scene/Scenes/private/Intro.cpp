@@ -7,6 +7,7 @@
 #include "AppContext.h"
 #include "UIManager.h"
 #include "ClassicButton.h"
+#include "Text.h"
 #include "AssetType.h"
 #include "SoundType.h"
 #include "SceneType.h"
@@ -15,6 +16,37 @@
 
 #define THERTY_FIFE 35.0f
 #define BTN_SPEED 2.5f
+
+void Intro::Initialize(AppContext& appContext, UIManager const& uiManager) {
+	m_btn = std::make_shared<ClassicButton>(
+		1,
+		GetElementPosition(0.5f, 1.1f),
+		GetElementSize(0.3f, 0.2f),
+		Alignment::MID_MID,
+		uiManager.GetResolution(),
+		"Start Game",
+		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
+		SoundType::ACCEPTED
+		);
+	m_btn->SetEnabled(false);
+	m_elements.push_back(m_btn);
+
+	auto skipText = std::make_shared<Text>(
+		GetElementPosition(0.99f, 0.98f),
+		GetElementSize(0.11f, 0.03f),
+		Alignment::BOTTOM_RIGHT,
+		0.03f,
+		"skip with [ESC]",
+		uiManager.GetResolution()
+		);
+	m_elements.push_back(skipText);
+
+
+	std::function<void()> gameStart = [&]() {
+		StartGame();
+	};
+	m_btn->SetOnClick(gameStart);
+}
 
 void Intro::RenderTitle(AppContext const& appContext) {
 	for (int i = 0;i < m_title->size();++i) {
@@ -132,31 +164,12 @@ void Intro::StartGame() {
 Intro::Intro(Vector2 pos, Vector2 size, Alignment alignment,
 	UIManager const& uiManager, SceneType nextScene)
 	:Scene(pos, size, alignment), m_nextScene(nextScene) {
+
 	AppContext& appContext = AppContext::GetInstance();
+	Initialize(appContext, uiManager);
+
 	m_title = appContext.assetManager.GetTitle();
-
 	ResizeText(appContext, uiManager.GetResolution());
-
-	m_btn = std::make_shared<ClassicButton>(
-		1,
-		GetElementPosition(0.5f, 1.1f),
-		GetElementSize(0.3f, 0.2f),
-		Alignment::MID_MID,
-		uiManager.GetResolution(),
-		"Start Game",
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
-		SoundType::ACCEPTED
-		);
-	m_btn->SetEnabled(false);
-
-
-	std::function<void()> gameStart = [&]() {
-		StartGame();
-	};
-	m_btn->SetOnClick(gameStart);
-
-	m_elements.push_back(m_btn);
-
 	MeasureTitleLength();
 }
 
@@ -191,7 +204,9 @@ void Intro::Render(AppContext const& appContext) {
 		RenderTitle(appContext);
 	}
 
-	m_btn->Render(appContext);
+	for (auto e : m_elements) {
+		e->Render(appContext);
+	}
 }
 void Intro::Resize(Vector2 resolution, AppContext const& appContext) {
 	m_btn->Resize(resolution, appContext);

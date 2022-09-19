@@ -39,6 +39,8 @@ private:
 	size_t m_maxBtnPosition;
 	SceneType m_nextScene;
 	
+	void Initialize(AppContext& appContext, UIManager const& uiManager);
+
 	void RenderTitle(AppContext const& appContext);
 	void RenderTitleSequens(AppContext const& appContext);
 
