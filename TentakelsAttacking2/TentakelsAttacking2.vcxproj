@@ -153,6 +153,7 @@
     <ClInclude Include="Game\public\Planet.h" />
     <ClInclude Include="UI\Elements\Default\public\Picture.h" />
     <ClInclude Include="UI\Elements\Default\public\Text.h" />
+    <ClInclude Include="UI\Elements\Default\public\Title.h" />
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h" />
     <ClInclude Include="UI\Elements\public\InputLine.h" />
@@ -176,6 +177,8 @@
     <ClInclude Include="UI\Scene\public\SceneType.h" />
     <ClInclude Include="UI\Scene\public\TestScene.h" />
     <ClInclude Include="UI\Scene\Scenes\public\Logos.h" />
+    <ClInclude Include="UI\Scene\Scenes\public\MainMenu.h" />
+    <ClInclude Include="UI\Scene\Scenes\public\Scenes.h" />
     <ClInclude Include="_public\AppContext.h" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +191,7 @@
     <ClCompile Include="Game\private\Planet.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
+    <ClCompile Include="UI\Elements\Default\private\Title.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\PopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\MessagePopUp.cpp" />
     <ClCompile Include="UI\private\Allignment.cpp" />
@@ -206,6 +210,7 @@
     <ClCompile Include="UI\Scene\private\Scene.cpp" />
     <ClCompile Include="UI\Scene\private\TestScene.cpp" />
     <ClCompile Include="UI\Scene\Scenes\private\Logos.cpp" />
+    <ClCompile Include="UI\Scene\Scenes\private\MainMenu.cpp" />
     <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="_private\AppContext.cpp" />

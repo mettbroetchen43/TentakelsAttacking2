@@ -8,9 +8,7 @@
 #include "PopUp.h"
 #include "MessagePopUp.h"
 #include "Events.h"
-#include "TestScene.h"
-#include "Intro.h"
-#include "Logos.h"
+#include "Scenes.h"
 #include "UIManager.h"
 #include "AppContext.h"
 #include "AssetType.h"
@@ -37,8 +35,16 @@ void SceneManager::InitializeScenes() {
 		Vector2(1.0f,1.0f),
 		Alignment::DEFAULT,
 		*m_uiManager,
-		SceneType::TEST);
+		SceneType::MAIN_MENU);
 	m_scenes[SceneType::INTRO] = intro;
+
+	auto mainMenu = std::make_shared<MainMenu>(
+		Vector2(0.0f, 0.0f),
+		Vector2(1.0f, 1.0f),
+		Alignment::DEFAULT,
+		*m_uiManager
+		);
+	m_scenes[SceneType::MAIN_MENU] = mainMenu;
 }
 
 void SceneManager::NewMessagePopUp(std::string const& title, std::string const& subTitle) {

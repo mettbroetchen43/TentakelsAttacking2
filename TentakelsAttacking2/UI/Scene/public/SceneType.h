@@ -9,4 +9,5 @@ enum class SceneType {
 	TEST,
 	LOGO,
 	INTRO,
+	MAIN_MENU,
 };
