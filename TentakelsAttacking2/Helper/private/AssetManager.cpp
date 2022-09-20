@@ -27,7 +27,6 @@ void AssetManager::LoadFont() {
 }
 
 AssetManager::AssetManager() {
-	InitWindow(100, 100, "Tentakels Attacking");
 	for (int i = 0; i < m_files.size(); ++i) {
 		char const* test = (m_files.at(i)).c_str();
 		Texture2D texture = LoadTexture(test);

@@ -5,6 +5,7 @@
 
 #include "UIManager.h"
 #include "TestScene.h"
+#include "UIEvents.h"
 
 Vector2 UIManager::GetResolution() const {
 	Vector2 newResolution;
@@ -37,7 +38,8 @@ void UIManager::CheckAndUpdate() {
 		IsKeyDown(KeyboardKey::KEY_LEFT_ALT)
 		and IsKeyPressed(KeyboardKey::KEY_F4);
 	if (quit) {
-		CloseWindow();
+		auto event = CloseWindowEvent();
+		m_appContext.eventManager.InvokeEvent(event);
 	}
 
 	if (IsKeyPressed(KEY_F11)) {
@@ -61,6 +63,9 @@ void UIManager::UILoop() {
 		CheckAndUpdateResolution();
 		CheckAndUpdate();
 		Render();
+		if (m_closeWindow) {
+			break;
+		}
 	}
 	CloseWindow();
 
@@ -73,6 +78,7 @@ UIManager::UIManager()
 
 	m_resolution = GetResolution();
 	SetWindowSize(static_cast<int>(m_resolution.x), static_cast<int>(m_resolution.y));
+	m_appContext.eventManager.AddListener(this);
 }
 
 void UIManager::StartUI() {
@@ -81,3 +87,8 @@ void UIManager::StartUI() {
 	UILoop();
 }
 
+void UIManager::OnEvent(Event const& event) {
+	if (auto const& CloseEvent = dynamic_cast<CloseWindowEvent const*>(&event)) {
+		m_closeWindow = true;
+	}
+}

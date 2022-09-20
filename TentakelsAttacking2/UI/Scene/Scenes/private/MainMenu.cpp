@@ -9,16 +9,23 @@
 #include "AssetType.h"
 #include "SoundType.h"
 #include "ClassicButton.h"
+#include "Title.h"
+#include "UIEvents.h"
 #include <memory>
+#include <iostream>
 
 void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
-	float btnX = 0.05f;
+	float btnPosX = 0.25f;
+	float btnPosY = 0.3f;
+	float btnSizX = 0.2f;
+	float btnSizY = 0.1f;
+	int focusID;
 
 	auto newGameBtn = std::make_shared<ClassicButton>(
-		1,
-		GetElementPosition(btnX, 0.3f),
-		GetElementSize(0.2f, 0.1f),
-		Alignment::MID_LEFT,
+		focusID,
+		GetElementPosition(btnPosX, btnPosY),
+		GetElementSize(btnSizX, btnSizY),
+		Alignment::MID_RIGHT,
 		uiManager.GetResolution(),
 		"New Game",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
@@ -26,11 +33,14 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		);
 	m_elements.push_back(newGameBtn);
 
+	btnPosY += 0.15f;
+	++focusID;
+
 	auto loadGameBtn = std::make_shared<ClassicButton>(
-		2,
-		GetElementPosition(btnX, 0.45f),
-		GetElementSize(0.2f, 0.1f),
-		Alignment::MID_LEFT,
+		focusID,
+		GetElementPosition(btnPosX, btnPosY),
+		GetElementSize(btnSizX, btnSizY),
+		Alignment::MID_RIGHT,
 		uiManager.GetResolution(),
 		"Load Game",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
@@ -38,41 +48,62 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		);
 	m_elements.push_back(loadGameBtn);
 
-	auto SettingsBtn = std::make_shared<ClassicButton>(
-		3,
-		GetElementPosition(btnX, 0.6f),
-		GetElementSize(0.2f, 0.1f),
-		Alignment::MID_LEFT,
+	btnPosY += 0.15f;
+	++focusID;
+
+	auto settingsBtn = std::make_shared<ClassicButton>(
+		focusID,
+		GetElementPosition(btnPosX, btnPosY),
+		GetElementSize(btnSizX, btnSizY),
+		Alignment::MID_RIGHT,
 		uiManager.GetResolution(),
 		"Settings",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::CLICKED_RELEASE_STD
 		);
-	m_elements.push_back(SettingsBtn);
+	m_elements.push_back(settingsBtn);
 
-	auto CreditsBtn = std::make_shared<ClassicButton>(
-		4,
-		GetElementPosition(btnX, 0.75f),
-		GetElementSize(0.2f, 0.1f),
-		Alignment::MID_LEFT,
+	btnPosY += 0.15f;
+	++focusID;
+
+	auto creditsBtn = std::make_shared<ClassicButton>(
+		focusID,
+		GetElementPosition(btnPosX, btnPosY),
+		GetElementSize(btnSizX, btnSizY),
+		Alignment::MID_RIGHT,
 		uiManager.GetResolution(),
 		"Credits",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::CLICKED_RELEASE_STD
 		);
-	m_elements.push_back(CreditsBtn);
+	m_elements.push_back(creditsBtn);
 
-	auto QuitBtn = std::make_shared<ClassicButton>(
-		5,
-		GetElementPosition(btnX, 0.9f),
-		GetElementSize(0.2f, 0.1f),
-		Alignment::MID_LEFT,
+	btnPosY += 0.15f;
+	++focusID;
+
+	auto quitBtn = std::make_shared<ClassicButton>(
+		focusID,
+		GetElementPosition(btnPosX, btnPosY),
+		GetElementSize(btnSizX, btnSizY),
+		Alignment::MID_RIGHT,
 		uiManager.GetResolution(),
 		"Quit",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
 		);
-	m_elements.push_back(QuitBtn);
+	quitBtn->SetOnClick([]() {AppContext::GetInstance().eventManager.InvokeEvent(CloseWindowEvent());});
+	m_elements.push_back(quitBtn);
+
+	auto title = std::make_shared<Title>(
+		GetElementPosition(0.625f, 0.025f),
+		GetElementSize(0.0f, 0.0f),
+		Alignment::TOP_MID,
+		25.0f,
+		false,
+		uiManager.GetResolution(),
+		appContext
+		);
+	m_elements.push_back(title);
 }
 
 MainMenu::MainMenu(Vector2 pos, Vector2 size, Alignment alignment, UIManager const& uiManager)

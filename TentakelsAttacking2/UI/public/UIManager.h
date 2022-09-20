@@ -5,6 +5,7 @@
 
 #pragma once
 #include "UIElement.h"
+#include "EventListener.h"	
 #include "AppContext.h"
 #include "SceneManager.h"
 #include "Focus.h"
@@ -13,12 +14,13 @@
 
 class Scene;
 
-class UIManager {
+class UIManager : public EventListener {
 private:
 	AppContext& m_appContext;
 	Focus m_focus;
 	SceneManager m_sceneManager;
 	Vector2 m_resolution;
+	bool m_closeWindow;
 
 	void ToggleFullScreen();
 
@@ -32,6 +34,8 @@ public:
 	UIManager();
 
 	void StartUI();
+
+	void OnEvent(Event const& event);
 
 	[[nodiscard]] Vector2 GetResolution() const;
 	[[nodiscard]] Focus& GetFocus();

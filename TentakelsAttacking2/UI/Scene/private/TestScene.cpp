@@ -8,7 +8,7 @@
 #include "AppContext.h"
 #include "UIManager.h"
 #include "InputLine.h"
-#include "Events.h"
+#include "UIEvents.h"
 #include <iostream>
 #include <functional>
 

@@ -12,6 +12,9 @@ class Focusable;
 class PopUp;
 enum class SceneType;
 
+class CloseWindowEvent :public Event {
+};
+
 class PlaySoundEvent : public Event {
 public:
 	PlaySoundEvent(SoundType soundType)
