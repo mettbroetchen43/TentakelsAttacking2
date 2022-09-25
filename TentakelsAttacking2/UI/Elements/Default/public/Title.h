@@ -35,12 +35,13 @@ private:
 	void RenderTitleSequens(AppContext const& appContext);
 
 	void MeasureTitleLength();
+	void SetColider(AppContext const& appContext, Vector2 const& resolution);
 	void ResizeText(AppContext const& appContext, Vector2 resolution);
 
 	void TitleFinish(AppContext const& appContext);
 
 public:
-	Title(Vector2 pos, Vector2 size, Alignment alignment, float fontSize, bool drawTitle,
+	Title(Vector2 pos, Vector2 size, Alignment alignment, bool drawTitle,
 		Vector2 resolution, AppContext& appContext);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;

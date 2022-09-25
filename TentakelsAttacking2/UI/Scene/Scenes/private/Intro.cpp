@@ -21,9 +21,8 @@
 void Intro::Initialize(AppContext& appContext, UIManager const& uiManager) {
 	m_title = std::make_shared<Title>(
 		GetElementPosition(0.5f, 0.1f),
-		GetElementSize(0.7f, 0.2f),
+		GetElementSize(0.9f, 0.3f),
 		Alignment::TOP_MID,
-		32.0f,
 		true,
 		uiManager.GetResolution(),
 		appContext

@@ -99,9 +99,8 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.625f, 0.025f),
-		GetElementSize(0.0f, 0.0f),
+		GetElementSize(0.7f, 0.2f),
 		Alignment::TOP_MID,
-		25.0f,
 		false,
 		uiManager.GetResolution(),
 		appContext

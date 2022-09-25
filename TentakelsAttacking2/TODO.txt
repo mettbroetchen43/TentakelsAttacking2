@@ -4,9 +4,9 @@
 // 
 
 UI:
+	- implement render colider of UIElement by bool
+
 	- fix Alignment of PopUp
-	- fix resize of title
-	- fix heigt of title
 	- fix movment of Button
 
 	- scrole slider extern
@@ -16,7 +16,9 @@ UI:
 
 	-> Text
 		-> implement Break Lines
-
+	
+Focus:
+	- Skip disabled Elements while tabbing
 Sound:
 	- implement sounds for button movment -> intro
 

@@ -1,7 +1,7 @@
 //
 // Purpur Tentakel
 // 19.09.2022
-//
+// 
 
 #include "Title.h"
 #include "AppContext.h"
@@ -76,16 +76,44 @@ void Title::MeasureTitleLength() {
 		m_maxCharCount += s.size();
 	}
 }
-void Title::ResizeText(AppContext const& appContext, Vector2 resolution) {
-	m_fontSize = resolution.y / ThirtyFife;
+void Title::SetColider(AppContext const& appContext, Vector2 const& resolution) {
+	m_fontSize = resolution.y * m_size.y / m_title->size();
+
+	std::string title = "";
+	for (auto const& line : *m_title) {
+		title += line + '\n';
+	}
+	title.pop_back();
+
 	Vector2 textSize = MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
-		m_title->at(0).c_str(),
+		title.c_str(),
 		m_fontSize,
 		0.0f
 	);
-	m_textPosition.x = (resolution.x - textSize.x) / 2;
-	m_textPosition.y = m_fontSize * 2;
+	float size = textSize.x / resolution.x;
+
+	while (m_size.x < size) {
+		--m_fontSize;
+		textSize = MeasureTextEx(
+			*(appContext.assetManager.GetFont()),
+			title.c_str(),
+			m_fontSize,
+			0.0f
+		);
+		size = textSize.x / resolution.x;
+	}
+
+	m_size.x = size;
+}
+void Title::ResizeText(AppContext const& appContext, Vector2 resolution) {
+	SetColider(appContext, resolution);
+	m_textPosition = {
+		m_pos.x * resolution.x,
+		m_pos.y * resolution.y,
+		m_size.x * resolution.x,
+		m_size.y * resolution.y
+	};
 }
 
 void Title::TitleFinish(AppContext const& appContext) {
@@ -94,25 +122,19 @@ void Title::TitleFinish(AppContext const& appContext) {
 	appContext.eventManager.InvokeEvent(event);
 }
 
-Title::Title(Vector2 pos, Vector2 size, Alignment alignment, float fontSize, bool drawTitle,
+Title::Title(Vector2 pos, Vector2 size, Alignment alignment, bool drawTitle,
 	Vector2 resolution, AppContext& appContext)
-	: UIElement(pos, size, alignment), m_fontSize(fontSize), m_titleFinish(!drawTitle) {
+	: UIElement(pos, size, alignment), m_titleFinish(!drawTitle) {
 
 	m_title = appContext.assetManager.GetTitle();
 	MeasureTitleLength();
-	Vector2 textSize = MeasureTextEx(
-		*(appContext.assetManager.GetFont()),
-		m_title->at(0).c_str(),
-		fontSize,
-		0.0f
-	);
-	m_size.x = textSize.x / resolution.x;
+	SetColider(appContext, resolution);
 
 	m_textPosition = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 
 }
 
-void Title::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void Title::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition, AppContext const& appContext) {
 	bool skipTitle =
 		IsKeyPressed(KEY_ESCAPE)
 		and !m_titleFinish;
