@@ -55,4 +55,5 @@ public:
 	[[nodiscard]] bool IsEnabled() const;
 	[[nodiscard]] Rectangle GetCollider() const;
 	void SetCollider(Rectangle collider);
+	void Move(Vector2 offset);
 };

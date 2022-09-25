@@ -16,7 +16,7 @@
 #include "random.h"
 
 
-#define BTN_SPEED 2.5f
+#define BTN_SPEED -0.003f
 
 void Intro::Initialize(AppContext& appContext, UIManager const& uiManager) {
 	m_title = std::make_shared<Title>(
@@ -60,21 +60,20 @@ void Intro::Initialize(AppContext& appContext, UIManager const& uiManager) {
 }
 
 void Intro::MoveBtn() {
-	auto colider = m_btn->GetCollider();
-	if (colider.y - BTN_SPEED < m_maxBtnPosition) {
+	auto btnPos = m_btn->GetPosition();
+	if (btnPos.y + BTN_SPEED < m_maxBtnPosition) {
 		BtnMoveFinish();
 		return;
 	}
-	colider.y -= BTN_SPEED;
-	m_btn->SetCollider(colider);
+	m_btn->Move({ 0.0f, BTN_SPEED });
 }
 void Intro::BtnMoveFinish(){
-	auto colider = m_btn->GetCollider();
-	colider.y = static_cast<float>(m_maxBtnPosition);
-	m_btn->SetCollider(colider);
+	auto btnPos = m_btn->GetPosition();
+	m_btn->Move({ 0.0f, m_maxBtnPosition - btnPos.y });
 	m_btnMovmendFinish = true;
+
 	AppContext& appContext = AppContext::GetInstance();
-	auto event = PlaySoundEvent(SoundType::ACCEPTED); // TODO
+	auto event = PlaySoundEvent(SoundType::ACCEPTED);
 	appContext.eventManager.InvokeEvent(event);
 }
 
@@ -85,7 +84,7 @@ void Intro::StartGame() {
 
 Intro::Intro(Vector2 pos, Vector2 size, Alignment alignment,
 	UIManager const& uiManager, SceneType nextScene)
-	:Scene(pos, size, alignment), m_nextScene(nextScene), m_maxBtnPosition(500) {
+	:Scene(pos, size, alignment), m_nextScene(nextScene) {
 
 	AppContext& appContext = AppContext::GetInstance();
 	Initialize(appContext, uiManager);

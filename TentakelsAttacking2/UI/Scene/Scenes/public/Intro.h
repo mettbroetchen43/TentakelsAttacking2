@@ -20,7 +20,7 @@ private:
 	std::shared_ptr<Title> m_title = nullptr;
 	std::shared_ptr<ClassicButton> m_btn = nullptr;
 	bool m_btnMovmendFinish = false;
-	size_t m_maxBtnPosition;
+	float m_maxBtnPosition = 0.5f;
 	SceneType m_nextScene;
 	
 	void Initialize(AppContext& appContext, UIManager const& uiManager);

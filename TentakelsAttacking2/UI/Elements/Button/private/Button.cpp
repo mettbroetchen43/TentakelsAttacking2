@@ -162,3 +162,18 @@ void Button::SetCollider(Rectangle collider) {
 	m_textPosition.y += (collider.y - m_collider.y);
 	m_collider = collider;
 }
+
+void Button::Move(Vector2 offset) {
+	Vector2 resolution = {
+		m_collider.x / m_pos.x,
+		m_collider.y / m_pos.y
+	};
+
+	m_pos.x += offset.x;
+	m_pos.y += offset.y;
+
+	m_collider.x = resolution.x * m_pos.x;
+	m_collider.y = resolution.y * m_pos.y;
+	m_textPosition.x += resolution.x * offset.x;
+	m_textPosition.y += resolution.y * offset.y;
+}

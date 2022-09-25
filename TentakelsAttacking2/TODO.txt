@@ -7,7 +7,6 @@ UI:
 	- implement render colider of UIElement by bool
 
 	- fix Alignment of PopUp
-	- fix movment of Button
 
 	- scrole slider extern
 
