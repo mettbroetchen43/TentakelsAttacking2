@@ -12,7 +12,6 @@
 #include "Title.h"
 #include "UIEvents.h"
 #include <memory>
-#include <iostream>
 
 void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 	float btnPosX = 0.25f;
@@ -31,6 +30,7 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
 		);
+	newGameBtn->SetEnabled(false);
 	m_elements.push_back(newGameBtn);
 
 	btnPosY += 0.15f;
@@ -46,6 +46,7 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
 		);
+	loadGameBtn->SetEnabled(false);
 	m_elements.push_back(loadGameBtn);
 
 	btnPosY += 0.15f;
@@ -61,6 +62,7 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::CLICKED_RELEASE_STD
 		);
+	settingsBtn->SetEnabled(false);
 	m_elements.push_back(settingsBtn);
 
 	btnPosY += 0.15f;
@@ -76,6 +78,7 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::CLICKED_RELEASE_STD
 		);
+	creditsBtn->SetEnabled(false);
 	m_elements.push_back(creditsBtn);
 
 	btnPosY += 0.15f;
