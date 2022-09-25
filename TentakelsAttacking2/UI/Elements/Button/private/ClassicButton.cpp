@@ -10,6 +10,10 @@ ClassicButton::ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size, Al
 	Vector2 resolution, std::string const& text, Texture2D* texture, SoundType releaseSound)
 	: Focusable(focusID), Button(pos, size, allignment, text, texture, releaseSound, resolution) { }
 
+[[nodiscard]] bool ClassicButton::IsEnabled() const{
+	return m_state != State::DISABLED;
+};
+
 void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 
 	if (IsFocused()) {

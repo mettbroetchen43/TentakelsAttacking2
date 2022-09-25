@@ -18,6 +18,8 @@ public:
 	ClassicButton& operator= (ClassicButton&&) = default;
 	~ClassicButton() = default;
 
+	[[nodiscard]] bool IsEnabled() const override;
+
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	[[nodiscard]] Rectangle GetCollider() const override;
 };

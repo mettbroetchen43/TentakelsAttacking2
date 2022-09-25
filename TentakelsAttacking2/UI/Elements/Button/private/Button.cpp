@@ -151,7 +151,7 @@ void Button::SetEnabled(bool enabled) {
 	}
 }
 bool Button::IsEnabled() const {
-	return m_state == State::ENABLED;
+	return m_state != State::DISABLED;
 }
 
 Rectangle Button::GetCollider() const {

@@ -113,6 +113,10 @@ public:
 	InputLine& operator= (InputLine const&) = default;
 	InputLine& operator= (InputLine&&) = default;
 
+	[[nodiscard]] virtual bool IsEnabled() const override {
+		return true;
+	}
+
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override {
 		bool hover = CheckCollisionPointRec(mousePosition, m_collider);
 		bool validSelect = !IsFocused() and

@@ -19,6 +19,8 @@ public:
 	[[nodiscard]] bool IsFocused() const;
 	void SetFocus(bool focus);
 
+	[[nodiscard]] virtual bool IsEnabled() const = 0;
+
 	[[nodiscard]] unsigned int GetFocusID() const;
 	[[nodiscard]] virtual Rectangle GetCollider() const = 0;
 };

@@ -9,6 +9,15 @@
 #include "AppContext.h"
 #include <stdexcept>
 
+bool Focus::HasAnyEnabledElements() const {
+	for (auto e : m_focus) {
+		if (e->IsEnabled()) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void Focus::UnfocusAllAtTopLayer() {
 	for (auto focus : m_focus) {
 		focus->SetFocus(false);
@@ -16,11 +25,16 @@ void Focus::UnfocusAllAtTopLayer() {
 
 	m_currentFocus = nullptr;
 }
-
 Focusable* Focus::GetFirstFocus() {
 	Focusable* firstFocus = nullptr;
+	bool hasAnyEnabledElements = HasAnyEnabledElements();
 
 	for (auto focus : m_focus) {
+		if (hasAnyEnabledElements
+			and !focus->IsEnabled()) {
+				continue;
+		}
+
 		if (!firstFocus) {
 			firstFocus = focus;
 		}
@@ -33,8 +47,13 @@ Focusable* Focus::GetFirstFocus() {
 }
 Focusable* Focus::GetLastFocus() {
 	Focusable* lastFocus = nullptr;
+	bool hasAnyEnabledElements = HasAnyEnabledElements();
 
 	for (auto focus : m_focus) {
+		if (hasAnyEnabledElements
+			and !focus->IsEnabled()) {
+				continue;
+		}
 		if (!lastFocus) {
 			lastFocus = focus;
 			continue;
@@ -49,8 +68,13 @@ Focusable* Focus::GetLastFocus() {
 Focusable* Focus::GetNextFocus() {
 	unsigned int currentID = m_currentFocus ? m_currentFocus->GetFocusID() : 0;
 	Focusable* nextFocus = nullptr;
+	bool hasAnyEnabledElements = HasAnyEnabledElements();
 
 	for (auto focus : m_focus) {
+		if (hasAnyEnabledElements 
+			and !focus->IsEnabled()) {
+				continue;
+		}
 		if (focus->GetFocusID() > currentID) {
 			if (!nextFocus) {
 				nextFocus = focus;
@@ -68,8 +92,13 @@ Focusable* Focus::GetPreviousFocus() {
 	unsigned int currentID = m_currentFocus ? m_currentFocus->GetFocusID() 
 		: static_cast<unsigned int>(m_focus.size());
 	Focusable* previousFocus = nullptr;
+	bool hasAnyEnabledElements = HasAnyEnabledElements();
 
 	for (auto focus : m_focus) {
+		if (hasAnyEnabledElements
+			and !focus->IsEnabled()) {
+				continue;
+		}
 		if (focus->GetFocusID() < currentID) {
 			if (!previousFocus) {
 				previousFocus = focus;
@@ -149,16 +178,17 @@ void Focus::AddElement(Focusable* focusable) {
 	CheckNewID(focusable->GetFocusID());
 	m_focus.AddElement(focusable);
 
-	if (!m_currentFocus) {
-		SetInitialFocus();
+	if (m_currentFocus) {
+		m_currentFocus->SetFocus(false);
 	}
+	SetInitialFocus();
 }
 void Focus::DeleteElement(Focusable* focusable) {
+	m_focus.RemoveElement(focusable);
+
 	if (m_currentFocus == focusable) {
 		m_currentFocus = GetNextFocus();
 	}
-
-	m_focus.RemoveElement(focusable);
 }
 
 void Focus::CheckNewID(unsigned int newID) {

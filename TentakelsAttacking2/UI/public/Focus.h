@@ -17,6 +17,8 @@ private:
 	std::vector<Focusable*> m_lastFocus;
 	bool m_renderFocus = false;
 
+	[[nodiscard]] bool HasAnyEnabledElements() const;
+
 	void UnfocusAllAtTopLayer();
 	[[nodiscard]] Focusable* GetFirstFocus();
 	[[nodiscard]] Focusable* GetLastFocus();
