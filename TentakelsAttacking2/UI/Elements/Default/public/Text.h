@@ -14,7 +14,7 @@ private:
 	float m_textHeight;
 	float m_textSize;
 	Rectangle m_collider = { 0.0f,0.0f,0.0f,0.0f };
-	bool m_lineBreaks = true;
+	bool m_lineBreaks = false;
 	bool m_renderRectangle = false;
 
 	void CreateToRender(AppContext const& appContext);

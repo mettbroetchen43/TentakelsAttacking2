@@ -12,18 +12,10 @@ UI:
 
 	-> InputLine
 		-> holding key
-
-	-> Text
-		-> implement Break Lines
 	
-Focus:
-	- Skip disabled Elements while tabbing
 Sound:
 	- implement sounds for button movment -> intro
 
 To Implement:
 	Player -> Fleet
 	GameManager -> SpaceObject
-
-Layerd Vector
-	- const end() broken

@@ -147,6 +147,7 @@
     <ClInclude Include="Game\public\PlayerType.h" />
     <ClInclude Include="Helper\public\LayeredVector.h" />
     <ClInclude Include="Helper\public\Random.h" />
+    <ClInclude Include="Helper\public\TextProcessing.h" />
     <ClInclude Include="Helper\public\Vec2.h" />
     <ClInclude Include="Game\public\SpaceObject.h" />
     <ClInclude Include="Game\public\Player.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Helper\private\Random.cpp" />
     <ClCompile Include="Game\private\Player.cpp" />
     <ClCompile Include="Game\private\Planet.cpp" />
+    <ClCompile Include="Helper\private\TextProcessing.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />

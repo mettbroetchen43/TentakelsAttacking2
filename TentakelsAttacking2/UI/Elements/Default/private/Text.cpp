@@ -4,21 +4,28 @@
 //
 
 #include "Text.h"
+#include "TextProcessing.h"
 #include "AppContext.h"
 
 void Text::CreateToRender(AppContext const& appContext) {
 	m_toRender = BreakLines(m_text, appContext);
 }
 std::string Text::BreakLines(std::string toBreak, AppContext const& appContext) const {
-	return toBreak; // TODO
+	if (!m_lineBreaks) {
+		return toBreak;
+	}
+
+	BreakText(toBreak, m_textSize, m_collider.width, appContext);
+
+	return toBreak;
 }
 
 Text::Text(Vector2 pos, Vector2 size, Alignment alignment, float textHeight,
 	std::string text, Vector2 resolution)
 	: UIElement(pos, size, alignment), m_textSize(textHeight * resolution.y),
 	m_text(text), m_textHeight(textHeight) {
-	CreateToRender(AppContext::GetInstance());
 	m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+	CreateToRender(AppContext::GetInstance());
 }
 
 void Text::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition, [[maybe_unused]] AppContext const& appContext) {
