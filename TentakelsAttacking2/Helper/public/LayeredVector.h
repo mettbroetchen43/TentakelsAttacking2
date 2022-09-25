@@ -22,6 +22,9 @@ private:
 	[[nodiscard]] std::vector<T*>& CurrentLayer() {
 		return m_elements.at(m_layer);
 	}
+	[[nodiscard]] std::vector<T*> const& CurrentLayer() const {
+		return m_elements.at(m_layer);
+	}
 
 public:
 	LayeredVector(){
@@ -59,17 +62,17 @@ public:
 		CurrentLayer().erase(CurrentLayer().begin() + index);
 	}
 
-	[[nodiscard]] T** begin() const {
+	[[nodiscard]] T const* const* begin() const {
 		return CurrentLayer().data();
 	}
 	[[nodiscard]] T** begin() {
 		return CurrentLayer().data();
 	}
-	[[nodiscard]] T** end() const {
-		return std::to_address(CurrentLayer().end());
+	[[nodiscard]] T const* const* end() const {
+		return CurrentLayer().data() + CurrentLayer().size();
 	}
 	[[nodiscard]] T** end() {
-		return std::to_address(CurrentLayer().end());
+		return CurrentLayer().data() + CurrentLayer().size();
 	}
 
 	[[nodiscard]] size_t size() const {
