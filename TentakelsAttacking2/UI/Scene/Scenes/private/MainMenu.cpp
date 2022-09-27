@@ -113,11 +113,31 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		GetElementSize(0.5f, 0.3f),
 		Alignment::TOP_MID,
 		0.02f,
-		"jhjaskfdjhalkjsdflkjdshfalkjhfflakjsdhflkajsdhfkasjdfhlkajhsfaflkajsdhfalsdkfhafalksdjfhalksjdfhaslkdjfhaasdlkfjhasdkljfhasdlkfjhasdflkjh afha dflkjha flkajjh flkajhdf alkjhfd lakjhf klajdhf lakjdshf klajhsdf lakjdshf.",
+		"jhjaskfdjhalkjsdflkjdshfalkjhfflakjsdhflkajsdhfk asjdfhlkajhsfaflkajsdhfalsdkfhafalksdjfhalksjdfhaslkdjfhaasdlkfjhasdkljfhasdlkfjhasdflkjh afha dflkjha flkajjh flkajhdf alkjhfd lakjhf klajdhf lakjdshf klajhsdf lakjdshf.",
 		uiManager.GetResolution()
 		);
 	testText->LineBreaks(true);
 	m_elements.push_back(testText);
+
+	auto version = std::make_shared<Text>(
+		GetElementPosition(1.0f, 0.97f),
+		GetElementSize(0.04f, 0.04f),
+		Alignment::BOTTOM_RIGHT,
+		0.02f,
+		appContext.Version(),
+		uiManager.GetResolution()
+		);
+	m_elements.push_back(version);
+
+	auto copyRight = std::make_shared<Text>(
+		GetElementPosition(1.0f, 1.0f),
+		GetElementSize(0.1f, 0.04f),
+		Alignment::BOTTOM_RIGHT,
+		0.02f,
+		appContext.CopyRight(),
+		uiManager.GetResolution()
+		);
+	m_elements.push_back(copyRight);
 }
 
 MainMenu::MainMenu(Vector2 pos, Vector2 size, Alignment alignment, UIManager const& uiManager)

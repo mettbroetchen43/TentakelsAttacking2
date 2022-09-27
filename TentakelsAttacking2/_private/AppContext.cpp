@@ -5,11 +5,19 @@
 
 #include "AppContext.h"
 
-AppContext::AppContext() {
-	eventManager.AddListener(&soundManager);
-}
-
 AppContext& AppContext::GetInstance() {
 	static AppContext appContext;
 	return appContext;
+}
+
+std::string const& AppContext::Version() const {
+	return m_version;
+}
+std::string const& AppContext::CopyRight() const {
+	return m_copyRight;
+}
+
+
+AppContext::AppContext() {
+	eventManager.AddListener(&soundManager);
 }

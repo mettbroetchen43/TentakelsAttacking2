@@ -4,17 +4,37 @@
 // 
 
 UI:
-	- implement render colider of UIElement by bool
+	-> Fix
+		-> PopUp
+			-> fix Alignment of 
+		
+		-> Alignment
+			-> value alignment not matching Element alignment
 
-	- fix Alignment of PopUp
+	-> Implement
+		-> Slider
+			-> scrole extern
 
-	- scrole slider extern
-
-	-> InputLine
-		-> holding key
-	
+		-> InputLine
+			-> holding key
+		
+		-> Main Menu
+			-> New Game
+			-> Load Game
+			-> Settings
+			-> Credits
+		
+		-> Table new
+			-> Text Cell	| template?
+			-> Integer Cell | template?
+			-> Float Cell   | template?
+			-> Color Cell
+			
+		-> color Picker new
+			-> all RayLib Colors
+		
 Sound:
-	- implement sounds for button movment -> intro
+	- add sounds for button movment -> intro
 
 To Implement:
 	Player -> Fleet
