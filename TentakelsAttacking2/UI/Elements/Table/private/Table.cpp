@@ -5,11 +5,11 @@
 
 #include "Table.h"
 #include "Allignment.h"
+#include <stdexcept>
 
 size_t Table::GetIndex(size_t row, size_t column) const {
 	return row * m_columns + column;
 }
-
 Vector2 Table::GetElementPosition(size_t row, size_t column) const {
 	Vector2 elementSize = GetElementSize();
 	return Vector2 { 
@@ -22,6 +22,14 @@ Vector2 Table::GetElementSize() const {
 		m_size.x / m_columns,
 		m_size.y / m_rows
 	};
+}
+[[nodiscard]] void Table::CheckValidRowColumn(size_t row, size_t column) const {
+	if (row < 0 or m_rows <= row) {
+		throw std::out_of_range("row out of range" + row);
+	}
+	if (column < 0 or m_columns <= column) {
+		throw std::out_of_range("column out of range" + column);
+	}
 }
 
 Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
@@ -90,5 +98,6 @@ Rectangle Table::GetCollider() const {
 }
 
 void Table::SetEmptyCell(size_t row, size_t column) {
+	CheckValidRowColumn(row, column);
 	SetCell<EmptyCell>(row, column);
 }

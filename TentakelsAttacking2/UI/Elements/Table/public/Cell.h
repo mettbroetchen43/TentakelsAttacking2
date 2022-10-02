@@ -10,9 +10,8 @@
 
 class Cell : public UIElement, public Focusable {
 private:
-	Rectangle m_colider;
-
 protected:
+	Rectangle m_colider;
 	Vector2 m_textPosition;
 	float m_textSize;
 

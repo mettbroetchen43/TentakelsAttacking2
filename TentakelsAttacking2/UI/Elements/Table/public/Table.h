@@ -21,6 +21,7 @@ private:
 	[[nodiscard]] size_t GetIndex(size_t row, size_t column) const;
 	[[nodiscard]] Vector2 GetElementPosition(size_t row, size_t column) const;
 	[[nodiscard]] Vector2 GetElementSize() const;
+	[[nodiscard]] void CheckValidRowColumn(size_t row, size_t column) const;
 
 	template<typename CellType>
 	void SetCell(size_t row, size_t column) {
@@ -51,6 +52,7 @@ public:
 
 	template<typename CellType, typename ValueType>
 	void SetValue(size_t row, size_t column, ValueType value) {
+		CheckValidRowColumn(row, column);
 		size_t index = GetIndex(row, column);
 		auto cell = dynamic_cast<CellType*>(m_cells.at(index).get());
 		if (!cell) {

@@ -33,10 +33,9 @@ UI:
 			-> remove Player
 		
 		-> Table new
-			-> Text Cell	| template?
-			-> Integer Cell | template?
-			-> Float Cell   | template?
-			-> Color Cell
+			-> check for / calculate single column width
+			-> check text height 
+			-> edit value popup
 			
 		-> color Picker new
 			-> all RayLib Colors

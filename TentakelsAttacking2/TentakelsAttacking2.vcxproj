@@ -158,6 +158,9 @@
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h" />
     <ClInclude Include="UI\Elements\Default\public\InputLine.h" />
+    <ClInclude Include="UI\Elements\Table\public\ColorCell.h" />
+    <ClInclude Include="UI\Elements\Table\public\DoubleCell.h" />
+    <ClInclude Include="UI\Elements\Table\public\FloatCell.h" />
     <ClInclude Include="UI\Elements\Table\public\AllCells.h" />
     <ClInclude Include="UI\Elements\Table\public\Cell.h" />
     <ClInclude Include="UI\Elements\Table\public\EmptyCell.h" />
@@ -207,6 +210,9 @@
     <ClCompile Include="UI\Elements\Table\private\EmptyCell.cpp" />
     <ClCompile Include="UI\Elements\Table\private\StringCell.cpp" />
     <ClCompile Include="UI\Elements\Table\private\Table.cpp" />
+    <ClCompile Include="UI\Elements\Table\private\FloatCell.cpp" />
+    <ClCompile Include="UI\Elements\Table\private\DoubleCell.cpp" />
+    <ClCompile Include="UI\Elements\Table\private\ColorCell.cpp" />
     <ClCompile Include="UI\private\Allignment.cpp" />
     <ClCompile Include="UI\Scene\private\BaseMainScene.cpp" />
     <ClCompile Include="UI\Scene\Scenes\private\Intro.cpp" />

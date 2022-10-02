@@ -22,7 +22,9 @@ void TestScene::Initialize(UIManager const& uiManager, [[maybe_unused]] AppConte
 		}
 	}
 	table->SetValue<StringCell, std::string>(4, 2, "Aboniert GyrosGeier");
-	// table->SetValue<IntCell, int>(1, 1, 5);
+	table->SetValue<FloatCell, float>(1, 1, 7.5f);
+	table->SetValue<DoubleCell, double>(2, 2, 13.542);
+	table->SetValue<ColorCell, Color>(3, 4, PURPLE);
 	m_elements.push_back(table);
 }
 
