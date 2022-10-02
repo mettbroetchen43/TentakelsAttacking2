@@ -23,6 +23,14 @@ UI:
 			-> Load Game
 			-> Settings
 			-> Credits
+			
+		-> Initial Player Window
+			-> Table
+				-> Player
+				-> Color
+			-> edit Player
+			-> add Player
+			-> remove Player
 		
 		-> Table new
 			-> Text Cell	| template?
