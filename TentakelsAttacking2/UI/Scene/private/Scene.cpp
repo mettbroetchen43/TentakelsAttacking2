@@ -21,10 +21,16 @@ void Scene::SetFocusActive(AppContext const& appContext) {
 }
 
 Vector2 Scene::GetElementPosition(float x, float y) {
-	return { m_pos.x + x * m_size.x, m_pos.y + y * m_size.y };
+	return {
+		m_pos.x + x * m_size.x,
+		m_pos.y + y * m_size.y
+	};
 }
 Vector2 Scene::GetElementSize(float x, float y) {
-	return { x * m_size.x, y * m_size.y };
+	return {
+		x * m_size.x,
+		y * m_size.y
+	};
 }
 
 Focusable* Scene::GetFocusableByFocusID(unsigned int ID) const {
