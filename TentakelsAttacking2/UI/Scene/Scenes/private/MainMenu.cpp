@@ -31,7 +31,7 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
 		);
-	newGameBtn->SetEnabled(false);
+	newGameBtn->SetOnClick([]() {AppContext::GetInstance().eventManager.InvokeEvent(SwitchSceneEvent(SceneType::TEST));});
 	m_elements.push_back(newGameBtn);
 
 	btnPosY += 0.15f;
@@ -107,17 +107,6 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		appContext
 		);
 	m_elements.push_back(title);
-
-	auto testText = std::make_shared<Text>(
-		GetElementPosition(0.65f, 0.3f),
-		GetElementSize(0.5f, 0.3f),
-		Alignment::TOP_MID,
-		0.02f,
-		"jhjaskfdjhalkjsdflkjdshfalkjhfflakjsdhflkajsdhfk asjdfhlkajhsfaflkajsdhfalsdkfhafalksdjfhalksjdfhaslkdjfhaasdlkfjhasdkljfhasdlkfjhasdflkjh afha dflkjha flkajjh flkajhdf alkjhfd lakjhf klajdhf lakjdshf klajhsdf lakjdshf.",
-		uiManager.GetResolution()
-		);
-	testText->LineBreaks(true);
-	m_elements.push_back(testText);
 
 	auto version = std::make_shared<Text>(
 		GetElementPosition(1.0f, 0.97f),
