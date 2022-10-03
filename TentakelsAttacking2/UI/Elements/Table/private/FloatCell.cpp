@@ -14,9 +14,10 @@ void FloatCell::CheckAndUpdate(Vector2 const& mousePosition,
 }
 
 void FloatCell::Render(AppContext const& appContext) {
+	const char* text = TextFormat("%.2f", value + 0.005f);
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
-		std::to_string(value).c_str(),
+		text,
 		m_textPosition,
 		m_textSize,
 		0.0f,
