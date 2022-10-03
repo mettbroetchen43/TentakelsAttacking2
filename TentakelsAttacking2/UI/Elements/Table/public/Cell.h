@@ -24,7 +24,7 @@ public:
 
 	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	virtual void Render(AppContext const& appContext) override;
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
 	
 	[[nodiscard]] bool IsEnabled() const override;
 	[[nodiscard]] Rectangle GetCollider() const override;

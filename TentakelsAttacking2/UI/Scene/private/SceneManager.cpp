@@ -60,8 +60,6 @@ void SceneManager::NewMessagePopUp(std::string const& title, std::string const& 
 		title,
 		subTitle,
 		AssetType::BUTTON_DEFAULT,
-		AssetType::GREY_50,
-		AssetType::GREY,
 		AssetType::EXCLAMATION_MARK
 	));
 }

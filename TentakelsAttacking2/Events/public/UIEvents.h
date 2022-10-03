@@ -8,6 +8,7 @@
 #include "SoundType.h"
 #include <string>
 
+class StringCell;
 class Focusable;
 class PopUp;
 enum class SceneType;
@@ -101,4 +102,18 @@ public:
 class ShowMessagePopUpEvent : public PopUpEvent {
 public:
 	using PopUpEvent::PopUpEvent;
+};
+class ShowStringCellPopUpEvent: public PopUpEvent{
+private:
+	StringCell* m_cell;
+
+public:
+	ShowStringCellPopUpEvent(std::string const& title, std::string const& subTile,
+		StringCell* cell)
+		: PopUpEvent(title, subTile), m_cell(cell) { }
+
+	[[nodiscard]] StringCell* GetCell() const {
+		return m_cell;
+	}
+
 };

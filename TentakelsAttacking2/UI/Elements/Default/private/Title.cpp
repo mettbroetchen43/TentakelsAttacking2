@@ -154,7 +154,7 @@ void Title::Render(AppContext const& appContext) {
 		RenderTitle(appContext);
 	}
 }
-void Title::Resize(Vector2 resolution, AppContext const& appContext) {
+void Title::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) {
 	ResizeText(AppContext::GetInstance(), resolution);
 }
 

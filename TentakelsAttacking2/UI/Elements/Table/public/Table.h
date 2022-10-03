@@ -7,11 +7,14 @@
 #include "UIElement.h"
 #include "Focusable.h"
 #include "AllCells.h"
+#include "CellPopUp.h"
+#include "EventListener.h"
 #include <memory>
 #include <vector>
 
-class Table : public UIElement, public Focusable {
+class Table : public UIElement, public Focusable, public EventListener {
 private:
+	std::unique_ptr<CellPopUp> m_popUp;
 	std::vector<std::unique_ptr<Cell>> m_cells;
 	size_t m_rows;
 	size_t m_columns;
@@ -36,11 +39,15 @@ private:
 			);
 	}
 
+	void GenerateStringPopUp(ShowStringCellPopUpEvent const* event);
+
 protected:
 
 public:
 	Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 		size_t rows, size_t columns, Vector2 resolution);
+
+	void OnEvent(Event const& event) override;
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
@@ -49,8 +56,9 @@ public:
 	[[nodiscard]] bool IsEnabled() const override;
 	[[nodiscard]] Rectangle GetCollider() const override;
 
-	void SetEmptyCell(size_t row, size_t column);
+	[[nodiscard]] Vector2 GetResolution() const;
 
+	void SetEmptyCell(size_t row, size_t column);
 	template<typename CellType, typename ValueType>
 	void SetValue(size_t row, size_t column, ValueType value) {
 		CheckValidRowColumn(row, column);

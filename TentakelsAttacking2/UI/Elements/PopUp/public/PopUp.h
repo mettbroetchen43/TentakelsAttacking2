@@ -22,14 +22,14 @@ protected:
 
 public:
 	PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, 
-		std::string const& title, std::string const& subTitle,
-		AssetType fullBackground, AssetType popUpBackground, AssetType infoTexture);
+		std::string const& title, std::string const& subTitle, AssetType infoTexture);
 	PopUp(PopUp const&) = default;
 	PopUp(PopUp&&) = default;
 	PopUp& operator= (PopUp const&) = default;
 	PopUp& operator= (PopUp&&) = default;
+	virtual ~PopUp() = default;
 
 	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) = 0;
-	virtual void Render(AppContext const& appContext) = 0;
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	virtual void Render(AppContext const& appContext);
+	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
 };

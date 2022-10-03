@@ -36,6 +36,8 @@ UI:
 			-> check for / calculate single column width
 			-> check text height 
 			-> edit value popup
+				-> edit value
+				-> close Popup
 			
 		-> color Picker new
 			-> all RayLib Colors

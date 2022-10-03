@@ -7,6 +7,7 @@
 #include "Allignment.h"
 #include "UIEvents.h"
 #include "AppContext.h"
+#include "StringCellPopUp.h"
 #include <stdexcept>
 
 size_t Table::GetIndex(size_t row, size_t column) const {
@@ -34,6 +35,19 @@ Vector2 Table::GetElementSize() const {
 	}
 }
 
+void Table::GenerateStringPopUp(ShowStringCellPopUpEvent const* event) {
+	m_popUp = std::make_unique<StringCellPopUp>(
+		Vector2(0.5f, 0.5f),
+		Vector2(0.7f, 0.7f),
+		Alignment::MID_MID,
+		m_resolution,
+		event->GetTitle(),
+		event->GetSubTitle(),
+		AssetType::LOGO,
+		event->GetCell()
+		);
+}
+
 Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 	size_t rows, size_t columns, Vector2 resolution)
 	: UIElement(pos, size, alignment), Focusable(ID),
@@ -51,9 +65,22 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 				));
 		}
 	}
+	AppContext::GetInstance().eventManager.AddListener(this);
+}
+
+void Table::OnEvent(Event const& event) {
+	if (auto const PopUpEvent = dynamic_cast<ShowStringCellPopUpEvent const*>(&event)) {
+		GenerateStringPopUp(PopUpEvent);
+		return;
+	}
 }
 
 void Table::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	if (m_popUp) {
+		m_popUp->CheckAndUpdate(mousePosition, appContext);
+		return;
+	}
+
 	if (!m_cellFocus) {
 		if (!IsFocused()) {
 			if (CheckCollisionPointRec(mousePosition, m_colider)) {
@@ -98,6 +125,10 @@ void Table::Render(AppContext const& appContext){
 	for (auto& c : m_cells) {
 		c->Render(appContext);
 	}
+
+	if (m_popUp) {
+		m_popUp->Render(appContext);
+	}
 }
 void Table::Resize(Vector2 resolution, AppContext const& appContext){
 	m_resolution = resolution;
@@ -111,6 +142,11 @@ void Table::Resize(Vector2 resolution, AppContext const& appContext){
 	for (auto& c : m_cells) {
 		c->Resize(resolution, appContext);
 	}
+
+	if (m_popUp) {
+		m_popUp->Resize(resolution, appContext);
+	}
+
 }
 
 bool Table::IsEnabled() const {
@@ -118,6 +154,10 @@ bool Table::IsEnabled() const {
 }
 Rectangle Table::GetCollider() const {
 	return m_colider;
+}
+
+Vector2 Table::GetResolution() const {
+	return m_resolution;
 }
 
 void Table::SetEmptyCell(size_t row, size_t column) {

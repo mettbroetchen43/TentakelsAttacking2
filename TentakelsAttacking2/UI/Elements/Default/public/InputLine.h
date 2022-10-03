@@ -6,6 +6,7 @@
 #pragma once
 #include "UIElement.h"
 #include "Focusable.h"
+#include "AppContext.h"
 #include <raylib.h>
 #include <string>
 #include <functional>
@@ -104,8 +105,9 @@ protected:
 
 public:
 	InputLine(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
-		unsigned int charLimit, Texture2D* texture, Vector2 resolution)
-		: UIElement(pos, size, alignment), Focusable(focusID), m_charLimit(charLimit), m_texture(texture) {
+		unsigned int charLimit, Vector2 resolution)
+		: UIElement(pos, size, alignment), Focusable(focusID), m_charLimit(charLimit) {
+		m_texture = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
 		m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	}
 	InputLine(InputLine const&) = default;
@@ -253,14 +255,14 @@ public:
 };
 
 template<>
-bool InputLine<int>::IsValidKey(int key) {
+inline bool InputLine<int>::IsValidKey(int key) {
 	bool valid = key >= 48 and
 		key <= 57;
 
 	return valid;
 }
 template<>
-bool InputLine<double>::IsValidKey(int key) {
+inline bool InputLine<double>::IsValidKey(int key) {
 	bool valid = (key >= 48 and key <= 57) // numbers
 		or key == 44 // comma
 		or key == 46; // dot
@@ -282,7 +284,7 @@ bool InputLine<double>::IsValidKey(int key) {
 	return valid;
 }
 template<>
-bool InputLine<std::string>::IsValidKey(int key) {
+inline bool InputLine<std::string>::IsValidKey(int key) {
 	bool valid = key >= 32 and
 		key <= 126;
 
@@ -290,11 +292,11 @@ bool InputLine<std::string>::IsValidKey(int key) {
 }
 
 template<>
-[[nodiscard]] int InputLine<int>::GetValue() {
+[[nodiscard]] inline int InputLine<int>::GetValue() {
 	return std::stoi(m_value);
 }
 template<>
-[[nodiscard]] double InputLine<double>::GetValue() {
+[[nodiscard]] inline double InputLine<double>::GetValue() {
 	std::string toReturn = m_value;
 	for (char& c : toReturn) {
 		if (c == ',') {
@@ -305,13 +307,12 @@ template<>
 	return std::stod(toReturn);
 }
 template<>
-[[nodiscard]] std::string InputLine<std::string>::GetValue() {
+[[nodiscard]] inline std::string InputLine<std::string>::GetValue() {
 	return m_value;
 }
 
 // need because std::to_string() has so overload for std::string
 template<>
-void InputLine<std::string>::SetValue(std::string value) {
+inline void InputLine<std::string>::SetValue(std::string value) {
 	m_value = value;
 }
-
