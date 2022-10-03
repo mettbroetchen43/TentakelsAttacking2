@@ -4,6 +4,8 @@
 //
 
 #include "Cell.h"
+#include "UIEvents.h"
+#include "AppContext.h"
 
 bool Cell::ShouldEdit(Vector2 const& mousePosition) const {
 	if (IsFocused()) {
@@ -29,6 +31,15 @@ Cell::Cell(Vector2 pos, Vector2 size, Alignment alignment,
 		m_colider.x + m_colider.width / 20,
 		m_colider.y + m_colider.height / 3
 	};
+}
+
+void Cell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	if (CheckCollisionPointRec(mousePosition, m_colider)) {
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			auto event = SelectFocusElementEvent(this);
+			appContext.eventManager.InvokeEvent(event);
+		}
+	}
 }
 
 void Cell::Render([[maybe_unused]] AppContext const& appContext) {

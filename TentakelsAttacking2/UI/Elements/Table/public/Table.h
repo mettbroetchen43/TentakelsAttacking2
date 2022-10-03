@@ -17,6 +17,7 @@ private:
 	size_t m_columns;
 	Rectangle m_colider;
 	Vector2 m_resolution;
+	bool m_cellFocus = false;
 
 	[[nodiscard]] size_t GetIndex(size_t row, size_t column) const;
 	[[nodiscard]] Vector2 GetElementPosition(size_t row, size_t column) const;

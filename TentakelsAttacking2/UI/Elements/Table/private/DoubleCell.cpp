@@ -6,8 +6,8 @@
 #include "DoubleCell.h"
 #include "AppContext.h"
 
-void DoubleCell::CheckAndUpdate(Vector2 const& mousePosition, 
-	[[maybe_unused]] AppContext const& appContext) {
+void DoubleCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	Cell::CheckAndUpdate(mousePosition, appContext);
 	if (ShouldEdit(mousePosition)) {
 		// invoke Edit Event
 	}

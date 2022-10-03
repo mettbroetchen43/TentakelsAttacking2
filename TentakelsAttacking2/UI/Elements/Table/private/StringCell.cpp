@@ -6,8 +6,8 @@
 #include "StringCell.h"
 #include "AppContext.h"
 
-void StringCell::CheckAndUpdate(Vector2 const& mousePosition,
-    [[maybe_unused]] AppContext const& appContext) {
+void StringCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+    Cell::CheckAndUpdate(mousePosition, appContext);
     if (ShouldEdit(mousePosition)) {
         // invoke Event
     }

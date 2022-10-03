@@ -22,7 +22,7 @@ public:
 		unsigned int ID, Vector2 resolution);
 	virtual ~Cell() = default;
 
-	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext)  = 0;
+	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	virtual void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
 	

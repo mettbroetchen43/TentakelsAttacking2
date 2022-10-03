@@ -5,7 +5,6 @@
 
 #include "EmptyCell.h"
 
-void EmptyCell::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
-	[[maybe_unused]]AppContext const& appContext) {
-
+void EmptyCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	Cell::CheckAndUpdate(mousePosition, appContext);
 }

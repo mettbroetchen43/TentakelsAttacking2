@@ -5,6 +5,8 @@
 
 #include "Table.h"
 #include "Allignment.h"
+#include "UIEvents.h"
+#include "AppContext.h"
 #include <stdexcept>
 
 size_t Table::GetIndex(size_t row, size_t column) const {
@@ -52,23 +54,44 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 }
 
 void Table::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
-	if (IsFocused()) {
-		if (IsKeyPressed(KEY_ENTER)
-			or IsKeyPressed(KEY_SPACE)) {
-			// invoke focus event
-			return;
+	if (!m_cellFocus) {
+		if (!IsFocused()) {
+			if (CheckCollisionPointRec(mousePosition, m_colider)) {
+				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					auto event = SelectFocusElementEvent(this);
+					appContext.eventManager.InvokeEvent(event);
+				}
+			}
+		}
+
+		if (IsFocused()) {
+			bool focusCell = IsKeyPressed(KEY_ENTER)
+				or IsKeyPressed(KEY_SPACE)
+				or (CheckCollisionPointRec(mousePosition, m_colider)
+					and IsMouseButtonPressed(MOUSE_BUTTON_LEFT));
+
+			if (focusCell) {
+				auto event = NewFocusLayerEvent();
+				appContext.eventManager.InvokeEvent(event);
+				for (auto& c : m_cells) {
+					auto event2 = NewFocusElementEvent(c.get());
+					appContext.eventManager.InvokeEvent(event2);
+				}
+				m_cellFocus = true;
+			}
 		}
 	}
 
-	if (CheckCollisionPointRec(mousePosition, m_colider)) {
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-			// invoke focus event
-			return;
+	if (m_cellFocus) {
+		for (auto& c : m_cells) {
+			c->CheckAndUpdate(mousePosition, appContext);
 		}
-	}
 
-	for (auto& c : m_cells) {
-		c->CheckAndUpdate(mousePosition, appContext);
+		if (IsKeyPressed(KEY_ESCAPE)) {
+			auto event = DeleteFocusLayerEvent();
+			appContext.eventManager.InvokeEvent(event);
+			m_cellFocus = false;
+		}
 	}
 }
 void Table::Render(AppContext const& appContext){

@@ -6,8 +6,8 @@
 #include "FloatCell.h"
 #include "AppContext.h"
 
-void FloatCell::CheckAndUpdate(Vector2 const& mousePosition,
-	[[maybe_unused]] AppContext const& appContext) {
+void FloatCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	Cell::CheckAndUpdate(mousePosition, appContext);
 	if (ShouldEdit(mousePosition)) {
 		// invoke Edit Event
 	}
