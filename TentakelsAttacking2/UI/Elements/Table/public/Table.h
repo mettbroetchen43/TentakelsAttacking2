@@ -39,9 +39,19 @@ private:
 			);
 	}
 
-	void GenerateStringPopUp(ShowStringCellPopUpEvent const* event);
-
-protected:
+	template<typename popUpType, typename eventType>
+	void GeneratePremitiveCellPopUp(eventType const* event) {
+		m_popUp = std::make_unique<popUpType>(
+			Vector2(0.5f, 0.5f),
+			Vector2(0.7f, 0.7f),
+			Alignment::MID_MID,
+			m_resolution,
+			event->GetTitle(),
+			event->GetSubTitle(),
+			AssetType::LOGO,
+			event->GetCell()
+			);
+	}
 
 public:
 	Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,

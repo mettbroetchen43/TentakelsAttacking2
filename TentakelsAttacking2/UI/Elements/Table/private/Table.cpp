@@ -35,19 +35,6 @@ Vector2 Table::GetElementSize() const {
 	}
 }
 
-void Table::GenerateStringPopUp(ShowStringCellPopUpEvent const* event) {
-	m_popUp = std::make_unique<StringCellPopUp>(
-		Vector2(0.5f, 0.5f),
-		Vector2(0.7f, 0.7f),
-		Alignment::MID_MID,
-		m_resolution,
-		event->GetTitle(),
-		event->GetSubTitle(),
-		AssetType::LOGO,
-		event->GetCell()
-		);
-}
-
 Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 	size_t rows, size_t columns, Vector2 resolution)
 	: UIElement(pos, size, alignment), Focusable(ID),
@@ -73,7 +60,12 @@ Table::~Table() {
 
 void Table::OnEvent(Event const& event) {
 	if (auto const PopUpEvent = dynamic_cast<ShowStringCellPopUpEvent const*>(&event)) {
-		GenerateStringPopUp(PopUpEvent);
+		GeneratePremitiveCellPopUp<StringCellPopUp, ShowStringCellPopUpEvent>(PopUpEvent);
+		return;
+	}
+
+	if (auto const PopUpEvent = dynamic_cast<ShowIntCellPopUpEvent const*>(&event)) {
+		GeneratePremitiveCellPopUp<IntCellPopUp, ShowIntCellPopUpEvent>(PopUpEvent);
 		return;
 	}
 
