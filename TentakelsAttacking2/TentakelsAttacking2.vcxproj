@@ -155,6 +155,7 @@
     <ClInclude Include="UI\Elements\Default\public\Picture.h" />
     <ClInclude Include="UI\Elements\Default\public\Text.h" />
     <ClInclude Include="UI\Elements\Default\public\Title.h" />
+    <ClInclude Include="UI\Elements\PopUp\public\AllCellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\CellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\IntCellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\PrimitiveCellPopUp.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="UI\Elements\PopUp\private\MessagePopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\StringCellPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\PrimitiveCellPopUp.cpp" />
+    <ClCompile Include="UI\Elements\PopUp\private\IntCellPopUp.cpp" />
     <ClCompile Include="UI\Elements\Table\private\Cell.cpp" />
     <ClCompile Include="UI\Elements\Table\private\IntCell.cpp" />
     <ClCompile Include="UI\Elements\Table\private\EmptyCell.cpp" />
