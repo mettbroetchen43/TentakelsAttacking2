@@ -9,6 +9,7 @@
 #include <string>
 
 class StringCell;
+class IntCell;
 class Focusable;
 class PopUp;
 enum class SceneType;
@@ -113,6 +114,20 @@ public:
 		: PopUpEvent(title, subTile), m_cell(cell) { }
 
 	[[nodiscard]] StringCell* GetCell() const {
+		return m_cell;
+	}
+
+};
+class ShowIntCellPopUpEvent : public PopUpEvent {
+private:
+	IntCell* m_cell;
+
+public:
+	ShowIntCellPopUpEvent(std::string const& title, std::string const& subTile,
+		IntCell* cell)
+		: PopUpEvent(title, subTile), m_cell(cell) { }
+
+	[[nodiscard]] IntCell* GetCell() const {
 		return m_cell;
 	}
 
