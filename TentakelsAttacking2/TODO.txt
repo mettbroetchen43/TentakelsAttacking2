@@ -17,6 +17,7 @@ UI:
 
 		-> InputLine
 			-> holding key
+			-> move Text Processing to helper
 		
 		-> Main Menu
 			-> New Game
@@ -34,7 +35,7 @@ UI:
 		
 		-> Table new
 			-> check for / calculate single column width
-			-> check text height 
+			-> Text Processing
 			-> edit value popup
 				-> edit value
 				-> close Popup

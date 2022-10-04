@@ -11,7 +11,6 @@ void IntCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& app
 	if (ShouldEdit(mousePosition)) {
 		auto event = ShowIntCellPopUpEvent(
 			"Edit Number",
-			"",
 			this
 		);
 		appContext.eventManager.InvokeEvent(event);

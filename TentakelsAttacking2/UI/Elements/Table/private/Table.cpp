@@ -69,6 +69,11 @@ void Table::OnEvent(Event const& event) {
 		return;
 	}
 
+	if (auto const PopUpEvent = dynamic_cast<ShowDoubleCellPopUpEvent const*>(&event)) {
+		GeneratePremitiveCellPopUp<DoubleCellPopUp, ShowDoubleCellPopUpEvent>(PopUpEvent);
+		return;
+	}
+
 	if (auto const PopUpEvent = dynamic_cast<ClosePopUpEvent const*>(&event)) {
 		if (PopUpEvent->GetPop() == m_popUp.get()) {
 			m_popUp.reset(nullptr);

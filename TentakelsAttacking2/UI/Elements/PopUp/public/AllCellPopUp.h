@@ -8,3 +8,4 @@
 #include "PrimitiveCellPopUp.h"
 #include "StringCellPopUp.h"
 #include "IntCellPopUp.h"
+#include "DoubleCellPopUp.h"

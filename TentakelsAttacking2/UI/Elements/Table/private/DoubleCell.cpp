@@ -9,7 +9,11 @@
 void DoubleCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Cell::CheckAndUpdate(mousePosition, appContext);
 	if (ShouldEdit(mousePosition)) {
-		// invoke Edit Event
+		auto event = ShowDoubleCellPopUpEvent(
+			"Edit Number",
+			this
+		);
+		appContext.eventManager.InvokeEvent(event);
 	}
 }
 

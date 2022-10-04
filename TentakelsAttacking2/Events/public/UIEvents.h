@@ -10,6 +10,7 @@
 
 class StringCell;
 class IntCell;
+class DoubleCell;
 class Focusable;
 class PopUp;
 enum class SceneType;
@@ -128,6 +129,20 @@ public:
 		: PopUpEvent(title, ""), m_cell(cell) { }
 
 	[[nodiscard]] IntCell* GetCell() const {
+		return m_cell;
+	}
+
+};
+class ShowDoubleCellPopUpEvent : public PopUpEvent {
+private:
+	DoubleCell* m_cell;
+
+public:
+	ShowDoubleCellPopUpEvent(std::string const& title,
+		DoubleCell* cell)
+		: PopUpEvent(title, ""), m_cell(cell) { }
+
+	[[nodiscard]] DoubleCell* GetCell() const {
 		return m_cell;
 	}
 
