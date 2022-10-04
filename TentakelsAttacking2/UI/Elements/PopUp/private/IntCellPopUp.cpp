@@ -52,7 +52,7 @@ IntCellPopUp::IntCellPopUp(Vector2 pos, Vector2 size, Alignment alignment,
 		GetElementPosition(0.5f, 0.5f),
 		GetElementSize(0.9f, 0.2f),
 		Alignment::MID_MID,
-		15,
+		9,
 		resolution
 		)) {
 	Initialize(AppContext::GetInstance());
