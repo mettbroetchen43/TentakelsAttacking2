@@ -8,21 +8,21 @@
 #include "AppContext.h"
 #include "StringCell.h"
 
-void StringCellPopUp::Initialize(AppContext const& appCpntext) {
+void StringCellPopUp::Initialize(AppContext const& appContext) {
 	auto event = NewFocusLayerEvent();
-	appCpntext.eventManager.InvokeEvent(event);
+	appContext.eventManager.InvokeEvent(event);
 
 	auto event2 = NewFocusElementEvent(&m_inputChange);
-	appCpntext.eventManager.InvokeEvent(event2);
+	appContext.eventManager.InvokeEvent(event2);
 
 	event2 = NewFocusElementEvent(&m_acceptBTN);
-	appCpntext.eventManager.InvokeEvent(event2);
+	appContext.eventManager.InvokeEvent(event2);
 
 	event2 = NewFocusElementEvent(&m_cancelBTN);
-	appCpntext.eventManager.InvokeEvent(event2);
+	appContext.eventManager.InvokeEvent(event2);
 
 	auto event3 = SelectFocusElementEvent(&m_inputChange);
-	appCpntext.eventManager.InvokeEvent(event3);
+	appContext.eventManager.InvokeEvent(event3);
 	m_inputChange.SetValue(m_currentCell->value);
 }
 
