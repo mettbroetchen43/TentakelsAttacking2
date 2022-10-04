@@ -46,6 +46,7 @@ protected:
 public:
 	Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 		size_t rows, size_t columns, Vector2 resolution);
+	~Table();
 
 	void OnEvent(Event const& event) override;
 

@@ -67,6 +67,9 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 	}
 	AppContext::GetInstance().eventManager.AddListener(this);
 }
+Table::~Table() {
+	AppContext::GetInstance().eventManager.RemoveListener(this);
+}
 
 void Table::OnEvent(Event const& event) {
 	if (auto const PopUpEvent = dynamic_cast<ShowStringCellPopUpEvent const*>(&event)) {
