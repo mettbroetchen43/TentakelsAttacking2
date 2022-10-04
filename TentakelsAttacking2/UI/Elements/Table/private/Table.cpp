@@ -76,6 +76,12 @@ void Table::OnEvent(Event const& event) {
 		GenerateStringPopUp(PopUpEvent);
 		return;
 	}
+
+	if (auto const PopUpEvent = dynamic_cast<ClosePopUpEvent const*>(&event)) {
+		if (PopUpEvent->GetPop() == m_popUp.get()) {
+			m_popUp.reset(nullptr);
+		}
+	}
 }
 
 void Table::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {

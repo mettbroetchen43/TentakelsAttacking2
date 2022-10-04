@@ -183,6 +183,12 @@
     <ClInclude Include="UI\Elements\PopUp\public\CellPopUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Elements\PopUp\public\PrimitiveCellPopUp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Elements\PopUp\public\IntCellPopUp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\Random.cpp">
@@ -309,6 +315,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\PopUp\private\StringCellPopUp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\PopUp\private\PrimitiveCellPopUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
