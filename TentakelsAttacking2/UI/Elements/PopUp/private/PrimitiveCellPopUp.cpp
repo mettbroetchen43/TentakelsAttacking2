@@ -66,6 +66,7 @@ void PrimitiveCellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	m_cancelBTN.CheckAndUpdate(mousePosition, appContext);
 
 	if (IsKeyPressed(KEY_ESCAPE)) {
+		appContext.soundManager.PlaySound(SoundType::CLICKED_RELEASE_STD);
 		SetShouldClose();
 	}
 }

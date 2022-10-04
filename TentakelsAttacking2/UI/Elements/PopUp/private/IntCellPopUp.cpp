@@ -33,6 +33,7 @@ void IntCellPopUp::CheckEnter() {
 		&& !m_shouldClose
 		&& !m_firstEnter;
 	if (validEnterClose) {
+		AppContext::GetInstance().soundManager.PlaySound(SoundType::ACCEPTED);
 		SetValue();
 	}
 

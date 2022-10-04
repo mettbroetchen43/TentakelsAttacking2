@@ -8,18 +8,25 @@
 #include "AppContext.h"
 
 bool Cell::ShouldEdit(Vector2 const& mousePosition) const {
+	bool edit = false;
+
 	if (IsFocused()) {
 		if (IsKeyPressed(KEY_ENTER)
 			or IsKeyPressed(KEY_SPACE)) {
-			return true;
+			edit = true;
 		}
 	}
 	if (CheckCollisionPointRec(mousePosition, m_colider)) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-			return true;
+			edit = true;
 		}
 	}
-	return false;
+
+	if (edit) {
+		AppContext::GetInstance().soundManager.PlaySound(SoundType::CLICKED_PRESS_STD);
+	}
+
+	return edit;
 }
 
 Cell::Cell(Vector2 pos, Vector2 size, Alignment alignment,

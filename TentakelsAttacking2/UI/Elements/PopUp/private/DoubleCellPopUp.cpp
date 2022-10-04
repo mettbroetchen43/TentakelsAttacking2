@@ -25,13 +25,13 @@ void DoubleCellPopUp::SetValue() {
 	m_currentCell->value = m_inputChange.GetValue();
 	SetShouldClose();
 }
-
 void DoubleCellPopUp::CheckEnter() {
 	bool validEnterClose =
 		IsKeyReleased(KEY_ENTER)
 		&& !m_shouldClose
 		&& !m_firstEnter;
 	if (validEnterClose) {
+		AppContext::GetInstance().soundManager.PlaySound(SoundType::ACCEPTED);
 		SetValue();
 	}
 
