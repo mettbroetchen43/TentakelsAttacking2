@@ -262,6 +262,28 @@ inline bool InputLine<int>::IsValidKey(int key) {
 	return valid;
 }
 template<>
+inline bool InputLine<float>::IsValidKey(int key) {
+	bool valid = (key >= 48 and key <= 57) // numbers
+		or key == 44 // comma
+		or key == 46; // dot
+
+	//check for multiple commas/dots
+	if ('.' == key or ',' == key) {
+		if (m_value.size() == 0) {
+			valid = false;
+		}
+
+		for (char c : m_value) {
+			if ('.' == c or ',' == c) {
+				valid = false;
+				break;
+			}
+		}
+	}
+
+	return valid;
+}
+template<>
 inline bool InputLine<double>::IsValidKey(int key) {
 	bool valid = (key >= 48 and key <= 57) // numbers
 		or key == 44 // comma
@@ -294,6 +316,17 @@ inline bool InputLine<std::string>::IsValidKey(int key) {
 template<>
 [[nodiscard]] inline int InputLine<int>::GetValue() {
 	return std::stoi(m_value);
+}
+template<>
+[[nodiscard]] inline float InputLine<float>::GetValue() {
+	std::string toReturn = m_value;
+	for (char& c : toReturn) {
+		if (c == ',') {
+			c = '.';
+			break;
+		}
+	}
+	return std::stof(toReturn);
 }
 template<>
 [[nodiscard]] inline double InputLine<double>::GetValue() {

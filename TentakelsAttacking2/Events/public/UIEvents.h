@@ -10,6 +10,7 @@
 
 class StringCell;
 class IntCell;
+class FloatCell;
 class DoubleCell;
 class Focusable;
 class PopUp;
@@ -129,6 +130,20 @@ public:
 		: PopUpEvent(title, ""), m_cell(cell) { }
 
 	[[nodiscard]] IntCell* GetCell() const {
+		return m_cell;
+	}
+
+};
+class ShowFloatCellPopUpEvent : public PopUpEvent {
+private:
+	FloatCell* m_cell;
+
+public:
+	ShowFloatCellPopUpEvent(std::string const& title,
+		FloatCell* cell)
+		: PopUpEvent(title, ""), m_cell(cell) { }
+
+	[[nodiscard]] FloatCell* GetCell() const {
 		return m_cell;
 	}
 
