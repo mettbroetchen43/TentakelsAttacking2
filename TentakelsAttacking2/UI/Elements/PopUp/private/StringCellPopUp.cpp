@@ -43,9 +43,9 @@ void StringCellPopUp::CheckEnter() {
 }
 
 StringCellPopUp::StringCellPopUp(Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution, std::string const& title, std::string const& subTitle,
+	Vector2 resolution, std::string const& title,
 	AssetType infoTexture, StringCell* currentCell)
-	: PrimitiveCellPopUp(pos, size, alignment, resolution, title, subTitle, infoTexture),
+	: PrimitiveCellPopUp(pos, size, alignment, resolution, title, infoTexture),
 	m_currentCell(currentCell),
 	m_inputChange(InputLine<std::string>(
 		1,

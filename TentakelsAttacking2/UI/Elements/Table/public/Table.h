@@ -47,7 +47,6 @@ private:
 			Alignment::MID_MID,
 			m_resolution,
 			event->GetTitle(),
-			event->GetSubTitle(),
 			AssetType::LOGO,
 			event->GetCell()
 			);

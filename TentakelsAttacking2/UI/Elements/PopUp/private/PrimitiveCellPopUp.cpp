@@ -33,8 +33,8 @@ void PrimitiveCellPopUp::Close(AppContext const& appContext) {
 }
 
 PrimitiveCellPopUp::PrimitiveCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	std::string const& title, std::string const& subTitle, AssetType infoTexture)
-	: CellPopUp(pos, size, alignment, resolution, title, subTitle, infoTexture),
+	std::string const& title, AssetType infoTexture)
+	: CellPopUp(pos, size, alignment, resolution, title, "", infoTexture),
 	m_acceptBTN(ClassicButton(
 		2,
 		GetElementPosition(0.9f, 0.9f),

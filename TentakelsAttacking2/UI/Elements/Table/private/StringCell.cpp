@@ -5,14 +5,15 @@
 
 #include "StringCell.h"
 #include "AppContext.h"
-#include "StringCellPopUp.h"
-#include "Table.h"
 
 void StringCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
     Cell::CheckAndUpdate(mousePosition, appContext);
 
     if (ShouldEdit(mousePosition)) {
-        auto event = ShowStringCellPopUpEvent("Edit Entry", "", this);
+        auto event = ShowStringCellPopUpEvent(
+            "Edit Entry",
+            this
+        );
         appContext.eventManager.InvokeEvent(event);
     }
 }

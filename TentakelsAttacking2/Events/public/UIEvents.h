@@ -109,9 +109,9 @@ private:
 	StringCell* m_cell;
 
 public:
-	ShowStringCellPopUpEvent(std::string const& title, std::string const& subTile,
+	ShowStringCellPopUpEvent(std::string const& title,
 		StringCell* cell)
-		: PopUpEvent(title, subTile), m_cell(cell) { }
+		: PopUpEvent(title, ""), m_cell(cell) { }
 
 	[[nodiscard]] StringCell* GetCell() const {
 		return m_cell;
@@ -123,9 +123,9 @@ private:
 	IntCell* m_cell;
 
 public:
-	ShowIntCellPopUpEvent(std::string const& title, std::string const& subTile,
+	ShowIntCellPopUpEvent(std::string const& title,
 		IntCell* cell)
-		: PopUpEvent(title, subTile), m_cell(cell) { }
+		: PopUpEvent(title, ""), m_cell(cell) { }
 
 	[[nodiscard]] IntCell* GetCell() const {
 		return m_cell;

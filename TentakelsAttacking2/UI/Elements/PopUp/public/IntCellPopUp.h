@@ -20,8 +20,7 @@ private:
 
 public:
 	IntCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		std::string const& title, std::string const& subTitle,
-		AssetType infoTexture, IntCell* currentCell);
+		std::string const& title, AssetType infoTexture, IntCell* currentCell);
 
 	void CheckAndUpdate(Vector2 const& mousePosition,
 		AppContext const& appContext) override;

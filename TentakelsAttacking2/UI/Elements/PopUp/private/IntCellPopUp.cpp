@@ -42,10 +42,10 @@ void IntCellPopUp::CheckEnter() {
 }
 
 IntCellPopUp::IntCellPopUp(Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution, std::string const& title, std::string const& subTitle,
+	Vector2 resolution, std::string const& title,
 	AssetType infoTexture, IntCell* currentCell)
 	: PrimitiveCellPopUp(pos, size, alignment, resolution, title,
-		subTitle, infoTexture), m_currentCell(currentCell),
+		infoTexture), m_currentCell(currentCell),
 	m_inputChange(InputLine<int>(
 		1,
 		GetElementPosition(0.5f, 0.5f),
