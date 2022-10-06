@@ -7,7 +7,7 @@
 #include "Scene.h"
 #include "PopUp.h"
 #include "MessagePopUp.h"
-#include "Scenes.h"
+#include "Scenes.hpp"
 #include "UIManager.h"
 #include "AppContext.h"
 #include <raylib.h>

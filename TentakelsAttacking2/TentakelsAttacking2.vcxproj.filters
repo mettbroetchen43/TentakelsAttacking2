@@ -138,7 +138,7 @@
     <ClInclude Include="UI\Scene\Scenes\public\MainMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Scene\Scenes\public\Scenes.h">
+    <ClInclude Include="UI\Scene\Scenes\public\Scenes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\Default\public\Title.h">
