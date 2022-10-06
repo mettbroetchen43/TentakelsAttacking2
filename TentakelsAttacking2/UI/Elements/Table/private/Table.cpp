@@ -91,11 +91,25 @@ void Table::OnEvent(Event const& event) {
 	}
 }
 
-void Table::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void Table::CheckAndUpdate(Vector2 const& mousePosition,
+	AppContext const& appContext) {
 	if (m_popUp) {
 		m_popUp->CheckAndUpdate(mousePosition, appContext);
 		return;
 	}
+
+	if (m_cellFocus) {
+		for (auto& c : m_cells) {
+			c->CheckAndUpdate(mousePosition, appContext);
+		}
+
+		if (IsKeyPressed(KEY_ESCAPE)) {
+			auto event = DeleteFocusLayerEvent();
+			appContext.eventManager.InvokeEvent(event);
+			m_cellFocus = false;
+		}
+	}
+
 
 	if (!m_cellFocus) {
 		if (!IsFocused()) {
@@ -122,18 +136,6 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 				}
 				m_cellFocus = true;
 			}
-		}
-	}
-
-	if (m_cellFocus) {
-		for (auto& c : m_cells) {
-			c->CheckAndUpdate(mousePosition, appContext);
-		}
-
-		if (IsKeyPressed(KEY_ESCAPE)) {
-			auto event = DeleteFocusLayerEvent();
-			appContext.eventManager.InvokeEvent(event);
-			m_cellFocus = false;
 		}
 	}
 }
