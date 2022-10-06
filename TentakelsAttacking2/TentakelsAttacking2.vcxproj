@@ -145,7 +145,7 @@
     <ClInclude Include="Game\public\Fleet.h" />
     <ClInclude Include="Game\public\GroupTarget.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
-    <ClInclude Include="Helper\public\LayeredVector.h" />
+    <ClInclude Include="Helper\public\LayeredVector.hpp" />
     <ClInclude Include="Helper\public\Random.h" />
     <ClInclude Include="Helper\public\TextProcessing.h" />
     <ClInclude Include="Helper\public\Vec2.h" />

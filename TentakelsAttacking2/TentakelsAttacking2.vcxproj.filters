@@ -120,7 +120,7 @@
     <ClInclude Include="UI\Scene\Scenes\public\Intro.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\LayeredVector.h">
+    <ClInclude Include="Helper\public\LayeredVector.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Scene\Scenes\public\Logos.h">
