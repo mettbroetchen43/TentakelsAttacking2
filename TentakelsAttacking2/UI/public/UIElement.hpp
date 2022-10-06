@@ -18,9 +18,9 @@ protected:
 	Alignment m_alignment;
 
 public:
-	virtual ~UIElement() = default;
 	UIElement(Vector2 pos, Vector2 size, Alignment alignment)
 		: m_pos(pos), m_size(size), m_alignment(alignment) { }
+	virtual ~UIElement() = default;
 
 	Vector2 GetPosition() const {
 		return m_pos;
