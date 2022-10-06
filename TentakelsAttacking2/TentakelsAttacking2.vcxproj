@@ -184,7 +184,7 @@
     <ClInclude Include="UI\Scene\public\SceneManager.h" />
     <ClInclude Include="UI\Elements\Button\public\ClassicButton.h" />
     <ClInclude Include="Helper\public\AssetManager.h" />
-    <ClInclude Include="Helper\public\AssetType.h" />
+    <ClInclude Include="Helper\public\AssetType.hpp" />
     <ClInclude Include="UI\Elements\Button\public\Button.h" />
     <ClInclude Include="UI\public\Focus.h" />
     <ClInclude Include="UI\public\Focusable.h" />

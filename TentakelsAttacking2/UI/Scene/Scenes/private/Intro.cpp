@@ -9,7 +9,6 @@
 #include "ClassicButton.h"
 #include "Text.h"
 #include "Title.h"
-#include "AssetType.h"
 #include "SoundType.h"
 #include "SceneType.h"
 #include "random.h"

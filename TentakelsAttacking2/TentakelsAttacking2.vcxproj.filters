@@ -81,7 +81,7 @@
     <ClInclude Include="Helper\public\AssetManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\AssetType.h">
+    <ClInclude Include="Helper\public\AssetType.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\Button\public\SliderButton.h">

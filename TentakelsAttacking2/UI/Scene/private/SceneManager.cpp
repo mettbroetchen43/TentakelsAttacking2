@@ -10,7 +10,6 @@
 #include "Scenes.h"
 #include "UIManager.h"
 #include "AppContext.h"
-#include "AssetType.h"
 #include <raylib.h>
 
 void SceneManager::InitializeScenes() {

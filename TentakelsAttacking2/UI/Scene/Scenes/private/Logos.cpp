@@ -6,7 +6,6 @@
 #include "Logos.h"
 #include "SceneType.h"
 #include "AppContext.h"
-#include "AssetType.h"
 #include "UIManager.h"
 #include "Text.h"
 #include "Picture.h"

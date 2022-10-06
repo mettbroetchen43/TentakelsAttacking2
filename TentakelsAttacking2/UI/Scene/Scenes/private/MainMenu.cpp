@@ -6,7 +6,6 @@
 #include "MainMenu.h"
 #include "AppContext.h"
 #include "UIManager.h"
-#include "AssetType.h"
 #include "SoundType.h"
 #include "ClassicButton.h"
 #include "Title.h"

@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "AssetType.h"
+#include "AssetType.hpp"
 #include <raylib.h>
 #include <array>
 #include <unordered_map>

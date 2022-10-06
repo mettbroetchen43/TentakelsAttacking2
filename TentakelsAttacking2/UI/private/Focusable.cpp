@@ -5,7 +5,7 @@
 
 #include "Focusable.h"
 #include "AppContext.h"
-#include "UIEvents.h"
+#include "UIEvents.hpp"
 
 Focusable::Focusable(unsigned int ID)
 	: m_focusID(ID) { }
