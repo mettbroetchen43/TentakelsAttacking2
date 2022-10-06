@@ -65,8 +65,8 @@ void Cell::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appCont
 	};
 	m_textSize = m_colider.height / 3;
 	m_textPosition = {
-	m_colider.x + m_colider.height / 3,
-	m_colider.y + m_colider.width / 20
+	m_colider.x + m_colider.width / 20,
+	m_colider.y + m_colider.height / 3
 	};
 }
 
