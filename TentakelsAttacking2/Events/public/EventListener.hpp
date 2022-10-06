@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#include "MainEvent.h"
+#include "MainEvent.hpp"
 
 class EventListener {
 	friend class EventManager;
