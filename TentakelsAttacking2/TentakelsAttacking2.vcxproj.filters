@@ -48,7 +48,7 @@
     <ClInclude Include="UI\Elements\Button\public\Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\public\UIElement.h">
+    <ClInclude Include="UI\public\UIElement.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\public\UIManager.h">

@@ -191,7 +191,7 @@
     <ClInclude Include="UI\Elements\Button\public\SliderButton.h" />
     <ClInclude Include="Helper\public\SoundManager.h" />
     <ClInclude Include="Helper\public\SoundType.hpp" />
-    <ClInclude Include="UI\public\UIElement.h" />
+    <ClInclude Include="UI\public\UIElement.hpp" />
     <ClInclude Include="UI\public\UIManager.h" />
     <ClInclude Include="UI\Scene\public\Scene.h" />
     <ClInclude Include="UI\Scene\public\SceneType.h" />
