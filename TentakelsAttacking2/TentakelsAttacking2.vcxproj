@@ -194,7 +194,7 @@
     <ClInclude Include="UI\public\UIElement.hpp" />
     <ClInclude Include="UI\public\UIManager.h" />
     <ClInclude Include="UI\Scene\public\Scene.h" />
-    <ClInclude Include="UI\Scene\public\SceneType.h" />
+    <ClInclude Include="UI\Scene\public\SceneType.hpp" />
     <ClInclude Include="UI\Scene\Scenes\public\Logos.h" />
     <ClInclude Include="UI\Scene\Scenes\public\MainMenu.h" />
     <ClInclude Include="UI\Scene\Scenes\public\Scenes.h" />

@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#include "SceneType.h"
+#include "SceneType.hpp"
 #include "EventListener.hpp"
 #include <unordered_map>
 #include <memory>
