@@ -5,7 +5,7 @@
 
 #pragma once
 #include "SoundManager.h"
-#include "EventManager.h"
+#include "EventManager.hpp"
 #include "AssetManager.h"
 #include <string>
 
