@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#include "PlayerType.h"
+#include "PlayerType.hpp"
 #include <string>
 
 class Player {
