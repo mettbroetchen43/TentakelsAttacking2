@@ -93,15 +93,15 @@ void Table::OnEvent(Event const& event) {
 
 void Table::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
+	bool updateCells = false;
+
 	if (m_popUp) {
 		m_popUp->CheckAndUpdate(mousePosition, appContext);
 		return;
 	}
 
 	if (m_cellFocus) {
-		for (auto& c : m_cells) {
-			c->CheckAndUpdate(mousePosition, appContext);
-		}
+		updateCells = true;
 
 		if (IsKeyPressed(KEY_ESCAPE)) {
 			auto event = DeleteFocusLayerEvent();
@@ -117,15 +117,22 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition,
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 					auto event = SelectFocusElementEvent(this);
 					appContext.eventManager.InvokeEvent(event);
+
+					updateCells = true;
 				}
 			}
 		}
 
 		if (IsFocused()) {
-			bool focusCell = IsKeyPressed(KEY_ENTER)
-				or IsKeyPressed(KEY_SPACE)
-				or (CheckCollisionPointRec(mousePosition, m_colider)
-					and IsMouseButtonPressed(MOUSE_BUTTON_LEFT));
+			bool mouseAction =
+				CheckCollisionPointRec(mousePosition, m_colider)
+				and IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+			bool enterAction =
+				IsKeyPressed(KEY_ENTER)
+				or IsKeyPressed(KEY_SPACE);
+			bool focusCell =
+				enterAction
+				or mouseAction;
 
 			if (focusCell) {
 				auto event = NewFocusLayerEvent();
@@ -135,7 +142,17 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition,
 					appContext.eventManager.InvokeEvent(event2);
 				}
 				m_cellFocus = true;
+
+				if (mouseAction) {
+					updateCells = true;
+				}
 			}
+		}
+	}
+
+	if (updateCells) {
+		for (auto& c : m_cells) {
+			c->CheckAndUpdate(mousePosition, appContext);
 		}
 	}
 }
