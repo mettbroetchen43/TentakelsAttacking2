@@ -34,6 +34,19 @@ void ColorPicker::Initialise(Vector2 resolution) {
 	}
 }
 
+void ColorPicker::SetColorFromFocus() {
+	if (!m_focusedCells) {
+		return;
+	}
+
+	for (auto& c : m_cells) {
+		if (c->IsFocused()) {
+			m_currentColorCell = c.get();
+			return;
+		}
+	}
+}
+
 ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution) 
 	: Focusable(ID), UIElement(pos, size, alignment) {
@@ -140,6 +153,8 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 	for (auto& c : m_cells) {
 		c->CheckAndUpdate(mousePosition, appContext);
 	}
+
+	SetColorFromFocus();
 }
 void ColorPicker::Render(AppContext const& appContext) {
 	// update here to make shure all CheckAndUpdate() is done

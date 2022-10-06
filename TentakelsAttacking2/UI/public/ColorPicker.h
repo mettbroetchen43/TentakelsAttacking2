@@ -39,6 +39,7 @@ private:
 	ColorPickerCell* m_previousColorCell = nullptr;
 
 	void Initialise(Vector2 resolution);
+	void SetColorFromFocus();
 
 public:
 	ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
