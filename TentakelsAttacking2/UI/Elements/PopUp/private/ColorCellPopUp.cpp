@@ -5,6 +5,7 @@
 
 #include "ColorCellPopUp.h"
 #include "ColorCell.h"
+#include "UIEvents.h"
 #include "AppContext.h"
 
 void ColorCellPopUp::Initialize(AppContext const& appContext) {
@@ -14,9 +15,6 @@ void ColorCellPopUp::Initialize(AppContext const& appContext) {
 	appContext.eventManager.InvokeEvent(event);
 
 	m_colorPicker.SetInitialColor(m_currentCell->value);
-
-	auto event2 = NewFocusLayerEvent();
-	appContext.eventManager.InvokeEvent(event2);
 
 	m_colorPicker.SetCellFocuses(appContext);
 
@@ -29,6 +27,12 @@ void ColorCellPopUp::SetValue() {
 	SetShouldClose();
 }
 void ColorCellPopUp::CheckEnter() {
+	if (!m_firstEnter and IsKeyPressed(KEY_ENTER)) {
+		SetValue();
+		auto event = PlaySoundEvent(SoundType::ACCEPTED);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+	}
+
 	if (m_firstEnter and IsKeyUp(KEY_ENTER)) {
 		m_firstEnter = false;
 	}
