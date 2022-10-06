@@ -156,7 +156,7 @@
     <ClInclude Include="UI\Elements\Table\public\EmptyCell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Elements\Table\public\AllCells.h">
+    <ClInclude Include="UI\Elements\Table\public\AllCells.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\Table\public\StringCell.h">

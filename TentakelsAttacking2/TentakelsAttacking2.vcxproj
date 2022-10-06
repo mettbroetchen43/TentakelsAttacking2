@@ -168,7 +168,7 @@
     <ClInclude Include="UI\Elements\Table\public\ColorCell.h" />
     <ClInclude Include="UI\Elements\Table\public\DoubleCell.h" />
     <ClInclude Include="UI\Elements\Table\public\FloatCell.h" />
-    <ClInclude Include="UI\Elements\Table\public\AllCells.h" />
+    <ClInclude Include="UI\Elements\Table\public\AllCells.hpp" />
     <ClInclude Include="UI\Elements\Table\public\Cell.h" />
     <ClInclude Include="UI\Elements\Table\public\EmptyCell.h" />
     <ClInclude Include="UI\Elements\Table\public\IntCell.h" />
