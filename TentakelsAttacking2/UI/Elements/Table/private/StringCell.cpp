@@ -11,7 +11,7 @@ void StringCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& 
 
     if (ShouldEdit(mousePosition)) {
         auto event = ShowStringCellPopUpEvent(
-            "Edit Entry",
+            "Edit Text",
             this
         );
         appContext.eventManager.InvokeEvent(event);
