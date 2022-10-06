@@ -6,7 +6,8 @@
 #include "ColorCell.h"
 #include "AppContext.h"
 
-void ColorCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void ColorCell::CheckAndUpdate(Vector2 const& mousePosition,
+	AppContext const& appContext) {
 	Cell::CheckAndUpdate(mousePosition, appContext);
 	if (ShouldEdit(mousePosition)) {
 		auto event = ShowColorCellPopUpEvent(

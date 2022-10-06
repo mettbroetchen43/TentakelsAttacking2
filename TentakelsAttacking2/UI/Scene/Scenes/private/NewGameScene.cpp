@@ -107,6 +107,8 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		3,
 		uiManager.GetResolution()
 		);
+	table->SetRowEditable(0,false);
+	table->SetColumnEditable(0,false);
 	table->SetValue<StringCell, std::string>(0, 0, "ID");
 	table->SetValue<StringCell, std::string>(0, 1, "Name");
 	table->SetValue<StringCell, std::string>(0, 2, "Color");

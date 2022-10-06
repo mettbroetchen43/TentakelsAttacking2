@@ -183,6 +183,27 @@ void Table::Resize(Vector2 resolution, AppContext const& appContext){
 
 }
 
+void Table::SetAllCellsEditable(bool editable) {
+	for (auto& c : m_cells) {
+		c->SetEditable(editable);
+	}
+}
+void Table::SetRowEditable(size_t row, bool editable) {
+	// index check in SetSingleColumnEditable
+	for (int column = 0; column < m_columns; ++column) {
+		SetSingleCellEditable(row, column, editable);
+	}
+}
+void Table::SetColumnEditable(size_t column, bool editable) {
+	// index check in SetSingleColumnEditable
+	for (int row = 0; row < m_rows; ++row) {
+		SetSingleCellEditable(row, column, editable);
+	}
+}
+void Table::SetSingleCellEditable(size_t row, size_t column, bool editable) {
+	CheckValidRowColumn(row, column);
+	m_cells.at(GetIndex(row, column))->SetEditable(editable);
+}
 bool Table::IsEnabled() const {
 	return true;
 }

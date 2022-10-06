@@ -11,6 +11,7 @@
 class Cell : public UIElement, public Focusable {
 private:
 protected:
+	bool m_editable = true;
 	Rectangle m_colider;
 	Vector2 m_textPosition;
 	float m_textSize;
@@ -22,10 +23,12 @@ public:
 		unsigned int ID, Vector2 resolution);
 	virtual ~Cell() = default;
 
-	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
+	virtual void CheckAndUpdate(Vector2 const& mousePosition,
+		AppContext const& appContext);
 	virtual void Render(AppContext const& appContext) override;
 	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
 	
+	void SetEditable(bool editable);
 	[[nodiscard]] bool IsEnabled() const override;
 	[[nodiscard]] Rectangle GetCollider() const override;
 };

@@ -30,13 +30,15 @@ private:
 	template<typename CellType>
 	void SetCell(size_t row, size_t column) {
 		const size_t index = GetIndex(row, column);
-		m_cells[index] = std::make_unique<CellType>(
+		const bool isEditable = m_cells.at(index)->IsEnabled();
+		m_cells.at(index) = std::make_unique<CellType>(
 			GetElementPosition(row, column),
 			GetElementSize(),
 			Alignment::DEFAULT,
 			static_cast<unsigned int>(index),
 			m_resolution
 			);
+		m_cells.at(index)->SetEditable(isEditable);
 	}
 
 	template<typename popUpType, typename eventType>
@@ -63,6 +65,10 @@ public:
 	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
 
+	void SetAllCellsEditable(bool editable);
+	void SetRowEditable(size_t row, bool editable);
+	void SetColumnEditable(size_t column, bool editable);
+	void SetSingleCellEditable(size_t row, size_t column, bool editable);
 	[[nodiscard]] bool IsEnabled() const override;
 	[[nodiscard]] Rectangle GetCollider() const override;
 

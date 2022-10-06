@@ -9,6 +9,10 @@
 bool Cell::ShouldEdit(Vector2 const& mousePosition) const {
 	bool edit = false;
 
+	if (!m_editable) {
+		return edit;
+	}
+
 	if (IsFocused()) {
 		if (IsKeyPressed(KEY_ENTER)
 			or IsKeyPressed(KEY_SPACE)) {
@@ -39,7 +43,12 @@ Cell::Cell(Vector2 pos, Vector2 size, Alignment alignment,
 	};
 }
 
-void Cell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void Cell::CheckAndUpdate(Vector2 const& mousePosition,
+	AppContext const& appContext) {
+	if (!m_editable) {
+		return;
+	}
+
 	if (CheckCollisionPointRec(mousePosition, m_colider)) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			auto event = SelectFocusElementEvent(this);
@@ -69,8 +78,11 @@ void Cell::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appCont
 	};
 }
 
+void Cell::SetEditable(bool editable) {
+	m_editable = editable;
+}
 bool Cell::IsEnabled() const {
-	return true;
+	return m_editable;
 }
 Rectangle Cell::GetCollider() const {
 	return m_colider;
