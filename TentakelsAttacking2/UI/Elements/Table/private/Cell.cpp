@@ -32,10 +32,10 @@ Cell::Cell(Vector2 pos, Vector2 size, Alignment alignment,
 	unsigned int ID, Vector2 resolution)
 	: UIElement(pos, size, alignment), Focusable(ID) {
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
-	m_textSize = m_colider.height / 3;
+	m_textSize = m_colider.height / 2;
 	m_textPosition = {
 		m_colider.x + m_colider.width / 20,
-		m_colider.y + m_colider.height / 3
+		m_colider.y + m_colider.height / 4
 	};
 }
 
@@ -62,10 +62,10 @@ void Cell::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appCont
 		resolution.x * m_size.x,
 		resolution.y * m_size.y
 	};
-	m_textSize = m_colider.height / 3;
+	m_textSize = m_colider.height / 2;
 	m_textPosition = {
 	m_colider.x + m_colider.width / 20,
-	m_colider.y + m_colider.height / 3
+	m_colider.y + m_colider.height / 4
 	};
 }
 
