@@ -112,6 +112,9 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 	table->SetValue<StringCell, std::string>(0, 0, "ID");
 	table->SetValue<StringCell, std::string>(0, 1, "Name");
 	table->SetValue<StringCell, std::string>(0, 2, "Color");
+	for (int i = 0; i < appContext.MaxPlayerCount();++i) {
+		table->SetValue<IntCell, int>(i + 1, 0, i + 1);
+	}
 	m_elements.push_back(table);
 
 	auto startGameBtn = std::make_shared<ClassicButton>(
