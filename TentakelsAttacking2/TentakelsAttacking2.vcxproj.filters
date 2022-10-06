@@ -198,18 +198,6 @@
     <ClInclude Include="UI\Elements\PopUp\public\FloatCellPopUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\public\ColorPicker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\public\ColorPickerCell.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Helper\public\GenerelHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\Elements\PopUp\public\ColorCellPopUp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\Random.cpp">
@@ -348,15 +336,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\PopUp\private\FloatCellPopUp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\private\ColorPicker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\private\ColorPickerCell.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\Elements\PopUp\private\ColorCellPopUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
