@@ -5,7 +5,6 @@
 
 #include "MessagePopUp.h"
 #include "AppContext.h"
-#include "SoundType.h"
 #include "memory"
 
 void MessagePopUp::Initialize() {

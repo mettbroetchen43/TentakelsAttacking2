@@ -57,7 +57,7 @@
     <ClInclude Include="Helper\public\SoundManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\SoundType.h">
+    <ClInclude Include="Helper\public\SoundType.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Events\public\MainEvent.hpp">
