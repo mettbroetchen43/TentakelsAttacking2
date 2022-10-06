@@ -43,6 +43,14 @@ void SceneManager::InitializeScenes() {
 		*m_uiManager
 		);
 	m_scenes[SceneType::MAIN_MENU] = mainMenu;
+
+	auto newGame = std::make_shared<NewGameScene>(
+		Vector2(0.0f, 0.0f),
+		Vector2(1.0f, 1.0f),
+		Alignment::DEFAULT,
+		*m_uiManager
+		);
+	m_scenes[SceneType::NEW_GAME] = newGame;
 }
 
 void SceneManager::NewMessagePopUp(std::string const& title, std::string const& subTitle) {

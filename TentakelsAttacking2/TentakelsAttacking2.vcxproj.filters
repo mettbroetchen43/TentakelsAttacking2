@@ -207,6 +207,12 @@
     <ClInclude Include="UI\Elements\PopUp\public\ColorCellPopUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Scene\Scenes\public\NewGameScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Elements\Default\public\Line.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\Random.cpp">
@@ -357,6 +363,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\PopUp\private\CellPopUp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Scene\Scenes\private\NewGameScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\Default\private\Line.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

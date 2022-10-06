@@ -28,7 +28,11 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
 		);
-	newGameBtn->SetOnClick([]() {AppContext::GetInstance().eventManager.InvokeEvent(SwitchSceneEvent(SceneType::TEST));});
+	newGameBtn->SetOnClick([]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(
+			SwitchSceneEvent(SceneType::NEW_GAME)
+			);
+		});
 	m_elements.push_back(newGameBtn);
 
 	btnPosY += 0.15f;

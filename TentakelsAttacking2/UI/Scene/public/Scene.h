@@ -31,9 +31,9 @@ public:
 	~Scene() = default;
 
 	[[nodiscard]] bool IsActive() const;
-	virtual void SetActive(bool active, AppContext const& appContext) = 0;
+	virtual void SetActive(bool active, AppContext const& appContext);
 
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
-	void Render(AppContext const& appContext) override;
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	virtual void Render(AppContext const& appContext) override;
+	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
 };

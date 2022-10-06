@@ -14,7 +14,8 @@ private:
 protected:
 
 public:
-	TestScene(Vector2 pos, Vector2 size, Alignment alignment, UIManager const& uiManager);
+	TestScene(Vector2 pos, Vector2 size, Alignment alignment,
+		UIManager const& uiManager);
 	void SetActive(bool active, AppContext const& appContext) override;
 
 };

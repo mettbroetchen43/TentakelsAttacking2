@@ -152,6 +152,7 @@
     <ClInclude Include="Game\public\SpaceObject.h" />
     <ClInclude Include="Game\public\Player.h" />
     <ClInclude Include="Game\public\Planet.h" />
+    <ClInclude Include="UI\Elements\Default\public\Line.h" />
     <ClInclude Include="UI\Elements\Default\public\Picture.h" />
     <ClInclude Include="UI\Elements\Default\public\Text.h" />
     <ClInclude Include="UI\Elements\Default\public\Title.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="UI\Scene\public\SceneType.hpp" />
     <ClInclude Include="UI\Scene\Scenes\public\Logos.h" />
     <ClInclude Include="UI\Scene\Scenes\public\MainMenu.h" />
+    <ClInclude Include="UI\Scene\Scenes\public\NewGameScene.h" />
     <ClInclude Include="UI\Scene\Scenes\public\Scenes.hpp" />
     <ClInclude Include="UI\Scene\Scenes\public\TestScene.h" />
     <ClInclude Include="_public\AppContext.h" />
@@ -214,6 +216,7 @@
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />
+    <ClCompile Include="UI\Elements\Default\private\Line.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\CellPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\ColorCellPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\PopUp.cpp" />
@@ -249,6 +252,7 @@
     <ClCompile Include="UI\Scene\Scenes\private\Logos.cpp" />
     <ClCompile Include="UI\Scene\Scenes\private\MainMenu.cpp" />
     <ClCompile Include="UI\Scene\Scenes\private\TestScene.cpp" />
+    <ClCompile Include="UI\Scene\Scenes\private\NewGameScene.cpp" />
     <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="_private\AppContext.cpp" />

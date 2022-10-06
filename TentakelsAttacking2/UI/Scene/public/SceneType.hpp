@@ -10,4 +10,5 @@ enum class SceneType {
 	LOGO,
 	INTRO,
 	MAIN_MENU,
+	NEW_GAME,
 };

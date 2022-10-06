@@ -5,7 +5,8 @@
 
 #pragma once
 
+#include "TestScene.h"
 #include "Intro.h"
 #include "Logos.h"
 #include "MainMenu.h"
-#include "TestScene.h"
+#include "NewGameScene.h"
