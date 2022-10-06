@@ -5,7 +5,7 @@
 
 #pragma once
 #include "PrimitiveCellPopUp.h"
-#include "InputLine.h"
+#include "InputLine.hpp"
 
 class FloatCell;
 

@@ -108,7 +108,7 @@
     <ClInclude Include="UI\Scene\public\BaseMainScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Elements\Default\public\InputLine.h">
+    <ClInclude Include="UI\Elements\Default\public\InputLine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h">

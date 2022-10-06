@@ -165,7 +165,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\StringCellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h" />
-    <ClInclude Include="UI\Elements\Default\public\InputLine.h" />
+    <ClInclude Include="UI\Elements\Default\public\InputLine.hpp" />
     <ClInclude Include="UI\Elements\Table\public\ColorCell.h" />
     <ClInclude Include="UI\Elements\Table\public\DoubleCell.h" />
     <ClInclude Include="UI\Elements\Table\public\FloatCell.h" />
