@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Helper\public\Vec2.h">
+    <ClInclude Include="Helper\public\Vec2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Helper\public\Random.h">

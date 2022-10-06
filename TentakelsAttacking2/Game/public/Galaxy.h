@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#include "Vec2.h"
+#include "Vec2.hpp"
 #include "Fleet.h"
 #include "Planet.h"
 #include "GroupTarget.h"
