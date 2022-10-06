@@ -136,7 +136,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Events\public\EventListener.h" />
+    <ClInclude Include="Events\public\EventListener.hpp" />
     <ClInclude Include="Events\public\EventManager.h" />
     <ClInclude Include="Events\public\UIEvents.h" />
     <ClInclude Include="Events\public\MainEvent.h" />
