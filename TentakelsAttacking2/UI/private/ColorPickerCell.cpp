@@ -14,6 +14,7 @@ void ColorPickerCell::SetColor() const {
 ColorPickerCell::ColorPickerCell(unsigned int ID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution, Color color, ColorPicker* colorPicker)
 	: Focusable(ID), UIElement(pos, size, alignment),
+
 	m_color(color), m_colorPicker(colorPicker) {
 
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
@@ -52,6 +53,10 @@ void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext co
 	}
 }
 void ColorPickerCell::Render([[maybe_unused]] AppContext const& appContext) {
+	if (!m_enabled) {
+		return;
+	}
+
 	DrawRectangle(
 		static_cast<int>(m_colider.x),
 		static_cast<int>(m_colider.y),
