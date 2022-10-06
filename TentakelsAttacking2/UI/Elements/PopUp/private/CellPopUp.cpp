@@ -3,10 +3,10 @@
 // 04.10.2022
 //
 
-#include "PrimitiveCellPopUp.h"
+#include "CellPopUp.h"
 #include "AppContext.h"
 
-void PrimitiveCellPopUp::Initialize(AppContext const& appContext) {
+void CellPopUp::Initialize(AppContext const& appContext) {
 	auto event = NewFocusLayerEvent();
 	appContext.eventManager.InvokeEvent(event);
 
@@ -21,20 +21,20 @@ void PrimitiveCellPopUp::Initialize(AppContext const& appContext) {
 		});
 }
 
-void PrimitiveCellPopUp::SetShouldClose() {
+void CellPopUp::SetShouldClose() {
 	m_shouldClose = true;
 }
 
-void PrimitiveCellPopUp::Close(AppContext const& appContext) {
+void CellPopUp::Close(AppContext const& appContext) {
 	if (m_shouldClose) {
 		auto event = ClosePopUpEvent(this);
 		appContext.eventManager.InvokeEvent(event);
 	}
 }
 
-PrimitiveCellPopUp::PrimitiveCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+CellPopUp::CellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, AssetType infoTexture)
-	: CellPopUp(pos, size, alignment, resolution, title, "", infoTexture),
+	: PopUp(pos, size, alignment, resolution, title, "", infoTexture),
 	m_acceptBTN(ClassicButton(
 		2,
 		GetElementPosition(0.9f, 0.9f),
@@ -60,7 +60,7 @@ PrimitiveCellPopUp::PrimitiveCellPopUp(Vector2 pos, Vector2 size, Alignment alig
 	}
 }
 
-void PrimitiveCellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
+void CellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 	m_acceptBTN.CheckAndUpdate(mousePosition, appContext);
 	m_cancelBTN.CheckAndUpdate(mousePosition, appContext);
@@ -70,13 +70,13 @@ void PrimitiveCellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 		SetShouldClose();
 	}
 }
-void PrimitiveCellPopUp::Render(AppContext const& appContext) {
+void CellPopUp::Render(AppContext const& appContext) {
 	PopUp::Render(appContext);
 
 	m_acceptBTN.Render(appContext);
 	m_cancelBTN.Render(appContext);
 }
-void PrimitiveCellPopUp::Resize(Vector2 resolution, AppContext const& appContext) {
+void CellPopUp::Resize(Vector2 resolution, AppContext const& appContext) {
 	m_acceptBTN.Resize(resolution, appContext);
 	m_cancelBTN.Resize(resolution, appContext);
 	PopUp::Resize(resolution, appContext);

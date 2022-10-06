@@ -4,12 +4,12 @@
 //
 
 #pragma once
-#include "PrimitiveCellPopUp.h"
+#include "CellPopUp.h"
 #include "ColorPicker.h"
 
 class ColorCell;
 
-class ColorCellPopUp : public PrimitiveCellPopUp {
+class ColorCellPopUp : public CellPopUp {
 private:
 	ColorPicker m_colorPicker;
 	ColorCell* m_currentCell;

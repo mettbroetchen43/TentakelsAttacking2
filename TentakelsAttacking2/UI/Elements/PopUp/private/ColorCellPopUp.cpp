@@ -8,7 +8,7 @@
 #include "AppContext.h"
 
 void ColorCellPopUp::Initialize(AppContext const& appContext) {
-	PrimitiveCellPopUp::Initialize(appContext);
+	CellPopUp::Initialize(appContext);
 
 	auto event = NewFocusElementEvent(&m_colorPicker);
 	appContext.eventManager.InvokeEvent(event);
@@ -39,7 +39,7 @@ void ColorCellPopUp::CheckEnter() {
 
 ColorCellPopUp::ColorCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, AssetType infoTexture, ColorCell* currentCell)
-	: PrimitiveCellPopUp(pos, size, alignment, resolution, title, infoTexture),
+	: CellPopUp(pos, size, alignment, resolution, title, infoTexture),
 	m_currentCell(currentCell),
 	m_colorPicker(
 		ColorPicker(
@@ -56,18 +56,18 @@ void ColorCellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 	m_colorPicker.CheckAndUpdate(mousePosition, appContext);
 
-	PrimitiveCellPopUp::CheckAndUpdate(mousePosition, appContext);
+	CellPopUp::CheckAndUpdate(mousePosition, appContext);
 
 	CheckEnter();
 
 	Close(appContext);
 }
 void ColorCellPopUp::Render(AppContext const& appContext) {
-	PrimitiveCellPopUp::Render(appContext);
+	CellPopUp::Render(appContext);
 
 	m_colorPicker.Render(appContext);
 }
 void ColorCellPopUp::Resize(Vector2 resolution, AppContext const& appContext) {
 	m_colorPicker.Resize(resolution, appContext);
-	PrimitiveCellPopUp::Resize(resolution, appContext);
+	CellPopUp::Resize(resolution, appContext);
 }

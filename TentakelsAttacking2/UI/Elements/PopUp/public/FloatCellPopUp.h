@@ -4,12 +4,12 @@
 //
 
 #pragma once
-#include "PrimitiveCellPopUp.h"
+#include "CellPopUp.h"
 #include "InputLine.hpp"
 
 class FloatCell;
 
-class FloatCellPopUp : public PrimitiveCellPopUp {
+class FloatCellPopUp : public CellPopUp {
 private:
 	InputLine<float> m_inputChange;
 	FloatCell* m_currentCell;

@@ -4,12 +4,12 @@
 //
 
 #pragma once
-#include "PrimitiveCellPopUp.h"
+#include "CellPopUp.h"
 #include "InputLine.hpp"
 
 class IntCell;
 
-class IntCellPopUp : public PrimitiveCellPopUp {
+class IntCellPopUp : public CellPopUp {
 private:
 	InputLine<int> m_inputChange;
 	IntCell* m_currentCell;

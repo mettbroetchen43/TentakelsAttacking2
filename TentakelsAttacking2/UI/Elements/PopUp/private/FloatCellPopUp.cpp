@@ -7,7 +7,7 @@
 #include "FloatCell.h"
 
 void FloatCellPopUp::Initialize(AppContext const& appContext) {
-	PrimitiveCellPopUp::Initialize(appContext);
+	CellPopUp::Initialize(appContext);
 
 	auto event = NewFocusElementEvent(&m_inputChange);
 	appContext.eventManager.InvokeEvent(event);
@@ -43,7 +43,7 @@ void FloatCellPopUp::CheckEnter() {
 FloatCellPopUp::FloatCellPopUp(Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution, std::string const& title, AssetType infoTexture,
 	FloatCell* currentCell)
-	: PrimitiveCellPopUp(pos, size, alignment, resolution, title, infoTexture),
+	: CellPopUp(pos, size, alignment, resolution, title, infoTexture),
 	m_currentCell(currentCell),
 	m_inputChange(InputLine<float>(
 		1,
@@ -61,18 +61,18 @@ void FloatCellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext){
 	m_inputChange.CheckAndUpdate(mousePosition, appContext);
 
-	PrimitiveCellPopUp::CheckAndUpdate(mousePosition, appContext);
+	CellPopUp::CheckAndUpdate(mousePosition, appContext);
 
 	CheckEnter();
 
 	Close(appContext);
 }
 void FloatCellPopUp::Render(AppContext const& appContext){
-	PrimitiveCellPopUp::Render(appContext);
+	CellPopUp::Render(appContext);
 
 	m_inputChange.Render(appContext);
 }
 void FloatCellPopUp::Resize(Vector2 resolution, AppContext const& appContext){
 	m_inputChange.Resize(resolution, appContext);
-	PrimitiveCellPopUp::Resize(resolution, appContext);
+	CellPopUp::Resize(resolution, appContext);
 }

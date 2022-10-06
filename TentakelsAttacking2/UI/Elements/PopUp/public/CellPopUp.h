@@ -5,8 +5,27 @@
 
 #pragma once
 #include "PopUp.h"
+#include "ClassicButton.h"
 
 class CellPopUp : public PopUp {
+protected:
+	bool m_shouldClose = false;
+	bool m_firstEnter = false;
+	ClassicButton m_acceptBTN, m_cancelBTN;
+
+	virtual void Initialize(AppContext const& appContext);
+
+	void SetShouldClose();
+	virtual void SetValue() = 0;
+
+	virtual void CheckEnter() = 0;
+	void Close(AppContext const& appContext);
 public:
-	using PopUp::PopUp;
+	CellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+		std::string const& title, AssetType infoTexture);
+
+	virtual void CheckAndUpdate(Vector2 const& mousePosition,
+		AppContext const& appContext) override;
+	virtual void Render(AppContext const& appContext) override;
+	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
 };
