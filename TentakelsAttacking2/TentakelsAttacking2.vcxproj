@@ -155,7 +155,7 @@
     <ClInclude Include="UI\Elements\Default\public\Picture.h" />
     <ClInclude Include="UI\Elements\Default\public\Text.h" />
     <ClInclude Include="UI\Elements\Default\public\Title.h" />
-    <ClInclude Include="UI\Elements\PopUp\public\AllCellPopUp.h" />
+    <ClInclude Include="UI\Elements\PopUp\public\AllCellPopUp.hpp" />
     <ClInclude Include="UI\Elements\PopUp\public\CellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\ColorCellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\DoubleCellPopUp.h" />
