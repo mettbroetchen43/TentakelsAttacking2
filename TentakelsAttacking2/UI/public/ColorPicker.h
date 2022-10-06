@@ -36,6 +36,7 @@ private:
 	};
 	std::array<std::unique_ptr<ColorPickerCell>, 16> m_cells;
 	ColorPickerCell* m_currentColorCell = nullptr;
+	ColorPickerCell* m_previousColorCell = nullptr;
 
 	void Initialise(Vector2 resolution);
 
@@ -44,7 +45,9 @@ public:
 		Alignment alignment, Vector2 resolution);
 	~ColorPicker() override;
 
-	[[nodiscard]] Color GetColor();
+	[[nodiscard]] Color GetColor() const;
+	[[nodiscard]] bool HasColorChanced() const;
+	bool SetInitialColor(Color color);
 	bool SetColor(Color color);
 
 	void SetCellFocuses(AppContext const& appContext);

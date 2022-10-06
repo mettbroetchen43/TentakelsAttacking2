@@ -13,7 +13,7 @@ void ColorCellPopUp::Initialize(AppContext const& appContext) {
 	auto event = NewFocusElementEvent(&m_colorPicker);
 	appContext.eventManager.InvokeEvent(event);
 
-	m_colorPicker.SetColor(m_currentCell->value);
+	m_colorPicker.SetInitialColor(m_currentCell->value);
 
 	auto event2 = NewFocusLayerEvent();
 	appContext.eventManager.InvokeEvent(event2);

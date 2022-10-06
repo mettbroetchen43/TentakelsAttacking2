@@ -22,7 +22,7 @@ public:
 	ColorPickerCell(unsigned int ID, Vector2 pos, Vector2 size,
 		Alignment alignment, Vector2 resolution, Color color, ColorPicker* colorPicker);
 
-	Color GetColor() const;
+	[[nodiscard]] Color GetColor() const;
 
 	void SetEnabled(bool enabled);
 	[[nodiscard]] bool IsEnabled() const override;

@@ -29,7 +29,7 @@ void ColorPicker::Initialise(Vector2 resolution) {
 				resolution,
 				m_colors.at(index),
 				this
-			);;
+			);
 		}
 	}
 }
@@ -49,16 +49,26 @@ ColorPicker::~ColorPicker() {
 	}
 }
 
-Color ColorPicker::GetColor() {
+Color ColorPicker::GetColor() const {
 	if (m_currentColorCell) {
 		return m_currentColorCell->GetColor();
 	}
 	return BLANK;
 }
+bool ColorPicker::HasColorChanced() const {
+	return m_currentColorCell->GetColor() !=
+		m_previousColorCell->GetColor();
+}
+bool ColorPicker::SetInitialColor(Color color) {
+	bool set = SetColor(color);
+	m_previousColorCell = m_currentColorCell;
+	return set;
+}
 bool ColorPicker::SetColor(Color color) {
 	for (auto& c : m_cells) {
 		if (c->GetColor() == color) {
 			if (!c->IsEnabled()) {
+				m_currentColorCell = nullptr;
 				return false;
 			}
 
@@ -132,6 +142,9 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 	}
 }
 void ColorPicker::Render(AppContext const& appContext) {
+	// update here to make shure all CheckAndUpdate() is done
+	m_previousColorCell = m_currentColorCell;
+
 	DrawTexturePro(
 		*m_backGround,
 		Rectangle(
