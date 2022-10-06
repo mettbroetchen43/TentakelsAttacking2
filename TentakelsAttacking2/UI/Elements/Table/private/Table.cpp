@@ -28,10 +28,10 @@ Vector2 Table::GetElementSize() const {
 }
 [[nodiscard]] void Table::CheckValidRowColumn(size_t row, size_t column) const {
 	if (row < 0 or m_rows <= row) {
-		throw std::out_of_range("row out of range" + row);
+		throw std::out_of_range("row out of range: " + row);
 	}
 	if (column < 0 or m_columns <= column) {
-		throw std::out_of_range("column out of range" + column);
+		throw std::out_of_range("column out of range: " + column);
 	}
 }
 
@@ -76,6 +76,11 @@ void Table::OnEvent(Event const& event) {
 
 	if (auto const PopUpEvent = dynamic_cast<ShowDoubleCellPopUpEvent const*>(&event)) {
 		GeneratePremitiveCellPopUp<DoubleCellPopUp, ShowDoubleCellPopUpEvent>(PopUpEvent);
+		return;
+	}
+
+	if (auto const PopUpEvent = dynamic_cast<ShowColorCellPopUpEvent const*>(&event)) {
+		GeneratePremitiveCellPopUp<ColorCellPopUp, ShowColorCellPopUpEvent>(PopUpEvent);
 		return;
 	}
 

@@ -4,11 +4,16 @@
 //
 
 #include "ColorCell.h"
+#include "AppContext.h"
 
 void ColorCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Cell::CheckAndUpdate(mousePosition, appContext);
 	if (ShouldEdit(mousePosition)) {
-		// invoke event
+		auto event = ShowColorCellPopUpEvent(
+			"Change Color",
+			this
+		);
+		appContext.eventManager.InvokeEvent(event);
 	}
 }
 

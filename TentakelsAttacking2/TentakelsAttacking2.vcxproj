@@ -157,6 +157,7 @@
     <ClInclude Include="UI\Elements\Default\public\Title.h" />
     <ClInclude Include="UI\Elements\PopUp\public\AllCellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\CellPopUp.h" />
+    <ClInclude Include="UI\Elements\PopUp\public\ColorCellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\DoubleCellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\FloatCellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\IntCellPopUp.h" />
@@ -175,6 +176,9 @@
     <ClInclude Include="UI\Elements\Table\public\StringCell.h" />
     <ClInclude Include="UI\Elements\Table\public\Table.h" />
     <ClInclude Include="UI\public\Allignment.h" />
+    <ClInclude Include="UI\public\ColorPicker.h" />
+    <ClInclude Include="UI\public\ColorPickerCell.h" />
+    <ClInclude Include="Helper\public\GenerelHelper.h" />
     <ClInclude Include="UI\Scene\public\BaseMainScene.h" />
     <ClInclude Include="UI\Scene\Scenes\public\Intro.h" />
     <ClInclude Include="UI\Scene\public\SceneManager.h" />
@@ -210,6 +214,7 @@
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />
+    <ClCompile Include="UI\Elements\PopUp\private\ColorCellPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\PopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\MessagePopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\StringCellPopUp.cpp" />
@@ -226,6 +231,8 @@
     <ClCompile Include="UI\Elements\Table\private\DoubleCell.cpp" />
     <ClCompile Include="UI\Elements\Table\private\ColorCell.cpp" />
     <ClCompile Include="UI\private\Allignment.cpp" />
+    <ClCompile Include="UI\private\ColorPicker.cpp" />
+    <ClCompile Include="UI\private\ColorPickerCell.cpp" />
     <ClCompile Include="UI\Scene\private\BaseMainScene.cpp" />
     <ClCompile Include="UI\Scene\Scenes\private\Intro.cpp" />
     <ClCompile Include="UI\Scene\private\SceneManager.cpp" />
