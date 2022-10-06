@@ -5,7 +5,6 @@
 
 #include "Table.h"
 #include "Allignment.h"
-#include "UIEvents.h"
 #include "AppContext.h"
 #include "StringCellPopUp.h"
 #include <stdexcept>

@@ -4,7 +4,6 @@
 //
 
 #include "StringCellPopUp.h"
-#include "UIEvents.h"
 #include "AppContext.h"
 #include "StringCell.h"
 

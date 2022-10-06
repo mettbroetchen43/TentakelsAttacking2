@@ -5,8 +5,8 @@
 
 #include "Focus.h"
 #include "Focusable.h"
-#include "UIEvents.h"
 #include "AppContext.h"
+#include "UIEvents.hpp"
 #include <stdexcept>
 
 bool Focus::HasAnyEnabledElements() const {

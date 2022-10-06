@@ -138,7 +138,7 @@
   <ItemGroup>
     <ClInclude Include="Events\public\EventListener.hpp" />
     <ClInclude Include="Events\public\EventManager.hpp" />
-    <ClInclude Include="Events\public\UIEvents.h" />
+    <ClInclude Include="Events\public\UIEvents.hpp" />
     <ClInclude Include="Events\public\MainEvent.hpp" />
     <ClInclude Include="Game\public\Galaxy.h" />
     <ClInclude Include="Game\public\GameManager.h" />

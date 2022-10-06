@@ -5,7 +5,6 @@
 
 #include "ColorCellPopUp.h"
 #include "ColorCell.h"
-#include "UIEvents.h"
 #include "AppContext.h"
 
 void ColorCellPopUp::Initialize(AppContext const& appContext) {

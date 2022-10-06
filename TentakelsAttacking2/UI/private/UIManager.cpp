@@ -5,7 +5,6 @@
 
 #include "UIManager.h"
 #include "TestScene.h"
-#include "UIEvents.h"
 
 Vector2 UIManager::GetResolution() const {
 	Vector2 newResolution;

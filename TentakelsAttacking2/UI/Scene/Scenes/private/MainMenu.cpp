@@ -11,7 +11,6 @@
 #include "ClassicButton.h"
 #include "Title.h"
 #include "Text.h"
-#include "UIEvents.h"
 #include <memory>
 
 void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {

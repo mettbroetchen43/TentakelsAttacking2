@@ -4,7 +4,6 @@
 //
 
 #include "ColorPicker.h"
-#include "UIEvents.h"
 #include "AppContext.h"
 #include "ColorPickerCell.h"
 #include "GenerelHelper.h"

@@ -4,7 +4,6 @@
 //
 
 #include "Cell.h"
-#include "UIEvents.h"
 #include "AppContext.h"
 
 bool Cell::ShouldEdit(Vector2 const& mousePosition) const {

@@ -66,7 +66,7 @@
     <ClInclude Include="Events\public\EventManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Events\public\UIEvents.h">
+    <ClInclude Include="Events\public\UIEvents.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Events\public\EventListener.hpp">
