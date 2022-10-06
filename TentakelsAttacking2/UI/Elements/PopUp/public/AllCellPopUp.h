@@ -10,3 +10,4 @@
 #include "IntCellPopUp.h"
 #include "FloatCellPopUp.h"
 #include "DoubleCellPopUp.h"
+#include "ColorCellPopUp.h"
