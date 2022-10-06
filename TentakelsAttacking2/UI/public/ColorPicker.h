@@ -19,8 +19,9 @@ private:
 	std::array<Color, 16> m_colors = {
 		YELLOW,
 		GOLD,
-		ORANGE,
 		PINK,
+		MAGENTA,
+		ORANGE,
 		RED,
 		MAROON,
 		GREEN,
@@ -32,7 +33,6 @@ private:
 		PURPLE,
 		VIOLET,
 		DARKPURPLE,
-		MAGENTA,
 	};
 	std::array<std::unique_ptr<ColorPickerCell>, 16> m_cells;
 	ColorPickerCell* m_currentColorCell = nullptr;
