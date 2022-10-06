@@ -56,11 +56,10 @@ void ColorPickerCell::Render([[maybe_unused]] AppContext const& appContext) {
 		return;
 	}
 
-	DrawRectangle(
-		static_cast<int>(m_colider.x),
-		static_cast<int>(m_colider.y),
-		static_cast<int>(m_colider.width),
-		static_cast<int>(m_colider.height),
+	DrawRectanglePro(
+		m_colider,
+		Vector2(0.0f, 0.0f),
+		0.0f,
 		m_color
 	);
 
