@@ -5,6 +5,7 @@
 
 #include "DoubleCell.h"
 #include "AppContext.h"
+#include "TextProcessing.h"
 
 void DoubleCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Cell::CheckAndUpdate(mousePosition, appContext);
@@ -18,9 +19,15 @@ void DoubleCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& 
 }
 
 void DoubleCell::Render(AppContext const& appContext) {
+	std::string printableValue = GetPritablePlaceholderTextInColider(
+		std::to_string(value),
+		m_textSize,
+		m_colider,
+		appContext
+	);
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
-		std::to_string(value).c_str(),
+		printableValue.c_str(),
 		m_textPosition,
 		m_textSize,
 		0.0f,

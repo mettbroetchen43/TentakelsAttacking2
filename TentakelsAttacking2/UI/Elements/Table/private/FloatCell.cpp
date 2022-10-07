@@ -5,6 +5,7 @@
 
 #include "FloatCell.h"
 #include "AppContext.h"
+#include "TextProcessing.h"
 
 void FloatCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Cell::CheckAndUpdate(mousePosition, appContext);
@@ -18,10 +19,15 @@ void FloatCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& a
 }
 
 void FloatCell::Render(AppContext const& appContext) {
-	const char* text = TextFormat("%.2f", value + 0.005f);
+	std::string printableValue = GetPritablePlaceholderTextInColider(
+		TextFormat("%.2f", value + 0.005f),
+		m_textSize,
+		m_colider,
+		appContext
+	);
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
-		text,
+		printableValue.c_str(),
 		m_textPosition,
 		m_textSize,
 		0.0f,
