@@ -117,20 +117,8 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 	}
 	m_elements.push_back(table);
 
-	auto startGameBtn = std::make_shared<ClassicButton>(
-		6,
-		GetElementPosition(0.9f, 0.85f),
-		GetElementSize(0.15f, 0.1f),
-		Alignment::TOP_RIGHT,
-		uiManager.GetResolution(),
-		"Start",
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
-		SoundType::ACCEPTED
-		);
-	m_elements.push_back(startGameBtn);
-
 	auto exitBtn = std::make_shared<ClassicButton>(
-		7,
+		6,
 		GetElementPosition(0.55f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_LEFT,
@@ -145,6 +133,18 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		);
 	});
 	m_elements.push_back(exitBtn);
+
+	auto startGameBtn = std::make_shared<ClassicButton>(
+		7,
+		GetElementPosition(0.9f, 0.85f),
+		GetElementSize(0.15f, 0.1f),
+		Alignment::TOP_RIGHT,
+		uiManager.GetResolution(),
+		"Start",
+		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
+		SoundType::ACCEPTED
+		);
+	m_elements.push_back(startGameBtn);
 }
 
 NewGameScene::NewGameScene(Vector2 pos, Vector2 size, Alignment alignment,
