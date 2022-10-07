@@ -9,11 +9,11 @@
 class NewGameScene : public Scene {
 private:
 
-	void Initialize(UIManager const& uiManager, AppContext& appContext);
+	void Initialize(Vector2 resolution, AppContext& appContext);
 
 public:
 	NewGameScene(Vector2 pos, Vector2 size, Alignment alignment,
-		UIManager const& uiManager);
+		Vector2 resolution);
 
 	void CheckAndUpdate(Vector2 const& mousePosition,
 		AppContext const& appContext) override;

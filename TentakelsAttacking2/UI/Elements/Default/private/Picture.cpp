@@ -8,9 +8,8 @@
 #include "AppContext.h"
 
 Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment,
-	AssetType assetType, UIManager const& uiManager)
+	AssetType assetType, Vector2 resolution)
 	: UIElement(pos, size, alignment) {
-	Vector2 resolution = uiManager.GetResolution();
 	m_texture = AppContext::GetInstance().assetManager.GetTexture(assetType);
 	m_size.x =
 		static_cast<float>(m_texture->width) / m_texture->height

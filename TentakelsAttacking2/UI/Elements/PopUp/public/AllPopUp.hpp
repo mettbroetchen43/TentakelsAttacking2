@@ -4,6 +4,14 @@
 //
 
 #pragma once
+
+// Main
+#include "PopUp.h"
+
+// Message PopUp
+#include "MessagePopUp.h"
+
+// Cell PopUps
 #include "CellPopUp.h"
 #include "StringCellPopUp.h"
 #include "IntCellPopUp.h"

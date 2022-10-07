@@ -23,7 +23,7 @@ private:
 	float m_maxBtnPosition = 0.5f;
 	SceneType m_nextScene;
 	
-	void Initialize(AppContext& appContext, UIManager const& uiManager);
+	void Initialize(AppContext& appContext, Vector2 resolution);
 
 	void MoveBtn();
 	void BtnMoveFinish();
@@ -32,7 +32,7 @@ private:
 
 public:
 	Intro(Vector2 pos, Vector2 size, Alignment alignment,
-		UIManager const& uiManager, SceneType nextScene);
+		Vector2 resolution, SceneType nextScene);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);

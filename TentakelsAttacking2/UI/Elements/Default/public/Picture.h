@@ -7,7 +7,6 @@
 #include "UIElement.hpp"
 
 enum class AssetType;
-class UIManager;
 
 class Picture : public UIElement {
 private:
@@ -17,7 +16,7 @@ private:
 
 public:
 	Picture(Vector2 pos, Vector2 size, Alignment alignment,
-		AssetType assetType, UIManager const& uiManager);
+		AssetType assetType, Vector2 resolution);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);

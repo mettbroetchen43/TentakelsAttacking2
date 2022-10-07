@@ -8,8 +8,8 @@
 
 class MainMenu : public Scene {
 private:
-	void Initialize(UIManager const& uiManager, AppContext& appContext);
+	void Initialize(Vector2 resolution, AppContext& appContext);
 public:
-	MainMenu(Vector2 pos, Vector2 size, Alignment alignment, UIManager const& uiManager);
+	MainMenu(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution);
 	void SetActive(bool active, AppContext const& appContext) override;
 };

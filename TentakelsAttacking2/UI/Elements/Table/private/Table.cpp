@@ -51,53 +51,11 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 				));
 		}
 	}
-	AppContext::GetInstance().eventManager.AddListener(this);
-}
-Table::~Table() {
-	AppContext::GetInstance().eventManager.RemoveListener(this);
-}
-
-void Table::OnEvent(Event const& event) {
-	if (auto const PopUpEvent = dynamic_cast<ShowStringCellPopUpEvent const*>(&event)) {
-		GeneratePremitiveCellPopUp<StringCellPopUp, ShowStringCellPopUpEvent>(PopUpEvent);
-		return;
-	}
-
-	if (auto const PopUpEvent = dynamic_cast<ShowIntCellPopUpEvent const*>(&event)) {
-		GeneratePremitiveCellPopUp<IntCellPopUp, ShowIntCellPopUpEvent>(PopUpEvent);
-		return;
-	}
-
-	if (auto const PopUpEvent = dynamic_cast<ShowFloatCellPopUpEvent const*>(&event)) {
-		GeneratePremitiveCellPopUp<FloatCellPopUp, ShowFloatCellPopUpEvent>(PopUpEvent);
-		return;
-	}
-
-	if (auto const PopUpEvent = dynamic_cast<ShowDoubleCellPopUpEvent const*>(&event)) {
-		GeneratePremitiveCellPopUp<DoubleCellPopUp, ShowDoubleCellPopUpEvent>(PopUpEvent);
-		return;
-	}
-
-	if (auto const PopUpEvent = dynamic_cast<ShowColorCellPopUpEvent const*>(&event)) {
-		GeneratePremitiveCellPopUp<ColorCellPopUp, ShowColorCellPopUpEvent>(PopUpEvent);
-		return;
-	}
-
-	if (auto const PopUpEvent = dynamic_cast<ClosePopUpEvent const*>(&event)) {
-		if (PopUpEvent->GetPop() == m_popUp.get()) {
-			m_popUp.reset(nullptr);
-		}
-	}
 }
 
 void Table::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 	bool updateCells = false;
-
-	if (m_popUp) {
-		m_popUp->CheckAndUpdate(mousePosition, appContext);
-		return;
-	}
 
 	if (m_cellFocus) {
 		updateCells = true;
@@ -159,10 +117,6 @@ void Table::Render(AppContext const& appContext){
 	for (auto& c : m_cells) {
 		c->Render(appContext);
 	}
-
-	if (m_popUp) {
-		m_popUp->Render(appContext);
-	}
 }
 void Table::Resize(Vector2 resolution, AppContext const& appContext){
 	m_resolution = resolution;
@@ -176,11 +130,6 @@ void Table::Resize(Vector2 resolution, AppContext const& appContext){
 	for (auto& c : m_cells) {
 		c->Resize(resolution, appContext);
 	}
-
-	if (m_popUp) {
-		m_popUp->Resize(resolution, appContext);
-	}
-
 }
 
 void Table::SetAllCellsEditable(bool editable) {

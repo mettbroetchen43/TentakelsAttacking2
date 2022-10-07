@@ -9,13 +9,13 @@
 
 class TestScene : public Scene {
 private:
-	void Initialize(UIManager const& uiManager, AppContext& appContext);
+	void Initialize(Vector2 resolution, AppContext& appContext);
 
 protected:
 
 public:
 	TestScene(Vector2 pos, Vector2 size, Alignment alignment,
-		UIManager const& uiManager);
+		Vector2 resolution);
 	void SetActive(bool active, AppContext const& appContext) override;
 
 };

@@ -7,9 +7,6 @@
 #include "AppContext.h"
 
 void CellPopUp::Initialize(AppContext const& appContext) {
-	auto event = NewFocusLayerEvent();
-	appContext.eventManager.InvokeEvent(event);
-
 	auto event2 = NewFocusElementEvent(&m_acceptBTN);
 	appContext.eventManager.InvokeEvent(event2);
 

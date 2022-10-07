@@ -12,13 +12,13 @@
 #include <memory>
 
 
-void LogoScene::Initialize(UIManager const& uiManager) {
+void LogoScene::Initialize(Vector2 resolution) {
 	auto logo = std::make_shared<Picture>(
 		GetElementPosition(0.5f, 0.1f),
 		GetElementSize(0.0f, 0.5f),
 		Alignment::TOP_MID,
 		AssetType::LOGO,
-		uiManager
+		resolution
 		);
 	m_elements.push_back(logo);
 
@@ -28,7 +28,7 @@ void LogoScene::Initialize(UIManager const& uiManager) {
 		Alignment::TOP_MID,
 		0.07f,
 		"A Purpur Tentakel production",
-		uiManager.GetResolution()
+		resolution
 		);
 	m_elements.push_back(mainText);
 
@@ -38,15 +38,15 @@ void LogoScene::Initialize(UIManager const& uiManager) {
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		"skip with [ESC]",
-		uiManager.GetResolution()
+		resolution
 		);
 	m_elements.push_back(skipText);
 }
 
 LogoScene::LogoScene(Vector2 pos, Vector2 size, Alignment alignment,
-	SceneType nextScene, UIManager const& uiManager)
+	SceneType nextScene, Vector2 resolution)
 	:Scene(pos, size, alignment), m_nextScene(nextScene), m_time(GetTime()) {
-	Initialize(uiManager);
+	Initialize(resolution);
 }
 void LogoScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	bool nextScene =

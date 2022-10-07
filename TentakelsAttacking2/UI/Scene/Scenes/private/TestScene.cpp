@@ -6,7 +6,8 @@
 #include "TestScene.h"
 #include "UIManager.h"
 
-void TestScene::Initialize(UIManager const& uiManager, [[maybe_unused]] AppContext& appContext) {
+void TestScene::Initialize(Vector2 resolution,
+	[[maybe_unused]] AppContext& appContext) {
 	auto table = std::make_shared<Table>(
 		GetElementPosition(0.1f, 0.1f),
 		GetElementSize(0.8f, 0.8f),
@@ -14,7 +15,7 @@ void TestScene::Initialize(UIManager const& uiManager, [[maybe_unused]] AppConte
 		1,
 		10,
 		5,
-		uiManager.GetResolution()
+		resolution
 		);
 	for (int row = 0; row < 10; ++row) {
 		for (int column = 0; column < 5; ++column) {
@@ -29,9 +30,9 @@ void TestScene::Initialize(UIManager const& uiManager, [[maybe_unused]] AppConte
 }
 
 TestScene::TestScene(Vector2 pos, Vector2 size, Alignment alignment,
-	UIManager const& uiManager)
+	Vector2 resolution)
 	: Scene(pos, size, alignment) {
-	Initialize(uiManager, AppContext::GetInstance());
+	Initialize(resolution, AppContext::GetInstance());
 }
 
 void TestScene::SetActive(bool active, AppContext const& appContext) {

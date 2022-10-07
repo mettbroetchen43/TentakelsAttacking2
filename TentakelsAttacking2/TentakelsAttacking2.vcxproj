@@ -157,7 +157,7 @@
     <ClInclude Include="UI\Elements\Default\public\Picture.h" />
     <ClInclude Include="UI\Elements\Default\public\Text.h" />
     <ClInclude Include="UI\Elements\Default\public\Title.h" />
-    <ClInclude Include="UI\Elements\PopUp\public\AllCellPopUp.hpp" />
+    <ClInclude Include="UI\Elements\PopUp\public\AllPopUp.hpp" />
     <ClInclude Include="UI\Elements\PopUp\public\CellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\ColorCellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\DoubleCellPopUp.h" />
@@ -181,6 +181,7 @@
     <ClInclude Include="UI\public\ColorPickerCell.h" />
     <ClInclude Include="Helper\public\GenerelHelper.h" />
     <ClInclude Include="UI\Scene\public\BaseMainScene.h" />
+    <ClInclude Include="UI\Scene\public\PopUpManager.h" />
     <ClInclude Include="UI\Scene\Scenes\public\Intro.h" />
     <ClInclude Include="UI\Scene\public\SceneManager.h" />
     <ClInclude Include="UI\Elements\Button\public\ClassicButton.h" />
@@ -238,6 +239,7 @@
     <ClCompile Include="UI\private\ColorPicker.cpp" />
     <ClCompile Include="UI\private\ColorPickerCell.cpp" />
     <ClCompile Include="UI\Scene\private\BaseMainScene.cpp" />
+    <ClCompile Include="UI\Scene\private\PopUpManager.cpp" />
     <ClCompile Include="UI\Scene\Scenes\private\Intro.cpp" />
     <ClCompile Include="UI\Scene\private\SceneManager.cpp" />
     <ClCompile Include="UI\Elements\Button\private\ClassicButton.cpp" />

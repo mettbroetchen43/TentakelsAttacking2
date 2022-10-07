@@ -186,7 +186,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\IntCellPopUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Elements\PopUp\public\AllCellPopUp.hpp">
+    <ClInclude Include="UI\Elements\PopUp\public\AllPopUp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\PopUp\public\DoubleCellPopUp.h">
@@ -214,6 +214,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Helper\public\TextProcecingConstant.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Scene\public\PopUpManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -372,6 +375,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Default\private\Line.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Scene\private\PopUpManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

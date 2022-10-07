@@ -16,11 +16,11 @@ private:
 	SceneType m_nextScene;
 	double m_time;
 
-	void Initialize(UIManager const& uiManager);
+	void Initialize(Vector2 resolution);
 
 public:
 	LogoScene(Vector2 pos, Vector2 size, Alignment alignment,
-		SceneType nextScene, UIManager const& uiManager);
+		SceneType nextScene, Vector2 resolution);
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution, AppContext const& appContext) override;

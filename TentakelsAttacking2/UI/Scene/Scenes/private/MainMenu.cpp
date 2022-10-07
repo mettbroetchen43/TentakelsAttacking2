@@ -11,7 +11,7 @@
 #include "Text.h"
 #include <memory>
 
-void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
+void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 	float btnPosX = 0.25f;
 	float btnPosY = 0.3f;
 	float btnSizX = 0.2f;
@@ -23,7 +23,7 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
-		uiManager.GetResolution(),
+		resolution,
 		"New Game",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
@@ -43,7 +43,7 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
-		uiManager.GetResolution(),
+		resolution,
 		"Load Game",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
@@ -59,7 +59,7 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
-		uiManager.GetResolution(),
+		resolution,
 		"Settings",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::CLICKED_RELEASE_STD
@@ -75,7 +75,7 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
-		uiManager.GetResolution(),
+		resolution,
 		"Credits",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::CLICKED_RELEASE_STD
@@ -91,7 +91,7 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
-		uiManager.GetResolution(),
+		resolution,
 		"Quit",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
@@ -104,7 +104,7 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		GetElementSize(0.7f, 0.2f),
 		Alignment::TOP_MID,
 		false,
-		uiManager.GetResolution(),
+		resolution,
 		appContext
 		);
 	m_elements.push_back(title);
@@ -115,7 +115,7 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		Alignment::BOTTOM_RIGHT,
 		0.02f,
 		appContext.Version(),
-		uiManager.GetResolution()
+		resolution
 		);
 	m_elements.push_back(version);
 
@@ -125,16 +125,17 @@ void MainMenu::Initialize(UIManager const& uiManager, AppContext& appContext) {
 		Alignment::BOTTOM_RIGHT,
 		0.02f,
 		appContext.CopyRight(),
-		uiManager.GetResolution()
+		resolution
 		);
 	m_elements.push_back(copyRight);
 }
 
-MainMenu::MainMenu(Vector2 pos, Vector2 size, Alignment alignment, UIManager const& uiManager)
+MainMenu::MainMenu(Vector2 pos, Vector2 size, Alignment alignment,
+	Vector2 resolution)
 	: Scene(pos, size, alignment) {
 
 	AppContext& appContext = AppContext::GetInstance();
-	Initialize(uiManager, appContext);
+	Initialize(resolution, appContext);
 }
 
 void MainMenu::SetActive(bool active, AppContext const& appContext) {

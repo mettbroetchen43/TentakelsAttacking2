@@ -33,7 +33,8 @@ MessagePopUp::MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vecto
 }
 	
 
-void MessagePopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void MessagePopUp::CheckAndUpdate(Vector2 const& mousePosition,
+	AppContext const& appContext) {
 	m_btn.CheckAndUpdate(mousePosition, appContext);
 }
 void MessagePopUp::Render(AppContext const& appContext) {

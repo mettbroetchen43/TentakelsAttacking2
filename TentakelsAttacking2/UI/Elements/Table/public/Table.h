@@ -7,14 +7,11 @@
 #include "UIElement.hpp"
 #include "Focusable.h"
 #include "AllCells.hpp"
-#include "AllCellPopUp.hpp"
-#include "EventListener.hpp"
 #include <memory>
 #include <vector>
 
-class Table : public UIElement, public Focusable, public EventListener {
+class Table : public UIElement, public Focusable {
 private:
-	std::unique_ptr<CellPopUp> m_popUp;
 	std::vector<std::unique_ptr<Cell>> m_cells;
 	size_t m_rows;
 	size_t m_columns;
@@ -41,25 +38,9 @@ private:
 		m_cells.at(index)->SetEditable(isEditable);
 	}
 
-	template<typename popUpType, typename eventType>
-	void GeneratePremitiveCellPopUp(eventType const* event) {
-		m_popUp = std::make_unique<popUpType>(
-			Vector2(0.5f, 0.5f),
-			Vector2(0.7f, 0.7f),
-			Alignment::MID_MID,
-			m_resolution,
-			event->GetTitle(),
-			AssetType::LOGO,
-			event->GetCell()
-			);
-	}
-
 public:
 	Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 		size_t rows, size_t columns, Vector2 resolution);
-	~Table();
-
-	void OnEvent(Event const& event) override;
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;

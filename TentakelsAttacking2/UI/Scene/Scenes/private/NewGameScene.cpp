@@ -13,14 +13,13 @@
 #include "Table.h"
 #include "UIManager.h"
 
-void NewGameScene::Initialize(UIManager const& uiManager,
-	AppContext& appContext) {
+void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
 		Alignment::TOP_MID,
 		false,
-		uiManager.GetResolution(),
+		resolution,
 		appContext
 		);
 	m_elements.push_back(title);
@@ -31,7 +30,7 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		Alignment::TOP_LEFT,
 		0.05f,
 		"Add Player:",
-		uiManager.GetResolution()
+		resolution
 		);
 	m_elements.push_back(addPlayerText);
 
@@ -41,7 +40,7 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		GetElementSize(0.35f, 0.05f),
 		Alignment::TOP_LEFT,
 		20,
-		uiManager.GetResolution()
+		resolution
 		);
 	inputLine->SetPlaceholderText("Player Name");
 	m_elements.push_back(inputLine);
@@ -51,7 +50,7 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		GetElementPosition(0.1f, 0.45f),
 		GetElementSize(0.35f, 0.35f),
 		Alignment::TOP_LEFT,
-		uiManager.GetResolution()
+		resolution
 		);
 	m_elements.push_back(colorPicker);
 
@@ -60,7 +59,7 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		GetElementPosition(0.1f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_LEFT,
-		uiManager.GetResolution(),
+		resolution,
 		"Add Player",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
@@ -72,7 +71,7 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		GetElementPosition(0.45f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_RIGHT,
-		uiManager.GetResolution(),
+		resolution,
 		"Remove Player",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::CLICKED_RELEASE_STD
@@ -84,7 +83,7 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		GetElementSize(0.0f, 0.7f),
 		Alignment::TOP_MID,
 		2.0f,
-		uiManager.GetResolution()
+		resolution
 		);
 	m_elements.push_back(line);
 
@@ -94,7 +93,7 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		Alignment::TOP_LEFT,
 		0.05f,
 		"Current Player:",
-		uiManager.GetResolution()
+		resolution
 		);
 	m_elements.push_back(currentPlayerText);
 
@@ -105,10 +104,10 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		5,
 		appContext.MaxPlayerCount() + 1,
 		3,
-		uiManager.GetResolution()
+		resolution
 		);
-	table->SetRowEditable(0,false);
-	table->SetColumnEditable(0,false);
+	//table->SetRowEditable(0,false);
+	//table->SetColumnEditable(0,false);
 	table->SetHeadlines({ "ID", "Name", "Color" });
 	for (int i = 0; i < appContext.MaxPlayerCount();++i) {
 		table->SetValue<IntCell, int>(i + 1, 0, i + 1);
@@ -120,7 +119,7 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		GetElementPosition(0.55f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_LEFT,
-		uiManager.GetResolution(),
+		resolution,
 		"Exit",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::CLICKED_RELEASE_STD
@@ -137,7 +136,7 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		GetElementPosition(0.9f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_RIGHT,
-		uiManager.GetResolution(),
+		resolution,
 		"Start",
 		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
@@ -146,10 +145,10 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 }
 
 NewGameScene::NewGameScene(Vector2 pos, Vector2 size, Alignment alignment,
-	UIManager const& uiManager)
+	Vector2 resolution)
 	: Scene(pos, size, alignment) {
 
-	Initialize(uiManager, AppContext::GetInstance());
+	Initialize(resolution, AppContext::GetInstance());
 }
 
 void NewGameScene::CheckAndUpdate(Vector2 const& mousePosition,
