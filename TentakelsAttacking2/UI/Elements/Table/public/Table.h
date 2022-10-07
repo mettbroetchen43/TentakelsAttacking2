@@ -87,4 +87,5 @@ public:
 
 		cell->value = value;
 	}
+	void SetHeadlines(std::vector<std::string> const& headlines);
 };

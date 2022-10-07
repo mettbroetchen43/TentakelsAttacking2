@@ -219,3 +219,14 @@ void Table::SetEmptyCell(size_t row, size_t column) {
 	CheckValidRowColumn(row, column);
 	SetCell<EmptyCell>(row, column);
 }
+void Table::SetHeadlines(std::vector<std::string> const& headlines) {
+	if (headlines.size() != m_columns) {
+		throw std::out_of_range(
+			"headlines count does not match the column count"
+		);
+	}
+
+	for (int i = 0; i < m_columns; ++i) {
+		SetValue<StringCell, std::string>(0, i, headlines.at(i));
+	}
+}

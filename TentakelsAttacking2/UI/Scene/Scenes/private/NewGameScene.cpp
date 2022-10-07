@@ -109,9 +109,7 @@ void NewGameScene::Initialize(UIManager const& uiManager,
 		);
 	table->SetRowEditable(0,false);
 	table->SetColumnEditable(0,false);
-	table->SetValue<StringCell, std::string>(0, 0, "ID");
-	table->SetValue<StringCell, std::string>(0, 1, "Name");
-	table->SetValue<StringCell, std::string>(0, 2, "Color");
+	table->SetHeadlines({ "ID", "Name", "Color" });
 	for (int i = 0; i < appContext.MaxPlayerCount();++i) {
 		table->SetValue<IntCell, int>(i + 1, 0, i + 1);
 	}
