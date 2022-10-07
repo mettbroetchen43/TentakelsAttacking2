@@ -7,6 +7,8 @@
 #include "UIElement.hpp"
 #include "Focusable.h"
 #include "AppContext.h"
+#include "TextProcessing.h"
+#include "TextProcecingConstant.hpp"
 #include <raylib.h>
 #include <string>
 #include <functional>
@@ -46,62 +48,6 @@ protected:
 		return valid;
 	}
 	[[nodiscard]] bool IsValidKey(int key) = delete;
-	[[nodiscard]] std::string GetPritableInput(std::string const& enter, std::string const& prefix,
-		float fontSize, int cursorOffset, AppContext const& appContext) const {
-		cursorOffset += 5; // Just to make shure that the curor didnt bounce out
-
-		Vector2 textSize = MeasureTextEx(
-			*(appContext.assetManager.GetFont()),
-			(m_value + enter).c_str(),
-			fontSize,
-			0.0f);
-		if (textSize.x + cursorOffset < m_collider.width) {
-			return m_value;
-		}
-
-		std::string toReturn = m_value;
-		std::string toCheck = prefix + m_value + enter;
-
-		do {
-			toReturn = toReturn.substr(1, toReturn.size());
-			toCheck = prefix + toReturn + enter;
-			textSize = MeasureTextEx(
-				*(appContext.assetManager.GetFont()),
-				toCheck.c_str(),
-				fontSize,
-				0.0f);
-		} while (textSize.x + cursorOffset >= m_collider.width);
-
-		return prefix + toReturn;
-	}
-	[[nodiscard]] std::string GetPritablePlaceholder(std::string const& prefix, float fontSize,
-		int cursorOffset, AppContext const& appContext) const {
-		cursorOffset += 5; // Just to make shure that the curor didnt bounce out
-
-		Vector2 textSize = MeasureTextEx(
-			*(appContext.assetManager.GetFont()),
-			m_placeholderText.c_str(),
-			fontSize,
-			0.0f);
-		if (textSize.x + cursorOffset < m_collider.width) {
-			return m_placeholderText;
-		}
-
-		std::string toReturn = m_placeholderText;
-		std::string toCheck = prefix + m_placeholderText;
-
-		do {
-			toReturn = toReturn.substr(0, toReturn.size() - 1);
-			toCheck = prefix + toReturn;
-			textSize = MeasureTextEx(
-				*(appContext.assetManager.GetFont()),
-				toCheck.c_str(),
-				fontSize,
-				0.0f);
-		} while (textSize.x + cursorOffset >= m_collider.width);
-
-		return  toReturn + prefix;
-	}
 
 public:
 	InputLine(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
@@ -165,6 +111,7 @@ public:
 		}
 	}
 	void Render(AppContext const& appContext) override {
+
 		// Update here to make shure its after call of HasValueChanced();
 		m_oldValue = m_value;
 
@@ -175,39 +122,57 @@ public:
 			static_cast<float>(m_texture->height) 
 		};
 
-		DrawTexturePro(*m_texture, textureRec,	m_collider,	Vector2(0.0f, 0.0f), 0,	WHITE);
+		DrawTexturePro(
+			*m_texture,
+			textureRec,
+			m_collider,
+			Vector2(0.0f, 0.0f),
+			0.0f,
+			WHITE
+		);
 
-		DrawRectangleLines(static_cast<int>(m_collider.x), static_cast<int>(m_collider.y),
-			static_cast<int>(m_collider.width), static_cast<int>(m_collider.height), WHITE);
+		DrawRectangleLinesEx(
+			m_collider,
+			2.0f,
+			WHITE
+		);
 
 		float posX = m_collider.x + 10.0f;
 		float posY = m_collider.y + m_collider.height * 0.1f;
 		float fontSize = m_collider.height * 0.8f;
-		int cursorOffset = 1;
-
-		std::string enter = "_";
-		std::string prefix = "...";
 		std::string printableInput;
 
 		if (m_value.size() > 0) {
-			printableInput = GetPritableInput(enter, prefix, fontSize, cursorOffset, appContext);
+			printableInput = GetPritableTextInColider(
+				m_value,
+				fontSize,
+				m_collider,
+				appContext
+			);
 			DrawTextEx(
 				*(appContext.assetManager.GetFont()),
 				printableInput.c_str(),
 				Vector2(posX, posY),
 				fontSize,
 				0,
-				WHITE);
+				WHITE
+			);
 		}
 		else {
-			std::string printablePlaceholder = GetPritablePlaceholder(prefix, fontSize, cursorOffset, appContext);
+			std::string printablePlaceholder = GetPritablePlaceholderTextInColider(
+				m_placeholderText,
+				fontSize,
+				m_collider,
+				appContext
+			);
 			DrawTextEx(
 				*(appContext.assetManager.GetFont()),
 				printablePlaceholder.c_str(),
 				Vector2(posX, posY),
 				fontSize,
 				0,
-				GRAY);
+				GRAY
+			);
 		}
 
 
@@ -217,16 +182,21 @@ public:
 				*(appContext.assetManager.GetFont()),
 				printableInput.c_str(),
 				fontSize,
-				0.0f);
+				0.0f
+			);
 
 			if (time % 2 == 0) {
 				DrawTextEx(
 					*(appContext.assetManager.GetFont()),
-					enter.c_str(),
-					Vector2(posX + cursorOffset + textLength.x, posY + m_collider.height * 0.05f),
+					&Constants::c_enter,
+					Vector2(
+						posX + Constants::c_cursorOffset + textLength.x,
+						posY + m_collider.height * 0.05f
+					),
 					fontSize,
 					0,
-					PURPLE);
+					PURPLE
+				);
 			}
 		}
 	}

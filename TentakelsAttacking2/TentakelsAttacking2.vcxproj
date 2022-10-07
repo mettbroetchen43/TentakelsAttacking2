@@ -147,6 +147,7 @@
     <ClInclude Include="Game\public\PlayerType.hpp" />
     <ClInclude Include="Helper\public\LayeredVector.hpp" />
     <ClInclude Include="Helper\public\Random.h" />
+    <ClInclude Include="Helper\public\TextProcecingConstant.hpp" />
     <ClInclude Include="Helper\public\TextProcessing.h" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
     <ClInclude Include="Game\public\SpaceObject.h" />
