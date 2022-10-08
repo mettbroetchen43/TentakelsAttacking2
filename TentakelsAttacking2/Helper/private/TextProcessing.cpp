@@ -43,6 +43,10 @@ void BreakText(std::string& toBreak, float fontSize, float length,
 	}
 }
 
+float GetElementTextHight(Vector2 const& size, float height) {
+	return size.y * height;
+}
+
 std::string GetPritableTextInColider(std::string const& text,
 	float fontSize, Rectangle colider, AppContext const& appContext) {
 	Vector2 textSize = MeasureTextEx(
