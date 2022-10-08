@@ -62,8 +62,7 @@ void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
 		Alignment::MID_MID,
 		m_resolution,
 		event->GetTitle(),
-		event->GetSubTitle(),
-		AssetType::BUTTON_DEFAULT,
+		const_cast<std::string&>(event->GetSubTitle()),
 		AssetType::EXCLAMATION_MARK
 		)
 	);

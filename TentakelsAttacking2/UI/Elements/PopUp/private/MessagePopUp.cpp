@@ -5,44 +5,34 @@
 
 #include "MessagePopUp.h"
 #include "AppContext.h"
-#include "memory"
+#include "GenerelHelper.h"
+#include <memory>
 
-void MessagePopUp::Initialize() {
+void MessagePopUp::Initialize(Vector2 resolution) {
 	AppContext& appContext = AppContext::GetInstance();
-	m_btn.SetOnClick(std::bind(&MessagePopUp::Close, *this));
-	auto event = NewFocusElementEvent(&m_btn);
+
+	auto btn = std::make_shared<ClassicButton>(
+		1,
+		GetElementPosition(m_pos, m_size,0.5f, 0.75f),
+		GetElementSize(m_pos,0.3f, 0.2f),
+		Alignment::MID_MID,
+		resolution,
+		"OK",
+		SoundType::CLICKED_RELEASE_STD
+		);
+
+	btn->SetOnClick([&]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(ClosePopUpEvent(this));
+		});
+	auto event = NewFocusElementEvent(btn.get());
 	appContext.eventManager.InvokeEvent(event);
+
+	m_elements.push_back(btn);
 }
 
 MessagePopUp::MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	std::string const& title, std::string const& subTitle, AssetType btnTexture,
-	AssetType m_infoTexture)
-	: PopUp(pos, size, alignment, resolution, title, subTitle, m_infoTexture),
-		m_btn(
-			1,
-			GetElementPosition(0.65f, 0.7f),
-			GetElementSize(0.3f, 0.2f),
-			Alignment::BOTTOM_RIGHT,
-			resolution,
-			"OK",
-			AppContext::GetInstance().assetManager.GetTexture(btnTexture),
-			SoundType::CLICKED_RELEASE_STD
-		) {
+	std::string const& title, std::string& subTitle,AssetType infoTexture)
+	: PopUp(pos, size, alignment, resolution, title, subTitle, infoTexture) {
 
-	Initialize();
-}
-	
-
-void MessagePopUp::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
-	m_btn.CheckAndUpdate(mousePosition, appContext);
-}
-void MessagePopUp::Render(AppContext const& appContext) {
-	PopUp::Render(appContext);
-
-	m_btn.Render(appContext);
-}
-void MessagePopUp::Resize(Vector2 resolution, AppContext const& appContext) {
-	PopUp::Resize(resolution, appContext);
-	m_btn.Resize(resolution, appContext);
+	Initialize(resolution);
 }

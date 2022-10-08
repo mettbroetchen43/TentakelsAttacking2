@@ -4,21 +4,71 @@
 //
 
 #include "PopUp.h"
+#include "Picture.h"
+#include "Text.h"
+#include "GenerelHelper.h"
+#include "TextProcessing.h"
 #include "AppContext.h"
 #include <iostream>
 #include <string>
 
-void PopUp::Close() {
-	AppContext& appContext = AppContext::GetInstance();
-	auto event = ClosePopUpEvent(this);
-	appContext.eventManager.InvokeEvent(event);
-}
+void PopUp::Initialize(std::string const& title, std::string& subTitle,
+	AssetType infoTexture, Vector2 resolution) {
+	
+	auto globalBackground = std::make_shared<Picture>(
+		Vector2(0.0f, 0.0f),
+		Vector2(1.0f, 1.0f),
+		Alignment::DEFAULT,
+		AssetType::GREY_50,
+		resolution
+		);
+	m_elements.push_back(globalBackground);
 
-Vector2 PopUp::GetElementPosition(float x, float y) {
-	return { m_pos.x + x * m_size.x, m_pos.y + y * m_size.y };
-}
-Vector2 PopUp::GetElementSize(float x, float y) {
-	return { x * m_size.x, y * m_size.y };
+	auto background = std::make_shared<Picture>(
+		m_pos,
+		m_size,
+		Alignment::DEFAULT,
+		AssetType::GREY,
+		resolution
+		);
+	m_elements.push_back(background);
+
+	auto icon = std::make_shared<Picture>(
+		GetElementPosition(m_pos, m_size, 0.1f, 0.1f),
+		GetElementSize(m_size, 0.2f, 0.2f),
+		Alignment::TOP_LEFT,
+		infoTexture,
+		resolution
+		);
+	m_elements.push_back(icon);
+
+	auto textTitle = std::make_shared<Text>(
+		GetElementPosition(m_pos, m_size, 0.4f, 0.2f),
+		GetElementSize(m_size, 0.5f, 0.2f),
+		Alignment::TOP_LEFT,
+		GetElementTextHight(m_size, 0.2f),
+		title,
+		resolution
+		);
+	m_elements.push_back(textTitle);
+
+	float textHeight = GetElementTextHight(m_size, 0.05f);
+	BreakText(
+		subTitle,
+		textHeight,
+		m_size.x * resolution.x,
+		AppContext::GetInstance()
+	);
+
+	auto textSubTitle = std::make_shared<Text>(
+		GetElementPosition(m_pos, m_size, 0.5f, 0.5f),
+		GetElementSize(m_size, 0.9f, 0.4f),
+		Alignment::TOP_MID,
+		textHeight,
+		subTitle,
+		resolution
+		);
+	m_elements.push_back(textSubTitle);
 }
 
 Rectangle PopUp::GetColiderWithMaxValues(Texture2D* texture, float maxWidth, float maxHeight) const {
@@ -42,63 +92,32 @@ Rectangle PopUp::GetColiderWithMaxValues(Texture2D* texture, float maxWidth, flo
 }
 
 PopUp::PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	std::string const& title, std::string const& subTitle, AssetType infoTexture)
-	: UIElement(pos, size, alignment), m_title(title), m_subTitle(subTitle) {
-	AppContext& appContext = AppContext::GetInstance();
-
-	m_fullBackground  = appContext.assetManager.GetTexture(AssetType::GREY_50);
-	m_popUpBackground = appContext.assetManager.GetTexture(AssetType::GREY);
-	m_infoTexture     = appContext.assetManager.GetTexture(infoTexture);
-
-	m_backgroundColider = {
-		0.0f,
-		0.0f,
-		resolution.x,
-		resolution.y
-	};
-
+	std::string const& title, std::string& subTitle, AssetType infoTexture)
+	: UIElement(pos, size, alignment) {
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+	Initialize(title, subTitle, infoTexture, resolution);
 }
 
+void PopUp::CheckAndUpdate(Vector2 const& mousePosition,
+	AppContext const& appContext) {
+	for (auto& e : m_elements) {
+		e->CheckAndUpdate(mousePosition, appContext);
+	}
+}
 void PopUp::Render(AppContext const& appContext) {
-	Rectangle textureRec = { 0.0f,0.0f,
-	static_cast<float>(m_fullBackground->width), static_cast<float>(m_fullBackground->height) };
-	DrawTexturePro(*m_fullBackground, textureRec, m_backgroundColider, { 0.0f, 0.0f }, 0, WHITE);
+	for (auto& e : m_elements) {
+		e->Render(appContext);
+	}
 
-	textureRec = { 0.0f, 0.0f, static_cast<float>(m_popUpBackground->width),static_cast<float>(m_popUpBackground->height) };
-	DrawTexturePro(*m_popUpBackground, textureRec, m_colider, { 0.0f, 0.0f }, 0, WHITE);
-	DrawRectangleLines(
-		static_cast<int>(m_colider.x),
-		static_cast<int>(m_colider.y),
-		static_cast<int>(m_colider.width),
-		static_cast<int>(m_colider.height), PURPLE);
-
-	textureRec = { 0.0f, 0.0f,
-	static_cast<float>(m_infoTexture->width),static_cast<float>(m_infoTexture->height) };
-	Rectangle colider = GetColiderWithMaxValues(m_infoTexture, m_colider.width * 0.3f,
-		m_colider.height * 0.3f);
-	colider.x = m_colider.x + m_colider.width * 0.075f;
-	colider.y = m_colider.y + m_colider.height * 0.025f;
-	DrawTexturePro(*m_infoTexture, textureRec, colider, { 0.0f, 0.0f }, 0.0f, WHITE);
-
-	DrawTextEx(
-		*(appContext.assetManager.GetFont()),
-		m_title.c_str(),
-		Vector2(m_colider.x + m_colider.width * 0.3f, m_colider.y + m_colider.height * 0.1f),
-		m_colider.height * 0.2f,
-		0,
-		WHITE);
-	DrawTextEx(
-		*(appContext.assetManager.GetFont()),
-		m_subTitle.c_str(),
-		Vector2(m_colider.x + m_colider.width * 0.05f, m_colider.y + m_colider.height * 0.40f),
-		m_colider.height * 0.1f,
-		0,
-		WHITE);
+	DrawRectangleLinesEx(
+		m_colider,
+		2.0f,
+		PURPLE
+	);
 }
 
-void PopUp::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) {
-	m_backgroundColider = { 0.0f, 0.0f, resolution.x, resolution.y };
-	m_colider = { resolution.x * m_pos.x, resolution.y * m_pos.y,
-		resolution.x * m_size.x, resolution.y * m_size.y };
+void PopUp::Resize(Vector2 resolution, AppContext const& appContext) {
+	for (auto& e : m_elements) {
+		e->Resize(resolution, appContext);
+	}
 }

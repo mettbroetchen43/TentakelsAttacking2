@@ -11,10 +11,11 @@ class FloatCell;
 
 class FloatCellPopUp : public CellPopUp {
 private:
-	InputLine<float> m_inputChange;
+	std::shared_ptr<InputLine<float>> m_inputChange;
 	FloatCell* m_currentCell;
 
-	void Initialize(AppContext const& appContext) override;
+	void Initialize(AppContext const& appContext,
+		Vector2 resolution) override;
 	void SetValue() override;
 	void CheckEnter() override;
 
@@ -24,6 +25,4 @@ public:
 
 	void CheckAndUpdate(Vector2 const& mousePosition,
 		AppContext const& appContext) override;
-	void Render(AppContext const& appContext) override;
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
 };

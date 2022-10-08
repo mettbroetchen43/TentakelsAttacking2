@@ -5,31 +5,26 @@
 
 #pragma once
 #include "UIElement.hpp"
+#include <vector>
+#include <memory>
 
 
 class PopUp : public UIElement {
 protected:
-	std::string m_title, m_subTitle;
-	Texture2D *m_fullBackground, *m_popUpBackground, *m_infoTexture;
-	Rectangle m_backgroundColider, m_colider;
+	std::vector<std::shared_ptr<UIElement>> m_elements;
+	Rectangle m_colider;
 
-	void Close();
-
-	Vector2 GetElementPosition(float x, float y);
-	Vector2 GetElementSize(float x, float y);
+	void Initialize(std::string const& title, std::string& subTitle,
+		AssetType infoTexture, Vector2 resolution);
 
 	Rectangle GetColiderWithMaxValues(Texture2D* texture, float maxWidth, float maxHeight) const;
 
 public:
 	PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, 
-		std::string const& title, std::string const& subTitle, AssetType infoTexture);
-	PopUp(PopUp const&) = default;
-	PopUp(PopUp&&) = default;
-	PopUp& operator= (PopUp const&) = default;
-	PopUp& operator= (PopUp&&) = default;
+		std::string const& title, std::string& subTitle, AssetType infoTexture);
 	virtual ~PopUp() = default;
 
-	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) = 0;
-	virtual void Render(AppContext const& appContext);
+	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	virtual void Render(AppContext const& appContext) override;
 	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
 };

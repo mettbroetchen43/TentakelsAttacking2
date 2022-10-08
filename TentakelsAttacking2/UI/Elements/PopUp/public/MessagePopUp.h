@@ -9,15 +9,9 @@
 
 class MessagePopUp : public PopUp {
 private:
-	ClassicButton m_btn;
-	void Initialize();
+	void Initialize(Vector2 resolution);
 
 public:
 	MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		std::string const& title, std::string const& subTitle, AssetType btnTexture,
-		AssetType m_infoTexture);
-
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
-	void Render(AppContext const& appContext) override;
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+		std::string const& title, std::string& subTitle, AssetType infoTexture);
 };

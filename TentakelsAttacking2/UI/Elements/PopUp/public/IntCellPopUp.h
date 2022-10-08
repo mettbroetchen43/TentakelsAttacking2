@@ -11,10 +11,10 @@ class IntCell;
 
 class IntCellPopUp : public CellPopUp {
 private:
-	InputLine<int> m_inputChange;
+	std::shared_ptr<InputLine<int>> m_inputChange;
 	IntCell* m_currentCell;
 
-	void Initialize(AppContext const& appContext) override;
+	void Initialize(AppContext const& appContext, Vector2 resolution) override;
 	void SetValue() override;
 	void CheckEnter() override;
 
@@ -24,6 +24,4 @@ public:
 
 	void CheckAndUpdate(Vector2 const& mousePosition,
 		AppContext const& appContext) override;
-	void Render(AppContext const& appContext) override;
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
 };

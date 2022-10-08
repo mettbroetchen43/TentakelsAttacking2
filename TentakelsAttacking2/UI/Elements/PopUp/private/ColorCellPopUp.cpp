@@ -6,23 +6,36 @@
 #include "ColorCellPopUp.h"
 #include "ColorCell.h"
 #include "AppContext.h"
+#include "GenerelHelper.h"
 
-void ColorCellPopUp::Initialize(AppContext const& appContext) {
-	CellPopUp::Initialize(appContext);
+void ColorCellPopUp::Initialize(AppContext const& appContext,
+	Vector2 resolution) {
+	// CellPopUp::Initialize(appContext, resolution);
 
-	auto event = NewFocusElementEvent(&m_colorPicker);
-	appContext.eventManager.InvokeEvent(event);
-
-	m_colorPicker.SetInitialColor(m_currentCell->value);
-
-	m_colorPicker.SetCellFocuses(appContext);
-
-	m_acceptBTN.SetOnClick([&]() {
+	auto acceptBtn = InitializeAcceptButton(appContext, resolution);
+	acceptBtn->SetOnClick([&]() {
 		SetValue();
 		});
+
+	auto colorPicker = std::make_shared<ColorPicker>(
+		3,
+		GetElementPosition(m_pos, m_size, 0.5f, 0.5f),
+		GetElementSize(m_size, 0.5f, 0.38f),
+		Alignment::MID_MID,
+		resolution
+		);
+
+	auto event = NewFocusElementEvent(colorPicker.get());
+	appContext.eventManager.InvokeEvent(event);
+
+	colorPicker->SetInitialColor(m_currentCell->value);
+	colorPicker->SetCellFocuses(appContext);
+
+	m_elements.push_back(colorPicker);
+	m_colorPicker = colorPicker;
 }
 void ColorCellPopUp::SetValue() {
-	m_currentCell->value = m_colorPicker.GetColor();
+	m_currentCell->value = m_colorPicker->GetColor();
 	SetShouldClose();
 }
 void ColorCellPopUp::CheckEnter() {
@@ -40,34 +53,15 @@ void ColorCellPopUp::CheckEnter() {
 ColorCellPopUp::ColorCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, AssetType infoTexture, ColorCell* currentCell)
 	: CellPopUp(pos, size, alignment, resolution, title, infoTexture),
-	m_currentCell(currentCell),
-	m_colorPicker(
-		ColorPicker(
-			1,
-			GetElementPosition(0.5f, 0.5f),
-			GetElementSize(0.5f, 0.38f),
-			Alignment::MID_MID,
-			resolution
-		)) {
-	Initialize(AppContext::GetInstance());
+	m_currentCell(currentCell) {
+
+	Initialize(AppContext::GetInstance(), resolution);
 }
 
 void ColorCellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
-	m_colorPicker.CheckAndUpdate(mousePosition, appContext);
-
-	CellPopUp::CheckAndUpdate(mousePosition, appContext);
 
 	CheckEnter();
 
-	Close(appContext);
-}
-void ColorCellPopUp::Render(AppContext const& appContext) {
-	CellPopUp::Render(appContext);
-
-	m_colorPicker.Render(appContext);
-}
-void ColorCellPopUp::Resize(Vector2 resolution, AppContext const& appContext) {
-	m_colorPicker.Resize(resolution, appContext);
-	CellPopUp::Resize(resolution, appContext);
+	CellPopUp::CheckAndUpdate(mousePosition, appContext);
 }

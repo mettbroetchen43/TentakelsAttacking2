@@ -11,9 +11,10 @@ class CellPopUp : public PopUp {
 protected:
 	bool m_shouldClose = false;
 	bool m_firstEnter = false;
-	ClassicButton m_acceptBTN, m_cancelBTN;
 
-	virtual void Initialize(AppContext const& appContext);
+	virtual void Initialize(AppContext const& appContext, Vector2 resolution);
+	[[nodiscard]] std::shared_ptr<ClassicButton> InitializeAcceptButton(
+		AppContext const& appContext, Vector2 resolution);
 
 	void SetShouldClose();
 	virtual void SetValue() = 0;
@@ -26,6 +27,4 @@ public:
 
 	virtual void CheckAndUpdate(Vector2 const& mousePosition,
 		AppContext const& appContext) override;
-	virtual void Render(AppContext const& appContext) override;
-	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
 };
