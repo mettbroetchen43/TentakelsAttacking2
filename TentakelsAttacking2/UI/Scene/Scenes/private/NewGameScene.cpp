@@ -61,7 +61,6 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		Alignment::TOP_LEFT,
 		resolution,
 		"Add Player",
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
 		);
 	m_elements.push_back(addPlayerBtn);
@@ -73,7 +72,6 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		Alignment::TOP_RIGHT,
 		resolution,
 		"Remove Player",
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	m_elements.push_back(removePlayerBtn);
@@ -121,7 +119,6 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		Alignment::TOP_LEFT,
 		resolution,
 		"Exit",
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	exitBtn->SetOnClick([]() {
@@ -138,7 +135,6 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		Alignment::TOP_RIGHT,
 		resolution,
 		"Start",
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
 		);
 	m_elements.push_back(startGameBtn);

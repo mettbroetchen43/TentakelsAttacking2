@@ -18,7 +18,6 @@ void BaseMainScene::InitializeSzene(UIManager const& uiManager) {
         Alignment::TOP_MID,
         uiManager.GetResolution(),
         "Super Testtext, viel besser Text",
-        appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
         SoundType::CLICKED_RELEASE_STD);
     m_elements.push_back(btnLeft);
 
@@ -29,7 +28,6 @@ void BaseMainScene::InitializeSzene(UIManager const& uiManager) {
         Alignment::TOP_MID,
         uiManager.GetResolution(),
         "Quit",
-        appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
         SoundType::CLICKED_RELEASE_STD);
     m_elements.push_back(btnMid);
 
@@ -40,7 +38,6 @@ void BaseMainScene::InitializeSzene(UIManager const& uiManager) {
         Alignment::TOP_MID,
         uiManager.GetResolution(),
         "Super Testtext, viel besser Text",
-        appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
         SoundType::CLICKED_RELEASE_STD);
     m_elements.push_back(btnRight);
 }

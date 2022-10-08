@@ -37,7 +37,7 @@ protected:
 
 public:
 	Button(Vector2 pos, Vector2 size, Alignment alignment, std::string const& text,
-		Texture2D* texture, SoundType releaseSound, Vector2 resolution);
+		SoundType releaseSound, Vector2 resolution);
 	Button();
 	Button(Button const&) = default;
 	Button(Button&& old) = default;

@@ -25,7 +25,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		Alignment::MID_RIGHT,
 		resolution,
 		"New Game",
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
 		);
 	newGameBtn->SetOnClick([]() {
@@ -45,7 +44,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		Alignment::MID_RIGHT,
 		resolution,
 		"Load Game",
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
 		);
 	loadGameBtn->SetEnabled(false);
@@ -61,7 +59,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		Alignment::MID_RIGHT,
 		resolution,
 		"Settings",
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	settingsBtn->SetEnabled(false);
@@ -77,7 +74,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		Alignment::MID_RIGHT,
 		resolution,
 		"Credits",
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	creditsBtn->SetEnabled(false);
@@ -93,7 +89,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		Alignment::MID_RIGHT,
 		resolution,
 		"Quit",
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
 		);
 	quitBtn->SetOnClick([]() {AppContext::GetInstance().eventManager.InvokeEvent(CloseWindowEvent());});

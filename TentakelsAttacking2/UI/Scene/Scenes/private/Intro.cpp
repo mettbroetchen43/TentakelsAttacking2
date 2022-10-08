@@ -33,7 +33,6 @@ void Intro::Initialize(AppContext& appContext, Vector2 resolution) {
 		Alignment::MID_MID,
 		resolution,
 		"Start Game",
-		appContext.assetManager.GetTexture(AssetType::BUTTON_DEFAULT),
 		SoundType::ACCEPTED
 		);
 	m_btn->SetEnabled(false);

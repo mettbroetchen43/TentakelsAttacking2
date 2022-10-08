@@ -6,15 +6,18 @@
 #include "ClassicButton.h"
 #include "AppContext.h"
 
-ClassicButton::ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size, Alignment allignment,
-	Vector2 resolution, std::string const& text, Texture2D* texture, SoundType releaseSound)
-	: Focusable(focusID), Button(pos, size, allignment, text, texture, releaseSound, resolution) { }
+ClassicButton::ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size,
+	Alignment allignment, Vector2 resolution, std::string const& text,
+	SoundType releaseSound)
+	: Focusable(focusID), Button(pos, size, allignment, text,
+		releaseSound, resolution) { }
 
 [[nodiscard]] bool ClassicButton::IsEnabled() const{
 	return m_state != State::DISABLED;
 };
 
-void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition,
+	AppContext const& appContext) {
 
 	if (IsFocused()) {
 		if (m_state == State::DISABLED) {

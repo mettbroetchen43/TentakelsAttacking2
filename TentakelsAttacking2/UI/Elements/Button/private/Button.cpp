@@ -34,9 +34,11 @@ bool Button::IsSameState(State state) const {
 	return m_state == state;
 }
 
-Button::Button(Vector2 pos, Vector2 size, Alignment alignment, std::string const& text,
-	Texture2D* texture, SoundType releaseSound, Vector2 resolution)
-	: UIElement(pos, size, alignment), m_texture(texture), m_text(text), m_sound(releaseSound) {
+Button::Button(Vector2 pos, Vector2 size, Alignment alignment,
+	std::string const& text, SoundType releaseSound, Vector2 resolution)
+	: UIElement(pos, size, alignment), m_text(text), m_sound(releaseSound) {
+	
+	m_texture = AppContext::GetInstance().assetManager.GetTexture(AssetType::BUTTON_DEFAULT);
 	m_textureRec = {
 		0.0f,
 		0.0f,
@@ -51,7 +53,7 @@ Button::Button(Vector2 pos, Vector2 size, Alignment alignment, std::string const
 Button::Button()
 	: UIElement(Vector2(0.0f,0.0f), Vector2(0.0f,0.0f), Alignment::TOP_LEFT),
 	m_collider({ 0.0f,0.0f,0.0f,0.0f }), m_sound(SoundType::CLICKED_RELEASE_STD),
-	m_textPosition({ 0.0f,0.0f }),m_texture(nullptr), m_textureRec({0.0f,0.0f,0.0f,0.0f}) {}
+	m_textPosition({ 0.0f,0.0f }), m_texture(nullptr), m_textureRec({0.0f,0.0f,0.0f,0.0f}) {}
 
 void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	bool const hover = CheckCollisionPointRec(mousePosition, m_collider);

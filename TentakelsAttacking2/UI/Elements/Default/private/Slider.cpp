@@ -7,8 +7,7 @@
 #include "Allignment.h"
 #include <iostream>
 
-void Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension,
-	Texture2D* texture) {
+void Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension) {
 	float sizeX = m_isHorizontal ? m_size.x / absoluteDimension : m_size.x;
 	float sizeY = m_isHorizontal ? m_size.y : m_size.y / absoluteDimension;
 
@@ -17,7 +16,6 @@ void Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension,
 		Vector2(sizeX, sizeY),
 		Alignment::TOP_LEFT,
 		"",
-		texture,
 		SoundType::CLICKED_RELEASE_STD,
 		resolution
 	);
@@ -71,7 +69,7 @@ void Slider::MoveButtonIfColiderIsPressed(Vector2 const& mousePosition) {
 }
 
 Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal,
-	Texture2D* slideTexture, Texture2D* btnTexture, float absoluteDimension, Vector2 resolution)
+	Texture2D* slideTexture, float absoluteDimension, Vector2 resolution)
 	: UIElement(pos, size, alignment), m_isHorizontal(isHorizontal), m_texture(slideTexture) {
 	m_textureRec = {
 		0.0f,
@@ -80,7 +78,7 @@ Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal
 		static_cast<float>(m_texture->height)
 	};
 	m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
-	CalculateInitialButton(resolution, absoluteDimension, btnTexture);
+	CalculateInitialButton(resolution, absoluteDimension);
 }
 
 void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
