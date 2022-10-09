@@ -54,7 +54,7 @@
     <ClInclude Include="UI\public\UIManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\SoundManager.h">
+    <ClInclude Include="Helper\public\HSoundManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Helper\public\HSoundType.hpp">
@@ -254,7 +254,7 @@
     <ClCompile Include="UI\private\UIManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Helper\private\SoundManager.cpp">
+    <ClCompile Include="Helper\private\HSoundManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Default\private\Slider.cpp">

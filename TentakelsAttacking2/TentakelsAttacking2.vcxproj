@@ -192,7 +192,7 @@
     <ClInclude Include="UI\public\Focusable.h" />
     <ClInclude Include="UI\Elements\Default\public\Slider.h" />
     <ClInclude Include="UI\Elements\Button\public\SliderButton.h" />
-    <ClInclude Include="Helper\public\SoundManager.h" />
+    <ClInclude Include="Helper\public\HSoundManager.h" />
     <ClInclude Include="Helper\public\HSoundType.hpp" />
     <ClInclude Include="UI\public\UIElement.hpp" />
     <ClInclude Include="UI\public\UIManager.h" />
@@ -247,7 +247,7 @@
     <ClCompile Include="UI\Elements\Button\private\Button.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Slider.cpp" />
     <ClCompile Include="UI\private\UIManager.cpp" />
-    <ClCompile Include="Helper\private\SoundManager.cpp" />
+    <ClCompile Include="Helper\private\HSoundManager.cpp" />
     <ClCompile Include="UI\Elements\Button\private\SliderButton.cpp" />
     <ClCompile Include="UI\private\Focusable.cpp" />
     <ClCompile Include="UI\private\Focus.cpp" />
