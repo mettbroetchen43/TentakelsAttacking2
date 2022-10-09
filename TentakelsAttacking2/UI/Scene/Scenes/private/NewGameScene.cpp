@@ -104,7 +104,7 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		3,
 		resolution
 		);
-	//table->SetRowEditable(0,false);
+	table->SetRowEditable(0,false);
 	table->SetColumnEditable(0,false);
 	table->SetHeadlines({ "ID", "Name", "Color" });
 	for (int i = 0; i < appContext.MaxPlayerCount();++i) {

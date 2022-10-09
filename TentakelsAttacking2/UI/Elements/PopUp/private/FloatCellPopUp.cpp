@@ -17,7 +17,7 @@ void FloatCellPopUp::Initialize(AppContext const& appContext,
 
 	auto inputChance = std::make_shared<InputLine<float>>(
 		3,
-		GetElementPosition(m_pos, m_size, 0.5f, 0.5f),
+		GetElementPosition(m_pos, m_size, 0.5f, 0.55f),
 		GetElementSize(m_size, 0.9f, 0.2f),
 		Alignment::MID_MID,
 		15,
