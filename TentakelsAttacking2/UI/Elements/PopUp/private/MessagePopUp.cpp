@@ -14,7 +14,7 @@ void MessagePopUp::Initialize(Vector2 resolution) {
 	auto btn = std::make_shared<ClassicButton>(
 		1,
 		GetElementPosition(m_pos, m_size,0.5f, 0.8f),
-		GetElementSize(m_pos,0.3f, 0.2f),
+		GetElementSize(m_size,0.3f, 0.2f),
 		Alignment::MID_MID,
 		resolution,
 		"OK",
