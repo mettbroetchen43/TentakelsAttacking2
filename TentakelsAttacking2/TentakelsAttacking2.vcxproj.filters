@@ -382,7 +382,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="TODO.txt" />
     <Text Include="Assets\title.txt" />
   </ItemGroup>
 </Project>

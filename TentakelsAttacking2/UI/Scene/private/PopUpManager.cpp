@@ -58,7 +58,7 @@ void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
 
 	m_popUps.push_back(std::make_unique<MessagePopUp>(
 		Vector2(0.5f, 0.5f),
-		Vector2(0.3f, 0.3f),
+		Vector2(0.5f, 0.5f),
 		Alignment::MID_MID,
 		m_resolution,
 		event->GetTitle(),
