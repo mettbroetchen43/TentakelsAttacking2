@@ -1,4 +1,9 @@
-#include "GenerelHelper.h"
+//
+// Purpur Tentakel
+// 05.09.2022
+//
+
+#include "HGeneral.h"
 
 bool operator==(Color lhs, Color rhs) {
 	bool sameColor =

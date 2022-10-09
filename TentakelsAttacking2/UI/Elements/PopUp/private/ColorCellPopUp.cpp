@@ -6,7 +6,7 @@
 #include "ColorCellPopUp.h"
 #include "ColorCell.h"
 #include "AppContext.h"
-#include "GenerelHelper.h"
+#include "HGeneral.h"
 
 void ColorCellPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution) {

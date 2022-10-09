@@ -179,7 +179,7 @@
     <ClInclude Include="UI\public\Allignment.h" />
     <ClInclude Include="UI\public\ColorPicker.h" />
     <ClInclude Include="UI\public\ColorPickerCell.h" />
-    <ClInclude Include="Helper\public\GenerelHelper.h" />
+    <ClInclude Include="Helper\public\HGeneral.h" />
     <ClInclude Include="UI\Scene\public\BaseMainScene.h" />
     <ClInclude Include="UI\Scene\public\PopUpManager.h" />
     <ClInclude Include="UI\Scene\Scenes\public\Intro.h" />
@@ -214,7 +214,7 @@
     <ClCompile Include="Game\private\Player.cpp" />
     <ClCompile Include="Game\private\Planet.cpp" />
     <ClCompile Include="Helper\private\HTextProcessing.cpp" />
-    <ClCompile Include="Helper\private\GenerelHelper.cpp" />
+    <ClCompile Include="Helper\private\HGeneral.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />

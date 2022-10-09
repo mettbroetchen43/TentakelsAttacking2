@@ -201,7 +201,7 @@
     <ClInclude Include="UI\public\ColorPickerCell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\GenerelHelper.h">
+    <ClInclude Include="Helper\public\HGeneral.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\PopUp\public\ColorCellPopUp.h">
@@ -365,7 +365,7 @@
     <ClCompile Include="UI\Elements\PopUp\private\ColorCellPopUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Helper\private\GenerelHelper.cpp">
+    <ClCompile Include="Helper\private\HGeneral.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\PopUp\private\CellPopUp.cpp">

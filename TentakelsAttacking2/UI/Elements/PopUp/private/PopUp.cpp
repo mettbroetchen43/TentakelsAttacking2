@@ -6,7 +6,7 @@
 #include "PopUp.h"
 #include "Picture.h"
 #include "Text.h"
-#include "GenerelHelper.h"
+#include "HGeneral.h"
 #include "HTextProcessing.h"
 #include "AppContext.h"
 #include <iostream>

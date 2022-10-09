@@ -5,7 +5,7 @@
 
 #include "IntCellPopUp.h"
 #include "IntCell.h"
-#include "GenerelHelper.h"
+#include "HGeneral.h"
 
 void IntCellPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution) {
