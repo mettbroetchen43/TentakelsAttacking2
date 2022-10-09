@@ -60,7 +60,7 @@ void Title::RenderTitleSequens(AppContext const& appContext) {
 
 	if (dummyText.size() > 0) {
 		if (dummyText.at(dummyText.size() - 1) != ' ') {
-			auto event = PlayTextSoundEvent();
+			auto event = PlaySoundEvent(SoundType::TEXT);
 			appContext.eventManager.InvokeEvent(event);
 		}
 	}
