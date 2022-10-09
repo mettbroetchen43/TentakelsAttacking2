@@ -12,9 +12,9 @@ Line::Line(Vector2 pos, Vector2 size, Alignment alignment,
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 }
 
-void Line::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) { }
-void Line::Render(AppContext const& appContext) {
+void Line::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
+	[[maybe_unused]] AppContext const& appContext) { }
+void Line::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawLineEx(
 		Vector2(
 			m_colider.x,
