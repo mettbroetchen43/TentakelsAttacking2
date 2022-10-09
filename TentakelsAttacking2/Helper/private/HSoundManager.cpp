@@ -30,10 +30,14 @@ void SoundManager::PlaySound(SoundType soundType) const {
 	::PlaySoundMulti(m_sounds.at(soundType));
 }
 void SoundManager::PlayTextSound() const {
-	static unsigned long long lastIndex = 0;
 	Random& random = Random::GetInstance();
 
-	unsigned long long nextIndex = random.random(m_textSounds.size());
+	static unsigned long long lastIndex = 0;
+
+	unsigned long long nextIndex;
+	do {
+		nextIndex = random.random(m_textSounds.size());
+	} while (lastIndex == nextIndex);
 
 	::PlaySoundMulti(m_textSounds.at(nextIndex));
 	lastIndex = nextIndex;
