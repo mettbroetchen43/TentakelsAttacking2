@@ -45,7 +45,8 @@ void DoubleCellPopUp::CheckEnter() {
 		&& !m_shouldClose
 		&& !m_firstEnter;
 	if (validEnterClose) {
-		AppContext::GetInstance().soundManager.PlaySound(SoundType::ACCEPTED);
+		auto event = PlaySoundEvent(SoundType::ACCEPTED);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
 		SetValue();
 	}
 

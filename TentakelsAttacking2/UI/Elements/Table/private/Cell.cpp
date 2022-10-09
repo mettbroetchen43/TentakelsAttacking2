@@ -26,7 +26,8 @@ bool Cell::ShouldEdit(Vector2 const& mousePosition) const {
 	}
 
 	if (edit) {
-		AppContext::GetInstance().soundManager.PlaySound(SoundType::CLICKED_PRESS_STD);
+		auto event = PlaySoundEvent(SoundType::CLICKED_PRESS_STD);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 
 	return edit;

@@ -21,26 +21,6 @@ void SoundManager::LoadSounds() {
 	}
 }
 
-void SoundManager::OnEvent(Event const& event) {
-	if (auto const soundEvent = dynamic_cast<PlaySoundEvent const*>(&event)) {
-		PlaySound(soundEvent->GetSoundType());
-	}
-	if (auto const soundEvent = dynamic_cast<PlayTextSoundEvent const*>(&event)) {
-		PlayTextSound();
-	}
-}
-
-SoundManager::SoundManager() {
-	InitAudioDevice();
-	LoadSounds();
-}
-SoundManager::~SoundManager() {
-	for (auto& [_,sound] : m_sounds) {
-		UnloadSound(sound);
-	}
-	CloseAudioDevice();
-}
-
 void SoundManager::PlaySound(SoundType soundType) const {
 	::PlaySound(m_sounds.at(soundType));
 }
@@ -55,4 +35,24 @@ void SoundManager::PlayTextSound() const {
 
 	::PlaySound(m_textSounds.at(nextIndex));
 	lastIndex = nextIndex;
+}
+
+SoundManager::SoundManager() {
+	InitAudioDevice();
+	LoadSounds();
+}
+SoundManager::~SoundManager() {
+	for (auto& [_,sound] : m_sounds) {
+		UnloadSound(sound);
+	}
+	CloseAudioDevice();
+}
+
+void SoundManager::OnEvent(Event const& event) {
+	if (auto const soundEvent = dynamic_cast<PlaySoundEvent const*>(&event)) {
+		PlaySound(soundEvent->GetSoundType());
+	}
+	if (auto const soundEvent = dynamic_cast<PlayTextSoundEvent const*>(&event)) {
+		PlayTextSound();
+	}
 }
