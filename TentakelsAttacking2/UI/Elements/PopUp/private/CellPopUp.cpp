@@ -21,7 +21,7 @@ void CellPopUp::Initialize([[maybe_unused]] AppContext const& appContext,
 		Alignment::BOTTOM_RIGHT,
 		resolution,
 		"Accept",
-		SoundType::ACCEPTED
+		SoundType::CLICKED_RELEASE_STD
 		);
 
 	auto event = NewFocusElementEvent(cancelBtn.get());
@@ -43,7 +43,7 @@ std::shared_ptr<ClassicButton> CellPopUp::InitializeAcceptButton(
 		Alignment::BOTTOM_LEFT,
 		resolution,
 		"Cancel",
-		SoundType::CLICKED_RELEASE_STD
+		SoundType::ACCEPTED
 		);
 
 	auto event = NewFocusElementEvent(acceptBtn.get());
