@@ -21,16 +21,16 @@ private:
 		"clicked_accepted_std.mp3",
 		"clicked_press_std.mp3",
 		"clicked_release_std.mp3",
-		"clicked_disabled_std.mp3",
-		"hovered_std.mp3",
+		"clicked_disabled_std.mp3"
 	};
 
 	std::vector<Sound> m_textSounds;
 
 	void LoadSounds();
 
-	void PlaySound(SoundType soundType) const;
+	void PlaySound(SoundType soundType);
 	void PlayTextSound() const;
+	void PlayHoveredSound();
 
 	void OnEvent(Event const& event) override;
 

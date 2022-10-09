@@ -14,6 +14,11 @@ void SoundManager::LoadSounds() {
 		m_sounds[static_cast<SoundType>(i)] = sound;
 	}
 
+	for (int i = 0; i < m_hoverSounds.size(); ++i) {
+		Sound sound = LoadSound("Sounds/hovered_std.mp3");
+		m_hoverSounds.at(i) = sound;
+	}
+
 	std::string files = "Sounds/TextSounds";
 	for (auto const& entry : std::filesystem::directory_iterator(files)) {
 		Sound sound = LoadSound(entry.path().string().c_str());
@@ -21,7 +26,11 @@ void SoundManager::LoadSounds() {
 	}
 }
 
-void SoundManager::PlaySound(SoundType soundType) const {
+void SoundManager::PlaySound(SoundType soundType) {
+	if (soundType == SoundType::HOVER_STD) {
+		PlayHoveredSound();
+		return;
+	}
 	::PlaySound(m_sounds.at(soundType));
 }
 void SoundManager::PlayTextSound() const {
@@ -36,13 +45,21 @@ void SoundManager::PlayTextSound() const {
 	::PlaySound(m_textSounds.at(nextIndex));
 	lastIndex = nextIndex;
 }
+void SoundManager::PlayHoveredSound() {
+	if (m_hoverIndex >= m_hoverSounds.size()) {
+		m_hoverIndex = 0;
+	}
+
+	::PlaySound(m_hoverSounds.at(m_hoverIndex));
+	++m_hoverIndex;
+}
 
 SoundManager::SoundManager() {
 	InitAudioDevice();
 	LoadSounds();
 }
 SoundManager::~SoundManager() {
-	for (auto& [_,sound] : m_sounds) {
+	for (auto& [_, sound] : m_sounds) {
 		UnloadSound(sound);
 	}
 	CloseAudioDevice();
