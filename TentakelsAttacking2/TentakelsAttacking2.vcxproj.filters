@@ -18,7 +18,7 @@
     <ClInclude Include="Helper\public\Vec2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\Random.h">
+    <ClInclude Include="Helper\public\HRandom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game\public\SpaceObject.h">
@@ -221,7 +221,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Helper\private\Random.cpp">
+    <ClCompile Include="Helper\private\HRandom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="_private\Main.cpp">

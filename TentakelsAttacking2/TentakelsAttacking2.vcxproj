@@ -146,7 +146,7 @@
     <ClInclude Include="Game\public\GroupTarget.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
     <ClInclude Include="Helper\public\LayeredVector.hpp" />
-    <ClInclude Include="Helper\public\Random.h" />
+    <ClInclude Include="Helper\public\HRandom.h" />
     <ClInclude Include="Helper\public\HTextProcecingConstant.hpp" />
     <ClInclude Include="Helper\public\HTextProcessing.h" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
@@ -210,7 +210,7 @@
     <ClCompile Include="Game\private\GameManager.cpp" />
     <ClCompile Include="Game\private\Fleet.cpp" />
     <ClCompile Include="Game\private\GroupTarget.cpp" />
-    <ClCompile Include="Helper\private\Random.cpp" />
+    <ClCompile Include="Helper\private\HRandom.cpp" />
     <ClCompile Include="Game\private\Player.cpp" />
     <ClCompile Include="Game\private\Planet.cpp" />
     <ClCompile Include="Helper\private\HTextProcessing.cpp" />

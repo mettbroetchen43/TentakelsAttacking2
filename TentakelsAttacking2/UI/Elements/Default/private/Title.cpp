@@ -5,7 +5,7 @@
 
 #include "Title.h"
 #include "AppContext.h"
-#include "Random.h"
+#include "HRandom.h"
 
 void Title::RenderTitle(AppContext const& appContext) {
 	for (int i = 0;i < m_title->size();++i) {
