@@ -7,6 +7,7 @@
 #include "AppContext.h"
 #include "HGeneral.h"
 #include "StringCell.h"
+#include "Table.h"
 
 void StringCellPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution) {
@@ -39,6 +40,7 @@ void StringCellPopUp::Initialize(AppContext const& appContext,
 }
 void StringCellPopUp::SetValue() {
 	m_currentCell->value = m_inputChange->GetValue();
+	m_currentCell->GetTable()->ResizeCells();
 	SetShouldClose();
 }
 

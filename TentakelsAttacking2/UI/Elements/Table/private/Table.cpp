@@ -47,7 +47,8 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 				GetElementSize(),
 				Alignment::DEFAULT,
 				static_cast<unsigned int>(GetIndex(row, column)),
-				resolution
+				resolution,
+				this
 				));
 		}
 	}
@@ -164,11 +165,17 @@ Vector2 Table::GetResolution() const {
 	return m_resolution;
 }
 
-void Table::SetEmptyCell(size_t row, size_t column) {
+void Table::SetEmptyCell(size_t row, size_t column, bool resizeCells) {
 	CheckValidRowColumn(row, column);
 	SetCell<EmptyCell>(row, column);
+
+	if (resizeCells) {
+		std::cout << "SET EMPTY CELL RESIZE\n";
+		ResizeCells();
+	}
 }
-void Table::SetHeadlines(std::vector<std::string> const& headlines) {
+void Table::SetHeadlines(std::vector<std::string> const& headlines,
+	bool resizeCells) {
 	if (headlines.size() != m_columns) {
 		throw std::out_of_range(
 			"headlines count does not match the column count"
@@ -176,6 +183,15 @@ void Table::SetHeadlines(std::vector<std::string> const& headlines) {
 	}
 
 	for (int i = 0; i < m_columns; ++i) {
-		SetValue<StringCell, std::string>(0, i, headlines.at(i));
+		SetValue<StringCell, std::string>(0, i, headlines.at(i), false);
 	}
+
+	if (resizeCells) {
+		std::cout << "SET HEADLINES RESIZE\n";
+		ResizeCells();
+	}
+}
+
+void Table::ResizeCells() {
+	std::cout << "RESIZE CELLS NOW!\n";
 }

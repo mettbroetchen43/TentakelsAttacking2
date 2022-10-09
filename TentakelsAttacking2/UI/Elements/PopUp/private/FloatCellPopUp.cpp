@@ -6,6 +6,7 @@
 #include "FloatCellPopUp.h"
 #include "FloatCell.h"
 #include "HGeneral.h"
+#include "Table.h"
 
 void FloatCellPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution) {
@@ -37,6 +38,7 @@ void FloatCellPopUp::Initialize(AppContext const& appContext,
 }
 void FloatCellPopUp::SetValue() {
 	m_currentCell->value = m_inputChange->GetValue();
+	m_currentCell->GetTable()->ResizeCells();
 	SetShouldClose();
 }
 void FloatCellPopUp::CheckEnter() {

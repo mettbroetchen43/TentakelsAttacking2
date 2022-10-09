@@ -8,9 +8,11 @@
 #include "Focusable.h"
 #include <string>
 
+class Table;
+
 class Cell : public UIElement, public Focusable {
-private:
 protected:
+	Table* m_table;
 	bool m_editable = true;
 	Rectangle m_colider;
 	Vector2 m_textPosition;
@@ -20,14 +22,16 @@ protected:
 
 public:
 	Cell(Vector2 pos, Vector2 size, Alignment alignment,
-		unsigned int ID, Vector2 resolution);
+		unsigned int ID, Vector2 resolution, Table* table);
 	virtual ~Cell() = default;
 
 	virtual void CheckAndUpdate(Vector2 const& mousePosition,
 		AppContext const& appContext);
 	virtual void Render(AppContext const& appContext) override;
 	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
-	
+
+	[[nodiscard]] Table* GetTable() const;
+
 	void SetEditable(bool editable);
 	[[nodiscard]] bool IsEnabled() const override;
 	[[nodiscard]] Rectangle GetCollider() const override;

@@ -7,6 +7,7 @@
 #include "ColorCell.h"
 #include "AppContext.h"
 #include "HGeneral.h"
+#include "Table.h"
 
 void ColorCellPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution) {
@@ -37,6 +38,7 @@ void ColorCellPopUp::Initialize(AppContext const& appContext,
 }
 void ColorCellPopUp::SetValue() {
 	m_currentCell->value = m_colorPicker->GetColor();
+	m_currentCell->GetTable()->ResizeCells();
 	SetShouldClose();
 }
 void ColorCellPopUp::CheckEnter() {

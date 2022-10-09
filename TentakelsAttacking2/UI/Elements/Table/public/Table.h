@@ -9,6 +9,7 @@
 #include "AllCells.hpp"
 #include <memory>
 #include <vector>
+#include <iostream>
 
 class Table : public UIElement, public Focusable {
 private:
@@ -33,7 +34,8 @@ private:
 			GetElementSize(),
 			Alignment::DEFAULT,
 			static_cast<unsigned int>(index),
-			m_resolution
+			m_resolution,
+			this
 			);
 		m_cells.at(index)->SetEditable(isEditable);
 	}
@@ -55,9 +57,10 @@ public:
 
 	[[nodiscard]] Vector2 GetResolution() const;
 
-	void SetEmptyCell(size_t row, size_t column);
+	void SetEmptyCell(size_t row, size_t column, bool resizeCells = true);
 	template<typename CellType, typename ValueType>
-	void SetValue(size_t row, size_t column, ValueType value) {
+	void SetValue(size_t row, size_t column, ValueType value,
+		bool resizeCells = true) {
 		CheckValidRowColumn(row, column);
 		size_t index = GetIndex(row, column);
 		auto cell = dynamic_cast<CellType*>(m_cells.at(index).get());
@@ -67,6 +70,13 @@ public:
 		}
 
 		cell->value = value;
+
+		if (resizeCells) {
+			std::cout << "SET VALUE RESIZE\n";
+			ResizeCells();
+		}
 	}
-	void SetHeadlines(std::vector<std::string> const& headlines);
+	void SetHeadlines(std::vector<std::string> const& headlines,
+		bool resizeCells = true);
+	void ResizeCells();
 };

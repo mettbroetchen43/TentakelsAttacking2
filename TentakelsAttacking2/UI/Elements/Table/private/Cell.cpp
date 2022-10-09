@@ -34,8 +34,8 @@ bool Cell::ShouldEdit(Vector2 const& mousePosition) const {
 }
 
 Cell::Cell(Vector2 pos, Vector2 size, Alignment alignment,
-	unsigned int ID, Vector2 resolution)
-	: UIElement(pos, size, alignment), Focusable(ID) {
+	unsigned int ID, Vector2 resolution, Table* table)
+	: UIElement(pos, size, alignment), Focusable(ID), m_table(table) {
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	m_textSize = m_colider.height / 2;
 	m_textPosition = {
@@ -77,6 +77,10 @@ void Cell::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appCont
 	m_colider.x + m_colider.width / 20,
 	m_colider.y + m_colider.height / 4
 	};
+}
+
+Table* Cell::GetTable() const {
+	return m_table;
 }
 
 void Cell::SetEditable(bool editable) {
