@@ -34,25 +34,25 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 	m_elements.push_back(background);
 
 	auto icon = std::make_shared<Picture>(
-		GetElementPosition(m_pos, m_size, 0.1f, 0.1f),
-		GetElementSize(m_size, 0.2f, 0.2f),
-		Alignment::TOP_LEFT,
+		GetElementPosition(m_pos, m_size, 0.15f, 0.05f),
+		GetElementSize(m_size, 0.25f, 0.3f),
+		Alignment::TOP_MID,
 		infoTexture,
 		resolution
 		);
 	m_elements.push_back(icon);
 
 	auto textTitle = std::make_shared<Text>(
-		GetElementPosition(m_pos, m_size, 0.4f, 0.2f),
-		GetElementSize(m_size, 0.5f, 0.2f),
-		Alignment::TOP_LEFT,
+		GetElementPosition(m_pos, m_size, 0.65f, 0.1f),
+		GetElementSize(m_size, 0.6f, 0.2f),
+		Alignment::TOP_MID,
 		GetElementTextHight(m_size, 0.2f),
 		title,
 		resolution
 		);
 	m_elements.push_back(textTitle);
 
-	float textHeight = GetElementTextHight(m_size, 0.05f);
+	float textHeight = GetElementTextHight(m_size, 0.1f);
 	BreakText(
 		subTitle,
 		textHeight,
@@ -61,7 +61,7 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 	);
 
 	auto textSubTitle = std::make_shared<Text>(
-		GetElementPosition(m_pos, m_size, 0.5f, 0.5f),
+		GetElementPosition(m_pos, m_size, 0.5f, 0.4f),
 		GetElementSize(m_size, 0.9f, 0.4f),
 		Alignment::TOP_MID,
 		textHeight,
