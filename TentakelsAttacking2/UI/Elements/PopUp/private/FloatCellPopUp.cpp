@@ -9,7 +9,6 @@
 
 void FloatCellPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution) {
-	// CellPopUp::Initialize(appContext, resolution);
 
 	auto acceptBtn = InitializeAcceptButton(appContext, resolution);
 	acceptBtn->SetOnClick([&]() {
