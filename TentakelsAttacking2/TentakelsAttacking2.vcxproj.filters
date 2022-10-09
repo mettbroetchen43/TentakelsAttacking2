@@ -144,7 +144,7 @@
     <ClInclude Include="UI\Elements\Default\public\Title.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\TextProcessing.h">
+    <ClInclude Include="Helper\public\HTextProcessing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\Table\public\Cell.h">
@@ -314,7 +314,7 @@
     <ClCompile Include="UI\Elements\Default\private\Title.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Helper\private\TextProcessing.cpp">
+    <ClCompile Include="Helper\private\HTextProcessing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Table\private\Cell.cpp">

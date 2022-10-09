@@ -5,7 +5,7 @@
 
 #include "FloatCell.h"
 #include "AppContext.h"
-#include "TextProcessing.h"
+#include "HTextProcessing.h"
 
 void FloatCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Cell::CheckAndUpdate(mousePosition, appContext);

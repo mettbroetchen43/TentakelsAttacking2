@@ -7,7 +7,7 @@
 #include "Picture.h"
 #include "Text.h"
 #include "GenerelHelper.h"
-#include "TextProcessing.h"
+#include "HTextProcessing.h"
 #include "AppContext.h"
 #include <iostream>
 #include <string>
