@@ -212,6 +212,9 @@ public:
 		m_value = std::to_string(value);
 	}
 	[[nodiscard]] T GetValue() = delete;
+	void Clear() {
+		m_value.clear();
+	}
 
 	[[nodiscard]] Rectangle GetCollider() const override {
 		return m_collider;
