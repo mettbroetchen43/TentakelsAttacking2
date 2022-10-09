@@ -18,7 +18,7 @@
     <ClInclude Include="Helper\public\Vec2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\Random.h">
+    <ClInclude Include="Helper\public\HRandom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game\public\SpaceObject.h">
@@ -54,10 +54,10 @@
     <ClInclude Include="UI\public\UIManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\SoundManager.h">
+    <ClInclude Include="Helper\public\HSoundManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\SoundType.hpp">
+    <ClInclude Include="Helper\public\HSoundType.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Events\public\MainEvent.hpp">
@@ -78,10 +78,10 @@
     <ClInclude Include="UI\Elements\Default\public\Slider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\AssetManager.h">
+    <ClInclude Include="Helper\public\HAssetManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\AssetType.hpp">
+    <ClInclude Include="Helper\public\HAssetType.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\Button\public\SliderButton.h">
@@ -144,7 +144,7 @@
     <ClInclude Include="UI\Elements\Default\public\Title.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\TextProcessing.h">
+    <ClInclude Include="Helper\public\HTextProcessing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\Table\public\Cell.h">
@@ -201,7 +201,7 @@
     <ClInclude Include="UI\public\ColorPickerCell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\GenerelHelper.h">
+    <ClInclude Include="Helper\public\HGeneral.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\PopUp\public\ColorCellPopUp.h">
@@ -213,7 +213,7 @@
     <ClInclude Include="UI\Elements\Default\public\Line.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\TextProcecingConstant.hpp">
+    <ClInclude Include="Helper\public\HTextProcecingConstant.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Scene\public\PopUpManager.h">
@@ -221,7 +221,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Helper\private\Random.cpp">
+    <ClCompile Include="Helper\private\HRandom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="_private\Main.cpp">
@@ -254,13 +254,13 @@
     <ClCompile Include="UI\private\UIManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Helper\private\SoundManager.cpp">
+    <ClCompile Include="Helper\private\HSoundManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Default\private\Slider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Helper\private\AssetManager.cpp">
+    <ClCompile Include="Helper\private\HAssetManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Button\private\SliderButton.cpp">
@@ -314,7 +314,7 @@
     <ClCompile Include="UI\Elements\Default\private\Title.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Helper\private\TextProcessing.cpp">
+    <ClCompile Include="Helper\private\HTextProcessing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Table\private\Cell.cpp">
@@ -365,7 +365,7 @@
     <ClCompile Include="UI\Elements\PopUp\private\ColorCellPopUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Helper\private\GenerelHelper.cpp">
+    <ClCompile Include="Helper\private\HGeneral.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\PopUp\private\CellPopUp.cpp">

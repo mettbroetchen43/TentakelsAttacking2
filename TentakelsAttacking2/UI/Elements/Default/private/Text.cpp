@@ -4,7 +4,7 @@
 //
 
 #include "Text.h"
-#include "TextProcessing.h"
+#include "HTextProcessing.h"
 #include "AppContext.h"
 
 void Text::CreateToRender(AppContext const& appContext) {

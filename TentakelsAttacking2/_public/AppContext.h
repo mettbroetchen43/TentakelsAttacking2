@@ -4,9 +4,9 @@
 //
 
 #pragma once
-#include "SoundManager.h"
+#include "HSoundManager.h"
 #include "EventManager.hpp"
-#include "AssetManager.h"
+#include "HAssetManager.h"
 #include <string>
 
 struct AppContext {

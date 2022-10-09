@@ -4,7 +4,7 @@
 //
 
 #include "CellPopUp.h"
-#include "GenerelHelper.h"
+#include "HGeneral.h"
 #include "AppContext.h"
 
 namespace {

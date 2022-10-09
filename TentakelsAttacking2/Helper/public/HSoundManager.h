@@ -5,7 +5,7 @@
 
 #pragma once
 #include "EventListener.hpp"
-#include "SoundType.hpp"
+#include "HSoundType.hpp"
 #include <raylib.h>
 #include <unordered_map>
 #include <array>

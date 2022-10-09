@@ -10,7 +10,7 @@
 #include "Text.h"
 #include "Title.h"
 #include "SceneType.hpp"
-#include "random.h"
+#include "Hrandom.h"
 
 
 #define BTN_SPEED -0.003f

@@ -5,7 +5,7 @@
 
 #include "StringCellPopUp.h"
 #include "AppContext.h"
-#include "GenerelHelper.h"
+#include "HGeneral.h"
 #include "StringCell.h"
 
 void StringCellPopUp::Initialize(AppContext const& appContext,

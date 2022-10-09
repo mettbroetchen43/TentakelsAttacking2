@@ -7,8 +7,8 @@
 #include "UIElement.hpp"
 #include "Focusable.h"
 #include "AppContext.h"
-#include "TextProcessing.h"
-#include "TextProcecingConstant.hpp"
+#include "HTextProcessing.h"
+#include "HTextProcecingConstant.hpp"
 #include <raylib.h>
 #include <string>
 #include <functional>

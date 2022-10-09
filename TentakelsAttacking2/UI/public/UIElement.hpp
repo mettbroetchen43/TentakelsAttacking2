@@ -4,8 +4,8 @@
 //
 
 #pragma once
-#include "SoundType.hpp"
-#include "AssetType.hpp"
+#include "HSoundType.hpp"
+#include "HAssetType.hpp"
 #include "UIEvents.hpp"
 #include "Allignment.h"
 

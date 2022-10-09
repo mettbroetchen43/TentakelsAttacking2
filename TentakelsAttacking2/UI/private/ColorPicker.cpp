@@ -6,7 +6,7 @@
 #include "ColorPicker.h"
 #include "AppContext.h"
 #include "ColorPickerCell.h"
-#include "GenerelHelper.h"
+#include "HGeneral.h"
 
 
 void ColorPicker::Initialise(Vector2 resolution) {

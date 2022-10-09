@@ -5,7 +5,7 @@
 
 #include "FloatCellPopUp.h"
 #include "FloatCell.h"
-#include "GenerelHelper.h"
+#include "HGeneral.h"
 
 void FloatCellPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution) {

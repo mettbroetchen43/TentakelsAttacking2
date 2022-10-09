@@ -5,7 +5,7 @@
 
 #include "MessagePopUp.h"
 #include "AppContext.h"
-#include "GenerelHelper.h"
+#include "HGeneral.h"
 #include <memory>
 
 void MessagePopUp::Initialize(Vector2 resolution) {

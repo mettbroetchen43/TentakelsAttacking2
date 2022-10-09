@@ -3,9 +3,9 @@
 // 24.08.2022
 //
 
-#include "SoundManager.h"
+#include "HSoundManager.h"
 #include "UIEvents.hpp"
-#include "Random.h"
+#include "HRandom.h"
 #include <filesystem>
 
 void SoundManager::LoadSounds() {

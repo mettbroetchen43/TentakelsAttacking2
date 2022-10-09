@@ -5,7 +5,7 @@
 
 #include "DoubleCellPopUp.h"
 #include "DoubleCell.h"
-#include "GenerelHelper.h"
+#include "HGeneral.h"
 
 void DoubleCellPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution) {

@@ -5,7 +5,7 @@
 
 #include "DoubleCell.h"
 #include "AppContext.h"
-#include "TextProcessing.h"
+#include "HTextProcessing.h"
 
 void DoubleCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Cell::CheckAndUpdate(mousePosition, appContext);
