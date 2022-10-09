@@ -9,9 +9,6 @@
 #include "StringCellPopUp.h"
 #include <stdexcept>
 
-size_t Table::GetIndex(size_t row, size_t column) const {
-	return row * m_columns + column;
-}
 Vector2 Table::GetElementPosition(size_t row, size_t column) const {
 	Vector2 elementSize = GetElementSize();
 	return Vector2 { 
@@ -34,6 +31,31 @@ Vector2 Table::GetElementSize() const {
 	}
 }
 
+std::vector<float> Table::GetColumnWidths() const {
+	std::vector<float> toReturn;
+
+	for (int i = 0; i < m_columns; ++i) {
+		toReturn.push_back(0.0f);
+	}
+
+	for (int row = 0; row < m_rows; ++row) {
+		for (int column = 0; column < m_columns; ++column) {
+			Cell* currentCell = m_cells.at(
+				GetIndexFromRowAndColumn(row, column, m_columns)).get();
+
+			float cellWitdh = GetElementSizeReversed(
+				m_size, currentCell->GetNeededSize()).x;
+
+			size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
+			if (toReturn.at(index) < cellWitdh) {
+				toReturn.at(index) = cellWitdh;
+			}
+		}
+	}
+
+	return toReturn;
+}
+
 Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 	size_t rows, size_t columns, Vector2 resolution)
 	: UIElement(pos, size, alignment), Focusable(ID),
@@ -46,7 +68,8 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 				GetElementPosition(row, column),
 				GetElementSize(),
 				Alignment::DEFAULT,
-				static_cast<unsigned int>(GetIndex(row, column)),
+				static_cast<unsigned int>(
+					GetIndexFromRowAndColumn(row, column,m_columns)),
 				resolution,
 				this
 				));
@@ -152,7 +175,8 @@ void Table::SetColumnEditable(size_t column, bool editable) {
 }
 void Table::SetSingleCellEditable(size_t row, size_t column, bool editable) {
 	CheckValidRowColumn(row, column);
-	m_cells.at(GetIndex(row, column))->SetEditable(editable);
+	m_cells.at(GetIndexFromRowAndColumn(row, column, m_columns))
+		->SetEditable(editable);
 }
 bool Table::IsEnabled() const {
 	return true;
@@ -170,7 +194,6 @@ void Table::SetEmptyCell(size_t row, size_t column, bool resizeCells) {
 	SetCell<EmptyCell>(row, column);
 
 	if (resizeCells) {
-		std::cout << "SET EMPTY CELL RESIZE\n";
 		ResizeCells();
 	}
 }
@@ -187,11 +210,19 @@ void Table::SetHeadlines(std::vector<std::string> const& headlines,
 	}
 
 	if (resizeCells) {
-		std::cout << "SET HEADLINES RESIZE\n";
 		ResizeCells();
 	}
 }
 
 void Table::ResizeCells() {
-	std::cout << "RESIZE CELLS NOW!\n";
+	std::vector<float> const& newColumnWidth = GetColumnWidths();
+
+	// TODO:
+	// 
+	// check if columns add up tp 1.0f
+	//		-> encrease all columns or
+	//		-> decrease all columns
+	// Set new Cell width
+	// Set new Cell position.x
+	// Resize cells -> do in Cells in all set methods
 }

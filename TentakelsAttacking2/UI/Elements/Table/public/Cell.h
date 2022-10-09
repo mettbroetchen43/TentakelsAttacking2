@@ -32,6 +32,13 @@ public:
 
 	[[nodiscard]] Table* GetTable() const;
 
+	void SetPosX(float posX);
+	void SetPosY(float posY);
+
+	[[nodiscard]] virtual Vector2 const& GetNeededSize() const = 0;
+	void SetSizeX(float sizeX);
+	void SetSizeY(float sizey);
+	
 	void SetEditable(bool editable);
 	[[nodiscard]] bool IsEnabled() const override;
 	[[nodiscard]] Rectangle GetCollider() const override;

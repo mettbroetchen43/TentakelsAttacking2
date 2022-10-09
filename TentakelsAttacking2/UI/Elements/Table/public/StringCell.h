@@ -14,6 +14,8 @@ public:
 
 	using Cell::Cell;
 
+	[[nodiscard]] Vector2 const& GetNeededSize() const override;
+
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution, AppContext const& appContext) override;

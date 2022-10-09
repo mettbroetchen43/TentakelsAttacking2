@@ -12,6 +12,8 @@ public:
 
 	using Cell::Cell;
 
+	[[nodiscard]] Vector2 const& GetNeededSize() const override;
+
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext) override;
 };
