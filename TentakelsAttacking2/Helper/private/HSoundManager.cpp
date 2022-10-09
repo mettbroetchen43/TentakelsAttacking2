@@ -21,13 +21,26 @@ void SoundManager::LoadSounds() {
 	}
 }
 
-void SoundManager::OnEvent(Event const& event) {
-	if (auto const soundEvent = dynamic_cast<PlaySoundEvent const*>(&event)) {
-		PlaySound(soundEvent->GetSoundType());
-	}
-	if (auto const soundEvent = dynamic_cast<PlayTextSoundEvent const*>(&event)) {
+void SoundManager::PlaySound(SoundType soundType) const {
+	if (soundType == SoundType::TEXT) {
 		PlayTextSound();
+		return;
 	}
+
+	::PlaySoundMulti(m_sounds.at(soundType));
+}
+void SoundManager::PlayTextSound() const {
+	Random& random = Random::GetInstance();
+
+	static unsigned long long lastIndex = 0;
+
+	unsigned long long nextIndex;
+	do {
+		nextIndex = random.random(m_textSounds.size());
+	} while (lastIndex == nextIndex);
+
+	::PlaySoundMulti(m_textSounds.at(nextIndex));
+	lastIndex = nextIndex;
 }
 
 SoundManager::SoundManager() {
@@ -35,24 +48,14 @@ SoundManager::SoundManager() {
 	LoadSounds();
 }
 SoundManager::~SoundManager() {
-	for (auto& [_,sound] : m_sounds) {
+	for (auto& [_, sound] : m_sounds) {
 		UnloadSound(sound);
 	}
 	CloseAudioDevice();
 }
 
-void SoundManager::PlaySound(SoundType soundType) const {
-	::PlaySound(m_sounds.at(soundType));
-}
-void SoundManager::PlayTextSound() const {
-	static unsigned long long lastIndex = 0;
-	Random& random = Random::GetInstance();
-
-	unsigned long long nextIndex;
-	do {
-		nextIndex = random.random(m_textSounds.size());
-	} while (lastIndex == nextIndex);
-
-	::PlaySound(m_textSounds.at(nextIndex));
-	lastIndex = nextIndex;
+void SoundManager::OnEvent(Event const& event) {
+	if (auto const soundEvent = dynamic_cast<PlaySoundEvent const*>(&event)) {
+		PlaySound(soundEvent->GetSoundType());
+	}
 }

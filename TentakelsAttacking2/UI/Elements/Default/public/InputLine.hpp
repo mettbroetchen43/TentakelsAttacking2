@@ -30,6 +30,9 @@ protected:
 
 		if (validAdd) {
 			m_value += static_cast<char>(key);
+
+			auto event = PlaySoundEvent(SoundType::TEXT);
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
 		}
 
 		return validAdd;
@@ -37,6 +40,9 @@ protected:
 	void RemoveChar() {
 		if (m_value.size() != 0) {
 			m_value.pop_back();
+
+			auto event = PlaySoundEvent(SoundType::TEXT);
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
 		}
 	}
 	[[nodiscard]] bool IsAnyKeyPressed() {

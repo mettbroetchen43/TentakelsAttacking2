@@ -153,13 +153,13 @@ void NewGameScene::CheckAndUpdate(Vector2 const& mousePosition,
 		e->CheckAndUpdate(mousePosition, appContext);
 	}
 }
-
 void NewGameScene::Render(AppContext const& appContext) {
 	for (auto& e : m_elements) {
 		e->Render(appContext);
 	}
 }
-void NewGameScene::Resize(Vector2 resolution, AppContext const& appContext) {
+void NewGameScene::Resize(Vector2 resolution,
+	AppContext const& appContext) {
 	for (auto& e : m_elements) {
 		e->Resize(resolution, appContext);
 	}
