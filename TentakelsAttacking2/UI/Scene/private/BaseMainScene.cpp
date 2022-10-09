@@ -9,7 +9,7 @@
 #include "ClassicButton.h"
 
 void BaseMainScene::InitializeSzene(UIManager const& uiManager) {
-	AppContext& appContext = AppContext::GetInstance();
+	[[maybe_unused]] AppContext& appContext = AppContext::GetInstance();
 
     auto btnLeft = std::make_shared<ClassicButton>(
         1,
