@@ -213,7 +213,7 @@
     <ClInclude Include="UI\Elements\Default\public\Line.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\TextProcecingConstant.hpp">
+    <ClInclude Include="Helper\public\HTextProcecingConstant.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Scene\public\PopUpManager.h">

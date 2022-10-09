@@ -8,7 +8,7 @@
 #include "Focusable.h"
 #include "AppContext.h"
 #include "TextProcessing.h"
-#include "TextProcecingConstant.hpp"
+#include "HTextProcecingConstant.hpp"
 #include <raylib.h>
 #include <string>
 #include <functional>
