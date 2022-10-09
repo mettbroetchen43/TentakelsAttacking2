@@ -78,7 +78,7 @@
     <ClInclude Include="UI\Elements\Default\public\Slider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\AssetManager.h">
+    <ClInclude Include="Helper\public\HAssetManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Helper\public\HAssetType.hpp">
@@ -260,7 +260,7 @@
     <ClCompile Include="UI\Elements\Default\private\Slider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Helper\private\AssetManager.cpp">
+    <ClCompile Include="Helper\private\HAssetManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Button\private\SliderButton.cpp">

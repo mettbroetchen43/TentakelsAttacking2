@@ -185,7 +185,7 @@
     <ClInclude Include="UI\Scene\Scenes\public\Intro.h" />
     <ClInclude Include="UI\Scene\public\SceneManager.h" />
     <ClInclude Include="UI\Elements\Button\public\ClassicButton.h" />
-    <ClInclude Include="Helper\public\AssetManager.h" />
+    <ClInclude Include="Helper\public\HAssetManager.h" />
     <ClInclude Include="Helper\public\HAssetType.hpp" />
     <ClInclude Include="UI\Elements\Button\public\Button.h" />
     <ClInclude Include="UI\public\Focus.h" />
@@ -243,7 +243,7 @@
     <ClCompile Include="UI\Scene\Scenes\private\Intro.cpp" />
     <ClCompile Include="UI\Scene\private\SceneManager.cpp" />
     <ClCompile Include="UI\Elements\Button\private\ClassicButton.cpp" />
-    <ClCompile Include="Helper\private\AssetManager.cpp" />
+    <ClCompile Include="Helper\private\HAssetManager.cpp" />
     <ClCompile Include="UI\Elements\Button\private\Button.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Slider.cpp" />
     <ClCompile Include="UI\private\UIManager.cpp" />
