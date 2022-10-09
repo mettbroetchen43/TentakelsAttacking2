@@ -5,7 +5,7 @@
 
 #pragma once
 #include "MainEvent.hpp"
-#include "SoundType.hpp"
+#include "HSoundType.hpp"
 #include <string>
 
 class StringCell;
