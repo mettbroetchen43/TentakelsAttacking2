@@ -21,7 +21,7 @@ void ColorPicker::Initialise(Vector2 resolution) {
 			float sizeY = (0.7f / m_countY);
 
 			m_cells.at(index) = std::make_unique<ColorPickerCell>(
-				index + 1,
+				static_cast<unsigned int>(index + 1),
 				GetElementPosition(m_pos, m_size, posX, posY),
 				GetElementSize(m_size, sizeX, sizeY),
 				Alignment::MID_MID,
