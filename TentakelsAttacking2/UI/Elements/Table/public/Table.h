@@ -7,6 +7,7 @@
 #include "UIElement.hpp"
 #include "Focusable.h"
 #include "AllCells.hpp"
+#include "HGeneral.h"
 #include <memory>
 #include <vector>
 
@@ -19,21 +20,27 @@ private:
 	Vector2 m_resolution;
 	bool m_cellFocus = false;
 
-	[[nodiscard]] size_t GetIndex(size_t row, size_t column) const;
 	[[nodiscard]] Vector2 GetElementPosition(size_t row, size_t column) const;
 	[[nodiscard]] Vector2 GetElementSize() const;
 	[[nodiscard]] void CheckValidRowColumn(size_t row, size_t column) const;
 
+	[[nodiscard]] std::vector<float> GetColumnWidths();
+	void DistributeDeviationToColumns(
+		std::vector<float>& neededWidths);
+	[[nodiscard]] std::vector<float> GetNewColumnPosition(
+		std::vector<float> const& newColumnWidths) const;
+
 	template<typename CellType>
 	void SetCell(size_t row, size_t column) {
-		const size_t index = GetIndex(row, column);
+		const size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
 		const bool isEditable = m_cells.at(index)->IsEnabled();
 		m_cells.at(index) = std::make_unique<CellType>(
 			GetElementPosition(row, column),
 			GetElementSize(),
 			Alignment::DEFAULT,
 			static_cast<unsigned int>(index),
-			m_resolution
+			m_resolution,
+			this
 			);
 		m_cells.at(index)->SetEditable(isEditable);
 	}
@@ -55,11 +62,12 @@ public:
 
 	[[nodiscard]] Vector2 GetResolution() const;
 
-	void SetEmptyCell(size_t row, size_t column);
+	void SetEmptyCell(size_t row, size_t column, bool resizeCells = true);
 	template<typename CellType, typename ValueType>
-	void SetValue(size_t row, size_t column, ValueType value) {
+	void SetValue(size_t row, size_t column, ValueType value,
+		bool resizeCells = true) {
 		CheckValidRowColumn(row, column);
-		size_t index = GetIndex(row, column);
+		size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
 		auto cell = dynamic_cast<CellType*>(m_cells.at(index).get());
 		if (!cell) {
 			SetCell<CellType>(row, column);
@@ -67,6 +75,12 @@ public:
 		}
 
 		cell->value = value;
+
+		if (resizeCells) {
+			ResizeCells();
+		}
 	}
-	void SetHeadlines(std::vector<std::string> const& headlines);
+	void SetHeadlines(std::vector<std::string> const& headlines,
+		bool resizeCells = true);
+	void ResizeCells();
 };

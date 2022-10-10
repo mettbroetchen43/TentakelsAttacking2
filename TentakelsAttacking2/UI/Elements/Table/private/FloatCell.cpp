@@ -7,6 +7,17 @@
 #include "AppContext.h"
 #include "HTextProcessing.h"
 
+Vector2 FloatCell::GetNeededSize() const {
+	Vector2 textSize = MeasureTextEx(
+		*(AppContext::GetInstance().assetManager.GetFont()),
+		std::to_string(value).c_str(),
+		m_textSize,
+		0.0f
+	);
+
+	return CalculateNeededSize(textSize);
+}
+
 void FloatCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Cell::CheckAndUpdate(mousePosition, appContext);
 	if (ShouldEdit(mousePosition)) {

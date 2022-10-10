@@ -7,6 +7,17 @@
 #include "AppContext.h"
 #include "HTextProcessing.h"
 
+Vector2 StringCell::GetNeededSize() const {
+    Vector2 textSize = MeasureTextEx(
+        *(AppContext::GetInstance().assetManager.GetFont()),
+        value.c_str(),
+        m_textSize,
+        0.0f
+    );
+
+    return CalculateNeededSize(textSize);
+}
+
 void StringCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
     Cell::CheckAndUpdate(mousePosition, appContext);
 

@@ -7,11 +7,10 @@
 #include "Allignment.h"
 #include "AppContext.h"
 #include "StringCellPopUp.h"
+#include "HGeneral.h"
 #include <stdexcept>
+#include <cassert>
 
-size_t Table::GetIndex(size_t row, size_t column) const {
-	return row * m_columns + column;
-}
 Vector2 Table::GetElementPosition(size_t row, size_t column) const {
 	Vector2 elementSize = GetElementSize();
 	return Vector2 { 
@@ -34,6 +33,61 @@ Vector2 Table::GetElementSize() const {
 	}
 }
 
+std::vector<float> Table::GetColumnWidths() {
+	std::vector<float> toReturn;
+
+	for (int i = 0; i < m_columns; ++i) {
+		toReturn.push_back(0.0f);
+	}
+
+	for (int row = 0; row < m_rows; ++row) {
+		for (int column = 0; column < m_columns; ++column) {
+			Cell* currentCell = m_cells.at(
+				GetIndexFromRowAndColumn(row, column, m_columns)).get();
+
+			float cellWitdh = GetElementSizeReversed(
+				m_size, currentCell->GetNeededSize()).x;
+
+			
+			if (toReturn.at(column) < cellWitdh) {
+				toReturn.at(column) = cellWitdh;
+			}
+		}
+	}
+
+	return toReturn;
+}
+void Table::DistributeDeviationToColumns(
+	std::vector<float>& neededWidths) {
+
+	float deviation = 0.0f;
+	for (float f : neededWidths) {
+		deviation += f;
+	}
+
+	deviation = 1.0f - deviation;
+	deviation /= neededWidths.size();
+
+	for (size_t i = 0; i < neededWidths.size(); ++i) {
+		neededWidths.at(i) += deviation;
+	}
+}
+std::vector<float> Table::GetNewColumnPosition(
+	std::vector<float> const& columnWidths) const {
+
+	std::vector<float> positions;
+
+	for (size_t column = 0; column < columnWidths.size(); ++column) {
+		float position = 0.0f;
+		for (size_t i = 0; i < column; ++i) {
+			position += columnWidths.at(i);
+		}
+		positions.push_back(position);
+	}
+
+	return positions;
+}
+
 Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 	size_t rows, size_t columns, Vector2 resolution)
 	: UIElement(pos, size, alignment), Focusable(ID),
@@ -46,8 +100,10 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 				GetElementPosition(row, column),
 				GetElementSize(),
 				Alignment::DEFAULT,
-				static_cast<unsigned int>(GetIndex(row, column)),
-				resolution
+				static_cast<unsigned int>(
+					GetIndexFromRowAndColumn(row, column,m_columns)),
+				resolution,
+				this
 				));
 		}
 	}
@@ -151,7 +207,8 @@ void Table::SetColumnEditable(size_t column, bool editable) {
 }
 void Table::SetSingleCellEditable(size_t row, size_t column, bool editable) {
 	CheckValidRowColumn(row, column);
-	m_cells.at(GetIndex(row, column))->SetEditable(editable);
+	m_cells.at(GetIndexFromRowAndColumn(row, column, m_columns))
+		->SetEditable(editable);
 }
 bool Table::IsEnabled() const {
 	return true;
@@ -164,11 +221,16 @@ Vector2 Table::GetResolution() const {
 	return m_resolution;
 }
 
-void Table::SetEmptyCell(size_t row, size_t column) {
+void Table::SetEmptyCell(size_t row, size_t column, bool resizeCells) {
 	CheckValidRowColumn(row, column);
 	SetCell<EmptyCell>(row, column);
+
+	if (resizeCells) {
+		ResizeCells();
+	}
 }
-void Table::SetHeadlines(std::vector<std::string> const& headlines) {
+void Table::SetHeadlines(std::vector<std::string> const& headlines,
+	bool resizeCells) {
 	if (headlines.size() != m_columns) {
 		throw std::out_of_range(
 			"headlines count does not match the column count"
@@ -176,6 +238,48 @@ void Table::SetHeadlines(std::vector<std::string> const& headlines) {
 	}
 
 	for (int i = 0; i < m_columns; ++i) {
-		SetValue<StringCell, std::string>(0, i, headlines.at(i));
+		SetValue<StringCell, std::string>(0, i, headlines.at(i), false);
+	}
+
+	if (resizeCells) {
+		ResizeCells();
+	}
+}
+
+void Table::ResizeCells() {
+	std::vector<float> columnWidths = GetColumnWidths();
+	DistributeDeviationToColumns(columnWidths);
+	std::vector<float> positions = GetNewColumnPosition(columnWidths);
+
+	assert(columnWidths.size() == positions.size());
+
+	for (size_t i = 0; i < columnWidths.size(); ++i) {
+		columnWidths.at(i) = ::GetElementSize(
+			m_size, columnWidths.at(i), 0.0f
+		).x;
+
+		positions.at(i) = ::GetElementPosition(
+			m_pos, m_size, positions.at(i), 0.0f
+		).x;
+	}
+
+	AppContext& appContext = AppContext::GetInstance();
+
+	for (size_t row = 0; row < m_rows; ++row) {
+		for (size_t column = 0; column < m_columns; ++column) {
+			Cell* currentCell = m_cells.at(
+				GetIndexFromRowAndColumn(row, column, m_columns)).get();
+			currentCell->SetSizeX(
+				columnWidths.at(column),
+				m_resolution,
+				appContext,
+				false
+			);
+			currentCell->SetPosX(
+				positions.at(column),
+				m_resolution,
+				appContext
+			);
+		}
 	}
 }

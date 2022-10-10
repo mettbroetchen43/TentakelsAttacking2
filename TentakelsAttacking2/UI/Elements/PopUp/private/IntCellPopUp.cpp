@@ -6,6 +6,7 @@
 #include "IntCellPopUp.h"
 #include "IntCell.h"
 #include "HGeneral.h"
+#include "Table.h"
 
 void IntCellPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution) {
@@ -38,6 +39,7 @@ void IntCellPopUp::Initialize(AppContext const& appContext,
 
 void IntCellPopUp::SetValue() {
 	m_currentCell->value = m_inputChange->GetValue();
+	m_currentCell->GetTable()->ResizeCells();
 	SetShouldClose();
 }
 

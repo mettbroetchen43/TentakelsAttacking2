@@ -5,6 +5,7 @@
 
 #include "HGeneral.h"
 
+// Colors
 bool operator==(Color lhs, Color rhs) {
 	bool sameColor =
 		lhs.a == rhs.a
@@ -14,11 +15,11 @@ bool operator==(Color lhs, Color rhs) {
 
 	return sameColor;
 }
-
 bool operator!=(Color lhs, Color rhs) {
 	return not (lhs == rhs);
 }
 
+// Position
 Vector2 GetElementPosition(Vector2 const& pos, Vector2 const& size,
 	float x, float y) {
 	return {
@@ -26,14 +27,27 @@ Vector2 GetElementPosition(Vector2 const& pos, Vector2 const& size,
 		pos.y + y * size.y
 	};
 }
-
+Vector2 GetElementPositionRversed(Vector2 const& posP, Vector2 const& sizeP,
+	Vector2 const& posC) {
+	return {
+		(posC.x - posP.x) / sizeP.x,
+		(posC.y - posP.y) / sizeP.y
+	};
+}
 Vector2 GetElementSize(Vector2 const& size, float x, float y) {
 	return {
 		x * size.x,
 		y * size.y
 	};
 }
+Vector2 GetElementSizeReversed(Vector2 const& sizeP, Vector2 const& sizeC) {
+	return {
+		sizeC.x / sizeP.x,
+		sizeC.y / sizeP.y
+	};
+}
 
+// Index
 size_t GetIndexFromRowAndColumn(size_t row, size_t column,
 	size_t maxColumn) {
 	return row * maxColumn + column;

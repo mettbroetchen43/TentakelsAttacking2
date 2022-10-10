@@ -6,6 +6,7 @@
 #include "DoubleCellPopUp.h"
 #include "DoubleCell.h"
 #include "HGeneral.h"
+#include "Table.h"
 
 void DoubleCellPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution) {
@@ -37,6 +38,7 @@ void DoubleCellPopUp::Initialize(AppContext const& appContext,
 } 
 void DoubleCellPopUp::SetValue() {
 	m_currentCell->value = m_inputChange->GetValue();
+	m_currentCell->GetTable()->ResizeCells();
 	SetShouldClose();
 }
 void DoubleCellPopUp::CheckEnter() {

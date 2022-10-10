@@ -19,13 +19,18 @@ void TestScene::Initialize(Vector2 resolution,
 		);
 	for (int row = 0; row < 10; ++row) {
 		for (int column = 0; column < 5; ++column) {
-			table->SetValue<IntCell, int>(row, column, row * 5 + column);
+			table->SetValue<IntCell, int>(row, column, row * 5 + column, false);
 		}
 	}
-	table->SetValue<StringCell, std::string>(4, 2, "Aboniert GyrosGeier");
-	table->SetValue<FloatCell, float>(1, 1, 7.5f);
-	table->SetValue<DoubleCell, double>(2, 2, 13.542);
-	table->SetValue<ColorCell, Color>(3, 4, PURPLE);
+	table->SetValue<StringCell, std::string>(4, 0, "Abonniert coder2k", false);
+	table->SetValue<StringCell, std::string>(4, 1, "Abonniert anyway", false);
+	table->SetValue<StringCell, std::string>(4, 2, "Abonniert GyrosGeier", false);
+	table->SetValue<StringCell, std::string>(4, 3, "Abonniert Necro", false);
+	table->SetValue<StringCell, std::string>(4, 4, "Abonniert HAKUINU", false);
+	table->SetValue<FloatCell, float>(1, 1, 7.5f, false);
+	table->SetValue<DoubleCell, double>(2, 2, 13.542, false);
+	table->SetValue<ColorCell, Color>(3, 4, PURPLE, false);
+	table->ResizeCells();
 	m_elements.push_back(table);
 }
 

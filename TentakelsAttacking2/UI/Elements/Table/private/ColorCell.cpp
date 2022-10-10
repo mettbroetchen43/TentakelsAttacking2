@@ -6,6 +6,12 @@
 #include "ColorCell.h"
 #include "AppContext.h"
 
+Vector2 ColorCell::GetNeededSize() const {
+	Vector2 neededSize =  { 0.05f, 0.1f };
+	ClampNeededSize(neededSize);
+	return neededSize;
+}
+
 void ColorCell::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 	Cell::CheckAndUpdate(mousePosition, appContext);
