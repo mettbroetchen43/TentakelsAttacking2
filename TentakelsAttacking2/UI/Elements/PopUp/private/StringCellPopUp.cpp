@@ -44,22 +44,6 @@ void StringCellPopUp::SetValue() {
 	SetShouldClose();
 }
 
-void StringCellPopUp::CheckEnter() {
-	bool validEnterClose =
-		IsKeyReleased(KEY_ENTER)
-		&& !m_shouldClose
-		&& !m_firstEnter;
-	if (validEnterClose) {
-		auto event = PlaySoundEvent(SoundType::ACCEPTED);
-		AppContext::GetInstance().eventManager.InvokeEvent(event);
-		SetValue();
-	}
-
-	if (m_firstEnter and IsKeyUp(KEY_ENTER)) {
-		m_firstEnter = false;
-	}
-}
-
 StringCellPopUp::StringCellPopUp(Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution, std::string const& title,
 	AssetType infoTexture, StringCell* currentCell)

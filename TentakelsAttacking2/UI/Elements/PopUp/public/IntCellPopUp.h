@@ -16,7 +16,6 @@ private:
 
 	void Initialize(AppContext const& appContext, Vector2 resolution) override;
 	void SetValue() override;
-	void CheckEnter() override;
 
 public:
 	IntCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
