@@ -16,11 +16,11 @@ void CellPopUp::Initialize([[maybe_unused]] AppContext const& appContext,
 	Vector2 resolution) {
 	auto cancelBtn = std::make_shared<ClassicButton>(
 		2,
-		GetElementPosition(m_pos, m_size, 0.9f, 0.95f),
+		GetElementPosition(m_pos, m_size, 0.1f, 0.95f),
 		GetElementSize(m_size, 0.3f, 0.2f),
-		Alignment::BOTTOM_RIGHT,
+		Alignment::BOTTOM_LEFT,
 		resolution,
-		"Accept",
+		"Cancel",
 		SoundType::CLICKED_RELEASE_STD
 		);
 
@@ -38,11 +38,11 @@ std::shared_ptr<ClassicButton> CellPopUp::InitializeAcceptButton(
 
 	auto acceptBtn = std::make_shared<ClassicButton>(
 		1,
-		GetElementPosition(m_pos, m_size, 0.1f, 0.95f),
+		GetElementPosition(m_pos, m_size, 0.9f, 0.95f),
 		GetElementSize(m_size, 0.3f, 0.2f),
-		Alignment::BOTTOM_LEFT,
+		Alignment::BOTTOM_RIGHT,
 		resolution,
-		"Cancel",
+		"Accept",
 		SoundType::ACCEPTED
 		);
 
