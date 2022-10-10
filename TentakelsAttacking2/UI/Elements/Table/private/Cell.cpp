@@ -32,6 +32,19 @@ bool Cell::ShouldEdit(Vector2 const& mousePosition) const {
 
 	return edit;
 }
+Vector2 Cell::CalculateNeededSize(Vector2& textSize) const {
+	textSize.x += 2 * m_textMargin;
+	textSize.y += m_textSize;
+
+	Vector2 neededSize = {
+		(textSize.x / m_colider.width) * m_size.x,
+		(textSize.y / m_colider.height) * m_size.y
+	};
+
+	ClampNeededSize(neededSize);
+
+	return neededSize;
+}
 void Cell::ClampNeededSize(Vector2& neededSize) const {
 	neededSize.x = neededSize.x < m_minSize.x ? m_minSize.x : neededSize.x;
 	neededSize.x = neededSize.x > m_maxSize.x ? m_maxSize.x : neededSize.x;
@@ -62,8 +75,9 @@ Cell::Cell(Vector2 pos, Vector2 size, Alignment alignment,
 
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	m_textSize = m_colider.height / 2;
+	m_textMargin = m_colider.width / 20;
 	m_textPosition = {
-		m_colider.x + m_colider.width / 20,
+		m_colider.x + m_textMargin,
 		m_colider.y + m_colider.height / 4
 	};
 }

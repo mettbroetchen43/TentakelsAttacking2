@@ -15,15 +15,17 @@ protected:
 	Table* m_table;
 	bool m_editable = true;
 	Rectangle m_colider;
+
 	Vector2 m_textPosition;
 	float m_textSize;
+	float m_textMargin;
 
 	Vector2 m_minSize;
 	Vector2 m_maxSize;
 
 	[[nodiscard]] bool ShouldEdit(Vector2 const& mousePosition) const;
+	[[nodiscard]] Vector2 CalculateNeededSize(Vector2& textSize) const;
 	void ClampNeededSize(Vector2& neededSize) const;
-
 	void CheckResizeCells(Vector2 resolution,
 		AppContext const& appContext, bool resize);
 
@@ -44,7 +46,7 @@ public:
 	void SetPosY(float posY, Vector2 resolution,
 		AppContext const& appContext, bool resize = true);
 
-	[[nodiscard]] virtual Vector2 const& GetNeededSize() const = 0;
+	[[nodiscard]] virtual Vector2 GetNeededSize() const = 0;
 	void SetSizeX(float sizeX, Vector2 resolution,
 		AppContext const& appContext, bool resize = true);
 	void SetSizeY(float sizeY, Vector2 resolution,

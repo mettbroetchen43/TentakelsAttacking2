@@ -6,8 +6,8 @@
 #include "ColorCell.h"
 #include "AppContext.h"
 
-Vector2 const& ColorCell::GetNeededSize() const {
-	Vector2 neededSize =  { 0.05f,0.1f };
+Vector2 ColorCell::GetNeededSize() const {
+	Vector2 neededSize =  { 0.05f, 0.1f };
 	ClampNeededSize(neededSize);
 	return neededSize;
 }
