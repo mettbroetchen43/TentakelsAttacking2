@@ -97,5 +97,7 @@ void CellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 
 	PopUp::CheckAndUpdate(mousePosition, appContext);
 
+	CheckEnter();
+
 	Close(appContext);
 }

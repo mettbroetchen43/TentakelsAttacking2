@@ -53,7 +53,5 @@ ColorCellPopUp::ColorCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, V
 void ColorCellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 
-		CheckEnter();
-
 	CellPopUp::CheckAndUpdate(mousePosition, appContext);
 }

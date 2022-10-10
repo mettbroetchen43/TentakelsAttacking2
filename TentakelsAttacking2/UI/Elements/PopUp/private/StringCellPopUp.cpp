@@ -56,7 +56,5 @@ StringCellPopUp::StringCellPopUp(Vector2 pos, Vector2 size, Alignment alignment,
 void StringCellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 
-	CheckEnter();
-
 	CellPopUp::CheckAndUpdate(mousePosition, appContext);
 }
