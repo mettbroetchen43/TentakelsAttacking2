@@ -33,9 +33,27 @@ bool Cell::ShouldEdit(Vector2 const& mousePosition) const {
 	return edit;
 }
 
+void Cell::ClampNeededSize(Vector2& neededSize) const {
+	neededSize.x = neededSize.x < m_minSize.x ? m_minSize.x : neededSize.x;
+	neededSize.x = neededSize.x > m_maxSize.x ? m_maxSize.x : neededSize.x;
+
+	neededSize.y = neededSize.y < m_minSize.y ? m_minSize.y : neededSize.y;
+	neededSize.y = neededSize.y > m_maxSize.y ? m_maxSize.y : neededSize.y;
+}
+
 Cell::Cell(Vector2 pos, Vector2 size, Alignment alignment,
 	unsigned int ID, Vector2 resolution, Table* table)
 	: UIElement(pos, size, alignment), Focusable(ID), m_table(table) {
+
+	m_minSize = {
+		m_size.x / 2,
+		m_size.y / 2
+	};
+	m_maxSize = {
+		m_size.x * 2,
+		m_size.y * 2
+	};
+
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	m_textSize = m_colider.height / 2;
 	m_textPosition = {

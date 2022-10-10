@@ -8,17 +8,20 @@
 #include "HTextProcessing.h"
 
 Vector2 const& IntCell::GetNeededSize() const {
-	Vector2 neededSize = MeasureTextEx(
+	Vector2 textSize = MeasureTextEx(
 		*(AppContext::GetInstance().assetManager.GetFont()),
 		std::to_string(value).c_str(),
 		m_textSize,
 		0.0f
 	);
 
-	return {
-		(m_colider.x / neededSize.x) * m_size.x,
-		(m_colider.y / neededSize.y) * m_size.y
+	Vector2 neededSize = {
+		(textSize.x / m_colider.width)* m_size.x,
+		(textSize.y / m_colider.height)* m_size.y
 	};
+
+	ClampNeededSize(neededSize);
+	return neededSize;
 }
 
 void IntCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {

@@ -18,7 +18,11 @@ protected:
 	Vector2 m_textPosition;
 	float m_textSize;
 
+	Vector2 m_minSize;
+	Vector2 m_maxSize;
+
 	[[nodiscard]] bool ShouldEdit(Vector2 const& mousePosition) const;
+	void ClampNeededSize(Vector2& neededSize) const;
 
 public:
 	Cell(Vector2 pos, Vector2 size, Alignment alignment,

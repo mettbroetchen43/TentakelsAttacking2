@@ -6,7 +6,9 @@
 #include "EmptyCell.h"
 
 Vector2 const& EmptyCell::GetNeededSize() const {
-	return { 0.05f,0.05f };
+	Vector2 neededSize = { 0.05f,0.05f };
+	ClampNeededSize(neededSize);
+	return neededSize;
 }
 
 void EmptyCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {

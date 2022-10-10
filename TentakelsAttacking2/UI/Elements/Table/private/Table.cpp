@@ -46,9 +46,9 @@ std::vector<float> Table::GetColumnWidths() const {
 			float cellWitdh = GetElementSizeReversed(
 				m_size, currentCell->GetNeededSize()).x;
 
-			size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
-			if (toReturn.at(index) < cellWitdh) {
-				toReturn.at(index) = cellWitdh;
+			
+			if (toReturn.at(column) < cellWitdh) {
+				toReturn.at(column) = cellWitdh;
 			}
 		}
 	}
