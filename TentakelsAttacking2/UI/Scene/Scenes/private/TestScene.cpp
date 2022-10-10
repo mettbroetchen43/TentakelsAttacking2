@@ -22,7 +22,11 @@ void TestScene::Initialize(Vector2 resolution,
 			table->SetValue<IntCell, int>(row, column, row * 5 + column, false);
 		}
 	}
-	table->SetValue<StringCell, std::string>(4, 2, "Aboniert GyrosGeier", false);
+	table->SetValue<StringCell, std::string>(4, 0, "Abonniert coder2k", false);
+	table->SetValue<StringCell, std::string>(4, 1, "Abonniert anyway", false);
+	table->SetValue<StringCell, std::string>(4, 2, "Abonniert GyrosGeier", false);
+	table->SetValue<StringCell, std::string>(4, 3, "Abonniert Necro", false);
+	table->SetValue<StringCell, std::string>(4, 4, "Abonniert HAKUINU", false);
 	table->SetValue<FloatCell, float>(1, 1, 7.5f, false);
 	table->SetValue<DoubleCell, double>(2, 2, 13.542, false);
 	table->SetValue<ColorCell, Color>(3, 4, PURPLE, false);

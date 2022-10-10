@@ -32,13 +32,19 @@ bool Cell::ShouldEdit(Vector2 const& mousePosition) const {
 
 	return edit;
 }
-
 void Cell::ClampNeededSize(Vector2& neededSize) const {
 	neededSize.x = neededSize.x < m_minSize.x ? m_minSize.x : neededSize.x;
 	neededSize.x = neededSize.x > m_maxSize.x ? m_maxSize.x : neededSize.x;
 
 	neededSize.y = neededSize.y < m_minSize.y ? m_minSize.y : neededSize.y;
 	neededSize.y = neededSize.y > m_maxSize.y ? m_maxSize.y : neededSize.y;
+}
+void Cell::CheckResizeCells(Vector2 resolution,
+	AppContext const& appContext, bool resize) {
+
+	if (resize) {
+		Resize(resolution, appContext);
+	}
 }
 
 Cell::Cell(Vector2 pos, Vector2 size, Alignment alignment,
@@ -83,7 +89,8 @@ void Cell::Render([[maybe_unused]] AppContext const& appContext) {
 		WHITE
 	);
 }
-void Cell::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) {
+void Cell::Resize(Vector2 resolution,
+	[[maybe_unused]] AppContext const& appContext) {
 	m_colider = {
 		resolution.x * m_pos.x,
 		resolution.y * m_pos.y,
@@ -99,6 +106,31 @@ void Cell::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appCont
 
 Table* Cell::GetTable() const {
 	return m_table;
+}
+
+void Cell::SetPosX(float posX, Vector2 resolution,
+	AppContext const& appContext, bool resize) {
+
+	m_pos.x = posX;
+	CheckResizeCells(resolution, appContext, resize);
+}
+void Cell::SetPosY(float posY, Vector2 resolution,
+	AppContext const& appContext, bool resize) {
+
+	m_pos.y = posY;
+	CheckResizeCells(resolution, appContext, resize);
+}
+void Cell::SetSizeX(float sizeX, Vector2 resolution,
+	AppContext const& appContext, bool resize) {
+
+	m_size.x = sizeX;
+	CheckResizeCells(resolution, appContext, resize);
+}
+void Cell::SetSizeY(float sizeY, Vector2 resolution,
+	AppContext const& appContext, bool resize) {
+
+	m_size.y = sizeY;
+	CheckResizeCells(resolution, appContext, resize);
 }
 
 void Cell::SetEditable(bool editable) {

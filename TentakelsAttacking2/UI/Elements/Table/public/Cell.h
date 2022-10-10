@@ -24,6 +24,9 @@ protected:
 	[[nodiscard]] bool ShouldEdit(Vector2 const& mousePosition) const;
 	void ClampNeededSize(Vector2& neededSize) const;
 
+	void CheckResizeCells(Vector2 resolution,
+		AppContext const& appContext, bool resize);
+
 public:
 	Cell(Vector2 pos, Vector2 size, Alignment alignment,
 		unsigned int ID, Vector2 resolution, Table* table);
@@ -36,12 +39,16 @@ public:
 
 	[[nodiscard]] Table* GetTable() const;
 
-	void SetPosX(float posX);
-	void SetPosY(float posY);
+	void SetPosX(float posX, Vector2 resolution,
+		AppContext const& appContext, bool resize = true);
+	void SetPosY(float posY, Vector2 resolution,
+		AppContext const& appContext, bool resize = true);
 
 	[[nodiscard]] virtual Vector2 const& GetNeededSize() const = 0;
-	void SetSizeX(float sizeX);
-	void SetSizeY(float sizey);
+	void SetSizeX(float sizeX, Vector2 resolution,
+		AppContext const& appContext, bool resize = true);
+	void SetSizeY(float sizeY, Vector2 resolution,
+		AppContext const& appContext, bool resize = true);
 	
 	void SetEditable(bool editable);
 	[[nodiscard]] bool IsEnabled() const override;

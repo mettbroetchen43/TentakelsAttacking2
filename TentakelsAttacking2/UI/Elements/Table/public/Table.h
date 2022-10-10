@@ -10,7 +10,6 @@
 #include "HGeneral.h"
 #include <memory>
 #include <vector>
-#include <iostream>
 
 class Table : public UIElement, public Focusable {
 private:
@@ -25,7 +24,11 @@ private:
 	[[nodiscard]] Vector2 GetElementSize() const;
 	[[nodiscard]] void CheckValidRowColumn(size_t row, size_t column) const;
 
-	[[nodiscard]] std::vector<float> GetColumnWidths() const;
+	[[nodiscard]] std::vector<float> GetColumnWidths();
+	void DistributeDeviationToColumns(
+		std::vector<float>& neededWidths);
+	[[nodiscard]] std::vector<float> GetNewColumnPosition(
+		std::vector<float> const& newColumnWidths) const;
 
 	template<typename CellType>
 	void SetCell(size_t row, size_t column) {

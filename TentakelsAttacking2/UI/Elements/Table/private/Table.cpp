@@ -7,7 +7,9 @@
 #include "Allignment.h"
 #include "AppContext.h"
 #include "StringCellPopUp.h"
+#include "HGeneral.h"
 #include <stdexcept>
+#include <cassert>
 
 Vector2 Table::GetElementPosition(size_t row, size_t column) const {
 	Vector2 elementSize = GetElementSize();
@@ -31,7 +33,7 @@ Vector2 Table::GetElementSize() const {
 	}
 }
 
-std::vector<float> Table::GetColumnWidths() const {
+std::vector<float> Table::GetColumnWidths() {
 	std::vector<float> toReturn;
 
 	for (int i = 0; i < m_columns; ++i) {
@@ -54,6 +56,36 @@ std::vector<float> Table::GetColumnWidths() const {
 	}
 
 	return toReturn;
+}
+void Table::DistributeDeviationToColumns(
+	std::vector<float>& neededWidths) {
+
+	float deviation = 0.0f;
+	for (float f : neededWidths) {
+		deviation += f;
+	}
+
+	deviation = 1.0f - deviation;
+	deviation /= neededWidths.size();
+
+	for (size_t i = 0; i < neededWidths.size(); ++i) {
+		neededWidths.at(i) += deviation;
+	}
+}
+std::vector<float> Table::GetNewColumnPosition(
+	std::vector<float> const& columnWidths) const {
+
+	std::vector<float> positions;
+
+	for (size_t column = 0; column < columnWidths.size(); ++column) {
+		float position = 0.0f;
+		for (size_t i = 0; i < column; ++i) {
+			position += columnWidths.at(i);
+		}
+		positions.push_back(position);
+	}
+
+	return positions;
 }
 
 Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
@@ -215,14 +247,39 @@ void Table::SetHeadlines(std::vector<std::string> const& headlines,
 }
 
 void Table::ResizeCells() {
-	std::vector<float> const& newColumnWidth = GetColumnWidths();
+	std::vector<float> columnWidths = GetColumnWidths();
+	DistributeDeviationToColumns(columnWidths);
+	std::vector<float> positions = GetNewColumnPosition(columnWidths);
 
-	// TODO:
-	// 
-	// check if columns add up tp 1.0f
-	//		-> encrease all columns or
-	//		-> decrease all columns
-	// Set new Cell width
-	// Set new Cell position.x
-	// Resize cells -> do in Cells in all set methods
+	assert(columnWidths.size() == positions.size());
+
+	for (size_t i = 0; i < columnWidths.size(); ++i) {
+		columnWidths.at(i) = ::GetElementSize(
+			m_size, columnWidths.at(i), 0.0f
+		).x;
+
+		positions.at(i) = ::GetElementPosition(
+			m_pos, m_size, positions.at(i), 0.0f
+		).x;
+	}
+
+	AppContext& appContext = AppContext::GetInstance();
+
+	for (size_t row = 0; row < m_rows; ++row) {
+		for (size_t column = 0; column < m_columns; ++column) {
+			Cell* currentCell = m_cells.at(
+				GetIndexFromRowAndColumn(row, column, m_columns)).get();
+			currentCell->SetSizeX(
+				columnWidths.at(column),
+				m_resolution,
+				appContext,
+				false
+			);
+			currentCell->SetPosX(
+				positions.at(column),
+				m_resolution,
+				appContext
+			);
+		}
+	}
 }
