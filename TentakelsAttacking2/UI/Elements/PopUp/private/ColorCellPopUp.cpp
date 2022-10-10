@@ -41,17 +41,6 @@ void ColorCellPopUp::SetValue() {
 	m_currentCell->GetTable()->ResizeCells();
 	SetShouldClose();
 }
-void ColorCellPopUp::CheckEnter() {
-	if (!m_firstEnter and IsKeyPressed(KEY_ENTER)) {
-		SetValue();
-		auto event = PlaySoundEvent(SoundType::ACCEPTED);
-		AppContext::GetInstance().eventManager.InvokeEvent(event);
-	}
-
-	if (m_firstEnter and IsKeyUp(KEY_ENTER)) {
-		m_firstEnter = false;
-	}
-}
 
 ColorCellPopUp::ColorCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, AssetType infoTexture, ColorCell* currentCell)
@@ -63,8 +52,6 @@ ColorCellPopUp::ColorCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, V
 
 void ColorCellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
-
-		CheckEnter();
 
 	CellPopUp::CheckAndUpdate(mousePosition, appContext);
 }

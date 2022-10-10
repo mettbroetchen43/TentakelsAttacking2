@@ -58,6 +58,22 @@ void CellPopUp::SetShouldClose() {
 	m_shouldClose = true;
 }
 
+void CellPopUp::CheckEnter() {
+	bool validEnterClose =
+		IsKeyReleased(KEY_ENTER)
+		&& !m_shouldClose
+		&& !m_firstEnter;
+	if (validEnterClose) {
+		auto event = PlaySoundEvent(SoundType::ACCEPTED);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		SetValue();
+	}
+
+	if (m_firstEnter and IsKeyUp(KEY_ENTER)) {
+		m_firstEnter = false;
+	}
+}
+
 void CellPopUp::Close(AppContext const& appContext) {
 	if (m_shouldClose) {
 		auto event = ClosePopUpEvent(this);
@@ -80,6 +96,8 @@ void CellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 
 	PopUp::CheckAndUpdate(mousePosition, appContext);
+
+	CheckEnter();
 
 	Close(appContext);
 }

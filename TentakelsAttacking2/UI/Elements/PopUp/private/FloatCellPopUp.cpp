@@ -41,21 +41,6 @@ void FloatCellPopUp::SetValue() {
 	m_currentCell->GetTable()->ResizeCells();
 	SetShouldClose();
 }
-void FloatCellPopUp::CheckEnter() {
-	bool validEnterClose =
-		IsKeyReleased(KEY_ENTER)
-		&& !m_shouldClose
-		&& !m_firstEnter;
-	if (validEnterClose) {
-		auto event = PlaySoundEvent(SoundType::ACCEPTED);
-		AppContext::GetInstance().eventManager.InvokeEvent(event);
-		SetValue();
-	}
-
-	if (m_firstEnter and IsKeyUp(KEY_ENTER)) {
-		m_firstEnter = false;
-	}
-}
 
 FloatCellPopUp::FloatCellPopUp(Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution, std::string const& title, AssetType infoTexture,
@@ -68,8 +53,6 @@ FloatCellPopUp::FloatCellPopUp(Vector2 pos, Vector2 size, Alignment alignment,
 
 void FloatCellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext){
-
-	CheckEnter();
 
 	CellPopUp::CheckAndUpdate(mousePosition, appContext);
 }

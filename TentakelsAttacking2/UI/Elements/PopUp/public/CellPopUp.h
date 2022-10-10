@@ -19,7 +19,7 @@ protected:
 	void SetShouldClose();
 	virtual void SetValue() = 0;
 
-	virtual void CheckEnter() = 0;
+	void CheckEnter();
 	void Close(AppContext const& appContext);
 public:
 	CellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
