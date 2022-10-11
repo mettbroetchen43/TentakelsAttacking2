@@ -39,7 +39,7 @@ void SoundManager::PlayTextSound() const {
 		nextIndex = random.random(m_textSounds.size());
 	} while (lastIndex == nextIndex);
 
-	::PlaySoundMulti(m_textSounds.at(nextIndex));
+	::PlaySound(m_textSounds.at(nextIndex));
 	lastIndex = nextIndex;
 }
 
