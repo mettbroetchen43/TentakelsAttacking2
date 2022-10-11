@@ -21,6 +21,12 @@ bool Focusable::IsFocused() const {
 void Focusable::SetFocus(bool focus) {
 	m_isFocus = focus;
 }
+bool Focusable::IsNestedFocus() const {
+	return m_isNestedFocus;
+}
+void Focusable::SetNestedFocus(bool nestedFocus) {
+	m_isNestedFocus = nestedFocus;
+}
 unsigned int Focusable::GetFocusID() const {
 	return m_focusID;
 }

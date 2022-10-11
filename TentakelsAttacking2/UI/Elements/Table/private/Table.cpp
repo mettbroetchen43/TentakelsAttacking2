@@ -113,18 +113,18 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 	bool updateCells = false;
 
-	if (m_cellFocus) {
+	if (m_isNestedFocus) {
 		updateCells = true;
 
 		if (IsKeyPressed(KEY_ESCAPE)) {
 			auto event = DeleteFocusLayerEvent();
 			appContext.eventManager.InvokeEvent(event);
-			m_cellFocus = false;
+			m_isNestedFocus = false;
 		}
 	}
 
 
-	if (!m_cellFocus) {
+	if (!m_isNestedFocus) {
 		if (!IsFocused()) {
 			if (CheckCollisionPointRec(mousePosition, m_colider)) {
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
@@ -154,7 +154,7 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition,
 					auto event2 = NewFocusElementEvent(c.get());
 					appContext.eventManager.InvokeEvent(event2);
 				}
-				m_cellFocus = true;
+				m_isNestedFocus = true;
 
 				if (mouseAction) {
 					updateCells = true;
