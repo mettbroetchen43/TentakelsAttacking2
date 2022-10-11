@@ -99,5 +99,11 @@ void CellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 
 	CheckEnter();
 
+	if (IsKeyPressed(KEY_ESCAPE)) {
+		auto event = PlaySoundEvent(SoundType::CLICKED_RELEASE_STD);
+		appContext.eventManager.InvokeEvent(event);
+		SetShouldClose();
+	}
+
 	Close(appContext);
 }
