@@ -24,11 +24,6 @@ public:
 		return m_color;
 	}
 };
-class AddPlayerEvent : public PlayerEvent {
-public:
-	using PlayerEvent::PlayerEvent;
-};
-
 class PlayerWithIDEvent : public PlayerEvent {
 private:
 	unsigned int m_ID;
@@ -41,15 +36,29 @@ public:
 		return m_ID;
 	}
 };
-class AddPlayerWithIDEvent : public PlayerWithIDEvent {
+
+class AddPlayerEvent : public PlayerEvent {
 public:
-	using PlayerWithIDEvent::PlayerWithIDEvent;
+	using PlayerEvent::PlayerEvent;
 };
 class EditPlayerEvent : public PlayerWithIDEvent {
 public:
 	using PlayerWithIDEvent::PlayerWithIDEvent;
 };
 class DeletePlayerEvent : public PlayerWithIDEvent {
+public:
+	using PlayerWithIDEvent::PlayerWithIDEvent;
+};
+
+class AddPlayerUIEvent : public PlayerWithIDEvent {
+public:
+	using PlayerWithIDEvent::PlayerWithIDEvent;
+};
+class EditPlayerUIEvent : public PlayerWithIDEvent {
+public:
+	using PlayerWithIDEvent::PlayerWithIDEvent;
+};
+class DeletePlayerUIEvent : public PlayerWithIDEvent {
 public:
 	using PlayerWithIDEvent::PlayerWithIDEvent;
 };

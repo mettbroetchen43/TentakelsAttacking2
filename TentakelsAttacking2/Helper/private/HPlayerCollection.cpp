@@ -95,7 +95,7 @@ std::unordered_map<unsigned int, std::string> PlayerCollection::GetNames() const
 
 void PlayerCollection::OnEvent(Event const& event) {
 
-	if (auto const* playerEvent = dynamic_cast<AddPlayerWithIDEvent const*>(&event)) {
+	if (auto const* playerEvent = dynamic_cast<AddPlayerUIEvent const*>(&event)) {
 		AddPlayer(
 			playerEvent->GetID(),
 			playerEvent->GetName(),
