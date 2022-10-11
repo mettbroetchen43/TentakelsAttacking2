@@ -11,7 +11,6 @@
 
 class ColorPicker : public UIElement, public Focusable {
 private:
-	bool m_focusedCells = false;
 	size_t m_countX = 4;
 	size_t m_countY = 4;
 	Texture* m_backGround;

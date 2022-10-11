@@ -53,6 +53,7 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		resolution
 		);
 	m_elements.push_back(colorPicker);
+	m_nestedFocus.push_back(colorPicker.get());
 
 	auto addPlayerBtn = std::make_shared<ClassicButton>(
 		3,
@@ -104,14 +105,15 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		3,
 		resolution
 		);
-	table->SetRowEditable(0,false);
-	table->SetColumnEditable(0,false);
-	table->SetHeadlines({ "ID", "Name", "Color" },false);
+	table->SetRowEditable(0, false);
+	table->SetColumnEditable(0, false);
+	table->SetHeadlines({ "ID", "Name", "Color" }, false);
 	for (int i = 0; i < appContext.MaxPlayerCount();++i) {
 		table->SetValue<IntCell, int>(i + 1, 0, i + 1, false);
 	}
 	table->ResizeCells();
 	m_elements.push_back(table);
+	m_nestedFocus.push_back(table.get());
 
 	auto exitBtn = std::make_shared<ClassicButton>(
 		6,
@@ -126,7 +128,7 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		AppContext::GetInstance().eventManager.InvokeEvent(
 			SwitchSceneEvent(SceneType::MAIN_MENU)
 		);
-	});
+		});
 	m_elements.push_back(exitBtn);
 
 	auto startGameBtn = std::make_shared<ClassicButton>(
@@ -141,6 +143,24 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 	m_elements.push_back(startGameBtn);
 }
 
+void NewGameScene::CheckForNestedFocus(Vector2 const& mousePosition,
+	AppContext const& appContext) const {
+	if (!IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		return;
+	}
+
+	for (auto f : m_nestedFocus) {
+		if (!f->IsFocused()) { continue; }
+		if (!f->IsNestedFocus()) { continue; }
+
+		if (!CheckCollisionPointRec(mousePosition, f->GetCollider())) {
+			f->SetNestedFocus(false);
+			auto event = DeleteFocusLayerEvent();
+			appContext.eventManager.InvokeEvent(event);
+		}
+	}
+}
+
 NewGameScene::NewGameScene(Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution)
 	: Scene(pos, size, alignment) {
@@ -150,6 +170,9 @@ NewGameScene::NewGameScene(Vector2 pos, Vector2 size, Alignment alignment,
 
 void NewGameScene::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
+
+	CheckForNestedFocus(mousePosition, appContext);
+
 	for (auto& e : m_elements) {
 		e->CheckAndUpdate(mousePosition, appContext);
 	}

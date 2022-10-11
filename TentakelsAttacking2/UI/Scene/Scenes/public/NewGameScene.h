@@ -8,8 +8,10 @@
 
 class NewGameScene : public Scene {
 private:
-
+	std::vector<Focusable*> m_nestedFocus;
 	void Initialize(Vector2 resolution, AppContext& appContext);
+	void CheckForNestedFocus(Vector2 const& mousePosition,
+		AppContext const& appContext) const;
 
 public:
 	NewGameScene(Vector2 pos, Vector2 size, Alignment alignment,

@@ -12,12 +12,17 @@ private:
 	unsigned int m_focusID;
 	bool m_isFocus = false;
 
+protected:
+	bool m_isNestedFocus = false;
+
 public:
 	Focusable(unsigned int ID);
 	~Focusable();
 	
 	[[nodiscard]] bool IsFocused() const;
 	void SetFocus(bool focus);
+	[[nodiscard]] bool IsNestedFocus() const;
+	void SetNestedFocus(bool nestedFocus);
 
 	[[nodiscard]] virtual bool IsEnabled() const = 0;
 

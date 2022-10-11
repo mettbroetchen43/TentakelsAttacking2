@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/Default/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/Default/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -109,7 +109,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/Default/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -125,7 +125,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/Default/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -177,8 +177,8 @@
     <ClInclude Include="UI\Elements\Table\public\StringCell.h" />
     <ClInclude Include="UI\Elements\Table\public\Table.h" />
     <ClInclude Include="UI\public\Allignment.h" />
-    <ClInclude Include="UI\public\ColorPicker.h" />
-    <ClInclude Include="UI\public\ColorPickerCell.h" />
+    <ClInclude Include="UI\Elements\ColorPicker\public\ColorPicker.h" />
+    <ClInclude Include="UI\Elements\ColorPicker\public\ColorPickerCell.h" />
     <ClInclude Include="Helper\public\HGeneral.h" />
     <ClInclude Include="UI\Scene\public\BaseMainScene.h" />
     <ClInclude Include="UI\Scene\public\PopUpManager.h" />
@@ -236,8 +236,8 @@
     <ClCompile Include="UI\Elements\Table\private\DoubleCell.cpp" />
     <ClCompile Include="UI\Elements\Table\private\ColorCell.cpp" />
     <ClCompile Include="UI\private\Allignment.cpp" />
-    <ClCompile Include="UI\private\ColorPicker.cpp" />
-    <ClCompile Include="UI\private\ColorPickerCell.cpp" />
+    <ClCompile Include="UI\Elements\ColorPicker\private\ColorPicker.cpp" />
+    <ClCompile Include="UI\Elements\ColorPicker\private\ColorPickerCell.cpp" />
     <ClCompile Include="UI\Scene\private\BaseMainScene.cpp" />
     <ClCompile Include="UI\Scene\private\PopUpManager.cpp" />
     <ClCompile Include="UI\Scene\Scenes\private\Intro.cpp" />
