@@ -294,32 +294,43 @@ inline bool InputLine<std::string>::IsValidKey(int key) {
 
 template<>
 [[nodiscard]] inline int InputLine<int>::GetValue() {
+	StripString(m_value);
+	if (m_value.size() == 0) {
+		return 0;
+	}
 	return std::stoi(m_value);
 }
 template<>
 [[nodiscard]] inline float InputLine<float>::GetValue() {
-	std::string toReturn = m_value;
-	for (char& c : toReturn) {
+	StripString(m_value);
+	if (m_value.size() == 0) {
+		return 0.0f;
+	}
+	for (char& c : m_value) {
 		if (c == ',') {
 			c = '.';
 			break;
 		}
 	}
-	return std::stof(toReturn);
+	return std::stof(m_value);
 }
 template<>
 [[nodiscard]] inline double InputLine<double>::GetValue() {
-	std::string toReturn = m_value;
-	for (char& c : toReturn) {
+	StripString(m_value);
+	if (m_value.size() == 0) {
+		return 0.0;
+	}
+	for (char& c : m_value) {
 		if (c == ',') {
 			c = '.';
 			break;
 		}
 	}
-	return std::stod(toReturn);
+	return std::stod(m_value);
 }
 template<>
 [[nodiscard]] inline std::string InputLine<std::string>::GetValue() {
+	StripString(m_value);
 	return m_value;
 }
 
