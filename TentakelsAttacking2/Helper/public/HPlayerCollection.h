@@ -37,7 +37,7 @@ private:
 
 	template<typename T>
 	[[nodiscard]] bool ContainsValue(
-		std::unordered_map<unsigned int, T> map, T value) {
+		std::unordered_map<unsigned int, T> map, T value) const {
 		for (auto [ID, element] : map) {
 			if (element == value) {
 				return true;
@@ -50,8 +50,6 @@ private:
 	void CheckRemainingColor(Color& color);
 	void CheckRemainingName(std::string& name);
 
-	[[nodiscard]] Color GetRemainingColor();
-
 public:
 
 	[[nodiscard]] size_t MaxPlayerCount() const;
@@ -62,6 +60,7 @@ public:
 	void RemovePlayer(unsigned int ID);
 
 	[[nodiscard]] std::array<Color, 16> GetAllColors() const;
+	[[nodiscard]] Color GetPossibleColor() const;
 	[[nodiscard]] std::unordered_map<unsigned int, Color> GetColors() const;
 	[[nodiscard]] std::unordered_map<unsigned int, std::string> GetNames() const;
 	

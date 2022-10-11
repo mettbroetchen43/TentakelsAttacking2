@@ -15,24 +15,6 @@ private:
 	size_t m_countY = 4;
 	Texture* m_backGround;
 	Rectangle m_colider;
-	std::array<Color, 16> m_colors = {
-		YELLOW,
-		GOLD,
-		PINK,
-		MAGENTA,
-		ORANGE,
-		RED,
-		MAROON,
-		GREEN,
-		LIME,
-		DARKGREEN,
-		SKYBLUE,
-		BLUE,
-		DARKBLUE,
-		PURPLE,
-		VIOLET,
-		DARKPURPLE,
-	};
 	std::array<std::unique_ptr<ColorPickerCell>, 16> m_cells;
 	ColorPickerCell* m_currentColorCell = nullptr;
 	ColorPickerCell* m_previousColorCell = nullptr;

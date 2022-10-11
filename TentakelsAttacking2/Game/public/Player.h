@@ -15,7 +15,7 @@ public:
 
 	[[nodiscard]] bool IsHumanPlayer() const;
 
-	[[nodiscrad]] unsigned int GetID() const;
+	[[nodiscard]] unsigned int GetID() const;
 
 	friend bool operator== (Player const& lhs, Player const& rhs);
 };

@@ -17,6 +17,7 @@ private:
 	Galaxy m_galaxy;
 
 	[[nodiscard]] bool ValidAddPlayer() const;
+	[[nodiscard]] bool GetNextID() const;
 
 public:
 	GameManager();

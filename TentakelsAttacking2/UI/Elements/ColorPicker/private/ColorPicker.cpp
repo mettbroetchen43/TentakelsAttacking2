@@ -20,13 +20,15 @@ void ColorPicker::Initialise(Vector2 resolution) {
 			float sizeX = (0.8f / m_countX);
 			float sizeY = (0.7f / m_countY);
 
+			AppContext& appContext = AppContext::GetInstance();
+
 			m_cells.at(index) = std::make_unique<ColorPickerCell>(
 				static_cast<unsigned int>(index + 1),
 				GetElementPosition(m_pos, m_size, posX, posY),
 				GetElementSize(m_size, sizeX, sizeY),
 				Alignment::MID_MID,
 				resolution,
-				m_colors.at(index),
+				appContext.playerCollection.GetColors(),
 				this
 			);
 		}

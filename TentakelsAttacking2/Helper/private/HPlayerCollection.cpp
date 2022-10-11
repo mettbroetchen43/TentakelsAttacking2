@@ -17,7 +17,7 @@ void PlayerCollection::CheckValidColor(Color& color) {
 			"The choosen color does not exist"
 		);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
-		color = GetRemainingColor();
+		color = GetPossibleColor();
 	}
 }
 void PlayerCollection::CheckRemainingColor(Color& color) {
@@ -27,7 +27,7 @@ void PlayerCollection::CheckRemainingColor(Color& color) {
 			"The choosen color already exists."
 		);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
-		color = GetRemainingColor();
+		color = GetPossibleColor();
 	}
 }
 void PlayerCollection::CheckRemainingName(std::string& name) {
@@ -41,7 +41,7 @@ void PlayerCollection::CheckRemainingName(std::string& name) {
 	}
 }
 
-Color PlayerCollection::GetRemainingColor() {
+Color PlayerCollection::GetPossibleColor() const {
 	for (auto c : m_colors) {
 		if (!ContainsValue<Color>(m_playerColors, c)) {
 			return c;

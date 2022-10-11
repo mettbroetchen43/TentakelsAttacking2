@@ -9,9 +9,11 @@
 #include "InputLine.hpp"
 #include "ColorPicker.h"
 #include "ClassicButton.h"
+#include "GenerelEvents.hpp"
 #include "Line.h"
 #include "Table.h"
 #include "UIManager.h"
+#include <cassert>
 
 void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 	auto title = std::make_shared<Title>(
@@ -44,6 +46,7 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		);
 	inputLine->SetPlaceholderText("Player Name");
 	m_elements.push_back(inputLine);
+	m_inputLine = inputLine.get();
 
 	auto colorPicker = std::make_shared<ColorPicker>(
 		2,
@@ -54,6 +57,7 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		);
 	m_elements.push_back(colorPicker);
 	m_nestedFocus.push_back(colorPicker.get());
+	m_colorPicker = colorPicker.get();
 
 	auto addPlayerBtn = std::make_shared<ClassicButton>(
 		3,
@@ -64,6 +68,9 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		"Add Player",
 		SoundType::ACCEPTED
 		);
+	addPlayerBtn->SetOnClick([&]() {
+		AddPlayer();
+		});
 	m_elements.push_back(addPlayerBtn);
 
 	auto removePlayerBtn = std::make_shared<ClassicButton>(
@@ -114,6 +121,7 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 	table->ResizeCells();
 	m_elements.push_back(table);
 	m_nestedFocus.push_back(table.get());
+	m_table = table.get();
 
 	auto exitBtn = std::make_shared<ClassicButton>(
 		6,
@@ -159,6 +167,39 @@ void NewGameScene::CheckForNestedFocus(Vector2 const& mousePosition,
 			appContext.eventManager.InvokeEvent(event);
 		}
 	}
+}
+
+void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
+	m_inputLine->Clear();
+	m_colorPicker->SetColor(appContext.playerCollection.GetPossibleColor());
+
+	auto playerNames = appContext.playerCollection.GetNames();
+	auto playerColors = appContext.playerCollection.GetColors();
+
+	assert(playerNames.size() == playerColors.size());
+
+	// ColorPicker set all Cells editable
+	
+	int index = 1;
+	for (auto& [ID, name] : playerNames) {
+		m_table->SetValue<IntCell, int>(index, 0, ID, false);
+		m_table->SetValue<StringCell, std::string>(index, 1, name, false);
+		m_table->SetValue<ColorCell, Color>(index, 2, playerColors.at(ID), false);
+	
+		++index;
+	}
+	m_table->ResizeCells();
+}
+
+void NewGameScene::AddPlayer() {
+	AppContext& appContext = AppContext::GetInstance();
+	auto event = AddPlayerEvent(
+		m_inputLine->GetValue(),
+		m_colorPicker->GetColor()
+	);
+	appContext.eventManager.InvokeEvent(event);
+
+	UpdateSceneEntries(appContext);
 }
 
 NewGameScene::NewGameScene(Vector2 pos, Vector2 size, Alignment alignment,
