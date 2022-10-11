@@ -5,17 +5,17 @@
 
 #include "Player.h"
 
-Player::Player(int id, std::string name, PlayerType playerType)
-	: m_id(id), m_name(name),m_playerType(playerType) {}
-
-std::string Player::GetName() const {
-	return m_name;
-}
+Player::Player(unsigned int ID, PlayerType playerType)
+	: m_ID(ID),m_playerType(playerType) {}
 
 bool Player::IsHumanPlayer() const {
 	return m_playerType == PlayerType::HUMAN;
 }
 
+unsigned int Player::GetID() const {
+	return m_ID;
+}
+
 bool operator==(Player const& lhs, Player const& rhs) {
-	return lhs.m_id == rhs.m_id;
+	return lhs.m_ID == rhs.m_ID;
 }
