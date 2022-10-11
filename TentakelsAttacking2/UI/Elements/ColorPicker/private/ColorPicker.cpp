@@ -143,6 +143,13 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 		}
 	}
 
+	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		if (CheckCollisionPointRec(mousePosition, m_colider)) {
+			auto event = SelectFocusElementEvent(this);
+			appContext.eventManager.InvokeEvent(event);
+		}
+	}
+
 	if (IsKeyPressed(KEY_ENTER) and IsFocused()) {
 		if (!m_isNestedFocus) {
 			SetCellFocuses(appContext);
