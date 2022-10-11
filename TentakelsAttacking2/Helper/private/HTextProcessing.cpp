@@ -102,6 +102,11 @@ std::string GetPritablePlaceholderTextInColider(std::string const& text,
 
 void StripString(std::string& toStrip) {
 	size_t pos1 = toStrip.find_first_not_of(' ');
+
+	if (pos1 == std::string::npos) {
+		return;
+	}
+
 	size_t pos2 = toStrip.find_last_not_of(' ');
 	toStrip = toStrip.substr(pos1, pos2 - pos1 + 1);
 }
