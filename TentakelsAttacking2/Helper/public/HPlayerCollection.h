@@ -4,12 +4,14 @@
 //
 
 #pragma once
+#include "EventListener.hpp"
 #include "HGeneral.h"
 #include <unordered_map>
 #include <array>
 #include <raylib.h>
 
-class PlayerCollection {
+
+class PlayerCollection : public EventListener {
 private:
 	size_t m_maxPlayerCount = 7;
 	std::array<Color, 16> m_colors = {
@@ -63,5 +65,5 @@ public:
 	[[nodiscard]] std::unordered_map<unsigned int, Color> GetColors() const;
 	[[nodiscard]] std::unordered_map<unsigned int, std::string> GetNames() const;
 	
-
+	void OnEvent(Event const& event) override;
 };

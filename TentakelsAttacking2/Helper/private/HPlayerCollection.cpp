@@ -5,6 +5,7 @@
 
 #include "HPlayerCollection.h"
 #include "UIEvents.hpp"
+#include "GenerelEvents.hpp"
 #include "AppContext.h"
 #include <algorithm>
 
@@ -90,4 +91,16 @@ std::unordered_map<unsigned int, Color> PlayerCollection::GetColors() const {
 }
 std::unordered_map<unsigned int, std::string> PlayerCollection::GetNames() const {
 	return m_playerNames;
+}
+
+void PlayerCollection::OnEvent(Event const& event) {
+
+	if (auto const* playerEvent = dynamic_cast<AddPlayerWithIDEvent const*>(&event)) {
+		AddPlayer(
+			playerEvent->GetID(),
+			playerEvent->GetName(),
+			playerEvent->GetColor()
+		);
+		return;
+	}
 }
