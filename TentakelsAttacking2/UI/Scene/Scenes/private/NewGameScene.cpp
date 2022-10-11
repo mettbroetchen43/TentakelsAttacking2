@@ -101,14 +101,14 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		GetElementSize(0.35f, 0.45f),
 		Alignment::TOP_RIGHT,
 		5,
-		appContext.MaxPlayerCount() + 1,
+		appContext.playerCollection.MaxPlayerCount() + 1,
 		3,
 		resolution
 		);
 	table->SetRowEditable(0, false);
 	table->SetColumnEditable(0, false);
 	table->SetHeadlines({ "ID", "Name", "Color" }, false);
-	for (int i = 0; i < appContext.MaxPlayerCount();++i) {
+	for (int i = 0; i < appContext.playerCollection.MaxPlayerCount();++i) {
 		table->SetValue<IntCell, int>(i + 1, 0, i + 1, false);
 	}
 	table->ResizeCells();

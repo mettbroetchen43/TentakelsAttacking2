@@ -145,6 +145,7 @@
     <ClInclude Include="Game\public\Fleet.h" />
     <ClInclude Include="Game\public\GroupTarget.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
+    <ClInclude Include="Helper\public\HPlayerCollection.h" />
     <ClInclude Include="Helper\public\LayeredVector.hpp" />
     <ClInclude Include="Helper\public\HRandom.h" />
     <ClInclude Include="Helper\public\HTextProcecingConstant.hpp" />
@@ -215,6 +216,7 @@
     <ClCompile Include="Game\private\Planet.cpp" />
     <ClCompile Include="Helper\private\HTextProcessing.cpp" />
     <ClCompile Include="Helper\private\HGeneral.cpp" />
+    <ClCompile Include="Helper\private\HPlayerCollection.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />
