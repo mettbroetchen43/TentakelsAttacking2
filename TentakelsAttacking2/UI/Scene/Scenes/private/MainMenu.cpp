@@ -29,7 +29,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		);
 	newGameBtn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::NEW_GAME)
+			SwitchSceneEvent(SceneType::TEST)
 			);
 		});
 	m_elements.push_back(newGameBtn);
