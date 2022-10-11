@@ -11,6 +11,30 @@ bool GameManager::ValidAddPlayer() const {
 		> m_players.size();
 }
 
+bool GameManager::GetNextID() const {
+	if (m_players.size() == 0) {
+		return 1;
+	}
+
+	unsigned int nextID = 1;
+	while (true) {
+		bool freeID = true;
+		for (auto p : m_players) {
+			if (p->GetID() == nextID) {
+				freeID = false;
+				break;
+			}
+		}
+
+		if (freeID) {
+			return nextID;
+		}
+
+		++nextID;
+	}
+
+}
+
 GameManager::GameManager() {
 	AppContext::GetInstance().eventManager.AddListener(this);
 }
@@ -25,7 +49,7 @@ void GameManager::AddPlayer(AddPlayerEvent const* event) {
 		return;
 	}
 
-	unsigned int newID = m_players.size() + 1;
+	unsigned int newID = GetNextID();
 	auto player = std::make_shared<Player>(
 		newID,
 		PlayerType::HUMAN
