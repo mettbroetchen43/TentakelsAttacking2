@@ -104,6 +104,7 @@ void StripString(std::string& toStrip) {
 	size_t pos1 = toStrip.find_first_not_of(' ');
 
 	if (pos1 == std::string::npos) {
+		toStrip = std::string();
 		return;
 	}
 
