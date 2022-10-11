@@ -222,6 +222,9 @@
     <ClInclude Include="Helper\public\HPlayerCollection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Events\public\GenerelEvents.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">

@@ -19,4 +19,5 @@ std::string const& AppContext::CopyRight() const {
 
 AppContext::AppContext() {
 	eventManager.AddListener(&soundManager);
+	eventManager.AddListener(&playerCollection);
 }
