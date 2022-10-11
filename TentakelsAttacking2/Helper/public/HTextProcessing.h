@@ -18,3 +18,5 @@ void BreakText(std::string& toBreak, float fontSize, float length,
 	float fontSize, Rectangle colider, AppContext const& appContext);
 [[nodiscard]] std::string GetPritablePlaceholderTextInColider(std::string const& text,
 	float fontSize, Rectangle colider, AppContext const& appContext);
+
+void StripString(std::string& toStrip);
