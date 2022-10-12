@@ -31,12 +31,30 @@ void PlayerCollection::CheckRemainingColor(Color& color) {
 	}
 }
 void PlayerCollection::CheckRemainingName(std::string& name) {
+
+	bool invalidName = true;
+
+	if (name.empty()) {
+		auto event = ShowMessagePopUpEvent(
+			"Invalid name",
+			"No name entered."
+		);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		invalidName = true;
+	}
+
 	if (ContainsValue<std::string>(m_playerNames, name)) {
 		auto event = ShowMessagePopUpEvent(
 			"Invalid name",
 			"The choosen name already exists."
 		);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		invalidName = true;
+
+
+	}
+
+	if (invalidName) {
 		static size_t invalidNameCounter = 1;
 		name = "Invalid Name " + std::to_string(invalidNameCounter);
 		++invalidNameCounter;
