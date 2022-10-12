@@ -114,9 +114,6 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 	table->SetRowEditable(0, false);
 	table->SetColumnEditable(0, false);
 	table->SetHeadlines({ "ID", "Name", "Color" }, false);
-	for (int i = 0; i < appContext.playerCollection.MaxPlayerCount();++i) {
-		table->SetValue<IntCell, int>(i + 1, 0, i + 1, false);
-	}
 	table->ResizeCells();
 	m_elements.push_back(table);
 	m_nestedFocus.push_back(table.get());
