@@ -16,10 +16,8 @@ std::string const& AppContext::Version() const {
 std::string const& AppContext::CopyRight() const {
 	return m_copyRight;
 }
-size_t AppContext::MaxPlayerCount() const {
-	return m_maxPlayerCount;
-}
 
 AppContext::AppContext() {
 	eventManager.AddListener(&soundManager);
+	eventManager.AddListener(&playerCollection);
 }

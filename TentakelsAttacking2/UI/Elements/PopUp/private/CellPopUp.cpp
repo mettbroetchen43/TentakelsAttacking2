@@ -69,9 +69,7 @@ void CellPopUp::CheckEnter() {
 		SetValue();
 	}
 
-	if (m_firstEnter and IsKeyUp(KEY_ENTER)) {
-		m_firstEnter = false;
-	}
+	LateUpdate();
 }
 
 void CellPopUp::Close(AppContext const& appContext) {
@@ -86,10 +84,6 @@ CellPopUp::CellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 res
 	: PopUp(pos, size, alignment, resolution, title, subTitle, infoTexture) {
 	
 	Initialize(AppContext::GetInstance(), resolution);
-
-	if (IsKeyDown(KEY_ENTER)) {
-		m_firstEnter = true;
-	}
 }
 
 void CellPopUp::CheckAndUpdate(Vector2 const& mousePosition,

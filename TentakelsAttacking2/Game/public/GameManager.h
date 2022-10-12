@@ -6,16 +6,29 @@
 #pragma once
 #include "Player.h"
 #include "Galaxy.h"
+#include "EventListener.hpp"
+#include "UIEvents.hpp"
+#include "GenerelEvents.hpp"
 #include <vector>
 
-class GameManager {
+class GameManager : public EventListener {
 private:
 	std::vector<std::shared_ptr<Player>> m_players;
 	Galaxy m_galaxy;
+
+	[[nodiscard]] bool ValidAddPlayer() const;
+	[[nodiscard]] unsigned int GetNextID() const;
+
+	void AddPlayer(AddPlayerEvent const* event);
+
 public:
+	GameManager();
+
 	[[nodiscard]] std::vector<std::shared_ptr<Player>>& GetPlayers();
 	[[nodiscard]] std::vector<std::shared_ptr<Player>> const& GetPlayers() const;
 
 	void Update();
+
+	void OnEvent(Event const& event) override;
 };
 

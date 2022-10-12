@@ -5,19 +5,17 @@
 
 #pragma once
 #include "PlayerType.hpp"
-#include <string>
 
 class Player {
 private:
-	int m_id;
+	unsigned int m_ID;
 	PlayerType m_playerType;
-	std::string m_name;
 public:
-	Player(int id, std::string name, PlayerType playerType);
-
-	[[nodiscard]] std::string GetName() const;
+	Player(unsigned int ID, PlayerType playerType);
 
 	[[nodiscard]] bool IsHumanPlayer() const;
+
+	[[nodiscard]] unsigned int GetID() const;
 
 	friend bool operator== (Player const& lhs, Player const& rhs);
 };

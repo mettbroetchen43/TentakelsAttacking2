@@ -14,6 +14,9 @@ void Galaxy::GeneratePlanets(std::vector<std::shared_ptr<Player>> const& initial
 	
 }
 
+Galaxy::Galaxy()
+	: m_dimensions({ 0.0f,0.0f }) { }
+
 void Galaxy::PreUpdate() {
 	for (auto& spaceObjectWeak : m_spaceObjects) {
 		spaceObjectWeak.lock()->PreUpdate(*this);
@@ -30,5 +33,5 @@ void Galaxy::PostUpdate() {
 	for (auto& spaceObjectWeak : m_spaceObjects) {
 		spaceObjectWeak.lock()->PostUpdate(*this);
 	}
-	std::cout << "TODO delete unvalid group pointer" << '\n';
+	// TODO delete unvalid group pointer
 }

@@ -15,8 +15,8 @@
 
 int main() {
     InitWindow(100, 100, "Tentakels Attacking");
-    UIManager uiManager;
     [[maybe_unused]] AppContext& appContext = AppContext::GetInstance();
+    UIManager uiManager;
 
     uiManager.StartUI();
 

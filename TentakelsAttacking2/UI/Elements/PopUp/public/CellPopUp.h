@@ -10,7 +10,6 @@
 class CellPopUp : public PopUp {
 protected:
 	bool m_shouldClose = false;
-	bool m_firstEnter = false;
 
 	virtual void Initialize(AppContext const& appContext, Vector2 resolution);
 	[[nodiscard]] std::shared_ptr<ClassicButton> InitializeAcceptButton(

@@ -16,6 +16,10 @@ ColorPickerCell::ColorPickerCell(unsigned int ID, Vector2 pos, Vector2 size,
 	: Focusable(ID), UIElement(pos, size, alignment),
 	m_color(color), m_colorPicker(colorPicker) {
 
+	if (IsBlankCell()) {
+		m_enabled = false;
+	}
+
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 }
 
@@ -23,7 +27,14 @@ Color ColorPickerCell::GetColor() const {
 	return m_color;
 }
 
+bool ColorPickerCell::IsBlankCell() const {
+	return m_color == BLANK;
+}
 void ColorPickerCell::SetEnabled(bool enabled) {
+	if (IsBlankCell()) {
+		m_enabled = false;
+		return;
+	}
 	m_enabled = enabled;
 }
 bool ColorPickerCell::IsEnabled() const {
@@ -33,7 +44,13 @@ Rectangle ColorPickerCell::GetCollider() const {
 	return m_colider;
 }
 
-void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
+	AppContext const& appContext) {
+
+	if (!m_enabled) {
+		return;
+	}
+
 	bool mouseClick =
 		CheckCollisionPointRec(mousePosition, m_colider)
 		&& IsMouseButtonDown(MOUSE_BUTTON_LEFT);
@@ -63,10 +80,11 @@ void ColorPickerCell::Render([[maybe_unused]] AppContext const& appContext) {
 		m_color
 	);
 
+	Color color = m_color != PURPLE ? PURPLE : DARKPURPLE;
 	DrawRectangleLinesEx(
 		m_colider,
 		3.0f,
-		PURPLE
+		color
 	);
 }
 void ColorPickerCell::Resize(Vector2 resolution,

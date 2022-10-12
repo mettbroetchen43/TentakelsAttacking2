@@ -7,32 +7,56 @@
 #include "AppContext.h"
 #include "ColorPickerCell.h"
 #include "HGeneral.h"
+#include <cmath>
 
 
 void ColorPicker::Initialise(Vector2 resolution) {
+	AppContext& appContext = AppContext::GetInstance();
+
+	auto colors = appContext.playerCollection.GetAllColors();
+
+	double countX_D = std::ceil(std::sqrt(colors.size()));
+	m_countX = static_cast<size_t>(countX_D);
+	m_countY = static_cast<size_t>(std::ceil(colors.size() / countX_D));
+
 	for (int row = 0; row < m_countY; ++row) {
 		for (int column = 0; column < m_countX; ++column) {
 
 			size_t index = GetIndexFromRowAndColumn(row, column, m_countX);
-						 // start					offset
-			float posX = (1.0f / (2 * m_countX)) +  (1.0f / m_countX * column);
+			// start					offset
+			float posX = (1.0f / (2 * m_countX)) + (1.0f / m_countX * column);
 			float posY = (1.0f / (2 * m_countY)) + (1.0f / m_countY * row);
 			float sizeX = (0.8f / m_countX);
 			float sizeY = (0.7f / m_countY);
 
-			m_cells.at(index) = std::make_unique<ColorPickerCell>(
+			Color color = colors.size() > index ? colors.at(index) : BLANK;
+
+			m_cells.push_back(std::make_unique<ColorPickerCell>(
 				static_cast<unsigned int>(index + 1),
 				GetElementPosition(m_pos, m_size, posX, posY),
 				GetElementSize(m_size, sizeX, sizeY),
 				Alignment::MID_MID,
 				resolution,
-				m_colors.at(index),
+				color,
 				this
-			);
+				));
 		}
 	}
 }
+void ColorPicker::SetUsedColors(AppContext const& appContext) {
+	auto colors = appContext.playerCollection.GetColors();
 
+	for (auto& c : m_cells) {
+		bool sameColor = false;
+		for (auto& [ID, color] : colors) {
+			if (c->GetColor() == color) {
+				sameColor = true;
+			}
+		}
+
+		c->SetEnabled(!sameColor);
+	}
+}
 void ColorPicker::SetColorFromFocus() {
 	if (!m_isNestedFocus) {
 		return;
@@ -47,7 +71,7 @@ void ColorPicker::SetColorFromFocus() {
 }
 
 ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
-	Alignment alignment, Vector2 resolution) 
+	Alignment alignment, Vector2 resolution)
 	: Focusable(ID), UIElement(pos, size, alignment) {
 
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
@@ -85,11 +109,19 @@ bool ColorPicker::SetColor(Color color) {
 			}
 
 			m_currentColorCell = c.get();
+			if (m_isNestedFocus) {
+				auto event = SelectFocusElementEvent(c.get());
+				AppContext::GetInstance().eventManager.InvokeEvent(event);
+			}
 			return true;
 		}
 	}
 
 	return false;
+}
+
+void ColorPicker::SetOnEnter(std::function<void()> onEnter) {
+	m_onEnter = onEnter;
 }
 
 void ColorPicker::SetCellFocuses(AppContext const& appContext) {
@@ -154,12 +186,16 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 		if (!m_isNestedFocus) {
 			SetCellFocuses(appContext);
 		}
+		else {
+			m_onEnter();
+		}
 	}
 
 	for (auto& c : m_cells) {
 		c->CheckAndUpdate(mousePosition, appContext);
 	}
 
+	SetUsedColors(appContext);
 	SetColorFromFocus();
 }
 void ColorPicker::Render(AppContext const& appContext) {

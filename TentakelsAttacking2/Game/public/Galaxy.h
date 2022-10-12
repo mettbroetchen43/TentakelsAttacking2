@@ -22,6 +22,7 @@ private:
 public:
 	Galaxy(double x, double y, size_t planetCount, std::vector<std::shared_ptr<Player>> const& initialPlayer);
 	void GeneratePlanets(std::vector<std::shared_ptr<Player>> const& initialPlayer);
+	Galaxy();
 
 	void PreUpdate();
 	void Update();

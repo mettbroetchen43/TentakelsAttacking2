@@ -165,13 +165,17 @@ void Focus::AddLayer() {
 	m_renderFocus = false;
 }
 void Focus::DeleteLayer() {
+	for (auto f : m_focus) {
+		f->SetFocus(false);
+	}
+
 	m_focus.RemoveLayer();
+
 	if (m_lastFocus.size() > 0) {
 		SetSpecificFocus(m_lastFocus.at(m_lastFocus.size() - 1));
 		m_lastFocus.pop_back();
 		m_renderFocus = false;
 	}
-
 }
 
 void Focus::AddElement(Focusable* focusable) {

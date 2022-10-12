@@ -78,6 +78,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -94,6 +95,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,6 +129,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>_public;Game/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public;Events/public;Helper/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,6 +141,7 @@
   <ItemGroup>
     <ClInclude Include="Events\public\EventListener.hpp" />
     <ClInclude Include="Events\public\EventManager.hpp" />
+    <ClInclude Include="Events\public\GenerelEvents.hpp" />
     <ClInclude Include="Events\public\UIEvents.hpp" />
     <ClInclude Include="Events\public\MainEvent.hpp" />
     <ClInclude Include="Game\public\Galaxy.h" />
@@ -145,6 +149,7 @@
     <ClInclude Include="Game\public\Fleet.h" />
     <ClInclude Include="Game\public\GroupTarget.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
+    <ClInclude Include="Helper\public\HPlayerCollection.h" />
     <ClInclude Include="Helper\public\LayeredVector.hpp" />
     <ClInclude Include="Helper\public\HRandom.h" />
     <ClInclude Include="Helper\public\HTextProcecingConstant.hpp" />
@@ -215,6 +220,7 @@
     <ClCompile Include="Game\private\Planet.cpp" />
     <ClCompile Include="Helper\private\HTextProcessing.cpp" />
     <ClCompile Include="Helper\private\HGeneral.cpp" />
+    <ClCompile Include="Helper\private\HPlayerCollection.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />
