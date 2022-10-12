@@ -6,7 +6,6 @@
 #include "NewGameScene.h"
 #include "Title.h"
 #include "Text.h"
-#include "InputLine.hpp"
 #include "ColorPicker.h"
 #include "ClassicButton.h"
 #include "GenerelEvents.hpp"

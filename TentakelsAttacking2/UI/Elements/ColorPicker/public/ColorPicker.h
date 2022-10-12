@@ -5,17 +5,17 @@
 
 #pragma once
 #include "ColorPickerCell.h"
-#include <array>
+#include <vector>
 #include <memory>
 
 
 class ColorPicker : public UIElement, public Focusable {
 private:
-	size_t m_countX = 4;
-	size_t m_countY = 4;
+	size_t m_countX;
+	size_t m_countY;
 	Texture* m_backGround;
 	Rectangle m_colider;
-	std::array<std::unique_ptr<ColorPickerCell>, 16> m_cells;
+	std::vector<std::unique_ptr<ColorPickerCell>> m_cells;
 	ColorPickerCell* m_currentColorCell = nullptr;
 	ColorPickerCell* m_previousColorCell = nullptr;
 

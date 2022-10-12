@@ -83,7 +83,7 @@ void PlayerCollection::RemovePlayer(unsigned int ID) {
 	m_playerNames.erase(ID);
 }
 
-std::array<Color, 16> PlayerCollection::GetAllColors() const {
+std::array<Color, 17> PlayerCollection::GetAllColors() const {
 	return m_colors;
 }
 std::unordered_map<unsigned int, Color> PlayerCollection::GetColors() const {

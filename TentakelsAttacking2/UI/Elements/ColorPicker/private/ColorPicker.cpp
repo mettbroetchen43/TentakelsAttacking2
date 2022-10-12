@@ -7,9 +7,18 @@
 #include "AppContext.h"
 #include "ColorPickerCell.h"
 #include "HGeneral.h"
+#include <cmath>
 
 
 void ColorPicker::Initialise(Vector2 resolution) {
+	AppContext& appContext = AppContext::GetInstance();
+
+	auto colors = appContext.playerCollection.GetAllColors();
+
+	float countX_F = std::ceil(std::sqrt(colors.size()));
+	m_countX = static_cast<size_t>(countX_F);
+	m_countY = static_cast<size_t>(std::ceil(colors.size() / countX_F));
+
 	for (int row = 0; row < m_countY; ++row) {
 		for (int column = 0; column < m_countX; ++column) {
 
@@ -20,17 +29,17 @@ void ColorPicker::Initialise(Vector2 resolution) {
 			float sizeX = (0.8f / m_countX);
 			float sizeY = (0.7f / m_countY);
 
-			AppContext& appContext = AppContext::GetInstance();
+			Color color = colors.size() > index ? colors.at(index) : PINK;
 
-			m_cells.at(index) = std::make_unique<ColorPickerCell>(
+			m_cells.push_back(std::make_unique<ColorPickerCell>(
 				static_cast<unsigned int>(index + 1),
 				GetElementPosition(m_pos, m_size, posX, posY),
 				GetElementSize(m_size, sizeX, sizeY),
 				Alignment::MID_MID,
 				resolution,
-				appContext.playerCollection.GetColors(),
+				color,
 				this
-			);
+			));
 		}
 	}
 }

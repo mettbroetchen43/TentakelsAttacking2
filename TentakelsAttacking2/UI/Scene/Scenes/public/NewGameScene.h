@@ -5,6 +5,11 @@
 
 #pragma once
 #include "Scene.h"
+#include "InputLine.hpp"
+
+class ColorPicker;
+class Table;
+class Focusable;
 
 class NewGameScene : public Scene {
 private:
