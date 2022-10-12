@@ -60,9 +60,9 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 
 	auto addPlayerBtn = std::make_shared<ClassicButton>(
 		3,
-		GetElementPosition(0.1f, 0.85f),
+		GetElementPosition(0.45f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
-		Alignment::TOP_LEFT,
+		Alignment::TOP_RIGHT,
 		resolution,
 		"Add Player",
 		SoundType::ACCEPTED
@@ -74,9 +74,9 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 
 	auto removePlayerBtn = std::make_shared<ClassicButton>(
 		4,
-		GetElementPosition(0.45f, 0.85f),
+		GetElementPosition(0.1f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
-		Alignment::TOP_RIGHT,
+		Alignment::TOP_LEFT,
 		resolution,
 		"Remove Player",
 		SoundType::CLICKED_RELEASE_STD
@@ -119,8 +119,19 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 	m_nestedFocus.push_back(table.get());
 	m_table = table.get();
 
-	auto exitBtn = std::make_shared<ClassicButton>(
+	auto startGameBtn = std::make_shared<ClassicButton>(
 		6,
+		GetElementPosition(0.9f, 0.85f),
+		GetElementSize(0.15f, 0.1f),
+		Alignment::TOP_RIGHT,
+		resolution,
+		"Start",
+		SoundType::ACCEPTED
+		);
+	m_elements.push_back(startGameBtn);
+
+	auto exitBtn = std::make_shared<ClassicButton>(
+		7,
 		GetElementPosition(0.55f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_LEFT,
@@ -134,17 +145,6 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		);
 		});
 	m_elements.push_back(exitBtn);
-
-	auto startGameBtn = std::make_shared<ClassicButton>(
-		7,
-		GetElementPosition(0.9f, 0.85f),
-		GetElementSize(0.15f, 0.1f),
-		Alignment::TOP_RIGHT,
-		resolution,
-		"Start",
-		SoundType::ACCEPTED
-		);
-	m_elements.push_back(startGameBtn);
 }
 
 void NewGameScene::CheckForNestedFocus(Vector2 const& mousePosition,
