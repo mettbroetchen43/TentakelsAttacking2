@@ -206,14 +206,6 @@ void Focus::DeletePopUpLayer() {
 		SetLayerAfterPopUp();
 	}
 }
-void Focus::SetLayerAfterPopUp() {
-	//
-	// TODO
-	// -> Rework Elements
-	// -> Add Element Events
-	// -> implement this method
-	// 
-}
 
 void Focus::AddElement(Focusable* focusable) {
 	CheckNewID(focusable->GetFocusID());
@@ -224,12 +216,41 @@ void Focus::AddElement(Focusable* focusable) {
 	}
 	SetInitialFocus();
 }
+void Focus::AddNormalElement(Focusable* focusable) {
+	if (m_PopUpLayerCounter == 0) {
+		AddElement(focusable);
+	}
+	else {
+		m_toAdd.AddElement(focusable);
+	}
+}
+void Focus::AddPopUpElement(Focusable* focusable) {
+	AddElement(focusable);
+}
 void Focus::DeleteElement(Focusable* focusable) {
 	m_focus.RemoveElement(focusable);
 
 	if (m_currentFocus == focusable) {
 		m_currentFocus = GetNextFocus();
 	}
+}
+void Focus::DeleteNormalElement(Focusable* focusable) {
+	if (m_PopUpLayerCounter == 0) {
+		DeleteElement(focusable);
+	}
+	else {
+		m_toDelete.AddElement(focusable);
+	}
+}
+void Focus::DeletePopUpElement(Focusable* focusable) {
+	DeleteElement(focusable);
+}
+
+void Focus::SetLayerAfterPopUp() {
+	//
+	// TODO
+	// -> implement this method
+	// 
 }
 
 void Focus::CheckNewID(unsigned int newID) {

@@ -42,7 +42,6 @@ private:
 	void DeleteNormalLayer();
 	void DeletePopUpLayer();
 	void Clear();
-	void SetLayerAfterPopUp();
 
 	void AddElement(Focusable* focusable);
 	void AddNormalElement(Focusable* focusable);
@@ -50,6 +49,8 @@ private:
 	void DeleteElement(Focusable* focusable);
 	void DeleteNormalElement(Focusable* focusable);
 	void DeletePopUpElement(Focusable* focusable);
+
+	void SetLayerAfterPopUp();
 
 	void CheckNewID(unsigned int newID);
 
