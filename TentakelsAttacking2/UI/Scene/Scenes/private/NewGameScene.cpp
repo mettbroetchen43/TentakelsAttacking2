@@ -168,6 +168,9 @@ void NewGameScene::CheckForNestedFocus(Vector2 const& mousePosition,
 
 void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
 	m_inputLine->Clear();
+	auto event = SelectFocusElementEvent(m_inputLine);
+	appContext.eventManager.InvokeEvent(event);
+
 	m_colorPicker->SetColor(appContext.playerCollection.GetPossibleColor());
 
 	auto playerNames = appContext.playerCollection.GetNames();
