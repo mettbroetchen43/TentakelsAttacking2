@@ -140,7 +140,7 @@ public:
 		DrawRectangleLinesEx(
 			m_collider,
 			2.0f,
-			WHITE
+			PURPLE
 		);
 
 		float posX = m_collider.x + 10.0f;
