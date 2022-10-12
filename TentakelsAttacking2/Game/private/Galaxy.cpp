@@ -33,5 +33,5 @@ void Galaxy::PostUpdate() {
 	for (auto& spaceObjectWeak : m_spaceObjects) {
 		spaceObjectWeak.lock()->PostUpdate(*this);
 	}
-	std::cout << "TODO delete unvalid group pointer" << '\n';
+	// TODO delete unvalid group pointer
 }

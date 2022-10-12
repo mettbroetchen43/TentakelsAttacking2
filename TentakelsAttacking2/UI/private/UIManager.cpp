@@ -33,6 +33,8 @@ void UIManager::CheckAndUpdateResolution() {
 }
 
 void UIManager::CheckAndUpdate() {
+	m_gameManager.Update();
+
 	bool quit = 
 		IsKeyDown(KeyboardKey::KEY_LEFT_ALT)
 		and IsKeyPressed(KeyboardKey::KEY_F4);
@@ -83,7 +85,7 @@ UIManager::UIManager()
 
 void UIManager::StartUI() {
 	m_sceneManager.SwitchScene(SceneType::LOGO, m_appContext);
-	ToggleFullScreen();
+	// ToggleFullScreen(); Disabled for Streaming
 	UILoop();
 }
 

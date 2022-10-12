@@ -10,11 +10,11 @@
 #include <array>
 #include <raylib.h>
 
-
 class PlayerCollection : public EventListener {
 private:
+	using ColorArray = std::array<Color, 16>;
 	size_t m_maxPlayerCount = 7;
-	std::array<Color, 17> m_colors = {
+	ColorArray m_colors = {
 		YELLOW,
 		GOLD,
 		PINK,
@@ -31,7 +31,6 @@ private:
 		PURPLE,
 		VIOLET,
 		DARKPURPLE,
-		PURPLE,
 	};
 	std::unordered_map<unsigned int, Color> m_playerColors;
 	std::unordered_map<unsigned int, std::string> m_playerNames;
@@ -60,7 +59,7 @@ public:
 	void EditPlayer(unsigned int ID, std::string name, Color color);
 	void RemovePlayer(unsigned int ID);
 
-	[[nodiscard]] std::array<Color, 17> GetAllColors() const;
+	[[nodiscard]] ColorArray GetAllColors() const;
 	[[nodiscard]] Color GetPossibleColor() const;
 	[[nodiscard]] std::unordered_map<unsigned int, Color> GetColors() const;
 	[[nodiscard]] std::unordered_map<unsigned int, std::string> GetNames() const;

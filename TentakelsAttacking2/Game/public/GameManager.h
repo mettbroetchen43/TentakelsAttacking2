@@ -17,12 +17,12 @@ private:
 	Galaxy m_galaxy;
 
 	[[nodiscard]] bool ValidAddPlayer() const;
-	[[nodiscard]] bool GetNextID() const;
+	[[nodiscard]] unsigned int GetNextID() const;
+
+	void AddPlayer(AddPlayerEvent const* event);
 
 public:
 	GameManager();
-
-	void AddPlayer(AddPlayerEvent const* event);
 
 	[[nodiscard]] std::vector<std::shared_ptr<Player>>& GetPlayers();
 	[[nodiscard]] std::vector<std::shared_ptr<Player>> const& GetPlayers() const;

@@ -8,6 +8,7 @@
 #include "EventListener.hpp"	
 #include "AppContext.h"
 #include "SceneManager.h"
+#include "GameManager.h"
 #include "Focus.h"
 #include <vector>
 #include <memory>
@@ -19,6 +20,7 @@ private:
 	AppContext& m_appContext;
 	Focus m_focus;
 	SceneManager m_sceneManager;
+	GameManager m_gameManager;
 	Vector2 m_resolution;
 	bool m_closeWindow;
 

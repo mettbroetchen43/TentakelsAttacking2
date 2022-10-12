@@ -37,7 +37,9 @@ void PlayerCollection::CheckRemainingName(std::string& name) {
 			"The choosen name already exists."
 		);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
-		name = "Invalid Name " + m_playerNames.size();
+		static size_t invalidNameCounter = 1;
+		name = "Invalid Name " + std::to_string(invalidNameCounter);
+		++invalidNameCounter;
 	}
 }
 
@@ -83,7 +85,7 @@ void PlayerCollection::RemovePlayer(unsigned int ID) {
 	m_playerNames.erase(ID);
 }
 
-std::array<Color, 17> PlayerCollection::GetAllColors() const {
+PlayerCollection::ColorArray PlayerCollection::GetAllColors() const {
 	return m_colors;
 }
 std::unordered_map<unsigned int, Color> PlayerCollection::GetColors() const {
