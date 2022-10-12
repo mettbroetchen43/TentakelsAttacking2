@@ -44,6 +44,9 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		resolution
 		);
 	inputLine->SetPlaceholderText("Player Name");
+	inputLine->SetOnEnter([&]() {
+		AddPlayer();
+		});
 	m_elements.push_back(inputLine);
 	m_inputLine = inputLine.get();
 
@@ -177,8 +180,6 @@ void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
 	auto playerColors = appContext.playerCollection.GetColors();
 
 	assert(playerNames.size() == playerColors.size());
-
-	// ColorPicker set all Cells editable
 	
 	int index = 1;
 	for (auto& [ID, name] : playerNames) {
