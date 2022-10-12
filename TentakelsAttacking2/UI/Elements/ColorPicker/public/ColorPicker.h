@@ -24,6 +24,7 @@ private:
 	void Initialise(Vector2 resolution);
 	void SetUsedColors(AppContext const& appContext);
 	void SetColorFromFocus();
+	void CheckforValidColor(AppContext const& appContext);
 
 public:
 	ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
