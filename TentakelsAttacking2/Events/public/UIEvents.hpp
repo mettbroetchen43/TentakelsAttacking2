@@ -48,7 +48,15 @@ class NewFocusElementEvent : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
+class NewFocusPopUpElementEvent : public FocusEvent {
+public:
+	using FocusEvent::FocusEvent;
+};
 class DeleteFocusElementEvent : public FocusEvent {
+public:
+	using FocusEvent::FocusEvent;
+};
+class DeleteFocusPopUpElementEvent : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
@@ -56,7 +64,15 @@ class SelectFocusElementEvent : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
+class SelectFocusPopUpElementEvent : public FocusEvent {
+public:
+	using FocusEvent::FocusEvent;
+};
+class NewFocusPopUpLayerEvent :public Event {
+};
 class NewFocusLayerEvent :public Event {
+};
+class DeleteFocusPopUpLayerEvent : public Event {
 };
 class DeleteFocusLayerEvent : public Event {
 };

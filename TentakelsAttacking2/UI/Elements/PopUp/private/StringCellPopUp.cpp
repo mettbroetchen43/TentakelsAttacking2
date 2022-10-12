@@ -26,10 +26,10 @@ void StringCellPopUp::Initialize(AppContext const& appContext,
 		resolution
 		);
 
-	auto event = NewFocusElementEvent(inputChance.get());
+	auto event = NewFocusPopUpElementEvent(inputChance.get());
 	appContext.eventManager.InvokeEvent(event);
 
-	auto event2 = SelectFocusElementEvent(inputChance.get());
+	auto event2 = SelectFocusPopUpElementEvent(inputChance.get());
 	appContext.eventManager.InvokeEvent(event2);
 	inputChance->SetValue(m_currentCell->value);
 	inputChance->SetPlaceholderText("Edit Text");

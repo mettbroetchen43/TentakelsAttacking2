@@ -8,6 +8,7 @@
 #include "AppContext.h"
 #include "UIEvents.hpp"
 #include <stdexcept>
+#include <functional>
 
 bool Focus::HasAnyEnabledElements() const {
 	for (auto e : m_focus) {
@@ -140,15 +141,6 @@ void Focus::SetPreviousFocus() {
 	m_currentFocus = previousFocus;
 	m_currentFocus->SetFocus(true);
 }
-void Focus::SetSpecificFocus(Focusable* focusable) {
-	if (!IsExistingFocus(focusable)) { return; }
-
-	if (m_currentFocus) {
-		m_currentFocus->SetFocus(false);
-	}
-	m_currentFocus = focusable;
-	m_currentFocus->SetFocus(true);
-}
 bool Focus::IsExistingFocus(Focusable* focusable) {
 	for (auto focus : m_focus) {
 		if (focus == focusable) {
@@ -158,11 +150,46 @@ bool Focus::IsExistingFocus(Focusable* focusable) {
 	return false;
 }
 
+void Focus::SetSpecificFocus(Focusable* focusable) {
+	if (!IsExistingFocus(focusable)) { return; }
+
+	if (m_currentFocus) {
+		m_currentFocus->SetFocus(false);
+	}
+	m_currentFocus = focusable;
+	m_currentFocus->SetFocus(true);
+}
+void Focus::SetSpecificNormalFocus(Focusable* focusable) {
+	if (m_PopUpLayerCounter == 0) {
+		SetSpecificFocus(focusable);
+	}
+	else {
+		m_toSelectRequest.AddElement(focusable);
+	}
+}
+void Focus::SetSpecificPopUpFocus(Focusable* focusable) {
+	SetSpecificFocus(focusable);
+}
+
 void Focus::AddLayer() {
 	m_lastFocus.push_back(m_currentFocus);
 	m_focus.AddLayer();
 	m_currentFocus = nullptr;
 	m_renderFocus = false;
+}
+void Focus::AddNormalLayer() {
+	if (m_PopUpLayerCounter == 0) {
+		AddLayer();
+	}
+	else {
+		m_layerRequest.AddLayer();
+		m_toSelectRequest.AddLayer();
+		m_toAddOrDelete.push_back(true);
+	}
+}
+void Focus::AddPopUpLayer() {
+	AddLayer();
+	++m_PopUpLayerCounter;
 }
 void Focus::DeleteLayer() {
 	for (auto f : m_focus) {
@@ -177,6 +204,22 @@ void Focus::DeleteLayer() {
 		m_renderFocus = false;
 	}
 }
+void Focus::DeleteNormalLayer() {
+	if (m_PopUpLayerCounter == 0) {
+		DeleteLayer();
+	}
+	else {
+		m_layerRequest.AddLayer();
+		m_toAddOrDelete.push_back(false);
+	}
+}
+void Focus::DeletePopUpLayer() {
+	DeleteLayer();
+	--m_PopUpLayerCounter;
+	if (m_PopUpLayerCounter == 0) {
+		SetLayerAfterPopUp();
+	}
+}
 
 void Focus::AddElement(Focusable* focusable) {
 	CheckNewID(focusable->GetFocusID());
@@ -187,12 +230,75 @@ void Focus::AddElement(Focusable* focusable) {
 	}
 	SetInitialFocus();
 }
+void Focus::AddNormalElement(Focusable* focusable) {
+	if (m_PopUpLayerCounter == 0) {
+		AddElement(focusable);
+	}
+	else {
+		m_layerRequest.AddElement(focusable);
+	}
+}
+void Focus::AddPopUpElement(Focusable* focusable) {
+	AddElement(focusable);
+}
 void Focus::DeleteElement(Focusable* focusable) {
+	focusable->SetFocus(false);
 	m_focus.RemoveElement(focusable);
 
 	if (m_currentFocus == focusable) {
 		m_currentFocus = GetNextFocus();
 	}
+}
+void Focus::DeleteNormalElement(Focusable* focusable) {
+	if (m_PopUpLayerCounter == 0) {
+		DeleteElement(focusable);
+	}
+	else {
+		m_layerRequest.AddElement(focusable);
+	}
+}
+void Focus::DeletePopUpElement(Focusable* focusable) {
+	DeleteElement(focusable);
+}
+
+void Focus::SetLayerAfterPopUp() {
+
+	while (true) {
+		if (m_toAddOrDelete.size() == 0) {
+			break;
+		}
+
+		bool b = m_toAddOrDelete.back();
+		m_toAddOrDelete.pop_back();
+
+		if (b) {
+			AddLayer();
+			for (auto f : m_layerRequest) {
+				AddElement(f);
+			}
+			m_layerRequest.RemoveLayer();
+		}
+		else {
+			for (auto f : m_layerRequest) {
+				DeleteElement(f);
+			}
+			DeleteLayer();
+			m_layerRequest.RemoveLayer();
+		}
+
+		for (auto f : m_toSelectRequest) {
+			SetSpecificFocus(f);
+		}
+		m_toSelectRequest.RemoveLayer();
+	}
+
+	m_toSelectRequest.Clear();
+	m_layerRequest.Clear();
+	m_toAddOrDelete.clear();
+	//
+	// TODO
+	// -> implement this method
+	// 
 }
 
 void Focus::CheckNewID(unsigned int newID) {
@@ -212,31 +318,56 @@ Focus::Focus() {
 void Focus::Clear() {
 	m_focus.Clear();
 	m_currentFocus = nullptr;
+
+	m_layerRequest.Clear();
+	m_toSelectRequest.Clear();
+	m_toAddOrDelete.clear();
+	m_PopUpLayerCounter = 0;
 }
 
 void Focus::OnEvent(Event const& event) {
-	if (auto const focusEvent = dynamic_cast<NewFocusElementEvent const*>(&event)) {
-		AddElement(focusEvent->GetFocusable());
+	if (auto const focusEvent =dynamic_cast<NewFocusElementEvent const*>(&event)) {
+		AddNormalElement(focusEvent->GetFocusable());
+		return;
+	}
+	if (auto const focusEvent = dynamic_cast<NewFocusPopUpElementEvent const*>(&event)) {
+		AddPopUpElement(focusEvent->GetFocusable());
 		return;
 	}
 
 	if (auto const focusEvent = dynamic_cast<DeleteFocusElementEvent const*>(&event)) {
-		DeleteElement(focusEvent->GetFocusable());
+		DeleteNormalElement(focusEvent->GetFocusable());
+		return;
+	}
+	if (auto const focusEvent = dynamic_cast<DeleteFocusPopUpElementEvent const*>(&event)) {
+		DeletePopUpElement(focusEvent->GetFocusable());
 		return;
 	}
 
 	if (auto const focusEvent = dynamic_cast<SelectFocusElementEvent const*>(&event)) {
-		SetSpecificFocus(focusEvent->GetFocusable());
+		SetSpecificNormalFocus(focusEvent->GetFocusable());
+		return;
+	}
+	if (auto const focusEvent = dynamic_cast<SelectFocusPopUpElementEvent const*>(&event)) {
+		SetSpecificPopUpFocus(focusEvent->GetFocusable());
 		return;
 	}
 
 	if (auto const focusEvent = dynamic_cast<NewFocusLayerEvent const*>(&event)) {
-		AddLayer();
+		AddNormalLayer();
+		return;
+	}
+	if (auto const focusEvent = dynamic_cast<NewFocusPopUpLayerEvent const*>(&event)) {
+		AddPopUpLayer();
 		return;
 	}
 
 	if (auto const focusEvent = dynamic_cast<DeleteFocusLayerEvent const*>(&event)) {
-		DeleteLayer();
+		DeleteNormalLayer();
+		return;
+	}
+	if (auto const focusEvent = dynamic_cast<DeleteFocusPopUpLayerEvent const*>(&event)) {
+		DeletePopUpLayer();
 		return;
 	}
 

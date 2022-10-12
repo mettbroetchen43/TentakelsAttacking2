@@ -24,7 +24,7 @@ void CellPopUp::Initialize([[maybe_unused]] AppContext const& appContext,
 		SoundType::CLICKED_RELEASE_STD
 		);
 
-	auto event = NewFocusElementEvent(cancelBtn.get());
+	auto event = NewFocusPopUpElementEvent(cancelBtn.get());
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 
 	cancelBtn->SetOnClick([&]() {
@@ -46,7 +46,7 @@ std::shared_ptr<ClassicButton> CellPopUp::InitializeAcceptButton(
 		SoundType::ACCEPTED
 		);
 
-	auto event = NewFocusElementEvent(acceptBtn.get());
+	auto event = NewFocusPopUpElementEvent(acceptBtn.get());
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 
 	m_elements.push_back(acceptBtn);

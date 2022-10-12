@@ -32,7 +32,7 @@ void PlayerCollection::CheckRemainingColor(Color& color) {
 }
 void PlayerCollection::CheckRemainingName(std::string& name) {
 
-	bool invalidName = true;
+	bool invalidName = false;
 
 	if (name.empty()) {
 		auto event = ShowMessagePopUpEvent(
