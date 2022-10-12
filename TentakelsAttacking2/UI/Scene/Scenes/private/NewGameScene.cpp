@@ -58,6 +58,9 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		resolution
 		);
 	colorPicker->SetColor(appContext.playerCollection.GetPossibleColor());
+	colorPicker->SetOnEnter([&]() {
+		AddPlayer();
+		});
 	m_elements.push_back(colorPicker);
 	m_nestedFocus.push_back(colorPicker.get());
 	m_colorPicker = colorPicker.get();

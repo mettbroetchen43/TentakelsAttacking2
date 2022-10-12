@@ -6,6 +6,7 @@
 #pragma once
 #include "ColorPickerCell.h"
 #include <vector>
+#include <functional>
 #include <memory>
 
 
@@ -18,6 +19,7 @@ private:
 	std::vector<std::unique_ptr<ColorPickerCell>> m_cells;
 	ColorPickerCell* m_currentColorCell = nullptr;
 	ColorPickerCell* m_previousColorCell = nullptr;
+	std::function<void()> m_onEnter = []() {};
 
 	void Initialise(Vector2 resolution);
 	void SetUsedColors(AppContext const& appContext);
@@ -32,6 +34,8 @@ public:
 	[[nodiscard]] bool HasColorChanced() const;
 	bool SetInitialColor(Color color);
 	bool SetColor(Color color);
+
+	void SetOnEnter(std::function<void()> onEnter);
 
 	void SetCellFocuses(AppContext const& appContext);
 	void SetEnabled(bool enabled, Color color);

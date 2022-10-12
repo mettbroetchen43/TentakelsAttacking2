@@ -23,8 +23,8 @@ void ColorPicker::Initialise(Vector2 resolution) {
 		for (int column = 0; column < m_countX; ++column) {
 
 			size_t index = GetIndexFromRowAndColumn(row, column, m_countX);
-						 // start					offset
-			float posX = (1.0f / (2 * m_countX)) +  (1.0f / m_countX * column);
+			// start					offset
+			float posX = (1.0f / (2 * m_countX)) + (1.0f / m_countX * column);
 			float posY = (1.0f / (2 * m_countY)) + (1.0f / m_countY * row);
 			float sizeX = (0.8f / m_countX);
 			float sizeY = (0.7f / m_countY);
@@ -39,7 +39,7 @@ void ColorPicker::Initialise(Vector2 resolution) {
 				resolution,
 				color,
 				this
-			));
+				));
 		}
 	}
 }
@@ -71,7 +71,7 @@ void ColorPicker::SetColorFromFocus() {
 }
 
 ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
-	Alignment alignment, Vector2 resolution) 
+	Alignment alignment, Vector2 resolution)
 	: Focusable(ID), UIElement(pos, size, alignment) {
 
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
@@ -114,6 +114,10 @@ bool ColorPicker::SetColor(Color color) {
 	}
 
 	return false;
+}
+
+void ColorPicker::SetOnEnter(std::function<void()> onEnter) {
+	m_onEnter = onEnter;
 }
 
 void ColorPicker::SetCellFocuses(AppContext const& appContext) {
@@ -177,6 +181,9 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 	if (IsKeyPressed(KEY_ENTER) and IsFocused()) {
 		if (!m_isNestedFocus) {
 			SetCellFocuses(appContext);
+		}
+		else {
+			m_onEnter();
 		}
 	}
 
