@@ -54,6 +54,7 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		Alignment::TOP_LEFT,
 		resolution
 		);
+	colorPicker->SetColor(appContext.playerCollection.GetPossibleColor());
 	m_elements.push_back(colorPicker);
 	m_nestedFocus.push_back(colorPicker.get());
 	m_colorPicker = colorPicker.get();
