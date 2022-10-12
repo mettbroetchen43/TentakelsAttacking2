@@ -53,7 +53,7 @@ void PopUpManager::OnEvent(Event const& event) {
 }
 
 void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
-	auto focusEvent = NewFocusLayerEvent();
+	auto focusEvent = NewFocusPopUpLayerEvent();
 	m_appContext->eventManager.InvokeEvent(focusEvent);
 
 	m_popUps.push_back(std::make_unique<MessagePopUp>(
@@ -70,7 +70,7 @@ void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
 
 void PopUpManager::DeleteLastPopUp() {
 	if (m_popUps.size() > 0) {
-		auto event = DeleteFocusLayerEvent();
+		auto event = DeleteFocusPopUpLayerEvent();
 		m_appContext->eventManager.InvokeEvent(event);
 
 		m_popUps.pop_back();

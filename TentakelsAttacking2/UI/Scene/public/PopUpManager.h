@@ -29,7 +29,7 @@ public:
 	void NewMessagePopUp(ShowMessagePopUpEvent const* event);
 	template<typename popUpType, typename eventType>
 	void NewTableCellPopUp(eventType const* event) {
-		auto focusEvent = NewFocusLayerEvent();
+		auto focusEvent = NewFocusPopUpLayerEvent();
 		m_appContext->eventManager.InvokeEvent(focusEvent);
 
 		m_popUps.push_back(std::make_unique<popUpType>(
