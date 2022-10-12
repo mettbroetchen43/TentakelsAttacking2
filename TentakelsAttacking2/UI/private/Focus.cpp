@@ -164,6 +164,19 @@ void Focus::AddLayer() {
 	m_currentFocus = nullptr;
 	m_renderFocus = false;
 }
+void Focus::AddNormalLayer() {
+	if (m_PopUpLayerCounter == 0) {
+		AddLayer();
+	}
+	else {
+		m_toAdd.AddLayer();
+		m_toAddDelete.push_back(true);
+	}
+}
+void Focus::AddPopUpLayer() {
+	AddLayer();
+	++m_PopUpLayerCounter;
+}
 void Focus::DeleteLayer() {
 	for (auto f : m_focus) {
 		f->SetFocus(false);
@@ -176,6 +189,30 @@ void Focus::DeleteLayer() {
 		m_lastFocus.pop_back();
 		m_renderFocus = false;
 	}
+}
+void Focus::DeleteNormalLayer() {
+	if (m_PopUpLayerCounter == 0) {
+		DeleteLayer();
+	}
+	else {
+		m_toDelete.AddLayer();
+		m_toAddDelete.push_back(false);
+	}
+}
+void Focus::DeletePopUpLayer() {
+	DeleteLayer();
+	--m_PopUpLayerCounter;
+	if (m_PopUpLayerCounter == 0) {
+		SetLayerAfterPopUp();
+	}
+}
+void Focus::SetLayerAfterPopUp() {
+	//
+	// TODO
+	// -> Rework Elements
+	// -> Add Element Events
+	// -> implement this method
+	// 
 }
 
 void Focus::AddElement(Focusable* focusable) {
@@ -235,8 +272,18 @@ void Focus::OnEvent(Event const& event) {
 		return;
 	}
 
+	if (auto const focusEvent = dynamic_cast<NewFocusPopUpLayerEvent const*>(&event)) {
+		AddPopUpLayer();
+		return;
+	}
+
 	if (auto const focusEvent = dynamic_cast<DeleteFocusLayerEvent const*>(&event)) {
 		DeleteLayer();
+		return;
+	}
+
+	if (auto const focusEvent = dynamic_cast<DeleteFocusPopUpLayerEvent const*>(&event)) {
+		DeletePopUpLayer();
 		return;
 	}
 
