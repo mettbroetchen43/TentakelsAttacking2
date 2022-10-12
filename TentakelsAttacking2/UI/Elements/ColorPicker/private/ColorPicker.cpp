@@ -43,7 +43,20 @@ void ColorPicker::Initialise(Vector2 resolution) {
 		}
 	}
 }
+void ColorPicker::SetUsedColors(AppContext const& appContext) {
+	auto colors = appContext.playerCollection.GetColors();
 
+	for (auto& c : m_cells) {
+		bool sameColor = false;
+		for (auto& [ID, color] : colors) {
+			if (c->GetColor() == color) {
+				sameColor = true;
+			}
+		}
+
+		c->SetEnabled(!sameColor);
+	}
+}
 void ColorPicker::SetColorFromFocus() {
 	if (!m_isNestedFocus) {
 		return;
@@ -171,6 +184,7 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 		c->CheckAndUpdate(mousePosition, appContext);
 	}
 
+	SetUsedColors(appContext);
 	SetColorFromFocus();
 }
 void ColorPicker::Render(AppContext const& appContext) {

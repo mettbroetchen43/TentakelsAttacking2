@@ -20,6 +20,7 @@ private:
 	ColorPickerCell* m_previousColorCell = nullptr;
 
 	void Initialise(Vector2 resolution);
+	void SetUsedColors(AppContext const& appContext);
 	void SetColorFromFocus();
 
 public:
