@@ -6,7 +6,6 @@
 #pragma once
 #include "UIElement.hpp"
 #include "Focusable.h"
-// #include <raylib.h>
 
 class ColorPicker;
 
@@ -25,6 +24,7 @@ public:
 
 	[[nodiscard]] Color GetColor() const;
 
+	[[nodiscard]] bool IsBlankCell() const;
 	void SetEnabled(bool enabled);
 	[[nodiscard]] bool IsEnabled() const override;
 	[[nodiscard]] Rectangle GetCollider() const override;

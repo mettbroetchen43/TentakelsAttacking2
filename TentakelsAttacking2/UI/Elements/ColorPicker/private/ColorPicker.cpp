@@ -15,9 +15,9 @@ void ColorPicker::Initialise(Vector2 resolution) {
 
 	auto colors = appContext.playerCollection.GetAllColors();
 
-	float countX_F = std::ceil(std::sqrt(colors.size()));
-	m_countX = static_cast<size_t>(countX_F);
-	m_countY = static_cast<size_t>(std::ceil(colors.size() / countX_F));
+	double countX_D = std::ceil(std::sqrt(colors.size()));
+	m_countX = static_cast<size_t>(countX_D);
+	m_countY = static_cast<size_t>(std::ceil(colors.size() / countX_D));
 
 	for (int row = 0; row < m_countY; ++row) {
 		for (int column = 0; column < m_countX; ++column) {
@@ -29,7 +29,7 @@ void ColorPicker::Initialise(Vector2 resolution) {
 			float sizeX = (0.8f / m_countX);
 			float sizeY = (0.7f / m_countY);
 
-			Color color = colors.size() > index ? colors.at(index) : PINK;
+			Color color = colors.size() > index ? colors.at(index) : BLANK;
 
 			m_cells.push_back(std::make_unique<ColorPickerCell>(
 				static_cast<unsigned int>(index + 1),
