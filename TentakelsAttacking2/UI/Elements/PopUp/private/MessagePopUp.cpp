@@ -24,7 +24,7 @@ void MessagePopUp::Initialize(Vector2 resolution) {
 	btn->SetOnClick([&]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(ClosePopUpEvent(this));
 		});
-	auto event = NewFocusElementEvent(btn.get());
+	auto event = NewFocusPopUpElementEvent(btn.get());
 	appContext.eventManager.InvokeEvent(event);
 
 	m_elements.push_back(btn);

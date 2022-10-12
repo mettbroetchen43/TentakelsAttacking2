@@ -248,17 +248,29 @@ Focus::Focus() {
 
 void Focus::Clear() {
 	m_focus.Clear();
+	m_toAdd.Clear();
+	m_toDelete.Clear();
+	m_toAddDelete.clear();
+	m_PopUpLayerCounter = 0;
 	m_currentFocus = nullptr;
 }
 
 void Focus::OnEvent(Event const& event) {
-	if (auto const focusEvent = dynamic_cast<NewFocusElementEvent const*>(&event)) {
-		AddElement(focusEvent->GetFocusable());
+	if (auto const focusEvent =dynamic_cast<NewFocusElementEvent const*>(&event)) {
+		AddNormalElement(focusEvent->GetFocusable());
+		return;
+	}
+	if (auto const focusEvent = dynamic_cast<NewFocusPopUpElementEvent const*>(&event)) {
+		AddPopUpElement(focusEvent->GetFocusable());
 		return;
 	}
 
 	if (auto const focusEvent = dynamic_cast<DeleteFocusElementEvent const*>(&event)) {
-		DeleteElement(focusEvent->GetFocusable());
+		DeleteNormalElement(focusEvent->GetFocusable());
+		return;
+	}
+	if (auto const focusEvent = dynamic_cast<DeleteFocusPopUpElementEvent const*>(&event)) {
+		DeletePopUpElement(focusEvent->GetFocusable());
 		return;
 	}
 
@@ -268,20 +280,18 @@ void Focus::OnEvent(Event const& event) {
 	}
 
 	if (auto const focusEvent = dynamic_cast<NewFocusLayerEvent const*>(&event)) {
-		AddLayer();
+		AddNormalLayer();
 		return;
 	}
-
 	if (auto const focusEvent = dynamic_cast<NewFocusPopUpLayerEvent const*>(&event)) {
 		AddPopUpLayer();
 		return;
 	}
 
 	if (auto const focusEvent = dynamic_cast<DeleteFocusLayerEvent const*>(&event)) {
-		DeleteLayer();
+		DeleteNormalLayer();
 		return;
 	}
-
 	if (auto const focusEvent = dynamic_cast<DeleteFocusPopUpLayerEvent const*>(&event)) {
 		DeletePopUpLayer();
 		return;

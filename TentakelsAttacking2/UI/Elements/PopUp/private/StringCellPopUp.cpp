@@ -26,7 +26,7 @@ void StringCellPopUp::Initialize(AppContext const& appContext,
 		resolution
 		);
 
-	auto event = NewFocusElementEvent(inputChance.get());
+	auto event = NewFocusPopUpElementEvent(inputChance.get());
 	appContext.eventManager.InvokeEvent(event);
 
 	auto event2 = SelectFocusElementEvent(inputChance.get());

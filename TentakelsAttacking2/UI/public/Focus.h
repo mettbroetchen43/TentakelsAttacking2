@@ -45,7 +45,11 @@ private:
 	void SetLayerAfterPopUp();
 
 	void AddElement(Focusable* focusable);
+	void AddNormalElement(Focusable* focusable);
+	void AddPopUpElement(Focusable* focusable);
 	void DeleteElement(Focusable* focusable);
+	void DeleteNormalElement(Focusable* focusable);
+	void DeletePopUpElement(Focusable* focusable);
 
 	void CheckNewID(unsigned int newID);
 
