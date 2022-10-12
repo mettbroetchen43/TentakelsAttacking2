@@ -28,7 +28,7 @@ void IntCellPopUp::Initialize(AppContext const& appContext,
 	auto event = NewFocusPopUpElementEvent(inputChange.get());
 	appContext.eventManager.InvokeEvent(event);
 
-	auto event2 = SelectFocusElementEvent(inputChange.get());
+	auto event2 = SelectFocusPopUpElementEvent(inputChange.get());
 	appContext.eventManager.InvokeEvent(event2);
 	inputChange->SetValue(m_currentCell->value);
 	inputChange->SetPlaceholderText("Edit Number");

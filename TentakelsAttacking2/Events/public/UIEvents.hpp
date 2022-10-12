@@ -64,6 +64,10 @@ class SelectFocusElementEvent : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
+class SelectFocusPopUpElementEvent : public FocusEvent {
+public:
+	using FocusEvent::FocusEvent;
+};
 class NewFocusPopUpLayerEvent :public Event {
 };
 class NewFocusLayerEvent :public Event {

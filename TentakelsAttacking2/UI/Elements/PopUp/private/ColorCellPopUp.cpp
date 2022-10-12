@@ -27,7 +27,7 @@ void ColorCellPopUp::Initialize(AppContext const& appContext,
 
 	auto event = NewFocusPopUpElementEvent(colorPicker.get());
 	appContext.eventManager.InvokeEvent(event);
-	auto event2 = SelectFocusElementEvent(colorPicker.get());
+	auto event2 = SelectFocusPopUpElementEvent(colorPicker.get());
 	appContext.eventManager.InvokeEvent(event2);
 
 	colorPicker->SetInitialColor(m_currentCell->value);
