@@ -70,6 +70,11 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		);
 	m_elements.push_back(textSubTitle);
 }
+void PopUp::LateUpdate() {
+	if (m_firstEnter and IsKeyUp(KEY_ENTER)) {
+		m_firstEnter = false;
+	}
+}
 
 Rectangle PopUp::GetColiderWithMaxValues(Texture2D* texture, float maxWidth, float maxHeight) const {
 
@@ -95,7 +100,12 @@ PopUp::PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, std::string& subTitle, AssetType infoTexture)
 	: UIElement(pos, size, alignment) {
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+	
 	Initialize(title, subTitle, infoTexture, resolution);
+
+	if (IsKeyDown(KEY_ENTER)) {
+		m_firstEnter = true;
+	}
 }
 
 void PopUp::CheckAndUpdate(Vector2 const& mousePosition,

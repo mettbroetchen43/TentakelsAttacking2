@@ -14,4 +14,7 @@ private:
 public:
 	MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		std::string const& title, std::string& subTitle, AssetType infoTexture);
+
+	void CheckAndUpdate(Vector2 const& mousePosition,
+		AppContext const& appContext) override;
 };

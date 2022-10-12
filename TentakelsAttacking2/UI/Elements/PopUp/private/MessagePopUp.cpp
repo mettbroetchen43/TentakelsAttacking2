@@ -36,3 +36,13 @@ MessagePopUp::MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vecto
 
 	Initialize(resolution);
 }
+
+void MessagePopUp::CheckAndUpdate(Vector2 const& mousePosition,
+	AppContext const& appContext) {
+
+	if (!m_firstEnter) {
+		PopUp::CheckAndUpdate(mousePosition, appContext);
+	}
+
+	LateUpdate();
+}
