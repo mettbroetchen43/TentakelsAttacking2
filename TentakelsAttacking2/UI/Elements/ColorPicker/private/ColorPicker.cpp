@@ -109,6 +109,10 @@ bool ColorPicker::SetColor(Color color) {
 			}
 
 			m_currentColorCell = c.get();
+			if (m_isNestedFocus) {
+				auto event = SelectFocusElementEvent(c.get());
+				AppContext::GetInstance().eventManager.InvokeEvent(event);
+			}
 			return true;
 		}
 	}

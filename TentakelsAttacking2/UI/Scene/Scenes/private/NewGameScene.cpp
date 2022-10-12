@@ -173,11 +173,17 @@ void NewGameScene::CheckForNestedFocus(Vector2 const& mousePosition,
 }
 
 void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
+	m_colorPicker->SetColor(appContext.playerCollection.GetPossibleColor());
+	
 	m_inputLine->Clear();
+	if (m_colorPicker->IsNestedFocus()) {
+		m_colorPicker->SetNestedFocus(false);
+		auto focusEvent = DeleteFocusLayerEvent();
+		appContext.eventManager.InvokeEvent(focusEvent);
+	}
+
 	auto event = SelectFocusElementEvent(m_inputLine);
 	appContext.eventManager.InvokeEvent(event);
-
-	m_colorPicker->SetColor(appContext.playerCollection.GetPossibleColor());
 
 	auto playerNames = appContext.playerCollection.GetNames();
 	auto playerColors = appContext.playerCollection.GetColors();
@@ -197,6 +203,7 @@ void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
 
 void NewGameScene::AddPlayer() {
 	AppContext& appContext = AppContext::GetInstance();
+
 	auto event = AddPlayerEvent(
 		m_inputLine->GetValue(),
 		m_colorPicker->GetColor()
