@@ -196,7 +196,6 @@ void StripString(std::string& toStrip) {
 	if (textAlignment == TextAlignment::TOP) {
 		return text;
 	}
-
 	Vector2 textSize = MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
 		text.c_str(),
@@ -215,7 +214,10 @@ void StripString(std::string& toStrip) {
 	size_t newLineCount =
 		static_cast<size_t>(difference / spaceSize.y);
 
-	std::string toReturn(newLineCount, '\n');
+	std::string toReturn;
+	for (size_t n = 0; n < newLineCount; ++n) {
+		toReturn += " \n";
+	}
 	toReturn += text;
 
 	return toReturn;
@@ -229,7 +231,7 @@ std::string GetAlignedText(std::string const& text,
 
 	Vector2 spaceSize = MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
-		" ",
+		" \n",
 		fontSize,
 		0.0f
 	);

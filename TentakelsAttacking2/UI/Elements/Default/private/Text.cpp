@@ -9,6 +9,7 @@
 
 void Text::CreateToRender(AppContext const& appContext) {
 	m_toRender = BreakLines(m_text, appContext);
+	m_toRender = GetAlignedText(m_toRender, m_collider, m_textSize, m_alignment);
 }
 std::string Text::BreakLines(std::string toBreak, AppContext const& appContext) const {
 	if (!m_lineBreaks) {
