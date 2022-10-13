@@ -14,11 +14,11 @@
 #include <iostream>
 
 int main() {
-    InitWindow(100, 100, "Tentakels Attacking");
-    [[maybe_unused]] AppContext& appContext = AppContext::GetInstance();
-    UIManager uiManager;
+	InitWindow(100, 100, "Tentakels Attacking");
+	[[maybe_unused]] AppContext& appContext = AppContext::GetInstance();
+	UIManager uiManager;
 
-    uiManager.StartUI();
+	uiManager.StartUI();
 
-    return 0;
+	return 0;
 }

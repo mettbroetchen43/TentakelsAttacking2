@@ -54,3 +54,44 @@ Rectangle GetAlignedCollider(Vector2& pos, Vector2 size, Alignment allignment, V
 	};
 	return toReturn;
 }
+
+TextAlignment GetHorisontalTextAlignment(Alignment alignment) {
+	switch(alignment) {
+		case Alignment::TOP_LEFT:
+		case Alignment::MID_LEFT:
+		case Alignment::BOTTOM_LEFT:
+		case Alignment::DEFAULT:
+		default:
+			return TextAlignment::LEFT;
+		
+		case Alignment::TOP_MID:
+		case Alignment::MID_MID:
+		case Alignment::BOTTOM_MID:
+			return TextAlignment::MID;
+
+		case Alignment::TOP_RIGHT:
+		case Alignment::MID_RIGHT:
+		case Alignment::BOTTOM_RIGHT:
+			return TextAlignment::RIGHT;
+	}
+}
+TextAlignment GetVerticalTextAlignment(Alignment alignment) {
+	switch (alignment) {
+		case Alignment::TOP_LEFT:
+		case Alignment::TOP_MID:
+		case Alignment::TOP_RIGHT:
+		case Alignment::DEFAULT:
+		default:
+			return TextAlignment::TOP;
+			
+		case Alignment::MID_LEFT:
+		case Alignment::MID_MID:
+		case Alignment::MID_RIGHT:
+			return TextAlignment::MID;
+
+		case Alignment::BOTTOM_LEFT:
+		case Alignment::BOTTOM_MID:
+		case Alignment::BOTTOM_RIGHT:
+			return TextAlignment::BOTTOM;
+	}
+}
