@@ -29,6 +29,7 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		GetElementPosition(0.1f, 0.28f),
 		GetElementSize(0.25f, 0.05f),
 		Alignment::TOP_LEFT,
+		Alignment::TOP_LEFT,
 		0.05f,
 		"Add Player:",
 		resolution
@@ -102,6 +103,7 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 	auto currentPlayerText = std::make_shared<Text>(
 		GetElementPosition(0.55f, 0.28f),
 		GetElementSize(0.25f, 0.05f),
+		Alignment::TOP_LEFT,
 		Alignment::TOP_LEFT,
 		0.05f,
 		"Current Player:",

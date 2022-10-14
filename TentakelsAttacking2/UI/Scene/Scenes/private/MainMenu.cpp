@@ -108,6 +108,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		GetElementPosition(0.99f, 0.98f),
 		GetElementSize(0.1f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
+		Alignment::BOTTOM_RIGHT,
 		0.02f,
 		appContext.Version() + '\n' + appContext.CopyRight(),
 		resolution
