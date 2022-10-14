@@ -13,6 +13,8 @@ private:
 	std::string m_toRender;
 	float m_textHeight;
 	float m_textSize;
+	Vector2 m_textPosition;
+
 	Rectangle m_collider = { 0.0f,0.0f,0.0f,0.0f };
 	bool m_lineBreaks = false;
 	bool m_renderRectangle = false;

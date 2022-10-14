@@ -22,5 +22,7 @@ void BreakText(std::string& toBreak, float fontSize, float length,
 
 void StripString(std::string& toStrip);
 
-[[nodiscard]] std::string GetAlignedText(std::string const& text,
+[[nodiscard]] Vector2 GetVerticalAlignedTextPosition(std::string const& text,
+	float fontSize, Rectangle colider, Alignment alignment);
+[[nodiscard]] std::string GetHorisontalAlignedText(std::string const& text,
 	Rectangle colider, float fontSize, Alignment alignment);
