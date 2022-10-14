@@ -26,6 +26,7 @@ void LogoScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.65f),
 		GetElementSize(0.45f, 0.1f),
 		Alignment::TOP_MID,
+		Alignment::TOP_MID,
 		0.07f,
 		"A Purpur Tentakel production",
 		resolution
@@ -35,6 +36,7 @@ void LogoScene::Initialize(Vector2 resolution) {
 	auto skipText = std::make_shared<Text>(
 		GetElementPosition(0.99f, 0.98f),
 		GetElementSize(0.11f, 0.03f),
+		Alignment::BOTTOM_RIGHT,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		"skip with [ESC]",

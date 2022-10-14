@@ -42,6 +42,7 @@ void Intro::Initialize(AppContext& appContext, Vector2 resolution) {
 		GetElementPosition(0.99f, 0.98f),
 		GetElementSize(0.11f, 0.03f),
 		Alignment::BOTTOM_RIGHT,
+		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		"skip with [ESC]",
 		resolution
