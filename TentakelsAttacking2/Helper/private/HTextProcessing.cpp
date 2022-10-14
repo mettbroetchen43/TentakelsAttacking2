@@ -36,7 +36,9 @@
 
 	for (auto const& s : slicedText) {
 		toReturn += s;
+		toReturn += '\n';
 	}
+	toReturn.pop_back();
 
 	return toReturn;
 }
