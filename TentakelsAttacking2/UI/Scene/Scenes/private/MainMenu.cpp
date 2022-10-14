@@ -104,25 +104,15 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		);
 	m_elements.push_back(title);
 
-	auto version = std::make_shared<Text>(
-		GetElementPosition(1.0f, 0.97f),
-		GetElementSize(0.04f, 0.04f),
+	auto versionAndCopyRight = std::make_shared<Text>(
+		GetElementPosition(0.99f, 0.98f),
+		GetElementSize(0.1f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
 		0.02f,
-		appContext.Version(),
+		appContext.Version() + '\n' + appContext.CopyRight(),
 		resolution
 		);
-	m_elements.push_back(version);
-
-	auto copyRight = std::make_shared<Text>(
-		GetElementPosition(1.0f, 1.0f),
-		GetElementSize(0.1f, 0.04f),
-		Alignment::BOTTOM_RIGHT,
-		0.02f,
-		appContext.CopyRight(),
-		resolution
-		);
-	m_elements.push_back(copyRight);
+	m_elements.push_back(versionAndCopyRight);
 }
 
 MainMenu::MainMenu(Vector2 pos, Vector2 size, Alignment alignment,

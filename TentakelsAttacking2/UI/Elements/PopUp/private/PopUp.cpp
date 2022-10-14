@@ -43,8 +43,8 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 	m_elements.push_back(icon);
 
 	auto textTitle = std::make_shared<Text>(
-		GetElementPosition(m_pos, m_size, 0.65f, 0.1f),
-		GetElementSize(m_size, 0.6f, 0.2f),
+		GetElementPosition(m_pos, m_size, 0.6f, 0.1f),
+		GetElementSize(m_size, 0.7f, 0.2f),
 		Alignment::TOP_MID,
 		GetElementTextHight(m_size, 0.2f),
 		title,

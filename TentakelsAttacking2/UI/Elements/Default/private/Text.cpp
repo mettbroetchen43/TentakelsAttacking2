@@ -9,6 +9,8 @@
 
 void Text::CreateToRender(AppContext const& appContext) {
 	m_toRender = BreakLines(m_text, appContext);
+	m_toRender = GetHorisontalAlignedText(m_toRender, m_collider, m_textSize, m_alignment);
+	m_textPosition = GetVerticalAlignedTextPosition(m_toRender, m_textSize, m_collider, m_alignment);
 }
 std::string Text::BreakLines(std::string toBreak, AppContext const& appContext) const {
 	if (!m_lineBreaks) {
@@ -34,17 +36,15 @@ void Text::Render(AppContext const& appContext) {
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_toRender.c_str(),
-		Vector2(m_collider.x, m_collider.y),
+		m_textPosition,
 		m_textSize,
 		0.0f,
 		WHITE
 	);
 	if (m_renderRectangle) {
-		DrawRectangleLines(
-			static_cast<int>(m_collider.x),
-			static_cast<int>(m_collider.y),
-			static_cast<int>(m_collider.width),
-			static_cast<int>(m_collider.height),
+		DrawRectangleLinesEx(
+			m_collider,
+			1.0f,
 			PURPLE
 		);
 	}

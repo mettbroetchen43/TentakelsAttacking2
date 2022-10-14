@@ -8,6 +8,7 @@
 #include <raylib.h>
 
 struct AppContext;
+enum class Alignment;
 
 void BreakText(std::string& toBreak, float fontSize, float length,
 	AppContext const& appContext);
@@ -20,3 +21,8 @@ void BreakText(std::string& toBreak, float fontSize, float length,
 	float fontSize, Rectangle colider, AppContext const& appContext);
 
 void StripString(std::string& toStrip);
+
+[[nodiscard]] Vector2 GetVerticalAlignedTextPosition(std::string const& text,
+	float fontSize, Rectangle colider, Alignment alignment);
+[[nodiscard]] std::string GetHorisontalAlignedText(std::string const& text,
+	Rectangle colider, float fontSize, Alignment alignment);
