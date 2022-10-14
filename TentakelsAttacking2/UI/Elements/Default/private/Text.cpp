@@ -42,11 +42,9 @@ void Text::Render(AppContext const& appContext) {
 		WHITE
 	);
 	if (m_renderRectangle) {
-		DrawRectangleLines(
-			static_cast<int>(m_collider.x),
-			static_cast<int>(m_collider.y),
-			static_cast<int>(m_collider.width),
-			static_cast<int>(m_collider.height),
+		DrawRectangleLinesEx(
+			m_collider,
+			1.0f,
 			PURPLE
 		);
 	}
