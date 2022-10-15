@@ -14,7 +14,8 @@
 #include "UIManager.h"
 #include <cassert>
 
-void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
+void NewGameScene::Initialize(Vector2 resolution,
+	AppContext& appContext) {
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
@@ -89,6 +90,7 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		"Remove Player",
 		SoundType::CLICKED_RELEASE_STD
 		);
+	removePlayerBtn->SetOnClick([&]() {CreateDeletePlayer();});
 	m_elements.push_back(removePlayerBtn);
 
 	auto line = std::make_shared<Line>(
@@ -200,6 +202,12 @@ void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
 	
 		++index;
 	}
+	for (int row = index; row < m_table->GetRows(); ++row) {
+		for (int column = 0; column < m_table->GetColumns(); ++column) {
+			m_table->SetEmptyCell(row, column, false);
+		}
+	}
+
 	m_table->ResizeCells();
 }
 
@@ -211,6 +219,23 @@ void NewGameScene::AddPlayer() {
 		m_colorPicker->GetColor()
 	);
 	appContext.eventManager.InvokeEvent(event);
+
+	UpdateSceneEntries(appContext);
+}
+void NewGameScene::CreateDeletePlayer() {
+	AppContext& appContext = AppContext::GetInstance();
+	auto event = ShowDeletePlayerEvent(
+		"Delete Player?",
+		"",
+		[&](unsigned int ID) {DeletePlayer(ID);}
+	);
+	appContext.eventManager.InvokeEvent(event);
+}
+void NewGameScene::DeletePlayer(unsigned int ID) {
+	AppContext& appContext = AppContext::GetInstance();
+
+	auto event = DeletePlayerEvent(ID);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 
 	UpdateSceneEntries(appContext);
 }

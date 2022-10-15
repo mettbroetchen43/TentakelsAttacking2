@@ -61,6 +61,9 @@ public:
 
 	[[nodiscard]] Vector2 GetResolution() const;
 
+	[[nodiscard]] size_t GetRows() const;
+	[[nodiscard]] size_t GetColumns() const;
+
 	void SetEmptyCell(size_t row, size_t column, bool resizeCells = true);
 	template<typename CellType, typename ValueType>
 	void SetValue(size_t row, size_t column, ValueType value,

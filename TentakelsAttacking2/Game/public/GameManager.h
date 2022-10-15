@@ -20,6 +20,7 @@ private:
 	[[nodiscard]] unsigned int GetNextID() const;
 
 	void AddPlayer(AddPlayerEvent const* event);
+	void DeletePlayer(DeletePlayerEvent const* event);
 
 public:
 	GameManager();

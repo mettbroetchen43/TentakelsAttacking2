@@ -11,6 +11,9 @@
 // Message PopUp
 #include "MessagePopUp.h"
 
+// Delete Player PopUp
+#include "DeletePlayerPopUp.h"
+
 // Cell PopUps
 #include "CellPopUp.h"
 #include "StringCellPopUp.h"

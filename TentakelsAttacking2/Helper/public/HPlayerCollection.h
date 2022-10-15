@@ -57,7 +57,7 @@ public:
 	void AddPlayer(unsigned int ID,
 		std::string name, Color color);
 	void EditPlayer(unsigned int ID, std::string name, Color color);
-	void RemovePlayer(unsigned int ID);
+	void DeletePlayer(unsigned int ID);
 
 	[[nodiscard]] ColorArray GetAllColors() const;
 	[[nodiscard]] Color GetPossibleColor() const;

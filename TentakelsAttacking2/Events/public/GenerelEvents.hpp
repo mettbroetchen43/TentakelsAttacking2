@@ -45,9 +45,16 @@ class EditPlayerEvent : public PlayerWithIDEvent {
 public:
 	using PlayerWithIDEvent::PlayerWithIDEvent;
 };
-class DeletePlayerEvent : public PlayerWithIDEvent {
+class DeletePlayerEvent : public Event {
+private:
+	unsigned int m_ID;
 public:
-	using PlayerWithIDEvent::PlayerWithIDEvent;
+	DeletePlayerEvent(unsigned int ID)
+		:m_ID(ID) { }
+
+	[[nodiscard]] unsigned int GetID() const {
+		return m_ID;
+	}
 };
 
 class AddPlayerUIEvent : public PlayerWithIDEvent {
@@ -58,7 +65,14 @@ class EditPlayerUIEvent : public PlayerWithIDEvent {
 public:
 	using PlayerWithIDEvent::PlayerWithIDEvent;
 };
-class DeletePlayerUIEvent : public PlayerWithIDEvent {
+class DeletePlayerUIEvent : public Event {
+private:
+	unsigned int m_ID;
 public:
-	using PlayerWithIDEvent::PlayerWithIDEvent;
+	DeletePlayerUIEvent(unsigned int ID)
+		:m_ID(ID) { }
+
+	[[nodiscard]] unsigned int GetID() const {
+		return m_ID;
+	}
 };

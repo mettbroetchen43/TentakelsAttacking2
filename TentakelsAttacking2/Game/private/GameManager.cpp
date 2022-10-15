@@ -53,6 +53,32 @@ void GameManager::AddPlayer(AddPlayerEvent const* event) {
 	);
 	AppContext::GetInstance().eventManager.InvokeEvent(AddEvent);
 }
+void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
+
+	std::shared_ptr<Player> toDelete = nullptr;
+	for (auto& p : m_players) {
+		if (p->GetID() == event->GetID()) {
+			toDelete = p;
+			break;
+		}
+	}
+
+	if (!toDelete) {
+		auto messageEvent = ShowMessagePopUpEvent(
+			"Invalid ID",
+			"ID " + std::to_string(event->GetID()) + " is not existing"
+		);
+		AppContext::GetInstance().eventManager.InvokeEvent(messageEvent);
+		return;
+	}
+
+	m_players.erase(std::remove(
+		m_players.begin(), m_players.end(), toDelete),
+		m_players.end());
+
+	auto deleteEvent = DeletePlayerUIEvent(event->GetID());
+	AppContext::GetInstance().eventManager.InvokeEvent(deleteEvent);
+}
 
 GameManager::GameManager() {
 	AppContext::GetInstance().eventManager.AddListener(this);
@@ -74,6 +100,11 @@ void GameManager::OnEvent(Event const& event) {
 
 	if (auto const* playerEvent = dynamic_cast<AddPlayerEvent const*>(&event)) {
 		AddPlayer(playerEvent);
+		return;
+	}
+
+	if (auto const* playerEvent = dynamic_cast<DeletePlayerEvent const*>(&event)) {
+		DeletePlayer(playerEvent);
 		return;
 	}
 }

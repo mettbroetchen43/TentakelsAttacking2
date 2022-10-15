@@ -24,10 +24,10 @@ void PlayerCollection::CheckRemainingColor(Color& color) {
 	if (ContainsValue<Color>(m_playerColors, color)) {
 		auto event = ShowMessagePopUpEvent(
 			"Invalid Color",
-			"The choosen color already exists."
-		);
-		AppContext::GetInstance().eventManager.InvokeEvent(event);
-		color = GetPossibleColor();
+"The choosen color already exists."
+);
+AppContext::GetInstance().eventManager.InvokeEvent(event);
+color = GetPossibleColor();
 	}
 }
 void PlayerCollection::CheckRemainingName(std::string& name) {
@@ -80,7 +80,7 @@ void PlayerCollection::AddPlayer(unsigned int ID,
 	CheckValidColor(color);
 	CheckRemainingColor(color);
 	CheckRemainingName(name);
-	
+
 	m_playerColors[ID] = color;
 	m_playerNames[ID] = name;
 }
@@ -98,7 +98,7 @@ void PlayerCollection::EditPlayer(unsigned int ID,
 		m_playerNames[ID] = name;
 	}
 }
-void PlayerCollection::RemovePlayer(unsigned int ID) {
+void PlayerCollection::DeletePlayer(unsigned int ID) {
 	m_playerColors.erase(ID);
 	m_playerNames.erase(ID);
 }
@@ -121,6 +121,11 @@ void PlayerCollection::OnEvent(Event const& event) {
 			playerEvent->GetName(),
 			playerEvent->GetColor()
 		);
+		return;
+	}
+
+	if (auto const* playerEvent = dynamic_cast<DeletePlayerUIEvent const*>(&event)) {
+		DeletePlayer(playerEvent->GetID());
 		return;
 	}
 }

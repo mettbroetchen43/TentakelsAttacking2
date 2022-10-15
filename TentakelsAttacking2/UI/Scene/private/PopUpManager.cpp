@@ -22,6 +22,12 @@ void PopUpManager::OnEvent(Event const& event) {
 		return;
 	}
 
+	// Delete Player Pop Up
+	if (auto const PopUpEvent = dynamic_cast<ShowDeletePlayerEvent const*>(&event)) {
+		NewDeletePlayerPopUp(PopUpEvent);
+		return;
+	}
+
 	// Table Pop Up
 	if (auto const PopUpEvent = dynamic_cast<ShowStringCellPopUpEvent const*>(&event)) {
 		NewTableCellPopUp<StringCellPopUp, ShowStringCellPopUpEvent>(PopUpEvent);
@@ -66,6 +72,20 @@ void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
 		AssetType::EXCLAMATION_MARK
 		)
 	);
+}
+void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerEvent const* event) {
+	auto focusEvent = NewFocusPopUpLayerEvent();
+	m_appContext->eventManager.InvokeEvent(focusEvent);
+
+	m_popUps.push_back(std::make_unique<DeletePlayerPopUp>(
+		Vector2(0.5f, 0.5f),
+		Vector2(0.5f, 0.5f),
+		Alignment::MID_MID,
+		m_resolution,
+		event->GetTitle(),
+		AssetType::QUESTION_MARK,
+		event->GetOnClick()
+		));
 }
 
 void PopUpManager::DeleteLastPopUp() {
