@@ -41,3 +41,11 @@ void DeletePlayerPopUp::SetValue() {
 
 	SetShouldClose();
 }
+
+DeletePlayerPopUp::DeletePlayerPopUp(Vector2 pos, Vector2 size,
+	Alignment alignemnt, Vector2 resolution,
+	std::string const& title, AssetType inpuTexture)
+	: CellPopUp(pos, size, alignemnt, resolution,
+		title, inpuTexture) {
+	Initialize(AppContext::GetInstance(), resolution);
+}

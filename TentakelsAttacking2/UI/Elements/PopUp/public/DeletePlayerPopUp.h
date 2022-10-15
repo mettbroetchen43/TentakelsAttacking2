@@ -16,5 +16,6 @@ private:
 	void SetValue() override;
 
 public:
-	using CellPopUp::CellPopUp;
+	DeletePlayerPopUp(Vector2 pos, Vector2 size, Alignment alignemnt,
+		Vector2 resolution, std::string const& title, AssetType inpuTexture);
 };
