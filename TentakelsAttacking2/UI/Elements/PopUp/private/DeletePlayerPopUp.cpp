@@ -15,8 +15,8 @@ void DeletePlayerPopUp::Initialize(AppContext const& appContext,
 
 	auto inputLine = std::make_shared<InputLine<int>>(
 		3,
-		GetElementPosition(m_pos, m_size, 0.5f, 0.5f),
-		GetElementSize(m_size, 0.5f, 0.05f),
+		GetElementPosition(m_pos, m_size, 0.5f, 0.45f),
+		GetElementSize(m_size, 0.5f, 0.1f),
 		Alignment::TOP_MID,
 		5,
 		resolution
