@@ -120,6 +120,7 @@ class ShowMessagePopUpEvent : public PopUpEvent {
 public:
 	using PopUpEvent::PopUpEvent;
 };
+
 class ShowStringCellPopUpEvent: public PopUpEvent{
 private:
 	StringCell* m_cell;
@@ -189,4 +190,9 @@ public:
 		return m_cell;
 	}
 
+};
+
+class ShowDeletePlayerEvent : public PopUpEvent {
+public:
+	using PopUpEvent::PopUpEvent;
 };
