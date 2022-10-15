@@ -7,6 +7,7 @@
 #include "MainEvent.hpp"
 #include "HSoundType.hpp"
 #include <string>
+#include <functional>
 
 class StringCell;
 class IntCell;
@@ -193,6 +194,14 @@ public:
 };
 
 class ShowDeletePlayerEvent : public PopUpEvent {
+	std::function<void(unsigned int)> m_onClick = [](unsigned int) {};
+
 public:
-	using PopUpEvent::PopUpEvent;
+	ShowDeletePlayerEvent(std::string const& title,
+		std::string const& subTitle, std::function<void(unsigned int)> onClick)
+		: PopUpEvent(title, subTitle), m_onClick(onClick) { }
+
+	[[nodiscard]] std::function<void(unsigned int)> GetOnClick() const {
+		return m_onClick;
+	}
 };

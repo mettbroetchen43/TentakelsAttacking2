@@ -83,7 +83,8 @@ void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerEvent const* event) {
 		Alignment::MID_MID,
 		m_resolution,
 		event->GetTitle(),
-		AssetType::QUESTION_MARK
+		AssetType::QUESTION_MARK,
+		event->GetOnClick()
 		));
 }
 

@@ -36,16 +36,16 @@ void DeletePlayerPopUp::Initialize(AppContext const& appContext,
 void DeletePlayerPopUp::SetValue() {
 	unsigned int ID = m_inputLine->GetValue();
 
-	auto event = DeletePlayerEvent(ID);
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
+	m_onClick(ID);
 
 	SetShouldClose();
 }
 
 DeletePlayerPopUp::DeletePlayerPopUp(Vector2 pos, Vector2 size,
 	Alignment alignemnt, Vector2 resolution,
-	std::string const& title, AssetType inpuTexture)
+	std::string const& title, AssetType inpuTexture,
+	std::function<void(unsigned int)> onClick)
 	: CellPopUp(pos, size, alignemnt, resolution,
-		title, inpuTexture) {
+		title, inpuTexture), m_onClick(onClick) {
 	Initialize(AppContext::GetInstance(), resolution);
 }

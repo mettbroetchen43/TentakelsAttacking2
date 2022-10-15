@@ -90,7 +90,7 @@ void NewGameScene::Initialize(Vector2 resolution,
 		"Remove Player",
 		SoundType::CLICKED_RELEASE_STD
 		);
-	removePlayerBtn->SetOnClick([&]() {DeletePlayer();});
+	removePlayerBtn->SetOnClick([&]() {CreateDeletePlayer();});
 	m_elements.push_back(removePlayerBtn);
 
 	auto line = std::make_shared<Line>(
@@ -202,6 +202,12 @@ void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
 	
 		++index;
 	}
+	for (int row = index; row < m_table->GetRows(); ++row) {
+		for (int column = 0; column < m_table->GetColumns(); ++column) {
+			m_table->SetEmptyCell(row, column, false);
+		}
+	}
+
 	m_table->ResizeCells();
 }
 
@@ -216,13 +222,22 @@ void NewGameScene::AddPlayer() {
 
 	UpdateSceneEntries(appContext);
 }
-
-void NewGameScene::DeletePlayer() {
+void NewGameScene::CreateDeletePlayer() {
+	AppContext& appContext = AppContext::GetInstance();
 	auto event = ShowDeletePlayerEvent(
 		"Delete Player?",
-		""
+		"",
+		[&](unsigned int ID) {DeletePlayer(ID);}
 	);
+	appContext.eventManager.InvokeEvent(event);
+}
+void NewGameScene::DeletePlayer(unsigned int ID) {
+	AppContext& appContext = AppContext::GetInstance();
+
+	auto event = DeletePlayerEvent(ID);
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
+
+	UpdateSceneEntries(appContext);
 }
 
 NewGameScene::NewGameScene(Vector2 pos, Vector2 size, Alignment alignment,

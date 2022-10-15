@@ -221,6 +221,13 @@ Vector2 Table::GetResolution() const {
 	return m_resolution;
 }
 
+size_t Table::GetRows() const {
+	return m_rows;
+}
+size_t Table::GetColumns() const {
+	return m_columns;
+}
+
 void Table::SetEmptyCell(size_t row, size_t column, bool resizeCells) {
 	CheckValidRowColumn(row, column);
 	SetCell<EmptyCell>(row, column);
