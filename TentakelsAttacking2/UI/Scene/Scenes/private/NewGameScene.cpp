@@ -14,7 +14,8 @@
 #include "UIManager.h"
 #include <cassert>
 
-void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
+void NewGameScene::Initialize(Vector2 resolution,
+	AppContext& appContext) {
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
@@ -89,6 +90,7 @@ void NewGameScene::Initialize(Vector2 resolution, AppContext& appContext) {
 		"Remove Player",
 		SoundType::CLICKED_RELEASE_STD
 		);
+	removePlayerBtn->SetOnClick([&]() {DeletePlayer();});
 	m_elements.push_back(removePlayerBtn);
 
 	auto line = std::make_shared<Line>(
@@ -213,6 +215,14 @@ void NewGameScene::AddPlayer() {
 	appContext.eventManager.InvokeEvent(event);
 
 	UpdateSceneEntries(appContext);
+}
+
+void NewGameScene::DeletePlayer() {
+	auto event = ShowDeletePlayerEvent(
+		"Delete Player?",
+		""
+	);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
 NewGameScene::NewGameScene(Vector2 pos, Vector2 size, Alignment alignment,

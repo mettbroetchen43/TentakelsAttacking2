@@ -24,6 +24,7 @@ private:
 	void UpdateSceneEntries(AppContext const& appContext);
 
 	void AddPlayer();
+	void DeletePlayer();
 
 
 public:
