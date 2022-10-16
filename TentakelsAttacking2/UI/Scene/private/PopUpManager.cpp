@@ -52,7 +52,7 @@ void PopUpManager::OnEvent(Event const& event) {
 
 	// Close Pop Up
 	if (auto const PopUpEvent = dynamic_cast<ClosePopUpEvent const*>(&event)) {
-		DeleteLastPopUp();
+		DeleteLastPopUp(PopUpEvent->GetPop());
 		return;
 	}
 
@@ -88,12 +88,51 @@ void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerEvent const* event) {
 		));
 }
 
-void PopUpManager::DeleteLastPopUp() {
-	if (m_popUps.size() > 0) {
+void PopUpManager::DeleteLastPopUp(PopUp* toDelete) {
+	if (m_popUps.size() == 0) {
+		return;
+	}
+
+	if (toDelete == m_popUps.back().get()) {
+
 		auto event = DeleteFocusPopUpLayerEvent();
 		m_appContext->eventManager.InvokeEvent(event);
-
 		m_popUps.pop_back();
+
+		CheckForDeleteRemainingPopUps();
+	}
+	else {
+		m_toDelete.push_back(toDelete);
+	}
+}
+void PopUpManager::CheckForDeleteRemainingPopUps() {
+	while (true) {
+		if (m_popUps.size() == 0) {
+			m_toDelete.clear();
+			return;
+		}
+		if (m_toDelete.size() == 0) {
+			return;
+		}
+
+		bool found = false;
+		for (auto& p : m_toDelete) {
+			if (p == m_popUps.back().get()) {
+				found = true;
+				auto event = DeleteFocusPopUpLayerEvent();
+				m_appContext->eventManager.InvokeEvent(event);
+				m_popUps.pop_back();
+				
+				m_toDelete.erase(std::remove(
+					m_toDelete.begin(), m_toDelete.end(), p),
+					m_toDelete.end());
+				break;
+			}
+		}
+
+		if (!found) {
+			return;
+		}
 	}
 }
 

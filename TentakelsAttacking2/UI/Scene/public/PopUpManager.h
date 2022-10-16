@@ -3,7 +3,6 @@
 // 05.09.2022
 //
 
-
 #pragma once
 #include "UIEvents.hpp"
 #include "AllPopUp.hpp"
@@ -15,6 +14,7 @@
 class PopUpManager :public EventListener {
 private:
 	std::vector<std::unique_ptr<PopUp>> m_popUps;
+	std::vector<PopUp*> m_toDelete;
 	AppContext* m_appContext;
 	Vector2 m_resolution;
 
@@ -45,7 +45,8 @@ public:
 		);
 	}
 
-	void DeleteLastPopUp();
+	void DeleteLastPopUp(PopUp* toDelete);
+	void CheckForDeleteRemainingPopUps();
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);
