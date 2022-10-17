@@ -207,7 +207,7 @@
     <ClInclude Include="Helper\public\HTextProcecingConstant.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Scene\public\PopUpManager.h">
+    <ClInclude Include="UI\public\PopUpManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Helper\public\HPlayerCollection.h">
@@ -365,7 +365,7 @@
     <ClCompile Include="UI\Elements\Default\private\Line.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Scene\private\PopUpManager.cpp">
+    <ClCompile Include="UI\private\PopUpManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Helper\private\HPlayerCollection.cpp">
