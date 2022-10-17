@@ -30,19 +30,19 @@ void PopUpManager::OnEvent(Event const& event) {
 
 	// Table Pop Up
 	if (auto const PopUpEvent = dynamic_cast<ShowStringCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<StringCellPopUp, ShowStringCellPopUpEvent>(PopUpEvent);
+		NewTableCellPopUp<std::string, ShowStringCellPopUpEvent>(PopUpEvent);
 		return;
 	}
 	if (auto const PopUpEvent = dynamic_cast<ShowIntCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<IntCellPopUp, ShowIntCellPopUpEvent>(PopUpEvent);
+		NewTableCellPopUp<int, ShowIntCellPopUpEvent>(PopUpEvent);
 		return;
 	}
 	if (auto const PopUpEvent = dynamic_cast<ShowFloatCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<FloatCellPopUp, ShowFloatCellPopUpEvent>(PopUpEvent);
+		NewTableCellPopUp<float, ShowFloatCellPopUpEvent>(PopUpEvent);
 		return;
 	}
 	if (auto const PopUpEvent = dynamic_cast<ShowDoubleCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<DoubleCellPopUp, ShowDoubleCellPopUpEvent>(PopUpEvent);
+		NewTableCellPopUp<double, ShowDoubleCellPopUpEvent>(PopUpEvent);
 		return;
 	}
 	if (auto const PopUpEvent = dynamic_cast<ShowColorCellPopUpEvent const*>(&event)) {
