@@ -11,7 +11,7 @@
 Vector2 DoubleCell::GetNeededSize() const {
 	Vector2 textSize = MeasureTextEx(
 		*(AppContext::GetInstance().assetManager.GetFont()),
-		std::to_string(value).c_str(),
+		std::to_string(m_value).c_str(),
 		m_textSize,
 		0.0f
 	);
@@ -20,11 +20,10 @@ Vector2 DoubleCell::GetNeededSize() const {
 }
 
 double DoubleCell::GetValue() const {
-	return value;
+	return m_value;
 }
-
-void DoubleCell::SetValue(double newValue, bool resize) {
-	value = newValue;
+void DoubleCell::SetValue(double value, bool resize) {
+	m_value = value;
 
 	if (resize) {
 		m_table->ResizeCells();
@@ -36,7 +35,7 @@ void DoubleCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& 
 	if (ShouldEdit(mousePosition)) {
 		auto event = ShowDoubleCellPopUpEvent(
 			"Edit Number",
-			value,
+			m_value,
 			[&](double value) {SetValue(value);}
 		);
 		appContext.eventManager.InvokeEvent(event);
@@ -45,7 +44,7 @@ void DoubleCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& 
 
 void DoubleCell::Render(AppContext const& appContext) {
 	std::string printableValue = GetPritablePlaceholderTextInColider(
-		std::to_string(value),
+		std::to_string(m_value),
 		m_textSize,
 		m_colider,
 		appContext

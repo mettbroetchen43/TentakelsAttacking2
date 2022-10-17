@@ -8,12 +8,10 @@
 
 class ColorCell : public Cell {
 private:
-
+	Color m_value;
 
 public:
 	using Cell::Cell;
-
-	Color value;
 
 	[[nodiscard]] Vector2 GetNeededSize() const override;
 

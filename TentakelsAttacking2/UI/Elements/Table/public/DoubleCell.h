@@ -7,9 +7,9 @@
 #include "Cell.h"
 
 class DoubleCell : public Cell {
+private:
+	double m_value;
 public:
-	double value;
-
 	using Cell::Cell;
 
 	[[nodiscard]] Vector2 GetNeededSize() const override;

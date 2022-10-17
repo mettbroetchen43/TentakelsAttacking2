@@ -13,15 +13,15 @@ Vector2 ColorCell::GetNeededSize() const {
 	return neededSize;
 }
 
-void ColorCell::SetValue(Color newColor, bool resize) {
-	value = newColor;
+void ColorCell::SetValue(Color value, bool resize) {
+	m_value = value;
 
 	if (resize) {
 		m_table->ResizeCells();
 	}
 }
 Color ColorCell::GetValue() const {
-	return value;
+	return m_value;
 }
 
 void ColorCell::CheckAndUpdate(Vector2 const& mousePosition,
@@ -30,7 +30,7 @@ void ColorCell::CheckAndUpdate(Vector2 const& mousePosition,
 	if (ShouldEdit(mousePosition)) {
 		auto event = ShowColorCellPopUpEvent(
 			"Change Color",
-			value,
+			m_value,
 			[&](Color color) {SetValue(color);}
 		);
 		appContext.eventManager.InvokeEvent(event);
@@ -49,7 +49,7 @@ void ColorCell::Render(AppContext const& appContext) {
 		toFill,
 		Vector2(0.0f, 0.0f),
 		0.0f,
-		value
+		m_value
 	);
 
 	Cell::Render(appContext);

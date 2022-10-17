@@ -11,7 +11,7 @@
 Vector2 StringCell::GetNeededSize() const {
     Vector2 textSize = MeasureTextEx(
         *(AppContext::GetInstance().assetManager.GetFont()),
-        value.c_str(),
+        m_value.c_str(),
         m_textSize,
         0.0f
     );
@@ -19,8 +19,11 @@ Vector2 StringCell::GetNeededSize() const {
     return CalculateNeededSize(textSize);
 }
 
+std::string StringCell::GetValue() const {
+    return m_value;
+}
 void StringCell::SetValue(std::string newValue, bool resize) {
-    value = newValue;
+    m_value = newValue;
 
     if (resize) {
         m_table->ResizeCells();
@@ -33,16 +36,15 @@ void StringCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& 
     if (ShouldEdit(mousePosition)) {
         auto event = ShowStringCellPopUpEvent(
             "Edit Text",
-            value,
+            m_value,
             [&](std::string value) {SetValue(value);}
         );
         appContext.eventManager.InvokeEvent(event);
     }
 }
-
 void StringCell::Render(AppContext const& appContext) {
     std::string printableValue = GetPritablePlaceholderTextInColider(
-        value,
+        m_value,
         m_textSize,
         m_colider,
         appContext
@@ -56,8 +58,4 @@ void StringCell::Render(AppContext const& appContext) {
         WHITE
     );
     Cell::Render(appContext);
-}
-
-void StringCell::Resize(Vector2 resolution, AppContext const& appContext) {
-    Cell::Resize(resolution, appContext);
 }

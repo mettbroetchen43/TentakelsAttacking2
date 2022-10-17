@@ -7,9 +7,9 @@
 #include "Cell.h"
 
 class FloatCell : public Cell {
+private:
+	float m_value;
 public:
-	float value;
-
 	using Cell::Cell;
 
 	[[nodiscard]] Vector2 GetNeededSize() const override;
