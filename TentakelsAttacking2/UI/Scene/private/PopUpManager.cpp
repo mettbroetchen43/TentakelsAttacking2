@@ -30,23 +30,23 @@ void PopUpManager::OnEvent(Event const& event) {
 
 	// Table Pop Up
 	if (auto const PopUpEvent = dynamic_cast<ShowStringCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<StringCellPopUp, ShowStringCellPopUpEvent>(PopUpEvent);
+		NewTableCellPopUp<std::string, ShowStringCellPopUpEvent>(PopUpEvent);
 		return;
 	}
 	if (auto const PopUpEvent = dynamic_cast<ShowIntCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<IntCellPopUp, ShowIntCellPopUpEvent>(PopUpEvent);
+		NewTableCellPopUp<int, ShowIntCellPopUpEvent>(PopUpEvent);
 		return;
 	}
 	if (auto const PopUpEvent = dynamic_cast<ShowFloatCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<FloatCellPopUp, ShowFloatCellPopUpEvent>(PopUpEvent);
+		NewTableCellPopUp<float, ShowFloatCellPopUpEvent>(PopUpEvent);
 		return;
 	}
 	if (auto const PopUpEvent = dynamic_cast<ShowDoubleCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<DoubleCellPopUp, ShowDoubleCellPopUpEvent>(PopUpEvent);
+		NewTableCellPopUp<double, ShowDoubleCellPopUpEvent>(PopUpEvent);
 		return;
 	}
 	if (auto const PopUpEvent = dynamic_cast<ShowColorCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<ColorCellPopUp, ShowColorCellPopUpEvent>(PopUpEvent);
+		NewColorCellPopUp(PopUpEvent);
 		return;
 	}
 
@@ -86,6 +86,23 @@ void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerEvent const* event) {
 		AssetType::QUESTION_MARK,
 		event->GetOnClick()
 		));
+}
+
+void PopUpManager::NewColorCellPopUp(ShowColorCellPopUpEvent const* event) {
+	auto focusEvent = NewFocusPopUpLayerEvent();
+	m_appContext->eventManager.InvokeEvent(focusEvent);
+
+	m_popUps.push_back(std::make_unique<ColorCellPopUp>(
+		Vector2(0.5f, 0.5f),
+		Vector2(0.7f, 0.7f),
+		Alignment::MID_MID,
+		m_resolution,
+		event->GetTitle(),
+		AssetType::LOGO,
+		event->GetCurrentColor(),
+		event->GetOnClick()
+		)
+	);
 }
 
 void PopUpManager::DeleteLastPopUp(PopUp* toDelete) {

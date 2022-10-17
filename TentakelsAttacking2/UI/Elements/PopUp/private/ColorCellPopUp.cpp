@@ -10,7 +10,7 @@
 #include "Table.h"
 
 void ColorCellPopUp::Initialize(AppContext const& appContext,
-	Vector2 resolution) {
+	Vector2 resolution, Color currentColor) {
 
 	auto acceptBtn = InitializeAcceptButton(appContext, resolution);
 	acceptBtn->SetOnClick([&]() {
@@ -30,28 +30,22 @@ void ColorCellPopUp::Initialize(AppContext const& appContext,
 	auto event2 = SelectFocusPopUpElementEvent(colorPicker.get());
 	appContext.eventManager.InvokeEvent(event2);
 
-	colorPicker->SetInitialColor(m_currentCell->value);
+	colorPicker->SetInitialColor(currentColor);
 	colorPicker->SetCellFocuses(appContext);
 
 	m_elements.push_back(colorPicker);
 	m_colorPicker = colorPicker;
 }
 void ColorCellPopUp::SetValue() {
-	m_currentCell->value = m_colorPicker->GetColor();
-	m_currentCell->GetTable()->ResizeCells();
+	m_onClick(m_colorPicker->GetColor());
 	SetShouldClose();
 }
 
 ColorCellPopUp::ColorCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	std::string const& title, AssetType infoTexture, ColorCell* currentCell)
+	std::string const& title, AssetType infoTexture, Color currentColor,
+	std::function<void(Color)> onClick)
 	: CellPopUp(pos, size, alignment, resolution, title, infoTexture),
-	m_currentCell(currentCell) {
+	m_onClick(onClick) {
 
-	Initialize(AppContext::GetInstance(), resolution);
-}
-
-void ColorCellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
-
-	CellPopUp::CheckAndUpdate(mousePosition, appContext);
+	Initialize(AppContext::GetInstance(), resolution, currentColor);
 }

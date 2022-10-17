@@ -6,7 +6,7 @@
 #include "Table.h"
 #include "Allignment.h"
 #include "AppContext.h"
-#include "StringCellPopUp.h"
+#include "PrimitiveCellPopUp.hpp"
 #include "HGeneral.h"
 #include <stdexcept>
 #include <cassert>

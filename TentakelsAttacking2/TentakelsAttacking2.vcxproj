@@ -166,10 +166,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\CellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\ColorCellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\DeletePlayerPopUp.h" />
-    <ClInclude Include="UI\Elements\PopUp\public\DoubleCellPopUp.h" />
-    <ClInclude Include="UI\Elements\PopUp\public\FloatCellPopUp.h" />
-    <ClInclude Include="UI\Elements\PopUp\public\IntCellPopUp.h" />
-    <ClInclude Include="UI\Elements\PopUp\public\StringCellPopUp.h" />
+    <ClInclude Include="UI\Elements\PopUp\public\PrimitiveCellPopUp.hpp" />
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h" />
     <ClInclude Include="UI\Elements\Default\public\InputLine.hpp" />
@@ -230,10 +227,6 @@
     <ClCompile Include="UI\Elements\PopUp\private\ColorCellPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\PopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\MessagePopUp.cpp" />
-    <ClCompile Include="UI\Elements\PopUp\private\StringCellPopUp.cpp" />
-    <ClCompile Include="UI\Elements\PopUp\private\IntCellPopUp.cpp" />
-    <ClCompile Include="UI\Elements\PopUp\private\DoubleCellPopUp.cpp" />
-    <ClCompile Include="UI\Elements\PopUp\private\FloatCellPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\DeletePlayerPopUp.cpp" />
     <ClCompile Include="UI\Elements\Table\private\Cell.cpp" />
     <ClCompile Include="UI\Elements\Table\private\IntCell.cpp" />

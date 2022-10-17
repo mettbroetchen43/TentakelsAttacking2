@@ -16,8 +16,5 @@
 
 // Cell PopUps
 #include "CellPopUp.h"
-#include "StringCellPopUp.h"
-#include "IntCellPopUp.h"
-#include "FloatCellPopUp.h"
-#include "DoubleCellPopUp.h"
+#include "PrimitiveCellPopUp.hpp"
 #include "ColorCellPopUp.h"

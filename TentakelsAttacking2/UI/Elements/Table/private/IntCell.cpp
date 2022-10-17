@@ -6,11 +6,12 @@
 #include "IntCell.h"
 #include "AppContext.h"
 #include "HTextProcessing.h"
+#include "Table.h"
 
 Vector2 IntCell::GetNeededSize() const {
 	Vector2 textSize = MeasureTextEx(
 		*(AppContext::GetInstance().assetManager.GetFont()),
-		std::to_string(value).c_str(),
+		std::to_string(m_value).c_str(),
 		m_textSize,
 		0.0f
 	);
@@ -18,12 +19,24 @@ Vector2 IntCell::GetNeededSize() const {
 	return CalculateNeededSize(textSize);
 }
 
+int IntCell::GetValue() const {
+	return m_value;
+}
+void IntCell::SetValue(int value, bool resize) {
+	m_value = value;
+
+	if (resize) {
+		m_table->ResizeCells();
+	}
+}
+
 void IntCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Cell::CheckAndUpdate(mousePosition, appContext);
 	if (ShouldEdit(mousePosition)) {
 		auto event = ShowIntCellPopUpEvent(
 			"Edit Number",
-			this
+			m_value,
+			[&](int value) {SetValue(value);}
 		);
 		appContext.eventManager.InvokeEvent(event);
 	}
@@ -31,7 +44,7 @@ void IntCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& app
 
 void IntCell::Render(AppContext const& appContext) {
 	std::string printableValue = GetPritablePlaceholderTextInColider(
-		std::to_string(value),
+		std::to_string(m_value),
 		m_textSize,
 		m_colider,
 		appContext

@@ -76,7 +76,7 @@ public:
 			cell = dynamic_cast<CellType*>(m_cells.at(index).get());
 		}
 
-		cell->value = value;
+		cell->SetValue(value);
 
 		if (resizeCells) {
 			ResizeCells();
