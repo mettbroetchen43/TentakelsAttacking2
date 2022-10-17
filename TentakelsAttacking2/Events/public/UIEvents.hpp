@@ -125,58 +125,80 @@ public:
 
 class ShowStringCellPopUpEvent: public PopUpEvent{
 private:
-	StringCell* m_cell;
+	std::string m_currentValue;
+	std::function<void(std::string)> m_onClick = [](std::string) {};
 
 public:
 	ShowStringCellPopUpEvent(std::string const& title,
-		StringCell* cell)
-		: PopUpEvent(title, ""), m_cell(cell) { }
+		std::string const& currentValue, std::function<void(std::string)> onClick)
+		: PopUpEvent(title, ""), m_currentValue(currentValue),
+		m_onClick(onClick) { }
 
-	[[nodiscard]] StringCell* GetCell() const {
-		return m_cell;
+	[[nodiscard]] std::string GetCurrentValue() const {
+		return m_currentValue;
 	}
+	[[nodiscard]] std::function<void(std::string)> GetOnClick() const {
+		return m_onClick;
+	}
+
 
 };
 class ShowIntCellPopUpEvent : public PopUpEvent {
 private:
-	IntCell* m_cell;
+	int m_currentValue;
+	std::function<void(int)> m_onClick = [](int) {};
 
 public:
 	ShowIntCellPopUpEvent(std::string const& title,
-		IntCell* cell)
-		: PopUpEvent(title, ""), m_cell(cell) { }
+		int currentValue, std::function<void(int)> onClick)
+		: PopUpEvent(title, ""), m_currentValue(currentValue),
+		m_onClick(onClick) { }
 
-	[[nodiscard]] IntCell* GetCell() const {
-		return m_cell;
+	[[nodiscard]] int GetCurrentValue() const {
+		return m_currentValue;
+	}
+	[[nodiscard]] std::function<void(int)> GetOnClick() const {
+		return m_onClick;
 	}
 
 };
 class ShowFloatCellPopUpEvent : public PopUpEvent {
 private:
-	FloatCell* m_cell;
+	float m_currentValue;
+	std::function<void(float)> m_onClick = [](float) {};
 
 public:
 	ShowFloatCellPopUpEvent(std::string const& title,
-		FloatCell* cell)
-		: PopUpEvent(title, ""), m_cell(cell) { }
+		double currentValue, std::function<void(float)> onClick)
+		: PopUpEvent(title, ""),m_currentValue(currentValue),
+		m_onClick(onClick) { }
 
-	[[nodiscard]] FloatCell* GetCell() const {
-		return m_cell;
+	[[nodiscard]] float GetCurrentValue() const {
+		return m_currentValue;
+	}
+	[[nodiscard]] std::function<void(float)> GetOnClick() const {
+		return m_onClick;
 	}
 
 };
 class ShowDoubleCellPopUpEvent : public PopUpEvent {
 private:
-	DoubleCell* m_cell;
+	double m_currentValue;
+	std::function<void(double)> m_onClick = [](double) {};
 
 public:
 	ShowDoubleCellPopUpEvent(std::string const& title,
-		DoubleCell* cell)
-		: PopUpEvent(title, ""), m_cell(cell) { }
+		double currentValue, std::function<void(double)> onClick)
+		: PopUpEvent(title, ""), m_currentValue(currentValue),
+		m_onClick(onClick) { }
 
-	[[nodiscard]] DoubleCell* GetCell() const {
-		return m_cell;
+	[[nodiscard]] double GetCurrentValue() const {
+		return m_currentValue;
 	}
+	[[nodiscard]] std::function<void(double)> GetOnClick() const {
+		return m_onClick;
+	}
+
 
 };
 class ShowColorCellPopUpEvent : public PopUpEvent {
