@@ -36,7 +36,7 @@ private:
 		auto event2 = SelectFocusPopUpElementEvent(inputChance.get());
 		appContext.eventManager.InvokeEvent(event2);
 		inputChance->SetValue(currentValue);
-		inputChance->SetPlaceholderText("Edit Text");
+		inputChance->SetPlaceholderText("Edit Entry");
 
 		m_elements.push_back(inputChance);
 		m_inputChange = inputChance;
