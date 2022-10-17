@@ -196,9 +196,9 @@ void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
 	
 	int index = 1;
 	for (auto& [ID, name] : playerNames) {
-		m_table->SetValue<IntCell, int>(index, 0, ID, false);
-		m_table->SetValue<StringCell, std::string>(index, 1, name, false);
-		m_table->SetValue<ColorCell, Color>(index, 2, playerColors.at(ID), false);
+		m_table->SetValue<int>(index, 0, ID, false);
+		m_table->SetValue<std::string>(index, 1, name, false);
+		m_table->SetValue<Color>(index, 2, playerColors.at(ID), false);
 	
 		++index;
 	}

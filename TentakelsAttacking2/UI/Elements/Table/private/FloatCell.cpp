@@ -31,7 +31,7 @@ void FloatCell::SetValue(float value, bool resize) {
 }
 
 void FloatCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
-	Cell::CheckAndUpdate(mousePosition, appContext);
+	TableCell::CheckAndUpdate(mousePosition, appContext);
 	if (ShouldEdit(mousePosition)) {
 		auto event = ShowFloatCellPopUpEvent(
 			"Edit Number",
@@ -57,5 +57,5 @@ void FloatCell::Render(AppContext const& appContext) {
 		0.0f,
 		WHITE
 	);
-	Cell::Render(appContext);
+	TableCell::Render(appContext);
 }

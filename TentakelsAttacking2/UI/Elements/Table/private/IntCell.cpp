@@ -31,7 +31,7 @@ void IntCell::SetValue(int value, bool resize) {
 }
 
 void IntCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
-	Cell::CheckAndUpdate(mousePosition, appContext);
+	TableCell::CheckAndUpdate(mousePosition, appContext);
 	if (ShouldEdit(mousePosition)) {
 		auto event = ShowIntCellPopUpEvent(
 			"Edit Number",
@@ -57,5 +57,5 @@ void IntCell::Render(AppContext const& appContext) {
 		0.0f,
 		WHITE
 	);
-	Cell::Render(appContext);
+	TableCell::Render(appContext);
 }

@@ -10,6 +10,11 @@
 #include "HGeneral.h"
 #include <stdexcept>
 #include <cassert>
+#include <iostream>
+
+void Table::CellUpdated(AbstractTableCell const* cell) {
+	std::cout << cell->GetFocusID() << '\n';
+}
 
 Vector2 Table::GetElementPosition(size_t row, size_t column) const {
 	Vector2 elementSize = GetElementSize();
@@ -42,7 +47,7 @@ std::vector<float> Table::GetColumnWidths() {
 
 	for (int row = 0; row < m_rows; ++row) {
 		for (int column = 0; column < m_columns; ++column) {
-			Cell* currentCell = m_cells.at(
+			AbstractTableCell* currentCell = m_cells.at(
 				GetIndexFromRowAndColumn(row, column, m_columns)).get();
 
 			float cellWitdh = GetElementSizeReversed(
@@ -97,13 +102,12 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 	for (int row = 0; row < m_rows; ++row) {
 		for (int column = 0; column < m_columns; ++column) {
 			m_cells.push_back(std::make_unique<EmptyCell>(
+				static_cast<unsigned int>(
+					GetIndexFromRowAndColumn(row, column, m_columns)), // ID
 				GetElementPosition(row, column),
 				GetElementSize(),
 				Alignment::DEFAULT,
-				static_cast<unsigned int>(
-					GetIndexFromRowAndColumn(row, column,m_columns)),
-				resolution,
-				this
+				resolution
 				));
 		}
 	}
@@ -230,7 +234,15 @@ size_t Table::GetColumns() const {
 
 void Table::SetEmptyCell(size_t row, size_t column, bool resizeCells) {
 	CheckValidRowColumn(row, column);
-	SetCell<EmptyCell>(row, column);
+	size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
+	m_cells.at(index) = std::make_unique<EmptyCell>(
+		static_cast<unsigned int>(
+			GetIndexFromRowAndColumn(row, column, m_columns)), // ID
+		GetElementPosition(row, column),
+		GetElementSize(),
+		Alignment::DEFAULT,
+		m_resolution
+		);
 
 	if (resizeCells) {
 		ResizeCells();
@@ -245,7 +257,7 @@ void Table::SetHeadlines(std::vector<std::string> const& headlines,
 	}
 
 	for (int i = 0; i < m_columns; ++i) {
-		SetValue<StringCell, std::string>(0, i, headlines.at(i), false);
+		SetValue<std::string>(0, i, headlines.at(i), false);
 	}
 
 	if (resizeCells) {
@@ -274,7 +286,7 @@ void Table::ResizeCells() {
 
 	for (size_t row = 0; row < m_rows; ++row) {
 		for (size_t column = 0; column < m_columns; ++column) {
-			Cell* currentCell = m_cells.at(
+			AbstractTableCell* currentCell = m_cells.at(
 				GetIndexFromRowAndColumn(row, column, m_columns)).get();
 			currentCell->SetSizeX(
 				columnWidths.at(column),

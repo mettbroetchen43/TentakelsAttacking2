@@ -6,11 +6,11 @@
 #pragma once
 #include "Cell.h"
 
-class FloatCell : public Cell {
+class FloatCell : public TableCell {
 private:
 	float m_value;
 public:
-	using Cell::Cell;
+	using TableCell::TableCell;
 
 	[[nodiscard]] Vector2 GetNeededSize() const override;
 	[[nodiscard]] float GetValue() const;

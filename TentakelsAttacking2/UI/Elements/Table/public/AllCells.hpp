@@ -4,10 +4,6 @@
 //
 
 #pragma once
-#include "Cell.h"
+#include "AbstractTableCell.h"
+#include "TableCell.h"
 #include "EmptyCell.h"
-#include "ColorCell.h"
-#include "StringCell.h"
-#include "IntCell.h"
-#include "FloatCell.h"
-#include "DoubleCell.h"

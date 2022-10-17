@@ -4,14 +4,14 @@
 //
 
 #pragma once
-#include "Cell.h"
+#include "TableCell.h"
 
-class ColorCell : public Cell {
+class ColorCell : public TableCell {
 private:
 	Color m_value;
 
 public:
-	using Cell::Cell;
+	using TableCell::TableCell;
 
 	[[nodiscard]] Vector2 GetNeededSize() const override;
 

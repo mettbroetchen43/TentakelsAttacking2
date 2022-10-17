@@ -14,7 +14,7 @@
 // Delete Player PopUp
 #include "DeletePlayerPopUp.h"
 
-// Cell PopUps
+// TableCell PopUps
 #include "CellPopUp.h"
 #include "PrimitiveCellPopUp.hpp"
 #include "ColorCellPopUp.h"

@@ -31,7 +31,7 @@ void DoubleCell::SetValue(double value, bool resize) {
 }
 
 void DoubleCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
-	Cell::CheckAndUpdate(mousePosition, appContext);
+	TableCell::CheckAndUpdate(mousePosition, appContext);
 	if (ShouldEdit(mousePosition)) {
 		auto event = ShowDoubleCellPopUpEvent(
 			"Edit Number",
@@ -57,5 +57,5 @@ void DoubleCell::Render(AppContext const& appContext) {
 		0.0f,
 		WHITE
 	);
-	Cell::Render(appContext);
+	TableCell::Render(appContext);
 }

@@ -6,12 +6,12 @@
 #pragma once
 #include "Cell.h"
 
-class IntCell : public Cell {
+class IntCell : public TableCell {
 private:
 	int m_value = 0;
 
 public:
-	using Cell::Cell;
+	using TableCell::TableCell;
 
 	[[nodiscard]] Vector2 GetNeededSize() const override;
 	[[nodiscard]] int GetValue() const;
