@@ -169,7 +169,7 @@ private:
 
 public:
 	ShowFloatCellPopUpEvent(std::string const& title,
-		double currentValue, std::function<void(float)> onClick)
+		float currentValue, std::function<void(float)> onClick)
 		: PopUpEvent(title, ""),m_currentValue(currentValue),
 		m_onClick(onClick) { }
 
