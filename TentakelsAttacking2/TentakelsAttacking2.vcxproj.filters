@@ -99,7 +99,7 @@
     <ClInclude Include="UI\Scene\public\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Scene\public\SceneManager.h">
+    <ClInclude Include="UI\public\SceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Scene\public\SceneType.hpp">
@@ -281,7 +281,7 @@
     <ClCompile Include="UI\Scene\private\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Scene\private\SceneManager.cpp">
+    <ClCompile Include="UI\private\SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Scene\private\BaseMainScene.cpp">
