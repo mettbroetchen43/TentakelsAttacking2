@@ -186,7 +186,7 @@
     <ClInclude Include="UI\Scene\public\BaseMainScene.h" />
     <ClInclude Include="UI\Scene\public\PopUpManager.h" />
     <ClInclude Include="UI\Scene\Scenes\public\Intro.h" />
-    <ClInclude Include="UI\Scene\public\SceneManager.h" />
+    <ClInclude Include="UI\public\SceneManager.h" />
     <ClInclude Include="UI\Elements\Button\public\ClassicButton.h" />
     <ClInclude Include="Helper\public\HAssetManager.h" />
     <ClInclude Include="Helper\public\HAssetType.hpp" />
@@ -242,7 +242,7 @@
     <ClCompile Include="UI\Scene\private\BaseMainScene.cpp" />
     <ClCompile Include="UI\Scene\private\PopUpManager.cpp" />
     <ClCompile Include="UI\Scene\Scenes\private\Intro.cpp" />
-    <ClCompile Include="UI\Scene\private\SceneManager.cpp" />
+    <ClCompile Include="UI\private\SceneManager.cpp" />
     <ClCompile Include="UI\Elements\Button\private\ClassicButton.cpp" />
     <ClCompile Include="Helper\private\HAssetManager.cpp" />
     <ClCompile Include="UI\Elements\Button\private\Button.cpp" />
