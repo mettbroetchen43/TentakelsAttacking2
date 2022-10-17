@@ -180,17 +180,21 @@ public:
 };
 class ShowColorCellPopUpEvent : public PopUpEvent {
 private:
-	ColorCell* m_cell;
+	Color m_currentColor;
+	std::function<void(Color)> m_onClick = [](Color) {};
 
 public:
 	ShowColorCellPopUpEvent(std::string const& title,
-		ColorCell* cell)
-		: PopUpEvent(title, ""), m_cell(cell) { }
+		Color currentColor, std::function<void(Color)> onClick)
+		: PopUpEvent(title, ""), m_currentColor(currentColor),
+		m_onClick(onClick) { }
 
-	[[nodiscard]] ColorCell* GetCell() const {
-		return m_cell;
+	[[nodiscard]] Color GetCurrentColor() const {
+		return m_currentColor;
 	}
-
+	[[nodiscard]] std::function<void(Color)> GetOnClick() const {
+		return m_onClick;
+	}
 };
 
 class ShowDeletePlayerEvent : public PopUpEvent {
