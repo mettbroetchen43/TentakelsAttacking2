@@ -6,6 +6,7 @@
 #include "DoubleCell.h"
 #include "AppContext.h"
 #include "HTextProcessing.h"
+#include "Table.h"
 
 Vector2 DoubleCell::GetNeededSize() const {
 	Vector2 textSize = MeasureTextEx(
@@ -18,12 +19,25 @@ Vector2 DoubleCell::GetNeededSize() const {
 	return CalculateNeededSize(textSize);
 }
 
+double DoubleCell::GetValue() const {
+	return value;
+}
+
+void DoubleCell::SetValue(double newValue, bool resize) {
+	value = newValue;
+
+	if (resize) {
+		m_table->ResizeCells();
+	}
+}
+
 void DoubleCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Cell::CheckAndUpdate(mousePosition, appContext);
 	if (ShouldEdit(mousePosition)) {
 		auto event = ShowDoubleCellPopUpEvent(
 			"Edit Number",
-			this
+			value,
+			[&](double value) {SetValue(value);}
 		);
 		appContext.eventManager.InvokeEvent(event);
 	}

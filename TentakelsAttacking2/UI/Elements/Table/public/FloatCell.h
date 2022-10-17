@@ -13,6 +13,8 @@ public:
 	using Cell::Cell;
 
 	[[nodiscard]] Vector2 GetNeededSize() const override;
+	[[nodiscard]] float GetValue() const;
+	void SetValue(float newValue, bool resize = false);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext) override;
