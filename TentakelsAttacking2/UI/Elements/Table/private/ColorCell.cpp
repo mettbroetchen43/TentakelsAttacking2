@@ -5,11 +5,23 @@
 
 #include "ColorCell.h"
 #include "AppContext.h"
+#include "Table.h"
 
 Vector2 ColorCell::GetNeededSize() const {
 	Vector2 neededSize =  { 0.05f, 0.1f };
 	ClampNeededSize(neededSize);
 	return neededSize;
+}
+
+void ColorCell::SetValue(Color newColor, bool resize) {
+	value = newColor;
+
+	if (resize) {
+		m_table->ResizeCells();
+	}
+}
+Color ColorCell::GetValue() const {
+	return value;
 }
 
 void ColorCell::CheckAndUpdate(Vector2 const& mousePosition,
@@ -18,7 +30,8 @@ void ColorCell::CheckAndUpdate(Vector2 const& mousePosition,
 	if (ShouldEdit(mousePosition)) {
 		auto event = ShowColorCellPopUpEvent(
 			"Change Color",
-			this
+			value,
+			[&](Color color) {SetValue(color);}
 		);
 		appContext.eventManager.InvokeEvent(event);
 	}

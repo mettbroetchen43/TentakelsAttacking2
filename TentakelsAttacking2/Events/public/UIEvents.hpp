@@ -8,6 +8,7 @@
 #include "HSoundType.hpp"
 #include <string>
 #include <functional>
+#include <raylib.h>
 
 class StringCell;
 class IntCell;

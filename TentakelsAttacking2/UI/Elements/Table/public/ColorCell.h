@@ -7,12 +7,18 @@
 #include "Cell.h"
 
 class ColorCell : public Cell {
-public:
-	Color value;
+private:
 
+
+public:
 	using Cell::Cell;
 
+	Color value;
+
 	[[nodiscard]] Vector2 GetNeededSize() const override;
+
+	void SetValue(Color newColor, bool resize = false);
+	[[nodiscard]] Color GetValue() const;
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext) override;
