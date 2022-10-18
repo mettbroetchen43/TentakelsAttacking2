@@ -11,9 +11,7 @@ Vector2 EmptyCell::GetNeededSize() {
 
 EmptyCell::EmptyCell(unsigned int ID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution)
-	:AbstractTableCell(ID, pos, size, alignment) {
-	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
-}
+	:AbstractTableCell(ID, pos, size, alignment, resolution) { }
 
 void EmptyCell::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
 	[[maybe_unused]] AppContext const& appContext) { }
@@ -34,10 +32,6 @@ void EmptyCell::Resize(Vector2 resolution,
 	};
 };
 
-void EmptyCell::SetEditable([[maybe_unused]] bool editable) { };
-[[nodiscard]] bool EmptyCell::IsEnabled() const {
-	return false;
-};
 [[nodiscard]] Rectangle EmptyCell::GetCollider() const {
 	return m_colider;
 };

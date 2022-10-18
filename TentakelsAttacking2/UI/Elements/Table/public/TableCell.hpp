@@ -15,7 +15,6 @@ class TableCell : public AbstractTableCell {
 protected:
 	EntryType m_value;
 
-	bool m_editable = true;
 	std::function<void()> m_resizeCells = []() {};
 	std::function<void(TableCell*)> m_updated = [](TableCell*) {};
 
@@ -77,7 +76,7 @@ public:
 		Alignment alignment, Vector2 resolution,
 		std::function<void()> resizeCells,
 		std::function<void(TableCell*)> updated) 
-		: AbstractTableCell(ID, pos, size, alignment),
+		: AbstractTableCell(ID, pos, size, alignment, resolution),
 			m_resizeCells(resizeCells), m_updated(updated){
 
 			m_minSize = {
@@ -89,7 +88,6 @@ public:
 				m_size.y * 2
 			};
 
-			m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 			m_textSize = m_colider.height / 2;
 			m_textMargin = m_colider.width / 20;
 			m_textPosition = {
@@ -177,13 +175,7 @@ public:
 
 		return CalculateNeededSize(textSize);
 	}
-	 
-	void SetEditable(bool editable) override {
-		m_editable = editable;
-	}
-	[[nodiscard]] bool IsEnabled() const override {
-		return m_editable;
-	}
+	
 	[[nodiscard]] Rectangle GetCollider() const override {
 		return m_colider;
 	}

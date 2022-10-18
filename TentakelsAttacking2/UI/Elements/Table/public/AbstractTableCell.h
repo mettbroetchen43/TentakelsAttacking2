@@ -10,12 +10,14 @@
 class AbstractTableCell : public UIElement, public Focusable {
 protected:
 	Rectangle m_colider;
+	bool m_editable = true;
 
 	void CheckResizeCells(Vector2 resolution,
 		AppContext const& appContext, bool resize);
 
 public:
-	AbstractTableCell(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment);
+	AbstractTableCell(unsigned int ID, Vector2 pos, Vector2 size,
+		Alignment alignment, Vector2 resolution);
 	virtual ~AbstractTableCell() = default;
 
 	[[nodiscard]] virtual Vector2 GetNeededSize() = 0 ;
@@ -24,8 +26,8 @@ public:
 	virtual void Render(AppContext const& appContext) = 0;
 	virtual void Resize(Vector2 resolution, AppContext const& appContext) = 0;
 
-	virtual void SetEditable(bool editable) = 0;
-	[[nodiscard]] virtual bool IsEnabled() const = 0;
+	[[nodiscard]] void SetEditable(bool editable);
+	[[nodiscard]] bool IsEnabled() const override;
 	[[nodiscard]] virtual Rectangle GetCollider() const = 0;
 
 	void SetPosX(float posX, Vector2 resolution,

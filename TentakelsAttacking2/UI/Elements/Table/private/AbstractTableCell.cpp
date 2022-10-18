@@ -12,8 +12,18 @@ void AbstractTableCell::CheckResizeCells(Vector2 resolution,
 	}
 }
 
-AbstractTableCell::AbstractTableCell(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment)
-	:Focusable(ID), UIElement(pos, size, alignment) { }
+AbstractTableCell::AbstractTableCell(unsigned int ID, Vector2 pos, Vector2 size,
+	Alignment alignment, Vector2 resolution)
+	:Focusable(ID), UIElement(pos, size, alignment) {
+	m_colider = GetAlignedCollider(m_size, m_pos, alignment, resolution);
+}
+
+[[nodiscard]] void AbstractTableCell::SetEditable(bool editable) {
+	m_editable = editable;
+}
+[[nodiscard]] bool AbstractTableCell::IsEnabled() const {
+	return m_editable;
+}
 
 void AbstractTableCell::SetPosX(float posX, Vector2 resolution,
 	AppContext const& appContext, bool resize) {
