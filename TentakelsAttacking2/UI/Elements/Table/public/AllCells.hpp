@@ -5,5 +5,5 @@
 
 #pragma once
 #include "AbstractTableCell.h"
-#include "TableCell.h"
+#include "TableCell.hpp"
 #include "EmptyCell.h"

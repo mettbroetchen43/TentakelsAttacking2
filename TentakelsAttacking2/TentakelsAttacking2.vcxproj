@@ -172,7 +172,7 @@
     <ClInclude Include="UI\Elements\Default\public\InputLine.hpp" />
     <ClInclude Include="UI\Elements\Table\public\AllCells.hpp" />
     <ClInclude Include="UI\Elements\Table\public\AbstractTableCell.h" />
-    <ClInclude Include="UI\Elements\Table\public\TableCell.h" />
+    <ClInclude Include="UI\Elements\Table\public\TableCell.hpp" />
     <ClInclude Include="UI\Elements\Table\public\EmptyCell.h" />
     <ClInclude Include="UI\Elements\Table\public\Table.h" />
     <ClInclude Include="UI\public\Allignment.h" />

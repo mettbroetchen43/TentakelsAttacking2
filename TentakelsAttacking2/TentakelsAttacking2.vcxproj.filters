@@ -147,7 +147,7 @@
     <ClInclude Include="Helper\public\HTextProcessing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Elements\Table\public\TableCell.h">
+    <ClInclude Include="UI\Elements\Table\public\TableCell.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\Table\public\EmptyCell.h">
