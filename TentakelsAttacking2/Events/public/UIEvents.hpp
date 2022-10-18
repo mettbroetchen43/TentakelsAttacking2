@@ -123,7 +123,7 @@ public:
 	using PopUpEvent::PopUpEvent;
 };
 
-class ShowStringCellPopUpEvent: public PopUpEvent{
+/*class ShowStringCellPopUpEvent : public PopUpEvent {
 private:
 	std::string m_currentValue;
 	std::function<void(std::string)> m_onClick = [](std::string) {};
@@ -218,8 +218,28 @@ public:
 	[[nodiscard]] std::function<void(Color)> GetOnClick() const {
 		return m_onClick;
 	}
-};
+};*/
 
+template <typename EntryType>
+class ShowCellPopUpEvent : public PopUpEvent {
+private:
+	EntryType m_currentValue;
+	std::function<void(EntryType)> m_onClick = [](EntryType) {};
+
+public:
+	ShowCellPopUpEvent(std::string const& title,
+		EntryType currentValue, std::function<void(EntryType)> onClick)
+		: PopUpEvent(title, ""), m_currentValue(currentValue),
+		m_onClick(onClick) { }
+
+	[[nodiscard]] EntryType GetCurrentValue() const {
+		return m_currentValue;
+	}
+	[[nodiscard]] std::function<void(EntryType)> GetOnClick() const {
+		return m_onClick;
+	}
+
+};
 class ShowDeletePlayerEvent : public PopUpEvent {
 	std::function<void(unsigned int)> m_onClick = [](unsigned int) {};
 

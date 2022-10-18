@@ -7,8 +7,6 @@
 #include "CellPopUp.h"
 #include "ColorPicker.h"
 
-class ColorCell;
-
 class ColorCellPopUp : public CellPopUp {
 private:
 	std::shared_ptr<ColorPicker> m_colorPicker;

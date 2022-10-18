@@ -29,23 +29,23 @@ void PopUpManager::OnEvent(Event const& event) {
 	}
 
 	// Table Pop Up
-	if (auto const PopUpEvent = dynamic_cast<ShowStringCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<std::string, ShowStringCellPopUpEvent>(PopUpEvent);
+	if (auto const PopUpEvent = dynamic_cast<ShowCellPopUpEvent<std::string> const*>(&event)) {
+		NewTableCellPopUp<std::string, ShowCellPopUpEvent<std::string>>(PopUpEvent);
 		return;
 	}
-	if (auto const PopUpEvent = dynamic_cast<ShowIntCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<int, ShowIntCellPopUpEvent>(PopUpEvent);
+	if (auto const PopUpEvent = dynamic_cast<ShowCellPopUpEvent<int> const*>(&event)) {
+		NewTableCellPopUp<int, ShowCellPopUpEvent<int>>(PopUpEvent);
 		return;
 	}
-	if (auto const PopUpEvent = dynamic_cast<ShowFloatCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<float, ShowFloatCellPopUpEvent>(PopUpEvent);
+	if (auto const PopUpEvent = dynamic_cast<ShowCellPopUpEvent<float> const*>(&event)) {
+		NewTableCellPopUp<float, ShowCellPopUpEvent<float>>(PopUpEvent);
 		return;
 	}
-	if (auto const PopUpEvent = dynamic_cast<ShowDoubleCellPopUpEvent const*>(&event)) {
-		NewTableCellPopUp<double, ShowDoubleCellPopUpEvent>(PopUpEvent);
+	if (auto const PopUpEvent = dynamic_cast<ShowCellPopUpEvent<double> const*>(&event)) {
+		NewTableCellPopUp<double, ShowCellPopUpEvent<double>>(PopUpEvent);
 		return;
 	}
-	if (auto const PopUpEvent = dynamic_cast<ShowColorCellPopUpEvent const*>(&event)) {
+	if (auto const PopUpEvent = dynamic_cast<ShowCellPopUpEvent<Color> const*>(&event)) {
 		NewColorCellPopUp(PopUpEvent);
 		return;
 	}
@@ -88,7 +88,7 @@ void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerEvent const* event) {
 		));
 }
 
-void PopUpManager::NewColorCellPopUp(ShowColorCellPopUpEvent const* event) {
+void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
 	auto focusEvent = NewFocusPopUpLayerEvent();
 	m_appContext->eventManager.InvokeEvent(focusEvent);
 
@@ -99,7 +99,7 @@ void PopUpManager::NewColorCellPopUp(ShowColorCellPopUpEvent const* event) {
 		m_resolution,
 		event->GetTitle(),
 		AssetType::LOGO,
-		event->GetCurrentColor(),
+		event->GetCurrentValue(),
 		event->GetOnClick()
 		)
 	);

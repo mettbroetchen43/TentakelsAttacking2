@@ -4,17 +4,21 @@
 //
 
 #pragma once
-#include "Cell.h"
+#include "AbstractTableCell.h"
 
-class EmptyCell : public Cell {
+class EmptyCell : public AbstractTableCell {
 private:
 
-protected:
-
 public:
-	using Cell::Cell;
+	EmptyCell(unsigned int ID, Vector2 pos, Vector2 size,
+		Alignment alignment, Vector2 resolution);
 
-	[[nodiscard]] Vector2 GetNeededSize() const override;
+	[[nodiscard]] Vector2 GetNeededSize() override;
 
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition,
+		AppContext const& appContext) override;
+	void Render(AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext const& appContext) override;
+
+	[[nodiscard]] Rectangle GetCollider() const override;
 };

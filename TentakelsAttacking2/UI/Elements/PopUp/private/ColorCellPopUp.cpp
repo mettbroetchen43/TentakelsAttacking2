@@ -4,7 +4,6 @@
 //
 
 #include "ColorCellPopUp.h"
-#include "ColorCell.h"
 #include "AppContext.h"
 #include "HGeneral.h"
 #include "Table.h"

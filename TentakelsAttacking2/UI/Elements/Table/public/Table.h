@@ -13,11 +13,13 @@
 
 class Table : public UIElement, public Focusable {
 private:
-	std::vector<std::unique_ptr<Cell>> m_cells;
+	std::vector<std::unique_ptr<AbstractTableCell>> m_cells;
 	size_t m_rows;
 	size_t m_columns;
 	Rectangle m_colider;
 	Vector2 m_resolution;
+
+	void CellUpdated(AbstractTableCell const* cell);
 
 	[[nodiscard]] Vector2 GetElementPosition(size_t row, size_t column) const;
 	[[nodiscard]] Vector2 GetElementSize() const;
@@ -29,17 +31,18 @@ private:
 	[[nodiscard]] std::vector<float> GetNewColumnPosition(
 		std::vector<float> const& newColumnWidths) const;
 
-	template<typename CellType>
+	template<typename EntryType>
 	void SetCell(size_t row, size_t column) {
 		const size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
 		const bool isEditable = m_cells.at(index)->IsEnabled();
-		m_cells.at(index) = std::make_unique<CellType>(
+		m_cells.at(index) = std::make_unique<TableCell<EntryType>>(
+			static_cast<unsigned int>(index),
 			GetElementPosition(row, column),
 			GetElementSize(),
 			Alignment::DEFAULT,
-			static_cast<unsigned int>(index),
 			m_resolution,
-			this
+			[&]() {ResizeCells();},
+			[&](AbstractTableCell const* cell) {CellUpdated(cell);}
 			);
 		m_cells.at(index)->SetEditable(isEditable);
 	}
@@ -65,15 +68,15 @@ public:
 	[[nodiscard]] size_t GetColumns() const;
 
 	void SetEmptyCell(size_t row, size_t column, bool resizeCells = true);
-	template<typename CellType, typename ValueType>
+	template<typename ValueType>
 	void SetValue(size_t row, size_t column, ValueType value,
 		bool resizeCells = true) {
 		CheckValidRowColumn(row, column);
 		size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
-		auto cell = dynamic_cast<CellType*>(m_cells.at(index).get());
+		auto cell = dynamic_cast<TableCell<ValueType>*>(m_cells.at(index).get());
 		if (!cell) {
-			SetCell<CellType>(row, column);
-			cell = dynamic_cast<CellType*>(m_cells.at(index).get());
+			SetCell<ValueType>(row, column);
+			cell = dynamic_cast<TableCell<ValueType>*>(m_cells.at(index).get());
 		}
 
 		cell->SetValue(value);
