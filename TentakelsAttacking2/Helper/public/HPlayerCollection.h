@@ -6,7 +6,8 @@
 #pragma once
 #include "EventListener.hpp"
 #include "HGeneral.h"
-#include <unordered_map>
+#include <map>
+#include <string>
 #include <array>
 #include <raylib.h>
 
@@ -32,12 +33,12 @@ private:
 		VIOLET,
 		DARKPURPLE,
 	};
-	std::unordered_map<unsigned int, Color> m_playerColors;
-	std::unordered_map<unsigned int, std::string> m_playerNames;
+	std::map<unsigned int, Color> m_playerColors;
+	std::map<unsigned int, std::string> m_playerNames;
 
 	template<typename T>
 	[[nodiscard]] bool ContainsValue(
-		std::unordered_map<unsigned int, T> map, T value) const {
+		std::map<unsigned int, T> map, T value) const {
 		for (auto [ID, element] : map) {
 			if (element == value) {
 				return true;
@@ -61,8 +62,8 @@ public:
 
 	[[nodiscard]] ColorArray GetAllColors() const;
 	[[nodiscard]] Color GetPossibleColor() const;
-	[[nodiscard]] std::unordered_map<unsigned int, Color> GetColors() const;
-	[[nodiscard]] std::unordered_map<unsigned int, std::string> GetNames() const;
+	[[nodiscard]] std::map<unsigned int, Color> GetColors() const;
+	[[nodiscard]] std::map<unsigned int, std::string> GetNames() const;
 	
 	void OnEvent(Event const& event) override;
 };

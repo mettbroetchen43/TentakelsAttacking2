@@ -106,10 +106,10 @@ void PlayerCollection::DeletePlayer(unsigned int ID) {
 PlayerCollection::ColorArray PlayerCollection::GetAllColors() const {
 	return m_colors;
 }
-std::unordered_map<unsigned int, Color> PlayerCollection::GetColors() const {
+std::map<unsigned int, Color> PlayerCollection::GetColors() const {
 	return m_playerColors;
 }
-std::unordered_map<unsigned int, std::string> PlayerCollection::GetNames() const {
+std::map<unsigned int, std::string> PlayerCollection::GetNames() const {
 	return m_playerNames;
 }
 
