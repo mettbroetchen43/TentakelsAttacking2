@@ -8,6 +8,7 @@
 #include "AppContext.h"
 #include "HTextProcessing.h"
 #include <string>
+#include <iostream>
 #include <functional>
 
 template<typename EntryType>
@@ -71,6 +72,12 @@ protected:
 		neededSize.y = neededSize.y > m_maxSize.y ? m_maxSize.y : neededSize.y;
 	}
 
+	void UpdateValue([[maybe_unused]] EntryType value) {
+		m_value = value;
+		m_resizeCells();
+		m_updated(this);
+	}
+
 public:
 	TableCell(unsigned int ID, Vector2 pos, Vector2 size,
 		Alignment alignment, Vector2 resolution,
@@ -113,7 +120,7 @@ public:
 			auto event = ShowCellPopUpEvent<EntryType>(
 				"Edit Entry",
 				m_value,
-				[&](EntryType value) {SetValue(value);}
+				[&](EntryType value) {UpdateValue(value);}
 			);
 			appContext.eventManager.InvokeEvent(event);
 		}

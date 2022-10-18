@@ -13,7 +13,7 @@
 #include <iostream>
 
 void Table::CellUpdated(AbstractTableCell const* cell) {
-	std::cout << cell->GetFocusID() << '\n';
+	std::cout << "EDIT! | " << cell->GetFocusID() << '\n';
 }
 
 Vector2 Table::GetElementPosition(size_t row, size_t column) const {
