@@ -90,7 +90,7 @@ void NewGameScene::Initialize(Vector2 resolution,
 		"Remove Player",
 		SoundType::CLICKED_RELEASE_STD
 		);
-	removePlayerBtn->SetOnClick([&]() {CreateDeletePlayer();});
+	removePlayerBtn->SetOnClick([&]() {	CreateDeletePlayer(); });
 	m_elements.push_back(removePlayerBtn);
 
 	auto line = std::make_shared<Line>(
@@ -178,7 +178,7 @@ void NewGameScene::CheckForNestedFocus(Vector2 const& mousePosition,
 
 void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
 	m_colorPicker->SetColor(appContext.playerCollection.GetPossibleColor());
-	
+
 	m_inputLine->Clear();
 	if (m_colorPicker->IsNestedFocus()) {
 		m_colorPicker->SetNestedFocus(false);
@@ -190,13 +190,13 @@ void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
 	appContext.eventManager.InvokeEvent(event);
 
 	auto PlayerData = appContext.playerCollection.GetPlayerData();
-	
+
 	int index = 1;
 	for (auto& p : PlayerData) {
 		m_table->SetValue<int>(index, 0, p.ID, false);
 		m_table->SetValue<std::string>(index, 1, p.name, false);
 		m_table->SetValue<Color>(index, 2, p.color, false);
-	
+
 		++index;
 	}
 	for (int row = index; row < m_table->GetRows(); ++row) {
