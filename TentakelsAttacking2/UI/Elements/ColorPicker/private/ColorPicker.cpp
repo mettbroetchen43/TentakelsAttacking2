@@ -44,12 +44,12 @@ void ColorPicker::Initialise(Vector2 resolution) {
 	}
 }
 void ColorPicker::SetUsedColors(AppContext const& appContext) {
-	auto colors = appContext.playerCollection.GetColors();
+	auto const& players = appContext.playerCollection.GetPlayerData();
 
 	for (auto& c : m_cells) {
 		bool sameColor = false;
-		for (auto& [ID, color] : colors) {
-			if (c->GetColor() == color) {
+		for (auto& p : players) {
+			if (c->GetColor() == p.color) {
 				sameColor = true;
 			}
 		}

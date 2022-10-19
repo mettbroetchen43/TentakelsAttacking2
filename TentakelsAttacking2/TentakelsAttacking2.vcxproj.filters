@@ -207,6 +207,9 @@
     <ClInclude Include="UI\Elements\Table\public\AbstractTableCell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Helper\public\HPlayerData.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">

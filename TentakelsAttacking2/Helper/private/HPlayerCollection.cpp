@@ -8,6 +8,25 @@
 #include "GenerelEvents.hpp"
 #include "AppContext.h"
 #include <algorithm>
+#include <stdexcept>
+
+bool PlayerCollection::ContainsName(std::string const& name) const {
+	for (auto const& p : m_playerData) {
+		if (p.name == name) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool PlayerCollection::ContainsColor(Color color) const {
+	for (auto const& p : m_playerData) {
+		if (p.color == color) {
+			return true;
+		}
+	}
+	return false;
+}
 
 void PlayerCollection::CheckValidColor(Color& color) {
 	if (std::find(m_colors.begin(), m_colors.end(), color)
@@ -21,13 +40,13 @@ void PlayerCollection::CheckValidColor(Color& color) {
 	}
 }
 void PlayerCollection::CheckRemainingColor(Color& color) {
-	if (ContainsValue<Color>(m_playerColors, color)) {
+	if (ContainsColor(color)) {
 		auto event = ShowMessagePopUpEvent(
 			"Invalid Color",
-"The choosen color already exists."
-);
-AppContext::GetInstance().eventManager.InvokeEvent(event);
-color = GetPossibleColor();
+			"The choosen color already exists."
+	);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		color = GetPossibleColor();
 	}
 }
 void PlayerCollection::CheckRemainingName(std::string& name) {
@@ -43,15 +62,13 @@ void PlayerCollection::CheckRemainingName(std::string& name) {
 		invalidName = true;
 	}
 
-	if (ContainsValue<std::string>(m_playerNames, name)) {
+	if (ContainsName(name)) {
 		auto event = ShowMessagePopUpEvent(
 			"Invalid name",
 			"The choosen name already exists."
 		);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 		invalidName = true;
-
-
 	}
 
 	if (invalidName) {
@@ -61,13 +78,17 @@ void PlayerCollection::CheckRemainingName(std::string& name) {
 	}
 }
 
-Color PlayerCollection::GetPossibleColor() const {
-	for (auto c : m_colors) {
-		if (!ContainsValue<Color>(m_playerColors, c)) {
-			return c;
+PlayerData& PlayerCollection::GetPlayerByID(unsigned int ID) {
+	for (auto& p : m_playerData) {
+		if (p.ID == ID) {
+			return p;
 		}
 	}
-	return m_colors.at(0);
+
+	throw std::out_of_range("Accecing non existing ID");
+}
+void PlayerCollection::SortPlayers() {
+	std::sort(m_playerData.begin(), m_playerData.end(), StortPlayerByID_ASC);
 }
 
 size_t PlayerCollection::MaxPlayerCount() const {
@@ -81,36 +102,78 @@ void PlayerCollection::AddPlayer(unsigned int ID,
 	CheckRemainingColor(color);
 	CheckRemainingName(name);
 
-	m_playerColors[ID] = color;
-	m_playerNames[ID] = name;
+	m_playerData.emplace_back(ID, name, color);
+	SortPlayers();
 }
 void PlayerCollection::EditPlayer(unsigned int ID,
 	std::string name, Color color) {
 
-	if (m_playerColors.at(ID) != color) {
-		CheckValidColor(color);
-		CheckRemainingColor(color);
-		m_playerColors[ID] = color;
+	PlayerData& playerData = GetPlayerByID(ID);
+
+	if (playerData.name != name) {
+		CheckRemainingName(name);
+		playerData.name = name;
 	}
 
-	if (m_playerNames.at(ID) != name) {
-		CheckRemainingName(name);
-		m_playerNames[ID] = name;
+	if (playerData.color != color) {
+		CheckValidColor(color);
+		CheckRemainingColor(color);
+		playerData.color = color;
 	}
+
+	SortPlayers();
 }
 void PlayerCollection::DeletePlayer(unsigned int ID) {
-	m_playerColors.erase(ID);
-	m_playerNames.erase(ID);
+	auto const& toDelete = GetPlayerByID(ID);
+
+	m_playerData.erase(std::remove(
+		m_playerData.begin(), m_playerData.end(), toDelete
+	), m_playerData.end());
+
+	SortPlayers();
 }
 
 PlayerCollection::ColorArray PlayerCollection::GetAllColors() const {
 	return m_colors;
 }
-std::map<unsigned int, Color> PlayerCollection::GetColors() const {
-	return m_playerColors;
+Color PlayerCollection::GetPossibleColor() const {
+	for (auto c : m_colors) {
+		if (!ContainsColor(c)) {
+			return c;
+		}
+	}
+	return m_colors.at(0);
 }
-std::map<unsigned int, std::string> PlayerCollection::GetNames() const {
-	return m_playerNames;
+std::vector<PlayerData> PlayerCollection::GetPlayerData() const {
+	return m_playerData;
+}
+
+PlayerData PlayerCollection::GetPlayerByID(unsigned int ID) const {
+	for (auto& p : m_playerData) {
+		if (p.ID == ID) {
+			return p;
+		}
+	}
+
+	throw std::out_of_range("Accecing non existing ID");
+}
+PlayerData PlayerCollection::GetPlayerByName(std::string const& name) const {
+	for (auto& p : m_playerData) {
+		if (p.name == name) {
+			return p;
+		}
+	}
+
+	throw std::out_of_range("Accecing non existing Name");
+}
+PlayerData PlayerCollection::GetPlayerByColor(Color color) const {
+	for (auto& p : m_playerData) {
+		if (p.color == color) {
+			return p;
+		}
+	}
+
+	throw std::out_of_range("Accecing non existing Color");
 }
 
 void PlayerCollection::OnEvent(Event const& event) {
