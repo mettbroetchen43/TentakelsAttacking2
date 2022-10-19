@@ -189,16 +189,13 @@ void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
 	auto event = SelectFocusElementEvent(m_inputLine);
 	appContext.eventManager.InvokeEvent(event);
 
-	auto playerNames = appContext.playerCollection.GetNames();
-	auto playerColors = appContext.playerCollection.GetColors();
-
-	assert(playerNames.size() == playerColors.size());
+	auto PlayerData = appContext.playerCollection.GetPlayerData();
 	
 	int index = 1;
-	for (auto& [ID, name] : playerNames) {
-		m_table->SetValue<int>(index, 0, ID, false);
-		m_table->SetValue<std::string>(index, 1, name, false);
-		m_table->SetValue<Color>(index, 2, playerColors.at(ID), false);
+	for (auto& p : PlayerData) {
+		m_table->SetValue<int>(index, 0, p.ID, false);
+		m_table->SetValue<std::string>(index, 1, p.name, false);
+		m_table->SetValue<Color>(index, 2, p.color, false);
 	
 		++index;
 	}

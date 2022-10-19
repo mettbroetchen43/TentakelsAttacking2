@@ -6,9 +6,10 @@
 #pragma once
 #include "EventListener.hpp"
 #include "HGeneral.h"
-#include <map>
+#include "HPlayerData.hpp"
 #include <string>
 #include <array>
+#include <vector>
 #include <raylib.h>
 
 class PlayerCollection : public EventListener {
@@ -33,23 +34,17 @@ private:
 		VIOLET,
 		DARKPURPLE,
 	};
-	std::map<unsigned int, Color> m_playerColors;
-	std::map<unsigned int, std::string> m_playerNames;
+	std::vector<PlayerData> m_playerData;
 
-	template<typename T>
-	[[nodiscard]] bool ContainsValue(
-		std::map<unsigned int, T> map, T value) const {
-		for (auto [ID, element] : map) {
-			if (element == value) {
-				return true;
-			}
-		}
-		return false;
-	}
+	[[nodiscard]] bool ContainsName(std::string const& name) const;
+	[[nodiscard]] bool ContainsColor(Color color) const;
 
 	void CheckValidColor(Color& color);
 	void CheckRemainingColor(Color& color);
 	void CheckRemainingName(std::string& name);
+
+	[[nodiscard]] PlayerData& GetPlayerByID(unsigned int ID);
+	void SortPlayers();
 
 public:
 
@@ -62,8 +57,11 @@ public:
 
 	[[nodiscard]] ColorArray GetAllColors() const;
 	[[nodiscard]] Color GetPossibleColor() const;
-	[[nodiscard]] std::map<unsigned int, Color> GetColors() const;
-	[[nodiscard]] std::map<unsigned int, std::string> GetNames() const;
+	[[nodiscard]] std::vector<PlayerData> GetPlayerData() const;
+
+	[[nodiscard]] PlayerData GetPlayerByID(unsigned int ID) const;
+	[[nodiscard]] PlayerData GetPlayerByName(std::string const& name) const;
+	[[nodiscard]] PlayerData GetPlayerByColor(Color color) const;
 	
 	void OnEvent(Event const& event) override;
 };
