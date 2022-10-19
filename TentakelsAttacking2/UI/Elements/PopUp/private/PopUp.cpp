@@ -127,7 +127,6 @@ void PopUp::Render(AppContext const& appContext) {
 		PURPLE
 	);
 }
-
 void PopUp::Resize(Vector2 resolution, AppContext const& appContext) {
 	for (auto& e : m_elements) {
 		e->Resize(resolution, appContext);

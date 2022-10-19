@@ -48,4 +48,8 @@ DeletePlayerPopUp::DeletePlayerPopUp(Vector2 pos, Vector2 size,
 	: CellPopUp(pos, size, alignemnt, resolution,
 		title, inpuTexture), m_onClick(onClick) {
 	Initialize(AppContext::GetInstance(), resolution);
+
+	if (IsKeyReleased(KEY_ENTER)) {
+		m_firstEnter = true;
+	}
 }
