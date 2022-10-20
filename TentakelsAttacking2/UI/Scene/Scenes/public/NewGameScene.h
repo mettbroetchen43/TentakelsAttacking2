@@ -6,6 +6,7 @@
 #pragma once
 #include "Scene.h"
 #include "InputLine.hpp"
+#include "AbstractTableCell.h"
 
 class ColorPicker;
 class Table;
@@ -24,6 +25,12 @@ private:
 	void UpdateSceneEntries(AppContext const& appContext);
 
 	void AddPlayer();
+	void UpdatePlayer(unsigned int ID, std::string const& name,
+		Color color, AppContext const& appContext);
+	void UpdatePlayerName(AbstractTableCell const* cell,
+		std::string oldValue, std::string newValue);
+	void UpdatePlayerColor(AbstractTableCell const* cell,
+		Color oldValue, Color newValue);
 	void CreateDeletePlayer();
 	void DeletePlayer(unsigned int ID);
 

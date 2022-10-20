@@ -8,6 +8,7 @@
 #include "Focusable.h"
 #include "AllCells.hpp"
 #include "HGeneral.h"
+#include "AppContext.h"
 #include <memory>
 #include <vector>
 
@@ -18,8 +19,35 @@ private:
 	size_t m_columns;
 	Rectangle m_colider;
 	Vector2 m_resolution;
+	std::function<void(AbstractTableCell const*, std::string, std::string)> m_updatedStringCell = [](AbstractTableCell const*, std::string, std::string) {};
+	std::function<void(AbstractTableCell const*, int, int)> m_updatedIntCell = [](AbstractTableCell const*, int, int) {};
+	std::function<void(AbstractTableCell const*, float, float)> m_updatedFloatCell = [](AbstractTableCell const*, float, float) {};
+	std::function<void(AbstractTableCell const*, double, double)> m_updatedDoubleCell = [](AbstractTableCell const*, double, double) {};
+	std::function<void(AbstractTableCell const*, Color, Color)> m_updatedColorCell = [](AbstractTableCell const*, Color, Color) {};
 
-	void CellUpdated(AbstractTableCell const* cell);
+	template<typename T>
+	void CellUpdated(AbstractTableCell const* cell, T oldValue, T newValue) {
+		if constexpr (std::is_same_v<T, std::string>) {
+			m_updatedStringCell(cell, oldValue, newValue);
+			return;
+		}
+		if constexpr (std::is_same_v<T, int>) {
+			m_updatedIntCell(cell, oldValue, newValue);
+			return;
+		}
+		if constexpr (std::is_same_v<T, float>) {
+			m_updatedFloatCell(cell, oldValue, newValue);
+			return;
+		}
+		if constexpr (std::is_same_v<T, double>) {
+			m_updatedDoubleCell(cell, oldValue, newValue);
+			return;
+		}
+		if constexpr (std::is_same_v<T, Color>) {
+			m_updatedColorCell(cell, oldValue, newValue);
+			return;
+		}
+	}
 
 	[[nodiscard]] Vector2 GetElementPosition(size_t row, size_t column) const;
 	[[nodiscard]] Vector2 GetElementSize() const;
@@ -42,7 +70,8 @@ private:
 			Alignment::DEFAULT,
 			m_resolution,
 			[&]() {ResizeCells();},
-			[&](AbstractTableCell const* cell) {CellUpdated(cell);}
+			[&](AbstractTableCell const* cell, EntryType oldValue, EntryType newValue)
+			{CellUpdated<EntryType>(cell, oldValue, newValue);}
 			);
 		m_cells.at(index)->SetEditable(isEditable);
 	}
@@ -50,6 +79,31 @@ private:
 public:
 	Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 		size_t rows, size_t columns, Vector2 resolution);
+
+	template<typename T>
+	void SetUpdateSpecificCell(std::function<void(
+		AbstractTableCell const*, T, T)> updateCell) {
+		if constexpr (std::is_same_v<T, std::string>) {
+			m_updatedStringCell = updateCell;
+			return;
+		}
+		if constexpr (std::is_same_v<T, int>) {
+			m_updatedIntCell = updateCell;
+			return;
+		}
+		if constexpr (std::is_same_v<T, float>) {
+			m_updatedFloatCell = updateCell;
+			return;
+		}
+		if constexpr (std::is_same_v<T, double>) {
+			m_updatedDoubleCell = updateCell;
+			return;
+		}
+		if constexpr (std::is_same_v<T, Color>) {
+			m_updatedColorCell = updateCell;
+			return;
+		}
+	}
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;

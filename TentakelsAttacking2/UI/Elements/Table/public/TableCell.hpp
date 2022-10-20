@@ -17,7 +17,7 @@ protected:
 	EntryType m_value;
 
 	std::function<void()> m_resizeCells = []() {};
-	std::function<void(TableCell*)> m_updated = [](TableCell*) {};
+	std::function<void(TableCell*, EntryType, EntryType)> m_updated = [](TableCell*, EntryType, EntryType) {};
 
 	Vector2 m_textPosition;
 	float m_textSize;
@@ -73,16 +73,17 @@ protected:
 	}
 
 	void UpdateValue([[maybe_unused]] EntryType value) {
+		EntryType oldValue = m_value;
 		m_value = value;
 		m_resizeCells();
-		m_updated(this);
+		m_updated(this, oldValue, m_value);
 	}
 
 public:
 	TableCell(unsigned int ID, Vector2 pos, Vector2 size,
 		Alignment alignment, Vector2 resolution,
 		std::function<void()> resizeCells,
-		std::function<void(TableCell*)> updated) 
+		std::function<void(TableCell*, EntryType, EntryType)> updated)
 		: AbstractTableCell(ID, pos, size, alignment, resolution),
 			m_resizeCells(resizeCells), m_updated(updated){
 

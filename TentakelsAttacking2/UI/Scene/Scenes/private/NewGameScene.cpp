@@ -126,6 +126,18 @@ void NewGameScene::Initialize(Vector2 resolution,
 	table->SetColumnEditable(0, false);
 	table->SetHeadlines({ "ID", "Name", "Color" }, false);
 	table->ResizeCells();
+
+	table->SetUpdateSpecificCell<std::string>(
+		[&](AbstractTableCell const* cell, std::string oldValue, std::string newValue) {
+			UpdatePlayerName(cell, oldValue, newValue);
+		}
+	);
+	table->SetUpdateSpecificCell<Color>(
+		[&](AbstractTableCell const* cell, Color oldValue, Color newValue) {
+			UpdatePlayerColor(cell, oldValue, newValue);
+		}
+	);
+
 	m_elements.push_back(table);
 	m_nestedFocus.push_back(table.get());
 	m_table = table.get();
@@ -218,6 +230,43 @@ void NewGameScene::AddPlayer() {
 	appContext.eventManager.InvokeEvent(event);
 
 	UpdateSceneEntries(appContext);
+}
+void NewGameScene::UpdatePlayer(unsigned int ID, std::string const& name,
+	Color color, AppContext const& appContext) {
+
+	auto event = EditPlayerEvent(
+		ID,
+		name,
+		color
+	);
+	appContext.eventManager.InvokeEvent(event);
+
+	UpdateSceneEntries(appContext);
+}
+void NewGameScene::UpdatePlayerName([[maybe_unused]] AbstractTableCell const* cell,
+	std::string oldValue, std::string newValue) {
+
+	AppContext& appContext = AppContext::GetInstance();
+	PlayerData playerData = appContext.playerCollection.GetPlayerByName(oldValue);
+
+	UpdatePlayer(
+		playerData.ID,
+		newValue,
+		playerData.color,
+		appContext
+	);
+}
+void NewGameScene::UpdatePlayerColor([[maybe_unused]] AbstractTableCell const* cell,
+	Color oldValue, Color newValue){
+	AppContext& appContext = AppContext::GetInstance();
+	PlayerData playerData = appContext.playerCollection.GetPlayerByColor(oldValue);
+
+	UpdatePlayer(
+		playerData.ID,
+		playerData.name,
+		newValue,
+		appContext
+	);
 }
 void NewGameScene::CreateDeletePlayer() {
 	AppContext& appContext = AppContext::GetInstance();

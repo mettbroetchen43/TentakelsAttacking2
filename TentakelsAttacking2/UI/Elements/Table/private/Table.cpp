@@ -12,10 +12,6 @@
 #include <cassert>
 #include <iostream>
 
-void Table::CellUpdated(AbstractTableCell const* cell) {
-	std::cout << "EDIT! | " << cell->GetFocusID() << '\n';
-}
-
 Vector2 Table::GetElementPosition(size_t row, size_t column) const {
 	Vector2 elementSize = GetElementSize();
 	return Vector2 { 
