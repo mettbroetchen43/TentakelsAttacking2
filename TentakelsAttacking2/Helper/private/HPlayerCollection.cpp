@@ -184,6 +184,15 @@ void PlayerCollection::OnEvent(Event const& event) {
 		return;
 	}
 
+	if (auto const* playerEvent = dynamic_cast<EditPlayerUIEvent const*>(&event)) {
+		EditPlayer(
+			playerEvent->GetID(),
+			playerEvent->GetName(),
+			playerEvent->GetColor()
+		);
+		return;
+	}
+
 	if (auto const* playerEvent = dynamic_cast<DeletePlayerUIEvent const*>(&event)) {
 		DeletePlayer(playerEvent->GetID());
 		return;
