@@ -8,6 +8,7 @@
 #include "EventManager.hpp"
 #include "HAssetManager.h"
 #include "HPlayerCollection.h"
+#include "HColors.h"
 #include <string>
 
 struct AppContext {
@@ -15,6 +16,7 @@ struct AppContext {
 	AssetManager assetManager;
 	EventManager eventManager;
 	PlayerCollection playerCollection;
+	Colors colors;
 
 	[[nodiscard]] static AppContext& GetInstance();
 	[[nodiscard]] std::string const& Version() const;
