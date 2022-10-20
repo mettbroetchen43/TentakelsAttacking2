@@ -92,8 +92,15 @@ ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
 }
 ColorPicker::~ColorPicker() {
 	if (m_isNestedFocus) {
-		auto event = DeleteFocusLayerEvent();
-		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		if (m_isPopUp) {
+			auto event = DeleteFocusPopUpLayerEvent();
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		}
+		else {
+			auto event = DeleteFocusLayerEvent();
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		}
+
 	}
 }
 

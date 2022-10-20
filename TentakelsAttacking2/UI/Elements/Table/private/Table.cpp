@@ -90,9 +90,9 @@ std::vector<float> Table::GetNewColumnPosition(
 }
 
 Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
-	size_t rows, size_t columns, Vector2 resolution)
+	size_t rows, size_t columns, Vector2 resolution, bool isPopUp)
 	: UIElement(pos, size, alignment), Focusable(ID),
-	m_rows(rows), m_columns(columns), m_resolution(resolution) {
+	m_rows(rows), m_columns(columns), m_resolution(resolution), m_isPopUp(isPopUp) {
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	m_cells.reserve(m_columns * m_rows);
 	for (int row = 0; row < m_rows; ++row) {
@@ -108,6 +108,18 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 		}
 	}
 }
+Table::~Table() {
+	if (m_isNestedFocus) {
+		if (m_isPopUp) {
+			auto event = DeleteFocusPopUpLayerEvent();
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		}
+		else {
+			auto event = DeleteFocusLayerEvent();
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		}
+	}
+}
 
 void Table::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
@@ -117,8 +129,15 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition,
 		updateCells = true;
 
 		if (IsKeyPressed(KEY_ESCAPE)) {
-			auto event = DeleteFocusLayerEvent();
-			appContext.eventManager.InvokeEvent(event);
+			if (m_isPopUp) {
+				auto event = DeleteFocusPopUpLayerEvent();
+				appContext.eventManager.InvokeEvent(event);
+			}
+			else {
+				auto event = DeleteFocusLayerEvent();
+				appContext.eventManager.InvokeEvent(event);
+			}
+
 			m_isNestedFocus = false;
 		}
 	}
@@ -128,8 +147,14 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition,
 		if (!IsFocused()) {
 			if (CheckCollisionPointRec(mousePosition, m_colider)) {
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-					auto event = SelectFocusElementEvent(this);
-					appContext.eventManager.InvokeEvent(event);
+					if (m_isPopUp) {
+						auto event = SelectFocusPopUpElementEvent(this);
+						appContext.eventManager.InvokeEvent(event);
+					}
+					else {
+						auto event = SelectFocusElementEvent(this);
+						appContext.eventManager.InvokeEvent(event);
+					}
 
 					updateCells = true;
 				}
@@ -148,11 +173,25 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition,
 				or mouseAction;
 
 			if (focusCell) {
-				auto event = NewFocusLayerEvent();
-				appContext.eventManager.InvokeEvent(event);
+				if (m_isPopUp) {
+					auto event = NewFocusPopUpLayerEvent();
+					appContext.eventManager.InvokeEvent(event);
+				}
+				else {
+					auto event = NewFocusLayerEvent();
+					appContext.eventManager.InvokeEvent(event);
+				}
+
 				for (auto& c : m_cells) {
-					auto event2 = NewFocusElementEvent(c.get());
-					appContext.eventManager.InvokeEvent(event2);
+					if (m_isPopUp) {
+						auto event2 = NewFocusPopUpElementEvent(c.get());
+						appContext.eventManager.InvokeEvent(event2);
+					}
+					else {
+						auto event2 = NewFocusElementEvent(c.get());
+						appContext.eventManager.InvokeEvent(event2);
+					}
+
 				}
 				m_isNestedFocus = true;
 
@@ -231,6 +270,7 @@ size_t Table::GetColumns() const {
 void Table::SetEmptyCell(size_t row, size_t column, bool resizeCells) {
 	CheckValidRowColumn(row, column);
 	size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
+	bool isEditable = m_cells.at(index)->IsEnabled();
 	m_cells.at(index) = std::make_unique<EmptyCell>(
 		static_cast<unsigned int>(
 			GetIndexFromRowAndColumn(row, column, m_columns)), // ID
@@ -239,6 +279,7 @@ void Table::SetEmptyCell(size_t row, size_t column, bool resizeCells) {
 		Alignment::DEFAULT,
 		m_resolution
 		);
+	m_cells.at(index)->SetEditable(isEditable);
 
 	if (resizeCells) {
 		ResizeCells();

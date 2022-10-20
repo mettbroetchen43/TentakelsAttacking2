@@ -14,6 +14,8 @@
 
 class Table : public UIElement, public Focusable {
 private:
+	bool m_isPopUp;
+
 	std::vector<std::unique_ptr<AbstractTableCell>> m_cells;
 	size_t m_rows;
 	size_t m_columns;
@@ -78,7 +80,8 @@ private:
 
 public:
 	Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
-		size_t rows, size_t columns, Vector2 resolution);
+		size_t rows, size_t columns, Vector2 resolution, bool isPopUp = false);
+	~Table();
 
 	template<typename T>
 	void SetUpdateSpecificCell(std::function<void(

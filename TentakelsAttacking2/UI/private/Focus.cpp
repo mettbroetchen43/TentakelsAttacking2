@@ -72,6 +72,9 @@ Focusable* Focus::GetNextFocus() {
 	bool hasAnyEnabledElements = HasAnyEnabledElements();
 
 	for (auto focus : m_focus) {
+		if (!focus) {
+			throw 0;
+		}
 		if (hasAnyEnabledElements 
 			and !focus->IsEnabled()) {
 				continue;
