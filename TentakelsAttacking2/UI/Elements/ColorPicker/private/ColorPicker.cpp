@@ -83,8 +83,8 @@ void ColorPicker::CheckforValidColor(AppContext const& appContext) {
 }
 
 ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
-	Alignment alignment, Vector2 resolution)
-	: Focusable(ID), UIElement(pos, size, alignment) {
+	Alignment alignment, Vector2 resolution, bool isPopUp)
+	: Focusable(ID), UIElement(pos, size, alignment), m_isPopUp(isPopUp) {
 
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	m_backGround = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
@@ -142,22 +142,48 @@ void ColorPicker::SetCellFocuses(AppContext const& appContext) {
 	}
 
 	{
-		auto event = NewFocusLayerEvent();
-		appContext.eventManager.InvokeEvent(event);
+		if (m_isPopUp) {
+			auto event = NewFocusPopUpLayerEvent();
+			appContext.eventManager.InvokeEvent(event);
+		}
+		else {
+			auto event = NewFocusLayerEvent();
+			appContext.eventManager.InvokeEvent(event);
+		}
+
 	}
 
 	for (auto& c : m_cells) {
-		auto event = NewFocusElementEvent(c.get());
-		appContext.eventManager.InvokeEvent(event);
+		if (m_isPopUp) {
+			auto event = NewFocusPopUpElementEvent(c.get());
+			appContext.eventManager.InvokeEvent(event);
+		}
+		else {
+			auto event = NewFocusElementEvent(c.get());
+			appContext.eventManager.InvokeEvent(event);
+		}
+
 	}
 
 	if (m_currentColorCell) {
-		auto event = SelectFocusElementEvent(m_currentColorCell);
-		appContext.eventManager.InvokeEvent(event);
+		if (m_isPopUp) {
+			auto event = SelectFocusPopUpElementEvent(m_currentColorCell);
+			appContext.eventManager.InvokeEvent(event);
+		}
+		else {
+			auto event = SelectFocusElementEvent(m_currentColorCell);
+			appContext.eventManager.InvokeEvent(event);
+		}
 	}
 	else {
-		auto event = SelectFocusElementEvent(m_cells.at(0).get());
-		appContext.eventManager.InvokeEvent(event);
+		if (m_isPopUp) {
+			auto event = SelectFocusPopUpElementEvent(m_cells.at(0).get());
+			appContext.eventManager.InvokeEvent(event);
+		}
+		else {
+			auto event = SelectFocusElementEvent(m_cells.at(0).get());
+			appContext.eventManager.InvokeEvent(event);
+		}
 	}
 
 	m_isNestedFocus = true;

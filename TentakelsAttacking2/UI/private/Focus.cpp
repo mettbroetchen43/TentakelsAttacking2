@@ -295,10 +295,6 @@ void Focus::SetLayerAfterPopUp() {
 	m_toSelectRequest.Clear();
 	m_layerRequest.Clear();
 	m_toAddOrDelete.clear();
-	//
-	// TODO
-	// -> implement this method
-	// 
 }
 
 void Focus::CheckNewID(unsigned int newID) {

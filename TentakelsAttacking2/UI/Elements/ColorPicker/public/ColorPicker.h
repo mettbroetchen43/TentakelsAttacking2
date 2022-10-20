@@ -12,6 +12,8 @@
 
 class ColorPicker : public UIElement, public Focusable {
 private:
+	bool m_isPopUp;
+
 	size_t m_countX;
 	size_t m_countY;
 	Texture* m_backGround;
@@ -28,7 +30,7 @@ private:
 
 public:
 	ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
-		Alignment alignment, Vector2 resolution);
+		Alignment alignment, Vector2 resolution, bool isPopUp = false);
 	~ColorPicker() override;
 
 	[[nodiscard]] Color GetColor() const;
