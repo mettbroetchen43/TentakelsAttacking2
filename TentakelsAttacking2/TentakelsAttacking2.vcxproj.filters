@@ -210,6 +210,9 @@
     <ClInclude Include="Helper\public\HPlayerData.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Helper\public\HColors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -348,6 +351,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Table\private\AbstractTableCell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\private\HColors.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

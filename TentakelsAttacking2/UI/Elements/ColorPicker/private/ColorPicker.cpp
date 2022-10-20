@@ -13,7 +13,7 @@
 void ColorPicker::Initialise(Vector2 resolution) {
 	AppContext& appContext = AppContext::GetInstance();
 
-	auto colors = appContext.playerCollection.GetAllColors();
+	auto colors = appContext.colors.GetColors();
 
 	double countX_D = std::ceil(std::sqrt(colors.size()));
 	m_countX = static_cast<size_t>(countX_D);

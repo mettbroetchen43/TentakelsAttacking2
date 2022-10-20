@@ -18,7 +18,6 @@ bool PlayerCollection::ContainsName(std::string const& name) const {
 	}
 	return false;
 }
-
 bool PlayerCollection::ContainsColor(Color color) const {
 	for (auto const& p : m_playerData) {
 		if (p.color == color) {
@@ -28,14 +27,14 @@ bool PlayerCollection::ContainsColor(Color color) const {
 	return false;
 }
 
-void PlayerCollection::CheckValidColor(Color& color) {
-	if (std::find(m_colors.begin(), m_colors.end(), color)
-		== m_colors.end()) {
+void PlayerCollection::CheckValidColor(Color color) {
+	AppContext& appContext = AppContext::GetInstance();
+	if (appContext.colors.CheckValidColor(color)) {
 		auto event = ShowMessagePopUpEvent(
 			"Invalid Color",
 			"The choosen color does not exist"
 		);
-		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		appContext.eventManager.InvokeEvent(event);
 		color = GetPossibleColor();
 	}
 }
@@ -133,16 +132,14 @@ void PlayerCollection::DeletePlayer(unsigned int ID) {
 	SortPlayers();
 }
 
-PlayerCollection::ColorArray PlayerCollection::GetAllColors() const {
-	return m_colors;
-}
 Color PlayerCollection::GetPossibleColor() const {
-	for (auto c : m_colors) {
+	AppContext& appCpntext = AppContext::GetInstance();
+	for (auto c : appCpntext.colors.GetColors()) {
 		if (!ContainsColor(c)) {
 			return c;
 		}
 	}
-	return m_colors.at(0);
+	return appCpntext.colors.GetColors().at(0);
 }
 std::vector<PlayerData> PlayerCollection::GetPlayerData() const {
 	return m_playerData;
