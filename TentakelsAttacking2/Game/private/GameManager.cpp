@@ -29,6 +29,15 @@ unsigned int GameManager::GetNextID() const {
 	}
 }
 
+bool GameManager::IsExistingID(unsigned int ID) const {
+	for (auto const& p : m_players) {
+		if (p->GetID() == ID) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void GameManager::AddPlayer(AddPlayerEvent const* event) {
 	if (!ValidAddPlayer()) {
 		auto UIEvent = ShowMessagePopUpEvent(
@@ -52,6 +61,24 @@ void GameManager::AddPlayer(AddPlayerEvent const* event) {
 		event->GetColor()
 	);
 	AppContext::GetInstance().eventManager.InvokeEvent(AddEvent);
+}
+void GameManager::EditPlayer(EditPlayerEvent const* event) const {
+	
+	if (!IsExistingID(event->GetID())) {
+		auto UIEvent = ShowMessagePopUpEvent(
+			"Invalid ID",
+			"ID " + std::to_string(event->GetID()) + " is not existing"
+		);
+		AppContext::GetInstance().eventManager.InvokeEvent(UIEvent);
+		return;
+	}
+
+	auto editEvent = EditPlayerUIEvent(
+		event->GetID(),
+		event->GetName(),
+		event->GetColor()
+	);
+	AppContext::GetInstance().eventManager.InvokeEvent(editEvent);
 }
 void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 
@@ -100,6 +127,11 @@ void GameManager::OnEvent(Event const& event) {
 
 	if (auto const* playerEvent = dynamic_cast<AddPlayerEvent const*>(&event)) {
 		AddPlayer(playerEvent);
+		return;
+	}
+
+	if (auto const* playerEvent = dynamic_cast<EditPlayerEvent const*>(&event)) {
+		EditPlayer(playerEvent);
 		return;
 	}
 

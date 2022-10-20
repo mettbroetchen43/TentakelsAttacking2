@@ -18,8 +18,10 @@ private:
 
 	[[nodiscard]] bool ValidAddPlayer() const;
 	[[nodiscard]] unsigned int GetNextID() const;
+	[[nodiscard]] bool IsExistingID(unsigned int ID) const;
 
 	void AddPlayer(AddPlayerEvent const* event);
+	void EditPlayer(EditPlayerEvent const* event) const;
 	void DeletePlayer(DeletePlayerEvent const* event);
 
 public:
