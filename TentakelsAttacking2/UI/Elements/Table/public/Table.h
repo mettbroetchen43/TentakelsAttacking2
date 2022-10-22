@@ -55,6 +55,12 @@ private:
 	[[nodiscard]] Vector2 GetElementSize() const;
 	[[nodiscard]] void CheckValidRowColumn(size_t row, size_t column) const;
 
+	void SetElementFocus(Focusable* toFocus) const;
+	void SelectElementFocus(Focusable* toFocus) const;
+	void DeleteElementFocus(Focusable* toFocus) const;
+	void SetFocusLayer();
+	void DeleteFocusLayer();
+
 	[[nodiscard]] std::vector<float> GetColumnWidths();
 	void DistributeDeviationToColumns(
 		std::vector<float>& neededWidths);
@@ -65,6 +71,8 @@ private:
 	void SetCell(size_t row, size_t column) {
 		const size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
 		const bool isEditable = m_cells.at(index)->IsEnabled();
+		DeleteElementFocus(m_cells.at(index).get());
+
 		m_cells.at(index) = std::make_unique<TableCell<EntryType>>(
 			static_cast<unsigned int>(index),
 			GetElementPosition(row, column),
@@ -75,7 +83,9 @@ private:
 			[&](AbstractTableCell const* cell, EntryType oldValue, EntryType newValue)
 			{CellUpdated<EntryType>(cell, oldValue, newValue);}
 			);
+
 		m_cells.at(index)->SetEditable(isEditable);
+		SetElementFocus(m_cells.at(index).get());
 	}
 
 public:
