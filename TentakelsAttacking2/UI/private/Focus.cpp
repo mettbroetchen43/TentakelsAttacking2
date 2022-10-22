@@ -72,6 +72,9 @@ Focusable* Focus::GetNextFocus() {
 	bool hasAnyEnabledElements = HasAnyEnabledElements();
 
 	for (auto focus : m_focus) {
+		if (!focus) {
+			throw 0;
+		}
 		if (hasAnyEnabledElements 
 			and !focus->IsEnabled()) {
 				continue;
@@ -182,7 +185,8 @@ void Focus::AddNormalLayer() {
 		AddLayer();
 	}
 	else {
-		m_layerRequest.AddLayer();
+		m_addElementRequest.AddLayer();
+		m_removeElementRequest.AddLayer();
 		m_toSelectRequest.AddLayer();
 		m_toAddOrDelete.push_back(true);
 	}
@@ -191,12 +195,16 @@ void Focus::AddPopUpLayer() {
 	AddLayer();
 	++m_PopUpLayerCounter;
 }
-void Focus::DeleteLayer() {
+void Focus::DeleteLayer(bool setNewFocus) {
 	for (auto f : m_focus) {
 		f->SetFocus(false);
 	}
 
 	m_focus.RemoveLayer();
+
+	if (!setNewFocus) {
+		return;
+	}
 
 	if (m_lastFocus.size() > 0) {
 		SetSpecificFocus(m_lastFocus.at(m_lastFocus.size() - 1));
@@ -209,7 +217,8 @@ void Focus::DeleteNormalLayer() {
 		DeleteLayer();
 	}
 	else {
-		m_layerRequest.AddLayer();
+		m_addElementRequest.AddLayer();
+		m_removeElementRequest.AddLayer();
 		m_toAddOrDelete.push_back(false);
 	}
 }
@@ -221,9 +230,13 @@ void Focus::DeletePopUpLayer() {
 	}
 }
 
-void Focus::AddElement(Focusable* focusable) {
+void Focus::AddElement(Focusable* focusable, bool setNewFocus) {
 	CheckNewID(focusable->GetFocusID());
 	m_focus.AddElement(focusable);
+
+	if (!setNewFocus) {
+		return;
+	}
 
 	if (m_currentFocus) {
 		m_currentFocus->SetFocus(false);
@@ -235,15 +248,19 @@ void Focus::AddNormalElement(Focusable* focusable) {
 		AddElement(focusable);
 	}
 	else {
-		m_layerRequest.AddElement(focusable);
+		m_addElementRequest.AddElement(focusable);
 	}
 }
 void Focus::AddPopUpElement(Focusable* focusable) {
 	AddElement(focusable);
 }
-void Focus::DeleteElement(Focusable* focusable) {
+void Focus::DeleteElement(Focusable* focusable, bool setNextFocus) {
 	focusable->SetFocus(false);
 	m_focus.RemoveElement(focusable);
+
+	if (!setNextFocus) {
+		return;
+	}
 
 	if (m_currentFocus == focusable) {
 		m_currentFocus = GetNextFocus();
@@ -254,7 +271,7 @@ void Focus::DeleteNormalElement(Focusable* focusable) {
 		DeleteElement(focusable);
 	}
 	else {
-		m_layerRequest.AddElement(focusable);
+		m_removeElementRequest.AddElement(focusable);
 	}
 }
 void Focus::DeletePopUpElement(Focusable* focusable) {
@@ -268,23 +285,23 @@ void Focus::SetLayerAfterPopUp() {
 			break;
 		}
 
-		bool b = m_toAddOrDelete.back();
-		m_toAddOrDelete.pop_back();
-
-		if (b) {
+		if (m_toAddOrDelete.back()) {
 			AddLayer();
-			for (auto f : m_layerRequest) {
-				AddElement(f);
-			}
-			m_layerRequest.RemoveLayer();
 		}
 		else {
-			for (auto f : m_layerRequest) {
-				DeleteElement(f);
-			}
-			DeleteLayer();
-			m_layerRequest.RemoveLayer();
+			DeleteLayer(false);
 		}
+		m_toAddOrDelete.pop_back();
+
+		for (auto f : m_removeElementRequest) {
+			DeleteElement(f, false);
+		}
+		m_removeElementRequest.RemoveLayer();
+
+		for (auto f : m_addElementRequest) {
+			AddElement(f, false);
+		}
+		m_addElementRequest.RemoveLayer();
 
 		for (auto f : m_toSelectRequest) {
 			SetSpecificFocus(f);
@@ -292,13 +309,28 @@ void Focus::SetLayerAfterPopUp() {
 		m_toSelectRequest.RemoveLayer();
 	}
 
+	for (auto f : m_removeElementRequest) {
+		DeleteElement(f, false);
+	}
+	m_removeElementRequest.RemoveLayer();
+		for (auto f : m_addElementRequest) {
+		AddElement(f, false);
+	}
+	m_addElementRequest.RemoveLayer();
+
+	for (auto f : m_toSelectRequest) {
+		SetSpecificFocus(f);
+	}
+	m_toSelectRequest.RemoveLayer();
+	
 	m_toSelectRequest.Clear();
-	m_layerRequest.Clear();
+	m_addElementRequest.Clear();
+	m_removeElementRequest.Clear();
 	m_toAddOrDelete.clear();
-	//
-	// TODO
-	// -> implement this method
-	// 
+
+	if (!m_currentFocus) {
+		m_currentFocus = GetFirstFocus();
+	}
 }
 
 void Focus::CheckNewID(unsigned int newID) {
@@ -319,7 +351,8 @@ void Focus::Clear() {
 	m_focus.Clear();
 	m_currentFocus = nullptr;
 
-	m_layerRequest.Clear();
+	m_addElementRequest.Clear();
+	m_removeElementRequest.Clear();
 	m_toSelectRequest.Clear();
 	m_toAddOrDelete.clear();
 	m_PopUpLayerCounter = 0;

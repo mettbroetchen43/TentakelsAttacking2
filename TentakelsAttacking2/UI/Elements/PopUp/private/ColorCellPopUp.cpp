@@ -21,7 +21,8 @@ void ColorCellPopUp::Initialize(AppContext const& appContext,
 		GetElementPosition(m_pos, m_size, 0.5f, 0.5f),
 		GetElementSize(m_size, 0.5f, 0.38f),
 		Alignment::MID_MID,
-		resolution
+		resolution,
+		true
 		);
 
 	auto event = NewFocusPopUpElementEvent(colorPicker.get());
