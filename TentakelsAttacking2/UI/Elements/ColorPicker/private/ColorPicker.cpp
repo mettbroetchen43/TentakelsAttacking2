@@ -209,6 +209,9 @@ bool ColorPicker::IsEnabled() const {
 Rectangle ColorPicker::GetCollider() const {
 	return m_colider;
 }
+[[nodiscard]] bool ColorPicker::IsPopUp() const {
+	return m_isPopUp;
+}
 
 void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {

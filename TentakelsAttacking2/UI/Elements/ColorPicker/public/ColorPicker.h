@@ -44,6 +44,7 @@ public:
 	void SetEnabled(bool enabled, Color color);
 	[[nodiscard]] bool IsEnabled() const override;
 	[[nodiscard]] Rectangle GetCollider() const override;
+	[[nodiscard]] bool IsPopUp() const;
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
