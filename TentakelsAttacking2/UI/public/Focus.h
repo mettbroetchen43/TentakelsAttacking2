@@ -18,7 +18,8 @@ private:
 	bool m_renderFocus = false;
 
 	size_t m_PopUpLayerCounter = 0;
-	LayeredVector<Focusable> m_layerRequest;
+	LayeredVector<Focusable> m_addElementRequest;
+	LayeredVector<Focusable> m_removeElementRequest;
 	LayeredVector<Focusable> m_toSelectRequest;
 	std::vector<bool> m_toAddOrDelete;
 
@@ -41,15 +42,15 @@ private:
 	void AddLayer();
 	void AddNormalLayer();
 	void AddPopUpLayer();
-	void DeleteLayer();
+	void DeleteLayer(bool setNewFocus = true);
 	void DeleteNormalLayer();
 	void DeletePopUpLayer();
 	void Clear();
 
-	void AddElement(Focusable* focusable);
+	void AddElement(Focusable* focusable, bool setNewFocus = true);
 	void AddNormalElement(Focusable* focusable);
 	void AddPopUpElement(Focusable* focusable);
-	void DeleteElement(Focusable* focusable);
+	void DeleteElement(Focusable* focusable, bool setNewFocus = true);
 	void DeleteNormalElement(Focusable* focusable);
 	void DeletePopUpElement(Focusable* focusable);
 

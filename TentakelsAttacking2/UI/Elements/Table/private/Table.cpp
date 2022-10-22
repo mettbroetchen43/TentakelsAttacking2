@@ -10,7 +10,6 @@
 #include "HGeneral.h"
 #include <stdexcept>
 #include <cassert>
-#include <iostream>
 
 Vector2 Table::GetElementPosition(size_t row, size_t column) const {
 	Vector2 elementSize = GetElementSize();
@@ -304,11 +303,7 @@ void Table::SetEmptyCell(size_t row, size_t column, bool resizeCells) {
 	CheckValidRowColumn(row, column);
 	size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
 	if (auto const* cell = dynamic_cast<EmptyCell const*>(m_cells.at(index).get())) {
-		static int counter = 1;
-		std::cout << "NO CHANCE! -> " << counter << '\n';
-		std::cout << "\tcolumn: -> " << column << " | row -> " << row << '\n';
-		++counter;
-		//return;
+		return;
 	}
 
 	DeleteElementFocus(m_cells.at(index).get());
