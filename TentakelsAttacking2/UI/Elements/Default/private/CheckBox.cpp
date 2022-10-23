@@ -25,9 +25,10 @@ void CheckBox::Check(AppContext const& appContext) {
 CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height,
 	Alignment alignment, unsigned int checkBoxID,
 	Vector2 resolution)
-	: UIElement(pos, { height, height }, alignment), Focusable(focusID),
+	: UIElement(pos, { 0.0f, height }, alignment), Focusable(focusID),
 	m_ID(checkBoxID) {
 
+	m_size.x = resolution.y / resolution.x * m_size.y;
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 
 	AppContext& appCpntext = AppContext::GetInstance();

@@ -12,7 +12,7 @@ void TestScene::Initialize(Vector2 resolution,
 	auto checkBox_1 = std::make_shared<CheckBox>(
 		1,
 		GetElementPosition(0.3f, 0.2f),
-		GetElementSize(0.05f, 0.05f),
+		GetElementSize(0.0f, 0.05f).y,
 		Alignment::MID_MID,
 		1,
 		resolution
