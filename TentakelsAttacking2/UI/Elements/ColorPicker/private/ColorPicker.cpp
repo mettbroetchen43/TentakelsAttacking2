@@ -217,8 +217,15 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 	if (IsKeyPressed(KEY_ESCAPE)) {
 		if (m_isNestedFocus) {
-			auto event = DeleteFocusLayerEvent();
-			AppContext::GetInstance().eventManager.InvokeEvent(event);
+			if (m_isPopUp) {
+				auto event = DeleteFocusPopUpLayerEvent();
+				AppContext::GetInstance().eventManager.InvokeEvent(event);
+			}
+			else {
+				auto event = DeleteFocusLayerEvent();
+				AppContext::GetInstance().eventManager.InvokeEvent(event);
+			}
+
 			m_isNestedFocus = false;
 		}
 	}

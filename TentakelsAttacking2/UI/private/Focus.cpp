@@ -9,6 +9,7 @@
 #include "UIEvents.hpp"
 #include <stdexcept>
 #include <functional>
+#include <iostream>
 
 bool Focus::HasAnyEnabledElements() const {
 	for (auto e : m_focus) {
@@ -175,12 +176,18 @@ void Focus::SetSpecificPopUpFocus(Focusable* focusable) {
 }
 
 void Focus::AddLayer() {
+	static int layer = -1;
+	std::cout << "AddLayer " << layer << '\n';
+	++layer;
 	m_lastFocus.push_back(m_currentFocus);
 	m_focus.AddLayer();
 	m_currentFocus = nullptr;
 	m_renderFocus = false;
 }
 void Focus::AddNormalLayer() {
+	static int layer = 0;
+	std::cout << "AddNormalLayer " << layer << '\n';
+	++layer;
 	if (m_PopUpLayerCounter == 0) {
 		AddLayer();
 	}
@@ -192,10 +199,17 @@ void Focus::AddNormalLayer() {
 	}
 }
 void Focus::AddPopUpLayer() {
+	static int layer = 0;
+	std::cout << "AddPopUpLayer " << layer << '\n';
+	++layer;
 	AddLayer();
 	++m_PopUpLayerCounter;
+	std::cout << "current Layer -> " << m_PopUpLayerCounter << '\n';
 }
 void Focus::DeleteLayer(bool setNewFocus) {
+	static int layer = 0;
+	std::cout << "DeleteLayer " << layer << '\n';
+	++layer;
 	for (auto f : m_focus) {
 		f->SetFocus(false);
 	}
@@ -213,6 +227,9 @@ void Focus::DeleteLayer(bool setNewFocus) {
 	}
 }
 void Focus::DeleteNormalLayer() {
+	static int layer = 0;
+	std::cout << "DeleteNormalLayer " << layer << '\n';
+	++layer;
 	if (m_PopUpLayerCounter == 0) {
 		DeleteLayer();
 	}
@@ -223,8 +240,12 @@ void Focus::DeleteNormalLayer() {
 	}
 }
 void Focus::DeletePopUpLayer() {
-	DeleteLayer();
+	static int layer = 0;
+	std::cout << "DeletePopUpLayer " << layer << '\n';
+	++layer;
+		DeleteLayer();
 	--m_PopUpLayerCounter;
+	std::cout << "current Layer -> " << m_PopUpLayerCounter << '\n';
 	if (m_PopUpLayerCounter == 0) {
 		SetLayerAfterPopUp();
 	}
