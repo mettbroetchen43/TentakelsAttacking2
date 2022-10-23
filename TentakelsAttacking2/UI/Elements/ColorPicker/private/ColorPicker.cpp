@@ -93,17 +93,11 @@ ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
 	Initialise(resolution);
 }
 ColorPicker::~ColorPicker() {
-	if (m_isNestedFocus) {
-		if (m_isPopUp) {
-			auto event = DeleteFocusPopUpLayerEvent();
-			AppContext::GetInstance().eventManager.InvokeEvent(event);
-		}
-		else {
-			auto event = DeleteFocusLayerEvent();
-			AppContext::GetInstance().eventManager.InvokeEvent(event);
-		}
-
+	if (!m_isNestedFocus) {
+		return;
 	}
+
+	DeleteFocusLayer(m_isPopUp);
 }
 
 Color ColorPicker::GetColor() const {
@@ -150,17 +144,7 @@ void ColorPicker::SetCellFocuses(AppContext const& appContext) {
 		return;
 	}
 
-	{
-		if (m_isPopUp) {
-			auto event = NewFocusPopUpLayerEvent();
-			appContext.eventManager.InvokeEvent(event);
-		}
-		else {
-			auto event = NewFocusLayerEvent();
-			appContext.eventManager.InvokeEvent(event);
-		}
-
-	}
+	AddFocusLayer(m_isPopUp);
 
 	for (auto& c : m_cells) {
 		AddFocusElement(c.get(), m_isPopUp);
@@ -196,18 +180,11 @@ Rectangle ColorPicker::GetCollider() const {
 void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 	if (IsKeyPressed(KEY_ESCAPE)) {
-		if (m_isNestedFocus) {
-			if (m_isPopUp) {
-				auto event = DeleteFocusPopUpLayerEvent();
-				AppContext::GetInstance().eventManager.InvokeEvent(event);
-			}
-			else {
-				auto event = DeleteFocusLayerEvent();
-				AppContext::GetInstance().eventManager.InvokeEvent(event);
-			}
-
-			m_isNestedFocus = false;
+		if (!m_isNestedFocus) {
+			return;
 		}
+		DeleteFocusLayer(m_isPopUp);
+		m_isNestedFocus = false;
 	}
 
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {

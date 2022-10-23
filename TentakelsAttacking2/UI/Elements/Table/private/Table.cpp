@@ -65,15 +65,8 @@ void Table::DeleteFocusLayer() {
 		return;
 	}
 
-	AppContext& appContext = AppContext::GetInstance();
-	if (m_isPopUp) {
-		auto event = DeleteFocusPopUpLayerEvent();
-		appContext.eventManager.InvokeEvent(event);
-	}
-	else {
-		auto event = DeleteFocusLayerEvent();
-		appContext.eventManager.InvokeEvent(event);
-	}
+	::DeleteFocusLayer(m_isPopUp);
+
 	m_isNestedFocus = false;
 }
 
