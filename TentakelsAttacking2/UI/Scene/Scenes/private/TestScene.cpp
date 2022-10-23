@@ -5,33 +5,36 @@
 
 #include "TestScene.h"
 #include "UIManager.h"
+#include "CheckBox.h"
 
 void TestScene::Initialize(Vector2 resolution,
 	[[maybe_unused]] AppContext& appContext) {
-	auto table = std::make_shared<Table>(
-		GetElementPosition(0.1f, 0.1f),
-		GetElementSize(0.8f, 0.8f),
-		Alignment::TOP_LEFT,
+	auto checkBox_1 = std::make_shared<CheckBox>(
 		1,
-		10,
-		5,
+		GetElementPosition(0.3f, 0.2f),
+		GetElementSize(0.05f, 0.05f),
+		Alignment::MID_MID,
+		1,
 		resolution
 		);
-	for (int row = 0; row < 10; ++row) {
-		for (int column = 0; column < 5; ++column) {
-			table->SetValue<int>(row, column, row * 5 + column, false);
-		}
-	}
-	table->SetValue<std::string>(4, 0, "Abonniert coder2k", false);
-	table->SetValue<std::string>(4, 1, "Abonniert anyway", false);
-	table->SetValue<std::string>(4, 2, "Abonniert GyrosGeier", false);
-	table->SetValue<std::string>(4, 3, "Abonniert Necro", false);
-	table->SetValue<std::string>(4, 4, "Abonniert HAKUINU", false);
-	table->SetValue<float>(1, 1, 7.5f, false);
-	table->SetValue<double>(2, 2, 13.542, false);
-	table->SetValue<Color>(3, 4, PURPLE, false);
-	table->ResizeCells();
-	m_elements.push_back(table);
+	m_elements.push_back(checkBox_1);
+
+
+	// to get Back No testing
+	auto backBtn = std::make_shared<ClassicButton>(
+		100,
+		GetElementPosition(0.05f, 0.95f),
+		GetElementSize(0.15f, 0.1f),
+		Alignment::BOTTOM_LEFT,
+		resolution,
+		"Back",
+		SoundType::CLICKED_PRESS_STD
+		);
+	backBtn->SetOnClick([]() {
+		auto event = SwitchSceneEvent(SceneType::MAIN_MENU);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		});
+	m_elements.push_back(backBtn);
 }
 
 TestScene::TestScene(Vector2 pos, Vector2 size, Alignment alignment,

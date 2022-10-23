@@ -46,7 +46,11 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		"Load Game",
 		SoundType::ACCEPTED
 		);
-	loadGameBtn->SetEnabled(false);
+	loadGameBtn->SetOnClick([]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(
+			SwitchSceneEvent(SceneType::TEST)
+			);
+		});
 	m_elements.push_back(loadGameBtn);
 
 	btnPosY += 0.15f;
