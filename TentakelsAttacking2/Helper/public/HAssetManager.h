@@ -14,12 +14,14 @@
 
 class AssetManager {
 private:
-	std::array<std::string, 6> m_files = {
+	using FileArray = std::array<std::string, 7>;
+	FileArray m_files = {
 		"Assets/btn_f_default.png",
 		"Assets/grey.png",
 		"Assets/grey_50.png",
 		"Assets/exclamation_mark.png",
 		"Assets/question_mark.png",
+		"Assets/check.png",
 		"Assets/logo.png",
 	};
 	std::unordered_map<AssetType, Texture2D> m_assets;
@@ -28,6 +30,7 @@ private:
 
 	void LoadTitle();
 	void LoadFont();
+	void LoadFiles();
 
 public:
 	AssetManager();
