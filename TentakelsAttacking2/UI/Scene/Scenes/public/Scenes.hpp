@@ -9,4 +9,4 @@
 #include "Intro.h"
 #include "Logos.h"
 #include "MainMenu.h"
-#include "NewGameScene.h"
+#include "NewGamePlayer.h"

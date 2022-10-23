@@ -12,7 +12,7 @@ class ColorPicker;
 class Table;
 class Focusable;
 
-class NewGameScene : public Scene {
+class NewGamePlayerScene : public Scene {
 private:
 	InputLine<std::string>* m_inputLine;
 	ColorPicker* m_colorPicker;
@@ -36,7 +36,7 @@ private:
 
 
 public:
-	NewGameScene(Vector2 pos, Vector2 size, Alignment alignment,
+	NewGamePlayerScene(Vector2 pos, Vector2 size, Alignment alignment,
 		Vector2 resolution);
 
 	void CheckAndUpdate(Vector2 const& mousePosition,

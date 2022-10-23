@@ -43,13 +43,13 @@ void SceneManager::InitializeScenes() {
 		);
 	m_scenes[SceneType::MAIN_MENU] = mainMenu;
 
-	auto newGame = std::make_shared<NewGameScene>(
+	auto newGamePlayer = std::make_shared<NewGamePlayerScene>(
 		Vector2(0.0f, 0.0f),
 		Vector2(1.0f, 1.0f),
 		Alignment::DEFAULT,
 		m_uiManager->GetResolution()
 		);
-	m_scenes[SceneType::NEW_GAME] = newGame;
+	m_scenes[SceneType::NEW_GAME_PLAYER] = newGamePlayer;
 }
 
 SceneManager::SceneManager(UIManager* uiManager)
