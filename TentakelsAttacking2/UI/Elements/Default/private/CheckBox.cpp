@@ -22,14 +22,14 @@ void CheckBox::Check(AppContext const& appContext) {
 	m_isChecked = !m_isChecked;
 }
 
-CheckBox::CheckBox(unsigned int focusID, Vector2 pos, Vector2 size,
+CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height,
 	Alignment alignment, unsigned int checkBoxID,
 	Vector2 resolution)
-	: UIElement(pos, size, alignment), Focusable(focusID),
+	: UIElement(pos, { height, height }, alignment), Focusable(focusID),
 	m_ID(checkBoxID) {
 
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
-	
+
 	AppContext& appCpntext = AppContext::GetInstance();
 	m_texture = appCpntext.assetManager.GetTexture(AssetType::CHECK);
 	m_textureRec = {

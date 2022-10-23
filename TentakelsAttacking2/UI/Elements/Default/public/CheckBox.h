@@ -29,7 +29,7 @@ private:
 	void Check(AppContext const& appContext);
 
 public:
-	CheckBox(unsigned int focusID, Vector2 pos, Vector2 size,
+	CheckBox(unsigned int focusID, Vector2 pos, float height,
 		Alignment alignment, unsigned int checkBoxID,
 		Vector2 resolution);
 
