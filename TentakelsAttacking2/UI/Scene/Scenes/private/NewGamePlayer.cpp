@@ -143,16 +143,16 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 	m_nestedFocus.push_back(table.get());
 	m_table = table.get();
 
-	auto startGameBtn = std::make_shared<ClassicButton>(
+	auto nextBtn = std::make_shared<ClassicButton>(
 		6,
 		GetElementPosition(0.9f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_RIGHT,
 		resolution,
-		"Start",
+		"Next",
 		SoundType::ACCEPTED
 		);
-	m_elements.push_back(startGameBtn);
+	m_elements.push_back(nextBtn);
 
 	auto backBtn = std::make_shared<ClassicButton>(
 		7,
