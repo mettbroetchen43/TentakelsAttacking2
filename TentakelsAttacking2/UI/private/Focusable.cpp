@@ -5,14 +5,13 @@
 
 #include "Focusable.h"
 #include "AppContext.h"
+#include "HFocusEvents.h"
 #include "UIEvents.hpp"
 
 Focusable::Focusable(unsigned int ID)
 	: m_focusID(ID) { }
 Focusable::~Focusable() {
-	AppContext& appContext = AppContext::GetInstance();
-	auto event = DeleteFocusElementEvent(this);
-	appContext.eventManager.InvokeEvent(event);
+	DeleteFocusElement(this);
 }
 
 bool Focusable::IsFocused() const {
