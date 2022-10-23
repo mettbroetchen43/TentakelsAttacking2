@@ -3,7 +3,7 @@
 // 06.10.2022
 //
 
-#include "NewGameScene.h"
+#include "NewGamePlayer.h"
 #include "Title.h"
 #include "Text.h"
 #include "ColorPicker.h"
@@ -15,7 +15,7 @@
 #include "HFocusEvents.h"
 #include <cassert>
 
-void NewGameScene::Initialize(Vector2 resolution,
+void NewGamePlayerScene::Initialize(Vector2 resolution,
 	AppContext& appContext) {
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.5f, 0.025f),
@@ -171,7 +171,7 @@ void NewGameScene::Initialize(Vector2 resolution,
 	m_elements.push_back(exitBtn);
 }
 
-void NewGameScene::CheckForNestedFocus(Vector2 const& mousePosition,
+void NewGamePlayerScene::CheckForNestedFocus(Vector2 const& mousePosition,
 	[[maybe_unused]] AppContext const& appContext) const {
 	if (!IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 		return;
@@ -188,7 +188,7 @@ void NewGameScene::CheckForNestedFocus(Vector2 const& mousePosition,
 	}
 }
 
-void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
+void NewGamePlayerScene::UpdateSceneEntries(AppContext const& appContext) {
 	m_colorPicker->SetColor(appContext.playerCollection.GetPossibleColor());
 
 	m_inputLine->Clear();
@@ -220,7 +220,7 @@ void NewGameScene::UpdateSceneEntries(AppContext const& appContext) {
 	m_table->ResizeCells();
 }
 
-void NewGameScene::AddPlayer() {
+void NewGamePlayerScene::AddPlayer() {
 	AppContext& appContext = AppContext::GetInstance();
 
 	auto event = AddPlayerEvent(
@@ -231,7 +231,7 @@ void NewGameScene::AddPlayer() {
 
 	UpdateSceneEntries(appContext);
 }
-void NewGameScene::UpdatePlayer(unsigned int ID, std::string const& name,
+void NewGamePlayerScene::UpdatePlayer(unsigned int ID, std::string const& name,
 	Color color, AppContext const& appContext) {
 
 	auto event = EditPlayerEvent(
@@ -243,7 +243,7 @@ void NewGameScene::UpdatePlayer(unsigned int ID, std::string const& name,
 
 	UpdateSceneEntries(appContext);
 }
-void NewGameScene::UpdatePlayerName([[maybe_unused]] AbstractTableCell const* cell,
+void NewGamePlayerScene::UpdatePlayerName([[maybe_unused]] AbstractTableCell const* cell,
 	std::string oldValue, std::string newValue) {
 
 	AppContext& appContext = AppContext::GetInstance();
@@ -256,7 +256,7 @@ void NewGameScene::UpdatePlayerName([[maybe_unused]] AbstractTableCell const* ce
 		appContext
 	);
 }
-void NewGameScene::UpdatePlayerColor([[maybe_unused]] AbstractTableCell const* cell,
+void NewGamePlayerScene::UpdatePlayerColor([[maybe_unused]] AbstractTableCell const* cell,
 	Color oldValue, Color newValue){
 	AppContext& appContext = AppContext::GetInstance();
 	PlayerData playerData = appContext.playerCollection.GetPlayerByColor(oldValue);
@@ -268,7 +268,7 @@ void NewGameScene::UpdatePlayerColor([[maybe_unused]] AbstractTableCell const* c
 		appContext
 	);
 }
-void NewGameScene::CreateDeletePlayer() {
+void NewGamePlayerScene::CreateDeletePlayer() {
 	AppContext& appContext = AppContext::GetInstance();
 	auto event = ShowDeletePlayerEvent(
 		"Delete Player?",
@@ -277,7 +277,7 @@ void NewGameScene::CreateDeletePlayer() {
 	);
 	appContext.eventManager.InvokeEvent(event);
 }
-void NewGameScene::DeletePlayer(unsigned int ID) {
+void NewGamePlayerScene::DeletePlayer(unsigned int ID) {
 	AppContext& appContext = AppContext::GetInstance();
 
 	auto event = DeletePlayerEvent(ID);
@@ -286,14 +286,14 @@ void NewGameScene::DeletePlayer(unsigned int ID) {
 	UpdateSceneEntries(appContext);
 }
 
-NewGameScene::NewGameScene(Vector2 pos, Vector2 size, Alignment alignment,
+NewGamePlayerScene::NewGamePlayerScene(Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution)
 	: Scene(pos, size, alignment) {
 
 	Initialize(resolution, AppContext::GetInstance());
 }
 
-void NewGameScene::CheckAndUpdate(Vector2 const& mousePosition,
+void NewGamePlayerScene::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 
 	CheckForNestedFocus(mousePosition, appContext);
@@ -302,12 +302,12 @@ void NewGameScene::CheckAndUpdate(Vector2 const& mousePosition,
 		e->CheckAndUpdate(mousePosition, appContext);
 	}
 }
-void NewGameScene::Render(AppContext const& appContext) {
+void NewGamePlayerScene::Render(AppContext const& appContext) {
 	for (auto& e : m_elements) {
 		e->Render(appContext);
 	}
 }
-void NewGameScene::Resize(Vector2 resolution,
+void NewGamePlayerScene::Resize(Vector2 resolution,
 	AppContext const& appContext) {
 	for (auto& e : m_elements) {
 		e->Resize(resolution, appContext);
