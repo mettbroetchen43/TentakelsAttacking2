@@ -11,6 +11,8 @@ class TestScene : public Scene {
 private:
 	void Initialize(Vector2 resolution, AppContext& appContext);
 
+	void Checked(unsigned int ID, bool isChecked);
+
 protected:
 
 public:
