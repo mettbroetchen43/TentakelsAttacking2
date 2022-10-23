@@ -154,21 +154,21 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		);
 	m_elements.push_back(startGameBtn);
 
-	auto exitBtn = std::make_shared<ClassicButton>(
+	auto backBtn = std::make_shared<ClassicButton>(
 		7,
 		GetElementPosition(0.55f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_LEFT,
 		resolution,
-		"Exit",
+		"Back",
 		SoundType::CLICKED_RELEASE_STD
 		);
-	exitBtn->SetOnClick([]() {
+	backBtn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(
 			SwitchSceneEvent(SceneType::MAIN_MENU)
 		);
 		});
-	m_elements.push_back(exitBtn);
+	m_elements.push_back(backBtn);
 }
 
 void NewGamePlayerScene::CheckForNestedFocus(Vector2 const& mousePosition,
