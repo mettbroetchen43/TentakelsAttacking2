@@ -139,7 +139,7 @@ void ColorPicker::SetOnEnter(std::function<void()> onEnter) {
 	m_onEnter = onEnter;
 }
 
-void ColorPicker::SetCellFocuses(AppContext const& appContext) {
+void ColorPicker::SetCellFocuses([[maybe_unused]] AppContext const& appContext) {
 	if (m_isNestedFocus) {
 		return;
 	}
