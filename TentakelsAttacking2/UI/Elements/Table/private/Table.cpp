@@ -8,6 +8,7 @@
 #include "AppContext.h"
 #include "PrimitiveCellPopUp.hpp"
 #include "HGeneral.h"
+#include "HFocusEvents.h"
 #include <stdexcept>
 #include <cassert>
 
@@ -38,16 +39,8 @@ void Table::SetElementFocus(Focusable* toFocus) const {
 		return;
 	}
 
-	AppContext& appContext = AppContext::GetInstance();
-	if (m_isPopUp) {
-		auto event = NewFocusPopUpElementEvent(toFocus);
-		appContext.eventManager.InvokeEvent(event);
+	AddFocusElement(toFocus, m_isPopUp);
 	}
-	else {
-		auto event = NewFocusElementEvent(toFocus);
-		appContext.eventManager.InvokeEvent(event);
-	}
-}
 void Table::SelectElementFocus(Focusable* toFocus) const {
 	AppContext& appContext = AppContext::GetInstance();
 	if (m_isPopUp) {

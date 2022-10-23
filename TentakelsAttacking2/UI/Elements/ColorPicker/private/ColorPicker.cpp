@@ -7,6 +7,7 @@
 #include "AppContext.h"
 #include "ColorPickerCell.h"
 #include "HGeneral.h"
+#include "HFocusEvents.h"
 #include <cmath>
 
 
@@ -161,15 +162,7 @@ void ColorPicker::SetCellFocuses(AppContext const& appContext) {
 	}
 
 	for (auto& c : m_cells) {
-		if (m_isPopUp) {
-			auto event = NewFocusPopUpElementEvent(c.get());
-			appContext.eventManager.InvokeEvent(event);
-		}
-		else {
-			auto event = NewFocusElementEvent(c.get());
-			appContext.eventManager.InvokeEvent(event);
-		}
-
+		AddFocusElement(c.get(), m_isPopUp);
 	}
 
 	if (m_currentColorCell) {
