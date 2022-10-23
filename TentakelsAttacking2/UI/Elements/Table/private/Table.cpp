@@ -8,6 +8,7 @@
 #include "AppContext.h"
 #include "PrimitiveCellPopUp.hpp"
 #include "HGeneral.h"
+#include "HFocusEvents.h"
 #include <stdexcept>
 #include <cassert>
 
@@ -38,56 +39,25 @@ void Table::SetElementFocus(Focusable* toFocus) const {
 		return;
 	}
 
-	AppContext& appContext = AppContext::GetInstance();
-	if (m_isPopUp) {
-		auto event = NewFocusPopUpElementEvent(toFocus);
-		appContext.eventManager.InvokeEvent(event);
-	}
-	else {
-		auto event = NewFocusElementEvent(toFocus);
-		appContext.eventManager.InvokeEvent(event);
-	}
+	AddFocusElement(toFocus, m_isPopUp);
 }
 void Table::SelectElementFocus(Focusable* toFocus) const {
-	AppContext& appContext = AppContext::GetInstance();
-	if (m_isPopUp) {
-		auto event = SelectFocusPopUpElementEvent(toFocus);
-		appContext.eventManager.InvokeEvent(event);
-	}
-	else {
-		auto event = SelectFocusElementEvent(toFocus);
-		appContext.eventManager.InvokeEvent(event);
-	}
+	SelectFocusElement(toFocus, m_isPopUp);
 }
 void Table::DeleteElementFocus(Focusable* toFocus) const {
 	if (!m_isNestedFocus) {
 		return;
 	}
 
-	AppContext& appContext = AppContext::GetInstance();
-	if (m_isPopUp) {
-		auto event = DeleteFocusPopUpElementEvent(toFocus);
-		appContext.eventManager.InvokeEvent(event);
-	}
-	else {
-		auto event = DeleteFocusElementEvent(toFocus);
-		appContext.eventManager.InvokeEvent(event);
-	}
+	DeleteFocusElement(toFocus, m_isPopUp);
 }
 void Table::SetFocusLayer() {
 	if (m_isNestedFocus) {
 		return;
 	}
 
-	AppContext& appContext = AppContext::GetInstance();
-	if (m_isPopUp) {
-		auto event = NewFocusPopUpLayerEvent();
-		appContext.eventManager.InvokeEvent(event);
-	}
-	else {
-		auto event = NewFocusLayerEvent();
-		appContext.eventManager.InvokeEvent(event);
-	}
+	AddFocusLayer(m_isPopUp);
+
 	m_isNestedFocus = true;
 }
 void Table::DeleteFocusLayer() {
@@ -95,15 +65,8 @@ void Table::DeleteFocusLayer() {
 		return;
 	}
 
-	AppContext& appContext = AppContext::GetInstance();
-	if (m_isPopUp) {
-		auto event = DeleteFocusPopUpLayerEvent();
-		appContext.eventManager.InvokeEvent(event);
-	}
-	else {
-		auto event = DeleteFocusLayerEvent();
-		appContext.eventManager.InvokeEvent(event);
-	}
+	::DeleteFocusLayer(m_isPopUp);
+
 	m_isNestedFocus = false;
 }
 

@@ -6,6 +6,7 @@
 #include "DeletePlayerPopUp.h"
 #include "GenerelEvents.hpp"
 #include "HGeneral.h"
+#include "HFocusEvents.h"
 
 void DeletePlayerPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution) {
@@ -25,11 +26,8 @@ void DeletePlayerPopUp::Initialize(AppContext const& appContext,
 	m_inputLine = inputLine;
 	m_elements.push_back(inputLine);
 
-	auto event = NewFocusPopUpElementEvent(inputLine.get());
-	appContext.eventManager.InvokeEvent(event);
-
-	auto selectEvent = SelectFocusPopUpElementEvent(inputLine.get());
-	appContext.eventManager.InvokeEvent(selectEvent);
+	AddFocusElement(m_inputLine.get(), true);
+	SelectFocusElement(m_inputLine.get(), true);
 }
 
 void DeletePlayerPopUp::SetValue() {

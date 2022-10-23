@@ -6,6 +6,7 @@
 #include "ColorCellPopUp.h"
 #include "AppContext.h"
 #include "HGeneral.h"
+#include "HFocusEvents.h"
 #include "Table.h"
 
 void ColorCellPopUp::Initialize(AppContext const& appContext,
@@ -25,10 +26,8 @@ void ColorCellPopUp::Initialize(AppContext const& appContext,
 		true
 		);
 
-	auto event = NewFocusPopUpElementEvent(colorPicker.get());
-	appContext.eventManager.InvokeEvent(event);
-	auto event2 = SelectFocusPopUpElementEvent(colorPicker.get());
-	appContext.eventManager.InvokeEvent(event2);
+	AddFocusElement(colorPicker.get(), true);
+	SelectFocusElement(colorPicker.get(), true);
 
 	colorPicker->SetInitialColor(currentColor);
 	colorPicker->SetCellFocuses(appContext);

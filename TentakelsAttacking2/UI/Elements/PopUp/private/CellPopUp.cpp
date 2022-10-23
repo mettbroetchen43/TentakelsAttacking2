@@ -5,6 +5,7 @@
 
 #include "CellPopUp.h"
 #include "HGeneral.h"
+#include "HFocusEvents.h"
 #include "AppContext.h"
 
 namespace {
@@ -24,8 +25,7 @@ void CellPopUp::Initialize([[maybe_unused]] AppContext const& appContext,
 		SoundType::CLICKED_RELEASE_STD
 		);
 
-	auto event = NewFocusPopUpElementEvent(cancelBtn.get());
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
+	AddFocusElement(cancelBtn.get(), true);
 
 	cancelBtn->SetOnClick([&]() {
 		SetShouldClose();
@@ -46,8 +46,7 @@ std::shared_ptr<ClassicButton> CellPopUp::InitializeAcceptButton(
 		SoundType::ACCEPTED
 		);
 
-	auto event = NewFocusPopUpElementEvent(acceptBtn.get());
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
+	AddFocusElement(acceptBtn.get(), true);
 
 	m_elements.push_back(acceptBtn);
 

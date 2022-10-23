@@ -12,6 +12,7 @@
 #include "Line.h"
 #include "Table.h"
 #include "UIManager.h"
+#include "HFocusEvents.h"
 #include <cassert>
 
 void NewGameScene::Initialize(Vector2 resolution,
@@ -171,7 +172,7 @@ void NewGameScene::Initialize(Vector2 resolution,
 }
 
 void NewGameScene::CheckForNestedFocus(Vector2 const& mousePosition,
-	AppContext const& appContext) const {
+	[[maybe_unused]] AppContext const& appContext) const {
 	if (!IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 		return;
 	}
@@ -182,8 +183,7 @@ void NewGameScene::CheckForNestedFocus(Vector2 const& mousePosition,
 
 		if (!CheckCollisionPointRec(mousePosition, f->GetCollider())) {
 			f->SetNestedFocus(false);
-			auto event = DeleteFocusLayerEvent();
-			appContext.eventManager.InvokeEvent(event);
+			DeleteFocusLayer();
 		}
 	}
 }

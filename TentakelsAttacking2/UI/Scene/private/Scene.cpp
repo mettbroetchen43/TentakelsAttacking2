@@ -7,13 +7,13 @@
 #include "Focus.h"
 #include "Focusable.h"
 #include "AppContext.h"
+#include "HFocusEvents.h"
 
 void Scene::SetFocusActive(AppContext const& appContext) {
 	if (m_active) {
 		for (auto& element : m_elements) {
 			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
-				auto event = NewFocusElementEvent(focusable);
-				appContext.eventManager.InvokeEvent(event);
+				AddFocusElement(focusable);
 				continue;
 			}
 		}

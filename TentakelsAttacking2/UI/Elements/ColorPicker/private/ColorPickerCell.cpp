@@ -6,6 +6,7 @@
 #include "ColorPickerCell.h"
 #include "ColorPicker.h"
 #include "AppContext.h"
+#include "HFocusEvents.h"
 #include <iostream>
 
 void ColorPickerCell::SetColor() const {
@@ -58,15 +59,7 @@ void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
 	if (mouseClick) {
 		m_colorPicker->SetCellFocuses(appContext);
 
-		if (m_colorPicker->IsPopUp()) {
-			auto event = SelectFocusPopUpElementEvent(this);
-			appContext.eventManager.InvokeEvent(event);
-		}
-		else {
-			auto event = SelectFocusElementEvent(this);
-			appContext.eventManager.InvokeEvent(event);
-		}
-
+		SelectFocusElement(this, m_colorPicker->IsPopUp());
 	}
 
 	bool enterClick =
