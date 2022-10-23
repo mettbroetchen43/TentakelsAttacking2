@@ -27,9 +27,7 @@ void DeletePlayerPopUp::Initialize(AppContext const& appContext,
 	m_elements.push_back(inputLine);
 
 	AddFocusElement(m_inputLine.get(), true);
-
-	auto selectEvent = SelectFocusPopUpElementEvent(inputLine.get());
-	appContext.eventManager.InvokeEvent(selectEvent);
+	SelectFocusElement(m_inputLine.get(), true);
 }
 
 void DeletePlayerPopUp::SetValue() {

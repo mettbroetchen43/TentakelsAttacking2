@@ -43,14 +43,7 @@ void Table::SetElementFocus(Focusable* toFocus) const {
 }
 void Table::SelectElementFocus(Focusable* toFocus) const {
 	AppContext& appContext = AppContext::GetInstance();
-	if (m_isPopUp) {
-		auto event = SelectFocusPopUpElementEvent(toFocus);
-		appContext.eventManager.InvokeEvent(event);
-	}
-	else {
-		auto event = SelectFocusElementEvent(toFocus);
-		appContext.eventManager.InvokeEvent(event);
-	}
+	SelectFocusElement(toFocus, m_isPopUp);
 }
 void Table::DeleteElementFocus(Focusable* toFocus) const {
 	if (!m_isNestedFocus) {

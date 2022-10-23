@@ -52,6 +52,7 @@ void ColorPicker::SetUsedColors(AppContext const& appContext) {
 		for (auto& p : players) {
 			if (c->GetColor() == p.color) {
 				sameColor = true;
+				break;
 			}
 		}
 
@@ -166,24 +167,10 @@ void ColorPicker::SetCellFocuses(AppContext const& appContext) {
 	}
 
 	if (m_currentColorCell) {
-		if (m_isPopUp) {
-			auto event = SelectFocusPopUpElementEvent(m_currentColorCell);
-			appContext.eventManager.InvokeEvent(event);
-		}
-		else {
-			auto event = SelectFocusElementEvent(m_currentColorCell);
-			appContext.eventManager.InvokeEvent(event);
-		}
+		SelectFocusElement(m_currentColorCell, m_isPopUp);
 	}
 	else {
-		if (m_isPopUp) {
-			auto event = SelectFocusPopUpElementEvent(m_cells.at(0).get());
-			appContext.eventManager.InvokeEvent(event);
-		}
-		else {
-			auto event = SelectFocusElementEvent(m_cells.at(0).get());
-			appContext.eventManager.InvokeEvent(event);
-		}
+		SelectFocusElement(m_cells.at(0).get(), m_isPopUp);
 	}
 
 	m_isNestedFocus = true;
@@ -225,8 +212,7 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 		if (CheckCollisionPointRec(mousePosition, m_colider)) {
-			auto event = SelectFocusElementEvent(this);
-			appContext.eventManager.InvokeEvent(event);
+			SelectFocusElement(this, m_isPopUp);
 		}
 	}
 
