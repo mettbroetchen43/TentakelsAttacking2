@@ -4,6 +4,7 @@
 //
 
 #include "PopUpManager.h"
+#include "HFocusEvents.h"
 
 PopUpManager::PopUpManager(Vector2 resolution)
 	: m_appContext(&(AppContext::GetInstance())), m_resolution(resolution) {
@@ -59,8 +60,7 @@ void PopUpManager::OnEvent(Event const& event) {
 }
 
 void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
-	auto focusEvent = NewFocusPopUpLayerEvent();
-	m_appContext->eventManager.InvokeEvent(focusEvent);
+	AddFocusLayer(true);
 
 	m_popUps.push_back(std::make_unique<MessagePopUp>(
 		Vector2(0.5f, 0.5f),
@@ -74,8 +74,7 @@ void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
 	);
 }
 void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerEvent const* event) {
-	auto focusEvent = NewFocusPopUpLayerEvent();
-	m_appContext->eventManager.InvokeEvent(focusEvent);
+	AddFocusLayer(true);
 
 	m_popUps.push_back(std::make_unique<DeletePlayerPopUp>(
 		Vector2(0.5f, 0.5f),
@@ -112,8 +111,7 @@ void PopUpManager::DeleteLastPopUp(PopUp* toDelete) {
 
 	if (toDelete == m_popUps.back().get()) {
 
-		auto event = DeleteFocusPopUpLayerEvent();
-		m_appContext->eventManager.InvokeEvent(event);
+		DeleteFocusLayer(true);
 		m_popUps.pop_back();
 
 		CheckForDeleteRemainingPopUps();
@@ -136,8 +134,7 @@ void PopUpManager::CheckForDeleteRemainingPopUps() {
 		for (auto& p : m_toDelete) {
 			if (p == m_popUps.back().get()) {
 				found = true;
-				auto event = DeleteFocusPopUpLayerEvent();
-				m_appContext->eventManager.InvokeEvent(event);
+				DeleteFocusLayer(true);
 				m_popUps.pop_back();
 				
 				m_toDelete.erase(std::remove(
