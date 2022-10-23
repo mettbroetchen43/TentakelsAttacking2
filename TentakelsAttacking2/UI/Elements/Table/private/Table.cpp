@@ -42,7 +42,6 @@ void Table::SetElementFocus(Focusable* toFocus) const {
 	AddFocusElement(toFocus, m_isPopUp);
 }
 void Table::SelectElementFocus(Focusable* toFocus) const {
-	AppContext& appContext = AppContext::GetInstance();
 	SelectFocusElement(toFocus, m_isPopUp);
 }
 void Table::DeleteElementFocus(Focusable* toFocus) const {
@@ -57,15 +56,8 @@ void Table::SetFocusLayer() {
 		return;
 	}
 
-	AppContext& appContext = AppContext::GetInstance();
-	if (m_isPopUp) {
-		auto event = NewFocusPopUpLayerEvent();
-		appContext.eventManager.InvokeEvent(event);
-	}
-	else {
-		auto event = NewFocusLayerEvent();
-		appContext.eventManager.InvokeEvent(event);
-	}
+	AddFocusLayer(m_isPopUp);
+
 	m_isNestedFocus = true;
 }
 void Table::DeleteFocusLayer() {
