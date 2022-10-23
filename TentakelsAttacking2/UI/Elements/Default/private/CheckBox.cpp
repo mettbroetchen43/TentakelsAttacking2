@@ -17,9 +17,9 @@ void CheckBox::Check(AppContext const& appContext) {
 		appContext.eventManager.InvokeEvent(event);
 	}
 
-	m_onCheck(m_ID, m_isChecked);
-
 	m_isChecked = !m_isChecked;
+
+	m_onCheck(m_ID, m_isChecked);
 }
 
 CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height,
