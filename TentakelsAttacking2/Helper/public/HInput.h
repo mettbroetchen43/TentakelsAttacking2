@@ -5,7 +5,15 @@
 
 #pragma once
 
-[[nodiscard]] bool IsConfirmInput();
-[[nodiscard]] bool IsBackInput();
+[[nodiscard]] bool IsConfirmInputPressed();
+[[nodiscard]] bool IsConfirmInputReleased();
+[[nodiscard]] bool IsConfirmInputDown();
+[[nodiscard]] bool IsConfirmInputUp();
+
+[[nodiscard]] bool IsBackInputPressed();
+[[nodiscard]] bool IsBackInputReleased();
+[[nodiscard]] bool IsBackInputDown();
+[[nodiscard]] bool IsBackInputUp();
+
 [[nodiscard]] bool IsQuitInput();
 
