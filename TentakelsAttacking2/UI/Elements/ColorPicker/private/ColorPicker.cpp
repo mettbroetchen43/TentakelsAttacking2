@@ -8,6 +8,7 @@
 #include "ColorPickerCell.h"
 #include "HGeneral.h"
 #include "HFocusEvents.h"
+#include "HInput.h"
 #include <cmath>
 
 
@@ -179,7 +180,7 @@ Rectangle ColorPicker::GetCollider() const {
 
 void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
-	if (IsKeyPressed(KEY_ESCAPE)) {
+	if (IsBackInputPressed()) {
 		if (!m_isNestedFocus) {
 			return;
 		}
@@ -193,7 +194,7 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 		}
 	}
 
-	if (IsKeyPressed(KEY_ENTER) and IsFocused()) {
+	if (IsConfirmInputPressed() and IsFocused()) {
 		if (!m_isNestedFocus) {
 			SetCellFocuses(appContext);
 		}
