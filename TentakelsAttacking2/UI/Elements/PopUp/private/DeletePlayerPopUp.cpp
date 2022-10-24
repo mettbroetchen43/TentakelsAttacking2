@@ -46,7 +46,8 @@ DeletePlayerPopUp::DeletePlayerPopUp(Vector2 pos, Vector2 size,
 		title, inpuTexture), m_onClick(onClick) {
 	Initialize(AppContext::GetInstance(), resolution);
 
-	if (IsKeyReleased(KEY_ENTER)) {
+	if (IsKeyReleased(KEY_ENTER)
+		or IsKeyReleased(KEY_KP_ENTER)) {
 		m_firstEnter = true;
 	}
 }
