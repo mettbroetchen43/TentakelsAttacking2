@@ -26,7 +26,7 @@ enum class TextAlignment {
 	RIGHT,
 };
 
-[[nodiscard]] Rectangle GetAlignedCollider(Vector2& pos, Vector2 size,
+Rectangle GetAlignedCollider(Vector2& pos, Vector2 size,
 	Alignment allignment, Vector2 resolution);
 
 [[nodiscard]] TextAlignment GetHorisontalTextAlignment(Alignment alignment);
