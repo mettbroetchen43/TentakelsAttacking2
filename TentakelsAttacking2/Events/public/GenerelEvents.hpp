@@ -8,6 +8,8 @@
 #include <string>
 #include <raylib.h>
 
+enum class GameEventType;
+
 class PlayerEvent : public Event {
 private:
 	std::string m_name;
@@ -74,5 +76,35 @@ public:
 
 	[[nodiscard]] unsigned int GetID() const {
 		return m_ID;
+	}
+};
+
+class UpdateCheckGameEvent : public Event {
+private:
+	GameEventType m_type;
+	bool m_isChecked;
+
+public:
+	UpdateCheckGameEvent(GameEventType type, bool isChecked)
+		: m_type(type), m_isChecked(isChecked) {}
+
+	[[nodiscard]] GameEventType GetType() const {
+		return m_type;
+	}
+	[[nodiscard]] bool GetIsChecked() const {
+		return m_isChecked;
+	}
+};
+class UpdateCheckGameEventsUI : public Event {
+private:
+	using Map = std::unordered_map<GameEventType, bool>const*;
+	Map m_types;
+
+public:
+	UpdateCheckGameEventsUI(Map types)
+		: m_types(types) { }
+
+	[[nodiscard]] Map GetTypes() const {
+		return m_types;
 	}
 };

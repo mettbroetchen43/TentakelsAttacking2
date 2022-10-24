@@ -8,8 +8,8 @@
 #include "CheckBox.h"
 #include "Line.h"
 #include "GameEventTypes.hpp"
+#include "AppContext.h"
 #include <array>
-#include <iostream>
 
 
 void GameEventSettings::Initialize(Vector2 resolution) {
@@ -76,17 +76,44 @@ void GameEventSettings::Initialize(Vector2 resolution) {
 }
 
 void GameEventSettings::SetChecked(unsigned int ID, bool isCecked) {
-	std::cout << "CHECKED | ID: " << ID << " | " << isCecked << '\n';
+	auto event = UpdateCheckGameEvent(
+		static_cast<GameEventType>(ID),
+		isCecked
+	);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
-void GameEventSettings::UpdateElements() {
+void GameEventSettings::UpdateElements(UpdateCheckGameEventsUI const* event) {
 
+	auto types = event->GetTypes();
+
+	for (auto const& [type, b] : *types) {
+		for (auto checkBox : m_checkBoxes) {
+			auto cbType = static_cast<GameEventType>(checkBox->GetID());
+			if (cbType == type) {
+				checkBox->SetChecked(b);
+				continue;
+			}
+		}
+	}
 }
 
 GameEventSettings::GameEventSettings(Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution)
 	: Scene(pos, size, alignment) {
+	AppContext::GetInstance().eventManager.AddListener(this);
 
 	GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	Initialize(resolution);
+}
+GameEventSettings::~GameEventSettings() {
+	AppContext::GetInstance().eventManager.RemoveListener(this);
+}
+
+void GameEventSettings::OnEvent(Event const& event) {
+
+	if (auto const* UpdateEvent = dynamic_cast<UpdateCheckGameEventsUI const*>(&event)) {
+		UpdateElements(UpdateEvent);
+		return;
+	}
 }

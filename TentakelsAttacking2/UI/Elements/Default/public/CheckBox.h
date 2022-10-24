@@ -34,6 +34,7 @@ public:
 		Vector2 resolution);
 
 	void SetOnCheck(std::function<void(unsigned int, bool)> onCheck);
+	[[nodiscard]] unsigned int GetID() const;
 
 	void SetChecked(bool isChecked);
 	[[nodiscard]] bool IsChecked() const;

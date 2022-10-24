@@ -53,6 +53,9 @@ CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height,
 void CheckBox::SetOnCheck(std::function<void(unsigned int, bool)> onCheck) {
 	m_onCheck = onCheck;
 }
+unsigned int CheckBox::GetID() const {
+	return m_ID;
+}
 
 void CheckBox::SetChecked(bool isChecked) {
 	m_isChecked = isChecked;

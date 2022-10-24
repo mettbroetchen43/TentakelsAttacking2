@@ -9,11 +9,13 @@
 #include "EventListener.hpp"
 #include "UIEvents.hpp"
 #include "GenerelEvents.hpp"
+#include "GameEventTypes.hpp"
 #include <vector>
 
 class GameManager : public EventListener {
 private:
 	std::vector<std::shared_ptr<Player>> m_players;
+	std::unordered_map<GameEventType, bool> m_gameEvents;
 	Galaxy m_galaxy;
 
 	[[nodiscard]] bool ValidAddPlayer() const;
@@ -23,6 +25,8 @@ private:
 	void AddPlayer(AddPlayerEvent const* event);
 	void EditPlayer(EditPlayerEvent const* event) const;
 	void DeletePlayer(DeletePlayerEvent const* event);
+
+	void SetGameEventActive(UpdateCheckGameEvent const* event);
 
 public:
 	GameManager();
