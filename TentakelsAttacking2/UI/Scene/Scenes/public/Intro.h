@@ -6,6 +6,7 @@
 #pragma once
 #include "Scene.h"
 #include "AppContext.h"
+#include "SceneType.hpp"
 #include <string>
 #include <vector>
 #include <memory>
@@ -21,7 +22,7 @@ private:
 	std::shared_ptr<ClassicButton> m_btn = nullptr;
 	bool m_btnMovmendFinish = false;
 	float m_maxBtnPosition = 0.5f;
-	SceneType m_nextScene;
+	SceneType m_nextScene = SceneType::MAIN_MENU;
 	
 	void Initialize(AppContext& appContext, Vector2 resolution);
 
@@ -31,8 +32,7 @@ private:
 	void StartGame();
 
 public:
-	Intro(Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution, SceneType nextScene);
+	Intro(Vector2 resolution);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);

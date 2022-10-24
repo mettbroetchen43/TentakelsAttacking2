@@ -80,9 +80,8 @@ void Intro::StartGame() {
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
-Intro::Intro(Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution, SceneType nextScene)
-	:Scene(pos, size, alignment), m_nextScene(nextScene) {
+Intro::Intro(Vector2 resolution)
+	:Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT) {
 
 	AppContext& appContext = AppContext::GetInstance();
 	Initialize(appContext, resolution);

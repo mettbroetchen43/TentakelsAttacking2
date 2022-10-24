@@ -36,8 +36,7 @@ private:
 
 
 public:
-	NewGamePlayerScene(Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution);
+	NewGamePlayerScene(Vector2 resolution);
 
 	void CheckAndUpdate(Vector2 const& mousePosition,
 		AppContext const& appContext) override;

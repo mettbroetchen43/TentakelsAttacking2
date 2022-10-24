@@ -5,6 +5,7 @@
 
 #pragma once
 #include "Scene.h"
+#include "SceneType.hpp"
 #include <functional>
 
 struct AppContext;
@@ -13,14 +14,13 @@ enum class SceneType;
 
 class LogoScene : public Scene {
 private:
-	SceneType m_nextScene;
+	SceneType m_nextScene = SceneType::INTRO;
 	double m_time;
 
 	void Initialize(Vector2 resolution);
 
 public:
-	LogoScene(Vector2 pos, Vector2 size, Alignment alignment,
-		SceneType nextScene, Vector2 resolution);
+	LogoScene(Vector2 resolution);
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution, AppContext const& appContext) override;

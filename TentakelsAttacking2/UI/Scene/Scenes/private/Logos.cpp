@@ -46,9 +46,9 @@ void LogoScene::Initialize(Vector2 resolution) {
 	m_elements.push_back(skipText);
 }
 
-LogoScene::LogoScene(Vector2 pos, Vector2 size, Alignment alignment,
-	SceneType nextScene, Vector2 resolution)
-	:Scene(pos, size, alignment), m_nextScene(nextScene), m_time(GetTime()) {
+LogoScene::LogoScene(Vector2 resolution)
+	:Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT),
+	m_time(GetTime()) {
 	Initialize(resolution);
 }
 void LogoScene::CheckAndUpdate(Vector2 const& mousePosition,

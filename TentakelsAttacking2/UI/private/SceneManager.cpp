@@ -11,42 +11,36 @@
 #include "AppContext.h"
 #include <raylib.h>
 
+/*
+	switch (nextScene){
+		case SceneType::TestScene 
+			m_currentScene = std::make_shared<TestScene>(resolution);
+			break;
+	}
+*/
+
 void SceneManager::InitializeScenes() {
 	auto test = std::make_shared<TestScene>(
-		Vector2(0.0f, 0.0f),
-		Vector2(1.0f, 1.0f),
-		Alignment::DEFAULT,
-		m_uiManager->GetResolution());
+		m_uiManager->GetResolution()
+		);
 	m_scenes[SceneType::TEST] = test;
 
 	auto logo = std::make_shared<LogoScene>(
-		Vector2(0.0f, 0.0f),
-		Vector2(1.0f, 1.0f),
-		Alignment::DEFAULT,
-		SceneType::INTRO,
-		m_uiManager->GetResolution());
+		m_uiManager->GetResolution()
+		);
 	m_scenes[SceneType::LOGO] = logo;
 
 	auto intro = std::make_shared<Intro>(
-		Vector2(0.0f,0.0f),
-		Vector2(1.0f,1.0f),
-		Alignment::DEFAULT,
-		m_uiManager->GetResolution(),
-		SceneType::MAIN_MENU);
+		m_uiManager->GetResolution()
+		);
 	m_scenes[SceneType::INTRO] = intro;
 
 	auto mainMenu = std::make_shared<MainMenu>(
-		Vector2(0.0f, 0.0f),
-		Vector2(1.0f, 1.0f),
-		Alignment::DEFAULT,
 		m_uiManager->GetResolution()
 		);
 	m_scenes[SceneType::MAIN_MENU] = mainMenu;
 
 	auto newGamePlayer = std::make_shared<NewGamePlayerScene>(
-		Vector2(0.0f, 0.0f),
-		Vector2(1.0f, 1.0f),
-		Alignment::DEFAULT,
 		m_uiManager->GetResolution()
 		);
 	m_scenes[SceneType::NEW_GAME_PLAYER] = newGamePlayer;
