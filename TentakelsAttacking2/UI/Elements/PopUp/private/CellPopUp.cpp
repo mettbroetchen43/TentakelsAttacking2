@@ -7,6 +7,7 @@
 #include "HGeneral.h"
 #include "HFocusEvents.h"
 #include "AppContext.h"
+#include "HInput.h"
 
 namespace {
 	// Need for PopUp ctor
@@ -59,7 +60,8 @@ void CellPopUp::SetShouldClose() {
 
 void CellPopUp::CheckEnter() {
 	bool validEnterClose =
-		IsKeyReleased(KEY_ENTER)
+		(IsKeyReleased(KEY_ENTER)
+			or IsKeyPressed(KEY_KP_ENTER))
 		&& !m_shouldClose
 		&& !m_firstEnter;
 	if (validEnterClose) {
@@ -92,7 +94,7 @@ void CellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 
 	CheckEnter();
 
-	if (IsKeyPressed(KEY_ESCAPE)) {
+	if (IsBackInputPressed()) {
 		auto event = PlaySoundEvent(SoundType::CLICKED_RELEASE_STD);
 		appContext.eventManager.InvokeEvent(event);
 		SetShouldClose();

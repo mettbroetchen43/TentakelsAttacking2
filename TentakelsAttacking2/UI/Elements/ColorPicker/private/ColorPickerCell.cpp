@@ -7,6 +7,7 @@
 #include "ColorPicker.h"
 #include "AppContext.h"
 #include "HFocusEvents.h"
+#include "HInput.h"
 #include <iostream>
 
 void ColorPickerCell::SetColor() const {
@@ -64,7 +65,7 @@ void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
 
 	bool enterClick =
 		IsFocused()
-		&& IsKeyPressed(KEY_ENTER);
+		&& IsConfirmInputPressed();
 	if (mouseClick or enterClick) {
 		m_colorPicker->SetColor(m_color);
 	}

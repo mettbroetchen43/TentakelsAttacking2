@@ -9,6 +9,7 @@
 #include "UIManager.h"
 #include "Text.h"
 #include "Picture.h"
+#include "HInput.h"
 #include <memory>
 
 
@@ -50,9 +51,10 @@ LogoScene::LogoScene(Vector2 pos, Vector2 size, Alignment alignment,
 	:Scene(pos, size, alignment), m_nextScene(nextScene), m_time(GetTime()) {
 	Initialize(resolution);
 }
-void LogoScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void LogoScene::CheckAndUpdate(Vector2 const& mousePosition,
+	AppContext const& appContext) {
 	bool nextScene =
-		IsKeyPressed(KEY_ESCAPE)
+		IsBackInputPressed()
 		or (m_time + SCENE_LENGTH) < GetTime();
 	if (nextScene) {
 		auto event = SwitchSceneEvent(m_nextScene);

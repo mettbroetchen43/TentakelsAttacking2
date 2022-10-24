@@ -83,7 +83,7 @@ public:
 
 		if (!IsFocused()) { return; }
 
-		if (IsKeyPressed(KEY_ENTER)) {
+		if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_KP_ENTER)) {
 			m_onEnter();
 		}
 

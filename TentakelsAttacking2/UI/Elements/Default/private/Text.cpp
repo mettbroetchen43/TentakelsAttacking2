@@ -31,8 +31,8 @@ Text::Text(Vector2 pos, Vector2 size, Alignment alignment,
 	CreateToRender(AppContext::GetInstance());
 }
 
-void Text::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition, [[maybe_unused]] AppContext const& appContext) {
-}
+void Text::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
+	[[maybe_unused]] AppContext const& appContext) { }
 void Text::Render(AppContext const& appContext) {
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),

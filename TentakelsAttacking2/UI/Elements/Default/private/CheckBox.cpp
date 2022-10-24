@@ -6,6 +6,7 @@
 #include "CheckBox.h"
 #include "AppContext.h"
 #include "UIEvents.hpp"
+#include "HInput.h"
 
 void CheckBox::Check(AppContext const& appContext) {
 	if (m_isChecked) {
@@ -77,7 +78,7 @@ void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
 	bool check = false;
 
 	if (IsFocused()) {
-		if (IsKeyPressed(KEY_SPACE) or IsKeyPressed(KEY_ENTER)) {
+		if (IsConfirmInputPressed()) {
 			if (m_isEnabled) {
 				check = true;
 			}

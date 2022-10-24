@@ -151,6 +151,7 @@
     <ClInclude Include="Game\public\PlayerType.hpp" />
     <ClInclude Include="Helper\public\HColors.h" />
     <ClInclude Include="Helper\public\HFocusEvents.h" />
+    <ClInclude Include="Helper\public\HInput.h" />
     <ClInclude Include="Helper\public\HPlayerCollection.h" />
     <ClInclude Include="Helper\public\LayeredVector.hpp" />
     <ClInclude Include="Helper\public\HRandom.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="Helper\private\HPlayerCollection.cpp" />
     <ClCompile Include="Helper\private\HColors.cpp" />
     <ClCompile Include="Helper\private\HFocusEvents.cpp" />
+    <ClCompile Include="Helper\private\HInput.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />

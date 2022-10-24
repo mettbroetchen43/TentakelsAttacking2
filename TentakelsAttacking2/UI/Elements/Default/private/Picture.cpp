@@ -19,8 +19,7 @@ Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment,
 }
 
 void Picture::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
-	[[maybe_unused]] AppContext const& appContext) {
-}
+	[[maybe_unused]] AppContext const& appContext) { }
 void Picture::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawTexturePro(
 		*m_texture,
