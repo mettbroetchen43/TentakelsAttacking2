@@ -13,11 +13,8 @@ private:
 
 	void Checked(unsigned int ID, bool isChecked);
 
-protected:
-
 public:
-	TestScene(Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution);
+	TestScene(Vector2 resolution);
 	void SetActive(bool active, AppContext const& appContext) override;
 
 };

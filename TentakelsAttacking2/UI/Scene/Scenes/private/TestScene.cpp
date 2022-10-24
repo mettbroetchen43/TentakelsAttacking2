@@ -28,7 +28,7 @@ void TestScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.3f, 0.3f),
 		GetElementSize(0.0f, 0.05f).y,
 		Alignment::MID_MID,
-		1,
+		2,
 		resolution
 		);
 	m_elements.push_back(checkBox_2);
@@ -42,7 +42,7 @@ void TestScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.3f, 0.4f),
 		GetElementSize(0.0f, 0.05f).y,
 		Alignment::MID_MID,
-		1,
+		3,
 		resolution
 		);
 	checkBox_3->SetOnCheck([this](unsigned int ID, bool isChecked) {
@@ -72,9 +72,8 @@ void TestScene::Checked(unsigned int ID, bool isChecked) {
 	std::cout << "CHECKED -> ID : " << ID << " -> " << isChecked << '\n';
 }
 
-TestScene::TestScene(Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution)
-	: Scene(pos, size, alignment) {
+TestScene::TestScene(Vector2 resolution)
+	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT) {
 	Initialize(resolution, AppContext::GetInstance());
 }
 

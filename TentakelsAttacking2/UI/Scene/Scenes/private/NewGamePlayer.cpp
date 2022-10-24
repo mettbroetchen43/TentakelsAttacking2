@@ -286,11 +286,12 @@ void NewGamePlayerScene::DeletePlayer(unsigned int ID) {
 	UpdateSceneEntries(appContext);
 }
 
-NewGamePlayerScene::NewGamePlayerScene(Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution)
-	: Scene(pos, size, alignment) {
+NewGamePlayerScene::NewGamePlayerScene(Vector2 resolution)
+	: Scene(Vector2(0.0f,0.0f), Vector2(1.0f,1.0f), Alignment::DEFAULT) {
 
-	Initialize(resolution, AppContext::GetInstance());
+	AppContext& appContext = AppContext::GetInstance();
+	Initialize(resolution, appContext);
+	UpdateSceneEntries(appContext);
 }
 
 void NewGamePlayerScene::CheckAndUpdate(Vector2 const& mousePosition,

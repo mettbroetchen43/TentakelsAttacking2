@@ -23,36 +23,15 @@ private:
 	UIManager* m_uiManager;
 	PopUpManager m_popUpManager;
 
-	std::unordered_map<SceneType, std::shared_ptr<Scene>> m_scenes;
+	SceneType m_currentSceneType = SceneType::NONE;
+	SceneType m_nextSceneType = SceneType::NONE;
 	std::shared_ptr<Scene> m_currentScene;
 
-	std::vector<std::shared_ptr<PopUp>> m_popUps;
-
-	void InitializeScenes();
-	/*void NewMessagePopUp(std::string const& title, std::string const& subTitle);
-	template<typename popUpType, typename eventType>
-	void NewTableCellPopUp(eventType const* event) {
-		AppContext& appContext = AppContext::GetInstance();
-		auto event = NewFocusLayerEvent();
-		appContext.eventManager.InvokeEvent(event);
-
-		auto popUp = std::make_shared<popUpType>(
-			Vector2(0.5f, 0.5f),
-			Vector2(0.7f, 0.7f),
-			Alignment::MID_MID,
-			*m_uiManager->GetResolution(),
-			event->GetTitle(),
-			AssetType::LOGO,
-			event->GetCell()
-			);
-		m_popUps.push_back(popUp);
-	}
-	void DeleteLastPopUp();*/
+	void InitializeNewScene(SceneType sceneType);
+	void SwitchScene(AppContext const& appContext);
 
 public:
 	SceneManager(UIManager* uiManager);
-
-	void SwitchScene(SceneType sceneType, AppContext const& appContext);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);

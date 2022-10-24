@@ -120,9 +120,8 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 	m_elements.push_back(versionAndCopyRight);
 }
 
-MainMenu::MainMenu(Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution)
-	: Scene(pos, size, alignment) {
+MainMenu::MainMenu(Vector2 resolution)
+	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT) {
 
 	AppContext& appContext = AppContext::GetInstance();
 	Initialize(resolution, appContext);
