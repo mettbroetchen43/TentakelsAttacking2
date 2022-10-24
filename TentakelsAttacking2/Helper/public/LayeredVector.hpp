@@ -42,6 +42,11 @@ public:
 	}
 	void RemoveLayer() {
 		m_elements.pop_back();
+
+		if (m_elements.size() <= 0) {
+			AddLayer();
+		}
+
 		m_layer = m_elements.size() - 1;
 	}
 	void Clear() {
