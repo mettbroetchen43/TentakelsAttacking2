@@ -5,6 +5,7 @@
 
 #include "ClassicButton.h"
 #include "AppContext.h"
+#include "HInput.h"
 
 ClassicButton::ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size,
 	Alignment allignment, Vector2 resolution, std::string const& text,
@@ -21,23 +22,21 @@ void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition,
 
 	if (IsFocused()) {
 		if (m_state == State::DISABLED) {
-			if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_SPACE)) {
+			if (IsConfirmInputPressed()) {
 				auto event = PlaySoundEvent(SoundType::CLICKED_DISABLED_STD);
 				appContext.eventManager.InvokeEvent(event);
 				return;
 			}
 
 			bool disabledAction =
-				IsKeyDown(KEY_ENTER) or
-				IsKeyDown(KEY_SPACE) or
-				IsKeyReleased(KEY_ENTER) or
-				IsKeyReleased(KEY_SPACE);
+				IsConfirmInputDown()
+				or IsConfirmInputReleased();
 			if (disabledAction) {
 				return;
 			}
 		}
 
-		if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_SPACE)) {
+		if (IsConfirmInputPressed()) {
 			if (m_state != State::PRESSED) {
 				m_state = State::PRESSED;
 				m_isPressed = true;
@@ -47,13 +46,13 @@ void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition,
 			}
 		}
 
-		if (IsKeyDown(KEY_ENTER) or IsKeyDown(KEY_SPACE)) {
+		if (IsConfirmInputDown()) {
 			m_state = State::PRESSED;
 			m_onPress();
 			return;
 		}
 
-		if (IsKeyReleased(KEY_ENTER) or IsKeyReleased(KEY_SPACE)) {
+		if (IsConfirmInputReleased()) {
 			bool hover = CheckCollisionPointRec(mousePosition, m_collider);
 			if (!hover or !IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 				m_state = hover ? State::HOVER : State::ENABLED;
