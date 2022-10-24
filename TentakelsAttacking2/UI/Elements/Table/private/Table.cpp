@@ -9,6 +9,7 @@
 #include "PrimitiveCellPopUp.hpp"
 #include "HGeneral.h"
 #include "HFocusEvents.h"
+#include "HInput.h"
 #include <stdexcept>
 #include <cassert>
 
@@ -155,7 +156,7 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition,
 	if (m_isNestedFocus) {
 		updateCells = true;
 
-		if (IsKeyPressed(KEY_ESCAPE)) {
+		if (IsBackInputPressed()) {
 			DeleteFocusLayer();
 		}
 	}
@@ -176,9 +177,7 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition,
 			bool mouseAction =
 				CheckCollisionPointRec(mousePosition, m_colider)
 				and IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
-			bool enterAction =
-				IsKeyPressed(KEY_ENTER)
-				or IsKeyPressed(KEY_SPACE);
+			bool enterAction = IsConfirmInputPressed();
 			bool focusCell =
 				enterAction
 				or mouseAction;
