@@ -27,8 +27,8 @@ void CellPopUp::Initialize([[maybe_unused]] AppContext const& appContext,
 
 	AddFocusElement(cancelBtn.get(), true);
 
-	cancelBtn->SetOnClick([&]() {
-		SetShouldClose();
+	cancelBtn->SetOnClick([this]() {
+		this->SetShouldClose();
 		});
 
 	m_elements.push_back(cancelBtn);

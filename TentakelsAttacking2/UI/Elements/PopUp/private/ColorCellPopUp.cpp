@@ -13,8 +13,8 @@ void ColorCellPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution, Color currentColor) {
 
 	auto acceptBtn = InitializeAcceptButton(appContext, resolution);
-	acceptBtn->SetOnClick([&]() {
-		SetValue();
+	acceptBtn->SetOnClick([this]() {
+		this->SetValue();
 		});
 
 	auto colorPicker = std::make_shared<ColorPicker>(

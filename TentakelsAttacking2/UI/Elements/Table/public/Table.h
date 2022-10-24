@@ -79,9 +79,9 @@ private:
 			GetElementSize(),
 			Alignment::DEFAULT,
 			m_resolution,
-			[&]() {ResizeCells();},
-			[&](AbstractTableCell const* cell, EntryType oldValue, EntryType newValue)
-			{CellUpdated<EntryType>(cell, oldValue, newValue);}
+			[this]() {this->ResizeCells();},
+			[this](AbstractTableCell const* cell, EntryType oldValue, EntryType newValue)
+			{this->CellUpdated<EntryType>(cell, oldValue, newValue);}
 			);
 
 		m_cells.at(index)->SetEditable(isEditable);

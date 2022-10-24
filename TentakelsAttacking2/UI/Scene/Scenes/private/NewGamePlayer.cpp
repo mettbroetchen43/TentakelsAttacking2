@@ -47,8 +47,8 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		resolution
 		);
 	inputLine->SetPlaceholderText("Player Name");
-	inputLine->SetOnEnter([&]() {
-		AddPlayer();
+	inputLine->SetOnEnter([this]() {
+		this->AddPlayer();
 		});
 	m_elements.push_back(inputLine);
 	m_inputLine = inputLine.get();
@@ -61,7 +61,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		resolution
 		);
 	colorPicker->SetColor(appContext.playerCollection.GetPossibleColor());
-	colorPicker->SetOnEnter([&]() {
+	colorPicker->SetOnEnter([this]() {
 		AddPlayer();
 		});
 	m_elements.push_back(colorPicker);
@@ -77,8 +77,8 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		"Add Player",
 		SoundType::ACCEPTED
 		);
-	addPlayerBtn->SetOnClick([&]() {
-		AddPlayer();
+	addPlayerBtn->SetOnClick([this]() {
+		this->AddPlayer();
 		});
 	m_elements.push_back(addPlayerBtn);
 
@@ -91,7 +91,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		"Remove Player",
 		SoundType::CLICKED_RELEASE_STD
 		);
-	removePlayerBtn->SetOnClick([&]() {	CreateDeletePlayer(); });
+	removePlayerBtn->SetOnClick([this]() {	CreateDeletePlayer(); });
 	m_elements.push_back(removePlayerBtn);
 
 	auto line = std::make_shared<Line>(
@@ -129,12 +129,12 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 	table->ResizeCells();
 
 	table->SetUpdateSpecificCell<std::string>(
-		[&](AbstractTableCell const* cell, std::string oldValue, std::string newValue) {
-			UpdatePlayerName(cell, oldValue, newValue);
+		[this](AbstractTableCell const* cell, std::string oldValue, std::string newValue) {
+			this->UpdatePlayerName(cell, oldValue, newValue);
 		}
 	);
 	table->SetUpdateSpecificCell<Color>(
-		[&](AbstractTableCell const* cell, Color oldValue, Color newValue) {
+		[this](AbstractTableCell const* cell, Color oldValue, Color newValue) {
 			UpdatePlayerColor(cell, oldValue, newValue);
 		}
 	);
@@ -273,7 +273,7 @@ void NewGamePlayerScene::CreateDeletePlayer() {
 	auto event = ShowDeletePlayerEvent(
 		"Delete Player?",
 		"",
-		[&](unsigned int ID) {DeletePlayer(ID);}
+		[this](unsigned int ID) {this->DeletePlayer(ID);}
 	);
 	appContext.eventManager.InvokeEvent(event);
 }
