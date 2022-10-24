@@ -219,6 +219,9 @@
     <ClInclude Include="UI\Elements\Default\public\CheckBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Helper\public\HInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -366,6 +369,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Default\private\CheckBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\private\HInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
