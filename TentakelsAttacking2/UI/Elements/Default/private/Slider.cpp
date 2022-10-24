@@ -19,7 +19,7 @@ void Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension)
 		SoundType::CLICKED_RELEASE_STD,
 		resolution
 	);
-	m_btn.SetOnPress([&]() {Slide();});
+	m_btn.SetOnPress([this]() {this->Slide();});
 }
 
 void Slider::Slide() {

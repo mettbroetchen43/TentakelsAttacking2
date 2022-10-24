@@ -18,8 +18,8 @@ void TestScene::Initialize(Vector2 resolution,
 		1,
 		resolution
 		);
-	checkBox_1->SetOnCheck([&](unsigned int ID, bool isChecked) {
-		Checked(ID, isChecked);
+	checkBox_1->SetOnCheck([this](unsigned int ID, bool isChecked) {
+		this->Checked(ID, isChecked);
 		});
 	m_elements.push_back(checkBox_1);
 
@@ -32,7 +32,7 @@ void TestScene::Initialize(Vector2 resolution,
 		resolution
 		);
 	m_elements.push_back(checkBox_2);
-	checkBox_2->SetOnCheck([&](unsigned int ID, bool isChecked) {
+	checkBox_2->SetOnCheck([this](unsigned int ID, bool isChecked) {
 		Checked(ID, isChecked);
 		});
 	checkBox_2->SetEnabled(false);
@@ -45,8 +45,8 @@ void TestScene::Initialize(Vector2 resolution,
 		1,
 		resolution
 		);
-	checkBox_3->SetOnCheck([&](unsigned int ID, bool isChecked) {
-		Checked(ID, isChecked);
+	checkBox_3->SetOnCheck([this](unsigned int ID, bool isChecked) {
+		this->Checked(ID, isChecked);
 		});
 	m_elements.push_back(checkBox_3);
 

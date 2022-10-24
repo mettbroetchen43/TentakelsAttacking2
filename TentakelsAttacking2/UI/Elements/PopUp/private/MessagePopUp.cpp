@@ -21,7 +21,7 @@ void MessagePopUp::Initialize(Vector2 resolution) {
 		SoundType::CLICKED_RELEASE_STD
 		);
 
-	btn->SetOnClick([&]() {
+	btn->SetOnClick([this]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(ClosePopUpEvent(this));
 		});
 	auto event = NewFocusPopUpElementEvent(btn.get());

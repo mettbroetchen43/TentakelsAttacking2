@@ -50,8 +50,8 @@ void Intro::Initialize(AppContext& appContext, Vector2 resolution) {
 	m_elements.push_back(skipText);
 
 
-	std::function<void()> gameStart = [&]() {
-		StartGame();
+	std::function<void()> gameStart = [this]() {
+		this->StartGame();
 	};
 	m_btn->SetOnClick(gameStart);
 }

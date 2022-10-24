@@ -121,7 +121,7 @@ public:
 			auto event = ShowCellPopUpEvent<EntryType>(
 				"Edit Entry",
 				m_value,
-				[&](EntryType value) {UpdateValue(value);}
+				[this](EntryType value) {this->UpdateValue(value);}
 			);
 			appContext.eventManager.InvokeEvent(event);
 		}

@@ -17,8 +17,8 @@ private:
 		Vector2 resolution, EntryType currentValue) {
 
 		auto acceptBtn = InitializeAcceptButton(appContext, resolution);
-		acceptBtn->SetOnClick([&]() {
-			SetValue();
+		acceptBtn->SetOnClick([this]() {
+			this->SetValue();
 			});
 
 		auto inputChance = std::make_shared<InputLine<EntryType>>(

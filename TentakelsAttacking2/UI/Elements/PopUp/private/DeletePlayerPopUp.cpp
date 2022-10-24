@@ -12,7 +12,7 @@ void DeletePlayerPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution) {
 
 	auto acceptBtn = InitializeAcceptButton(appContext, resolution);
-	acceptBtn->SetOnClick([&]() {SetValue();});
+	acceptBtn->SetOnClick([this]() {this->SetValue();});
 
 	auto inputLine = std::make_shared<InputLine<int>>(
 		3,
