@@ -101,10 +101,14 @@ void GameEventSettings::UpdateElements(UpdateCheckGameEventsUI const* event) {
 GameEventSettings::GameEventSettings(Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution)
 	: Scene(pos, size, alignment) {
-	AppContext::GetInstance().eventManager.AddListener(this);
+	AppContext& appContext = AppContext::GetInstance();
+	appContext.eventManager.AddListener(this);
 
 	GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	Initialize(resolution);
+
+	auto event = InitialCheckGameEventDataEvent();
+	appContext.eventManager.InvokeEvent(event);
 }
 GameEventSettings::~GameEventSettings() {
 	AppContext::GetInstance().eventManager.RemoveListener(this);

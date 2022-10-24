@@ -108,3 +108,4 @@ public:
 		return m_types;
 	}
 };
+class InitialCheckGameEventDataEvent : public Event { };

@@ -161,4 +161,9 @@ void GameManager::OnEvent(Event const& event) {
 		SetGameEventActive(GameEvent);
 		return;
 	}
+	if (auto const* GameEvent = dynamic_cast<InitialCheckGameEventDataEvent const*>(&event)) {
+		auto updateEvent = UpdateCheckGameEventsUI(&m_gameEvents);
+		AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
+		return;
+	}
 }
