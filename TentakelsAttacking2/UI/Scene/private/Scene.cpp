@@ -59,7 +59,8 @@ void Scene::SetActive(bool active, AppContext const& appContext) {
 	SetFocusActive(appContext);
 }
 
-void Scene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void Scene::CheckAndUpdate(Vector2 const& mousePosition,
+	AppContext const& appContext) {
 	if (!m_active) {
 		return;
 	}

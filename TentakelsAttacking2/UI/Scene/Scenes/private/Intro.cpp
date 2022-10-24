@@ -11,6 +11,7 @@
 #include "Title.h"
 #include "SceneType.hpp"
 #include "Hrandom.h"
+#include "HInput.h"
 
 
 #define BTN_SPEED -0.003f
@@ -96,7 +97,7 @@ void Intro::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 	}
 
 	bool skipBtn =
-		IsKeyPressed(KEY_ESCAPE)
+		IsBackInputPressed()
 		and m_title->HasFinishedTitle()
 		and !m_btnMovmendFinish;
 	if (skipBtn) {
