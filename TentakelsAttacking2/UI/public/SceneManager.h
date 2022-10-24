@@ -23,20 +23,15 @@ private:
 	UIManager* m_uiManager;
 	PopUpManager m_popUpManager;
 
-	std::unordered_map<SceneType, std::shared_ptr<Scene>> m_scenes;
+	SceneType m_currentSceneType = SceneType::NONE;
+	SceneType m_nextSceneType = SceneType::NONE;
 	std::shared_ptr<Scene> m_currentScene;
 
-	std::vector<std::shared_ptr<PopUp>> m_popUps;
-
-	void InitializeScenes();
-	void GenerateTestScene();
-	void GenerateLogoScene(AppContext const& appContext);
-	void GenerateIntro(AppContext const& appContext);
+	void InitializeNewScene(SceneType sceneType);
+	void SwitchScene(AppContext const& appContext);
 
 public:
 	SceneManager(UIManager* uiManager);
-
-	void SwitchScene(SceneType sceneType, AppContext const& appContext);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);
