@@ -6,6 +6,7 @@
 #include "Title.h"
 #include "AppContext.h"
 #include "HRandom.h"
+#include "HInput.h"
 
 void Title::RenderTitle(AppContext const& appContext) {
 	for (int i = 0;i < m_title->size();++i) {
@@ -136,7 +137,7 @@ Title::Title(Vector2 pos, Vector2 size, Alignment alignment, bool drawTitle,
 
 void Title::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition, AppContext const& appContext) {
 	bool skipTitle =
-		IsKeyPressed(KEY_ESCAPE)
+		IsBackInputPressed()
 		and !m_titleFinish;
 	if (skipTitle) {
 		TitleFinish(appContext);
