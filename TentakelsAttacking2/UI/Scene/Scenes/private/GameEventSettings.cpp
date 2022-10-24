@@ -96,6 +96,39 @@ void GameEventSettings::UpdateElements(UpdateCheckGameEventsUI const* event) {
 			}
 		}
 	}
+
+	std::shared_ptr<CheckBox> gloablCheckbox = nullptr;
+	bool check = true;
+	bool value = false;
+
+	for (size_t i = 0; i < m_checkBoxes.size(); ++i) {
+		auto cbTypei = static_cast<GameEventType>(m_checkBoxes.at(i)->GetID());
+		if (cbTypei == GameEventType::GLOBAL) {
+			gloablCheckbox = m_checkBoxes.at(i);
+			continue;
+		}
+		value = m_checkBoxes.at(i)->IsChecked();
+		for (size_t j = i; j < m_checkBoxes.size(); ++j) {
+			auto cbTypej = static_cast<GameEventType>(m_checkBoxes.at(i)->GetID());
+			if (cbTypej == GameEventType::GLOBAL) {
+				continue;
+			}
+			if (m_checkBoxes.at(i)->IsChecked()
+				!= m_checkBoxes.at(j)->IsChecked()) {
+				check = false;
+				goto found;
+			}
+		}
+	}
+
+found:
+	if (check) {
+		gloablCheckbox->SetChecked(value);
+	}
+	else {
+		gloablCheckbox->SetChecked(false);
+	}
+
 }
 
 GameEventSettings::GameEventSettings(Vector2 pos, Vector2 size,
