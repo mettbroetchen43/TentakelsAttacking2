@@ -6,8 +6,11 @@
 #pragma once
 #include "Scene.h"
 
+class CheckBox;
+
 class GameEventSettings : public Scene {
 private:
+	std::vector<std::shared_ptr<CheckBox>> m_checkBoxes;
 	void Initialize(Vector2 resoluton);
 
 	void SetChecked(unsigned int ID, bool isCecked);
