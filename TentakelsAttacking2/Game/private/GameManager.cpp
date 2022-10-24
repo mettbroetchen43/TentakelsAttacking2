@@ -107,8 +107,25 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(deleteEvent);
 }
 
+void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
+	if (event->GetType() == GameEventType::GLOBAL) {
+		for (auto e : settableGameEventTypes) {
+			m_gameEvents[e] = event->GetIsChecked();
+		}
+	}
+	else {
+		m_gameEvents[event->GetType()] = event->GetIsChecked();
+	}
+
+	auto updateEvent = UpdateCheckGameEventsUI(&m_gameEvents);
+	AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
+}
+
 GameManager::GameManager() {
 	AppContext::GetInstance().eventManager.AddListener(this);
+	for (auto e : settableGameEventTypes) {
+		m_gameEvents[e] = true;
+	}
 }
 
 std::vector<std::shared_ptr<Player>>& GameManager::GetPlayers() {
@@ -125,18 +142,28 @@ void GameManager::Update() {
 }
 void GameManager::OnEvent(Event const& event) {
 
+	// Player
 	if (auto const* playerEvent = dynamic_cast<AddPlayerEvent const*>(&event)) {
 		AddPlayer(playerEvent);
 		return;
 	}
-
 	if (auto const* playerEvent = dynamic_cast<EditPlayerEvent const*>(&event)) {
 		EditPlayer(playerEvent);
 		return;
 	}
-
 	if (auto const* playerEvent = dynamic_cast<DeletePlayerEvent const*>(&event)) {
 		DeletePlayer(playerEvent);
+		return;
+	}
+
+	// Game Events
+	if (auto const* GameEvent = dynamic_cast<UpdateCheckGameEvent const *>(&event)) {
+		SetGameEventActive(GameEvent);
+		return;
+	}
+	if (auto const* GameEvent = dynamic_cast<InitialCheckGameEventDataEvent const*>(&event)) {
+		auto updateEvent = UpdateCheckGameEventsUI(&m_gameEvents);
+		AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
 		return;
 	}
 }

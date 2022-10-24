@@ -149,6 +149,7 @@
     <ClInclude Include="Game\public\Fleet.h" />
     <ClInclude Include="Game\public\GroupTarget.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
+    <ClInclude Include="Helper\public\GameEventTypes.hpp" />
     <ClInclude Include="Helper\public\HColors.h" />
     <ClInclude Include="Helper\public\HFocusEvents.h" />
     <ClInclude Include="Helper\public\HInput.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Helper\public\HGeneral.h" />
     <ClInclude Include="UI\Scene\public\BaseMainScene.h" />
     <ClInclude Include="UI\public\PopUpManager.h" />
+    <ClInclude Include="UI\Scene\Scenes\public\GameEventSettings.h" />
     <ClInclude Include="UI\Scene\Scenes\public\Intro.h" />
     <ClInclude Include="UI\public\SceneManager.h" />
     <ClInclude Include="UI\Elements\Button\public\ClassicButton.h" />
@@ -257,6 +259,7 @@
     <ClCompile Include="UI\Scene\Scenes\private\MainMenu.cpp" />
     <ClCompile Include="UI\Scene\Scenes\private\TestScene.cpp" />
     <ClCompile Include="UI\Scene\Scenes\private\NewGamePlayer.cpp" />
+    <ClCompile Include="UI\Scene\Scenes\private\GameEventSettings.cpp" />
     <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="_private\AppContext.cpp" />
