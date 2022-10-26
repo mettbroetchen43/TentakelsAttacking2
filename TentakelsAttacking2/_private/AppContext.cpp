@@ -17,6 +17,10 @@ std::string const& AppContext::CopyRight() const {
 	return m_copyRight;
 }
 
+bool AppContext::IsMaximizedStartingWindow() const {
+	return m_starting_maximized_window;
+}
+
 AppContext::AppContext() {
 	eventManager.AddListener(&soundManager);
 	eventManager.AddListener(&playerCollection);
