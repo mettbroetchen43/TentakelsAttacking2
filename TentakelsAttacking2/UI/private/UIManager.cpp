@@ -18,6 +18,9 @@ Focus& UIManager::GetFocus() {
 }
 void UIManager::ToggleFullScreen() {
 	ToggleFullscreen();
+	if (!IsWindowFullscreen()) {
+		SetWindowPosition(0, 0);
+	}
 }
 void UIManager::CheckAndUpdateResolution() {
 	Vector2 newResolution = GetResolution();
