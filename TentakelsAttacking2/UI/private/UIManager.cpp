@@ -86,8 +86,13 @@ UIManager::UIManager()
 void UIManager::StartUI() {
 	auto event = SwitchSceneEvent(SceneType::LOGO);
 	m_appContext.eventManager.InvokeEvent(event);
-	//m_sceneManager.SwitchScene(SceneType::LOGO, m_appContext);
-	// ToggleFullScreen(); Disabled for Streaming
+	if (m_appContext.IsMaximizedStartingWindow()) {
+		ToggleFullScreen();
+	}
+	else {
+		SetWindowPosition(0,0);
+	}
+
 	UILoop();
 }
 
