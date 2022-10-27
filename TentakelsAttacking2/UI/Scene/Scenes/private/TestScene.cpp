@@ -5,20 +5,32 @@
 
 #include "TestScene.h"
 #include "UIManager.h"
-#include "GameEventSettings.h"
+#include "SliderAndInputLine.h"
 #include <iostream>
 
 void TestScene::Initialize(Vector2 resolution,
 	[[maybe_unused]] AppContext& appContext) {
 	
-	auto scene = std::make_shared<GameEventSettings>(
-		GetElementPosition(0.5f, 0.5f),
-		GetElementSize(0.5f, 0.5f),
-		Alignment::MID_MID,
-		resolution
-	);
-	scene->SetActive(true, appContext);
-	m_elements.push_back(scene);
+	float position = 0.3f;
+	for (int i = 100; i < 105; i +=2) {
+		auto scene = std::make_shared<SliderAndInputLine>(
+			i,
+			GetElementPosition(0.5f, position),
+			GetElementSize(0.3f, 0.03f),
+			Alignment::MID_MID,
+			0,
+			100,
+			61,
+			resolution
+			);
+		scene->SetActive(true, appContext);
+		scene->SetOnSave([this](int value) {
+			TestLambda(value);
+			});
+		m_elements.push_back(scene);
+		position += 0.05f;
+	}
+
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -37,10 +49,6 @@ void TestScene::Initialize(Vector2 resolution,
 	m_elements.push_back(backBtn);
 }
 
-void TestScene::Checked(unsigned int ID, bool isChecked) {
-	std::cout << "CHECKED -> ID : " << ID << " -> " << isChecked << '\n';
-}
-
 TestScene::TestScene(Vector2 resolution)
 	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT) {
 	Initialize(resolution, AppContext::GetInstance());
@@ -48,4 +56,14 @@ TestScene::TestScene(Vector2 resolution)
 
 void TestScene::SetActive(bool active, AppContext const& appContext) {
 	Scene::SetActive(active, appContext);
+}
+
+void TestScene::TestLambda(int value) {
+	std::cout << "Value Triggert -> " << value << '\n';
+
+	for (auto& s : m_elements) {
+		if (auto* e = dynamic_cast<SliderAndInputLine*>(s.get())) {
+			e->SetValue(value);
+		}
+	}
 }

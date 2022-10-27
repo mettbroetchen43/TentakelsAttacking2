@@ -7,13 +7,13 @@
 #include "AppContext.h"
 
 void Button::SetTextSizeAndPosition(Vector2 resolution, AppContext const& appContext) {
-	m_textSize = m_collider.height / 2;
+	m_textSize = m_colider.height / 2;
 	Vector2 textSize = MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_text.c_str(),
 		m_textSize,
 		0.0f);
-	while (textSize.x > m_collider.width) {
+	while (textSize.x > m_colider.width) {
 		if (m_textSize == 1) {
 			break;
 		}
@@ -45,18 +45,18 @@ Button::Button(Vector2 pos, Vector2 size, Alignment alignment,
 		static_cast<float>(m_texture->width),
 		static_cast<float>(m_texture->height / m_buttonParts)
 	};
-	m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 
 	SetTextSizeAndPosition(resolution, AppContext::GetInstance());
 }
 
 Button::Button()
 	: UIElement(Vector2(0.0f,0.0f), Vector2(0.0f,0.0f), Alignment::TOP_LEFT),
-	m_collider({ 0.0f,0.0f,0.0f,0.0f }), m_sound(SoundType::CLICKED_RELEASE_STD),
+	m_colider({ 0.0f,0.0f,0.0f,0.0f }), m_sound(SoundType::CLICKED_RELEASE_STD),
 	m_textPosition({ 0.0f,0.0f }), m_texture(nullptr), m_textureRec({0.0f,0.0f,0.0f,0.0f}) {}
 
 void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
-	bool const hover = CheckCollisionPointRec(mousePosition, m_collider);
+	bool const hover = CheckCollisionPointRec(mousePosition, m_colider);
 	if (m_state == State::DISABLED) {
 		if (hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 			auto event = PlaySoundEvent(SoundType::CLICKED_DISABLED_STD);
@@ -93,9 +93,9 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 			auto event = PlaySoundEvent(m_sound);
 			appContext.eventManager.InvokeEvent(event);
-			m_onClick();
 			m_state = hover ? State::HOVER : State::ENABLED;
 			m_isPressed = false;
+			m_onClick();
 			return;
 		}
 	}
@@ -119,7 +119,7 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 }
 void Button::Render(AppContext const& appContext) {
 	m_textureRec.y = static_cast<int>(m_state) * m_textureRec.height;
-	DrawTexturePro(*m_texture, m_textureRec, m_collider, Vector2(0.0f, 0.0f), 0, WHITE);
+	DrawTexturePro(*m_texture, m_textureRec, m_colider, Vector2(0.0f, 0.0f), 0, WHITE);
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()), m_text.c_str(),
 		Vector2(m_textPosition.x, m_textPosition.y),
@@ -128,7 +128,7 @@ void Button::Render(AppContext const& appContext) {
 		WHITE);
 }
 void Button::Resize(Vector2 resolution, AppContext const& appContext) {
-	m_collider = {
+	m_colider = {
 		resolution.x * m_pos.x,
 		resolution.y * m_pos.y,
 		resolution.x * m_size.x,
@@ -157,25 +157,25 @@ bool Button::IsEnabled() const {
 }
 
 Rectangle Button::GetCollider() const {
-	return m_collider;
+	return m_colider;
 }
 void Button::SetCollider(Rectangle collider) {
-	m_textPosition.x += (collider.x - m_collider.x);
-	m_textPosition.y += (collider.y - m_collider.y);
-	m_collider = collider;
+	m_textPosition.x += (collider.x - m_colider.x);
+	m_textPosition.y += (collider.y - m_colider.y);
+	m_colider = collider;
 }
 
 void Button::Move(Vector2 offset) {
 	Vector2 resolution = {
-		m_collider.x / m_pos.x,
-		m_collider.y / m_pos.y
+		m_colider.x / m_pos.x,
+		m_colider.y / m_pos.y
 	};
 
 	m_pos.x += offset.x;
 	m_pos.y += offset.y;
 
-	m_collider.x = resolution.x * m_pos.x;
-	m_collider.y = resolution.y * m_pos.y;
+	m_colider.x = resolution.x * m_pos.x;
+	m_colider.y = resolution.y * m_pos.y;
 	m_textPosition.x += resolution.x * offset.x;
 	m_textPosition.y += resolution.y * offset.y;
 }

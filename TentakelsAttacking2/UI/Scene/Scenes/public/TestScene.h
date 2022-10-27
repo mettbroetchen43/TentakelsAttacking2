@@ -11,10 +11,9 @@ class TestScene : public Scene {
 private:
 	void Initialize(Vector2 resolution, AppContext& appContext);
 
-	void Checked(unsigned int ID, bool isChecked);
-
 public:
 	TestScene(Vector2 resolution);
 	void SetActive(bool active, AppContext const& appContext) override;
 
+	void TestLambda(int value);
 };

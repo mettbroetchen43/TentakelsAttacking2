@@ -19,7 +19,7 @@ protected:
 	bool m_isPressed = false;
 	Texture2D* m_texture;
 	Rectangle m_textureRec;
-	Rectangle m_collider;
+	Rectangle m_colider;
 	State m_state = State::ENABLED;
 	int m_buttonParts = 4;
 

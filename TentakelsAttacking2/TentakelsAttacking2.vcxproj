@@ -208,6 +208,7 @@
     <ClInclude Include="UI\Scene\Scenes\public\MainMenu.h" />
     <ClInclude Include="UI\Scene\Scenes\public\NewGamePlayer.h" />
     <ClInclude Include="UI\Scene\Scenes\public\Scenes.hpp" />
+    <ClInclude Include="UI\Scene\Scenes\public\SliderAndInputLine.h" />
     <ClInclude Include="UI\Scene\Scenes\public\TestScene.h" />
     <ClInclude Include="_public\AppContext.h" />
   </ItemGroup>
@@ -260,6 +261,7 @@
     <ClCompile Include="UI\Scene\Scenes\private\TestScene.cpp" />
     <ClCompile Include="UI\Scene\Scenes\private\NewGamePlayer.cpp" />
     <ClCompile Include="UI\Scene\Scenes\private\GameEventSettings.cpp" />
+    <ClCompile Include="UI\Scene\Scenes\private\SliderAndInputLine.cpp" />
     <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="_private\AppContext.cpp" />

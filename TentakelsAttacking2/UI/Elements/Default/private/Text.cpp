@@ -9,15 +9,15 @@
 
 void Text::CreateToRender(AppContext const& appContext) {
 	m_toRender = BreakLines(m_text, appContext);
-	m_toRender = GetHorisontalAlignedText(m_toRender, m_collider, m_textSize, m_textAlignment);
-	m_textPosition = GetVerticalAlignedTextPosition(m_toRender, m_textSize, m_collider, m_textAlignment);
+	m_toRender = GetHorisontalAlignedText(m_toRender, m_colider, m_textSize, m_textAlignment);
+	m_textPosition = GetVerticalAlignedTextPosition(m_toRender, m_textSize, m_colider, m_textAlignment);
 }
 std::string Text::BreakLines(std::string toBreak, AppContext const& appContext) const {
 	if (!m_lineBreaks) {
 		return toBreak;
 	}
 
-	BreakText(toBreak, m_textSize, m_collider.width, appContext);
+	BreakText(toBreak, m_textSize, m_colider.width, appContext);
 
 	return toBreak;
 }
@@ -27,7 +27,7 @@ Text::Text(Vector2 pos, Vector2 size, Alignment alignment,
 	std::string text, Vector2 resolution)
 	: UIElement(pos, size, alignment), m_textSize(textHeight * resolution.y),
 	m_text(text), m_textHeight(textHeight), m_textAlignment(textAlignment) {
-	m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	CreateToRender(AppContext::GetInstance());
 }
 
@@ -44,14 +44,14 @@ void Text::Render(AppContext const& appContext) {
 	);
 	if (m_renderRectangle) {
 		DrawRectangleLinesEx(
-			m_collider,
+			m_colider,
 			1.0f,
 			PURPLE
 		);
 	}
 }
 void Text::Resize(Vector2 resolution, AppContext const& appContext) {
-	m_collider = {
+	m_colider = {
 		m_pos.x * resolution.x,
 		m_pos.y * resolution.y,
 		m_size.x * resolution.x,

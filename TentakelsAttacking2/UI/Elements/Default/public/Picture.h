@@ -11,7 +11,7 @@ enum class AssetType;
 class Picture : public UIElement {
 private:
 	Texture2D* m_texture = nullptr;
-	Rectangle m_collider = { 0.0f,0.0f,0.0f,0.0f };
+	Rectangle m_colider = { 0.0f,0.0f,0.0f,0.0f };
 	bool m_isScaleToFit = false;
 
 public:

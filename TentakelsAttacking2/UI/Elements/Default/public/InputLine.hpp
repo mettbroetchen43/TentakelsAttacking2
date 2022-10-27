@@ -17,7 +17,7 @@ template <class T>
 class InputLine : public UIElement, public Focusable {
 protected:
 	unsigned int m_charLimit;
-	Rectangle m_collider;
+	Rectangle m_colider;
 	std::string m_value;
 	std::string m_oldValue;
 	std::string m_placeholderText;
@@ -60,7 +60,7 @@ public:
 		unsigned int charLimit, Vector2 resolution)
 		: UIElement(pos, size, alignment), Focusable(focusID), m_charLimit(charLimit) {
 		m_texture = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
-		m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+		m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	}
 	InputLine(InputLine const&) = default;
 	InputLine(InputLine&&) = default;
@@ -72,7 +72,7 @@ public:
 	}
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override {
-		bool hover = CheckCollisionPointRec(mousePosition, m_collider);
+		bool hover = CheckCollisionPointRec(mousePosition, m_colider);
 		bool validSelect = !IsFocused() and
 			hover and IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 
@@ -131,28 +131,28 @@ public:
 		DrawTexturePro(
 			*m_texture,
 			textureRec,
-			m_collider,
+			m_colider,
 			Vector2(0.0f, 0.0f),
 			0.0f,
 			WHITE
 		);
 
 		DrawRectangleLinesEx(
-			m_collider,
+			m_colider,
 			2.0f,
 			PURPLE
 		);
 
-		float posX = m_collider.x + 10.0f;
-		float posY = m_collider.y + m_collider.height * 0.1f;
-		float fontSize = m_collider.height * 0.8f;
+		float posX = m_colider.x + 10.0f;
+		float posY = m_colider.y + m_colider.height * 0.1f;
+		float fontSize = m_colider.height * 0.8f;
 		std::string printableInput;
 
 		if (m_value.size() > 0) {
 			printableInput = GetPritableTextInColider(
 				m_value,
 				fontSize,
-				m_collider,
+				m_colider,
 				appContext
 			);
 			DrawTextEx(
@@ -168,7 +168,7 @@ public:
 			std::string printablePlaceholder = GetPritablePlaceholderTextInColider(
 				m_placeholderText,
 				fontSize,
-				m_collider,
+				m_colider,
 				appContext
 			);
 			DrawTextEx(
@@ -197,7 +197,7 @@ public:
 					&Constants::c_enter,
 					Vector2(
 						posX + Constants::c_cursorOffset + textLength.x,
-						posY + m_collider.height * 0.05f
+						posY + m_colider.height * 0.05f
 					),
 					fontSize,
 					0,
@@ -207,7 +207,7 @@ public:
 		}
 	}
 	void Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) override {
-		m_collider = { resolution.x * m_pos.x, resolution.y * m_pos.y,
+		m_colider = { resolution.x * m_pos.x, resolution.y * m_pos.y,
 			resolution.x * m_size.x, resolution.y * m_size.y };
 	}
 
@@ -223,10 +223,13 @@ public:
 	}
 
 	[[nodiscard]] Rectangle GetCollider() const override {
-		return m_collider;
+		return m_colider;
+	}
+	[[nodiscard]] bool HasValue() const {
+		return !m_value.empty();
 	}
 	[[nodiscard]] bool HasValueChanced() const {
-		return m_value == m_oldValue;
+		return m_value != m_oldValue;
 	}
 	void SetOnEnter(std::function<void()> onEnter) {
 		m_onEnter = onEnter;

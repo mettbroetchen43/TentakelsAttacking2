@@ -228,6 +228,9 @@
     <ClInclude Include="Helper\public\GameEventTypes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Scene\Scenes\public\SliderAndInputLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -381,6 +384,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Scene\Scenes\private\GameEventSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Scene\Scenes\private\SliderAndInputLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
