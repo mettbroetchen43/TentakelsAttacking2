@@ -26,6 +26,7 @@ private:
 	void SaveValue() const;
 	void Slide(float position);
 	void ValidateCurrentValue();
+	void SetSliderValue() const;
 
 public:
 	SliderAndInputLine(unsigned int focusID, Vector2 pos, Vector2 size,

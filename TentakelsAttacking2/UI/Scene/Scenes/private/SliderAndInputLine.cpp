@@ -58,6 +58,7 @@ void SliderAndInputLine::BtnPressed() {
 	SaveValue();
 	m_btn->SetEnabled(false);
 	m_slided = false;
+	SetSliderValue();
 }
 void SliderAndInputLine::SaveValue() const {
 	if (!m_btn->IsEnabled()) {
@@ -71,7 +72,6 @@ void SliderAndInputLine::Slide(float position) {
 	SaveValue();
 	m_slided = true;
 }
-
 void SliderAndInputLine::ValidateCurrentValue() {
 	m_currentValue = m_inputLine->GetValue();
 	if (m_currentValue < m_minValue) {
@@ -82,6 +82,9 @@ void SliderAndInputLine::ValidateCurrentValue() {
 		m_currentValue = m_maxValue;
 		m_inputLine->SetValue(m_maxValue);
 	}
+}
+void SliderAndInputLine::SetSliderValue() const {
+	m_slider->SetButtonPosition(static_cast<float>(m_currentValue));
 }
 
 SliderAndInputLine::SliderAndInputLine(unsigned int focusID, Vector2 pos,

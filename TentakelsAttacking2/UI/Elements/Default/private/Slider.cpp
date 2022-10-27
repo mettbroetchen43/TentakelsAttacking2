@@ -122,3 +122,25 @@ void Slider::Resize(Vector2 resolution, AppContext const& appContext) {
 void Slider::SetOnSlide(std::function<void(float)> onSlide) {
 	m_onSlide = onSlide;
 }
+
+void Slider::SetButtonPosition(float position) {
+	auto btnColider = m_btn.GetCollider();
+
+	float total = m_isHorizontal
+		? m_collider.width - btnColider.width
+		: m_collider.height - btnColider.height;
+
+	float differenz = total / 100 * position;
+	float newPosition = m_isHorizontal
+		? m_collider.x + differenz
+		: m_collider.y + differenz;
+
+	if (m_isHorizontal) {
+		btnColider.x = newPosition;
+	}
+	else {
+		btnColider.y = newPosition;
+	}
+
+	m_btn.SetCollider(btnColider);
+}
