@@ -18,10 +18,13 @@ private:
 	std::shared_ptr<ClassicButton> m_btn;
 	std::function<void(int)> m_onSave = [](int) {};
 
+	bool m_slided = false;
 	int m_minValue, m_maxValue, m_currentValue;
 
 	void Initialize(unsigned int focusID, Vector2 resolution);
+	void BtnPressed();
 	void SaveValue() const;
+	void Slide(float position);
 	void ValidateCurrentValue();
 
 public:

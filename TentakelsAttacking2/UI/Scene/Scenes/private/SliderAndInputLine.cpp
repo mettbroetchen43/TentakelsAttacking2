@@ -17,6 +17,9 @@ void SliderAndInputLine::Initialize(unsigned int focusID, Vector2 resolution) {
 		10.0f,
 		resolution
 		);
+	m_slider->SetOnSlide([this](float position) {
+		Slide(position);
+		});
 	m_elements.push_back(m_slider);
 
 	m_inputLine = std::make_shared<InputLine<int>>(
@@ -28,7 +31,7 @@ void SliderAndInputLine::Initialize(unsigned int focusID, Vector2 resolution) {
 		resolution
 		);
 	m_inputLine->SetOnEnter([this]() {
-		this->SaveValue();
+		this->BtnPressed();
 		});
 	m_inputLine->SetPlaceholderText("%");
 	m_elements.push_back(m_inputLine);
@@ -45,18 +48,28 @@ void SliderAndInputLine::Initialize(unsigned int focusID, Vector2 resolution) {
 		SoundType::CLICKED_RELEASE_STD
 		);
 	m_btn->SetOnClick([this]() {
-		this->SaveValue();
+		this->BtnPressed();
 	});
 	m_btn->SetEnabled(false);
 	m_elements.push_back(m_btn);
 }
 
+void SliderAndInputLine::BtnPressed() {
+	SaveValue();
+	m_btn->SetEnabled(false);
+	m_slided = false;
+}
 void SliderAndInputLine::SaveValue() const {
 	if (!m_btn->IsEnabled()) {
 		return;
 	}
 	std::cout << "New Value: " << m_inputLine->GetValue() << '\n';
-	m_btn->SetEnabled(false);
+
+}
+void SliderAndInputLine::Slide(float position) {
+	m_inputLine->SetValue(static_cast<int>(position));
+	SaveValue();
+	m_slided = true;
 }
 
 void SliderAndInputLine::ValidateCurrentValue() {
@@ -84,7 +97,11 @@ void SliderAndInputLine::CheckAndUpdate(Vector2 const& mousePosition,
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
 	if (m_inputLine->HasValueChanced()) {
-		m_btn->SetEnabled(true);
-		ValidateCurrentValue();
+		if (!m_slided) {
+			m_btn->SetEnabled(true);
+			ValidateCurrentValue();
+		} else {
+			m_slided = false;
+		}
 	}
 }
