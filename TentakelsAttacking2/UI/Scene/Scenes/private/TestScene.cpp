@@ -18,6 +18,8 @@ void TestScene::Initialize(Vector2 resolution,
 			GetElementPosition(0.5f, position),
 			GetElementSize(0.3f, 0.03f),
 			Alignment::MID_MID,
+			0,
+			100,
 			resolution
 			);
 		scene->SetActive(true, appContext);

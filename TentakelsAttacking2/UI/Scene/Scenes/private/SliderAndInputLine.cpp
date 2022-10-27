@@ -59,10 +59,22 @@ void SliderAndInputLine::SaveValue() const {
 	m_btn->SetEnabled(false);
 }
 
+void SliderAndInputLine::ValidateCurrentValue() {
+	m_currentValue = m_inputLine->GetValue();
+	if (m_currentValue < m_minValue) {
+		m_currentValue = m_minValue;
+		m_inputLine->SetValue(m_currentValue);
+	}
+	else if (m_currentValue > m_maxValue) {
+		m_currentValue = m_maxValue;
+		m_inputLine->SetValue(m_maxValue);
+	}
+}
+
 SliderAndInputLine::SliderAndInputLine(unsigned int focusID, Vector2 pos,
-	Vector2 size, Alignment alignment,
+	Vector2 size, Alignment alignment, int minValue, int maxValue,
 	Vector2 resolution)
-	: Scene(pos, size, alignment) {
+	: Scene(pos, size, alignment), m_minValue(minValue), m_maxValue(maxValue) {
 	GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	Initialize(focusID, resolution);
 }
@@ -73,5 +85,6 @@ void SliderAndInputLine::CheckAndUpdate(Vector2 const& mousePosition,
 
 	if (m_inputLine->HasValueChanced()) {
 		m_btn->SetEnabled(true);
+		ValidateCurrentValue();
 	}
 }

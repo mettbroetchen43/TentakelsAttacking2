@@ -18,12 +18,15 @@ private:
 	std::shared_ptr<ClassicButton> m_btn;
 	std::function<void(int)> m_onSave = [](int) {};
 
+	int m_minValue, m_maxValue, m_currentValue;
+
 	void Initialize(unsigned int focusID, Vector2 resolution);
 	void SaveValue() const;
+	void ValidateCurrentValue();
 
 public:
 	SliderAndInputLine(unsigned int focusID, Vector2 pos, Vector2 size,
-		Alignment alignment, Vector2 resolution);
+		Alignment alignment, int minValue, int maxValue, Vector2 resolution);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 };
