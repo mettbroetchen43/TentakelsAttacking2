@@ -15,6 +15,7 @@ private:
 	Rectangle m_collider;
 
 	SliderButton m_btn;
+	std::function<void(float)> m_onSlide = [](float) {};
 
 	void CalculateInitialButton(Vector2 resolution, float absolutDimension);
 

@@ -24,7 +24,7 @@ void SliderAndInputLine::Initialize(unsigned int focusID, Vector2 resolution) {
 		GetElementPosition(0.77f, 0.0f),
 		GetElementSize(0.13f, 1.0f),
 		Alignment::TOP_LEFT,
-		3,
+		5,
 		resolution
 		);
 	m_inputLine->SetOnEnter([this]() {
