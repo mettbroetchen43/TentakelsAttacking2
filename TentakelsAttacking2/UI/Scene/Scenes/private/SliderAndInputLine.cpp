@@ -119,3 +119,10 @@ void SliderAndInputLine::CheckAndUpdate(Vector2 const& mousePosition,
 void SliderAndInputLine::SetOnSave(std::function<void(int)> onSave) {
 	m_onSave = onSave;
 }
+void SliderAndInputLine::SetValue(int value) {
+	m_currentValue = value;
+	ValidateCurrentValue();
+	m_inputLine->SetValue(m_currentValue);
+	m_slider->SetButtonPosition(static_cast<float>(m_currentValue));
+	m_slided = true;
+}

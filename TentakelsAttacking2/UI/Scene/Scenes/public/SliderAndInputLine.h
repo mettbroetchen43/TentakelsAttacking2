@@ -35,4 +35,5 @@ public:
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 
 	void SetOnSave(std::function<void(int)> onSave);
+	void SetValue(int value);
 };

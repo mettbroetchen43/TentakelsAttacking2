@@ -60,4 +60,10 @@ void TestScene::SetActive(bool active, AppContext const& appContext) {
 
 void TestScene::TestLambda(int value) {
 	std::cout << "Value Triggert -> " << value << '\n';
+
+	for (auto& s : m_elements) {
+		if (auto* e = dynamic_cast<SliderAndInputLine*>(s.get())) {
+			e->SetValue(value);
+		}
+	}
 }
