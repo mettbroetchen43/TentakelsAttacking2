@@ -28,9 +28,9 @@ public:
 private:
 
 #ifdef _DEBUG
-	bool m_starting_maximized_window = false;
+	bool m_startingMaximizedWindow = false;
 #else
-	bool m_starting_maximized_window = true;
+	bool m_startingMaximizedWindow = true;
 #endif // _DEBUG
 
 	AppContext();

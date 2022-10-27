@@ -18,7 +18,7 @@ std::string const& AppContext::CopyRight() const {
 }
 
 bool AppContext::IsMaximizedStartingWindow() const {
-	return m_starting_maximized_window;
+	return m_startingMaximizedWindow;
 }
 
 AppContext::AppContext() {
