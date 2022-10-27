@@ -19,7 +19,7 @@ Focus& UIManager::GetFocus() {
 void UIManager::ToggleFullScreen() {
 	ToggleFullscreen();
 	if (!IsWindowFullscreen()) {
-		SetWindowPosition(0, 0);
+		SetWindowPosition(0, 10);
 	}
 }
 void UIManager::CheckAndUpdateResolution() {
@@ -93,7 +93,7 @@ void UIManager::StartUI() {
 		ToggleFullScreen();
 	}
 	else {
-		SetWindowPosition(0,0);
+		SetWindowPosition(0,10);
 	}
 
 	UILoop();
