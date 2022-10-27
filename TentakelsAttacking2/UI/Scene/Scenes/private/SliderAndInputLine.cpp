@@ -64,11 +64,7 @@ void SliderAndInputLine::BtnPressed() {
 	SetSliderValue();
 }
 void SliderAndInputLine::SaveValue() const {
-	if (!m_btn->IsEnabled()) {
-		return;
-	}
-	std::cout << "New Value: " << m_inputLine->GetValue() << '\n';
-
+	m_onSave(m_inputLine->GetValue());
 }
 void SliderAndInputLine::Slide(float position) {
 	m_inputLine->SetValue(static_cast<int>(position));
@@ -118,4 +114,8 @@ void SliderAndInputLine::CheckAndUpdate(Vector2 const& mousePosition,
 			m_slided = false;
 		}
 	}
+}
+
+void SliderAndInputLine::SetOnSave(std::function<void(int)> onSave) {
+	m_onSave = onSave;
 }

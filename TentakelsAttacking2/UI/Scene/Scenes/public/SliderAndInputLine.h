@@ -33,4 +33,6 @@ public:
 		int minValue, int maxValue, int currentValue, Vector2 resolution);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+
+	void SetOnSave(std::function<void(int)> onSave);
 };

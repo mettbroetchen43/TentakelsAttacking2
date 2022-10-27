@@ -24,6 +24,9 @@ void TestScene::Initialize(Vector2 resolution,
 			resolution
 			);
 		scene->SetActive(true, appContext);
+		scene->SetOnSave([this](int value) {
+			TestLambda(value);
+			});
 		m_elements.push_back(scene);
 		position += 0.05f;
 	}
@@ -46,10 +49,6 @@ void TestScene::Initialize(Vector2 resolution,
 	m_elements.push_back(backBtn);
 }
 
-void TestScene::Checked(unsigned int ID, bool isChecked) {
-	std::cout << "CHECKED -> ID : " << ID << " -> " << isChecked << '\n';
-}
-
 TestScene::TestScene(Vector2 resolution)
 	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT) {
 	Initialize(resolution, AppContext::GetInstance());
@@ -57,4 +56,8 @@ TestScene::TestScene(Vector2 resolution)
 
 void TestScene::SetActive(bool active, AppContext const& appContext) {
 	Scene::SetActive(active, appContext);
+}
+
+void TestScene::TestLambda(int value) {
+	std::cout << "Value Triggert -> " << value << '\n';
 }
