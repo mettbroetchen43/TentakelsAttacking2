@@ -85,27 +85,27 @@ std::string GetPritableTextInColider(std::string const& text,
 	auto constants = appContext.constants.textProcecing;
 	Vector2 textSize = MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
-		(text + constants.c_enter).c_str(),
+		(text + constants.enter).c_str(),
 		fontSize,
 		0.0f);
-	if ((textSize.x + constants.c_cursorOffset) < colider.width) {
+	if ((textSize.x + constants.cursorOffset) < colider.width) {
 		return text;
 	}
 
 	std::string toReturn = text;
-	std::string toCheck = constants.c_prefix + text + constants.c_enter;
+	std::string toCheck = constants.prefix + text + constants.enter;
 
 	do {
 		toReturn = toReturn.substr(1, toReturn.size());
-		toCheck = constants.c_prefix + toReturn + constants.c_enter;
+		toCheck = constants.prefix + toReturn + constants.enter;
 		textSize = MeasureTextEx(
 			*(appContext.assetManager.GetFont()),
 			toCheck.c_str(),
 			fontSize,
 			0.0f);
-	} while (textSize.x + constants.c_cursorOffset >= colider.width);
+	} while (textSize.x + constants.cursorOffset >= colider.width);
 
-	return constants.c_prefix + toReturn;
+	return constants.prefix + toReturn;
 }
 std::string GetPritablePlaceholderTextInColider(std::string const& text,
 	float fontSize, Rectangle colider, AppContext const& appContext) {
@@ -115,24 +115,24 @@ std::string GetPritablePlaceholderTextInColider(std::string const& text,
 		text.c_str(),
 		fontSize,
 		0.0f);
-	if ((textSize.x + constants.c_cursorOffset) < colider.width) {
+	if ((textSize.x + constants.cursorOffset) < colider.width) {
 		return text;
 	}
 
 	std::string toReturn = text;
-	std::string toCheck = constants.c_prefix + text;
+	std::string toCheck = constants.prefix + text;
 
 	do {
 		toReturn = toReturn.substr(0, toReturn.size() - 1);
-		toCheck = constants.c_prefix + toReturn;
+		toCheck = constants.prefix + toReturn;
 		textSize = MeasureTextEx(
 			*(appContext.assetManager.GetFont()),
 			toCheck.c_str(),
 			fontSize,
 			0.0f);
-	} while (textSize.x + constants.c_cursorOffset >= colider.width);
+	} while (textSize.x + constants.cursorOffset >= colider.width);
 
-	return  toReturn + constants.c_prefix;
+	return  toReturn + constants.prefix;
 }
 
 void StripString(std::string& toStrip) {

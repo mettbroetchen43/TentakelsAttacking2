@@ -194,9 +194,9 @@ public:
 			if (time % 2 == 0) {
 				DrawTextEx(
 					*(appContext.assetManager.GetFont()),
-					&constants.c_enter,
+					&constants.enter,
 					Vector2(
-						posX + constants.c_cursorOffset + textLength.x,
+						posX + constants.cursorOffset + textLength.x,
 						posY + m_colider.height * 0.05f
 					),
 					fontSize,
