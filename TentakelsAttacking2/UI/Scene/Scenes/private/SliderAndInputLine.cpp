@@ -77,10 +77,18 @@ void SliderAndInputLine::ValidateCurrentValue() {
 	if (m_currentValue < m_minValue) {
 		m_currentValue = m_minValue;
 		m_inputLine->SetValue(m_currentValue);
+		return;
 	}
-	else if (m_currentValue > m_maxValue) {
+	
+	if (m_currentValue > m_maxValue) {
 		m_currentValue = m_maxValue;
 		m_inputLine->SetValue(m_maxValue);
+		return;
+	}
+	
+	if (m_currentValue == 0) {
+		m_inputLine->SetValue(0);
+		return;
 	}
 }
 void SliderAndInputLine::SetSliderValue() const {
