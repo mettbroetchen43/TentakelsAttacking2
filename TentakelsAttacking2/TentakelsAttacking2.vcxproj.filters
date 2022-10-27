@@ -189,7 +189,7 @@
     <ClInclude Include="UI\Elements\Default\public\Line.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\HTextProcecingConstant.hpp">
+    <ClInclude Include="Constants\public\CTextProcecing.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\public\PopUpManager.h">
@@ -229,6 +229,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Scene\Scenes\public\SliderAndInputLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants\public\CConstants.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants\public\CPlayer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants\public\CWorld.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
