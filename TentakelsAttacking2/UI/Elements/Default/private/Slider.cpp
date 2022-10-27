@@ -23,6 +23,22 @@ void Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension)
 	m_btn.SetOnPress([this]() {this->Slide();});
 }
 
+void Slider::CalculateOnSlide() const {
+
+	auto btnColider = m_btn.GetCollider();
+
+	float total = m_isHorizontal
+		? m_collider.width - btnColider.width
+		: m_collider.height - btnColider.height;
+	float slided = m_isHorizontal
+		? btnColider.x - m_collider.x
+		: btnColider.y - m_collider.y;
+
+	float calculated = slided / total * 100;
+
+	m_onSlide(calculated);
+}
+
 void Slider::Slide() {
 	m_isPressed = true;
 	Vector2 mousePosition = GetMousePosition();
@@ -47,6 +63,8 @@ void Slider::Slide() {
 	}
 
 	m_btn.SetCollider(btnCollider);
+
+	CalculateOnSlide();
 }
 void Slider::SlideIfPressed() {
 	if (!m_isPressed) { return; }
@@ -99,4 +117,8 @@ void Slider::Render(AppContext const& appContext) {
 void Slider::Resize(Vector2 resolution, AppContext const& appContext) {
 	m_collider = { m_pos.x * resolution.x, m_pos.y * resolution.y, m_size.x * resolution.x, m_size.y * resolution.y };
 	m_btn.Resize(resolution, appContext);
+}
+
+void Slider::SetOnSlide(std::function<void(float)> onSlide) {
+	m_onSlide = onSlide;
 }

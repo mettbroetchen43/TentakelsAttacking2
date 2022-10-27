@@ -15,10 +15,11 @@ private:
 	Rectangle m_collider;
 
 	SliderButton m_btn;
-	std::function<void(float)> m_onSlide = [](float) {};
+	std::function<void(float)> m_onSlide =[](float) {};
 
 	void CalculateInitialButton(Vector2 resolution, float absolutDimension);
 
+	void CalculateOnSlide() const;
 	void Slide();
 	void SlideIfPressed();
 	void MoveButtonIfColiderIsPressed(Vector2 const& mousePosition);
@@ -34,4 +35,7 @@ public:
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
+
+	void SetOnSlide(std::function<void(float)> onSlide);
+	void SetButtonPosition(float position);
 };
