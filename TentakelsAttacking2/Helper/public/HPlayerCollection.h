@@ -14,7 +14,6 @@
 
 class PlayerCollection : public EventListener {
 private:
-	size_t m_maxPlayerCount = 7;
 	std::vector<PlayerData> m_playerData;
 
 	[[nodiscard]] bool ContainsName(std::string const& name) const;
@@ -28,8 +27,6 @@ private:
 	void SortPlayers();
 
 public:
-	[[nodiscard]] size_t MaxPlayerCount() const;
-
 	void AddPlayer(unsigned int ID,
 		std::string name, Color color);
 	void EditPlayer(unsigned int ID, std::string name, Color color);

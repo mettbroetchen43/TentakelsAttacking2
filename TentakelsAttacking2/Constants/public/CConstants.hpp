@@ -4,8 +4,10 @@
 //
 
 #pragma once
-#include "CTextProcecingConstant.hpp"
+#include "CTextProcecing.hpp"
+#include "CPlayer.hpp"
 
 struct Constants {
 	CTextProcecing textProcecing;
+	CPlayer player;
 };

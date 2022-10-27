@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants\public\CConstants.hpp" />
+    <ClInclude Include="Constants\public\CPlayer.hpp" />
     <ClInclude Include="Events\public\EventListener.hpp" />
     <ClInclude Include="Events\public\EventManager.hpp" />
     <ClInclude Include="Events\public\GenerelEvents.hpp" />
@@ -157,7 +158,7 @@
     <ClInclude Include="Helper\public\HPlayerCollection.h" />
     <ClInclude Include="Helper\public\LayeredVector.hpp" />
     <ClInclude Include="Helper\public\HRandom.h" />
-    <ClInclude Include="Constants\public\CTextProcecingConstant.hpp" />
+    <ClInclude Include="Constants\public\CTextProcecing.hpp" />
     <ClInclude Include="Helper\public\HTextProcessing.h" />
     <ClInclude Include="Helper\public\HPlayerData.hpp" />
     <ClInclude Include="Helper\public\Vec2.hpp" />

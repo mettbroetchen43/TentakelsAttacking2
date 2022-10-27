@@ -90,10 +90,6 @@ void PlayerCollection::SortPlayers() {
 	std::sort(m_playerData.begin(), m_playerData.end(), StortPlayerByID_ASC);
 }
 
-size_t PlayerCollection::MaxPlayerCount() const {
-	return m_maxPlayerCount;
-}
-
 void PlayerCollection::AddPlayer(unsigned int ID,
 	std::string name, Color color) {
 

@@ -119,7 +119,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementSize(0.35f, 0.45f),
 		Alignment::TOP_RIGHT,
 		5,
-		appContext.playerCollection.MaxPlayerCount() + 1,
+		appContext.constants.player.maxPlayerCount + 1,
 		3,
 		resolution
 		);

@@ -7,7 +7,7 @@
 #include "AppContext.h"
 
 bool GameManager::ValidAddPlayer() const {
-	return AppContext::GetInstance().playerCollection.MaxPlayerCount()
+	return AppContext::GetInstance().constants.player.maxPlayerCount
 		> m_players.size();
 }
 unsigned int GameManager::GetNextID() const {
