@@ -26,7 +26,13 @@ public:
 	[[nodiscard]] bool IsMaximizedStartingWindow() const;
 
 private:
+
+#ifdef _DEBUG
 	bool m_starting_maximized_window = false;
+#else
+	bool m_starting_maximized_window = true;
+#endif // _DEBUG
+
 	AppContext();
 	std::string m_version = "v0.0.0";
 	std::string m_copyRight = "(c) Purpur Tentakel";
