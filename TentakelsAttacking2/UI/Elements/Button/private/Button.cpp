@@ -93,9 +93,9 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 			auto event = PlaySoundEvent(m_sound);
 			appContext.eventManager.InvokeEvent(event);
-			m_onClick();
 			m_state = hover ? State::HOVER : State::ENABLED;
 			m_isPressed = false;
+			m_onClick();
 			return;
 		}
 	}

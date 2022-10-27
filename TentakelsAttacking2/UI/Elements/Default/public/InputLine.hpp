@@ -225,8 +225,11 @@ public:
 	[[nodiscard]] Rectangle GetCollider() const override {
 		return m_collider;
 	}
+	[[nodiscard]] bool HasValue() const {
+		return !m_value.empty();
+	}
 	[[nodiscard]] bool HasValueChanced() const {
-		return m_value == m_oldValue;
+		return m_value != m_oldValue;
 	}
 	void SetOnEnter(std::function<void()> onEnter) {
 		m_onEnter = onEnter;
