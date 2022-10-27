@@ -15,7 +15,7 @@ Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment,
 		static_cast<float>(m_texture->width) / m_texture->height
 		* resolution.y / resolution.x
 		* m_size.y;
-	m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 }
 
 void Picture::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
@@ -29,14 +29,14 @@ void Picture::Render([[maybe_unused]] AppContext const& appContext) {
 			static_cast<float>(m_texture->width),
 			static_cast<float>(m_texture->height)
 		),
-		m_collider,
+		m_colider,
 		Vector2(0.0f,0.0f),
 		0.0f,
 		WHITE
 	);
 }
 void Picture::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) {
-	m_collider = {
+	m_colider = {
 		m_pos.x * resolution.x,
 		m_pos.y * resolution.y,
 		m_size.x * resolution.x,

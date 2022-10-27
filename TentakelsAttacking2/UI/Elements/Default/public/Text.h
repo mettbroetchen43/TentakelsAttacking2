@@ -16,7 +16,7 @@ private:
 	Alignment m_textAlignment;
 	Vector2 m_textPosition;
 
-	Rectangle m_collider = { 0.0f,0.0f,0.0f,0.0f };
+	Rectangle m_colider = { 0.0f,0.0f,0.0f,0.0f };
 	bool m_lineBreaks = false;
 	bool m_renderRectangle = false;
 

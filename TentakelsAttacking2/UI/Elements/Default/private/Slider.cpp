@@ -28,11 +28,11 @@ void Slider::CalculateOnSlide() const {
 	auto btnColider = m_btn.GetCollider();
 
 	float total = m_isHorizontal
-		? m_collider.width - btnColider.width
-		: m_collider.height - btnColider.height;
+		? m_colider.width - btnColider.width
+		: m_colider.height - btnColider.height;
 	float slided = m_isHorizontal
-		? btnColider.x - m_collider.x
-		: btnColider.y - m_collider.y;
+		? btnColider.x - m_colider.x
+		: btnColider.y - m_colider.y;
 
 	float calculated = slided / total * 100;
 
@@ -47,8 +47,8 @@ void Slider::Slide() {
 	float mousePoint = m_isHorizontal ? mousePosition.x : mousePosition.y;
 	float* btnColliderPoint = m_isHorizontal ? &btnCollider.x : &btnCollider.y;
 	float btnColliderLength = m_isHorizontal ? btnCollider.width : btnCollider.height;
-	float sliderColliderPoint = m_isHorizontal ? m_collider.x : m_collider.y;
-	float sliderColliderLength = m_isHorizontal ? m_collider.width : m_collider.height;
+	float sliderColliderPoint = m_isHorizontal ? m_colider.x : m_colider.y;
+	float sliderColliderLength = m_isHorizontal ? m_colider.width : m_colider.height;
 
 	float maxValue = sliderColliderPoint + btnColliderLength / 2;
 	float minValue = sliderColliderPoint + sliderColliderLength - btnColliderLength / 2;
@@ -75,7 +75,7 @@ void Slider::SlideIfPressed() {
 	Slide();
 }
 void Slider::MoveButtonIfColiderIsPressed(Vector2 const& mousePosition) {
-	bool const hover = CheckCollisionPointRec(mousePosition, m_collider);
+	bool const hover = CheckCollisionPointRec(mousePosition, m_colider);
 	if (!hover) {
 		return;
 	}
@@ -97,7 +97,7 @@ Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal
 		static_cast<float>(m_texture->width),
 		static_cast<float>(m_texture->height)
 	};
-	m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	CalculateInitialButton(resolution, absoluteDimension);
 }
 
@@ -111,11 +111,11 @@ void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 	m_btn.CheckAndUpdate(mousePosition, appContext);
 }
 void Slider::Render(AppContext const& appContext) {
-	DrawTexturePro(*m_texture, m_textureRec, m_collider, Vector2(0.0f, 0.0f), 0, WHITE);
+	DrawTexturePro(*m_texture, m_textureRec, m_colider, Vector2(0.0f, 0.0f), 0, WHITE);
 	m_btn.Render(appContext);
 }
 void Slider::Resize(Vector2 resolution, AppContext const& appContext) {
-	m_collider = { m_pos.x * resolution.x, m_pos.y * resolution.y, m_size.x * resolution.x, m_size.y * resolution.y };
+	m_colider = { m_pos.x * resolution.x, m_pos.y * resolution.y, m_size.x * resolution.x, m_size.y * resolution.y };
 	m_btn.Resize(resolution, appContext);
 }
 
@@ -127,13 +127,13 @@ void Slider::SetButtonPosition(float position) {
 	auto btnColider = m_btn.GetCollider();
 
 	float total = m_isHorizontal
-		? m_collider.width - btnColider.width
-		: m_collider.height - btnColider.height;
+		? m_colider.width - btnColider.width
+		: m_colider.height - btnColider.height;
 
 	float differenz = total / 100 * position;
 	float newPosition = m_isHorizontal
-		? m_collider.x + differenz
-		: m_collider.y + differenz;
+		? m_colider.x + differenz
+		: m_colider.y + differenz;
 
 	if (m_isHorizontal) {
 		btnColider.x = newPosition;

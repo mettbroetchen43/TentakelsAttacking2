@@ -12,7 +12,7 @@ private:
 	bool m_isPressed = false;
 	Texture2D* m_texture;
 	Rectangle m_textureRec;
-	Rectangle m_collider;
+	Rectangle m_colider;
 
 	SliderButton m_btn;
 	std::function<void(float)> m_onSlide =[](float) {};
