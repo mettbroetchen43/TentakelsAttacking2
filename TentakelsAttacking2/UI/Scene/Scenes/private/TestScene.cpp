@@ -20,6 +20,7 @@ void TestScene::Initialize(Vector2 resolution,
 			Alignment::MID_MID,
 			0,
 			100,
+			61,
 			resolution
 			);
 		scene->SetActive(true, appContext);

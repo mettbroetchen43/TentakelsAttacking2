@@ -29,8 +29,8 @@ private:
 	void SetSliderValue() const;
 
 public:
-	SliderAndInputLine(unsigned int focusID, Vector2 pos, Vector2 size,
-		Alignment alignment, int minValue, int maxValue, Vector2 resolution);
+	SliderAndInputLine(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
+		int minValue, int maxValue, int currentValue, Vector2 resolution);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 };

@@ -20,6 +20,7 @@ void SliderAndInputLine::Initialize(unsigned int focusID, Vector2 resolution) {
 	m_slider->SetOnSlide([this](float position) {
 		Slide(position);
 		});
+	m_slider->SetButtonPosition(static_cast<float>(m_currentValue));
 	m_elements.push_back(m_slider);
 
 	m_inputLine = std::make_shared<InputLine<int>>(
@@ -33,6 +34,8 @@ void SliderAndInputLine::Initialize(unsigned int focusID, Vector2 resolution) {
 	m_inputLine->SetOnEnter([this]() {
 		this->BtnPressed();
 		});
+	m_inputLine->SetValue(m_currentValue);
+	m_slided = true;
 	m_inputLine->SetPlaceholderText("%");
 	m_elements.push_back(m_inputLine);
 
@@ -73,21 +76,14 @@ void SliderAndInputLine::Slide(float position) {
 	m_slided = true;
 }
 void SliderAndInputLine::ValidateCurrentValue() {
-	m_currentValue = m_inputLine->GetValue();
+
 	if (m_currentValue < m_minValue) {
 		m_currentValue = m_minValue;
-		m_inputLine->SetValue(m_currentValue);
 		return;
 	}
 	
 	if (m_currentValue > m_maxValue) {
 		m_currentValue = m_maxValue;
-		m_inputLine->SetValue(m_maxValue);
-		return;
-	}
-	
-	if (m_currentValue == 0) {
-		m_inputLine->SetValue(0);
 		return;
 	}
 }
@@ -96,21 +92,28 @@ void SliderAndInputLine::SetSliderValue() const {
 }
 
 SliderAndInputLine::SliderAndInputLine(unsigned int focusID, Vector2 pos,
-	Vector2 size, Alignment alignment, int minValue, int maxValue,
+	Vector2 size, Alignment alignment,
+	int minValue, int maxValue, int initialValue,
 	Vector2 resolution)
 	: Scene(pos, size, alignment), m_minValue(minValue), m_maxValue(maxValue) {
 	GetAlignedCollider(m_pos, m_size, alignment, resolution);
+	m_currentValue = initialValue;
+	ValidateCurrentValue();
 	Initialize(focusID, resolution);
+
 }
 
 void SliderAndInputLine::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
+	
 
 	if (m_inputLine->HasValueChanced()) {
 		if (!m_slided) {
 			m_btn->SetEnabled(true);
+			m_currentValue = m_inputLine->GetValue();
 			ValidateCurrentValue();
+			m_inputLine->SetValue(m_currentValue);
 		} else {
 			m_slided = false;
 		}
