@@ -5,6 +5,7 @@
 
 #include "Slider.h"
 #include "Allignment.h"
+#include "AppContext.h"
 #include <iostream>
 
 void Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension) {
@@ -69,8 +70,9 @@ void Slider::MoveButtonIfColiderIsPressed(Vector2 const& mousePosition) {
 }
 
 Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal,
-	Texture2D* slideTexture, float absoluteDimension, Vector2 resolution)
-	: UIElement(pos, size, alignment), m_isHorizontal(isHorizontal), m_texture(slideTexture) {
+	float absoluteDimension, Vector2 resolution)
+	: UIElement(pos, size, alignment), m_isHorizontal(isHorizontal) {
+	m_texture = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
 	m_textureRec = {
 		0.0f,
 		0.0f,

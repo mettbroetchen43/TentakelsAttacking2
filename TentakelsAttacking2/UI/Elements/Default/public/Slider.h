@@ -24,7 +24,7 @@ private:
 
 public:
 	Slider(Vector2 pos,Vector2 size, Alignment alignment, bool isHorizontal, 
-		Texture2D* slideTexture, float absoluteDimension, Vector2 resolution);
+		float absoluteDimension, Vector2 resolution);
 	Slider(Slider const&) = default;
 	Slider(Slider&&) = default;
 	Slider& operator=(Slider const&) = default;
