@@ -9,6 +9,7 @@
 #include "HAssetManager.h"
 #include "HPlayerCollection.h"
 #include "HColors.h"
+#include "CConstants.hpp"
 #include <string>
 
 struct AppContext {
@@ -18,6 +19,7 @@ public:
 	EventManager eventManager;
 	PlayerCollection playerCollection;
 	Colors colors;
+	Constants constants;
 	
 
 	[[nodiscard]] static AppContext& GetInstance();

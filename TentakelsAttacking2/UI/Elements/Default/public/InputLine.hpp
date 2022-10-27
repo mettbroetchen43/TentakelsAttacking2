@@ -8,7 +8,6 @@
 #include "Focusable.h"
 #include "AppContext.h"
 #include "HTextProcessing.h"
-#include "HTextProcecingConstant.hpp"
 #include <raylib.h>
 #include <string>
 #include <functional>
@@ -118,6 +117,7 @@ public:
 	}
 	void Render(AppContext const& appContext) override {
 
+		auto constants = appContext.constants.textProcecing;
 		// Update here to make shure its after call of HasValueChanced();
 		m_oldValue = m_value;
 
@@ -194,9 +194,9 @@ public:
 			if (time % 2 == 0) {
 				DrawTextEx(
 					*(appContext.assetManager.GetFont()),
-					&Constants::c_enter,
+					&constants.c_enter,
 					Vector2(
-						posX + Constants::c_cursorOffset + textLength.x,
+						posX + constants.c_cursorOffset + textLength.x,
 						posY + m_colider.height * 0.05f
 					),
 					fontSize,
