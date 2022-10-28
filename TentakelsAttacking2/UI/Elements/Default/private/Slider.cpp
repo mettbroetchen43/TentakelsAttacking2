@@ -38,7 +38,6 @@ void Slider::CalculateOnSlide() const {
 
 	m_onSlide(calculated);
 }
-
 void Slider::Slide() {
 	m_isPressed = true;
 	Vector2 mousePosition = GetMousePosition();
@@ -87,6 +86,15 @@ void Slider::MoveButtonIfColiderIsPressed(Vector2 const& mousePosition) {
 	Slide();
 }
 
+void Slider::SlideIfScroll() {
+	if (!m_isScroll) { return; }
+	if (m_isPressed) { return; }
+	float mouseWheel = GetMouseWheelMove();
+	if (mouseWheel == 0.0f) { return; }
+	if (m_isHorizontal != IsKeyDown(KEY_LEFT_SHIFT)) { return; }
+	std::cout << mouseWheel << " | " << m_isScroll << " | " << m_isHorizontal << '\n';
+}
+
 Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal,
 	float absoluteDimension, Vector2 resolution)
 	: UIElement(pos, size, alignment), m_isHorizontal(isHorizontal) {
@@ -108,6 +116,9 @@ void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 	else {
 		SlideIfPressed();
 	}
+
+	SlideIfScroll();
+
 	m_btn.CheckAndUpdate(mousePosition, appContext);
 }
 void Slider::Render(AppContext const& appContext) {
@@ -122,7 +133,6 @@ void Slider::Resize(Vector2 resolution, AppContext const& appContext) {
 void Slider::SetOnSlide(std::function<void(float)> onSlide) {
 	m_onSlide = onSlide;
 }
-
 void Slider::SetButtonPosition(float position) {
 	auto btnColider = m_btn.GetCollider();
 
@@ -148,7 +158,6 @@ void Slider::SetButtonPosition(float position) {
 void Slider::SetScrolling(bool isScroll) {
 	m_isScroll = isScroll;
 }
-
 bool Slider::IsScrolling() const {
 	return m_isScroll;
 }

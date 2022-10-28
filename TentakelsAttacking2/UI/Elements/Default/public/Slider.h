@@ -24,6 +24,7 @@ private:
 	void Slide();
 	void SlideIfPressed();
 	void MoveButtonIfColiderIsPressed(Vector2 const& mousePosition);
+	void SlideIfScroll();
 
 public:
 	Slider(Vector2 pos,Vector2 size, Alignment alignment, bool isHorizontal, 
