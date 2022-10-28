@@ -33,6 +33,18 @@ public:
 private:
 	SoundType m_soundType;
 };
+class SetMasterVolumeEvent : public Event {
+private:
+	float m_level;
+
+public:
+	SetMasterVolumeEvent(float level)
+		: m_level(level) {};
+
+	[[nodiscard]] float GetLevel() const {
+		return m_level;
+	}
+};
 
 class FocusEvent : public Event {
 protected:

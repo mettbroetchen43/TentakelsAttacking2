@@ -29,6 +29,7 @@ private:
 
 	void PlaySound(SoundType soundType) const;
 	void PlayTextSound() const;
+	void SetMasterSoundLevel(float level) const;
 
 	void OnEvent(Event const& event) override;
 
