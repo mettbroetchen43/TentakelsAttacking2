@@ -4,6 +4,7 @@
 //
 
 #include "AppContext.h"
+#include "ConfigIO.h"
 
 AppContext& AppContext::GetInstance() {
 	static AppContext appContext;
@@ -19,6 +20,13 @@ std::string const& AppContext::CopyRight() const {
 
 bool AppContext::IsMaximizedStartingWindow() const {
 	return m_startingMaximizedWindow;
+}
+
+void AppContext::LoadConfig() {
+	::LoadConfig();
+}
+void AppContext::SaveConfig() {
+	::SaveConfig();
 }
 
 AppContext::AppContext() {

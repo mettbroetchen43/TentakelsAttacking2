@@ -27,6 +27,9 @@ public:
 	[[nodiscard]] std::string const& CopyRight() const;
 	[[nodiscard]] bool IsMaximizedStartingWindow() const;
 
+	void LoadConfig();
+	void SaveConfig();
+
 private:
 
 #ifdef _DEBUG

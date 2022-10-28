@@ -243,6 +243,9 @@
     <ClInclude Include="Constants\public\ConfigIO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Constants\public\CFiles.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -409,6 +412,7 @@
     <Text Include="Assets\title.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\config.ta" />
+    <None Include="Saves\config.tac" />
+    <None Include="Saves\testCondig.tac" />
   </ItemGroup>
 </Project>
