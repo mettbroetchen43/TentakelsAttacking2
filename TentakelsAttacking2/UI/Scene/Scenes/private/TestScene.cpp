@@ -20,6 +20,9 @@ void TestScene::Initialize(Vector2 resolution,
 		resolution
 		);
 	hSlider_1->SetScrolling(true);
+	hSlider_1->SetOnSlide([this](float value) {
+		this->TestLambda(value);
+		});
 	m_elements.push_back(hSlider_1);
 
 	auto hSlider_2 = std::make_shared<Slider>(
@@ -30,6 +33,9 @@ void TestScene::Initialize(Vector2 resolution,
 		10.0f,
 		resolution
 		);
+	hSlider_2->SetOnSlide([this](float value) {
+		this->TestLambda(value);
+		});
 	m_elements.push_back(hSlider_2);
 
 
@@ -42,6 +48,9 @@ void TestScene::Initialize(Vector2 resolution,
 		resolution
 		);
 	vSlider_1->SetScrolling(true);
+	vSlider_1->SetOnSlide([this](float value) {
+		this->TestLambda(value);
+		});
 	m_elements.push_back(vSlider_1);
 
 	auto vSlider_2 = std::make_shared<Slider>(
@@ -52,6 +61,9 @@ void TestScene::Initialize(Vector2 resolution,
 		10.0f,
 		resolution
 		);
+	vSlider_2->SetOnSlide([this](float value) {
+		this->TestLambda(value);
+		});
 	m_elements.push_back(vSlider_2);
 
 	// to get Back No testing
@@ -80,7 +92,6 @@ void TestScene::SetActive(bool active, AppContext const& appContext) {
 	Scene::SetActive(active, appContext);
 }
 
-void TestScene::TestLambda(int value) {
+void TestScene::TestLambda(float value) {
 	std::cout << "Value Triggert -> " << value << '\n';
-
 }
