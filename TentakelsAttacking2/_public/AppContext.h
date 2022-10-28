@@ -28,13 +28,5 @@ public:
 	void SaveConfig();
 
 private:
-
-/*
-#ifdef _DEBUG
-	bool m_startingMaximizedWindow = false;
-#else
-	bool m_startingMaximizedWindow = true;
-#endif // _DEBUG
-*/
 	AppContext();
 };

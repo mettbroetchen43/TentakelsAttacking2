@@ -90,13 +90,20 @@ void LoadConfig() {
 	};
 	addFloat(floatEltries, file, input, nextEntry);
 
+	file.close();
+
+#ifdef _DEBUG
+	constants.global.startingModeFullScreen = false;
+#endif // _DEBUG
+
+	Print("config loaded");
 }
 void SaveConfig() {
 	auto& constants = AppContext::GetInstance().constants;
 	std::ofstream file;
 
 	if (!std::filesystem::exists(constants.files.config)) {
-		Print("generated config");
+		Print("generate config");
 	}
 
 	file.open(constants.files.config);
@@ -132,4 +139,6 @@ void SaveConfig() {
 
 	file << toSave;
 	file.close();
+
+	Print("config saved");
 }
