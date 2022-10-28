@@ -89,10 +89,29 @@ void Slider::MoveButtonIfColiderIsPressed(Vector2 const& mousePosition) {
 void Slider::SlideIfScroll() {
 	if (!m_isScroll) { return; }
 	if (m_isPressed) { return; }
-	float mouseWheel = GetMouseWheelMove();
+
+	float mouseWheel = GetMouseWheelMove() * -1;
 	if (mouseWheel == 0.0f) { return; }
 	if (m_isHorizontal != IsKeyDown(KEY_LEFT_SHIFT)) { return; }
+
 	std::cout << mouseWheel << " | " << m_isScroll << " | " << m_isHorizontal << '\n';
+
+	auto btnColider = m_btn.GetCollider();
+	float total = m_isHorizontal
+		? m_colider.width - btnColider.width
+		: m_colider.height - btnColider.height;
+
+	float slidingDiference = total / 100 * mouseWheel * 3;
+
+	if (m_isHorizontal) {
+		btnColider.x += slidingDiference;
+	}
+	else {
+		btnColider.y += slidingDiference;
+	}
+
+	m_btn.SetCollider(btnColider);
+	CalculateOnSlide();
 }
 
 Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal,
