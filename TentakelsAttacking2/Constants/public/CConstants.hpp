@@ -9,6 +9,7 @@
 #include "CPlayer.hpp"
 #include "CWorld.hpp"
 #include "CFiles.hpp"
+#include "CSound.hpp"
 
 struct Constants {
 	CGlobal global;
@@ -16,4 +17,5 @@ struct Constants {
 	CPlayer player;
 	CWorld world;
 	CFiles files;
+	CSound sound;
 };

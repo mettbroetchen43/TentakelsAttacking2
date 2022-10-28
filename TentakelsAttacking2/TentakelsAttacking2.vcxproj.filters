@@ -249,7 +249,7 @@
     <ClInclude Include="Constants\public\CGlobal.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Constants\public\Sound.hpp">
+    <ClInclude Include="Constants\public\CSound.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

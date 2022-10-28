@@ -18,3 +18,6 @@
 200 - Max Dimension X
 20 - Min Dimension Y
 160 - Max Dimension Y
+//
+// Sound
+100.000000 - Master Volume

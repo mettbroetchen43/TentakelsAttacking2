@@ -145,7 +145,7 @@
     <ClInclude Include="Constants\public\CPlayer.hpp" />
     <ClInclude Include="Constants\public\CWorld.hpp" />
     <ClInclude Include="Constants\public\CGlobal.hpp" />
-    <ClInclude Include="Constants\public\Sound.hpp" />
+    <ClInclude Include="Constants\public\CSound.hpp" />
     <ClInclude Include="Events\public\EventListener.hpp" />
     <ClInclude Include="Events\public\EventManager.hpp" />
     <ClInclude Include="Events\public\GenerelEvents.hpp" />

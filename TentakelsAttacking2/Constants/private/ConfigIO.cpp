@@ -9,7 +9,7 @@
 #include <filesystem>
 #include <iostream>
 
-static constexpr char token = '-';
+static constexpr char ignoreLine = '-';
 
 void LoadConfig() {
 
@@ -51,16 +51,10 @@ void SaveConfig() {
 	entry(std::to_string(constants.world.maxDiemnsionY), "Max Dimension Y", toSave);
 
 	headline("Sound", toSave);
+	entry(std::to_string(constants.sound.masterVolume), "Master Volume", toSave);
 	
+
+	toSave += "//";
 	file << toSave;
 	file.close();
 }
-/*
-size_t minPlanetCount = 20;
-size_t maxPlanetCount = 100;
-
-size_t minDiemnsionX = 40;
-size_t minDiemnsionY = 20;
-size_t maxDiemnsionX = 200;
-size_t maxDiemnsionY = 160;
-*/

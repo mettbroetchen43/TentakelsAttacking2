@@ -1,0 +1,10 @@
+//
+// Purpur Tentakel
+// 28.10.2022
+//
+
+#pragma once
+
+struct CSound {
+	float masterVolume = 100.0f;
+};
