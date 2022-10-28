@@ -10,6 +10,7 @@ class Slider: public UIElement {
 private:
 	bool m_isHorizontal;
 	bool m_isPressed = false;
+	bool m_isScroll = false;
 	Texture2D* m_texture;
 	Rectangle m_textureRec;
 	Rectangle m_colider;
@@ -38,4 +39,7 @@ public:
 
 	void SetOnSlide(std::function<void(float)> onSlide);
 	void SetButtonPosition(float position);
+
+	void SetScrolling(bool isScroll);
+	[[nodiscard]] bool IsScrolling() const;
 };

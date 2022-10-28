@@ -144,3 +144,11 @@ void Slider::SetButtonPosition(float position) {
 
 	m_btn.SetCollider(btnColider);
 }
+
+void Slider::SetScrolling(bool isScroll) {
+	m_isScroll = isScroll;
+}
+
+bool Slider::IsScrolling() const {
+	return m_isScroll;
+}
