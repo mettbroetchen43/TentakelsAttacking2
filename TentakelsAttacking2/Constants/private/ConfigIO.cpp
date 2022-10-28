@@ -28,6 +28,7 @@ void SaveConfig() {
 	std::string toSave = "//\n// Purpur Tentakel\n// Tentakels Attacking\n// Config\n//\n//\n";
 
 	toSave += "// Globals\n";
+	toSave += std::to_string(appContext.constants.global.startingModeFullScreen) + " - Starting Full Screen";
 
 	file << toSave;
 	file.close();

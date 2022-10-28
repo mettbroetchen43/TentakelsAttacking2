@@ -5,3 +5,4 @@
 //
 //
 // Globals
+0 - Starting Full Screen
