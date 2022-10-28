@@ -6,6 +6,7 @@
 #include "HSoundManager.h"
 #include "UIEvents.hpp"
 #include "HRandom.h"
+#include "AppContext.h"
 #include <filesystem>
 
 void SoundManager::LoadSounds() {
@@ -42,6 +43,11 @@ void SoundManager::PlayTextSound() const {
 	::PlaySound(m_textSounds.at(nextIndex));
 	lastIndex = nextIndex;
 }
+void SoundManager::SetMasterSoundLevel(float level) const {
+	AppContext::GetInstance().constants.sound.masterVolume = level;
+	level /= 100;
+	SetMasterSoundLevel(level);
+}
 
 SoundManager::SoundManager() {
 	InitAudioDevice();
@@ -57,5 +63,11 @@ SoundManager::~SoundManager() {
 void SoundManager::OnEvent(Event const& event) {
 	if (auto const soundEvent = dynamic_cast<PlaySoundEvent const*>(&event)) {
 		PlaySound(soundEvent->GetSoundType());
+		return;
+	}
+
+	if (auto const LevelEvent = dynamic_cast<SetMasterVolumeEvent const*>(&event)) {
+		SetMasterSoundLevel(LevelEvent->GetLevel());
+		return;
 	}
 }

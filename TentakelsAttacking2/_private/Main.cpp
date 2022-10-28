@@ -22,5 +22,7 @@ int main() {
 
 	uiManager.StartUI();
 
+	appContext.SaveConfig();
+
 	return 0;
 }
