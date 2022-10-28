@@ -94,8 +94,6 @@ void Slider::SlideIfScroll() {
 	if (mouseWheel == 0.0f) { return; }
 	if (m_isHorizontal != IsKeyDown(KEY_LEFT_SHIFT)) { return; }
 
-	std::cout << mouseWheel << " | " << m_isScroll << " | " << m_isHorizontal << '\n';
-
 	auto btnColider = m_btn.GetCollider();
 	float total = m_isHorizontal
 		? m_colider.width - btnColider.width
@@ -104,10 +102,16 @@ void Slider::SlideIfScroll() {
 	float slidingDiference = total / 100 * mouseWheel * 3;
 
 	if (m_isHorizontal) {
-		btnColider.x += slidingDiference;
+		float value =  btnColider.x + slidingDiference;
+		value = value < m_colider.x ? m_colider.x : value;
+		value = value > m_colider.x + total ? m_colider.x + total : value;
+		btnColider.x = value;
 	}
 	else {
-		btnColider.y += slidingDiference;
+		float value = btnColider.y + slidingDiference;
+		value = value < m_colider.y ? m_colider.y : value;
+		value = value > m_colider.y + total ? m_colider.y + total : value;
+		btnColider.y = value;
 	}
 
 	m_btn.SetCollider(btnColider);
