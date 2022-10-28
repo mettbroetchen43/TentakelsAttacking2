@@ -16,19 +16,29 @@ void LoadConfig() {
 }
 
 void SaveConfig() {
-	AppContext& appContext = AppContext::GetInstance();
+	auto& constants = AppContext::GetInstance().constants;
 	std::ofstream file;
 
-	file.open(appContext.constants.files.config);
+	file.open(constants.files.config);
 	if (!file.is_open()) {
 		std::cout << "Cant Open Config\n";
 		return;
 	}
 
-	std::string toSave = "//\n// Purpur Tentakel\n// Tentakels Attacking\n// Config\n//\n//\n";
+	auto headline = [](std::string const& headline, std::string& toSave) {
+		toSave += "//\n// " + headline + '\n';
+	};
+	auto entry = [](std::string const& entry, std::string const& message, std::string& toSave) {
+		toSave += entry + " - " + message + "\n";
+	};
+	std::string toSave = "//\n// Purpur Tentakel\n// Tentakels Attacking\n// Config\n//\n";
 
-	toSave += "// Globals\n";
-	toSave += std::to_string(appContext.constants.global.startingModeFullScreen) + " - Starting Full Screen";
+	headline("Globals", toSave);
+	entry(std::to_string(constants.global.startingModeFullScreen), "Starting Full Screen", toSave);
+
+	headline("Player", toSave);
+	entry(std::to_string(constants.player.minPlayerCount), "Min Player Count", toSave);
+	entry(std::to_string(constants.player.maxPlayerCount), "Max Player Count", toSave);
 
 	file << toSave;
 	file.close();
