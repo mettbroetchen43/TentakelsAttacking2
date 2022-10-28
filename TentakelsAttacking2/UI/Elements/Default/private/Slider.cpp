@@ -38,7 +38,6 @@ void Slider::CalculateOnSlide() const {
 
 	m_onSlide(calculated);
 }
-
 void Slider::Slide() {
 	m_isPressed = true;
 	Vector2 mousePosition = GetMousePosition();
@@ -87,6 +86,38 @@ void Slider::MoveButtonIfColiderIsPressed(Vector2 const& mousePosition) {
 	Slide();
 }
 
+void Slider::SlideIfScroll() {
+	if (!m_isScroll) { return; }
+	if (m_isPressed) { return; }
+
+	float mouseWheel = GetMouseWheelMove() * -1;
+	if (mouseWheel == 0.0f) { return; }
+	if (m_isHorizontal != IsKeyDown(KEY_LEFT_SHIFT)) { return; }
+
+	auto btnColider = m_btn.GetCollider();
+	float total = m_isHorizontal
+		? m_colider.width - btnColider.width
+		: m_colider.height - btnColider.height;
+
+	float slidingDiference = total / 100 * mouseWheel * 3;
+
+	if (m_isHorizontal) {
+		float value =  btnColider.x + slidingDiference;
+		value = value < m_colider.x ? m_colider.x : value;
+		value = value > m_colider.x + total ? m_colider.x + total : value;
+		btnColider.x = value;
+	}
+	else {
+		float value = btnColider.y + slidingDiference;
+		value = value < m_colider.y ? m_colider.y : value;
+		value = value > m_colider.y + total ? m_colider.y + total : value;
+		btnColider.y = value;
+	}
+
+	m_btn.SetCollider(btnColider);
+	CalculateOnSlide();
+}
+
 Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal,
 	float absoluteDimension, Vector2 resolution)
 	: UIElement(pos, size, alignment), m_isHorizontal(isHorizontal) {
@@ -108,6 +139,9 @@ void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 	else {
 		SlideIfPressed();
 	}
+
+	SlideIfScroll();
+
 	m_btn.CheckAndUpdate(mousePosition, appContext);
 }
 void Slider::Render(AppContext const& appContext) {
@@ -122,7 +156,6 @@ void Slider::Resize(Vector2 resolution, AppContext const& appContext) {
 void Slider::SetOnSlide(std::function<void(float)> onSlide) {
 	m_onSlide = onSlide;
 }
-
 void Slider::SetButtonPosition(float position) {
 	auto btnColider = m_btn.GetCollider();
 
@@ -143,4 +176,11 @@ void Slider::SetButtonPosition(float position) {
 	}
 
 	m_btn.SetCollider(btnColider);
+}
+
+void Slider::SetScrolling(bool isScroll) {
+	m_isScroll = isScroll;
+}
+bool Slider::IsScrolling() const {
+	return m_isScroll;
 }

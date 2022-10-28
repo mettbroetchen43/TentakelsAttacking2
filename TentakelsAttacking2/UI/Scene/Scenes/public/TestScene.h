@@ -15,5 +15,5 @@ public:
 	TestScene(Vector2 resolution);
 	void SetActive(bool active, AppContext const& appContext) override;
 
-	void TestLambda(int value);
+	void TestLambda(float value);
 };
