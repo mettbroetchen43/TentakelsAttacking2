@@ -5,9 +5,9 @@
 
 #include "ConfigIO.h"
 #include "AppContext.h"
+#include "HPrint.h"
 #include <fstream>
 #include <filesystem>
-#include <iostream>
 #include <vector>
 
 static constexpr char ignoreLine = '/';
@@ -17,9 +17,15 @@ void LoadConfig() {
 	auto& constants = AppContext::GetInstance().constants;
 	std::ifstream file;
 
+	if (!std::filesystem::exists(constants.files.config)) {
+		Print("config does not exists", PrintType::EXPECTED_ERROR);
+		SaveConfig();
+		return;
+	}
+
 	file.open(constants.files.config);
 	if (!file.is_open()) {
-		std::cout << "Cant Open Config\n";
+		Print("cant open config");
 		return;
 	}
 
@@ -39,7 +45,6 @@ void LoadConfig() {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
 				*e = std::stoi(input);
-				std::cout << *e << '\n';
 			}
 		}
 	};
@@ -47,7 +52,6 @@ void LoadConfig() {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
 				*e = std::stoi(input);
-				std::cout << *e << '\n';
 			}
 		}
 	};
@@ -55,7 +59,6 @@ void LoadConfig() {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
 				*e = std::stof(input);
-				std::cout << *e << '\n';
 			}
 		}
 	};
@@ -88,10 +91,13 @@ void LoadConfig() {
 	addFloat(floatEltries, file, input, nextEntry);
 
 }
-
 void SaveConfig() {
 	auto& constants = AppContext::GetInstance().constants;
 	std::ofstream file;
+
+	if (!std::filesystem::exists(constants.files.config)) {
+		Print("generated config");
+	}
 
 	file.open(constants.files.config);
 
