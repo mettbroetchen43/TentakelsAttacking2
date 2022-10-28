@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants\public\CConstants.hpp" />
+    <ClInclude Include="Constants\public\ConfigIO.h" />
     <ClInclude Include="Constants\public\CPlayer.hpp" />
     <ClInclude Include="Constants\public\CWorld.hpp" />
     <ClInclude Include="Events\public\EventListener.hpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="_public\AppContext.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Constants\private\ConfigIO.cpp" />
     <ClCompile Include="Game\private\Galaxy.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />
     <ClCompile Include="Game\private\Fleet.cpp" />
@@ -271,6 +273,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\title.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\config.ta" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
