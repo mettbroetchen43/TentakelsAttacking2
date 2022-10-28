@@ -249,6 +249,9 @@
     <ClInclude Include="Constants\public\CGlobal.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Constants\public\Sound.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
