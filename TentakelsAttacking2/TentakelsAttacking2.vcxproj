@@ -277,10 +277,6 @@
   <ItemGroup>
     <Text Include="Assets\title.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Saves\config.tac" />
-    <None Include="Saves\testCondig.tac" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

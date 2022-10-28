@@ -18,7 +18,7 @@ int main() {
 	AppContext& appContext = AppContext::GetInstance();
 	UIManager uiManager;
 
-	appContext.SaveConfig();
+	appContext.LoadConfig();
 
 	uiManager.StartUI();
 

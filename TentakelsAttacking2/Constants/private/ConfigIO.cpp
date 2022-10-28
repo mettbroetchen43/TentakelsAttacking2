@@ -8,10 +8,84 @@
 #include <fstream>
 #include <filesystem>
 #include <iostream>
+#include <vector>
 
-static constexpr char ignoreLine = '-';
+static constexpr char ignoreLine = '/';
+static constexpr char token = '-';
 
 void LoadConfig() {
+	auto& constants = AppContext::GetInstance().constants;
+	std::ifstream file;
+
+	file.open(constants.files.config);
+	if (!file.is_open()) {
+		std::cout << "Cant Open Config\n";
+		return;
+	}
+
+	auto nextEntry = [](std::ifstream& file, std::string& input) {
+		while (std::getline(file, input)) {
+			if (input.empty()) { continue; }
+			if (input[0] == ignoreLine) { continue; }
+
+			size_t index = input.find_first_of(token);
+			input = input.substr(0, index);
+			return true;
+		}
+		return false;
+	};
+
+	auto addBools = [](std::vector<bool*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
+		for (auto e : entries) {
+			if (nextEntry(file, input)) {
+				*e = std::stoi(input);
+				std::cout << *e << '\n';
+			}
+		}
+	};
+	auto addSize_t = [](std::vector<size_t*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
+		for (auto e : entries) {
+			if (nextEntry(file, input)) {
+				*e = std::stoi(input);
+				std::cout << *e << '\n';
+			}
+		}
+	};
+	auto addFloat = [](std::vector<float*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
+		for (auto e : entries) {
+			if (nextEntry(file, input)) {
+				*e = std::stof(input);
+				std::cout << *e << '\n';
+			}
+		}
+	};
+	std::string input;
+	std::vector<bool*> boolEntries = {
+		// Globals
+		&constants.global.startingModeFullScreen,
+	};
+	addBools(boolEntries, file, input, nextEntry);
+
+	std::vector<size_t*> size_tEntries = {
+		// Player
+		&constants.player.minPlayerCount,
+		&constants.player.maxPlayerCount,
+		// World
+		&constants.world.minPlanetCount,
+		&constants.world.maxPlanetCount,
+
+		&constants.world.minDiemnsionX,
+		&constants.world.maxDiemnsionX,
+		&constants.world.minDiemnsionY,
+		&constants.world.maxDiemnsionY
+	};
+	addSize_t(size_tEntries, file, input, nextEntry);
+
+	std::vector<float*> floatEltries = {
+		// Sound
+		&constants.sound.masterVolume
+	};
+	addFloat(floatEltries, file, input, nextEntry);
 
 }
 
@@ -20,20 +94,17 @@ void SaveConfig() {
 	std::ofstream file;
 
 	file.open(constants.files.config);
-	if (!file.is_open()) {
-		std::cout << "Cant Open Config\n";
-		return;
-	}
+
 	std::string toSave = "//\n// Purpur Tentakel\n// Tentakels Attacking\n// Config\n//\n";
 
 
 	auto headline = [](std::string const& headline, std::string& toSave) {
-		toSave += "//\n// " + headline + '\n';
+		toSave += "\n// " + headline + '\n';
 	};
 	auto entry = [](std::string const& entry, std::string const& message, std::string& toSave) {
 		toSave += entry + " - " + message + "\n";
 	};
-	
+
 	headline("Globals", toSave);
 	entry(std::to_string(constants.global.startingModeFullScreen), "Starting Full Screen", toSave);
 
@@ -52,9 +123,7 @@ void SaveConfig() {
 
 	headline("Sound", toSave);
 	entry(std::to_string(constants.sound.masterVolume), "Master Volume", toSave);
-	
 
-	toSave += "//";
 	file << toSave;
 	file.close();
 }
