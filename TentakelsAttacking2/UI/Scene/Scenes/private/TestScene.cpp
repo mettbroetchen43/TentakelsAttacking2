@@ -5,32 +5,54 @@
 
 #include "TestScene.h"
 #include "UIManager.h"
-#include "SliderAndInputLine.h"
+#include "Slider.h"
 #include <iostream>
 
 void TestScene::Initialize(Vector2 resolution,
 	[[maybe_unused]] AppContext& appContext) {
-	
-	float position = 0.3f;
-	for (int i = 100; i < 105; i +=2) {
-		auto scene = std::make_shared<SliderAndInputLine>(
-			i,
-			GetElementPosition(0.5f, position),
-			GetElementSize(0.3f, 0.03f),
-			Alignment::MID_MID,
-			0,
-			100,
-			61,
-			resolution
-			);
-		scene->SetActive(true, appContext);
-		scene->SetOnSave([this](int value) {
-			TestLambda(value);
-			});
-		m_elements.push_back(scene);
-		position += 0.05f;
-	}
 
+	auto hSlider_1 = std::make_shared<Slider>(
+		GetElementPosition(0.5f, 0.1f),
+		GetElementSize(0.5f, 0.05f),
+		Alignment::TOP_MID,
+		true,
+		10.0f,
+		resolution
+		);
+	hSlider_1->SetScrolling(true);
+	m_elements.push_back(hSlider_1);
+
+	auto hSlider_2 = std::make_shared<Slider>(
+		GetElementPosition(0.5f, 0.85f),
+		GetElementSize(0.5f, 0.05f),
+		Alignment::TOP_MID,
+		true,
+		10.0f,
+		resolution
+		);
+	m_elements.push_back(hSlider_2);
+
+
+	auto vSlider_1 = std::make_shared<Slider>(
+		GetElementPosition(0.1f, 0.5f),
+		GetElementSize(0.05f, 0.5f),
+		Alignment::MID_LEFT,
+		false,
+		10.0f,
+		resolution
+		);
+	vSlider_1->SetScrolling(true);
+	m_elements.push_back(vSlider_1);
+
+	auto vSlider_2 = std::make_shared<Slider>(
+		GetElementPosition(0.85f, 0.5f),
+		GetElementSize(0.05f, 0.5f),
+		Alignment::MID_LEFT,
+		false,
+		10.0f,
+		resolution
+		);
+	m_elements.push_back(vSlider_2);
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -61,9 +83,4 @@ void TestScene::SetActive(bool active, AppContext const& appContext) {
 void TestScene::TestLambda(int value) {
 	std::cout << "Value Triggert -> " << value << '\n';
 
-	for (auto& s : m_elements) {
-		if (auto* e = dynamic_cast<SliderAndInputLine*>(s.get())) {
-			e->SetValue(value);
-		}
-	}
 }
