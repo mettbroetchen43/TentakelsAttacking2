@@ -9,6 +9,8 @@
 #include <filesystem>
 #include <iostream>
 
+static constexpr char token = '-';
+
 void LoadConfig() {
 
 }
@@ -23,9 +25,10 @@ void SaveConfig() {
 		return;
 	}
 
-	std::string toSave = "//\n// Purpur Tentakel\n// Tentakels Attacking\n// Config\n//\n\n";
+	std::string toSave = "//\n// Purpur Tentakel\n// Tentakels Attacking\n// Config\n//\n//\n";
+
+	toSave += "// Globals\n";
 
 	file << toSave;
-
 	file.close();
 }

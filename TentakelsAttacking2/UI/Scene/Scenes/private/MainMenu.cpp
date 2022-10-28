@@ -114,7 +114,8 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		Alignment::BOTTOM_RIGHT,
 		Alignment::BOTTOM_RIGHT,
 		0.02f,
-		appContext.Version() + '\n' + appContext.CopyRight(),
+		appContext.constants.global.version + '\n' 
+			+ appContext.constants.global.copyRight,
 		resolution
 		);
 	m_elements.push_back(versionAndCopyRight);

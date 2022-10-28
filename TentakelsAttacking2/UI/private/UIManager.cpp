@@ -89,7 +89,7 @@ UIManager::UIManager()
 void UIManager::StartUI() {
 	auto event = SwitchSceneEvent(SceneType::LOGO);
 	m_appContext.eventManager.InvokeEvent(event);
-	if (m_appContext.IsMaximizedStartingWindow()) {
+	if (m_appContext.constants.global.startingModeFullScreen) {
 		ToggleFullScreen();
 	}
 	else {

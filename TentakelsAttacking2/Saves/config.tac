@@ -3,4 +3,5 @@
 // Tentakels Attacking
 // Config
 //
-
+//
+// Globals

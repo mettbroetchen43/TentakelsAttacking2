@@ -11,17 +11,6 @@ AppContext& AppContext::GetInstance() {
 	return appContext;
 }
 
-std::string const& AppContext::Version() const {
-	return m_version;
-}
-std::string const& AppContext::CopyRight() const {
-	return m_copyRight;
-}
-
-bool AppContext::IsMaximizedStartingWindow() const {
-	return m_startingMaximizedWindow;
-}
-
 void AppContext::LoadConfig() {
 	::LoadConfig();
 }
