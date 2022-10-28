@@ -4,12 +4,18 @@
 //
 
 #pragma once
+#include "CGlobal.hpp"
 #include "CTextProcecing.hpp"
 #include "CPlayer.hpp"
 #include "CWorld.hpp"
+#include "CFiles.hpp"
+#include "CSound.hpp"
 
 struct Constants {
+	CGlobal global;
 	CTextProcecing textProcecing;
 	CPlayer player;
 	CWorld world;
+	CFiles files;
+	CSound sound;
 };

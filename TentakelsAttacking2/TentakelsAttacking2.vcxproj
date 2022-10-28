@@ -140,8 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants\public\CConstants.hpp" />
+    <ClInclude Include="Constants\public\CFiles.hpp" />
+    <ClInclude Include="Constants\public\ConfigIO.h" />
     <ClInclude Include="Constants\public\CPlayer.hpp" />
     <ClInclude Include="Constants\public\CWorld.hpp" />
+    <ClInclude Include="Constants\public\CGlobal.hpp" />
+    <ClInclude Include="Constants\public\CSound.hpp" />
     <ClInclude Include="Events\public\EventListener.hpp" />
     <ClInclude Include="Events\public\EventManager.hpp" />
     <ClInclude Include="Events\public\GenerelEvents.hpp" />
@@ -157,6 +161,7 @@
     <ClInclude Include="Helper\public\HFocusEvents.h" />
     <ClInclude Include="Helper\public\HInput.h" />
     <ClInclude Include="Helper\public\HPlayerCollection.h" />
+    <ClInclude Include="Helper\public\HPrint.h" />
     <ClInclude Include="Helper\public\LayeredVector.hpp" />
     <ClInclude Include="Helper\public\HRandom.h" />
     <ClInclude Include="Constants\public\CTextProcecing.hpp" />
@@ -216,6 +221,7 @@
     <ClInclude Include="_public\AppContext.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Constants\private\ConfigIO.cpp" />
     <ClCompile Include="Game\private\Galaxy.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />
     <ClCompile Include="Game\private\Fleet.cpp" />
@@ -229,6 +235,7 @@
     <ClCompile Include="Helper\private\HColors.cpp" />
     <ClCompile Include="Helper\private\HFocusEvents.cpp" />
     <ClCompile Include="Helper\private\HInput.cpp" />
+    <ClCompile Include="Helper\private\HPrint.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />
