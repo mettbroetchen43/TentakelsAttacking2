@@ -46,7 +46,7 @@ void SoundManager::PlayTextSound() const {
 void SoundManager::SetMasterSoundLevel(float level) const {
 	AppContext::GetInstance().constants.sound.masterVolume = level;
 	level /= 100;
-	SetMasterSoundLevel(level);
+	SetMasterVolume(level);
 }
 
 SoundManager::SoundManager() {
