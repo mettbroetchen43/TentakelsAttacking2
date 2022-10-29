@@ -12,12 +12,14 @@
 class ColorPicker;
 class Table;
 class Focusable;
+class ClassicButton;
 
 class NewGamePlayerScene : public Scene, public EventListener {
 private:
 	InputLine<std::string>* m_inputLine;
 	ColorPicker* m_colorPicker;
 	Table* m_table;
+	std::shared_ptr<ClassicButton> m_nextBTN;
 	std::vector<Focusable*> m_nestedFocus;
 	void Initialize(Vector2 resolution, AppContext& appContext);
 	void CheckForNestedFocus(Vector2 const& mousePosition,
@@ -36,6 +38,8 @@ private:
 	void DeletePlayer(unsigned int ID);
 	void CheckPlayerCount() const;
 	void NextScene(bool valid);
+
+	void SetNextButton(AppContext const& appContext);
 
 public:
 	NewGamePlayerScene(Vector2 resolution);

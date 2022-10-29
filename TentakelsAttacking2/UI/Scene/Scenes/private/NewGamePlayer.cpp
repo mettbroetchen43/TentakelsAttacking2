@@ -144,7 +144,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 	m_nestedFocus.push_back(table.get());
 	m_table = table.get();
 
-	auto nextBtn = std::make_shared<ClassicButton>(
+	m_nextBTN = std::make_shared<ClassicButton>(
 		6,
 		GetElementPosition(0.9f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
@@ -153,10 +153,10 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		"Next",
 		SoundType::ACCEPTED
 		);
-	nextBtn->SetOnClick([this]() {
+	m_nextBTN->SetOnClick([this]() {
 		this->CheckPlayerCount();
 		});
-	m_elements.push_back(nextBtn);
+	m_elements.push_back(m_nextBTN);
 
 	auto backBtn = std::make_shared<ClassicButton>(
 		7,
@@ -301,6 +301,14 @@ void NewGamePlayerScene::NextScene(bool valid) {
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
+void NewGamePlayerScene::SetNextButton(AppContext const& appContext) {
+	size_t playerCount = appContext.playerCollection.GetPlayerData().size();
+	bool validPlayerCount =
+		playerCount >= appContext.constants.player.minPlayerCount
+		&& playerCount <= appContext.constants.player.maxPlayerCount;
+	m_nextBTN->SetEnabled(validPlayerCount);
+}
+
 NewGamePlayerScene::NewGamePlayerScene(Vector2 resolution)
 	: Scene(Vector2(0.0f,0.0f), Vector2(1.0f,1.0f), Alignment::DEFAULT) {
 
@@ -317,6 +325,8 @@ void NewGamePlayerScene::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 
 	CheckForNestedFocus(mousePosition, appContext);
+
+	SetNextButton(appContext);
 
 	for (auto& e : m_elements) {
 		e->CheckAndUpdate(mousePosition, appContext);
