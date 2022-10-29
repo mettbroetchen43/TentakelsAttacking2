@@ -115,6 +115,17 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		);
 	m_elements.push_back(currentPlayerText);
 
+	auto currentPlayerCount = std::make_shared<Text>(
+		GetElementPosition(0.55f, 0.33f),
+		GetElementSize(0.25f, 0.05f),
+		Alignment::TOP_LEFT,
+		Alignment::TOP_LEFT,
+		0.02f,
+		"current min player count: " + std::to_string(appContext.constants.player.minPlayerCount),
+		resolution
+		);
+	m_elements.push_back(currentPlayerCount);
+
 	auto table = std::make_shared<Table>(
 		GetElementPosition(0.9f, 0.35f),
 		GetElementSize(0.35f, 0.45f),
