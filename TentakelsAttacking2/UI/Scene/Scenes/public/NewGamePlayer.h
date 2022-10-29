@@ -7,12 +7,13 @@
 #include "Scene.h"
 #include "InputLine.hpp"
 #include "AbstractTableCell.h"
+#include "EventListener.hpp"
 
 class ColorPicker;
 class Table;
 class Focusable;
 
-class NewGamePlayerScene : public Scene {
+class NewGamePlayerScene : public Scene, public EventListener {
 private:
 	InputLine<std::string>* m_inputLine;
 	ColorPicker* m_colorPicker;
@@ -33,13 +34,17 @@ private:
 		Color oldValue, Color newValue);
 	void CreateDeletePlayer();
 	void DeletePlayer(unsigned int ID);
-
+	void CheckPlayerCount() const;
+	void NextScene(bool valid);
 
 public:
 	NewGamePlayerScene(Vector2 resolution);
+	~NewGamePlayerScene();
 
 	void CheckAndUpdate(Vector2 const& mousePosition,
 		AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
+
+	void OnEvent(Event const& event) override;
 };

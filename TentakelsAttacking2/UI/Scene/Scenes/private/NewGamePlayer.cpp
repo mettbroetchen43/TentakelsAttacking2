@@ -12,6 +12,7 @@
 #include "Line.h"
 #include "Table.h"
 #include "UIManager.h"
+
 #include "HFocusEvents.h"
 #include <cassert>
 
@@ -152,6 +153,9 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		"Next",
 		SoundType::ACCEPTED
 		);
+	nextBtn->SetOnClick([this]() {
+		this->CheckPlayerCount();
+		});
 	m_elements.push_back(nextBtn);
 
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -285,6 +289,17 @@ void NewGamePlayerScene::DeletePlayer(unsigned int ID) {
 
 	UpdateSceneEntries(appContext);
 }
+void NewGamePlayerScene::CheckPlayerCount() const {
+	auto event = ValidatePlayerCountEvent();
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+
+void NewGamePlayerScene::NextScene(bool valid) {
+	if (!valid) { return; }
+
+	auto event = SwitchSceneEvent(SceneType::TEST); // TODO Need To change
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
 
 NewGamePlayerScene::NewGamePlayerScene(Vector2 resolution)
 	: Scene(Vector2(0.0f,0.0f), Vector2(1.0f,1.0f), Alignment::DEFAULT) {
@@ -292,6 +307,10 @@ NewGamePlayerScene::NewGamePlayerScene(Vector2 resolution)
 	AppContext& appContext = AppContext::GetInstance();
 	Initialize(resolution, appContext);
 	UpdateSceneEntries(appContext);
+	appContext.eventManager.AddListener(this);
+}
+NewGamePlayerScene::~NewGamePlayerScene() {
+	AppContext::GetInstance().eventManager.RemoveListener(this);
 }
 
 void NewGamePlayerScene::CheckAndUpdate(Vector2 const& mousePosition,
@@ -312,5 +331,13 @@ void NewGamePlayerScene::Resize(Vector2 resolution,
 	AppContext const& appContext) {
 	for (auto& e : m_elements) {
 		e->Resize(resolution, appContext);
+	}
+}
+
+void NewGamePlayerScene::OnEvent(Event const& event) {
+
+	if (auto const* CountEvent = dynamic_cast<ValidatePlayerCountResultEvent const*>(&event)) {
+		NextScene(CountEvent->GetValid());
+		return;
 	}
 }

@@ -89,7 +89,7 @@ public:
 		: m_validPlayerCount(validPlayerCount) { }
 
 	[[nodiscard]] bool GetValid() const {
-		m_validPlayerCount;
+		return m_validPlayerCount;
 	}
 };
 
