@@ -12,6 +12,7 @@
 #include "Line.h"
 #include "Table.h"
 #include "UIManager.h"
+
 #include "HFocusEvents.h"
 #include <cassert>
 
@@ -114,6 +115,17 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		);
 	m_elements.push_back(currentPlayerText);
 
+	auto currentPlayerCount = std::make_shared<Text>(
+		GetElementPosition(0.55f, 0.33f),
+		GetElementSize(0.25f, 0.05f),
+		Alignment::TOP_LEFT,
+		Alignment::TOP_LEFT,
+		0.02f,
+		"current min player count: " + std::to_string(appContext.constants.player.minPlayerCount),
+		resolution
+		);
+	m_elements.push_back(currentPlayerCount);
+
 	auto table = std::make_shared<Table>(
 		GetElementPosition(0.9f, 0.35f),
 		GetElementSize(0.35f, 0.45f),
@@ -143,7 +155,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 	m_nestedFocus.push_back(table.get());
 	m_table = table.get();
 
-	auto nextBtn = std::make_shared<ClassicButton>(
+	m_nextBTN = std::make_shared<ClassicButton>(
 		6,
 		GetElementPosition(0.9f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
@@ -152,7 +164,10 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		"Next",
 		SoundType::ACCEPTED
 		);
-	m_elements.push_back(nextBtn);
+	m_nextBTN->SetOnClick([this]() {
+		this->CheckPlayerCount();
+		});
+	m_elements.push_back(m_nextBTN);
 
 	auto backBtn = std::make_shared<ClassicButton>(
 		7,
@@ -285,6 +300,28 @@ void NewGamePlayerScene::DeletePlayer(unsigned int ID) {
 
 	UpdateSceneEntries(appContext);
 }
+void NewGamePlayerScene::CheckPlayerCount() const {
+	auto event = ValidatePlayerCountEvent();
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+
+void NewGamePlayerScene::NextScene(bool valid) {
+	if (!valid) { return; }
+
+	auto event = SwitchSceneEvent(SceneType::TEST); // TODO Need To change
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+
+void NewGamePlayerScene::SetNextButton(AppContext const& appContext) {
+	size_t playerCount = appContext.playerCollection.GetPlayerData().size();
+	bool validPlayerCount =
+		playerCount >= appContext.constants.player.minPlayerCount
+		&& playerCount <= appContext.constants.player.maxPlayerCount;
+
+	if (validPlayerCount != m_nextBTN->IsEnabled()) {
+		m_nextBTN->SetEnabled(validPlayerCount);
+	}
+}
 
 NewGamePlayerScene::NewGamePlayerScene(Vector2 resolution)
 	: Scene(Vector2(0.0f,0.0f), Vector2(1.0f,1.0f), Alignment::DEFAULT) {
@@ -292,12 +329,18 @@ NewGamePlayerScene::NewGamePlayerScene(Vector2 resolution)
 	AppContext& appContext = AppContext::GetInstance();
 	Initialize(resolution, appContext);
 	UpdateSceneEntries(appContext);
+	appContext.eventManager.AddListener(this);
+}
+NewGamePlayerScene::~NewGamePlayerScene() {
+	AppContext::GetInstance().eventManager.RemoveListener(this);
 }
 
 void NewGamePlayerScene::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 
 	CheckForNestedFocus(mousePosition, appContext);
+
+	SetNextButton(appContext);
 
 	for (auto& e : m_elements) {
 		e->CheckAndUpdate(mousePosition, appContext);
@@ -312,5 +355,13 @@ void NewGamePlayerScene::Resize(Vector2 resolution,
 	AppContext const& appContext) {
 	for (auto& e : m_elements) {
 		e->Resize(resolution, appContext);
+	}
+}
+
+void NewGamePlayerScene::OnEvent(Event const& event) {
+
+	if (auto const* CountEvent = dynamic_cast<ValidatePlayerCountResultEvent const*>(&event)) {
+		NextScene(CountEvent->GetValid());
+		return;
 	}
 }
