@@ -106,6 +106,30 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 	auto deleteEvent = DeletePlayerUIEvent(event->GetID());
 	AppContext::GetInstance().eventManager.InvokeEvent(deleteEvent);
 }
+void GameManager::CheckPlayerCount() const {
+
+	AppContext& appContext = AppContext::GetInstance();
+	bool valid;
+
+	if (m_players.size() < appContext.constants.player.minPlayerCount) {
+		auto event = ShowMessagePopUpEvent("Player Count",
+			"Not enough players \n min. Player Count : " + appContext.constants.player.minPlayerCount);
+		appContext.eventManager.InvokeEvent(event);
+		valid = false;
+	}
+	else if (m_players.size() > appContext.constants.player.maxPlayerCount) {
+		auto event = ShowMessagePopUpEvent("Player Count",
+			"Too many players \n max Player Count : " + appContext.constants.player.maxPlayerCount);
+		appContext.eventManager.InvokeEvent(event);
+		valid = false;
+	}
+	else {
+		valid = true;
+	}
+
+	auto event = ValidatePlayerCountResultEvent(valid);
+	appContext.eventManager.InvokeEvent(event);
+}
 
 void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 	if (event->GetType() == GameEventType::GLOBAL) {
@@ -153,6 +177,10 @@ void GameManager::OnEvent(Event const& event) {
 	}
 	if (auto const* playerEvent = dynamic_cast<DeletePlayerEvent const*>(&event)) {
 		DeletePlayer(playerEvent);
+		return;
+	}
+	if (auto const* playerEvent = dynamic_cast<ValidatePlayerCountEvent const*>(&event)) {
+		CheckPlayerCount();
 		return;
 	}
 
