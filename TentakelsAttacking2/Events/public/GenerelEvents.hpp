@@ -79,6 +79,20 @@ public:
 	}
 };
 
+class ValidatePlayerCountEvent : public Event { };
+class ValidatePlayerCountResultEvent : public Event {
+private:
+	bool m_validPlayerCount;
+
+public:
+	ValidatePlayerCountResultEvent(bool validPlayerCount)
+		: m_validPlayerCount(validPlayerCount) { }
+
+	[[nodiscard]] bool GetValid() const {
+		m_validPlayerCount;
+	}
+};
+
 class UpdateCheckGameEvent : public Event {
 private:
 	GameEventType m_type;
