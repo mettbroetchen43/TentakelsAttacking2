@@ -113,13 +113,13 @@ void GameManager::CheckPlayerCount() const {
 
 	if (m_players.size() < appContext.constants.player.minPlayerCount) {
 		auto event = ShowMessagePopUpEvent("Player Count",
-			"Not enough players \n min. Player Count : " + appContext.constants.player.minPlayerCount);
+			"Not enough players.\n current min. Player Count: " + std::to_string(appContext.constants.player.minPlayerCount));
 		appContext.eventManager.InvokeEvent(event);
 		valid = false;
 	}
 	else if (m_players.size() > appContext.constants.player.maxPlayerCount) {
 		auto event = ShowMessagePopUpEvent("Player Count",
-			"Too many players \n max Player Count : " + appContext.constants.player.maxPlayerCount);
+			"Too many players.\n current max Player Count: " + std::to_string(appContext.constants.player.maxPlayerCount));
 		appContext.eventManager.InvokeEvent(event);
 		valid = false;
 	}
