@@ -317,7 +317,10 @@ void NewGamePlayerScene::SetNextButton(AppContext const& appContext) {
 	bool validPlayerCount =
 		playerCount >= appContext.constants.player.minPlayerCount
 		&& playerCount <= appContext.constants.player.maxPlayerCount;
-	m_nextBTN->SetEnabled(validPlayerCount);
+
+	if (validPlayerCount != m_nextBTN->IsEnabled()) {
+		m_nextBTN->SetEnabled(validPlayerCount);
+	}
 }
 
 NewGamePlayerScene::NewGamePlayerScene(Vector2 resolution)
