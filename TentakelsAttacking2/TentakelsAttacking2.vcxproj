@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -93,7 +93,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -111,7 +111,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -127,7 +127,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/Scenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -195,8 +195,8 @@
     <ClInclude Include="Helper\public\HGeneral.h" />
     <ClInclude Include="UI\Scene\public\BaseMainScene.h" />
     <ClInclude Include="UI\public\PopUpManager.h" />
-    <ClInclude Include="UI\Scene\Scenes\public\GameEventSettings.h" />
-    <ClInclude Include="UI\Scene\Scenes\public\Intro.h" />
+    <ClInclude Include="UI\Scene\SupportScenes\public\GameEventSettings.h" />
+    <ClInclude Include="UI\Scene\MainScenes\public\Intro.h" />
     <ClInclude Include="UI\public\SceneManager.h" />
     <ClInclude Include="UI\Elements\Button\public\ClassicButton.h" />
     <ClInclude Include="Helper\public\HAssetManager.h" />
@@ -212,12 +212,12 @@
     <ClInclude Include="UI\public\UIManager.h" />
     <ClInclude Include="UI\Scene\public\Scene.h" />
     <ClInclude Include="UI\Scene\public\SceneType.hpp" />
-    <ClInclude Include="UI\Scene\Scenes\public\Logos.h" />
-    <ClInclude Include="UI\Scene\Scenes\public\MainMenu.h" />
-    <ClInclude Include="UI\Scene\Scenes\public\NewGamePlayer.h" />
-    <ClInclude Include="UI\Scene\Scenes\public\Scenes.hpp" />
-    <ClInclude Include="UI\Scene\Scenes\public\SliderAndInputLine.h" />
-    <ClInclude Include="UI\Scene\Scenes\public\TestScene.h" />
+    <ClInclude Include="UI\Scene\MainScenes\public\Logos.h" />
+    <ClInclude Include="UI\Scene\MainScenes\public\MainMenu.h" />
+    <ClInclude Include="UI\Scene\MainScenes\public\NewGamePlayer.h" />
+    <ClInclude Include="UI\Scene\MainScenes\public\Scenes.hpp" />
+    <ClInclude Include="UI\Scene\SupportScenes\public\SliderAndInputLine.h" />
+    <ClInclude Include="UI\Scene\SupportScenes\public\TestScene.h" />
     <ClInclude Include="_public\AppContext.h" />
   </ItemGroup>
   <ItemGroup>
@@ -254,7 +254,7 @@
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPickerCell.cpp" />
     <ClCompile Include="UI\Scene\private\BaseMainScene.cpp" />
     <ClCompile Include="UI\private\PopUpManager.cpp" />
-    <ClCompile Include="UI\Scene\Scenes\private\Intro.cpp" />
+    <ClCompile Include="UI\Scene\MainScenes\private\Intro.cpp" />
     <ClCompile Include="UI\private\SceneManager.cpp" />
     <ClCompile Include="UI\Elements\Button\private\ClassicButton.cpp" />
     <ClCompile Include="Helper\private\HAssetManager.cpp" />
@@ -266,12 +266,12 @@
     <ClCompile Include="UI\private\Focusable.cpp" />
     <ClCompile Include="UI\private\Focus.cpp" />
     <ClCompile Include="UI\Scene\private\Scene.cpp" />
-    <ClCompile Include="UI\Scene\Scenes\private\Logos.cpp" />
-    <ClCompile Include="UI\Scene\Scenes\private\MainMenu.cpp" />
-    <ClCompile Include="UI\Scene\Scenes\private\TestScene.cpp" />
-    <ClCompile Include="UI\Scene\Scenes\private\NewGamePlayer.cpp" />
-    <ClCompile Include="UI\Scene\Scenes\private\GameEventSettings.cpp" />
-    <ClCompile Include="UI\Scene\Scenes\private\SliderAndInputLine.cpp" />
+    <ClCompile Include="UI\Scene\MainScenes\private\Logos.cpp" />
+    <ClCompile Include="UI\Scene\MainScenes\private\MainMenu.cpp" />
+    <ClCompile Include="UI\Scene\SupportScenes\private\TestScene.cpp" />
+    <ClCompile Include="UI\Scene\MainScenes\private\NewGamePlayer.cpp" />
+    <ClCompile Include="UI\Scene\SupportScenes\private\GameEventSettings.cpp" />
+    <ClCompile Include="UI\Scene\SupportScenes\private\SliderAndInputLine.cpp" />
     <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="_private\AppContext.cpp" />
