@@ -10,8 +10,8 @@
 0 / Starting Full Screen
 
 // Player
--2 / Min Player Count
-7 / Max Player Count
+2 / Min Player Count
+11 / Max Player Count
 
 // World
 20 / Min Planet Count
@@ -22,4 +22,4 @@
 160 / Max Dimension Y
 
 // Sound
-100.000000 / Master Volume
+100.000000 / Master Volume (0.0 - 100.0)

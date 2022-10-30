@@ -5,7 +5,7 @@
 
 #include "AppContext.h"
 #include "ConfigIO.h"
-#include "UIEvents.hpp"
+
 
 AppContext& AppContext::GetInstance() {
 	static AppContext appContext;
@@ -22,18 +22,31 @@ void AppContext::SaveConfig() {
 }
 
 void AppContext::Validate() {
-	ValidatePlayer();
+	// Player
+	ValidateMinMax<size_t>(constants.player.minPlayerCount, constants.player.maxPlayerCount,
+		"minPlayerCount >= maxPlayerCount\nset maxPlayerCount to ");
+
+	// Sound
+	ValidateSound();
 }
-void AppContext::ValidatePlayer() {
-	if (constants.player.minPlayerCount >= constants.player.maxPlayerCount) {
-		constants.player.maxPlayerCount = constants.player.minPlayerCount + 1;
-		auto event = ShowMessagePopUpEvent(
-			"Invalid Config",
-			"minPlayerCount >= maxPlayerCount\nset maxPlayerCount to "
-				+ std::to_string(constants.player.maxPlayerCount)
+void AppContext::ValidateSound() {
+	auto& volume = constants.sound.masterVolume;
+
+	if (volume < 0.0f) {
+		volume = 0.0f;
+		auto event = ShowMessagePopUpEvent("Invalid Config",
+			"masterVolume < 0.0\nset Volume to " + std::to_string(volume)
 		);
 		eventManager.InvokeEvent(event);
 	}
+	else if (volume > 100.0f) {
+		volume = 100.0f;
+		auto event = ShowMessagePopUpEvent("Invalid Config",
+			"masterVolume > 100.0\nset Volume to " + std::to_string(volume)
+		);
+		eventManager.InvokeEvent(event);
+	}
+
 }
 
 AppContext::AppContext() {

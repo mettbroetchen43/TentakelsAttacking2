@@ -138,7 +138,7 @@ void SaveConfig() {
 	entry(std::to_string(constants.world.maxDiemnsionY), "Max Dimension Y", toSave);
 
 	headline("Sound", toSave);
-	entry(std::to_string(constants.sound.masterVolume), "Master Volume", toSave);
+	entry(std::to_string(constants.sound.masterVolume), "Master Volume (0.0 - 100.0)", toSave);
 
 	file << toSave;
 	file.close();
