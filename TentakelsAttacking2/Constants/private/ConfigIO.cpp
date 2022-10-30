@@ -10,8 +10,7 @@
 #include <filesystem>
 #include <vector>
 
-static constexpr char ignoreLine = '/';
-static constexpr char token = '-';
+static constexpr char token = '/';
 
 void LoadConfig() {
 	auto& constants = AppContext::GetInstance().constants;
@@ -32,7 +31,7 @@ void LoadConfig() {
 	auto nextEntry = [](std::ifstream& file, std::string& input) {
 		while (std::getline(file, input)) {
 			if (input.empty()) { continue; }
-			if (input[0] == ignoreLine) { continue; }
+			if (input[0] == token) { continue; }
 
 			size_t index = input.find_first_of(token);
 			input = input.substr(0, index);
@@ -44,14 +43,18 @@ void LoadConfig() {
 	auto addBools = [](std::vector<bool*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
-				*e = std::stoi(input);
+				*e = static_cast<bool>(std::stoi(input));
 			}
 		}
 	};
 	auto addSize_t = [](std::vector<size_t*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
-				*e = std::stoi(input);
+				int i = std::stoi(input);
+				if (i < 0) {
+					i = 0;
+				}
+				*e = i;
 			}
 		}
 	};
@@ -108,18 +111,18 @@ void SaveConfig() {
 
 	file.open(constants.files.config);
 
-	std::string toSave = "//\n// Purpur Tentakel\n// Tentakels Attacking\n// Config\n//\n";
+	std::string toSave = "//\n// Purpur Tentakel\n// Tentakels Attacking\n// Config\n//\n\n// Min Count >= 0\n";
 
 
 	auto headline = [](std::string const& headline, std::string& toSave) {
 		toSave += "\n// " + headline + '\n';
 	};
 	auto entry = [](std::string const& entry, std::string const& message, std::string& toSave) {
-		toSave += entry + " - " + message + "\n";
+		toSave += entry + ' ' + token + ' ' + message + "\n";
 	};
 
 	headline("Globals", toSave);
-	entry(std::to_string(constants.global.startingModeFullScreen), "Starting Full Screen", toSave);
+	entry(std::to_string(constants.global.startingModeFullScreen), "Starting Full Screen (0 = window)", toSave);
 
 	headline("Player", toSave);
 	entry(std::to_string(constants.player.minPlayerCount), "Min Player Count", toSave);
@@ -135,7 +138,7 @@ void SaveConfig() {
 	entry(std::to_string(constants.world.maxDiemnsionY), "Max Dimension Y", toSave);
 
 	headline("Sound", toSave);
-	entry(std::to_string(constants.sound.masterVolume), "Master Volume", toSave);
+	entry(std::to_string(constants.sound.masterVolume), "Master Volume (0.0 - 100.0)", toSave);
 
 	file << toSave;
 	file.close();
