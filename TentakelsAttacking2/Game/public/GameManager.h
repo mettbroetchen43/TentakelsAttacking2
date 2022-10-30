@@ -25,6 +25,7 @@ private:
 	void AddPlayer(AddPlayerEvent const* event);
 	void EditPlayer(EditPlayerEvent const* event) const;
 	void DeletePlayer(DeletePlayerEvent const* event);
+	void ResetPlayer();
 	void CheckPlayerCount() const;
 
 	void SetGameEventActive(UpdateCheckGameEvent const* event);

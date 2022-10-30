@@ -106,6 +106,12 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 	auto deleteEvent = DeletePlayerUIEvent(event->GetID());
 	AppContext::GetInstance().eventManager.InvokeEvent(deleteEvent);
 }
+void GameManager::ResetPlayer() {
+	m_players.clear();
+	
+	auto event = ResetPlayerUIEvent();
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
 void GameManager::CheckPlayerCount() const {
 
 	AppContext& appContext = AppContext::GetInstance();
@@ -177,6 +183,10 @@ void GameManager::OnEvent(Event const& event) {
 	}
 	if (auto const* playerEvent = dynamic_cast<DeletePlayerEvent const*>(&event)) {
 		DeletePlayer(playerEvent);
+		return;
+	}
+	if (auto const* playerEvent = dynamic_cast<ResetPlayerEvent const*>(&event)) {
+		ResetPlayer();
 		return;
 	}
 	if (auto const* playerEvent = dynamic_cast<ValidatePlayerCountEvent const*>(&event)) {
