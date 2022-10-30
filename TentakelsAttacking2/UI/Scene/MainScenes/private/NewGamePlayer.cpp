@@ -325,8 +325,9 @@ void NewGamePlayerScene::NextScene(bool valid) {
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
-void NewGamePlayerScene::Reset()
-{
+void NewGamePlayerScene::Reset() {
+	auto event = ResetPlayerEvent();
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
 void NewGamePlayerScene::SetNextButton(AppContext const& appContext) {

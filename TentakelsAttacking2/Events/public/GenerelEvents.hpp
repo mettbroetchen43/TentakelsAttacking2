@@ -58,6 +58,7 @@ public:
 		return m_ID;
 	}
 };
+class ResetPlayerEvent : public Event { };
 
 class AddPlayerUIEvent : public PlayerWithIDEvent {
 public:
@@ -78,6 +79,7 @@ public:
 		return m_ID;
 	}
 };
+class ResetPlayerUIEvent : public Event { };
 
 class ValidatePlayerCountEvent : public Event { };
 class ValidatePlayerCountResultEvent : public Event {
