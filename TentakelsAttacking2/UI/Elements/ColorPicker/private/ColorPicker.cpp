@@ -73,16 +73,14 @@ void ColorPicker::SetColorFromFocus() {
 	}
 }
 void ColorPicker::CheckforValidColor(AppContext const& appContext) {
-	if (!m_currentColorCell) {
-		return;
+	if (m_currentColorCell) {
+		if (m_currentColorCell->IsEnabled()) {
+			return;
+		}
 	}
-	if (m_currentColorCell->IsEnabled()) {
-		return;
-	}
-
+	
 	Color color = appContext.playerCollection.GetPossibleColor();
 	SetColor(color);
-
 }
 
 ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,

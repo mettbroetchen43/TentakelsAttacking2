@@ -324,10 +324,13 @@ void NewGamePlayerScene::NextScene(bool valid) {
 	auto event = SwitchSceneEvent(SceneType::TEST); // TODO Need To change
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
-
 void NewGamePlayerScene::Reset() {
+	AppContext& appContext = AppContext::GetInstance();
+
 	auto event = ResetPlayerEvent();
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
+	appContext.eventManager.InvokeEvent(event);
+
+	UpdateSceneEntries(appContext);
 }
 
 void NewGamePlayerScene::SetNextButton(AppContext const& appContext) {
