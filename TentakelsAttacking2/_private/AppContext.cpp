@@ -24,7 +24,15 @@ void AppContext::SaveConfig() {
 void AppContext::Validate() {
 	// Player
 	ValidateMinMax<size_t>(constants.player.minPlayerCount, constants.player.maxPlayerCount,
-		"minPlayerCount >= maxPlayerCount\nset maxPlayerCount to ");
+		"minPlayerCount", "maxPlayerCount");
+
+	// World
+	ValidateMinMax<size_t>(constants.world.minPlanetCount, constants.world.maxPlanetCount,
+		"minPlanetCount", "maxPlanetCount");
+	ValidateMinMax<size_t>(constants.world.minDiemnsionX, constants.world.maxDiemnsionX,
+		"minDiemnsionX", "maxDiemnsionX");
+	ValidateMinMax<size_t>(constants.world.minDiemnsionY, constants.world.maxDiemnsionY,
+		"minDiemnsionY", "maxDiemnsionY");
 
 	// Sound
 	ValidateSound();

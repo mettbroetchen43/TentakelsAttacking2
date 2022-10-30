@@ -31,11 +31,12 @@ public:
 	void Validate();
 	void ValidateSound();
 	template<typename type>
-	void ValidateMinMax(type& lhs, type& rhs, std::string const& message) {
+	void ValidateMinMax(type& lhs, type& rhs,
+		std::string const& lhsMessage, std::string const& rhsMessage) {
 		if (lhs >= rhs) {
 			rhs = lhs + 1;
 			auto event = ShowMessagePopUpEvent("Invalid Config",
-				message + std::to_string(rhs)
+				lhsMessage + " >= " + rhsMessage + "\nset " + rhsMessage + " to " + std::to_string(rhs)
 			);
 			eventManager.InvokeEvent(event);
 		}
