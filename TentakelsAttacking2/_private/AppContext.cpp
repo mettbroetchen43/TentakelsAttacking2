@@ -35,26 +35,8 @@ void AppContext::Validate() {
 		"minDiemnsionY", "maxDiemnsionY");
 
 	// Sound
-	ValidateSound();
-}
-void AppContext::ValidateSound() {
-	auto& volume = constants.sound.masterVolume;
-
-	if (volume < 0.0f) {
-		volume = 0.0f;
-		auto event = ShowMessagePopUpEvent("Invalid Config",
-			"masterVolume < 0.0\nset Volume to " + std::to_string(volume)
-		);
-		eventManager.InvokeEvent(event);
-	}
-	else if (volume > 100.0f) {
-		volume = 100.0f;
-		auto event = ShowMessagePopUpEvent("Invalid Config",
-			"masterVolume > 100.0\nset Volume to " + std::to_string(volume)
-		);
-		eventManager.InvokeEvent(event);
-	}
-
+	ValidateLowerThan<float>(constants.sound.masterVolume, 100.0f, "MasterVolume");
+	ValidateGreaterThan<float>(constants.sound.masterVolume, 0.0f, "MasterVolume");
 }
 
 AppContext::AppContext() {
