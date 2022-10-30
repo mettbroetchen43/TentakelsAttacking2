@@ -122,7 +122,7 @@ void SaveConfig() {
 	};
 
 	headline("Globals", toSave);
-	entry(std::to_string(constants.global.startingModeFullScreen), "Starting Full Screen", toSave);
+	entry(std::to_string(constants.global.startingModeFullScreen), "Starting Full Screen (0 = window)", toSave);
 
 	headline("Player", toSave);
 	entry(std::to_string(constants.player.minPlayerCount), "Min Player Count", toSave);
