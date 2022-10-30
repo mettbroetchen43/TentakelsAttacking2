@@ -12,7 +12,6 @@
 #include "Line.h"
 #include "Table.h"
 #include "UIManager.h"
-
 #include "HFocusEvents.h"
 #include <cassert>
 
@@ -158,7 +157,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 	m_nextBTN = std::make_shared<ClassicButton>(
 		6,
 		GetElementPosition(0.9f, 0.85f),
-		GetElementSize(0.15f, 0.1f),
+		GetElementSize(0.11f, 0.1f),
 		Alignment::TOP_RIGHT,
 		resolution,
 		"Next",
@@ -169,10 +168,24 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		});
 	m_elements.push_back(m_nextBTN);
 
-	auto backBtn = std::make_shared<ClassicButton>(
+	auto resetBTN = std::make_shared<ClassicButton>(
 		7,
+		GetElementPosition(0.78f, 0.85f),
+		GetElementSize(0.11f, 0.1f),
+		Alignment::TOP_RIGHT,
+		resolution,
+		"Reset",
+		SoundType::ACCEPTED
+		);
+	resetBTN->SetOnClick([this]() {
+		this->Reset();
+		});
+	m_elements.push_back(resetBTN);
+
+	auto backBtn = std::make_shared<ClassicButton>(
+		8,
 		GetElementPosition(0.55f, 0.85f),
-		GetElementSize(0.15f, 0.1f),
+		GetElementSize(0.11f, 0.1f),
 		Alignment::TOP_LEFT,
 		resolution,
 		"Back",
@@ -310,6 +323,14 @@ void NewGamePlayerScene::NextScene(bool valid) {
 
 	auto event = SwitchSceneEvent(SceneType::TEST); // TODO Need To change
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+void NewGamePlayerScene::Reset() {
+	AppContext& appContext = AppContext::GetInstance();
+
+	auto event = ResetPlayerEvent();
+	appContext.eventManager.InvokeEvent(event);
+
+	UpdateSceneEntries(appContext);
 }
 
 void NewGamePlayerScene::SetNextButton(AppContext const& appContext) {
