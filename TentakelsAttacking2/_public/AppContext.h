@@ -27,6 +27,9 @@ public:
 	void LoadConfig();
 	void SaveConfig();
 
+	void Validate();
+	void ValidatePlayer();
+
 private:
 	AppContext();
 };

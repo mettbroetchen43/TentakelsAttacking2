@@ -44,7 +44,7 @@ void LoadConfig() {
 	auto addBools = [](std::vector<bool*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
-				*e = std::stoi(input);
+				*e = static_cast<bool>(std::stoi(input));
 			}
 		}
 	};
