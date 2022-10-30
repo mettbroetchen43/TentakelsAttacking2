@@ -127,6 +127,9 @@ void PlayerCollection::DeletePlayer(unsigned int ID) {
 
 	SortPlayers();
 }
+void PlayerCollection::ResetPlayer(){
+	m_playerData.clear();
+}
 
 Color PlayerCollection::GetPossibleColor() const {
 	AppContext& appCpntext = AppContext::GetInstance();
@@ -179,7 +182,6 @@ void PlayerCollection::OnEvent(Event const& event) {
 		);
 		return;
 	}
-
 	if (auto const* playerEvent = dynamic_cast<EditPlayerUIEvent const*>(&event)) {
 		EditPlayer(
 			playerEvent->GetID(),
@@ -188,9 +190,12 @@ void PlayerCollection::OnEvent(Event const& event) {
 		);
 		return;
 	}
-
 	if (auto const* playerEvent = dynamic_cast<DeletePlayerUIEvent const*>(&event)) {
 		DeletePlayer(playerEvent->GetID());
+		return;
+	}
+	if (auto const* playerEvent = dynamic_cast<ResetPlayerUIEvent const*>(&event)) {
+		ResetPlayer();
 		return;
 	}
 }

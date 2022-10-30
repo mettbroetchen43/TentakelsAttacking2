@@ -26,12 +26,13 @@ private:
 	[[nodiscard]] PlayerData& GetPlayerByID(unsigned int ID);
 	void SortPlayers();
 
-public:
 	void AddPlayer(unsigned int ID,
 		std::string name, Color color);
 	void EditPlayer(unsigned int ID, std::string name, Color color);
 	void DeletePlayer(unsigned int ID);
+	void ResetPlayer();
 
+public:
 	[[nodiscard]] Color GetPossibleColor() const;
 	[[nodiscard]] std::vector<PlayerData> GetPlayerData() const;
 
