@@ -38,6 +38,7 @@ private:
 	void DeletePlayer(unsigned int ID);
 	void CheckPlayerCount() const;
 	void NextScene(bool valid);
+	void Reset();
 
 	void SetNextButton(AppContext const& appContext);
 
