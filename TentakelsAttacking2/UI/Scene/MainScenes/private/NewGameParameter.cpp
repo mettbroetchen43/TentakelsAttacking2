@@ -198,16 +198,16 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		});
 	m_elements.push_back(backBtn);
 
-	auto startBtn = std::make_shared<ClassicButton>(
+	auto nextBtn = std::make_shared<ClassicButton>(
 		1000,
 		GetElementPosition(0.85f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
 		resolution,
-		"Start",
+		"Next",
 		SoundType::ACCEPTED
 		);
-	m_elements.push_back(startBtn);
+	m_elements.push_back(nextBtn);
 }
 
 void NewGameParameterScene::SetValue(int value, int ID) const {
