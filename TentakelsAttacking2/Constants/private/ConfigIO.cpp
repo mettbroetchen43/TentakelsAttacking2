@@ -73,6 +73,9 @@ void LoadConfig() {
 	addBools(boolEntries, file, input, nextEntry);
 
 	std::vector<size_t*> size_tEntries = {
+		// Globals
+		&constants.global.minRounds,
+		&constants.global.maxRounds,
 		// Player
 		&constants.player.minPlayerCount,
 		&constants.player.maxPlayerCount,
@@ -123,6 +126,9 @@ void SaveConfig() {
 
 	headline("Globals", toSave);
 	entry(std::to_string(constants.global.startingModeFullScreen), "Starting Full Screen (0 = window)", toSave);
+
+	entry(std::to_string(constants.global.minRounds), "Min Game Rounds", toSave);
+	entry(std::to_string(constants.global.maxRounds), "Max Game Rounds", toSave);
 
 	headline("Player", toSave);
 	entry(std::to_string(constants.player.minPlayerCount), "Min Player Count", toSave);

@@ -321,7 +321,7 @@ void NewGamePlayerScene::CheckPlayerCount() const {
 void NewGamePlayerScene::NextScene(bool valid) {
 	if (!valid) { return; }
 
-	auto event = SwitchSceneEvent(SceneType::TEST); // TODO Need To change
+	auto event = SwitchSceneEvent(SceneType::NEW_GAME_PARAMETER);
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 void NewGamePlayerScene::Reset() {

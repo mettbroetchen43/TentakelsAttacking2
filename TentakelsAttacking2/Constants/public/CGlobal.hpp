@@ -10,4 +10,8 @@ struct CGlobal {
 	static inline const std::string version = "v0.0.0";
 	static inline const std::string copyRight = "(c) Purpur Tentakel";
 	bool startingModeFullScreen = true;
+
+	size_t minRounds = 20;
+	size_t currentRounds = 50;
+	size_t maxRounds = 100;
 };

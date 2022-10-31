@@ -9,10 +9,11 @@
 #include "Line.h"
 #include "GameEventTypes.hpp"
 #include "AppContext.h"
+#include "HRandom.h"
 #include <array>
 
 
-void GameEventSettings::Initialize(Vector2 resolution) {
+void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 
 	// Title
 	m_elements.push_back(std::make_shared<Text>(
@@ -45,7 +46,7 @@ void GameEventSettings::Initialize(Vector2 resolution) {
 		"Renegade ships",
 		"Black Hole",
 		"Supernova",
-		"EngineProblems"
+		"Engine Problems"
 	};
 
 	for (unsigned int i = 0; i < text.size(); ++i) {
@@ -60,7 +61,7 @@ void GameEventSettings::Initialize(Vector2 resolution) {
 		));
 
 		auto element = std::make_shared<CheckBox>(
-			i + 100,
+			i + focusID,
 			GetElementPosition(cbX, firstRow + row * i * 2),
 			GetElementSize(0.0f, row*1.5f).y,
 			Alignment::MID_LEFT,
@@ -97,6 +98,9 @@ void GameEventSettings::UpdateElements(UpdateCheckGameEventsUI const* event) {
 		}
 	}
 
+	SetGlobalCheckbox();
+}
+void GameEventSettings::SetGlobalCheckbox(){
 	std::shared_ptr<CheckBox> gloablCheckbox = nullptr;
 	bool check = true;
 	bool value = false;
@@ -128,17 +132,16 @@ found:
 	else {
 		gloablCheckbox->SetChecked(false);
 	}
-
 }
 
-GameEventSettings::GameEventSettings(Vector2 pos, Vector2 size,
+GameEventSettings::GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution)
 	: Scene(pos, size, alignment) {
 	AppContext& appContext = AppContext::GetInstance();
 	appContext.eventManager.AddListener(this);
 
 	GetAlignedCollider(m_pos, m_size, alignment, resolution);
-	Initialize(resolution);
+	Initialize(resolution, focusID);
 
 	auto event = InitialCheckGameEventDataEvent();
 	appContext.eventManager.InvokeEvent(event);
@@ -153,4 +156,24 @@ void GameEventSettings::OnEvent(Event const& event) {
 		UpdateElements(UpdateEvent);
 		return;
 	}
+}
+
+void GameEventSettings::SetRandom() {
+	Random& random = Random::GetInstance();
+	AppContext& appContext = AppContext::GetInstance();
+
+	for (auto& c : m_checkBoxes) {
+		if (c->GetID() == 0) { continue; }
+
+		bool r = random.random(2) == 1;
+		if (c->IsChecked() != r) {
+			auto event = UpdateCheckGameEvent(
+				static_cast<GameEventType>(c->GetID()),
+				r
+			);
+			appContext.eventManager.InvokeEvent(event);
+		}
+	}
+
+	SetGlobalCheckbox();
 }

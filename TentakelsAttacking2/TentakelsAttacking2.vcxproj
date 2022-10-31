@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -193,6 +193,7 @@
     <ClInclude Include="UI\Elements\ColorPicker\public\ColorPicker.h" />
     <ClInclude Include="UI\Elements\ColorPicker\public\ColorPickerCell.h" />
     <ClInclude Include="Helper\public\HGeneral.h" />
+    <ClInclude Include="UI\Scene\MainScenes\public\NewGameParameter.h" />
     <ClInclude Include="UI\Scene\public\BaseMainScene.h" />
     <ClInclude Include="UI\public\PopUpManager.h" />
     <ClInclude Include="UI\Scene\SupportScenes\public\GameEventSettings.h" />
@@ -252,6 +253,7 @@
     <ClCompile Include="UI\private\Allignment.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPicker.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPickerCell.cpp" />
+    <ClCompile Include="UI\Scene\MainScenes\private\NewGameParameter.cpp" />
     <ClCompile Include="UI\Scene\private\BaseMainScene.cpp" />
     <ClCompile Include="UI\private\PopUpManager.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\Intro.cpp" />
