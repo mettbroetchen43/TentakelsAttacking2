@@ -6,6 +6,7 @@
 #include "SliderAndInputLine.h"
 #include "ClassicButton.h"
 #include "Slider.h"
+#include "HRandom.h"
 #include <iostream>
 
 void SliderAndInputLine::Initialize(unsigned int focusID, Vector2 resolution) {
@@ -125,4 +126,11 @@ void SliderAndInputLine::SetValue(int value) {
 	m_inputLine->SetValue(m_currentValue);
 	m_slider->SetButtonPosition(static_cast<float>(m_currentValue));
 	m_slided = true;
+}
+
+void SliderAndInputLine::RandomValue() {
+	Random& random = Random::GetInstance();
+	m_currentValue = static_cast<int>(random.random(m_maxValue - m_minValue) + m_minValue);
+	m_inputLine->SetValue(m_currentValue);
+	SetSliderValue();
 }

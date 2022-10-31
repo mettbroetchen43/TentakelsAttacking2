@@ -48,15 +48,15 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		));
 
 	// events
-	auto gameEvents = std::make_shared<GameEventSettings>(
+	m_eventSettings = std::make_shared<GameEventSettings>(
 		1,
 		GetElementPosition(0.25f, 0.3f),
 		GetElementSize(0.25f, 0.5f),
 		Alignment::TOP_MID,
 		resolution
 		);
-	gameEvents->SetActive(true, appContext);
-	m_elements.push_back(gameEvents);
+	m_eventSettings->SetActive(true, appContext);
+	m_elements.push_back(m_eventSettings);
 
 	// slider
 	m_elements.push_back(std::make_shared<Text>(
@@ -84,6 +84,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		this->SetValue(value, 0);
 		});
 	m_elements.push_back(planetCount);
+	m_slider.push_back(planetCount);
 
 	m_elements.push_back(std::make_shared<Text>(
 		GetElementPosition(0.75f, 0.4f),
@@ -110,6 +111,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		this->SetValue(value, 1);
 		});
 	m_elements.push_back(galaxyWidth);
+	m_slider.push_back(galaxyWidth);
 
 	m_elements.push_back(std::make_shared<Text>(
 		GetElementPosition(0.75f, 0.5f),
@@ -136,6 +138,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		this->SetValue(value, 2);
 		});
 	m_elements.push_back(galaxyHeight);
+	m_slider.push_back(galaxyHeight);
 
 	m_elements.push_back(std::make_shared<Text>(
 		GetElementPosition(0.75f, 0.6f),
@@ -162,29 +165,22 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		this->SetValue(value, 3);
 		});
 	m_elements.push_back(lastRound);
+	m_slider.push_back(lastRound);
 
 	// btn
 	auto randomBtn = std::make_shared<ClassicButton>(
-		1003,
-		GetElementPosition(0.15f, 0.95f),
+		1002,
+		GetElementPosition(0.25f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
 		resolution,
 		"Random",
 		SoundType::CLICKED_RELEASE_STD
 		);
+	randomBtn->SetOnClick([this]() {
+		this->SetRandom();
+		});
 	m_elements.push_back(randomBtn);
-
-	auto resetBtn = std::make_shared<ClassicButton>(
-		1002,
-		GetElementPosition(0.375f, 0.95f),
-		GetElementSize(0.15f, 0.1f),
-		Alignment::BOTTOM_MID,
-		resolution,
-		"Reset",
-		SoundType::CLICKED_RELEASE_STD
-		);
-	m_elements.push_back(resetBtn);
 
 	auto backBtn = std::make_shared<ClassicButton>(
 		1001,
@@ -228,6 +224,13 @@ void NewGameParameterScene::SetValue(int value, int ID) const {
 		case 3:
 			AppContext::GetInstance().constants.global.currentRounds = value;
 			return;
+	}
+}
+
+void NewGameParameterScene::SetRandom() const {
+	m_eventSettings->SetRandom();
+	for (auto& s : m_slider) {
+		s->RandomValue();
 	}
 }
 

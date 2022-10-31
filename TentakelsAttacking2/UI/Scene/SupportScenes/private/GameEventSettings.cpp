@@ -9,6 +9,7 @@
 #include "Line.h"
 #include "GameEventTypes.hpp"
 #include "AppContext.h"
+#include "HRandom.h"
 #include <array>
 
 
@@ -97,6 +98,9 @@ void GameEventSettings::UpdateElements(UpdateCheckGameEventsUI const* event) {
 		}
 	}
 
+	SetGlobalCheckbox();
+}
+void GameEventSettings::SetGlobalCheckbox(){
 	std::shared_ptr<CheckBox> gloablCheckbox = nullptr;
 	bool check = true;
 	bool value = false;
@@ -128,7 +132,6 @@ found:
 	else {
 		gloablCheckbox->SetChecked(false);
 	}
-
 }
 
 GameEventSettings::GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 size,
@@ -153,4 +156,24 @@ void GameEventSettings::OnEvent(Event const& event) {
 		UpdateElements(UpdateEvent);
 		return;
 	}
+}
+
+void GameEventSettings::SetRandom() {
+	Random& random = Random::GetInstance();
+	AppContext& appContext = AppContext::GetInstance();
+
+	for (auto& c : m_checkBoxes) {
+		if (c->GetID() == 0) { continue; }
+
+		bool r = random.random(2) == 1;
+		if (c->IsChecked() != r) {
+			auto event = UpdateCheckGameEvent(
+				static_cast<GameEventType>(c->GetID()),
+				r
+			);
+			appContext.eventManager.InvokeEvent(event);
+		}
+	}
+
+	SetGlobalCheckbox();
 }

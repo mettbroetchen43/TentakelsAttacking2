@@ -19,6 +19,7 @@ private:
 	void SetChecked(unsigned int ID, bool isCecked);
 
 	void UpdateElements(UpdateCheckGameEventsUI const* event);
+	void SetGlobalCheckbox();
 
 public:
 	GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
@@ -26,4 +27,6 @@ public:
 	~GameEventSettings();
 
 	void OnEvent(Event const& event);
+
+	void SetRandom();
 };

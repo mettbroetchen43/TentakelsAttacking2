@@ -36,4 +36,6 @@ public:
 
 	void SetOnSave(std::function<void(int)> onSave);
 	void SetValue(int value);
+
+	void RandomValue();
 };
