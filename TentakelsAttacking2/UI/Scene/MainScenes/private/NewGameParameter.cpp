@@ -12,6 +12,7 @@
 #include "UIEvents.hpp"
 #include "SceneType.hpp"
 #include "GameEventSettings.h"
+#include "SliderAndInputLine.h"
 
 void NewGameParameterScene::Initialize(Vector2 resolution) {
 	AppContext& appContext = AppContext::GetInstance();
@@ -57,9 +58,33 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 	gameEvents->SetActive(true, appContext);
 	m_elements.push_back(gameEvents);
 
+	// slider
+	m_elements.push_back(std::make_shared<Text>(
+		GetElementPosition(0.75f, 0.3f),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		Alignment::TOP_LEFT,
+		0.04f,
+		"Planet Count:",
+		resolution
+		));
+
+	auto planetCount = std::make_shared<SliderAndInputLine>(
+		100,
+		GetElementPosition(0.75f, 0.34f),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		appContext.constants.world.minPlanetCount,
+		appContext.constants.world.maxPlanetCount,
+		appContext.constants.world.currentPlanetCount,
+		resolution
+		);
+	planetCount->SetActive(true,appContext);
+	m_elements.push_back(planetCount);
+
 	// btn
 	auto randomBtn = std::make_shared<ClassicButton>(
-		103,
+		1003,
 		GetElementPosition(0.15f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
@@ -70,7 +95,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 	m_elements.push_back(randomBtn);
 
 	auto resetBtn = std::make_shared<ClassicButton>(
-		102,
+		1002,
 		GetElementPosition(0.375f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
@@ -81,7 +106,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 	m_elements.push_back(resetBtn);
 
 	auto backBtn = std::make_shared<ClassicButton>(
-		101,
+		1001,
 		GetElementPosition(0.625f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
@@ -97,7 +122,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 	m_elements.push_back(backBtn);
 
 	auto startBtn = std::make_shared<ClassicButton>(
-		100,
+		1000,
 		GetElementPosition(0.85f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
