@@ -30,6 +30,11 @@ public:
 
 	void Validate();
 	template<typename type>
+	void ValidateMinCurrentMax(type min, type& current, type max) {
+		current = min <= current ? current : min;
+		current = max >= current ? current : max;
+	}
+	template<typename type>
 	void ValidateMinMax(type& lhs, type& rhs,
 		std::string const& lhsMessage, std::string const& rhsMessage) {
 
