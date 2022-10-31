@@ -48,7 +48,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		);
 	loadGameBtn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::TEST)
+			SwitchSceneEvent(SceneType::NEW_GAME_PARAMETER)
 			);
 		});
 	m_elements.push_back(loadGameBtn);
