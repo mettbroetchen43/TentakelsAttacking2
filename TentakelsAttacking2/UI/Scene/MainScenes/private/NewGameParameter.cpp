@@ -74,13 +74,82 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, 0.34f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
-		appContext.constants.world.minPlanetCount,
-		appContext.constants.world.maxPlanetCount,
-		appContext.constants.world.currentPlanetCount,
+		static_cast<int>(appContext.constants.world.minPlanetCount),
+		static_cast<int>(appContext.constants.world.maxPlanetCount),
+		static_cast<int>(appContext.constants.world.currentPlanetCount),
 		resolution
 		);
 	planetCount->SetActive(true,appContext);
 	m_elements.push_back(planetCount);
+
+	m_elements.push_back(std::make_shared<Text>(
+		GetElementPosition(0.75f, 0.4f),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		Alignment::TOP_LEFT,
+		0.04f,
+		"Galaxy Width:",
+		resolution
+		));
+
+	auto galaxyWidth = std::make_shared<SliderAndInputLine>(
+		200,
+		GetElementPosition(0.75f, 0.44f),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		static_cast<int>(appContext.constants.world.minDiemnsionX),
+		static_cast<int>(appContext.constants.world.maxDiemnsionX),
+		static_cast<int>(appContext.constants.world.currentDimensionX),
+		resolution
+		);
+	galaxyWidth->SetActive(true, appContext);
+	m_elements.push_back(galaxyWidth);
+
+	m_elements.push_back(std::make_shared<Text>(
+		GetElementPosition(0.75f, 0.5f),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		Alignment::TOP_LEFT,
+		0.04f,
+		"Galaxy Height:",
+		resolution
+		));
+
+	auto galaxyHeight = std::make_shared<SliderAndInputLine>(
+		300,
+		GetElementPosition(0.75f, 0.54f),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		static_cast<int>(appContext.constants.world.minDiemnsionY),
+		static_cast<int>(appContext.constants.world.maxDiemnsionY),
+		static_cast<int>(appContext.constants.world.currentDimensionY),
+		resolution
+		);
+	galaxyHeight->SetActive(true, appContext);
+	m_elements.push_back(galaxyHeight);
+
+	m_elements.push_back(std::make_shared<Text>(
+		GetElementPosition(0.75f, 0.6f),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		Alignment::TOP_LEFT,
+		0.04f,
+		"ca. Last Round:",
+		resolution
+		));
+
+	auto lastRound = std::make_shared<SliderAndInputLine>(
+		400,
+		GetElementPosition(0.75f, 0.64f),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		static_cast<int>(30),
+		static_cast<int>(100),
+		static_cast<int>(63),
+		resolution
+		);
+	lastRound->SetActive(true, appContext);
+	m_elements.push_back(lastRound);
 
 	// btn
 	auto randomBtn = std::make_shared<ClassicButton>(
