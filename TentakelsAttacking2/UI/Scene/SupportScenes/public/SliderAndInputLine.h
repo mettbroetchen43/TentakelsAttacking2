@@ -23,7 +23,7 @@ private:
 
 	void Initialize(unsigned int focusID, Vector2 resolution);
 	void BtnPressed();
-	void SaveValue() const;
+	void SaveValue();
 	void Slide(float position);
 	void ValidateCurrentValue();
 	void SetSliderValue() const;
