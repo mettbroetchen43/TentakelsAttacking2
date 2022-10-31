@@ -10,6 +10,8 @@ class NewGameParameterScene : public Scene {
 private:
 	void Initialize(Vector2 resolution);
 
+	void SetValue(int value, int ID) const;
+
 public:
 	NewGameParameterScene(Vector2 resolution);
 };

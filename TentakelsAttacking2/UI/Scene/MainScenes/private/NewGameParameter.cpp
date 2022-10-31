@@ -80,6 +80,9 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution
 		);
 	planetCount->SetActive(true,appContext);
+	planetCount->SetOnSave([this](int value) {
+		this->SetValue(value, 0);
+		});
 	m_elements.push_back(planetCount);
 
 	m_elements.push_back(std::make_shared<Text>(
@@ -103,6 +106,9 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution
 		);
 	galaxyWidth->SetActive(true, appContext);
+	galaxyWidth->SetOnSave([this](int value) {
+		this->SetValue(value, 1);
+		});
 	m_elements.push_back(galaxyWidth);
 
 	m_elements.push_back(std::make_shared<Text>(
@@ -126,6 +132,9 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution
 		);
 	galaxyHeight->SetActive(true, appContext);
+	galaxyHeight->SetOnSave([this](int value) {
+		this->SetValue(value, 2);
+		});
 	m_elements.push_back(galaxyHeight);
 
 	m_elements.push_back(std::make_shared<Text>(
@@ -143,12 +152,15 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, 0.64f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
-		static_cast<int>(30),
-		static_cast<int>(100),
-		static_cast<int>(63),
+		static_cast<int>(appContext.constants.global.minRounds),
+		static_cast<int>(appContext.constants.global.maxRounds),
+		static_cast<int>(appContext.constants.global.currentRounds),
 		resolution
 		);
 	lastRound->SetActive(true, appContext);
+	lastRound->SetOnSave([this](int value) {
+		this->SetValue(value, 3);
+		});
 	m_elements.push_back(lastRound);
 
 	// btn
@@ -200,6 +212,23 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		SoundType::ACCEPTED
 		);
 	m_elements.push_back(startBtn);
+}
+
+void NewGameParameterScene::SetValue(int value, int ID) const {
+	switch (ID) {
+		case 0:
+			AppContext::GetInstance().constants.world.currentPlanetCount = value;
+			return;
+		case 1:
+			AppContext::GetInstance().constants.world.currentDimensionX = value;
+			return;
+		case 2:
+			AppContext::GetInstance().constants.world.currentDimensionY = value;
+			return;
+		case 3:
+			AppContext::GetInstance().constants.global.currentRounds = value;
+			return;
+	}
 }
 
 NewGameParameterScene::NewGameParameterScene(Vector2 resolution)
