@@ -33,3 +33,8 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		));
 
 }
+
+NewGameParameterScene::NewGameParameterScene(Vector2 resolution)
+	: Scene({ 0.0f,0.0f }, {1.0f,1.0f}, Alignment::DEFAULT) {
+	Initialize(resolution);
+}

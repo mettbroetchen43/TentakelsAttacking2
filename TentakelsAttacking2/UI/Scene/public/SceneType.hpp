@@ -11,5 +11,6 @@ enum class SceneType {
 	INTRO,
 	MAIN_MENU,
 	NEW_GAME_PLAYER,
+	NEW_GAME_PARAMETER,
 	NONE,
 };

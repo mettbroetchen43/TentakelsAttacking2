@@ -11,5 +11,5 @@ private:
 	void Initialize(Vector2 resolution);
 
 public:
-
+	NewGameParameterScene(Vector2 resolution);
 };
