@@ -73,6 +73,9 @@ void LoadConfig() {
 	addBools(boolEntries, file, input, nextEntry);
 
 	std::vector<size_t*> size_tEntries = {
+		// Globals
+		&constants.global.minRounds,
+		&constants.global.maxRounds,
 		// Player
 		&constants.player.minPlayerCount,
 		&constants.player.maxPlayerCount,
