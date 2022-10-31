@@ -8,6 +8,8 @@
 
 // Globals
 0 / Starting Full Screen (0 = window)
+20 / Min Game Rounds
+100 / Max Game Rounds
 
 // Player
 2 / Min Player Count
