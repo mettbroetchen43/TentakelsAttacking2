@@ -115,7 +115,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		Alignment::TOP_LEFT,
 		Alignment::TOP_LEFT,
 		0.02f,
-		"mute",
+		"Mute",
 		resolution
 		));
 
