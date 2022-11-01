@@ -5,6 +5,7 @@
 
 #include "AppContext.h"
 #include "ConfigIO.h"
+#include "GenerelEvents.hpp"
 
 
 AppContext& AppContext::GetInstance() {
@@ -59,7 +60,16 @@ void AppContext::Validate() {
 	ValidateGreaterThan<float>(constants.sound.masterVolume, 0.0f, "Master Volume");
 }
 
+void AppContext::OnEvent(Event const& event) {
+
+	if (auto const LastRoundEvent = dynamic_cast<SetCurrentLastRoundEvent const*>(&event)) {
+		constants.global.currentRounds = LastRoundEvent->GetLastRound();
+		return;
+	}
+}
+
 AppContext::AppContext() {
 	eventManager.AddListener(&soundManager);
 	eventManager.AddListener(&playerCollection);
+	eventManager.AddListener(this);
 }

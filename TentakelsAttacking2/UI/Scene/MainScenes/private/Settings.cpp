@@ -142,6 +142,10 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		resolution
 		);
 	lastRound->SetActive(true, appContext);
+	lastRound->SetOnSave([](int value) {
+			auto event = SetCurrentLastRoundEvent(value);
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		});
 	m_elements.push_back(lastRound);
 
 	// btn

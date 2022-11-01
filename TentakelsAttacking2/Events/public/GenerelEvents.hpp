@@ -125,3 +125,16 @@ public:
 	}
 };
 class InitialCheckGameEventDataEvent : public Event { };
+
+class SetCurrentLastRoundEvent : public Event {
+private:
+	int m_lastRound;
+
+public:
+	SetCurrentLastRoundEvent(int lastRound)
+		:m_lastRound(lastRound) { }
+
+	[[nodiscard]] int GetLastRound() const {
+		return m_lastRound;
+	}
+};
