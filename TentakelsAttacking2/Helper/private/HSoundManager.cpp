@@ -43,8 +43,18 @@ void SoundManager::PlayTextSound() const {
 	::PlaySound(m_textSounds.at(nextIndex));
 	lastIndex = nextIndex;
 }
+void SoundManager::MuteMasterSoundLevel(bool mute) const {
+	AppContext& appContext = AppContext::GetInstance();
+	appContext.constants.sound.muteVolume = mute;
+	SetMasterVolume(appContext.constants.sound.masterVolume);
+}
 void SoundManager::SetMasterSoundLevel(float level) const {
-	AppContext::GetInstance().constants.sound.masterVolume = level;
+	AppContext& appCpntext = AppContext::GetInstance();
+	if (appCpntext.constants.sound.muteVolume) {
+		SetMasterVolume(0.0f);
+		return;
+	}
+	appCpntext.constants.sound.masterVolume = level;
 	level /= 100;
 	SetMasterVolume(level);
 }
@@ -68,6 +78,10 @@ void SoundManager::OnEvent(Event const& event) {
 
 	if (auto const LevelEvent = dynamic_cast<SetMasterVolumeEvent const*>(&event)) {
 		SetMasterSoundLevel(LevelEvent->GetLevel());
+		return;
+	}
+	if (auto const MuteEvent = dynamic_cast<MuteMasterVolumeEvent const*>(&event)) {
+		MuteMasterSoundLevel(MuteEvent->GetMute());
 		return;
 	}
 }
