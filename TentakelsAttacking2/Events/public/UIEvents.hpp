@@ -179,3 +179,5 @@ public:
 		return m_onClick;
 	}
 };
+
+class ToggleFullscreenEvent : public Event { };

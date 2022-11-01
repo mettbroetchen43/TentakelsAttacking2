@@ -170,6 +170,10 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		"Toggle Fullscreen",
 		SoundType::CLICKED_RELEASE_STD
 		);
+	fullscreenToggleBtn->SetOnClick([]() {
+			auto event = ToggleFullscreenEvent();
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		});
 	m_elements.push_back(fullscreenToggleBtn);
 
 	auto backBtn = std::make_shared<ClassicButton>(

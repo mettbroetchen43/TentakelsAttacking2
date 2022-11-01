@@ -102,5 +102,11 @@ void UIManager::StartUI() {
 void UIManager::OnEvent(Event const& event) {
 	if (auto const& CloseEvent = dynamic_cast<CloseWindowEvent const*>(&event)) {
 		m_closeWindow = true;
+		return;
+	}
+
+	if (auto const& ToggleEvent = dynamic_cast<ToggleFullscreenEvent const*>(&event)) {
+		ToggleFullScreen();
+		return;
 	}
 }
