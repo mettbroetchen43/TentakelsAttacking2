@@ -15,7 +15,13 @@ AppContext& AppContext::GetInstance() {
 void AppContext::LoadConfig() {
 	::LoadConfig();
 	Validate();
-	SetMasterVolume(constants.sound.masterVolume / 100);
+	if (constants.sound.muteVolume) {
+		SetMasterVolume(0.0f);
+	}
+	else {
+		SetMasterVolume(constants.sound.masterVolume / 100);
+	}
+	
 }
 void AppContext::SaveConfig() {
 	::SaveConfig();
