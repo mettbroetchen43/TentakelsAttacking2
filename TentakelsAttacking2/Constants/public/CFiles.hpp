@@ -7,5 +7,6 @@
 #include <string>
 
 struct CFiles {
-	static inline const std::string config = "Saves/config.tac";
+	static inline const std::string savesDir = "Saves";
+	static inline const std::string configFile = "Saves/config.tac";
 };
