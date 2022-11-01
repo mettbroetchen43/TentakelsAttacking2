@@ -63,7 +63,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 	eventSettings->SetActive(true, appContext);
 	m_elements.push_back(eventSettings);
 
-	// Volume
+	// volume
 	m_elements.push_back(std::make_shared<Text>(
 		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
@@ -85,6 +85,10 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		resolution
 		);
 	volumeLevel->SetActive(true,appContext);
+	volumeLevel->SetOnSave([](int value) {
+			auto event = SetMasterVolumeEvent(static_cast<float>(value));
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		});
 	m_elements.push_back(volumeLevel);
 
 	auto muteCB = std::make_shared<CheckBox>(
