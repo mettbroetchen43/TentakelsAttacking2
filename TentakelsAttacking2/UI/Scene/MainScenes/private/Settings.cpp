@@ -74,7 +74,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		resolution
 		));
 
-	auto volumeLevel = std::make_shared<SliderAndInputLine>(
+	m_volume = std::make_shared<SliderAndInputLine>(
 		100,
 		GetElementPosition(0.75f, elementY + sliderOffset),
 		GetElementSize(0.4f, 0.05f),
@@ -84,12 +84,13 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		static_cast<int>(appContext.constants.sound.masterVolume),
 		resolution
 		);
-	volumeLevel->SetActive(true,appContext);
-	volumeLevel->SetOnSave([](int value) {
+	m_volume->SetActive(true,appContext);
+	m_volume->SetEnabled(!appContext.constants.sound.muteVolume);
+	m_volume->SetOnSave([](int value) {
 			auto event = SetMasterVolumeEvent(static_cast<float>(value));
 			AppContext::GetInstance().eventManager.InvokeEvent(event);
 		});
-	m_elements.push_back(volumeLevel);
+	m_elements.push_back(m_volume);
 
 	auto muteCB = std::make_shared<CheckBox>(
 		102,
@@ -99,6 +100,13 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		1,
 		resolution
 		);
+	muteCB->SetChecked(appContext.constants.sound.muteVolume);
+	muteCB->SetOnCheck([this](unsigned int, bool isChecked) {
+			AppContext& appContext = AppContext::GetInstance();
+			auto event = MuteMasterVolumeEvent(isChecked);
+			appContext.eventManager.InvokeEvent(event);
+			m_volume->SetEnabled(!isChecked);
+		});
 	m_elements.push_back(muteCB);
 
 	m_elements.push_back(std::make_shared<Text>(

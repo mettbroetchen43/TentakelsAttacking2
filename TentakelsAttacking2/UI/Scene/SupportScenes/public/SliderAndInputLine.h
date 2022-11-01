@@ -18,6 +18,7 @@ private:
 	std::shared_ptr<ClassicButton> m_btn;
 	std::function<void(int)> m_onSave = [](int) {};
 
+	bool m_isEnabled = true;
 	bool m_slided = false;
 	int m_minValue, m_maxValue, m_currentValue;
 
@@ -33,6 +34,8 @@ public:
 		int minValue, int maxValue, int currentValue, Vector2 resolution);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+
+	void SetEnabled(bool isEnabled);
 
 	void SetOnSave(std::function<void(int)> onSave);
 	void SetValue(int value);

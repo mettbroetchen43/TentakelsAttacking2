@@ -6,8 +6,12 @@
 #pragma once
 #include "Scene.h"
 
+class SliderAndInputLine;
+
 class SettingsScene : public Scene {
 private:
+	std::shared_ptr<SliderAndInputLine> m_volume;
+
 	void Initialize(Vector2 resolution);
 
 public:

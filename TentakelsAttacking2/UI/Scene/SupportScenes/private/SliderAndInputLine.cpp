@@ -105,6 +105,9 @@ SliderAndInputLine::SliderAndInputLine(unsigned int focusID, Vector2 pos,
 
 void SliderAndInputLine::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
+
+	if (!m_isEnabled) { return; }
+
 	Scene::CheckAndUpdate(mousePosition, appContext);
 	
 
@@ -115,6 +118,21 @@ void SliderAndInputLine::CheckAndUpdate(Vector2 const& mousePosition,
 			m_slided = false;
 		}
 	}
+}
+
+void SliderAndInputLine::SetEnabled(bool isEnabled) {
+	m_isEnabled = isEnabled;
+	m_slider->SetEnabled(isEnabled);
+	m_inputLine->SetEnabled(isEnabled);
+	if (isEnabled) {
+		if (m_currentValue != m_inputLine->GetValue()) {
+			m_btn->SetEnabled(isEnabled);
+		}
+	}
+	else {
+		m_btn->SetEnabled(isEnabled);
+	}
+	
 }
 
 void SliderAndInputLine::SetOnSave(std::function<void(int)> onSave) {

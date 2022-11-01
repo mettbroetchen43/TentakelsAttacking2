@@ -46,7 +46,7 @@ void SoundManager::PlayTextSound() const {
 void SoundManager::MuteMasterSoundLevel(bool mute) const {
 	AppContext& appContext = AppContext::GetInstance();
 	appContext.constants.sound.muteVolume = mute;
-	SetMasterVolume(appContext.constants.sound.masterVolume);
+	SetMasterSoundLevel(appContext.constants.sound.masterVolume);
 }
 void SoundManager::SetMasterSoundLevel(float level) const {
 	AppContext& appCpntext = AppContext::GetInstance();

@@ -25,4 +25,4 @@
 
 // Sound
 0 / Volume Mute (1 = mute)
-42.000000 / Master Volume (0.0 - 100.0)
+50.000000 / Master Volume (0.0 - 100.0)

@@ -15,6 +15,7 @@
 template <class T>
 class InputLine : public UIElement, public Focusable {
 protected:
+	bool m_isEnabled = true;
 	unsigned int m_charLimit;
 	Rectangle m_colider;
 	std::string m_value;
@@ -71,6 +72,9 @@ public:
 	}
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override {
+		
+		if (!m_isEnabled) { return; }
+
 		bool hover = CheckCollisionPointRec(mousePosition, m_colider);
 		bool validSelect = !IsFocused() and
 			hover and IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
@@ -137,11 +141,13 @@ public:
 			WHITE
 		);
 
-		DrawRectangleLinesEx(
-			m_colider,
-			2.0f,
-			PURPLE
-		);
+		if (m_isEnabled) {
+			DrawRectangleLinesEx(
+				m_colider,
+				2.0f,
+				PURPLE
+			);
+		}
 
 		float posX = m_colider.x + 10.0f;
 		float posY = m_colider.y + m_colider.height * 0.1f;
@@ -233,6 +239,10 @@ public:
 	}
 	void SetOnEnter(std::function<void()> onEnter) {
 		m_onEnter = onEnter;
+	}
+
+	void SetEnabled(bool isEnabled) {
+		m_isEnabled = isEnabled;
 	}
 };
 
