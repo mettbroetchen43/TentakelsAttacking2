@@ -11,3 +11,4 @@
 #include "MainMenu.h"
 #include "NewGamePlayer.h"
 #include "NewGameParameter.h"
+#include "Settings.h"

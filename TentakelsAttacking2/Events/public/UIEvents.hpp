@@ -45,6 +45,18 @@ public:
 		return m_level;
 	}
 };
+class MuteMasterVolumeEvent : public Event {
+private:
+	bool m_mute;
+
+public:
+	MuteMasterVolumeEvent(bool mute)
+		: m_mute(mute){ }
+
+	[[nodiscard]] bool GetMute() const {
+		return m_mute;
+	}
+};
 
 class FocusEvent : public Event {
 protected:
@@ -167,3 +179,5 @@ public:
 		return m_onClick;
 	}
 };
+
+class ToggleFullscreenEvent : public Event { };

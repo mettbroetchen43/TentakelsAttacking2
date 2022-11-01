@@ -8,6 +8,7 @@
 
 class Slider: public UIElement {
 private:
+	bool m_isEnabled = true;
 	bool m_isHorizontal;
 	bool m_isPressed = false;
 	bool m_isScroll = false;
@@ -43,4 +44,6 @@ public:
 
 	void SetScrolling(bool isScroll);
 	[[nodiscard]] bool IsScrolling() const;
+
+	void SetEnabled(bool isEnabled);
 };

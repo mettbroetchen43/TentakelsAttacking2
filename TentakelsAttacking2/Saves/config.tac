@@ -24,4 +24,5 @@
 160 / Max Dimension Y
 
 // Sound
-100.000000 / Master Volume (0.0 - 100.0)
+0 / Volume Mute (1 = mute)
+73.000000 / Master Volume (0.0 - 100.0)

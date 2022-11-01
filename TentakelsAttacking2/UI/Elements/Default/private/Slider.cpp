@@ -133,6 +133,8 @@ Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal
 }
 
 void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	if (!m_isEnabled) { return; }
+
 	if (!m_isPressed) {
 		MoveButtonIfColiderIsPressed(mousePosition);
 	}
@@ -183,4 +185,9 @@ void Slider::SetScrolling(bool isScroll) {
 }
 bool Slider::IsScrolling() const {
 	return m_isScroll;
+}
+
+void Slider::SetEnabled(bool isEnabled) {
+	m_isEnabled = isEnabled;
+	m_btn.SetEnabled(isEnabled);
 }

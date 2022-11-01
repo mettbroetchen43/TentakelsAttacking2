@@ -11,9 +11,10 @@
 #include "HColors.h"
 #include "UIEvents.hpp"
 #include "CConstants.hpp"
+#include "EventListener.hpp"
 #include <string>
 
-struct AppContext {
+struct AppContext : public EventListener {
 public:
 	SoundManager soundManager;
 	AssetManager assetManager;
@@ -72,6 +73,8 @@ public:
 		);
 		eventManager.InvokeEvent(event);
 	}
+
+	void OnEvent(Event const& event) override;
 
 private:
 	AppContext();

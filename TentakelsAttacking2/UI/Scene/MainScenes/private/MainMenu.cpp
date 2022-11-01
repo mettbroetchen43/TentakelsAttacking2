@@ -48,9 +48,10 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		);
 	loadGameBtn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::NEW_GAME_PARAMETER)
+			SwitchSceneEvent(SceneType::TEST)
 			);
-		});
+		}
+	);
 	m_elements.push_back(loadGameBtn);
 
 	btnPosY += 0.15f;
@@ -65,7 +66,12 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		"Settings",
 		SoundType::CLICKED_RELEASE_STD
 		);
-	settingsBtn->SetEnabled(false);
+	settingsBtn->SetOnClick([]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(
+			SwitchSceneEvent(SceneType::SETTINGS)
+			);
+		}
+	);
 	m_elements.push_back(settingsBtn);
 
 	btnPosY += 0.15f;

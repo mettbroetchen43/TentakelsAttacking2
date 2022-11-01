@@ -38,6 +38,10 @@ void SceneManager::InitializeNewScene(SceneType sceneType) {
 			m_currentScene = std::make_shared<NewGameParameterScene>(
 				m_uiManager->GetResolution());
 			return;
+		case SceneType::SETTINGS:
+			m_currentScene = std::make_shared<SettingsScene>(
+				m_uiManager->GetResolution());
+			return;
 	}
 }
 

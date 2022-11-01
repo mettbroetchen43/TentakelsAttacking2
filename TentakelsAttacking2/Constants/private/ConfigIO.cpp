@@ -90,6 +90,12 @@ void LoadConfig() {
 	};
 	addSize_t(size_tEntries, file, input, nextEntry);
 
+	boolEntries = {
+		// Sound
+		&constants.sound.muteVolume
+	};
+	addBools(boolEntries, file, input, nextEntry);
+
 	std::vector<float*> floatEltries = {
 		// Sound
 		&constants.sound.masterVolume
@@ -144,6 +150,7 @@ void SaveConfig() {
 	entry(std::to_string(constants.world.maxDiemnsionY), "Max Dimension Y", toSave);
 
 	headline("Sound", toSave);
+	entry(std::to_string(constants.sound.muteVolume), "Volume Mute (1 = mute)", toSave);
 	entry(std::to_string(constants.sound.masterVolume), "Master Volume (0.0 - 100.0)", toSave);
 
 	file << toSave;
