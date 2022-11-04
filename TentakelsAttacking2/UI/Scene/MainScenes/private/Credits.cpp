@@ -51,6 +51,22 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		);
 	m_movingElements.push_back(m_title);
 	m_elements.push_back(m_title);
+
+	m_finishBTN = std::make_shared<ClassicButton>(
+		3,
+		GetElementPosition(0.5f, 1.1f),
+		GetElementSize(0.15f, 0.1f),
+		Alignment::TOP_MID,
+		resolution,
+		"Finish",
+		SoundType::ACCEPTED
+		);
+	m_finishBTN->SetOnClick([]() {
+		auto event = SwitchSceneEvent(SceneType::MAIN_MENU);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		});
+	m_elements.push_back(m_finishBTN);
+	m_movingElements.push_back(m_finishBTN);
 }
 
 void CreditsScene::ToggleSpeedLevel() {
