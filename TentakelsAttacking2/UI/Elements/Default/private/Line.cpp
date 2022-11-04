@@ -5,6 +5,15 @@
 
 #include "Line.h"
 
+void Line::UpdateColider(Vector2 resolution) {
+	m_colider = {
+		resolution.x * m_pos.x,
+		resolution.y * m_pos.y,
+		resolution.x * m_size.x,
+		resolution.y * m_size.y
+	};
+}
+
 Line::Line(Vector2 pos, Vector2 size, Alignment alignment,
 	float thick, Vector2 resolution)
 	: UIElement(pos, size, alignment), m_thick(thick) {

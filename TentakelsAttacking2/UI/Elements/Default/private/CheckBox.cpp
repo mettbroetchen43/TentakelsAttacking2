@@ -23,6 +23,15 @@ void CheckBox::Check(AppContext const& appContext) {
 	m_onCheck(m_ID, m_isChecked);
 }
 
+void CheckBox::UpdateColider(Vector2 resolution) {
+	m_colider = {
+		resolution.x * m_pos.x,
+		resolution.y * m_pos.y,
+		resolution.x * m_size.x,
+		resolution.y * m_size.y
+	};
+}
+
 CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height,
 	Alignment alignment, unsigned int checkBoxID,
 	Vector2 resolution)

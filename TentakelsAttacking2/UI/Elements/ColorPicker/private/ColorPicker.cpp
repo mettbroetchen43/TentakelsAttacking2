@@ -83,6 +83,15 @@ void ColorPicker::CheckforValidColor(AppContext const& appContext) {
 	SetColor(color);
 }
 
+void ColorPicker::UpdateColider(Vector2 resolution) {
+	m_colider = {
+	resolution.x * m_pos.x,
+	resolution.y * m_pos.y,
+	resolution.x * m_size.x,
+	resolution.y * m_size.y
+	};
+}
+
 ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution, bool isPopUp)
 	: Focusable(ID), UIElement(pos, size, alignment), m_isPopUp(isPopUp) {

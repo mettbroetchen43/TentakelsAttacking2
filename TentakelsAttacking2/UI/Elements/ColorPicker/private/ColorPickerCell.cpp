@@ -14,6 +14,15 @@ void ColorPickerCell::SetColor() const {
 	m_colorPicker->SetColor(m_color);
 }
 
+void ColorPickerCell::UpdateColider(Vector2 resolution) {
+	m_colider = {
+	resolution.x * m_pos.x,
+	resolution.y * m_pos.y,
+	resolution.x * m_size.x,
+	resolution.y * m_size.y
+	};
+}
+
 ColorPickerCell::ColorPickerCell(unsigned int ID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution, Color color, ColorPicker* colorPicker)
 	: Focusable(ID), UIElement(pos, size, alignment),

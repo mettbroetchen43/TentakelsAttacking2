@@ -55,6 +55,15 @@ protected:
 	}
 	[[nodiscard]] bool IsValidKey(int key) = delete;
 
+	void UpdateColider(Vector2 resolution) override {
+		m_colider = {
+			resolution.x * m_pos.x,
+			resolution.y * m_pos.y,
+			resolution.x * m_size.x,
+			resolution.y * m_size.y
+		};
+	}
+
 public:
 	InputLine(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
 		unsigned int charLimit, Vector2 resolution)

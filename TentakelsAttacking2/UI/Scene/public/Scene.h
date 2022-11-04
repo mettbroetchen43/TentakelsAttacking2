@@ -22,6 +22,8 @@ protected:
 	Vector2 GetElementSize(float x, float y);
 	Focusable* GetFocusableByFocusID(unsigned int ID) const;
 
+	void UpdateColider(Vector2 resolution) override;
+
 public:
 	Scene(Vector2 pos, Vector2 size, Alignment alignment);
 	Scene(Scene const&) = default;

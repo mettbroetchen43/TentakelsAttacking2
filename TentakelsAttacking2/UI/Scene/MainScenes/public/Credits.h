@@ -6,12 +6,26 @@
 #pragma once
 #include "Scene.h"
 
+class Title;
+
 class CreditsScene : public Scene {
 private:
+	std::shared_ptr<Title> m_title;
 	Vector2 m_resolution;
+	bool m_moving = false;
+	float m_speed = -0.002f;
+	int m_maxSpeedLevel = 3;
+	int m_speedLevel = 1;
+	std::vector<std::shared_ptr<UIElement>> m_movingElements;
 
 	void Initialize(Vector2 resolution);
 
+	void ToggleSpeedLevel();
+	void Move();
+
 public:
 	CreditsScene(Vector2 resolution);
+
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext const& appContext) override;
 };

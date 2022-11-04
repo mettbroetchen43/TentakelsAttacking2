@@ -123,6 +123,15 @@ void Title::TitleFinish(AppContext const& appContext) {
 	appContext.eventManager.InvokeEvent(event);
 }
 
+void Title::UpdateColider(Vector2 resolution) {
+	m_textPosition = {
+		resolution.x * m_pos.x,
+		resolution.y * m_pos.y,
+		resolution.x * m_size.x,
+		resolution.y * m_size.y
+	};
+}
+
 Title::Title(Vector2 pos, Vector2 size, Alignment alignment, bool drawTitle,
 	Vector2 resolution, AppContext& appContext)
 	: UIElement(pos, size, alignment), m_titleFinish(!drawTitle) {

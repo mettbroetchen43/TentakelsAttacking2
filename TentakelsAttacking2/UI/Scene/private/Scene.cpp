@@ -44,6 +44,8 @@ Focusable* Scene::GetFocusableByFocusID(unsigned int ID) const {
 	return nullptr;
 }
 
+void Scene::UpdateColider([[maybe_unused]] Vector2 resolution) { }
+
 Scene::Scene(Vector2 pos, Vector2 size, Alignment alignment)
 	:UIElement(pos, size, alignment), m_firstFocusID(0) { }
 

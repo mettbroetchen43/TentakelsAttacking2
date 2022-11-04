@@ -15,6 +15,8 @@ protected:
 	void CheckResizeCells(Vector2 resolution,
 		AppContext const& appContext, bool resize);
 
+	void UpdateColider(Vector2 resolution) override;
+
 public:
 	AbstractTableCell(unsigned int ID, Vector2 pos, Vector2 size,
 		Alignment alignment, Vector2 resolution);

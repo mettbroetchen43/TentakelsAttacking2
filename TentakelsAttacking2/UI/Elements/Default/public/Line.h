@@ -12,6 +12,8 @@ private:
 	float m_thick;
 	Rectangle m_colider;
 
+	void UpdateColider(Vector2 resolution) override;
+
 public:
 	Line(Vector2 pos, Vector2 size, Alignment alignment,
 		float thick, Vector2 resolution);

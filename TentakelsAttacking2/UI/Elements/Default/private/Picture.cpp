@@ -7,6 +7,15 @@
 #include "UIManager.h"
 #include "AppContext.h"
 
+void Picture::UpdateColider(Vector2 resolution) {
+	m_colider = {
+		resolution.x * m_pos.x,
+		resolution.y * m_pos.y,
+		resolution.x * m_size.x,
+		resolution.y * m_size.y
+	};
+}
+
 Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment,
 	AssetType assetType, Vector2 resolution)
 	: UIElement(pos, size, alignment) {

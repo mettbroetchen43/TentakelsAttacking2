@@ -88,6 +88,8 @@ private:
 		SetElementFocus(m_cells.at(index).get());
 	}
 
+	void UpdateColider(Vector2 resolution) override;
+
 public:
 	Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 		size_t rows, size_t columns, Vector2 resolution, bool isPopUp = false);

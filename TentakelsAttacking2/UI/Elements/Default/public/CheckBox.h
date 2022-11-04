@@ -28,6 +28,8 @@ private:
 
 	void Check(AppContext const& appContext);
 
+	void UpdateColider(Vector2 resolution) override;
+
 public:
 	CheckBox(unsigned int focusID, Vector2 pos, float height,
 		Alignment alignment, unsigned int checkBoxID,

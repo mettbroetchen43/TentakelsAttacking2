@@ -118,6 +118,15 @@ void Slider::SlideIfScroll() {
 	CalculateOnSlide();
 }
 
+void Slider::UpdateColider(Vector2 resolution) {
+	m_colider = {
+		resolution.x * m_pos.x,
+		resolution.y * m_pos.y,
+		resolution.x * m_size.x,
+		resolution.y * m_size.y
+	};
+}
+
 Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal,
 	float absoluteDimension, Vector2 resolution)
 	: UIElement(pos, size, alignment), m_isHorizontal(isHorizontal) {

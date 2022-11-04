@@ -35,6 +35,8 @@ protected:
 	void SetTextSizeAndPosition(Vector2 resolution, AppContext const& appContext);
 	[[nodiscard]] bool IsSameState(State state) const;
 
+	void UpdateColider(Vector2 resolution) override;
+
 public:
 	Button(Vector2 pos, Vector2 size, Alignment alignment, std::string const& text,
 		SoundType releaseSound, Vector2 resolution);

@@ -27,6 +27,8 @@ private:
 	void MoveButtonIfColiderIsPressed(Vector2 const& mousePosition);
 	void SlideIfScroll();
 
+	void UpdateColider(Vector2 resolution) override;
+
 public:
 	Slider(Vector2 pos,Vector2 size, Alignment alignment, bool isHorizontal, 
 		float absoluteDimension, Vector2 resolution);
