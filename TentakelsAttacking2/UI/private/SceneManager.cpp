@@ -42,6 +42,10 @@ void SceneManager::InitializeNewScene(SceneType sceneType) {
 			m_currentScene = std::make_shared<SettingsScene>(
 				m_uiManager->GetResolution());
 			return;
+		case SceneType::CREDITS:
+			m_currentScene = std::make_shared<CreditsScene>(
+				m_uiManager->GetResolution());
+			return;
 	}
 }
 

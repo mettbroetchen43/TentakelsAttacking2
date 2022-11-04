@@ -12,3 +12,4 @@
 #include "NewGamePlayer.h"
 #include "NewGameParameter.h"
 #include "Settings.h"
+#include "Credits.h"
