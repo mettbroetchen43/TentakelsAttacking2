@@ -5,10 +5,41 @@
 
 #include "Credits.h"
 #include "Title.h"
+#include "ClassicButton.h"
+#include "SceneType.hpp"
 #include "AppContext.h"
 
 void CreditsScene::Initialize(Vector2 resolution) {
 	AppContext& appContext = AppContext::GetInstance();
+
+	auto speedBTN = std::make_shared<ClassicButton>(
+		2,
+		GetElementPosition(0.95f, 0.95f),
+		GetElementSize(0.15f, 0.1f),
+		Alignment::BOTTOM_RIGHT,
+		resolution,
+		"Speed",
+		SoundType::CLICKED_RELEASE_STD
+		);
+	speedBTN->SetOnClick([this]() {
+		this->ToggleSpeedLevel();
+		});
+	m_elements.push_back(speedBTN);
+
+	auto backBTN = std::make_shared<ClassicButton>(
+		1,
+		GetElementPosition(0.05f, 0.95f),
+		GetElementSize(0.15f, 0.1f),
+		Alignment::BOTTOM_LEFT,
+		resolution,
+		"Back",
+		SoundType::CLICKED_RELEASE_STD
+		);
+	backBTN->SetOnClick([]() {
+		auto event = SwitchSceneEvent(SceneType::MAIN_MENU);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		});
+	m_elements.push_back(backBTN);
 
 	m_title = std::make_shared<Title>(
 		GetElementPosition(0.5f, 0.5f),
@@ -25,7 +56,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 void CreditsScene::ToggleSpeedLevel() {
 	++m_speedLevel;
 
-	if (m_speedLevel < m_maxSpeedLevel) {
+	if (m_speedLevel > m_maxSpeedLevel) {
 		m_speedLevel = 1;
 	}
 }
@@ -39,6 +70,10 @@ void CreditsScene::Move() {
 		e->SetPosition(position, m_resolution);
 	}
 
+}
+
+void CreditsScene::CheckCreditsFinished()
+{
 }
 
 CreditsScene::CreditsScene(Vector2 resolution)
@@ -55,6 +90,7 @@ void CreditsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const
 
 	if (m_moving) {
 		Move();
+		CheckCreditsFinished();
 	}
 }
 void CreditsScene::Resize(Vector2 resolution, AppContext const& appContext) {

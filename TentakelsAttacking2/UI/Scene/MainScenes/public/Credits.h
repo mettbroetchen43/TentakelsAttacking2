@@ -22,6 +22,7 @@ private:
 
 	void ToggleSpeedLevel();
 	void Move();
+	void CheckCreditsFinished();
 
 public:
 	CreditsScene(Vector2 resolution);
