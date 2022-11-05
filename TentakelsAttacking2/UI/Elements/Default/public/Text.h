@@ -23,6 +23,8 @@ private:
 	void CreateToRender(AppContext const& appContext);
 	std::string BreakLines(std::string toBreak, AppContext const& appContext) const;
 
+	void UpdateColider(Vector2 resolution) override;
+
 public:
 	Text(Vector2 pos, Vector2 size, Alignment alignment,
 		Alignment textAlignment, float textHeight,

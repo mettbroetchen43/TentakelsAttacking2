@@ -34,6 +34,16 @@ bool Button::IsSameState(State state) const {
 	return m_state == state;
 }
 
+void Button::UpdateColider(Vector2 resolution) {
+	m_colider = {
+		resolution.x * m_pos.x,
+		resolution.y * m_pos.y,
+		resolution.x * m_size.x,
+		resolution.y * m_size.y
+	};
+	SetTextSizeAndPosition(resolution, AppContext::GetInstance());
+}
+
 Button::Button(Vector2 pos, Vector2 size, Alignment alignment,
 	std::string const& text, SoundType releaseSound, Vector2 resolution)
 	: UIElement(pos, size, alignment), m_text(text), m_sound(releaseSound) {
@@ -141,6 +151,14 @@ void Button::SetOnClick(std::function<void()> onClick) {
 }
 void Button::SetOnPress(std::function<void()> onPress) {
 	m_onPress = onPress;
+}
+
+void Button::SetText(Vector2 resolution, std::string const& text) {
+	m_text = text;
+	SetTextSizeAndPosition(resolution, AppContext::GetInstance());
+}
+std::string Button::GetText() const {
+	return m_text;
 }
 
 void Button::SetEnabled(bool enabled) {

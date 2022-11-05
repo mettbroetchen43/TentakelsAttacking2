@@ -14,6 +14,8 @@ private:
 	Rectangle m_colider = { 0.0f,0.0f,0.0f,0.0f };
 	bool m_isScaleToFit = false;
 
+	void UpdateColider(Vector2 resolution) override;
+
 public:
 	Picture(Vector2 pos, Vector2 size, Alignment alignment,
 		AssetType assetType, Vector2 resolution);

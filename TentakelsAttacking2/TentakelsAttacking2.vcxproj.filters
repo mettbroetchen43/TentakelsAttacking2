@@ -261,6 +261,12 @@
     <ClInclude Include="UI\Scene\MainScenes\public\Settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Scene\MainScenes\public\Credits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Scene\SupportScenes\public\CreditTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -429,6 +435,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Scene\MainScenes\private\Settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Scene\MainScenes\private\Credits.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Scene\SupportScenes\private\CreditTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

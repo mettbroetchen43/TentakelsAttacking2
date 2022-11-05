@@ -52,6 +52,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 			);
 		}
 	);
+	loadGameBtn->SetEnabled(false);
 	m_elements.push_back(loadGameBtn);
 
 	btnPosY += 0.15f;
@@ -86,7 +87,12 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		"Credits",
 		SoundType::CLICKED_RELEASE_STD
 		);
-	creditsBtn->SetEnabled(false);
+	creditsBtn->SetOnClick([]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(
+			SwitchSceneEvent(SceneType::CREDITS)
+		);
+		}
+	);
 	m_elements.push_back(creditsBtn);
 
 	btnPosY += 0.15f;

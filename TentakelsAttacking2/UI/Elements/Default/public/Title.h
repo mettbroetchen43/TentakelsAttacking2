@@ -40,6 +40,8 @@ private:
 
 	void TitleFinish(AppContext const& appContext);
 
+	void UpdateColider(Vector2 resolution) override;
+
 public:
 	Title(Vector2 pos, Vector2 size, Alignment alignment, bool drawTitle,
 		Vector2 resolution, AppContext& appContext);

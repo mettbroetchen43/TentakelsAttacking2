@@ -13,5 +13,6 @@ enum class SceneType {
 	NEW_GAME_PLAYER,
 	NEW_GAME_PARAMETER,
 	SETTINGS,
+	CREDITS,
 	NONE,
 };

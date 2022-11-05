@@ -35,6 +35,8 @@ protected:
 	void SetTextSizeAndPosition(Vector2 resolution, AppContext const& appContext);
 	[[nodiscard]] bool IsSameState(State state) const;
 
+	void UpdateColider(Vector2 resolution) override;
+
 public:
 	Button(Vector2 pos, Vector2 size, Alignment alignment, std::string const& text,
 		SoundType releaseSound, Vector2 resolution);
@@ -50,6 +52,9 @@ public:
 
 	void SetOnClick(std::function<void()> onClick);
 	void SetOnPress(std::function<void()> onPress);
+
+	void SetText(Vector2 resolution, std::string const& text);
+	[[nodiscard]] std::string GetText() const;
 
 	void SetEnabled(bool enabled);
 	[[nodiscard]] bool IsEnabled() const;

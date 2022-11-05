@@ -22,6 +22,16 @@ std::string Text::BreakLines(std::string toBreak, AppContext const& appContext) 
 	return toBreak;
 }
 
+void Text::UpdateColider(Vector2 resolution) {
+	m_colider = {
+		resolution.x * m_pos.x,
+		resolution.y * m_pos.y,
+		resolution.x * m_size.x,
+		resolution.y * m_size.y
+	};
+	m_textPosition = GetVerticalAlignedTextPosition(m_toRender, m_textSize, m_colider, m_textAlignment);
+}
+
 Text::Text(Vector2 pos, Vector2 size, Alignment alignment,
 	Alignment textAlignment, float textHeight,
 	std::string text, Vector2 resolution)

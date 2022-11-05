@@ -28,6 +28,8 @@ private:
 	void SetColorFromFocus();
 	void CheckforValidColor(AppContext const& appContext);
 
+	void UpdateColider(Vector2 resolution) override;
+
 public:
 	ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
 		Alignment alignment, Vector2 resolution, bool isPopUp = false);

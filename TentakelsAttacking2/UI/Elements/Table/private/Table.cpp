@@ -126,6 +126,15 @@ std::vector<float> Table::GetNewColumnPosition(
 	return positions;
 }
 
+void Table::UpdateColider(Vector2 resolution) {
+	m_colider = {
+		resolution.x * m_pos.x,
+		resolution.y * m_pos.y,
+		resolution.x * m_size.x,
+		resolution.y * m_size.y
+	};
+}
+
 Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
 	size_t rows, size_t columns, Vector2 resolution, bool isPopUp)
 	: UIElement(pos, size, alignment), Focusable(ID),
