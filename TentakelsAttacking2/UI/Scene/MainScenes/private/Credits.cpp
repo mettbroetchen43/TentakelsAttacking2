@@ -7,6 +7,7 @@
 #include "Title.h"
 #include "Text.h"
 #include "Line.h"
+#include "Picture.h"
 #include "ClassicButton.h"
 #include "SceneType.hpp"
 #include "AppContext.h"
@@ -87,12 +88,44 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		);
 	// Added to Element when moving is true
 
+	float Y = 1.1f;
+	float height = 0.5f;
+
+	auto setHeight = [&Y, &height](float newHeight, float spacing) {
+		Y += height + spacing;
+		height = newHeight;
+	};
+
+	// logo
+	auto logo = std::make_shared<Picture>(
+		GetElementPosition(0.5f, Y),
+		GetElementSize(0.5f, height),
+		Alignment::TOP_MID,
+		AssetType::LOGO,
+		resolution
+		);
+	AddMovingElement(logo);
+
+	setHeight(0.1f, 0.0f);
+
+	auto logoText = std::make_shared<Text>(
+		GetElementPosition(0.5f, Y),
+		GetElementSize(0.5f, height),
+		Alignment::TOP_MID,
+		Alignment::TOP_MID,
+		0.08f,
+		"A Purpur Tentakel Production",
+		resolution
+		);
+	AddMovingElement(logoText);
+
+	setHeight(0.1f, 0.5f);
 
 	// finish btn
 	m_finishBTN = std::make_shared<ClassicButton>(
 		3,
-		GetElementPosition(0.5f, 1.1f),
-		GetElementSize(0.15f, 0.1f),
+		GetElementPosition(0.5f, Y),
+		GetElementSize(0.15f, height),
 		Alignment::TOP_MID,
 		resolution,
 		"Finish",
@@ -121,7 +154,7 @@ void CreditsScene::ToggleSpeedLevel() {
 	text = text.substr(0, text.size() - 4);
 	text += " " + std::to_string(m_speedLevel) + "/" + std::to_string(m_maxSpeedLevel);
 	m_speedBTN->SetText(m_resolution, text);
-	
+
 }
 void CreditsScene::Move() {
 
@@ -149,7 +182,7 @@ CreditsScene::CreditsScene(Vector2 resolution)
 
 void CreditsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
-	
+
 	if (m_title->IsTitleFinished()) {
 		m_moving = true;
 		AddMovingElement(m_titleLine);
@@ -158,6 +191,11 @@ void CreditsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const
 	if (m_moving) {
 		Move();
 		CheckCreditsFinished();
+	}
+
+	// for debugging
+	if (IsKeyPressed(KEY_ESCAPE)) {
+		m_moving = !m_moving;
 	}
 }
 void CreditsScene::Resize(Vector2 resolution, AppContext const& appContext) {
