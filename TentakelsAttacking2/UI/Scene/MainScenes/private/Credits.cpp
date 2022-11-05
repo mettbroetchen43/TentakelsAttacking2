@@ -139,6 +139,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	std::vector<std::string> specialThancsVec = {
 		"coder2k",
 		"r00tifant",
+		"Clemens",
 		"CreazyNightowl01",
 		"german coding commuinty on twitch",
 		"the discord of coder2k",
@@ -292,9 +293,9 @@ void CreditsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const
 	}
 
 	// for debugging
-	if (IsKeyPressed(KEY_ESCAPE)) {
+	/*if (IsKeyPressed(KEY_ESCAPE)) {
 		m_moving = !m_moving;
-	}
+	}*/
 }
 void CreditsScene::Resize(Vector2 resolution, AppContext const& appContext) {
 	m_resolution = resolution;
