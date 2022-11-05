@@ -5,66 +5,23 @@
 
 #include "TestScene.h"
 #include "UIManager.h"
-#include "Slider.h"
+#include "CreditTable.h"
 #include <iostream>
 
 void TestScene::Initialize(Vector2 resolution,
 	[[maybe_unused]] AppContext& appContext) {
 
-	auto hSlider_1 = std::make_shared<Slider>(
-		GetElementPosition(0.5f, 0.1f),
-		GetElementSize(0.5f, 0.05f),
+	auto creditsTable = std::make_shared<CreditTableScene>(
+		1,
+		GetElementPosition(0.5f, 0.5f),
+		GetElementSize(0.5f, 0.5f),
 		Alignment::TOP_MID,
-		true,
-		10.0f,
+		5,
+		"Headline Testing",
 		resolution
 		);
-	hSlider_1->SetScrolling(true);
-	hSlider_1->SetOnSlide([this](float value) {
-		this->TestLambda(value);
-		});
-	m_elements.push_back(hSlider_1);
-
-	auto hSlider_2 = std::make_shared<Slider>(
-		GetElementPosition(0.5f, 0.85f),
-		GetElementSize(0.5f, 0.05f),
-		Alignment::TOP_MID,
-		true,
-		10.0f,
-		resolution
-		);
-	hSlider_2->SetOnSlide([this](float value) {
-		this->TestLambda(value);
-		});
-	m_elements.push_back(hSlider_2);
-
-
-	auto vSlider_1 = std::make_shared<Slider>(
-		GetElementPosition(0.1f, 0.5f),
-		GetElementSize(0.05f, 0.5f),
-		Alignment::MID_LEFT,
-		false,
-		10.0f,
-		resolution
-		);
-	vSlider_1->SetScrolling(true);
-	vSlider_1->SetOnSlide([this](float value) {
-		this->TestLambda(value);
-		});
-	m_elements.push_back(vSlider_1);
-
-	auto vSlider_2 = std::make_shared<Slider>(
-		GetElementPosition(0.85f, 0.5f),
-		GetElementSize(0.05f, 0.5f),
-		Alignment::MID_LEFT,
-		false,
-		10.0f,
-		resolution
-		);
-	vSlider_2->SetOnSlide([this](float value) {
-		this->TestLambda(value);
-		});
-	m_elements.push_back(vSlider_2);
+	creditsTable->SetActive(true, appContext);
+	m_elements.push_back(creditsTable);
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(

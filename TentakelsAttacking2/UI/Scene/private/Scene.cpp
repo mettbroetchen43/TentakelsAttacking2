@@ -45,7 +45,7 @@ Focusable* Scene::GetFocusableByFocusID(unsigned int ID) const {
 }
 
 void Scene::UpdateColider([[maybe_unused]] Vector2 resolution) { }
-
+	
 Scene::Scene(Vector2 pos, Vector2 size, Alignment alignment)
 	:UIElement(pos, size, alignment), m_firstFocusID(0) { }
 
@@ -59,6 +59,41 @@ void Scene::SetActive(bool active, AppContext const& appContext) {
 
 	m_active = active;
 	SetFocusActive(appContext);
+}
+
+void Scene::SetPosition(Vector2 pos, Vector2 resolution) {
+	Vector2 dif = {
+		m_pos.x - pos.x,
+		m_pos.y - pos.y
+	};
+
+	for (auto e : m_elements) {
+		Vector2 ePos = e->GetPosition();
+		ePos = {
+			ePos.x + dif.x,
+			ePos.y + dif.y
+		};
+		e->SetPosition(ePos, resolution);
+	}
+
+	UIElement::SetPosition(pos, resolution);
+}
+void Scene::SetSize(Vector2 size, Vector2 resolution) {
+	Vector2 dif = {
+	m_size.x - size.x,
+	m_size.y - size.y
+	};
+
+	for (auto e : m_elements) {
+		Vector2 eSize = e->GetSize();
+		eSize = {
+			eSize.x + dif.x,
+			eSize.y + dif.y
+		};
+		e->SetSize(eSize, resolution);
+	}
+
+	UIElement::SetSize(size, resolution);
 }
 
 void Scene::CheckAndUpdate(Vector2 const& mousePosition,

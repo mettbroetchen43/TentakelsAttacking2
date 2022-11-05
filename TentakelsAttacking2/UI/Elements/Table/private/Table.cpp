@@ -128,10 +128,10 @@ std::vector<float> Table::GetNewColumnPosition(
 
 void Table::UpdateColider(Vector2 resolution) {
 	m_colider = {
-	resolution.x * m_pos.x,
-	resolution.y * m_pos.y,
-	resolution.x * m_size.x,
-	resolution.y * m_size.y
+		resolution.x * m_pos.x,
+		resolution.y * m_pos.y,
+		resolution.x * m_size.x,
+		resolution.y * m_size.y
 	};
 }
 

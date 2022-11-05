@@ -10,6 +10,7 @@
 #include "Picture.h"
 #include "ClassicButton.h"
 #include "SceneType.hpp"
+#include "CreditTable.h"
 #include "AppContext.h"
 
 void CreditsScene::Initialize(Vector2 resolution) {
@@ -107,7 +108,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	AddMovingElement(logo);
 
 	setHeight(0.1f, 0.0f);
-
 	auto logoText = std::make_shared<Text>(
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
@@ -119,9 +119,24 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		);
 	AddMovingElement(logoText);
 
-	setHeight(0.1f, 0.5f);
+
+	// credits table
+	setHeight(0.5f, 0.0f);
+	auto creditsTable = std::make_shared<CreditTableScene>(
+		1000,
+		GetElementPosition(0.5f, Y),
+		GetElementSize(0.5f, height),
+		Alignment::TOP_MID,
+		5,
+		"Test Tabelle",
+		resolution
+		);
+	creditsTable->SetActive(true, appContext);
+	AddMovingElement(creditsTable);
+
 
 	// finish btn
+	setHeight(0.1f, 0.5f);
 	m_finishBTN = std::make_shared<ClassicButton>(
 		3,
 		GetElementPosition(0.5f, Y),

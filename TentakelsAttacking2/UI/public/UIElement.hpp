@@ -24,14 +24,14 @@ public:
 		: m_pos(pos), m_size(size), m_alignment(alignment) { }
 	virtual ~UIElement() = default;
 
-	void SetPosition(Vector2 pos, Vector2 resoltion) {
+	virtual void SetPosition(Vector2 pos, Vector2 resoltion) {
 		m_pos = pos;
 		UpdateColider(resoltion);
 	}
 	Vector2 GetPosition() const {
 		return m_pos;
 	}
-	void SetSize(Vector2 size, Vector2 resoltion) {
+	virtual void SetSize(Vector2 size, Vector2 resoltion) {
 		m_size = size;
 		UpdateColider(resoltion);
 	}

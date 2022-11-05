@@ -35,6 +35,9 @@ public:
 	[[nodiscard]] bool IsActive() const;
 	virtual void SetActive(bool active, AppContext const& appContext);
 
+	void SetPosition(Vector2 pos, Vector2 resoltion) override;
+	void SetSize(Vector2 size, Vector2 resoltion) override;
+
 	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	virtual void Render(AppContext const& appContext) override;
 	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
