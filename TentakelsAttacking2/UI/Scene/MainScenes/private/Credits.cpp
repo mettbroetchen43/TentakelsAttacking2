@@ -107,7 +107,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		);
 	AddMovingElement(logo);
 
-	setHeight(0.1f, 0.0f);
+	setHeight(0.1f, 0.02f);
 	auto logoText = std::make_shared<Text>(
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
@@ -120,6 +120,37 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	AddMovingElement(logoText);
 
 
+	// credits vector
+	// lib
+	std::vector<std::string> libVec = {
+		"raylib", "www.raylib.com",
+		"random lib", "www.github.com/mgerhold"
+	};
+	// inperation
+	std::vector<std::string> inspreationVec = {
+		"my Dad",
+		"coder2k",
+	};
+	// tester
+	std::vector<std::string> testerVec = {
+		"TODO",
+	};
+	// special thanks
+	std::vector<std::string> specialThancsVec = {
+		"coder2k",
+		"r00tifant",
+		"CreazyNightowl01",
+		"german coding commuinty on twitch",
+		"the discord of coder2k",
+		"TODO: more to come",
+	};
+	// contact
+	std::vector<std::string> contactVec = {
+		"discord", "discord.gg/JG5fsFZqEE",
+		"twitch", "www.twitch.tv/codingpurpurtentakel",
+		"gitHub", "github.com/PurpurTentakel97",
+	};
+
 	// credits table
 	setHeight(0.5f, 0.5f);
 	auto libTable = std::make_shared<CreditTableScene>(
@@ -127,10 +158,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		"Libraries",
-		std::vector<std::string> {
-			"raylib", "www.raylib.com",
-			"random lib", "www.github.com/mgerhold"
-		},
+		libVec,
 		true,
 		resolution
 		);
@@ -143,10 +171,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		"Inspiration",
-		std::vector<std::string> {
-			"my Dad",
-			"coder2k",
-		},
+		inspreationVec,
 		false,
 		resolution
 		);
@@ -159,9 +184,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		"Testers",
-		std::vector<std::string> {
-			"TODO",
-		},
+		testerVec,
 		false,
 		resolution
 		);
@@ -174,22 +197,29 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		"Special Thanks",
-		std::vector<std::string> {
-			"coder2k",
-			"r00tifant",
-			"CreazyNightowl01",
-			"german coding commuinty",
-			"the discord of coder2k",
-		},
+		specialThancsVec,
 		false,
 		resolution
 		);
 	spacialThanksTable->SetActive(true, appContext);
 	AddMovingElement(spacialThanksTable);
 
+	setHeight(0.5f, 0.3f);
+	auto contactTable = std::make_shared<CreditTableScene>(
+		GetElementPosition(0.5f, Y),
+		GetElementSize(0.5f, height),
+		Alignment::TOP_MID,
+		"Contact",
+		contactVec,
+		true,
+		resolution
+		);
+	contactTable->SetActive(true, appContext);
+	AddMovingElement(contactTable);
+
 
 	// finish btn
-	setHeight(0.1f, 0.5f);
+	setHeight(0.1f, 0.0f);
 	m_finishBTN = std::make_shared<ClassicButton>(
 		3,
 		GetElementPosition(0.5f, Y),
@@ -236,7 +266,7 @@ void CreditsScene::Move() {
 
 }
 void CreditsScene::CheckCreditsFinished() {
-	float shoudY = (m_resolution.y * 0.5f) - (m_finishBTN->GetCollider().height / 2);
+	float shoudY = (m_resolution.y * 0.75f) - (m_finishBTN->GetCollider().height / 2);
 	float btnY = m_finishBTN->GetCollider().y;
 	if (btnY <= shoudY) {
 		m_moving = false;

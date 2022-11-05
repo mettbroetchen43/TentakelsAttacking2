@@ -39,7 +39,7 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 		assert(entries.size() % 2 == 0);
 		for (size_t i = 0; i < entries.size(); i += 2) {
 			m_elements.push_back(std::make_shared<Text>(
-				GetElementPosition(0.49f, 0.17f + textHeight * (i / 2)),
+				GetElementPosition(0.49f, 0.2f + textHeight * (i / 2)),
 				GetElementSize(0.5f, textHeight),
 				Alignment::TOP_RIGHT,
 				Alignment::TOP_RIGHT,
@@ -49,7 +49,7 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 			));
 
 			m_elements.push_back(std::make_shared<Text>(
-				GetElementPosition(0.51f, 0.17f + textHeight * (i / 2)),
+				GetElementPosition(0.51f, 0.2f + textHeight * (i / 2)),
 				GetElementSize(0.5f, textHeight),
 				Alignment::TOP_LEFT,
 				Alignment::TOP_LEFT,
@@ -62,7 +62,7 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 	else {
 		for (size_t i = 0; i < entries.size(); ++i) {
 			m_elements.push_back(std::make_shared<Text>(
-				GetElementPosition(0.5f, 0.2f + textHeight * i),
+				GetElementPosition(0.5f, 0.23f + textHeight * i),
 				GetElementSize(0.5f, textHeight),
 				Alignment::MID_MID,
 				Alignment::MID_MID,
