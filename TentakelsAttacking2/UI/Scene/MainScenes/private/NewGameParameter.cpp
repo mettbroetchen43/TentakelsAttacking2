@@ -207,6 +207,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		"Next",
 		SoundType::ACCEPTED
 		);
+	nextBtn->SetEnabled(false);
 	m_elements.push_back(nextBtn);
 }
 
