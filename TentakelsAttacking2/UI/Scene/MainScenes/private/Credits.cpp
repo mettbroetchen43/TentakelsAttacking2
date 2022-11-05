@@ -88,8 +88,12 @@ void CreditsScene::Move() {
 
 }
 
-void CreditsScene::CheckCreditsFinished()
-{
+void CreditsScene::CheckCreditsFinished() {
+	float shoudY = (m_resolution.y * 0.5f) - (m_finishBTN->GetCollider().height / 2);
+	float btnY = m_finishBTN->GetCollider().y;
+	if (btnY <= shoudY) {
+		m_moving = false;
+	}
 }
 
 CreditsScene::CreditsScene(Vector2 resolution)
