@@ -78,6 +78,15 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		);
 	AddMovingElement(m_title);
 
+	m_titleLine = std::make_shared<Line>(
+		GetElementPosition(0.5f, 0.5f),
+		GetElementSize(0.9f, 0.0f),
+		Alignment::MID_MID,
+		5.0f,
+		resolution
+		);
+	// Added to Element when moving is true
+
 
 	// finish btn
 	m_finishBTN = std::make_shared<ClassicButton>(
@@ -143,6 +152,7 @@ void CreditsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const
 	
 	if (m_title->IsTitleFinished()) {
 		m_moving = true;
+		AddMovingElement(m_titleLine);
 	}
 
 	if (m_moving) {

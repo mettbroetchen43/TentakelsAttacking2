@@ -8,10 +8,12 @@
 
 class Title;
 class ClassicButton;
+class Line;
 
 class CreditsScene : public Scene {
 private:
 	std::shared_ptr<Title> m_title;
+	std::shared_ptr<Line> m_titleLine;
 	std::shared_ptr<ClassicButton> m_finishBTN;
 	std::shared_ptr<ClassicButton> m_speedBTN;
 	Vector2 m_resolution;
