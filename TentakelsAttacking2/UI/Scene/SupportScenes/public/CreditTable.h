@@ -8,9 +8,11 @@
 
 class CreditTableScene : public Scene {
 private:
-	void Initialize(Vector2 resolution, int rows, unsigned int focusID, std::string const& headline);
+	void Initialize(Vector2 resolution, std::string const& headline,
+		std::vector<std::string> const& entries, bool doubleColumn);
 
 public:
-	CreditTableScene(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
-		int rows, std::string const& headline, Vector2 resolution);
+	CreditTableScene(Vector2 pos, Vector2 size, Alignment alignment,
+		std::string const& headline, std::vector<std::string> const& entries,
+		bool doubleColumn, Vector2 resolution);
 };

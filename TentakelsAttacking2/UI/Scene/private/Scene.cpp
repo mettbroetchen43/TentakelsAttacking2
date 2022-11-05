@@ -70,8 +70,8 @@ void Scene::SetPosition(Vector2 pos, Vector2 resolution) {
 	for (auto e : m_elements) {
 		Vector2 ePos = e->GetPosition();
 		ePos = {
-			ePos.x + dif.x,
-			ePos.y + dif.y
+			ePos.x - dif.x,
+			ePos.y - dif.y
 		};
 		e->SetPosition(ePos, resolution);
 	}
@@ -87,8 +87,8 @@ void Scene::SetSize(Vector2 size, Vector2 resolution) {
 	for (auto e : m_elements) {
 		Vector2 eSize = e->GetSize();
 		eSize = {
-			eSize.x + dif.x,
-			eSize.y + dif.y
+			eSize.x - dif.x,
+			eSize.y - dif.y
 		};
 		e->SetSize(eSize, resolution);
 	}

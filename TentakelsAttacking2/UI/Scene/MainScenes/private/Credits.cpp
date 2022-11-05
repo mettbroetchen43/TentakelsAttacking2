@@ -121,18 +121,71 @@ void CreditsScene::Initialize(Vector2 resolution) {
 
 
 	// credits table
-	setHeight(0.5f, 0.0f);
-	auto creditsTable = std::make_shared<CreditTableScene>(
-		1000,
+	setHeight(0.5f, 0.5f);
+	auto libTable = std::make_shared<CreditTableScene>(
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
-		5,
-		"Test Tabelle",
+		"Libraries",
+		std::vector<std::string> {
+			"raylib", "www.raylib.com",
+			"random lib", "www.github.com/mgerhold"
+		},
+		true,
 		resolution
 		);
-	creditsTable->SetActive(true, appContext);
-	AddMovingElement(creditsTable);
+	libTable->SetActive(true, appContext);
+	AddMovingElement(libTable);
+
+	setHeight(0.5f, 0.3f);
+	auto inspirationTable = std::make_shared<CreditTableScene>(
+		GetElementPosition(0.5f, Y),
+		GetElementSize(0.5f, height),
+		Alignment::TOP_MID,
+		"Inspiration",
+		std::vector<std::string> {
+			"my Dad",
+			"coder2k",
+		},
+		false,
+		resolution
+		);
+	inspirationTable->SetActive(true, appContext);
+	AddMovingElement(inspirationTable);
+
+	setHeight(0.5f, 0.3f);
+	auto testersTable = std::make_shared<CreditTableScene>(
+		GetElementPosition(0.5f, Y),
+		GetElementSize(0.5f, height),
+		Alignment::TOP_MID,
+		"Testers",
+		std::vector<std::string> {
+			"TODO",
+		},
+		false,
+		resolution
+		);
+	testersTable->SetActive(true, appContext);
+	AddMovingElement(testersTable);
+
+	setHeight(0.5f, 0.3f);
+	auto spacialThanksTable = std::make_shared<CreditTableScene>(
+		GetElementPosition(0.5f, Y),
+		GetElementSize(0.5f, height),
+		Alignment::TOP_MID,
+		"Special Thanks",
+		std::vector<std::string> {
+			"coder2k",
+			"r00tifant",
+			"CreazyNightowl01",
+			"german coding commuinty",
+			"the discord of coder2k",
+		},
+		false,
+		resolution
+		);
+	spacialThanksTable->SetActive(true, appContext);
+	AddMovingElement(spacialThanksTable);
 
 
 	// finish btn

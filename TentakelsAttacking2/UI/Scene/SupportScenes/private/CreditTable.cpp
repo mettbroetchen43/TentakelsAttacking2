@@ -4,53 +4,80 @@
 //
 
 #include "CreditTable.h"
-#include "Table.h"
 #include "Text.h"
 #include "Line.h"
+#include "AppContext.h"
+#include <cassert>
 
-void CreditTableScene::Initialize(Vector2 resolution, int rows, unsigned int focusID, std::string const& headline) {
+void CreditTableScene::Initialize(Vector2 resolution, std::string const& headline, 
+	std::vector<std::string> const& entries, bool doubleColumn) {
 	// headline
 	auto headlineText = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.0f),
-		GetElementSize(0.5f, 0.05f),
+		GetElementSize(0.8f, 0.15f),
 		Alignment::TOP_MID,
 		Alignment::TOP_MID,
-		0.05f * m_size.y,
+		0.15f * m_size.y,
 		headline,
 		resolution
-		);
-	headlineText->RenderRectangle(true);
+	);
 	m_elements.push_back(headlineText);
 
 	auto headlineLine = std::make_shared<Line>(
-		GetElementPosition(0.5f, 0.05f),
-		GetElementSize(0.5f, 0.0f),
+		GetElementPosition(0.5f, 0.15f),
+		GetElementSize(0.7f, 0.0f),
 		Alignment::TOP_MID,
 		3.0f,
 		resolution
-		);
+	);
 	m_elements.push_back(headlineLine);
-	
 
-	// table
-	auto table = std::make_shared<Table>(
-		GetElementPosition(0.5f, 0.1f),
-		GetElementSize(1.0f, 0.9f),
-		Alignment::TOP_MID,
-		focusID,
-		rows,
-		2,
-		resolution
-		);
-	table->SetAllCellsEditable(false);
-	table->SetValue<std::string>(0, 0, "test");
-	table->SetValue<std::string>(1, 0, "test");
-	m_elements.push_back(table);
+	// elements
+	float textHeight = 0.07f;
+
+	if (doubleColumn) {
+		assert(entries.size() % 2 == 0);
+		for (size_t i = 0; i < entries.size(); i += 2) {
+			m_elements.push_back(std::make_shared<Text>(
+				GetElementPosition(0.49f, 0.17f + textHeight * (i / 2)),
+				GetElementSize(0.5f, textHeight),
+				Alignment::TOP_RIGHT,
+				Alignment::TOP_RIGHT,
+				textHeight * m_size.y,
+				entries.at(i),
+				resolution
+			));
+
+			m_elements.push_back(std::make_shared<Text>(
+				GetElementPosition(0.51f, 0.17f + textHeight * (i / 2)),
+				GetElementSize(0.5f, textHeight),
+				Alignment::TOP_LEFT,
+				Alignment::TOP_LEFT,
+				textHeight * m_size.y,
+				entries.at(i + 1),
+				resolution
+			));
+		}
+	}
+	else {
+		for (size_t i = 0; i < entries.size(); ++i) {
+			m_elements.push_back(std::make_shared<Text>(
+				GetElementPosition(0.5f, 0.2f + textHeight * i),
+				GetElementSize(0.5f, textHeight),
+				Alignment::MID_MID,
+				Alignment::MID_MID,
+				textHeight * m_size.y,
+				entries.at(i),
+				resolution
+			));
+		}
+	}
 }
 
-CreditTableScene::CreditTableScene(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
-	int rows, std::string const& headline, Vector2 resolution)
+CreditTableScene::CreditTableScene(Vector2 pos, Vector2 size, Alignment alignment,
+	std::string const& headline, std::vector<std::string> const& entries,
+	bool doubleColumn, Vector2 resolution)
 	: Scene(pos, size, alignment) {
 	GetAlignedCollider(m_pos, m_size, alignment, resolution);
-	Initialize(resolution, rows, focusID, headline);
+	Initialize(resolution, headline, entries, doubleColumn);
 }
