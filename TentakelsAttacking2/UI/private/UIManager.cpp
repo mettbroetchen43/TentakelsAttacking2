@@ -16,10 +16,14 @@ Vector2 UIManager::GetResolution() const {
 Focus& UIManager::GetFocus() {
 	return m_focus;
 }
-void UIManager::ToggleFullScreen() {
+void UIManager::ToggleFullScreen(bool first) {
 	ToggleFullscreen();
 	if (!IsWindowFullscreen()) {
 		SetWindowPosition(0, 10);
+	}
+	if (!first) {
+		auto& fullScreen = AppContext::GetInstance().constants.global.startingModeFullScreen;
+		fullScreen = !fullScreen;
 	}
 }
 void UIManager::CheckAndUpdateResolution() {
@@ -90,7 +94,7 @@ void UIManager::StartUI() {
 	auto event = SwitchSceneEvent(SceneType::LOGO);
 	m_appContext.eventManager.InvokeEvent(event);
 	if (m_appContext.constants.global.startingModeFullScreen) {
-		ToggleFullScreen();
+		ToggleFullScreen(true);
 	}
 	else {
 		SetWindowPosition(0,10);

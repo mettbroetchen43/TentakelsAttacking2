@@ -24,7 +24,7 @@ private:
 	Vector2 m_resolution;
 	bool m_closeWindow;
 
-	void ToggleFullScreen();
+	void ToggleFullScreen(bool first = false);
 
 	void CheckAndUpdateResolution();
 	void CheckAndUpdate();

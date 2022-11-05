@@ -14,9 +14,10 @@
 #include <iostream>
 
 int main() {
-	InitWindow(100, 100, "Tentakels Attacking");
+	InitWindow(100, 100, "");
 	AppContext& appContext = AppContext::GetInstance();
 	UIManager uiManager;
+	SetWindowTitle(("Tentakels Attacking " + appContext.constants.global.version).c_str());
 
 	appContext.LoadConfig();
 

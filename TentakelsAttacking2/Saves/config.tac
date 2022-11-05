@@ -7,7 +7,7 @@
 // Min Count >= 0
 
 // Globals
-0 / Starting Full Screen (0 = window)
+1 / Starting Full Screen (0 = window)
 20 / Min Game Rounds
 100 / Max Game Rounds
 
