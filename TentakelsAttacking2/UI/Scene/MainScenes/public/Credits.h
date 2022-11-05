@@ -21,6 +21,7 @@ private:
 	std::vector<std::shared_ptr<UIElement>> m_movingElements;
 
 	void Initialize(Vector2 resolution);
+	void AddMovingElement(std::shared_ptr<UIElement> element);
 
 	void ToggleSpeedLevel();
 	void Move();

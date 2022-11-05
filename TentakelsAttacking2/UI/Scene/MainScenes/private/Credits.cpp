@@ -5,6 +5,8 @@
 
 #include "Credits.h"
 #include "Title.h"
+#include "Text.h"
+#include "Line.h"
 #include "ClassicButton.h"
 #include "SceneType.hpp"
 #include "AppContext.h"
@@ -12,8 +14,9 @@
 void CreditsScene::Initialize(Vector2 resolution) {
 	AppContext& appContext = AppContext::GetInstance();
 
+	// not moving btn
 	auto speedBTN = std::make_shared<ClassicButton>(
-		2,
+		1,
 		GetElementPosition(0.95f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
@@ -27,7 +30,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	m_elements.push_back(speedBTN);
 
 	auto backBTN = std::make_shared<ClassicButton>(
-		1,
+		2,
 		GetElementPosition(0.05f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
@@ -41,6 +44,30 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		});
 	m_elements.push_back(backBTN);
 
+
+	// credits
+	auto creditsText = std::make_shared<Text>(
+		GetElementPosition(0.5f, 0.15f),
+		GetElementSize(0.25f, 0.15f),
+		Alignment::MID_MID,
+		Alignment::MID_MID,
+		0.15f,
+		"Credits",
+		resolution
+		);
+	AddMovingElement(creditsText);
+
+	auto creditsLine = std::make_shared<Line>(
+		GetElementPosition(0.5f, 0.21f),
+		GetElementSize(0.21f, 0.0f),
+		Alignment::MID_MID,
+		3.0f,
+		resolution
+		);
+	AddMovingElement(creditsLine);
+
+
+	// title
 	m_title = std::make_shared<Title>(
 		GetElementPosition(0.5f, 0.5f),
 		GetElementSize(0.9f, 0.4f),
@@ -49,9 +76,10 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		resolution,
 		appContext
 		);
-	m_movingElements.push_back(m_title);
-	m_elements.push_back(m_title);
+	AddMovingElement(m_title);
 
+
+	// finish btn
 	m_finishBTN = std::make_shared<ClassicButton>(
 		3,
 		GetElementPosition(0.5f, 1.1f),
@@ -65,8 +93,12 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		auto event = SwitchSceneEvent(SceneType::MAIN_MENU);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 		});
-	m_elements.push_back(m_finishBTN);
-	m_movingElements.push_back(m_finishBTN);
+	AddMovingElement(m_finishBTN);
+}
+
+void CreditsScene::AddMovingElement(std::shared_ptr<UIElement> element) {
+	m_elements.push_back(element);
+	m_movingElements.push_back(element);
 }
 
 void CreditsScene::ToggleSpeedLevel() {
@@ -87,7 +119,6 @@ void CreditsScene::Move() {
 	}
 
 }
-
 void CreditsScene::CheckCreditsFinished() {
 	float shoudY = (m_resolution.y * 0.5f) - (m_finishBTN->GetCollider().height / 2);
 	float btnY = m_finishBTN->GetCollider().y;
