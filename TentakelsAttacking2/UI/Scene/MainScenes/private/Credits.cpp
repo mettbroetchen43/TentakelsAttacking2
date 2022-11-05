@@ -15,19 +15,19 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	AppContext& appContext = AppContext::GetInstance();
 
 	// not moving btn
-	auto speedBTN = std::make_shared<ClassicButton>(
+	m_speedBTN = std::make_shared<ClassicButton>(
 		1,
 		GetElementPosition(0.95f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
 		resolution,
-		"Speed",
+		"Speed " + std::to_string(m_speedLevel) + "/" + std::to_string(m_maxSpeedLevel),
 		SoundType::CLICKED_RELEASE_STD
 		);
-	speedBTN->SetOnClick([this]() {
+	m_speedBTN->SetOnClick([this]() {
 		this->ToggleSpeedLevel();
 		});
-	m_elements.push_back(speedBTN);
+	m_elements.push_back(m_speedBTN);
 
 	auto backBTN = std::make_shared<ClassicButton>(
 		2,
@@ -107,6 +107,12 @@ void CreditsScene::ToggleSpeedLevel() {
 	if (m_speedLevel > m_maxSpeedLevel) {
 		m_speedLevel = 1;
 	}
+
+	std::string text = m_speedBTN->GetText();
+	text = text.substr(0, text.size() - 4);
+	text += " " + std::to_string(m_speedLevel) + "/" + std::to_string(m_maxSpeedLevel);
+	m_speedBTN->SetText(m_resolution, text);
+	
 }
 void CreditsScene::Move() {
 

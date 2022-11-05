@@ -53,6 +53,9 @@ public:
 	void SetOnClick(std::function<void()> onClick);
 	void SetOnPress(std::function<void()> onPress);
 
+	void SetText(Vector2 resolution, std::string const& text);
+	[[nodiscard]] std::string GetText() const;
+
 	void SetEnabled(bool enabled);
 	[[nodiscard]] bool IsEnabled() const;
 	[[nodiscard]] Rectangle GetCollider() const;

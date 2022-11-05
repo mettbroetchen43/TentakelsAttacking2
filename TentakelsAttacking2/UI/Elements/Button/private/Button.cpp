@@ -153,6 +153,14 @@ void Button::SetOnPress(std::function<void()> onPress) {
 	m_onPress = onPress;
 }
 
+void Button::SetText(Vector2 resolution, std::string const& text) {
+	m_text = text;
+	SetTextSizeAndPosition(resolution, AppContext::GetInstance());
+}
+std::string Button::GetText() const {
+	return m_text;
+}
+
 void Button::SetEnabled(bool enabled) {
 	if (enabled) {
 		m_state = State::ENABLED;

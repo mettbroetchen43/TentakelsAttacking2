@@ -13,6 +13,7 @@ class CreditsScene : public Scene {
 private:
 	std::shared_ptr<Title> m_title;
 	std::shared_ptr<ClassicButton> m_finishBTN;
+	std::shared_ptr<ClassicButton> m_speedBTN;
 	Vector2 m_resolution;
 	bool m_moving = false;
 	float m_speed = -0.002f;
