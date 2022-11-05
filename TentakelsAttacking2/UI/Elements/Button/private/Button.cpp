@@ -41,6 +41,7 @@ void Button::UpdateColider(Vector2 resolution) {
 		resolution.x * m_size.x,
 		resolution.y * m_size.y
 	};
+	SetTextSizeAndPosition(resolution, AppContext::GetInstance());
 }
 
 Button::Button(Vector2 pos, Vector2 size, Alignment alignment,
