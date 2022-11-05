@@ -20,7 +20,7 @@ private:
 	bool m_moving = false;
 	float m_speed = -0.002f;
 	int m_maxSpeedLevel = 3;
-	int m_speedLevel = 1;
+	int m_speedLevel = 3; // for testing -> need to reset
 	std::vector<std::shared_ptr<UIElement>> m_movingElements;
 
 	void Initialize(Vector2 resolution);
