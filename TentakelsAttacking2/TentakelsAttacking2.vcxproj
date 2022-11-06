@@ -151,10 +151,7 @@
     <ClInclude Include="Events\public\GenerelEvents.hpp" />
     <ClInclude Include="Events\public\UIEvents.hpp" />
     <ClInclude Include="Events\public\MainEvent.hpp" />
-    <ClInclude Include="Game\public\Galaxy.h" />
     <ClInclude Include="Game\public\GameManager.h" />
-    <ClInclude Include="Game\public\Fleet.h" />
-    <ClInclude Include="Game\public\GroupTarget.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
     <ClInclude Include="Helper\public\GameEventTypes.hpp" />
     <ClInclude Include="Helper\public\HColors.h" />
@@ -168,9 +165,7 @@
     <ClInclude Include="Helper\public\HTextProcessing.h" />
     <ClInclude Include="Helper\public\HPlayerData.hpp" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
-    <ClInclude Include="Game\public\SpaceObject.h" />
     <ClInclude Include="Game\public\Player.h" />
-    <ClInclude Include="Game\public\Planet.h" />
     <ClInclude Include="UI\Elements\Default\public\CheckBox.h" />
     <ClInclude Include="UI\Elements\Default\public\Line.h" />
     <ClInclude Include="UI\Elements\Default\public\Picture.h" />
@@ -226,13 +221,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Constants\private\ConfigIO.cpp" />
-    <ClCompile Include="Game\private\Galaxy.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />
-    <ClCompile Include="Game\private\Fleet.cpp" />
-    <ClCompile Include="Game\private\GroupTarget.cpp" />
     <ClCompile Include="Helper\private\HRandom.cpp" />
     <ClCompile Include="Game\private\Player.cpp" />
-    <ClCompile Include="Game\private\Planet.cpp" />
     <ClCompile Include="Helper\private\HTextProcessing.cpp" />
     <ClCompile Include="Helper\private\HGeneral.cpp" />
     <ClCompile Include="Helper\private\HPlayerCollection.cpp" />
@@ -281,7 +272,6 @@
     <ClCompile Include="UI\Scene\SupportScenes\private\SliderAndInputLine.cpp" />
     <ClCompile Include="UI\Scene\SupportScenes\private\CreditTable.cpp" />
     <ClCompile Include="_private\Main.cpp" />
-    <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="_private\AppContext.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -166,9 +166,11 @@ std::vector<std::shared_ptr<Player>> const& GameManager::GetPlayers() const {
 }
 
 void GameManager::Update() {
-	m_galaxy.PreUpdate(); // bevor main update -> z.B. move
-	m_galaxy.Update();  // main update
-	m_galaxy.PostUpdate(); // debug Print
+	/*
+	preUpdate -> moving and stuff
+	Update -> general update
+	postUpdate -> cleanup
+	*/
 }
 void GameManager::OnEvent(Event const& event) {
 

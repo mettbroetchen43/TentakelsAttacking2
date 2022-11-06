@@ -5,7 +5,6 @@
 
 #pragma once
 #include "Player.h"
-#include "Galaxy.h"
 #include "EventListener.hpp"
 #include "UIEvents.hpp"
 #include "GenerelEvents.hpp"
@@ -16,7 +15,6 @@ class GameManager final : public EventListener {
 private:
 	std::vector<std::shared_ptr<Player>> m_players;
 	std::unordered_map<GameEventType, bool> m_gameEvents;
-	Galaxy m_galaxy;
 
 	[[nodiscard]] bool ValidAddPlayer() const;
 	[[nodiscard]] unsigned int GetNextID() const;
