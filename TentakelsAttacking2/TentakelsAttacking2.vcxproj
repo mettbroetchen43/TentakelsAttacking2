@@ -153,6 +153,7 @@
     <ClInclude Include="Events\public\MainEvent.hpp" />
     <ClInclude Include="Game\public\GameManager.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
+    <ClInclude Include="Game\public\SpaceObject.h" />
     <ClInclude Include="Helper\public\GameEventTypes.hpp" />
     <ClInclude Include="Helper\public\HColors.h" />
     <ClInclude Include="Helper\public\HFocusEvents.h" />
@@ -222,6 +223,7 @@
   <ItemGroup>
     <ClCompile Include="Constants\private\ConfigIO.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />
+    <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="Helper\private\HRandom.cpp" />
     <ClCompile Include="Game\private\Player.cpp" />
     <ClCompile Include="Helper\private\HTextProcessing.cpp" />

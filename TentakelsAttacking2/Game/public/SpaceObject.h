@@ -1,0 +1,80 @@
+//
+// Purpur Tentakel
+// 06.11.2022
+//
+
+#pragma once
+#include <memory>
+
+class Player;
+
+class SpaceObject {
+private:
+	unsigned int m_ID;
+	size_t m_ships = 0;
+	std::shared_ptr<Player> m_player;
+
+public:
+	SpaceObject(unsigned int ID, std::shared_ptr<Player> player);
+	SpaceObject(unsigned int ID, size_t ships, std::shared_ptr<Player> player);
+	virtual ~SpaceObject() = default;
+
+	void SetPlayer(std::shared_ptr<Player> player);
+	[[nodiscard]] std::shared_ptr<Player> GetPlayer() const;
+
+	friend size_t operator+ (SpaceObject const& object, size_t ships);
+	friend size_t operator+ (size_t ships, SpaceObject const& object);
+	friend size_t operator+ (SpaceObject const& lhs, SpaceObject const& rhs);
+
+	friend size_t operator- (SpaceObject const& object, size_t ships);
+	friend size_t operator- (size_t ships, SpaceObject const& object);
+	friend size_t operator- (SpaceObject const& lhs, SpaceObject const& rhs);
+
+	friend bool operator< (SpaceObject const& object, size_t ships);
+	friend bool operator< (size_t ships, SpaceObject const& object);
+	friend bool operator< (SpaceObject const& lhs, SpaceObject const& rhs);
+
+	friend bool operator<= (SpaceObject const& object, size_t ships);
+	friend bool operator<= (size_t ships, SpaceObject const& object);
+	friend bool operator<= (SpaceObject const& lhs, SpaceObject const& rhs);
+
+	friend bool operator> (SpaceObject const& object, size_t ships);
+	friend bool operator> (size_t ships, SpaceObject const& object);
+	friend bool operator> (SpaceObject const& lhs, SpaceObject const& rhs);
+
+	friend bool operator>= (SpaceObject const& object, size_t ships);
+	friend bool operator>= (size_t ships, SpaceObject const& object);
+	friend bool operator>= (SpaceObject const& lhs, SpaceObject const& rhs);
+
+	SpaceObject& operator+=(size_t ships);
+	SpaceObject& operator+=(SpaceObject const& object);
+
+	SpaceObject& operator-=(size_t ships);
+	SpaceObject& operator-=(SpaceObject const& object);
+
+	[[nodiscard]] bool operator== (SpaceObject const& other) const;
+};
+
+[[nodiscard]] size_t operator+ (SpaceObject const& object, size_t ships);
+[[nodiscard]] size_t operator+ (size_t ships, SpaceObject& object);
+[[nodiscard]] size_t operator+ (SpaceObject const& lhs, SpaceObject const& rhs);
+
+[[nodiscard]] size_t operator- (SpaceObject const& object, size_t ships);
+[[nodiscard]] size_t operator- (size_t ships, SpaceObject const& object);
+[[nodiscard]] size_t operator- (SpaceObject const& lhs, SpaceObject const& rhs);
+
+[[nodiscard]] bool operator< (SpaceObject const& object, size_t ships);
+[[nodiscard]] bool operator< (size_t ships, SpaceObject const& object);
+[[nodiscard]] bool operator< (SpaceObject const& lhs, SpaceObject const& rhs);
+
+[[nodiscard]] bool operator<= (SpaceObject const& object, size_t ships);
+[[nodiscard]] bool operator<= (size_t ships, SpaceObject const& object);
+[[nodiscard]] bool operator<= (SpaceObject const& lhs, SpaceObject const& rhs);
+
+[[nodiscard]] bool operator> (SpaceObject const& object, size_t ships);
+[[nodiscard]] bool operator> (size_t ships, SpaceObject const& object);
+[[nodiscard]] bool operator> (SpaceObject const& lhs, SpaceObject const& rhs);
+
+[[nodiscard]] bool operator>= (SpaceObject const& object, size_t ships);
+[[nodiscard]] bool operator>= (size_t ships, SpaceObject const& object);
+[[nodiscard]] bool operator>= (SpaceObject const& lhs, SpaceObject const& rhs);

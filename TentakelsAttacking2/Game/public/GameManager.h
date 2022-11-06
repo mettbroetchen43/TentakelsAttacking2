@@ -30,6 +30,8 @@ private:
 	// events
 	void SetGameEventActive(UpdateCheckGameEvent const* event);
 
+	// galaxy
+
 public:
 	GameManager();
 
