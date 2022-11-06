@@ -39,15 +39,15 @@ public:
 	}
 };
 
-class AddPlayerEvent : public PlayerEvent {
+class AddPlayerEvent final : public PlayerEvent {
 public:
 	using PlayerEvent::PlayerEvent;
 };
-class EditPlayerEvent : public PlayerWithIDEvent {
+class EditPlayerEvent final : public PlayerWithIDEvent {
 public:
 	using PlayerWithIDEvent::PlayerWithIDEvent;
 };
-class DeletePlayerEvent : public Event {
+class DeletePlayerEvent final : public Event {
 private:
 	unsigned int m_ID;
 public:
@@ -58,17 +58,17 @@ public:
 		return m_ID;
 	}
 };
-class ResetPlayerEvent : public Event { };
+class ResetPlayerEvent final : public Event { };
 
-class AddPlayerUIEvent : public PlayerWithIDEvent {
+class AddPlayerUIEvent final : public PlayerWithIDEvent {
 public:
 	using PlayerWithIDEvent::PlayerWithIDEvent;
 };
-class EditPlayerUIEvent : public PlayerWithIDEvent {
+class EditPlayerUIEvent final : public PlayerWithIDEvent {
 public:
 	using PlayerWithIDEvent::PlayerWithIDEvent;
 };
-class DeletePlayerUIEvent : public Event {
+class DeletePlayerUIEvent final : public Event {
 private:
 	unsigned int m_ID;
 public:
@@ -79,10 +79,10 @@ public:
 		return m_ID;
 	}
 };
-class ResetPlayerUIEvent : public Event { };
+class ResetPlayerUIEvent final : public Event { };
 
-class ValidatePlayerCountEvent : public Event { };
-class ValidatePlayerCountResultEvent : public Event {
+class ValidatePlayerCountEvent final : public Event { };
+class ValidatePlayerCountResultEvent final : public Event {
 private:
 	bool m_validPlayerCount;
 
@@ -95,7 +95,7 @@ public:
 	}
 };
 
-class UpdateCheckGameEvent : public Event {
+class UpdateCheckGameEvent final : public Event {
 private:
 	GameEventType m_type;
 	bool m_isChecked;
@@ -111,7 +111,7 @@ public:
 		return m_isChecked;
 	}
 };
-class UpdateCheckGameEventsUI : public Event {
+class UpdateCheckGameEventsUI final : public Event {
 private:
 	using Map = std::unordered_map<GameEventType, bool>const*;
 	Map m_types;
@@ -124,9 +124,9 @@ public:
 		return m_types;
 	}
 };
-class InitialCheckGameEventDataEvent : public Event { };
+class InitialCheckGameEventDataEvent final : public Event { };
 
-class SetCurrentLastRoundEvent : public Event {
+class SetCurrentLastRoundEvent final : public Event {
 private:
 	int m_lastRound;
 

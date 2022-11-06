@@ -6,7 +6,7 @@
 #pragma once
 #include "Button.h"
 
-class SliderButton : public Button {
+class SliderButton final : public Button {
 public:
 	using Button::Button;
 	using Button::operator=;

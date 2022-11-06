@@ -8,7 +8,7 @@
 #include <array>
 #include <vector>
 
-class Title : public UIElement {
+class Title final : public UIElement {
 private:
 	std::array<std::string, 10> m_postFixes = {
 	"  /-\\-",

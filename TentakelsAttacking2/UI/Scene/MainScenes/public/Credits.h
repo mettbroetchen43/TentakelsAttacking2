@@ -10,7 +10,7 @@ class Title;
 class ClassicButton;
 class Line;
 
-class CreditsScene : public Scene {
+class CreditsScene final : public Scene {
 private:
 	std::shared_ptr<Title> m_title;
 	std::shared_ptr<Line> m_titleLine;

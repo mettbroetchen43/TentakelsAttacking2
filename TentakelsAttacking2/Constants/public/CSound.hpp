@@ -5,7 +5,7 @@
 
 #pragma once
 
-struct CSound {
+struct CSound final {
 	bool muteVolume = false;
 	float masterVolume = 100.0f;
 };

@@ -12,7 +12,7 @@
 #include "GameEventTypes.hpp"
 #include <vector>
 
-class GameManager : public EventListener {
+class GameManager final : public EventListener {
 private:
 	std::vector<std::shared_ptr<Player>> m_players;
 	std::unordered_map<GameEventType, bool> m_gameEvents;

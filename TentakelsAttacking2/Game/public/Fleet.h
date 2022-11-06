@@ -8,7 +8,7 @@
 #include "GroupTarget.h"
 #include <memory>
 
-class Fleet : public SpaceObject {
+class Fleet final : public SpaceObject {
 private:
 	std::shared_ptr<GroupTarget> m_target;
 public:

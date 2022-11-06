@@ -6,7 +6,7 @@
 #pragma once
 #include <string>
 
-struct CFiles {
+struct CFiles final {
 	static inline const std::string savesDir = "Saves";
 	static inline const std::string configFile = "Saves/config.tac";
 };

@@ -8,7 +8,7 @@
 #include "Focusable.h"
 #include <functional>
 
-class CheckBox : public UIElement, public Focusable {
+class CheckBox final : public UIElement, public Focusable {
 private:
 	bool m_isEnabled = true;
 	bool m_isChecked = false;

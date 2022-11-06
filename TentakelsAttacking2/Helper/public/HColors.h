@@ -7,7 +7,7 @@
 #include <array>
 #include <raylib.h>
 
-struct Colors {
+struct Colors final {
 private:
 	using ColorArray = std::array<Color, 16>;
 	ColorArray m_colors = {

@@ -11,7 +11,7 @@
 #include "CFiles.hpp"
 #include "CSound.hpp"
 
-struct Constants {
+struct Constants final {
 	CGlobal global;
 	CTextProcecing textProcecing;
 	CPlayer player;

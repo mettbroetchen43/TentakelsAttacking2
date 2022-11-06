@@ -11,7 +11,7 @@
 #include <vector>
 #include <iostream>
 
-class Galaxy {
+class Galaxy final {
 private:
 	Vec2<double> m_dimensions;
 	size_t m_planetCount;

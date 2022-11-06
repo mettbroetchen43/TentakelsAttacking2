@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-class PopUpManager :public EventListener {
+class PopUpManager final : public EventListener {
 private:
 	std::vector<std::unique_ptr<PopUp>> m_popUps;
 	std::vector<PopUp*> m_toDelete;

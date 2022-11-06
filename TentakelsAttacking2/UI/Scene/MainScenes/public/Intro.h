@@ -16,7 +16,7 @@
 class ClassicButton;
 class Title;
 
-class Intro : public Scene {
+class Intro final : public Scene {
 private:
 	std::shared_ptr<Title> m_title = nullptr;
 	std::shared_ptr<ClassicButton> m_btn = nullptr;

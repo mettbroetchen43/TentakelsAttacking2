@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-class AssetManager {
+class AssetManager final {
 private:
 	using FileArray = std::array<std::string, 7>;
 	FileArray m_files = {

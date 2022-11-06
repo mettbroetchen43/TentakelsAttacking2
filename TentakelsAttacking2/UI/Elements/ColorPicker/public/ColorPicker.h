@@ -10,7 +10,7 @@
 #include <memory>
 
 
-class ColorPicker : public UIElement, public Focusable {
+class ColorPicker final : public UIElement, public Focusable {
 private:
 	bool m_isPopUp;
 

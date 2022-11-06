@@ -6,7 +6,7 @@
 #pragma once
 #include "Scene.h"
 
-class MainMenu : public Scene {
+class MainMenu final : public Scene {
 private:
 	void Initialize(Vector2 resolution, AppContext& appContext);
 public:

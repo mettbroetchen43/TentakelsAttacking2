@@ -7,7 +7,7 @@
 #include "EventListener.hpp"
 #include <vector>
 
- class  EventManager {
+ class  EventManager final {
 public:
 	void AddListener(EventListener* eventListener) {
 		m_listeners.push_back(eventListener);

@@ -9,7 +9,7 @@
 
 class ColorPicker;
 
-class ColorPickerCell : public UIElement, public Focusable {
+class ColorPickerCell final : public UIElement, public Focusable {
 private:
 	bool m_enabled = true;
 	Rectangle m_colider;

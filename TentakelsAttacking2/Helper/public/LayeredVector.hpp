@@ -10,7 +10,7 @@
 #include <memory>
 
 template<class T>
-class LayeredVector  {
+class LayeredVector final {
 private:
 	std::vector<std::vector<T*>> m_elements;
 	size_t m_layer = 0;

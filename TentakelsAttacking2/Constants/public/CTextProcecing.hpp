@@ -6,7 +6,7 @@
 #pragma once
 #include <string>
 
-struct CTextProcecing {
+struct CTextProcecing final {
 	static constexpr char enter = '_';
 	static inline const std::string prefix = "...";
 	static constexpr int cursorOffset = 5;

@@ -8,7 +8,7 @@
 
 class SliderAndInputLine;
 
-class SettingsScene : public Scene {
+class SettingsScene final : public Scene {
 private:
 	std::shared_ptr<SliderAndInputLine> m_volume;
 

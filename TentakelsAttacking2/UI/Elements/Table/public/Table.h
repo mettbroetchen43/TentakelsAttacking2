@@ -12,7 +12,7 @@
 #include <memory>
 #include <vector>
 
-class Table : public UIElement, public Focusable {
+class Table final : public UIElement, public Focusable {
 private:
 	bool m_isPopUp;
 

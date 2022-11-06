@@ -14,7 +14,7 @@
 #include "EventListener.hpp"
 #include <string>
 
-struct AppContext : public EventListener {
+struct AppContext final : public EventListener {
 public:
 	SoundManager soundManager;
 	AssetManager assetManager;

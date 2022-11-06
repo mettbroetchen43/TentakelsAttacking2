@@ -6,7 +6,7 @@
 #pragma once
 #include "Vec2.hpp"
 
-struct GroupTarget {
+struct GroupTarget final {
 	int id;
 	Vec2<double> position;
 

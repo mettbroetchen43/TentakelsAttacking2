@@ -12,7 +12,7 @@
 #include <vector>
 
 
-class SoundManager : public EventListener {
+class SoundManager final : public EventListener {
 private:
 	std::unordered_map<SoundType, Sound> m_sounds;
 	std::array<std::string, 5> m_files = {

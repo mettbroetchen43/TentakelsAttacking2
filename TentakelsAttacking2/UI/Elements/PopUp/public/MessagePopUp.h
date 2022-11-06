@@ -7,7 +7,7 @@
 #include "PopUp.h"
 #include "ClassicButton.h"
 
-class MessagePopUp : public PopUp {
+class MessagePopUp final : public PopUp {
 private:
 	void Initialize(Vector2 resolution);
 

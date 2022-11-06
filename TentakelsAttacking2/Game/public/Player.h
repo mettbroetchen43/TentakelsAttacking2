@@ -6,7 +6,7 @@
 #pragma once
 #include "PlayerType.hpp"
 
-class Player {
+class Player final {
 private:
 	unsigned int m_ID;
 	PlayerType m_playerType;

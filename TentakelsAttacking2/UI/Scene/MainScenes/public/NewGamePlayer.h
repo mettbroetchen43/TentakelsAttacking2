@@ -14,7 +14,7 @@ class Table;
 class Focusable;
 class ClassicButton;
 
-class NewGamePlayerScene : public Scene, public EventListener {
+class NewGamePlayerScene final : public Scene, public EventListener {
 private:
 	InputLine<std::string>* m_inputLine;
 	ColorPicker* m_colorPicker;

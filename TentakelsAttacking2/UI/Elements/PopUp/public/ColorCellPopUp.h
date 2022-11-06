@@ -7,7 +7,7 @@
 #include "CellPopUp.h"
 #include "ColorPicker.h"
 
-class ColorCellPopUp : public CellPopUp {
+class ColorCellPopUp final : public CellPopUp {
 private:
 	std::shared_ptr<ColorPicker> m_colorPicker;
 	std::function<void(Color)> m_onClick = [](Color) {};

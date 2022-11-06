@@ -12,7 +12,7 @@
 #include <vector>
 
 
-class PlayerCollection : public EventListener {
+class PlayerCollection final : public EventListener {
 private:
 	std::vector<PlayerData> m_playerData;
 

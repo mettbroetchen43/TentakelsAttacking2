@@ -10,7 +10,7 @@
 #include <cmath>
 
 template<class T>
-struct Vec2 {
+struct Vec2 final {
 	T x, y;
 
 	Vec2(T x, T y)

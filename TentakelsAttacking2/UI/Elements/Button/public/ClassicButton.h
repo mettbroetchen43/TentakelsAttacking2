@@ -7,7 +7,7 @@
 #include "Button.h"
 #include "Focusable.h"
 
-class ClassicButton : public Button, public Focusable {
+class ClassicButton final : public Button, public Focusable {
 private:
 public:
 	ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,

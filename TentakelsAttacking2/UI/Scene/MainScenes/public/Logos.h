@@ -12,7 +12,7 @@ struct AppContext;
 enum class SceneType;
 #define SCENE_LENGTH 5.0
 
-class LogoScene : public Scene {
+class LogoScene final : public Scene {
 private:
 	SceneType m_nextScene = SceneType::INTRO;
 	double m_time;

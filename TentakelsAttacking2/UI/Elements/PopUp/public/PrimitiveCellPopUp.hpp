@@ -8,7 +8,7 @@
 #include "InputLine.hpp"
 
 template<typename EntryType>
-class PrivitiveCellPopUp : public CellPopUp {
+class PrivitiveCellPopUp final : public CellPopUp {
 private:
 	std::shared_ptr<InputLine<EntryType>> m_inputChange;
 	std::function<void(EntryType)> m_onClick = [](EntryType) {};

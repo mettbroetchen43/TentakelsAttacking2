@@ -5,7 +5,7 @@
 
 #pragma once
 
-struct CPlayer {
+struct CPlayer final {
 	size_t minPlayerCount = 2;
 	size_t maxPlayerCount = 7;
 };

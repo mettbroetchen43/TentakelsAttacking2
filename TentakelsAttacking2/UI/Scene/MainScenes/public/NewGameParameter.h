@@ -10,7 +10,7 @@
 class GameEventSettings;
 class SliderAndInputLine;
 
-class NewGameParameterScene : public Scene {
+class NewGameParameterScene final : public Scene {
 private:
 	std::shared_ptr<GameEventSettings> m_eventSettings;
 	std::vector<std::shared_ptr<SliderAndInputLine>> m_slider;

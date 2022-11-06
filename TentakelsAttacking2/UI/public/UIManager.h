@@ -15,7 +15,7 @@
 
 class Scene;
 
-class UIManager : public EventListener {
+class UIManager final : public EventListener {
 private:
 	AppContext& m_appContext;
 	Focus m_focus;

@@ -18,7 +18,7 @@ struct AppContext;
 struct Vector2;
 class UIManager;
 
-class SceneManager : public EventListener {
+class SceneManager final : public EventListener {
 private:
 	UIManager* m_uiManager;
 	PopUpManager m_popUpManager;

@@ -8,7 +8,7 @@
 
 enum class AssetType;
 
-class Picture : public UIElement {
+class Picture final : public UIElement {
 private:
 	Texture2D* m_texture = nullptr;
 	Rectangle m_colider = { 0.0f,0.0f,0.0f,0.0f };

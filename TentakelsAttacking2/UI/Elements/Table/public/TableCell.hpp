@@ -12,7 +12,7 @@
 #include <functional>
 
 template<typename EntryType>
-class TableCell : public AbstractTableCell {
+class TableCell final : public AbstractTableCell {
 protected:
 	EntryType m_value;
 

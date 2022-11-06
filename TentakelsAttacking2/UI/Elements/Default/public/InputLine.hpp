@@ -13,7 +13,7 @@
 #include <functional>
 
 template <class T>
-class InputLine : public UIElement, public Focusable {
+class InputLine final : public UIElement, public Focusable {
 protected:
 	bool m_isEnabled = true;
 	unsigned int m_charLimit;

@@ -6,7 +6,7 @@
 #pragma once
 #include "SliderButton.h"
 
-class Slider: public UIElement {
+class Slider final : public UIElement {
 private:
 	bool m_isEnabled = true;
 	bool m_isHorizontal;

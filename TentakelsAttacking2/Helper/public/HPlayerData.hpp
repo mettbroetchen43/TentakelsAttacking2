@@ -7,7 +7,7 @@
 #include <raylib.h>
 #include <string>
 
-struct PlayerData {
+struct PlayerData final {
 	unsigned int ID;
 	std::string name;
 	Color color;

@@ -8,7 +8,7 @@
 #include "InputLine.hpp"
 #include <functional>
 
-class DeletePlayerPopUp : public CellPopUp {
+class DeletePlayerPopUp final : public CellPopUp {
 private:
 	std::shared_ptr<InputLine<int>> m_inputLine;
 	std::function<void(unsigned int)> m_onClick;

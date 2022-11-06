@@ -19,10 +19,10 @@ class Focusable;
 class PopUp;
 enum class SceneType;
 
-class CloseWindowEvent :public Event {
+class CloseWindowEvent final :public Event {
 };
 
-class PlaySoundEvent : public Event {
+class PlaySoundEvent final : public Event {
 public:
 	PlaySoundEvent(SoundType soundType)
 		:m_soundType(soundType) {}
@@ -33,7 +33,7 @@ public:
 private:
 	SoundType m_soundType;
 };
-class SetMasterVolumeEvent : public Event {
+class SetMasterVolumeEvent final : public Event {
 private:
 	float m_level;
 
@@ -45,7 +45,7 @@ public:
 		return m_level;
 	}
 };
-class MuteMasterVolumeEvent : public Event {
+class MuteMasterVolumeEvent final : public Event {
 private:
 	bool m_mute;
 
@@ -70,42 +70,37 @@ public:
 		return m_focusable;
 	}
 };
-class NewFocusElementEvent : public FocusEvent {
+class NewFocusElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
-class NewFocusPopUpElementEvent : public FocusEvent {
+class NewFocusPopUpElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
-class DeleteFocusElementEvent : public FocusEvent {
+class DeleteFocusElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
-class DeleteFocusPopUpElementEvent : public FocusEvent {
+class DeleteFocusPopUpElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
-class SelectFocusElementEvent : public FocusEvent {
+class SelectFocusElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
-class SelectFocusPopUpElementEvent : public FocusEvent {
+class SelectFocusPopUpElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
-class NewFocusPopUpLayerEvent :public Event {
-};
-class NewFocusLayerEvent :public Event {
-};
-class DeleteFocusPopUpLayerEvent : public Event {
-};
-class DeleteFocusLayerEvent : public Event {
-};
-class ClearFocusEvent : public Event {
-};
+class NewFocusPopUpLayerEvent final :public Event { };
+class NewFocusLayerEvent final :public Event { };
+class DeleteFocusPopUpLayerEvent final : public Event { };
+class DeleteFocusLayerEvent final : public Event { };
+class ClearFocusEvent final : public Event { };
 
-class SwitchSceneEvent :public Event {
+class SwitchSceneEvent final :public Event {
 private:
 	SceneType m_sceneType;
 public:
@@ -115,7 +110,7 @@ public:
 		return m_sceneType;
 	}
 };
-class ClosePopUpEvent : public Event {
+class ClosePopUpEvent final : public Event {
 private:
 	PopUp* m_popUp;
 
@@ -142,13 +137,13 @@ public:
 		return m_subTitle;
 	}
 };
-class ShowMessagePopUpEvent : public PopUpEvent {
+class ShowMessagePopUpEvent final : public PopUpEvent {
 public:
 	using PopUpEvent::PopUpEvent;
 };
 
 template <typename EntryType>
-class ShowCellPopUpEvent : public PopUpEvent {
+class ShowCellPopUpEvent final : public PopUpEvent {
 private:
 	EntryType m_currentValue;
 	std::function<void(EntryType)> m_onClick = [](EntryType) {};
@@ -167,7 +162,7 @@ public:
 	}
 
 };
-class ShowDeletePlayerEvent : public PopUpEvent {
+class ShowDeletePlayerEvent final : public PopUpEvent {
 	std::function<void(unsigned int)> m_onClick = [](unsigned int) {};
 
 public:
@@ -180,4 +175,4 @@ public:
 	}
 };
 
-class ToggleFullscreenEvent : public Event { };
+class ToggleFullscreenEvent final : public Event { };

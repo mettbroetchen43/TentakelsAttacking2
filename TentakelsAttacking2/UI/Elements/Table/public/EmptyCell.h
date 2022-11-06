@@ -6,7 +6,7 @@
 #pragma once
 #include "AbstractTableCell.h"
 
-class EmptyCell : public AbstractTableCell {
+class EmptyCell final : public AbstractTableCell {
 private:
 
 public:

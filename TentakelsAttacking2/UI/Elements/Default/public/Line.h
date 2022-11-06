@@ -7,7 +7,7 @@
 #include "UIElement.hpp"
 #include <raylib.h>
 
-class Line : public UIElement {
+class Line final : public UIElement {
 private:
 	float m_thick;
 	Rectangle m_colider;

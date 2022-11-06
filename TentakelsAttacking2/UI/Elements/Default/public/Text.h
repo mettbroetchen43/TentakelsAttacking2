@@ -7,7 +7,7 @@
 #include "UIElement.hpp"
 #include <string>
 
-class Text : public UIElement {
+class Text final : public UIElement {
 private:
 	std::string m_text;
 	std::string m_toRender;

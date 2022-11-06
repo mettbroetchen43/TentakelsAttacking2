@@ -7,7 +7,7 @@
 #pragma once
 #include <random>
 
-class Random {
+class Random final {
 public:
 	static Random& GetInstance();
 

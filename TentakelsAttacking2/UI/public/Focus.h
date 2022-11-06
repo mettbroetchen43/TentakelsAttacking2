@@ -10,7 +10,7 @@
 
 class Focusable;
 
-class Focus : public EventListener {
+class Focus final : public EventListener {
 private:
 	Focusable* m_currentFocus = nullptr;
 	LayeredVector<Focusable> m_focus;

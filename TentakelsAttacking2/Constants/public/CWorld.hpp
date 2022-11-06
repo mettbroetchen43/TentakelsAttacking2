@@ -5,7 +5,7 @@
 
 #pragma once
 
-struct CWorld {
+struct CWorld final {
 	size_t minPlanetCount = 20;
 	size_t currentPlanetCount = 50;
 	size_t maxPlanetCount = 100;

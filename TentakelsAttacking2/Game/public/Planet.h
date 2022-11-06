@@ -6,7 +6,7 @@
 #pragma once
 #include "SpaceObject.h"
 
-class Planet: public SpaceObject {
+class Planet final : public SpaceObject {
 private:
 	int m_production;
 	size_t m_maxShips;
