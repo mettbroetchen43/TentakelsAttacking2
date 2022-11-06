@@ -6,6 +6,7 @@
 #include "GameManager.h"
 #include "AppContext.h"
 
+// player
 bool GameManager::ValidAddPlayer() const {
 	return AppContext::GetInstance().constants.player.maxPlayerCount
 		> m_players.size();
@@ -137,6 +138,7 @@ void GameManager::CheckPlayerCount() const {
 	appContext.eventManager.InvokeEvent(event);
 }
 
+// events
 void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 	if (event->GetType() == GameEventType::GLOBAL) {
 		for (auto e : settableGameEventTypes) {
@@ -156,13 +158,6 @@ GameManager::GameManager() {
 	for (auto e : settableGameEventTypes) {
 		m_gameEvents[e] = true;
 	}
-}
-
-std::vector<std::shared_ptr<Player>>& GameManager::GetPlayers() {
-	return m_players;
-}
-std::vector<std::shared_ptr<Player>> const& GameManager::GetPlayers() const {
-	return m_players;
 }
 
 void GameManager::Update() {

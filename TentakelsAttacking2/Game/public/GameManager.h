@@ -16,6 +16,7 @@ private:
 	std::vector<std::shared_ptr<Player>> m_players;
 	std::unordered_map<GameEventType, bool> m_gameEvents;
 
+	// player
 	[[nodiscard]] bool ValidAddPlayer() const;
 	[[nodiscard]] unsigned int GetNextID() const;
 	[[nodiscard]] bool IsExistingID(unsigned int ID) const;
@@ -26,13 +27,11 @@ private:
 	void ResetPlayer();
 	void CheckPlayerCount() const;
 
+	// events
 	void SetGameEventActive(UpdateCheckGameEvent const* event);
 
 public:
 	GameManager();
-
-	[[nodiscard]] std::vector<std::shared_ptr<Player>>& GetPlayers();
-	[[nodiscard]] std::vector<std::shared_ptr<Player>> const& GetPlayers() const;
 
 	void Update();
 
