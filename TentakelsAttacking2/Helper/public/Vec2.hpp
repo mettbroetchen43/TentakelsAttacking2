@@ -47,10 +47,10 @@ struct Vec2 final {
 		return Vec2<T>(x * other.x, y * other.y);
 	}
 
-	template<typename To>
-	Vec2<To> To() const {
-		static_assert(std::is_floating_point_v<To>, "floting point required");
-		return Vec2<To>(static_cast<To>(x), static_cast<To>(y));
+	template<typename Scalar>
+	Vec2<Scalar> To() const {
+		static_assert(std::is_floating_point_v<Scalar>, "floting point required");
+		return Vec2<Scalar>(static_cast<Scalar>(x), static_cast<Scalar>(y));
 	}
 	[[nodiscard]] std::string ToString() const {
 		return "X: " + std::to_string(x) + " Y: " + std::to_string(y);

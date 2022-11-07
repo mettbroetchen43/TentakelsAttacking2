@@ -10,7 +10,7 @@
 #include "Text.h"
 #include "Title.h"
 #include "SceneType.hpp"
-#include "Hrandom.h"
+#include "HRandom.h"
 #include "HInput.h"
 
 
