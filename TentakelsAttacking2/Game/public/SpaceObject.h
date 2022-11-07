@@ -6,11 +6,12 @@
 #pragma once
 #include <memory>
 #include "Vec2.hpp"
+#include "LogicUpdate.hpp"
 
 class Player;
 
-class SpaceObject {
-private:
+class SpaceObject : public LogicUpdate {
+protected:
 	using vec2pos = Vec2<int>;
 	unsigned int m_ID;
 	size_t m_ships = 0;
@@ -28,9 +29,9 @@ public:
 	void SetPos(vec2pos pos);
 	[[nodiscard]] vec2pos GetPos() const;
 
-	virtual void PreUpdate() = 0;
-	virtual void MainUpdate() = 0;
-	virtual void PostUpdate() = 0;
+	virtual void PreUpdate() override = 0;
+	virtual void MainUpdate() override = 0;
+	virtual void PostUpdate() override = 0;
 
 	friend size_t operator+ (SpaceObject const& object, size_t ships);
 	friend size_t operator+ (size_t ships, SpaceObject const& object);

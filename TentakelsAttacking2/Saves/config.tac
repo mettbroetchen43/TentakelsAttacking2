@@ -26,3 +26,11 @@
 // Sound
 0 / Volume Mute (1 = mute)
 100.000000 / Master Volume (0.0 - 100.0)
+
+// Planet
+200 / Max Ships
+10 / Starting Ships Multiplicator for Humans
+5 / Starting Ships Multiplicator for Global
+10 / HomeWorld Production
+3 / Min Production
+7 / Max Production
