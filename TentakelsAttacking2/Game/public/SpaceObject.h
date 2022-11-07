@@ -28,9 +28,9 @@ public:
 	void SetPos(vec2pos pos);
 	[[nodiscard]] vec2pos GetPos() const;
 
-	void PreUpdate();
-	void MainUpdate();
-	void PostUpdate();
+	virtual void PreUpdate() = 0;
+	virtual void MainUpdate() = 0;
+	virtual void PostUpdate() = 0;
 
 	friend size_t operator+ (SpaceObject const& object, size_t ships);
 	friend size_t operator+ (size_t ships, SpaceObject const& object);
