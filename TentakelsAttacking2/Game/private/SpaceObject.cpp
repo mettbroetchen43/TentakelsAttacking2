@@ -25,6 +25,10 @@ SpaceObject::vec2pos SpaceObject::GetPos() const {
 	return m_position;
 }
 
+void SpaceObject::PreUpdate() {}
+void SpaceObject::MainUpdate() {}
+void SpaceObject::PostUpdate() {}
+
 SpaceObject& SpaceObject::operator+=(size_t ships) {
 	m_ships += ships;
 	return *this;

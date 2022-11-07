@@ -28,6 +28,10 @@ public:
 	void SetPos(vec2pos pos);
 	[[nodiscard]] vec2pos GetPos() const;
 
+	void PreUpdate();
+	void MainUpdate();
+	void PostUpdate();
+
 	friend size_t operator+ (SpaceObject const& object, size_t ships);
 	friend size_t operator+ (size_t ships, SpaceObject const& object);
 	friend size_t operator+ (SpaceObject const& lhs, SpaceObject const& rhs);
