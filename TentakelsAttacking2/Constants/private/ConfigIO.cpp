@@ -102,6 +102,15 @@ void LoadConfig() {
 	};
 	addFloat(floatEltries, file, input, nextEntry);
 
+	size_tEntries = {
+		// Planet
+		&constants.planet.maxShips,
+		&constants.planet.homeworldProduction,
+		&constants.planet.minProduction,
+		&constants.planet.maxProduction,
+	};
+	addSize_t(size_tEntries, file, input, nextEntry);
+
 	file.close();
 
 #ifdef _DEBUG
@@ -157,6 +166,12 @@ void SaveConfig() {
 	headline("Sound", toSave);
 	entry(std::to_string(constants.sound.muteVolume), "Volume Mute (1 = mute)", toSave);
 	entry(std::to_string(constants.sound.masterVolume), "Master Volume (0.0 - 100.0)", toSave);
+
+	headline("Planet", toSave);
+	entry(std::to_string(constants.planet.maxShips), "Max Ships", toSave);
+	entry(std::to_string(constants.planet.homeworldProduction), "HomeWorld Production", toSave);
+	entry(std::to_string(constants.planet.minProduction), "Min Production", toSave);
+	entry(std::to_string(constants.planet.maxProduction), "Max Production", toSave);
 
 	file << toSave;
 	file.close();

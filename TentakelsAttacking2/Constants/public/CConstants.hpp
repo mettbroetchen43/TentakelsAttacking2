@@ -10,6 +10,7 @@
 #include "CWorld.hpp"
 #include "CFiles.hpp"
 #include "CSound.hpp"
+#include "CPlanet.hpp"
 
 struct Constants final {
 	CGlobal global;
@@ -18,4 +19,5 @@ struct Constants final {
 	CWorld world;
 	CFiles files;
 	CSound sound;
+	CPlanet planet;
 };
