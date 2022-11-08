@@ -26,7 +26,7 @@ Vector2 Table::GetElementSize() const {
 		m_size.y / m_rows
 	};
 }
-[[nodiscard]] void Table::CheckValidRowColumn(size_t row, size_t column) const {
+void Table::CheckValidRowColumn(size_t row, size_t column) const {
 	if (row < 0 or m_rows <= row) {
 		throw std::out_of_range("row out of range: " + row);
 	}
