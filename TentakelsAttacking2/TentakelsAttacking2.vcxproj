@@ -79,6 +79,8 @@
       <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -113,6 +115,8 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +156,7 @@
     <ClInclude Include="Events\public\GenerelEvents.hpp" />
     <ClInclude Include="Events\public\UIEvents.hpp" />
     <ClInclude Include="Events\public\MainEvent.hpp" />
+    <ClInclude Include="Game\public\Galaxy.h" />
     <ClInclude Include="Game\public\GameManager.h" />
     <ClInclude Include="Game\public\Planet.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
@@ -228,6 +233,7 @@
     <ClCompile Include="Game\private\GameManager.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="Game\private\Planet.cpp" />
+    <ClCompile Include="Game\private\Galaxy.cpp" />
     <ClCompile Include="Helper\private\HRandom.cpp" />
     <ClCompile Include="Game\private\Player.cpp" />
     <ClCompile Include="Helper\private\HTextProcessing.cpp" />

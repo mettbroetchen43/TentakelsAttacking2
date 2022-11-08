@@ -13,4 +13,7 @@ struct CPlanet final {
 	size_t homeworldProduction = 10;
 	size_t minProduction = 3;
 	size_t maxProduction = 7;
+
+	float homeworldSpacing = 0.3f;
+	float globalSpacing = 0.05f;
 };

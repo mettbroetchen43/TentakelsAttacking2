@@ -264,6 +264,9 @@
     <ClInclude Include="Constants\public\CPlanet.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game\public\Galaxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -429,6 +432,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game\private\Planet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\private\Galaxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

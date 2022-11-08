@@ -113,6 +113,13 @@ void LoadConfig() {
 	};
 	addSize_t(size_tEntries, file, input, nextEntry);
 
+	floatEltries = {
+		// Planet
+		&constants.planet.homeworldSpacing,
+		&constants.planet.globalSpacing,
+	};
+	addFloat(floatEltries, file, input, nextEntry);
+
 	file.close();
 
 #ifdef _DEBUG
@@ -176,6 +183,8 @@ void SaveConfig() {
 	entry(std::to_string(constants.planet.homeworldProduction), "HomeWorld Production", toSave);
 	entry(std::to_string(constants.planet.minProduction), "Min Production", toSave);
 	entry(std::to_string(constants.planet.maxProduction), "Max Production", toSave);
+	entry(std::to_string(constants.planet.homeworldSpacing), "Homeworld Spacing (0.0 - 100.0)", toSave);
+	entry(std::to_string(constants.planet.globalSpacing), "Global Spacing (0.0 - 100.0)", toSave);
 
 	file << toSave;
 	file.close();
