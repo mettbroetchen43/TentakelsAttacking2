@@ -8,7 +8,7 @@
 
 class Planet final : public SpaceObject {
 private:
-	using vec2pos = Vec2<int>;
+	using vec2pos = Vec2<size_t>;
 	bool m_isHomePlanet;
 	int m_planetNumber;
 	size_t m_maxShips; // set from config
@@ -17,4 +17,6 @@ private:
 public:
 	Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
 		bool isHomePlanet, int m_planetNumber);
+
+	[[nodiscard]] bool IsHomePlanet() const;
 };

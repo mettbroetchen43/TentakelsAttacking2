@@ -12,7 +12,7 @@ class Player;
 
 class SpaceObject /*: public LogicUpdate */ {
 protected:
-	using vec2pos = Vec2<int>;
+	using vec2pos = Vec2<size_t>;
 	unsigned int m_ID;
 	size_t m_ships = 0;
 	vec2pos m_position;
@@ -22,6 +22,8 @@ public:
 	SpaceObject(unsigned int ID, vec2pos position, std::shared_ptr<Player> player);
 	SpaceObject(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Player> player);
 	virtual ~SpaceObject() = default;
+
+	[[nodiscard]] unsigned int GetID() const;
 
 	void SetPlayer(std::shared_ptr<Player> player);
 	[[nodiscard]] std::shared_ptr<Player> GetPlayer() const;

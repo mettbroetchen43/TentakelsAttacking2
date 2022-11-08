@@ -138,3 +138,6 @@ public:
 		return m_lastRound;
 	}
 };
+
+class GenerateGalaxyEvent : public Event { };
+class GalaxyGeneratedUIEvent : public Event { };

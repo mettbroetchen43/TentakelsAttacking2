@@ -11,6 +11,10 @@ SpaceObject::SpaceObject(unsigned int ID, vec2pos position, std::shared_ptr<Play
 SpaceObject::SpaceObject(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Player> player)
 	: m_ID(ID), m_position(position), m_player(player), m_ships(ships) {}
 
+unsigned int SpaceObject::GetID() const {
+	return m_ID;
+}
+
 void SpaceObject::SetPlayer(std::shared_ptr<Player> player) {
 	m_player = player;
 }

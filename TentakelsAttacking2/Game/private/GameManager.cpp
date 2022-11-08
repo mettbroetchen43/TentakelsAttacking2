@@ -5,6 +5,7 @@
 
 #include "GameManager.h"
 #include "AppContext.h"
+#include "GenerelEvents.hpp"
 
 // player
 bool GameManager::ValidAddPlayer() const {
@@ -153,6 +154,25 @@ void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
 }
 
+void GameManager::GenerateGalaxy() {
+	AppContext& appContext = AppContext::GetInstance();
+	Vec2<size_t> size = {
+		appContext.constants.world.currentDimensionX,
+		appContext.constants.world.currentDimensionY
+	};
+	auto galaxy = std::make_shared<Galaxy>(
+		size,
+		appContext.constants.world.currentPlanetCount,
+		m_players
+	);
+
+	if (galaxy->IsValidGalaxy()) {
+		m_galaxy = galaxy;
+		auto event = GalaxyGeneratedUIEvent();
+		appContext.eventManager.InvokeEvent(event);
+	}
+}
+
 GameManager::GameManager() {
 	AppContext::GetInstance().eventManager.AddListener(this);
 	for (auto e : settableGameEventTypes) {
@@ -199,6 +219,12 @@ void GameManager::OnEvent(Event const& event) {
 	if (auto const* GameEvent = dynamic_cast<InitialCheckGameEventDataEvent const*>(&event)) {
 		auto updateEvent = UpdateCheckGameEventsUI(&m_gameEvents);
 		AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
+		return;
+	}
+
+	// Galaxy
+	if (auto const* GalaxyEvent = dynamic_cast<GenerateGalaxyEvent const*>(&event)) {
+		GenerateGalaxy();
 		return;
 	}
 }

@@ -18,9 +18,7 @@ struct Vec2 final {
 	T x, y;
 
 	Vec2(T x, T y)
-		: x(x), y(y) {
-		static_assert(std::is_floating_point_v<T>, "floting point required");
-	}
+		: x(x), y(y) { }
 	Vec2(const Vec2<T>& toCopy)
 		: x(toCopy.x), y(toCopy.y) {}
 

@@ -27,5 +27,10 @@ Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player
 			appContext.constants.planet.minProduction
 		));
 		m_production = r + appContext.constants.planet.minProduction;
+		m_ships = m_production * appContext.constants.planet.statringGlobalShipsMultiplicator;
 	}
+}
+
+bool Planet::IsHomePlanet() const {
+	return m_isHomePlanet;
 }
