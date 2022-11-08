@@ -10,6 +10,7 @@
 #include "GenerelEvents.hpp"
 #include "GameEventTypes.hpp"
 #include <vector>
+#include <memory>
 
 class GameManager final : public EventListener {
 private:

@@ -10,6 +10,7 @@
 #include <unordered_map>
 #include <array>
 #include <vector>
+#include <string>
 
 
 class SoundManager final : public EventListener {
