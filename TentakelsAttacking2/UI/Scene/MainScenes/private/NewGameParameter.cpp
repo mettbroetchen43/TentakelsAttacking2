@@ -207,7 +207,10 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		"Next",
 		SoundType::ACCEPTED
 		);
-	nextBtn->SetEnabled(false);
+	nextBtn->SetOnClick([]() {
+		auto event = GenerateGalaxyEvent();
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		});
 	m_elements.push_back(nextBtn);
 }
 
@@ -235,7 +238,25 @@ void NewGameParameterScene::SetRandom() const {
 	}
 }
 
+void NewGameParameterScene::NextScene() const {
+	auto event = SwitchSceneEvent(SceneType::TEST); // TODO chance
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+
 NewGameParameterScene::NewGameParameterScene(Vector2 resolution)
 	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT) {
 	Initialize(resolution);
+	AppContext::GetInstance().eventManager.AddListener(this);
+}
+
+NewGameParameterScene::~NewGameParameterScene() {
+	AppContext::GetInstance().eventManager.RemoveListener(this);
+}
+
+void NewGameParameterScene::OnEvent(Event const& event) {
+
+	if (auto const* GalaxyEvent = dynamic_cast<GalaxyGeneratedUIEvent const*>(&event)) {
+		NextScene();
+		return;
+	}
 }
