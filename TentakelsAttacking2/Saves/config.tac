@@ -34,5 +34,5 @@
 10 / HomeWorld Production
 3 / Min Production
 7 / Max Production
-0.300000 / Homeworld Spacing (0.0 - 100.0)
-0.050000 / Global Spacing (0.0 - 100.0)
+0.300000 / Homeworld Spacing (0.0 - 1.0)
+0.050000 / Global Spacing (0.0 - 1.0)

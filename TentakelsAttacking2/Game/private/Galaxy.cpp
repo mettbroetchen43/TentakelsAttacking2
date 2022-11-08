@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "HRandom.h"
 #include "UIEvents.hpp"
+#include <iostream>
 
 unsigned int Galaxy::GetNextID() const {
 
@@ -29,20 +30,32 @@ unsigned int Galaxy::GetNextID() const {
     }
 }
 
-void Galaxy::InitialzePlanets(int planetCount,
-    std::vector<std::shared_ptr<Player>> players) {
+void Galaxy::InitialzePlanets(size_t planetCount,
+    std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer) {
     
-    int currentPlanet = 1;
-    AppContext& appContext = AppContext::GetInstance();
-    Random& random = Random::GetInstance();
+    int currentPlanet = GenerateHomePlanets(players);
+    if (m_validGalaxy) {
+        GenerateOtherPlanets(planetCount, currentPlanet, neutralPlayer);
+    }
+}
+int Galaxy::GenerateHomePlanets(std::vector<std::shared_ptr<Player>> players) {
 
-    int counter = 0;
+    Random& random = Random::GetInstance();
+    AppContext& appContext = AppContext::GetInstance();
+    int currentPlanet = 1; 
+
+
+
     for (auto& p : players) {
+        int counter = 0;
         while (true) {
             Vec2<size_t> newPosition = {
                static_cast<size_t>(random.random(m_size.x)),
                static_cast<size_t>(random.random(m_size.y))
             };
+
+            std::cout << "H | " << newPosition.x << " : " <<
+                newPosition.y << " | " << counter << '\n';
 
             auto newPlanet = std::make_shared<Planet>(
                 GetNextID(),
@@ -50,7 +63,7 @@ void Galaxy::InitialzePlanets(int planetCount,
                 p,
                 true,
                 currentPlanet
-            );
+                );
 
             if (IsValidNewPlanet(newPlanet, appContext)) {
                 m_objects.push_back(newPlanet);
@@ -63,8 +76,55 @@ void Galaxy::InitialzePlanets(int planetCount,
 
             if (counter > 10) {
                 m_validGalaxy = false;
-                auto event = ShowMessagePopUpEvent("Galaxy", "Unable to generate the Galaxy. To many Plantes.");
+                auto event = ShowMessagePopUpEvent("Galaxy", "Unable to generate the Galaxy.\nTo many Home-Plantes.");
                 appContext.eventManager.InvokeEvent(event);
+                return 0;
+            }
+        }
+    }
+
+    return currentPlanet;
+}
+void Galaxy::GenerateOtherPlanets(size_t planetCount, int currentPlanet,
+    std::shared_ptr<Player> player) {
+
+    AppContext& appContext = AppContext::GetInstance();
+    Random& random = Random::GetInstance();
+
+
+    for (;currentPlanet <= planetCount; ++currentPlanet) {
+        int counter = 0;
+        while (true) {
+            Vec2<size_t> newPosition = {
+                static_cast<size_t>(random.random(m_size.x)),
+                static_cast<size_t>(random.random(m_size.y))
+            };
+
+            std::cout << "O | " << newPosition.x << " : " <<
+                newPosition.y << " | " << counter << '\n';
+
+            auto newPlanet = std::make_shared<Planet>(
+                GetNextID(),
+                newPosition,
+                player,
+                false,
+                currentPlanet
+                );
+
+            if (IsValidNewPlanet(newPlanet, appContext)) {
+                m_objects.push_back(newPlanet);
+                m_planets.push_back(newPlanet);
+                ++currentPlanet;
+                break;
+            }
+
+            ++counter;
+
+            if (counter > 10) {
+                m_validGalaxy = false;
+                auto event = ShowMessagePopUpEvent("Galaxy", "Unable to generate the Galaxy.\nTo many Plantes.");
+                appContext.eventManager.InvokeEvent(event);
+                return;
             }
         }
     }
@@ -81,7 +141,7 @@ bool Galaxy::IsValidNewPlanet(std::shared_ptr<Planet> newPlanet,
     double spacing = m_size.x * factor;
 
     for (auto& p : m_planets) {
-        double currentSpacing = p->GetPos().Length() - newPlanet->GetPos().Length();
+        double currentSpacing = (p->GetPos() - newPlanet->GetPos()).Length();
         if (currentSpacing < spacing) {
             validPlanet = false;
             break;
@@ -91,11 +151,11 @@ bool Galaxy::IsValidNewPlanet(std::shared_ptr<Planet> newPlanet,
     return validPlanet;
 }
 
-Galaxy::Galaxy(Vec2<size_t> size, int planetCount,
-    std::vector<std::shared_ptr<Player>> players)
+Galaxy::Galaxy(Vec2<size_t> size, size_t planetCount,
+    std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer)
     : m_size(size) {
 
-    InitialzePlanets(planetCount, players);
+    InitialzePlanets(planetCount, players, neutralPlayer);
 }
 
 bool Galaxy::IsValidGalaxy() const {

@@ -23,11 +23,14 @@ private:
 	Vec2<size_t> m_size;
 
 	[[nodiscard]] unsigned int GetNextID() const;
-	void InitialzePlanets(int planetCount, std::vector<std::shared_ptr<Player>> players);
+	void InitialzePlanets(size_t planetCount, std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer);
+	[[nodiscard]] int GenerateHomePlanets(std::vector<std::shared_ptr<Player>> players);
+	void GenerateOtherPlanets(size_t PlanetCount, int currentPlanet, std::shared_ptr<Player> player);
 	[[nodiscard]] bool IsValidNewPlanet(std::shared_ptr<Planet> newPlanet, AppContext const& appContext) const;
 
 public:
-	Galaxy(Vec2<size_t> size, int planetCount, std::vector<std::shared_ptr<Player>> players);
+	Galaxy(Vec2<size_t> size, size_t planetCount, std::vector<std::shared_ptr<Player>> players,
+		std::shared_ptr<Player> neutralPlayer);
 
 	[[nodiscard]] bool IsValidGalaxy() const;
 };

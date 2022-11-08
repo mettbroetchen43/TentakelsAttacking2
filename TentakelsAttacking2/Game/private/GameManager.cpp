@@ -163,7 +163,8 @@ void GameManager::GenerateGalaxy() {
 	auto galaxy = std::make_shared<Galaxy>(
 		size,
 		appContext.constants.world.currentPlanetCount,
-		m_players
+		m_players,
+		m_npcs[PlayerType::NEUTRAL]
 	);
 
 	if (galaxy->IsValidGalaxy()) {
@@ -178,6 +179,7 @@ GameManager::GameManager() {
 	for (auto e : settableGameEventTypes) {
 		m_gameEvents[e] = true;
 	}
+	m_npcs[PlayerType::NEUTRAL] = std::make_shared<Player>(100, PlayerType::NEUTRAL);
 }
 
 void GameManager::Update() {

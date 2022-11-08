@@ -15,6 +15,7 @@
 
 class GameManager final : public EventListener {
 private:
+	std::unordered_map<PlayerType, std::shared_ptr<Player>> m_npcs;
 	std::vector<std::shared_ptr<Player>> m_players;
 	std::unordered_map<GameEventType, bool> m_gameEvents;
 	std::shared_ptr<Galaxy> m_galaxy = nullptr;
