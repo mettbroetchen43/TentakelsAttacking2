@@ -81,7 +81,7 @@ void UIManager::UILoop() {
 }
 
 UIManager::UIManager()
-	: m_appContext(AppContext::GetInstance()), m_resolution({ 0.0f,0.0f }), m_sceneManager(this) {
+	: m_appContext(AppContext::GetInstance()), m_resolution({ 0.0f,0.0f }), m_sceneManager(this),m_closeWindow(false) {
 	SetTargetFPS(60);
 	SetExitKey(KeyboardKey::KEY_NULL);
 
