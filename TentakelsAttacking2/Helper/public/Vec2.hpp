@@ -5,7 +5,11 @@
 
 #pragma once
 #include <string>
+#ifdef USE_FMT_FORMAT
+#include <fmt/format.h>
+#else
 #include <format>
+#endif
 #include <stdexcept>
 #include <cmath>
 
@@ -31,7 +35,13 @@ struct Vec2 final {
 		return std::sqrt((X * X) + (Y * Y));
 	}
 	[[nodiscard]] std::string Display() const {
-		return std::format("x -> {} / y -> {}", x, y);
+		return
+#ifdef USE_FMT_FORMAT
+			fmt::format(
+#else
+			std::format(
+#endif
+				"x -> {} / y -> {}", x, y);
 	}
 
 	bool operator== (const Vec2<T>& other) const {
