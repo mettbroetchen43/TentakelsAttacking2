@@ -22,7 +22,7 @@ private:
 	SceneManager m_sceneManager;
 	GameManager m_gameManager;
 	Vector2 m_resolution;
-	bool m_closeWindow;
+	bool m_closeWindow = false;
 
 	void ToggleFullScreen(bool first = false);
 
