@@ -5,7 +5,7 @@
 
 #pragma once
 #include <raylib.h>
-
+#include <cstddef>
 // Colors
 [[nodiscard]] bool operator==(Color lhs, Color rhs);
 [[nodiscard]] bool operator!=(Color lhs, Color rhs);

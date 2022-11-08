@@ -6,6 +6,7 @@
 #pragma once
 #include "Vec2.hpp"
 #include <string>
+#include <memory>
 
 class Galaxy;
 class Player;
