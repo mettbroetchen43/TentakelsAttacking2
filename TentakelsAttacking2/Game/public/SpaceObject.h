@@ -10,7 +10,7 @@
 
 class Player;
 
-class SpaceObject : public LogicUpdate {
+class SpaceObject /*: public LogicUpdate */ {
 protected:
 	using vec2pos = Vec2<int>;
 	unsigned int m_ID;
@@ -28,10 +28,6 @@ public:
 
 	void SetPos(vec2pos pos);
 	[[nodiscard]] vec2pos GetPos() const;
-
-	virtual void PreUpdate() override = 0;
-	virtual void MainUpdate() override = 0;
-	virtual void PostUpdate() override = 0;
 
 	friend size_t operator+ (SpaceObject const& object, size_t ships);
 	friend size_t operator+ (size_t ships, SpaceObject const& object);
