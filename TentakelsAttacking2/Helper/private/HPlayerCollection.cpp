@@ -178,7 +178,7 @@ Color PlayerCollection::GetColorByID(unsigned int ID) const {
 			return p.color;
 		}
 	}
-	return PINK;
+	return WHITE;
 }
 
 void PlayerCollection::OnEvent(Event const& event) {
