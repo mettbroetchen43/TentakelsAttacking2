@@ -141,3 +141,17 @@ public:
 
 class GenerateGalaxyEvent : public Event { };
 class GalaxyGeneratedUIEvent : public Event { };
+
+class GetGalaxyCopy : public Event { };
+class SendGalaxyCopy : public Event {
+private:
+	Galaxy m_galaxy;
+
+public:
+	SendGalaxyCopy(Galaxy galaxy)
+		: m_galaxy(galaxy) { }
+
+	[[nodiscard]] Galaxy GetGalaxy() const {
+		return m_galaxy;
+	}
+};

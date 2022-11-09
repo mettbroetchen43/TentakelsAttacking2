@@ -229,4 +229,9 @@ void GameManager::OnEvent(Event const& event) {
 		GenerateGalaxy();
 		return;
 	}
+	if (auto const* GalaxyEvent = dynamic_cast<GetGalaxyCopy const*>(&event)) {
+		auto event = SendGalaxyCopy(*m_galaxy);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		return;
+	}
 }
