@@ -33,7 +33,7 @@ void GalaxyScene::Initialize() {
 	m_horisontalSlider->SetScrolling(true);
 	m_elements.push_back(m_horisontalSlider);
 
-	// Btn
+	// btn
 	m_zoomInBtn = std::make_shared<ClassicButton>(
 		100,
 		GetElementPosition(1.0f, 1.0f),
@@ -65,6 +65,8 @@ void GalaxyScene::Initialize() {
 		galaxySize.x * m_resolution.x,
 		galaxySize.y * m_resolution.y
 	};
+
+
 }
 
 void GalaxyScene::UpdateGalaxy() {}
@@ -88,9 +90,20 @@ void GalaxyScene::OnEvent(Event const& event) {
 void GalaxyScene::Render(AppContext const& appContext) {
 	Scene::Render(appContext);
 
+	for (auto& e : m_galaxyElements) {
+		e.Render(appContext);
+	}
+
 	DrawRectangleLinesEx(
 		m_galaxyColider,
 		3.0f,
 		WHITE
 	);
+}
+void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	Scene::CheckAndUpdate(mousePosition, appContext);
+
+	for (auto& e : m_galaxyElements) {
+		e.CheckAndUpdate(mousePosition, appContext);
+	}
 }

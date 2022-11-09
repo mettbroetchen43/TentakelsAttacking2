@@ -17,7 +17,7 @@ private:
 	Vector2 m_resolution;
 	Galaxy const* m_currentGalaxy;
 	Rectangle m_galaxyColider;
-	std::vector<UIElement> m_GalaxyElements;
+	std::vector<UIElement> m_galaxyElements;
 	std::shared_ptr<Slider> m_verticalSlider;
 	std::shared_ptr<Slider> m_horisontalSlider;
 	std::shared_ptr<ClassicButton> m_zoomInBtn;
@@ -33,4 +33,5 @@ public:
 	void OnEvent(Event const& event) override;
 
 	void Render(AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 };
