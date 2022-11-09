@@ -18,8 +18,8 @@
 // World
 20 / Min Planet Count
 100 / Max Planet Count
-40 / Min Dimension X
-200 / Max Dimension X
+60 / Min Dimension X
+300 / Max Dimension X
 20 / Min Dimension Y
 160 / Max Dimension Y
 
@@ -34,5 +34,5 @@
 10 / HomeWorld Production
 3 / Min Production
 7 / Max Production
-0.300000 / Homeworld Spacing (0.0 - 1.0)
-0.050000 / Global Spacing (0.0 - 1.0)
+0.500000 / Homeworld Spacing (0.0 - 1.0)
+0.150000 / Global Spacing (0.0 - 1.0)
