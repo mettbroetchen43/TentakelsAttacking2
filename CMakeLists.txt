@@ -53,8 +53,12 @@ if (NOT has_std_format)
   # workaround for Ubuntu libfmt-dev package when building in 'RelWithDebInfo'
   # the fmt::fmt target has no RelWithDebInfo imported config, use Release in that case
   get_target_property(imported_configs fmt::fmt IMPORTED_CONFIGURATIONS)
-  if(NOT "RELWITHDEBINFO" IN_LIST imported_configs AND "RELEASE" IN_LIST imported_configs)
-      set_property(TARGET fmt::fmt PROPERTY MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release)
+  message(STATUS "imported configs: ${imported_configs}")
+  if(NOT "RELWITHDEBINFO" IN_LIST imported_configs AND "NONE" IN_LIST imported_configs)
+    set_property(TARGET fmt::fmt PROPERTY MAP_IMPORTED_CONFIG_RELWITHDEBINFO none)
+  endif()
+  if(NOT "RELEASE" IN_LIST imported_configs AND "NONE" IN_LIST imported_configs)
+    set_property(TARGET fmt::fmt PROPERTY MAP_IMPORTED_CONFIG_RELEASE none)
   endif()
 endif()
 
