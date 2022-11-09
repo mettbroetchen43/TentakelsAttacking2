@@ -8,7 +8,6 @@
 #include "Player.h"
 #include "HRandom.h"
 #include "UIEvents.hpp"
-#include <iostream>
 
 unsigned int Galaxy::GetNextID() const {
 
@@ -54,9 +53,6 @@ int Galaxy::GenerateHomePlanets(std::vector<std::shared_ptr<Player>> players) {
                static_cast<size_t>(random.random(m_size.y))
             };
 
-            std::cout << "H | " << newPosition.x << " : " <<
-                newPosition.y << " | " << counter << '\n';
-
             auto newPlanet = std::make_shared<Planet>(
                 GetNextID(),
                 newPosition,
@@ -99,9 +95,6 @@ void Galaxy::GenerateOtherPlanets(size_t planetCount, int currentPlanet,
                 static_cast<size_t>(random.random(m_size.x)),
                 static_cast<size_t>(random.random(m_size.y))
             };
-
-            std::cout << "O | " << newPosition.x << " : " <<
-                newPosition.y << " | " << counter << '\n';
 
             auto newPlanet = std::make_shared<Planet>(
                 GetNextID(),
