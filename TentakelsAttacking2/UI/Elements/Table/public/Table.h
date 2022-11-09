@@ -53,7 +53,7 @@ private:
 
 	[[nodiscard]] Vector2 GetElementPosition(size_t row, size_t column) const;
 	[[nodiscard]] Vector2 GetElementSize() const;
-	[[nodiscard]] void CheckValidRowColumn(size_t row, size_t column) const;
+	void CheckValidRowColumn(size_t row, size_t column) const;
 
 	void SetElementFocus(Focusable* toFocus) const;
 	void SelectElementFocus(Focusable* toFocus) const;
