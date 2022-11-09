@@ -141,6 +141,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		"r00tifant",
 		"Clemens",
 		"CrazyNightowl01",
+		"NECROMENZER",
 		"german coding commuinty on twitch",
 		"the discord of coder2k",
 		"TODO: more to come",
