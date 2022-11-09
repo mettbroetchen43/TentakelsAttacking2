@@ -50,6 +50,12 @@ if (NOT has_std_format)
   target_compile_definitions(${PROJECT_NAME} PRIVATE USE_FMT_FORMAT)
   find_package(fmt REQUIRED)
   target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
+  # workaround for Ubuntu libfmt-dev package when building in 'RelWithDebInfo'
+  # the fmt::fmt target has no RelWithDebInfo imported config, use Release in that case
+  get_target_property(imported_configs fmt::fmt IMPORTED_CONFIGURATIONS)
+  if(NOT "RELWITHDEBINFO" IN_LIST imported_configs AND "RELEASE" IN_LIST imported_configs)
+      set_property(TARGET fmt::fmt PROPERTY MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release)
+  endif()
 endif()
 
 # find and link to raylib dependency
