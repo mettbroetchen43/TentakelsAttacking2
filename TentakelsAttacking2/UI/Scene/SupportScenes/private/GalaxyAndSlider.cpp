@@ -142,11 +142,11 @@ void GalaxyScene::Render(AppContext const& appContext) {
 		e->Render(appContext);
 	}
 
-	DrawRectangleLinesEx(
+	/*DrawRectangleLinesEx(
 		m_galaxyColiderDraw,
 		3.0f,
 		WHITE
-	);
+	);*/
 }
 void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);

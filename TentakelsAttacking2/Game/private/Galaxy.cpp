@@ -131,7 +131,7 @@ bool Galaxy::IsValidNewPlanet(std::shared_ptr<Planet> newPlanet,
     float factor = newPlanet->IsHomePlanet()
         ? appContext.constants.planet.homeworldSpacing
         : appContext.constants.planet.globalSpacing;
-    double spacing = m_size.x * factor;
+    double spacing = m_size.Length() * factor;
 
     for (auto& p : m_planets) {
         double currentSpacing = (p->GetPos() - newPlanet->GetPos()).Length();
