@@ -9,6 +9,7 @@
 #include <raylib.h>
 
 enum class GameEventType;
+class Galaxy;
 
 class PlayerEvent : public Event {
 private:
@@ -142,16 +143,16 @@ public:
 class GenerateGalaxyEvent : public Event { };
 class GalaxyGeneratedUIEvent : public Event { };
 
-class GetGalaxyCopy : public Event { };
-class SendGalaxyCopy : public Event {
+class GetGalaxyCopy final : public Event { };
+class SendGalaxyCopy final : public Event {
 private:
-	Galaxy m_galaxy;
+	Galaxy const *const m_galaxy;
 
 public:
-	SendGalaxyCopy(Galaxy galaxy)
+	SendGalaxyCopy(Galaxy const *const galaxy)
 		: m_galaxy(galaxy) { }
 
-	[[nodiscard]] Galaxy GetGalaxy() const {
+	[[nodiscard]] Galaxy const *const GetGalaxy() const {
 		return m_galaxy;
 	}
 };

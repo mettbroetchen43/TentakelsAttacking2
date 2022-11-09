@@ -31,6 +31,7 @@ private:
 public:
 	Galaxy(Vec2<size_t> size, size_t planetCount, std::vector<std::shared_ptr<Player>> players,
 		std::shared_ptr<Player> neutralPlayer);
+	Galaxy(Galaxy const&) = default;
 
 	[[nodiscard]] bool IsValidGalaxy() const;
 };
