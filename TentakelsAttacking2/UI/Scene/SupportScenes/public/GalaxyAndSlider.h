@@ -6,6 +6,7 @@
 #pragma once
 #include "Scene.h"
 #include "EventListener.hpp"
+#include <vector>
 
 class Galaxy;
 class Slider;
@@ -16,6 +17,7 @@ private:
 	Vector2 m_resolution;
 	Galaxy const* m_currentGalaxy;
 	Rectangle m_galaxyColider;
+	std::vector<UIElement> m_GalaxyElements;
 	std::shared_ptr<Slider> m_verticalSlider;
 	std::shared_ptr<Slider> m_horisontalSlider;
 	std::shared_ptr<ClassicButton> m_zoomInBtn;
