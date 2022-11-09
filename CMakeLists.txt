@@ -53,5 +53,11 @@ if (NOT has_std_format)
 endif()
 
 # find and link to raylib dependency
-find_package(raylib CONFIG REQUIRED)
+find_package(raylib CONFIG QUIET)
+if (NOT raylib_FOUND)
+  # workaround because raylib with vcpkg on Linux is broken with asan/ubsan build errors
+  # see: https://github.com/microsoft/vcpkg/issues/21293
+  message(STATUS "raylib dependency not found, adding 'raylib' subdirectory to satisfy dependency")
+  add_subdirectory(raylib EXCLUDE_FROM_ALL)
+endif()
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
