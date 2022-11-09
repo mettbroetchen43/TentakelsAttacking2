@@ -14,6 +14,7 @@ class ClassicButton;
 
 class GalaxyScene final : public Scene, public EventListener {
 private:
+	float m_scaleFacor = 1.0f;
 	Vector2 m_resolution;
 	Galaxy const* m_currentGalaxy;
 	Rectangle m_galaxyColiderDraw;
@@ -28,6 +29,8 @@ private:
 	void Initialize();
 
 	void UpdateGalaxy();
+
+	void SetScale(bool ScaleIn);
 
 public:
 	GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution);

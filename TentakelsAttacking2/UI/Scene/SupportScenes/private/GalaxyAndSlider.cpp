@@ -10,6 +10,7 @@
 #include "Galaxy.h"
 #include "PlanetUI.h"
 #include "ClassicButton.h"
+#include <iostream>
 
 void GalaxyScene::Initialize() {
 	AppContext& appContext = AppContext::GetInstance();
@@ -24,7 +25,6 @@ void GalaxyScene::Initialize() {
 		m_resolution
 		);
 	m_verticalSlider->SetScrolling(true);
-	m_elements.push_back(m_verticalSlider);
 
 	m_horisontalSlider = std::make_shared<Slider>(
 		GetElementPosition(0.5175f, 1.0f),
@@ -35,7 +35,6 @@ void GalaxyScene::Initialize() {
 		m_resolution
 		);
 	m_horisontalSlider->SetScrolling(true);
-	m_elements.push_back(m_horisontalSlider);
 
 	// btn
 	m_zoomInBtn = std::make_shared<ClassicButton>(
@@ -47,6 +46,9 @@ void GalaxyScene::Initialize() {
 		"+",
 		SoundType::CLICKED_RELEASE_STD
 		);
+	m_zoomInBtn->SetOnPress([this]() {
+		this->SetScale(true);
+		});
 	m_elements.push_back(m_zoomInBtn);
 
 	m_zoomOutBtn = std::make_shared<ClassicButton>(
@@ -58,6 +60,9 @@ void GalaxyScene::Initialize() {
 		"-",
 		SoundType::CLICKED_RELEASE_STD
 		);
+	m_zoomOutBtn->SetOnPress([this]() {
+		this->SetScale(false);
+		});
 	m_elements.push_back(m_zoomOutBtn);
 
 	// Galaxy
@@ -113,6 +118,15 @@ void GalaxyScene::UpdateGalaxy() {
 	}
 }
 
+void GalaxyScene::SetScale(bool scaleIn) {
+	if (scaleIn) { m_scaleFacor += 0.01f; }
+	else { m_scaleFacor -= 0.01f; }
+
+	if (m_scaleFacor < 1.0f) { m_scaleFacor = 1.0f; }
+
+	std::cout << m_scaleFacor << '\n';
+}
+
 GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution)
 	: Scene(pos, size, alignment), m_resolution(resolution) {
@@ -135,6 +149,18 @@ void GalaxyScene::OnEvent(Event const& event) {
 	}
 }
 
+void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	Scene::CheckAndUpdate(mousePosition, appContext);
+
+	if (m_scaleFacor > 1.0f) {
+		m_horisontalSlider->CheckAndUpdate(mousePosition, appContext);
+		m_verticalSlider->CheckAndUpdate(mousePosition, appContext);
+	}
+
+	for (auto& e : m_galaxyElements) {
+		e->CheckAndUpdate(mousePosition, appContext);
+	}
+}
 void GalaxyScene::Render(AppContext const& appContext) {
 	Scene::Render(appContext);
 
@@ -142,16 +168,14 @@ void GalaxyScene::Render(AppContext const& appContext) {
 		e->Render(appContext);
 	}
 
+	if (m_scaleFacor > 1.0f) {
+		m_horisontalSlider->Render(appContext);
+		m_verticalSlider->Render(appContext);
+	}
+
 	/*DrawRectangleLinesEx(
 		m_galaxyColiderDraw,
 		3.0f,
 		WHITE
 	);*/
-}
-void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
-	Scene::CheckAndUpdate(mousePosition, appContext);
-
-	for (auto& e : m_galaxyElements) {
-		e->CheckAndUpdate(mousePosition, appContext);
-	}
 }
