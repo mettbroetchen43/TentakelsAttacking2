@@ -89,10 +89,11 @@ void Slider::MoveButtonIfColiderIsPressed(Vector2 const& mousePosition) {
 void Slider::SlideIfScroll() {
 	if (!m_isScroll) { return; }
 	if (m_isPressed) { return; }
+	if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) { return; }
 
 	float mouseWheel = GetMouseWheelMove() * -1;
 	if (mouseWheel == 0.0f) { return; }
-	if (m_isHorizontal != IsKeyDown(KEY_LEFT_SHIFT)) { return; }
+	if (m_isHorizontal != (IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT))) { return; }
 
 	auto btnColider = m_btn.GetCollider();
 	float total = m_isHorizontal
