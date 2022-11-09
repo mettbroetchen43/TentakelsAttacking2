@@ -203,6 +203,7 @@
     <ClInclude Include="UI\Scene\public\BaseMainScene.h" />
     <ClInclude Include="UI\public\PopUpManager.h" />
     <ClInclude Include="UI\Scene\SupportScenes\public\CreditTable.h" />
+    <ClInclude Include="UI\Scene\SupportScenes\public\GalaxyAndSlider.h" />
     <ClInclude Include="UI\Scene\SupportScenes\public\GameEventSettings.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\Intro.h" />
     <ClInclude Include="UI\public\SceneManager.h" />
@@ -283,6 +284,7 @@
     <ClCompile Include="UI\Scene\SupportScenes\private\GameEventSettings.cpp" />
     <ClCompile Include="UI\Scene\SupportScenes\private\SliderAndInputLine.cpp" />
     <ClCompile Include="UI\Scene\SupportScenes\private\CreditTable.cpp" />
+    <ClCompile Include="UI\Scene\SupportScenes\private\GalaxyAndSlider.cpp" />
     <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="_private\AppContext.cpp" />
   </ItemGroup>

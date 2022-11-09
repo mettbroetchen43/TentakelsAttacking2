@@ -5,30 +5,29 @@
 
 #include "TestScene.h"
 #include "UIManager.h"
-#include "CreditTable.h"
+#include "GalaxyAndSlider.h"
 #include <iostream>
 
 void TestScene::Initialize(Vector2 resolution,
 	[[maybe_unused]] AppContext& appContext) {
 
-	auto creditsTable = std::make_shared<CreditTableScene>(
-		GetElementPosition(0.5f, 0.5f),
-		GetElementSize(0.5f, 0.5f),
-		Alignment::TOP_MID,
-		"Headline Testing",
-		std::vector<std::string> {
-			"test 0.0", "test 1.0",
-			"test 0.1", "test 1.2",
-			"test 0.2", "test 1.2",
-			"test 0.3", "test 1.3",
-			"test 0.4", "test 1.4",
-		},
-		true,
+	auto galaxyScene = std::make_shared<GalaxyScene>(
+		GetElementPosition(0.05f, 0.05f),
+		GetElementSize(0.7f, 0.7f),
+		Alignment::TOP_LEFT,
 		resolution
 		);
-	creditsTable->SetActive(true, appContext);
-	m_elements.push_back(creditsTable);
-	m_movingElements.push_back(creditsTable);
+	galaxyScene->SetActive(true, appContext);
+	m_elements.push_back(galaxyScene);
+
+	auto galaxyPos = GetElementPosition(0.05f, 0.05f);
+	auto galaxySize = GetElementSize(0.7f, 0.7f);
+	m_coldier = {
+		galaxyPos.x * resolution.x,
+		galaxyPos.y * resolution.y,
+		galaxySize.x * resolution.x,
+		galaxySize.y * resolution.y,
+	};
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -63,12 +62,15 @@ void TestScene::TestLambda(float value) {
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
-	for (auto& e : m_movingElements) {
-		auto position = e->GetPosition();
-		position.y += (m_speed);
-		e->SetPosition(position, m_resolution);
-	}
-
 }
 
+void TestScene::Render(AppContext const& appContext) {
+	Scene::Render(appContext);
+	
+	DrawRectangleLinesEx(
+		m_coldier,
+		3.0f,
+		PURPLE
+	);
+}
 
