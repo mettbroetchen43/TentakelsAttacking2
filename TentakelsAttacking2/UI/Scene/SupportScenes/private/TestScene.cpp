@@ -66,11 +66,5 @@ void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& a
 
 void TestScene::Render(AppContext const& appContext) {
 	Scene::Render(appContext);
-	
-	DrawRectangleLinesEx(
-		m_coldier,
-		3.0f,
-		PURPLE
-	);
 }
 

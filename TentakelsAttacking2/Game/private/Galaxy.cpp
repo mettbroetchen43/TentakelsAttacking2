@@ -150,7 +150,17 @@ Galaxy::Galaxy(Vec2<size_t> size, size_t planetCount,
 
     InitialzePlanets(planetCount, players, neutralPlayer);
 }
+Galaxy::Galaxy(Galaxy const& old)
+    : m_validGalaxy(old.m_validGalaxy), m_objects(old.m_objects),
+    m_planets(old.m_planets), m_size(old.m_size) { }
 
 bool Galaxy::IsValidGalaxy() const {
     return m_validGalaxy;
+}
+
+Vec2<size_t> Galaxy::GetSize() const {
+    return m_size;
+}
+std::vector<std::shared_ptr<Planet>> const Galaxy::GetPlanets() const {
+    return m_planets;
 }

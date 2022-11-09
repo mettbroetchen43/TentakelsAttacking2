@@ -17,7 +17,7 @@ void PlanetUI::UpdateColider(Vector2 resolution) {
 }
 
 PlanetUI::PlanetUI(Vector2 pos, unsigned int ID, Color color, Vector2 resolution)
-	: UIElement(pos, {0.01f,0.01f}, Alignment::MID_MID), m_ID(ID), m_color(color) {
+	: UIElement(pos, {0.02f,0.02f}, Alignment::MID_MID), m_ID(ID), m_color(color) {
 	
 	m_colider = GetAlignedCollider(m_pos, m_size, m_alignment, resolution);
 }

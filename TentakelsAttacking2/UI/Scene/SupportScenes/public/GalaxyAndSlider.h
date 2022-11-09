@@ -16,8 +16,10 @@ class GalaxyScene final : public Scene, public EventListener {
 private:
 	Vector2 m_resolution;
 	Galaxy const* m_currentGalaxy;
+	Rectangle m_galaxyColiderDraw;
 	Rectangle m_galaxyColider;
-	std::vector<UIElement> m_galaxyElements;
+	Rectangle m_colider;
+	std::vector<std::shared_ptr<UIElement>> m_galaxyElements;
 	std::shared_ptr<Slider> m_verticalSlider;
 	std::shared_ptr<Slider> m_horisontalSlider;
 	std::shared_ptr<ClassicButton> m_zoomInBtn;
@@ -29,6 +31,7 @@ private:
 
 public:
 	GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution);
+	~GalaxyScene();
 
 	void OnEvent(Event const& event) override;
 
