@@ -14,7 +14,7 @@ void Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension)
 
 	m_btn = SliderButton(
 		m_pos,
-		Vector2(sizeX, sizeY),
+		Vector2{ sizeX, sizeY },
 		Alignment::TOP_LEFT,
 		"",
 		SoundType::CLICKED_RELEASE_STD,
