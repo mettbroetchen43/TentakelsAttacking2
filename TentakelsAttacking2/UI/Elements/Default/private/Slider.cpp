@@ -157,7 +157,14 @@ void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 	m_btn.CheckAndUpdate(mousePosition, appContext);
 }
 void Slider::Render(AppContext const& appContext) {
-	DrawTexturePro(*m_texture, m_textureRec, m_colider, Vector2(0.0f, 0.0f), 0, WHITE);
+	DrawTexturePro(
+		*m_texture,
+		m_textureRec,
+		m_colider,
+		Vector2{ 0.0f, 0.0f },
+		0,
+		WHITE
+	);
 	m_btn.Render(appContext);
 }
 void Slider::Resize(Vector2 resolution, AppContext const& appContext) {

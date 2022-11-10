@@ -25,14 +25,14 @@ void Line::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
 	[[maybe_unused]] AppContext const& appContext) { }
 void Line::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawLineEx(
-		Vector2(
+		Vector2{
 			m_colider.x,
 			m_colider.y
-		),
-		Vector2(
+		},
+		Vector2{
 			m_colider.x + m_colider.width,
 			m_colider.y + m_colider.height
-		),
+		},
 		m_thick,
 		WHITE
 	);

@@ -13,10 +13,11 @@ void Title::RenderTitle(AppContext const& appContext) {
 		DrawTextEx(
 			*(appContext.assetManager.GetFont()),
 			m_title->at(i).c_str(),
-			Vector2(m_textPosition.x, m_textPosition.y + m_fontSize * i),
+			Vector2{ m_textPosition.x, m_textPosition.y + m_fontSize * i },
 			m_fontSize,
 			0.0f,
-			WHITE);
+			WHITE
+		);
 	}
 }
 void Title::RenderTitleSequens(AppContext const& appContext) {
@@ -32,10 +33,11 @@ void Title::RenderTitleSequens(AppContext const& appContext) {
 		DrawTextEx(
 			*(appContext.assetManager.GetFont()),
 			dummyText.c_str(),
-			Vector2(m_textPosition.x, m_textPosition.y + m_fontSize * i),
+			Vector2{ m_textPosition.x, m_textPosition.y + m_fontSize * i },
 			m_fontSize,
 			0.0f,
-			WHITE);
+			WHITE
+		);
 		localCharCount += dummyText.size();
 		if (localCharCount >= m_charCount) {
 			break;
@@ -49,15 +51,17 @@ void Title::RenderTitleSequens(AppContext const& appContext) {
 				*(appContext.assetManager.GetFont()),
 				"a",
 				m_fontSize,
-				0.0f).x);
+				0.0f).x
+			);
 
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_postFixes.at(random.random(m_postFixes.size())).c_str(),
-		Vector2(prefixPosition, m_textPosition.y + m_fontSize * i),
+		Vector2{ prefixPosition, m_textPosition.y + m_fontSize * i },
 		m_fontSize,
 		0.0f,
-		WHITE);
+		WHITE
+	);
 
 	if (dummyText.size() > 0) {
 		if (dummyText.at(dummyText.size() - 1) != ' ') {
