@@ -72,6 +72,7 @@ void GalaxyScene::Initialize() {
 
 void GalaxyScene::InitialGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
+	m_scaleFacor = 1.0f;
 
 	auto galaxyPos = GetElementPosition(0.035f, 0.0f);
 	auto galaxySize = GetElementSize(0.965f, 0.94f);
