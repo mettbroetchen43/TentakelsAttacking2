@@ -28,6 +28,7 @@ private:
 
 	void Initialize();
 
+	void InitialGalaxy();
 	void UpdateGalaxy();
 
 	void SetScale(bool ScaleIn);

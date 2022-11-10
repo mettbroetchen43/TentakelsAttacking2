@@ -13,6 +13,7 @@
 #include "SceneType.hpp"
 #include "GameEventSettings.h"
 #include "SliderAndInputLine.h"
+#include <iostream>
 
 void NewGameParameterScene::Initialize(Vector2 resolution) {
 	AppContext& appContext = AppContext::GetInstance();
@@ -26,6 +27,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		appContext
 		));
+
 
 	// parameters
 	m_elements.push_back(std::make_shared<Text>(

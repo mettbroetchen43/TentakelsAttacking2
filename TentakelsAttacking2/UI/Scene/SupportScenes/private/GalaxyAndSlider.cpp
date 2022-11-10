@@ -70,7 +70,7 @@ void GalaxyScene::Initialize() {
 	appContext.eventManager.InvokeEvent(event);
 }
 
-void GalaxyScene::UpdateGalaxy() {
+void GalaxyScene::InitialGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
 
 	auto galaxyPos = GetElementPosition(0.035f, 0.0f);
@@ -117,12 +117,19 @@ void GalaxyScene::UpdateGalaxy() {
 		m_galaxyElements.push_back(planet);
 	}
 }
+void GalaxyScene::UpdateGalaxy() {
+	AppContext& appContext = AppContext::GetInstance();
+
+}
 
 void GalaxyScene::SetScale(bool scaleIn) {
 	if (scaleIn) { m_scaleFacor += 0.01f; }
 	else { m_scaleFacor -= 0.01f; }
 
 	if (m_scaleFacor < 1.0f) { m_scaleFacor = 1.0f; }
+
+	m_horisontalSlider->SetAboluteDimension(m_scaleFacor);
+	m_verticalSlider->SetAboluteDimension(m_scaleFacor);
 
 	std::cout << m_scaleFacor << '\n';
 }
@@ -144,13 +151,21 @@ void GalaxyScene::OnEvent(Event const& event) {
 
 	if (auto const* GalaxyEvent = dynamic_cast<SendGalaxyCopy const*>(&event)) {
 		m_currentGalaxy = GalaxyEvent->GetGalaxy();
-		UpdateGalaxy();
+		InitialGalaxy();
 		return;
 	}
 }
 
 void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
+
+	if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
+		float mouse = GetMouseWheelMove();
+		if (mouse != 0.0f) {
+			SetScale(mouse > 0);
+			SetScale(mouse > 0);
+		}
+	}
 
 	if (m_scaleFacor > 1.0f) {
 		m_horisontalSlider->CheckAndUpdate(mousePosition, appContext);

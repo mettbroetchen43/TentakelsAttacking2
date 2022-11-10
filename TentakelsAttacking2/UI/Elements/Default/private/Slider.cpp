@@ -8,9 +8,9 @@
 #include "AppContext.h"
 #include <iostream>
 
-void Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension) {
-	float sizeX = m_isHorizontal ? m_size.x / absoluteDimension : m_size.x;
-	float sizeY = m_isHorizontal ? m_size.y : m_size.y / absoluteDimension;
+void Slider::CalculateInitialButton() {
+	float sizeX = m_isHorizontal ? m_size.x / m_absoluteDimension : m_size.x;
+	float sizeY = m_isHorizontal ? m_size.y : m_size.y / m_absoluteDimension;
 
 	m_btn = SliderButton(
 		m_pos,
@@ -18,7 +18,7 @@ void Slider::CalculateInitialButton(Vector2 resolution, float absoluteDimension)
 		Alignment::TOP_LEFT,
 		"",
 		SoundType::CLICKED_RELEASE_STD,
-		resolution
+		m_resolution
 	);
 	m_btn.SetOnPress([this]() {this->Slide();});
 }
@@ -130,7 +130,8 @@ void Slider::UpdateColider(Vector2 resolution) {
 
 Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal,
 	float absoluteDimension, Vector2 resolution)
-	: UIElement(pos, size, alignment), m_isHorizontal(isHorizontal) {
+	: UIElement(pos, size, alignment), m_isHorizontal(isHorizontal),
+	m_absoluteDimension(absoluteDimension), m_resolution(resolution) {
 	m_texture = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
 	m_textureRec = {
 		0.0f,
@@ -139,7 +140,7 @@ Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal
 		static_cast<float>(m_texture->height)
 	};
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
-	CalculateInitialButton(resolution, absoluteDimension);
+	CalculateInitialButton();
 }
 
 void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
@@ -168,7 +169,13 @@ void Slider::Render(AppContext const& appContext) {
 	m_btn.Render(appContext);
 }
 void Slider::Resize(Vector2 resolution, AppContext const& appContext) {
-	m_colider = { m_pos.x * resolution.x, m_pos.y * resolution.y, m_size.x * resolution.x, m_size.y * resolution.y };
+	m_resolution = resolution;
+	m_colider = {
+		m_pos.x * resolution.x,
+		m_pos.y * resolution.y,
+		m_size.x * resolution.x,
+		m_size.y * resolution.y
+	};
 	m_btn.Resize(resolution, appContext);
 }
 
@@ -202,6 +209,14 @@ void Slider::SetScrolling(bool isScroll) {
 }
 bool Slider::IsScrolling() const {
 	return m_isScroll;
+}
+
+void Slider::SetAboluteDimension(float absolutDimension) {
+	m_absoluteDimension = absolutDimension;
+	CalculateInitialButton();
+}
+float Slider::GetAbsoluteDimension() const {
+	return m_absoluteDimension;
 }
 
 void Slider::SetEnabled(bool isEnabled) {
