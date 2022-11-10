@@ -31,7 +31,7 @@ void PlanetUI::Render(AppContext const& appContext) {
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
 		std::to_string(m_ID).c_str(),
-		Vector2 { m_colider.x, m_colider.y },
+		Vector2 (m_colider.x, m_colider.y),
 		m_colider.height,
 		0.0f,
 		m_color

@@ -61,7 +61,7 @@ Button::Button(Vector2 pos, Vector2 size, Alignment alignment,
 }
 
 Button::Button()
-	: UIElement(Vector2{0.0f,0.0f}, Vector2{0.0f,0.0f}, Alignment::TOP_LEFT),
+	: UIElement(Vector2(0.0f,0.0f), Vector2(0.0f,0.0f), Alignment::TOP_LEFT),
 	m_colider({ 0.0f,0.0f,0.0f,0.0f }), m_sound(SoundType::CLICKED_RELEASE_STD),
 	m_textPosition({ 0.0f,0.0f }), m_texture(nullptr), m_textureRec({0.0f,0.0f,0.0f,0.0f}) {}
 
@@ -133,7 +133,7 @@ void Button::Render(AppContext const& appContext) {
 		*m_texture,
 		m_textureRec,
 		m_colider,
-		Vector2{ 0.0f, 0.0f },
+		Vector2(0.0f, 0.0f),
 		0,
 		WHITE
 	);

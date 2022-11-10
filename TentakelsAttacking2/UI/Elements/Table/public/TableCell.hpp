@@ -243,7 +243,7 @@ inline void TableCell<Color>::Render([[maybe_unused]]AppContext const& appContex
 	};
 	DrawRectanglePro(
 		toFill,
-		Vector2{ 0.0f, 0.0f },
+		Vector2(0.0f, 0.0f),
 		0.0f,
 		m_value
 	);

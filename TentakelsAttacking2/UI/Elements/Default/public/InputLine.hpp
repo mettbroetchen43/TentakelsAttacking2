@@ -81,7 +81,7 @@ public:
 	}
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override {
-		
+
 		if (!m_isEnabled) { return; }
 
 		bool hover = CheckCollisionPointRec(mousePosition, m_colider);
@@ -115,7 +115,7 @@ public:
 		if (!IsAnyKeyPressed()) { return; }
 
 		while (true) {
-		int key = GetCharPressed();
+			int key = GetCharPressed();
 
 			if (key <= 0) { return; }
 
@@ -134,18 +134,18 @@ public:
 		// Update here to make shure its after call of HasValueChanced();
 		m_oldValue = m_value;
 
-		Rectangle textureRec = { 
+		Rectangle textureRec = {
 			0.0f,
 			0.0f,
-			static_cast<float>(m_texture->width), 
-			static_cast<float>(m_texture->height) 
+			static_cast<float>(m_texture->width),
+			static_cast<float>(m_texture->height)
 		};
 
 		DrawTexturePro(
 			*m_texture,
 			textureRec,
 			m_colider,
-			Vector2{ 0.0f, 0.0f },
+			Vector2(0.0f, 0.0f),
 			0.0f,
 			WHITE
 		);

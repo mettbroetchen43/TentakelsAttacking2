@@ -32,14 +32,14 @@ void Picture::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
 void Picture::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawTexturePro(
 		*m_texture,
-		Rectangle{
+		Rectangle(
 			0.0f,
 			0.0f,
 			static_cast<float>(m_texture->width),
 			static_cast<float>(m_texture->height)
-		},
+		),
 		m_colider,
-		Vector2{ 0.0f,0.0f },
+		Vector2(0.0f,0.0f),
 		0.0f,
 		WHITE
 	);

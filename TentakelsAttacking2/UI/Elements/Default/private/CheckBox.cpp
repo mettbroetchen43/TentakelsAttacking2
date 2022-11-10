@@ -134,7 +134,7 @@ void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 			*m_texture,
 			m_textureRec,
 			m_colider,
-			Vector2{ 0.0f, 0.0f },
+			Vector2(0.0f, 0.0f),
 			0.0f,
 			WHITE
 		);
@@ -145,7 +145,7 @@ void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 			*m_greyTexture,
 			m_greyTextureRec,
 			m_colider,
-			Vector2{ 0.0f, 0.0f },
+			Vector2(0.0f, 0.0f),
 			0.0f,
 			WHITE
 		);
@@ -156,7 +156,7 @@ void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 			*m_greyTexture,
 			m_greyTextureRec,
 			m_colider,
-			Vector2{ 0.0f, 0.0f },
+			Vector2(0.0f, 0.0f),
 			0.0f,
 			WHITE
 		);
