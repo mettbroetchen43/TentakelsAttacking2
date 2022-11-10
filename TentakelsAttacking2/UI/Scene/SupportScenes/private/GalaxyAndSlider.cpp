@@ -10,7 +10,6 @@
 #include "Galaxy.h"
 #include "PlanetUI.h"
 #include "ClassicButton.h"
-#include <iostream>
 
 void GalaxyScene::Initialize(Vector2 resolution) {
 	AppContext& appContext = AppContext::GetInstance();
