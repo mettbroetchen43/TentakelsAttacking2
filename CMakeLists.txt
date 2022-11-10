@@ -50,8 +50,24 @@ if (NOT has_std_format)
   target_compile_definitions(${PROJECT_NAME} PRIVATE USE_FMT_FORMAT)
   find_package(fmt REQUIRED)
   target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
+  # workaround for Ubuntu libfmt-dev package when building in 'RelWithDebInfo'
+  # the fmt::fmt target has no RelWithDebInfo imported config, use Release in that case
+  get_target_property(imported_configs fmt::fmt IMPORTED_CONFIGURATIONS)
+  message(STATUS "imported configs: ${imported_configs}")
+  if(NOT "RELWITHDEBINFO" IN_LIST imported_configs AND "NONE" IN_LIST imported_configs)
+    set_property(TARGET fmt::fmt PROPERTY MAP_IMPORTED_CONFIG_RELWITHDEBINFO none)
+  endif()
+  if(NOT "RELEASE" IN_LIST imported_configs AND "NONE" IN_LIST imported_configs)
+    set_property(TARGET fmt::fmt PROPERTY MAP_IMPORTED_CONFIG_RELEASE none)
+  endif()
 endif()
 
 # find and link to raylib dependency
-find_package(raylib CONFIG REQUIRED)
+find_package(raylib CONFIG QUIET)
+if (NOT raylib_FOUND)
+  # workaround because raylib with vcpkg on Linux is broken with asan/ubsan build errors
+  # see: https://github.com/microsoft/vcpkg/issues/21293
+  message(STATUS "raylib dependency not found, adding 'raylib' subdirectory to satisfy dependency")
+  add_subdirectory(raylib EXCLUDE_FROM_ALL)
+endif()
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
