@@ -52,7 +52,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 			);
 		}
 	);
-	// loadGameBtn->SetEnabled(false);
+	loadGameBtn->SetEnabled(false);
 	m_elements.push_back(loadGameBtn);
 
 	btnPosY += 0.15f;
