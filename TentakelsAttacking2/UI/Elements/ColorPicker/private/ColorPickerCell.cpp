@@ -86,7 +86,7 @@ void ColorPickerCell::Render([[maybe_unused]] AppContext const& appContext) {
 
 	DrawRectanglePro(
 		m_colider,
-		Vector2(0.0f, 0.0f),
+		Vector2{ 0.0f, 0.0f },
 		0.0f,
 		m_color
 	);
