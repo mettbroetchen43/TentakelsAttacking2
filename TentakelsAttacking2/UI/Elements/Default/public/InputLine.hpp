@@ -145,7 +145,7 @@ public:
 			*m_texture,
 			textureRec,
 			m_colider,
-			Vector2(0.0f, 0.0f),
+			Vector2{ 0.0f, 0.0f },
 			0.0f,
 			WHITE
 		);
