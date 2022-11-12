@@ -4,7 +4,6 @@
 //
 
 #include "UIGalaxy.h"
-#include <iostream>
 
 void UIGalaxy::CheckPosition() {
 	m_absoluteSize.x = m_absoluteSize.x < m_colider.x
