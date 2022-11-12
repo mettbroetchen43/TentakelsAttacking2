@@ -7,7 +7,21 @@
 #include <iostream>
 
 void UIGalaxy::CheckPosition() {
-	std::cout << "TODO: implement Check Galaxy Position in \"CheckPosition()\"\n";
+	m_absoluteSize.x = m_absoluteSize.x < m_colider.x 
+		? m_absoluteSize.x 
+		: m_colider.x;
+
+	m_absoluteSize.x = m_absoluteSize.x + m_absoluteSize.width > m_colider.x + m_colider.width
+		? m_absoluteSize.x
+		: m_colider.x + m_colider.width - m_absoluteSize.width;
+
+	m_absoluteSize.y = m_absoluteSize.y < m_colider.y 
+		? m_absoluteSize.y 
+		: m_colider.y;
+
+	m_absoluteSize.y = m_absoluteSize.y + m_absoluteSize.height > m_colider.y + m_colider.height
+		? m_absoluteSize.y
+		: m_colider.y + m_colider.height - m_absoluteSize.height;
 }
 
 UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
