@@ -45,31 +45,42 @@ void UIGalaxy::MoveByKey(Direction direction, float speed) {
 			offset = m_colider.y - m_absoluteSize.y;
 			percent = offset / differenz * 100 + speed;
 			Slide(percent, false);
-			std::cout << "UP\n";
 			break;
 		case Direction::DOWN:
 			differenz = m_absoluteSize.height - m_colider.height;
 			offset = m_colider.y - m_absoluteSize.y;
 			percent = offset / differenz * 100 - speed;
 			Slide(percent, false);
-			std::cout << "DOWN\n";
 			break;
 		case Direction::LEFT:
 			differenz = m_absoluteSize.width - m_colider.width;
 			offset = m_colider.x - m_absoluteSize.x;
 			percent = offset / differenz * 100 + speed;
 			Slide(percent, true);
-			std::cout << "LEFT\n";
 			break;
 		case Direction::RIGHT:
 			differenz = m_absoluteSize.width - m_colider.width;
 			offset = m_colider.x - m_absoluteSize.x;
 			percent = offset / differenz * 100 - speed;
 			Slide(percent, true);
-			std::cout << "RIGHT\n";
 			break;
 	}
 	CheckPosition();
+}
+void UIGalaxy::MoveByMouse(Vector2 mousePosition) {
+	if (m_lastMousePosition.x == 0.0f
+		&& m_lastMousePosition.y == 0.0f) {
+		m_lastMousePosition = mousePosition;
+		return;
+	}
+
+	m_absoluteSize.x -= m_lastMousePosition.x - mousePosition.x;
+	m_absoluteSize.y -= m_lastMousePosition.y - mousePosition.y;
+
+	m_lastMousePosition = mousePosition;
+
+	CheckPosition();
+	PrepForOnSlide();
 }
 
 UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
@@ -171,6 +182,15 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		if (IsKeyDown(KEY_DOWN)) { MoveByKey(Direction::DOWN, 2.0f); }
 		if (IsKeyDown(KEY_LEFT)) { MoveByKey(Direction::LEFT, 2.0f); }
 		if (IsKeyDown(KEY_RIGHT)) { MoveByKey(Direction::RIGHT, 2.0f); }
+
+		if (CheckCollisionPointRec(mousePosition, m_colider)) {
+			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+				MoveByMouse(mousePosition);
+			}
+		}
+		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+			m_lastMousePosition = { 0.0f, 0.0f };
+		}
 	}
 
 

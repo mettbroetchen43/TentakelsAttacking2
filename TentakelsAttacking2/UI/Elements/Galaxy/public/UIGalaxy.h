@@ -20,6 +20,7 @@ private:
 	bool m_isEnabled = true;
 	bool m_isScaling = true;
 	float m_scaleFacor = 1.0f;
+	Vector2 m_lastMousePosition = { 0.0f,0.0f };
 	Rectangle m_colider;
 	Rectangle m_absoluteSize;
 	std::function<void(float)> m_onZoom = [](float) {};
@@ -28,6 +29,7 @@ private:
 	void CheckPosition();
 	void PrepForOnSlide();
 	void MoveByKey(Direction direction, float speed);
+	void MoveByMouse(Vector2 mousePosition);
 
 public:
 	UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution);
