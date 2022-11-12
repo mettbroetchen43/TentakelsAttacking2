@@ -288,11 +288,11 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 	}
 
 	if (m_isEnabled) {
-	for (auto& p : m_uiPlanets) {
+		for (auto& p : m_uiPlanets) {
 			if (IsPlanetInColider(p)) {
-		p->CheckAndUpdate(mousePosition, appContext);
-	}
-}
+				p->CheckAndUpdate(mousePosition, appContext);
+			}
+		}
 	}
 }
 void UIGalaxy::Render(AppContext const& appContext) {
@@ -314,7 +314,6 @@ void UIGalaxy::Render(AppContext const& appContext) {
 	}
 }
 void UIGalaxy::Resize(Vector2 resolution, AppContext const& appContext) {
-	m_resolution = resolution;
 
 	m_colider = {
 	m_pos.x * resolution.x,
@@ -322,10 +321,18 @@ void UIGalaxy::Resize(Vector2 resolution, AppContext const& appContext) {
 	m_size.x * resolution.x,
 	m_size.y * resolution.y
 	};
-	// need to scale m_absoluteSize
+	m_absoluteSize = {
+		m_absoluteSize.x / m_resolution.x * resolution.x,
+		m_absoluteSize.y / m_resolution.y * resolution.y,
+		m_absoluteSize.width / m_resolution.x * resolution.x,
+		m_absoluteSize.height / m_resolution.y * resolution.y,
+	};
+
+	m_resolution = resolution;
 
 	for (auto& p : m_uiPlanets) {
 		p->Resize(resolution, appContext);
+		p->UpdatePosition(m_absoluteSize);
 	}
 }
 
