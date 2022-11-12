@@ -11,6 +11,12 @@
 
 class UIGalaxy : public UIElement, public EventListener, public Focusable {
 private:
+	enum class Direction {
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+	};
 	bool m_isEnabled = true;
 	bool m_isScaling = true;
 	float m_scaleFacor = 1.0f;
@@ -21,6 +27,7 @@ private:
 
 	void CheckPosition();
 	void PrepForOnSlide();
+	void MoveByKey(Direction direction, float speed);
 
 public:
 	UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution);

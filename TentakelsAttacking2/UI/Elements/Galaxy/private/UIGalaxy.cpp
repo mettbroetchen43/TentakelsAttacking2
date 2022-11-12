@@ -34,6 +34,43 @@ void UIGalaxy::PrepForOnSlide() {
 	percent = offset / differenz * 100;
 	m_onSlide(percent, false);
 }
+void UIGalaxy::MoveByKey(Direction direction, float speed) {
+	float differenz;
+	float offset;
+	float percent;
+
+	switch (direction) {
+		case Direction::UP:
+			differenz = m_absoluteSize.height - m_colider.height;
+			offset = m_colider.y - m_absoluteSize.y;
+			percent = offset / differenz * 100 + speed;
+			Slide(percent, false);
+			std::cout << "UP\n";
+			break;
+		case Direction::DOWN:
+			differenz = m_absoluteSize.height - m_colider.height;
+			offset = m_colider.y - m_absoluteSize.y;
+			percent = offset / differenz * 100 - speed;
+			Slide(percent, false);
+			std::cout << "DOWN\n";
+			break;
+		case Direction::LEFT:
+			differenz = m_absoluteSize.width - m_colider.width;
+			offset = m_colider.x - m_absoluteSize.x;
+			percent = offset / differenz * 100 + speed;
+			Slide(percent, true);
+			std::cout << "LEFT\n";
+			break;
+		case Direction::RIGHT:
+			differenz = m_absoluteSize.width - m_colider.width;
+			offset = m_colider.x - m_absoluteSize.x;
+			percent = offset / differenz * 100 - speed;
+			Slide(percent, true);
+			std::cout << "RIGHT\n";
+			break;
+	}
+	CheckPosition();
+}
 
 UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
 	:Focusable(ID), UIElement(pos, size, alignment) {
@@ -129,7 +166,15 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 				Zoom(mouseWheel > 0.0f, 3);
 			}
 		}
+
+		if (IsKeyDown(KEY_UP)) { MoveByKey(Direction::UP,2.0f); }
+		if (IsKeyDown(KEY_DOWN)) { MoveByKey(Direction::DOWN, 2.0f); }
+		if (IsKeyDown(KEY_LEFT)) { MoveByKey(Direction::LEFT, 2.0f); }
+		if (IsKeyDown(KEY_RIGHT)) { MoveByKey(Direction::RIGHT, 2.0f); }
 	}
+
+
+
 }
 void UIGalaxy::Render(AppContext const& appContext) {
 	DrawRectangleLinesEx(
