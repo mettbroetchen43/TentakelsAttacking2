@@ -38,6 +38,7 @@ private:
 
 	[[nodiscard]] bool IsPlanetInColider(std::shared_ptr<UIPlanet> planet) const;
 	void UpdatePlanetPosition();
+	void SelectPlanet(UIPlanet* planet);
 
 	void CheckPosition();
 	void PrepForOnSlide();

@@ -32,6 +32,9 @@ void UIGalaxy::Initialize(Galaxy const* const galaxy) {
 			planet->SetEnabled(false);
 			planet->SetColor(GRAY);
 		}
+		planet->SetOnClick([this](UIPlanet* planet) {
+			this->SelectPlanet(planet);
+			});
 		m_uiPlanets.push_back(planet);
 	}
 }
@@ -78,6 +81,9 @@ void UIGalaxy::UpdatePlanetPosition() {
 	for (auto& p : m_uiPlanets) {
 		p->UpdatePosition(m_absoluteSize);
 	}
+}
+void UIGalaxy::SelectPlanet(UIPlanet* planet) {
+	std::cout << "HIT! | " << planet->GetFocusID() << '\n';
 }
 
 void UIGalaxy::CheckPosition() {
@@ -281,10 +287,13 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		}
 	}
 
+	if (m_isEnabled) {
 	for (auto& p : m_uiPlanets) {
+			if (IsPlanetInColider(p)) {
 		p->CheckAndUpdate(mousePosition, appContext);
 	}
-
+}
+	}
 }
 void UIGalaxy::Render(AppContext const& appContext) {
 	DrawRectangleLinesEx(

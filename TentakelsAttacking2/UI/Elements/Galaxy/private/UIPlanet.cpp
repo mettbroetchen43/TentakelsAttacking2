@@ -19,7 +19,7 @@ void UIPlanet::UpdatePosition(Rectangle newColider) {
 	m_colider.y = newColider.y + newColider.height * m_coliderPos.y;
 }
 
-void UIPlanet::SetOnClick(std::function<void()> onClick) {
+void UIPlanet::SetOnClick(std::function<void(UIPlanet*)> onClick) {
 	m_onClick = onClick;
 }
 
@@ -39,7 +39,13 @@ Color UIPlanet::GetColor() const {
 	return m_color;
 }
 
-void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {}
+void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	if (CheckCollisionPointRec(mousePosition, m_colider)) {
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			m_onClick(this);
+		}
+	}
+}
 void UIPlanet::Render(AppContext const& appContext) {
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),

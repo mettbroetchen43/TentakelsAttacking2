@@ -16,7 +16,7 @@ private:
 	Rectangle m_colider;
 	Vector2 m_coliderPos;
 	Color m_color;
-	std::function<void()> m_onClick = []() {};
+	std::function<void(UIPlanet*)> m_onClick = [](UIPlanet*) {};
 
 public:
 	UIPlanet(unsigned int focusID, unsigned int ID, Vector2 pos, Color color,
@@ -24,7 +24,7 @@ public:
 
 	void UpdatePosition(Rectangle newColider);
 
-	void SetOnClick(std::function<void()> onClick);
+	void SetOnClick(std::function<void(UIPlanet*)> onClick);
 
 	void UpdateColider(Vector2 resolution) override;
 
