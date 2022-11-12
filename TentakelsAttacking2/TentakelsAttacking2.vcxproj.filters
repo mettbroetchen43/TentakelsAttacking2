@@ -270,7 +270,10 @@
     <ClInclude Include="UI\Scene\SupportScenes\public\GalaxyAndSlider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Elements\Galaxy\public\PlanetUI.h">
+    <ClInclude Include="UI\Elements\Galaxy\public\UIPlanet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Elements\Galaxy\public\UIGalaxy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -446,7 +449,10 @@
     <ClCompile Include="UI\Scene\SupportScenes\private\GalaxyAndSlider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Elements\Galaxy\private\PlanetUI.cpp">
+    <ClCompile Include="UI\Elements\Galaxy\private\UIPlanet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\Galaxy\private\UIGalaxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

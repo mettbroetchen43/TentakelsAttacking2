@@ -13,6 +13,7 @@ class UIManager;
 class Scene: public UIElement {
 protected:
 	std::vector<std::shared_ptr<UIElement>> m_elements;
+	std::vector<std::shared_ptr<UIElement>> m_elementsOutUpdates;
 	bool m_active = false;
 	unsigned int m_firstFocusID;
 

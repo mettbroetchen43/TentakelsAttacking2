@@ -7,8 +7,7 @@
 #include "AppContext.h"
 #include "GenerelEvents.hpp"
 #include "Slider.h"
-#include "Galaxy.h"
-#include "PlanetUI.h"
+#include "UIGalaxy.h"
 #include "ClassicButton.h"
 
 void GalaxyScene::Initialize(Vector2 resolution) {
@@ -37,7 +36,7 @@ void GalaxyScene::Initialize(Vector2 resolution) {
 
 	// btn
 	m_zoomInBtn = std::make_shared<ClassicButton>(
-		100,
+		101,
 		GetElementPosition(1.0f, 1.0f),
 		GetElementSize(0.05f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
@@ -45,12 +44,10 @@ void GalaxyScene::Initialize(Vector2 resolution) {
 		"+",
 		SoundType::CLICKED_RELEASE_STD
 		);
-	m_zoomInBtn->SetOnPress([this]() {
-		this->SetScale(true);
-		});
+	m_elementsOutUpdates.push_back(m_zoomInBtn);
 
 	m_zoomOutBtn = std::make_shared<ClassicButton>(
-		101,
+		102,
 		GetElementPosition(0.95f, 1.0f),
 		GetElementSize(0.05f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
@@ -58,23 +55,17 @@ void GalaxyScene::Initialize(Vector2 resolution) {
 		"-",
 		SoundType::CLICKED_RELEASE_STD
 		);
-	m_zoomOutBtn->SetOnPress([this]() {
-		this->SetScale(false);
-		});
+	m_elementsOutUpdates.push_back(m_zoomOutBtn);
 
 	// Galaxy
-	auto event = GetGalaxyCopy();
-	appContext.eventManager.InvokeEvent(event);
-}
-
-void GalaxyScene::SetScale(bool scaleIn) {
-	if (scaleIn) { m_galaxayScaleFacor += 0.01f; }
-	else { m_galaxayScaleFacor -= 0.01f; }
-
-	if (m_galaxayScaleFacor < 1.0f) { m_galaxayScaleFacor = 1.0f; }
-
-	m_horisontalSlider->SetAboluteDimension(m_galaxayScaleFacor);
-	m_verticalSlider->SetAboluteDimension(m_galaxayScaleFacor);
+	auto galaxy = std::make_shared<UIGalaxy>(
+		100,
+		GetElementPosition(0.52f, 0.45f),
+		GetElementSize(0.915f, 0.9f),
+		Alignment::MID_MID,
+		resolution
+		);
+	m_elements.push_back(galaxy);
 }
 
 GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
@@ -82,12 +73,7 @@ GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
 	: Scene(pos, size, alignment) {
 	GetAlignedCollider(m_pos, m_size, alignment, resolution);
 
-	AppContext::GetInstance().eventManager.AddListener(this);
-
 	Initialize(resolution);
-}
-GalaxyScene::~GalaxyScene() {
-	AppContext::GetInstance().eventManager.RemoveListener(this);
 }
 
 void GalaxyScene::SetIsScaling(bool isScaling) {
@@ -97,29 +83,12 @@ bool GalaxyScene::GetIsScaling() const {
 	return m_isScaling;
 }
 
-void GalaxyScene::OnEvent(Event const& event) {
-
-	if (auto const* GalaxyEvent = dynamic_cast<SendGalaxyCopy const*>(&event)) {
-		/*m_currentGalaxy = GalaxyEvent->GetGalaxy();
-		InitialGalaxy();*/
-		return;
-	}
-}
-
 void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
 	if (m_isScaling) {
 		m_zoomInBtn->CheckAndUpdate(mousePosition, appContext);
 		m_zoomOutBtn->CheckAndUpdate(mousePosition, appContext);
-
-		if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
-			float mouse = GetMouseWheelMove();
-			if (mouse != 0.0f) {
-				SetScale(mouse > 0);
-				SetScale(mouse > 0);
-			}
-		}
 	}
 
 	if (m_galaxayScaleFacor > 1.0f) {

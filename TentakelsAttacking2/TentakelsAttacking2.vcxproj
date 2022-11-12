@@ -180,7 +180,8 @@
     <ClInclude Include="UI\Elements\Default\public\Picture.h" />
     <ClInclude Include="UI\Elements\Default\public\Text.h" />
     <ClInclude Include="UI\Elements\Default\public\Title.h" />
-    <ClInclude Include="UI\Elements\Galaxy\public\PlanetUI.h" />
+    <ClInclude Include="UI\Elements\Galaxy\public\UIPlanet.h" />
+    <ClInclude Include="UI\Elements\Galaxy\public\UIGalaxy.h" />
     <ClInclude Include="UI\Elements\PopUp\public\AllPopUp.hpp" />
     <ClInclude Include="UI\Elements\PopUp\public\CellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\ColorCellPopUp.h" />
@@ -250,7 +251,8 @@
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Line.cpp" />
     <ClCompile Include="UI\Elements\Default\private\CheckBox.cpp" />
-    <ClCompile Include="UI\Elements\Galaxy\private\PlanetUI.cpp" />
+    <ClCompile Include="UI\Elements\Galaxy\private\UIPlanet.cpp" />
+    <ClCompile Include="UI\Elements\Galaxy\private\UIGalaxy.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\CellPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\ColorCellPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\PopUp.cpp" />
