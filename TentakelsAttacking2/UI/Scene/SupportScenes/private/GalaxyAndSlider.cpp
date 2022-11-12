@@ -15,13 +15,16 @@ void GalaxyScene::Initialize(Vector2 resolution) {
 	// Galaxy
 	m_galaxy = std::make_shared<UIGalaxy>(
 		100,
-		GetElementPosition(0.52f, 0.45f),
+		GetElementPosition(1.0f, 0.0f),
 		GetElementSize(0.915f, 0.9f),
-		Alignment::MID_MID,
+		Alignment::TOP_RIGHT,
 		resolution
 		);
 	m_galaxy->SetOnZoom([this](float scaleFactor) {
 		this->Zoom(scaleFactor);
+		});
+	m_galaxy->SetOnSlide([this](float position, bool isHorzontal) {
+		this->Slide(position, isHorzontal);
 		});
 	m_elements.push_back(m_galaxy);
 
@@ -34,6 +37,9 @@ void GalaxyScene::Initialize(Vector2 resolution) {
 		m_galaxy->GetScaleFactor(),
 		resolution
 		);
+	m_verticalSlider->SetOnSlide([this](float position) {
+		this->m_galaxy->Slide(position, false);
+		});
 	m_verticalSlider->SetScrolling(true);
 
 	m_horisontalSlider = std::make_shared<Slider>(
@@ -44,6 +50,9 @@ void GalaxyScene::Initialize(Vector2 resolution) {
 		m_galaxy->GetScaleFactor(),
 		resolution
 		);
+	m_horisontalSlider->SetOnSlide([this](float position) {
+		this->m_galaxy->Slide(position, true);
+		});
 	m_horisontalSlider->SetScrolling(true);
 
 	// btn
@@ -79,6 +88,14 @@ void GalaxyScene::Initialize(Vector2 resolution) {
 void GalaxyScene::Zoom(float scaleFactor) {
 	m_verticalSlider->SetAboluteDimension(scaleFactor);
 	m_horisontalSlider->SetAboluteDimension(scaleFactor);
+}
+void GalaxyScene::Slide(float position, bool isHorisontal) {
+	if (isHorisontal) {
+		m_horisontalSlider->SetButtonPosition(position);
+	}
+	else {
+		m_verticalSlider->SetButtonPosition(position);
+	}
 }
 
 GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,

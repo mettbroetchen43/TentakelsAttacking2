@@ -21,6 +21,7 @@ private:
 
 	void Initialize(Vector2 resolution);
 	void Zoom(float scaleFactor);
+	void Slide(float position, bool isHorisontal);
 
 public:
 	GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution);

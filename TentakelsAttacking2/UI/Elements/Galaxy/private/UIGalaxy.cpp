@@ -7,8 +7,8 @@
 #include <iostream>
 
 void UIGalaxy::CheckPosition() {
-	m_absoluteSize.x = m_absoluteSize.x < m_colider.x 
-		? m_absoluteSize.x 
+	m_absoluteSize.x = m_absoluteSize.x < m_colider.x
+		? m_absoluteSize.x
 		: m_colider.x;
 
 	m_absoluteSize.x = m_absoluteSize.x + m_absoluteSize.width > m_colider.x + m_colider.width
@@ -16,12 +16,23 @@ void UIGalaxy::CheckPosition() {
 		: m_colider.x + m_colider.width - m_absoluteSize.width;
 
 	m_absoluteSize.y = m_absoluteSize.y < m_colider.y 
-		? m_absoluteSize.y 
+		? m_absoluteSize.y
 		: m_colider.y;
 
 	m_absoluteSize.y = m_absoluteSize.y + m_absoluteSize.height > m_colider.y + m_colider.height
 		? m_absoluteSize.y
 		: m_colider.y + m_colider.height - m_absoluteSize.height;
+}
+void UIGalaxy::PrepForOnSlide() {
+	float differenz = m_absoluteSize.width - m_colider.width;
+	float offset = m_colider.x - m_absoluteSize.x;
+	float percent = offset / differenz * 100;
+	m_onSlide(percent, true);
+
+	differenz = m_absoluteSize.height - m_colider.height;
+	offset = m_colider.y - m_absoluteSize.y;
+	percent = offset / differenz * 100;
+	m_onSlide(percent, false);
 }
 
 UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
@@ -76,10 +87,28 @@ void UIGalaxy::Zoom(bool zoomIn, int factor) {
 	CheckPosition();
 
 	m_onZoom(m_scaleFacor);
+	PrepForOnSlide();
+}
+void UIGalaxy::Slide(float position, bool isHorizontal) {
+	if (isHorizontal) {
+		float differenz = m_absoluteSize.width - m_colider.width;
+		float offset = differenz / 100 * position;
+		m_absoluteSize.x = m_colider.x - offset;
+	}
+	else {
+		float differenz = m_absoluteSize.height - m_colider.height;
+		float offset = differenz / 100 * position;
+		m_absoluteSize.y = m_colider.y - offset;
+	}
+	CheckPosition();
+	PrepForOnSlide();
 }
 
 void UIGalaxy::SetOnZoom(std::function<void(float)> onZoom) {
 	m_onZoom = onZoom;
+}
+void UIGalaxy::SetOnSlide(std::function<void(float, bool)> onSlide) {
+	m_onSlide = onSlide;
 }
 
 void UIGalaxy::UpdateColider(Vector2 resolution) {
