@@ -6,6 +6,7 @@
 #include "GameManager.h"
 #include "AppContext.h"
 #include "GenerelEvents.hpp"
+#include <cassert>
 
 // player
 bool GameManager::ValidAddPlayer() const {
@@ -229,8 +230,9 @@ void GameManager::OnEvent(Event const& event) {
 		GenerateGalaxy();
 		return;
 	}
-	if (auto const* GalaxyEvent = dynamic_cast<GetGalaxyCopy const*>(&event)) {
-		auto retunEvent = SendGalaxyCopy(m_galaxy.get());
+	if (auto const* GalaxyEvent = dynamic_cast<GetGalaxyCopyEvent const*>(&event)) {
+		assert(m_galaxy);
+		auto retunEvent = SendGalaxyCopyEvent(m_galaxy.get());
 		AppContext::GetInstance().eventManager.InvokeEvent(retunEvent);
 		return;
 	}

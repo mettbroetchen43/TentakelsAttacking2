@@ -34,3 +34,10 @@ Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player
 bool Planet::IsHomePlanet() const {
 	return m_isHomePlanet;
 }
+
+void Planet::SetIsDestroyed(bool isDestroyed) {
+	m_isDestroyed = isDestroyed;
+}
+bool Planet::IsDestroyed() const {
+	return m_isDestroyed;
+}

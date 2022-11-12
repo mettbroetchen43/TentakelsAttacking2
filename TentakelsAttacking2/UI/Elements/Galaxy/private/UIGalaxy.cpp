@@ -4,6 +4,81 @@
 //
 
 #include "UIGalaxy.h"
+#include "GenerelEvents.hpp"
+#include "AppContext.h"
+#include "Galaxy.h"
+#include "UIPlanet.h"
+#include <iostream>
+
+void UIGalaxy::Initialize(Galaxy const* const galaxy) {
+	AppContext& appContext = AppContext::GetInstance();
+
+	for (auto& p  : galaxy->GetPlanets()) {
+		auto planet = std::make_shared<UIPlanet>(
+			p->GetID(),
+			p->GetID(),
+			GetAbsolutePosition({
+				static_cast<float>(p->GetPos().x),
+				static_cast<float>(p->GetPos().y),
+				}, appContext),
+			appContext.playerCollection.GetColorByID(p->GetID()),
+			GetRelativePosition({
+				static_cast<float>(p->GetPos().x),
+				static_cast<float>(p->GetPos().y),
+				}, appContext),
+			m_resolution
+			);
+		if (p->IsDestroyed()) {
+			planet->SetEnabled(false);
+			planet->SetColor(GRAY);
+		}
+		m_uiPlanets.push_back(planet);
+	}
+}
+Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext const& appContext) const {
+	Vector2 newPos = {
+		(m_colider.x + m_resolution.x * 0.05f) / m_resolution.x,
+		(m_colider.y + m_resolution.y * 0.05f) / m_resolution.y,
+	};
+	Vector2 newSize = {
+		(m_colider.width - m_resolution.x * 0.1f) / m_resolution.x,
+		(m_colider.height - m_resolution.y * 0.1f) / m_resolution.y,
+	};
+	return {
+		newPos.x + pos.x / appContext.constants.world.currentDimensionX * newSize.x,
+		newPos.y + pos.y / appContext.constants.world.currentDimensionY * newSize.y,
+	};
+}
+Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext const& appContext) const {
+	Vector2 newPos = {
+		m_resolution.x * 0.045f / m_colider.width,
+		m_resolution.y * 0.045f / m_colider.height,
+	};
+	Vector2 newSize = {
+		(m_colider.width - m_resolution.x * 0.1f) / m_colider.width,
+		(m_colider.height - m_resolution.y * 0.1f) / m_colider.height,
+	};
+	return {
+		newPos.x + pos.x / appContext.constants.world.currentDimensionX * newSize.x,
+		newPos.x + pos.y / appContext.constants.world.currentDimensionY * newSize.y,
+	};
+}
+
+bool UIGalaxy::IsPlanetInColider(std::shared_ptr<UIPlanet> planet) const {
+	Rectangle planetColider = planet->GetCollider();
+
+	if (planetColider.x < m_colider.x) { return false; }
+	if (planetColider.y < m_colider.y) { return false; }
+	if (planetColider.x + planetColider.width > m_colider.x + m_colider.width) { return false; }
+	if (planetColider.y + planetColider.height > m_colider.y + m_colider.height) { return false; }
+
+	return true;
+}
+void UIGalaxy::UpdatePlanetPosition() {
+	for (auto& p : m_uiPlanets) {
+		p->UpdatePosition(m_absoluteSize);
+	}
+}
 
 void UIGalaxy::CheckPosition() {
 	m_absoluteSize.x = m_absoluteSize.x < m_colider.x
@@ -65,6 +140,7 @@ void UIGalaxy::MoveByKey(Direction direction, float speed) {
 			break;
 	}
 	CheckPosition();
+	UpdatePlanetPosition();
 }
 void UIGalaxy::MoveByMouse(Vector2 mousePosition) {
 	if (m_lastMousePosition.x == 0.0f
@@ -80,12 +156,23 @@ void UIGalaxy::MoveByMouse(Vector2 mousePosition) {
 
 	CheckPosition();
 	PrepForOnSlide();
+	UpdatePlanetPosition();
 }
 
 UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
-	:Focusable(ID), UIElement(pos, size, alignment) {
+	:Focusable(ID), UIElement(pos, size, alignment), m_resolution(resolution) {
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	m_absoluteSize = m_colider; // just for testing. need to chance to actual galaxy size.
+
+	AppContext& appContext = AppContext::GetInstance();
+
+	appContext.eventManager.AddListener(this);
+
+	auto event = GetGalaxyCopyEvent();
+	appContext.eventManager.InvokeEvent(event);
+}
+UIGalaxy::~UIGalaxy() {
+	AppContext::GetInstance().eventManager.RemoveListener(this);
 }
 
 void UIGalaxy::SetIsScaling(bool isScaling) {
@@ -135,6 +222,7 @@ void UIGalaxy::Zoom(bool zoomIn, int factor) {
 
 	m_onZoom(m_scaleFacor);
 	PrepForOnSlide();
+	UpdatePlanetPosition();
 }
 void UIGalaxy::Slide(float position, bool isHorizontal) {
 	if (isHorizontal) {
@@ -149,6 +237,7 @@ void UIGalaxy::Slide(float position, bool isHorizontal) {
 	}
 	CheckPosition();
 	PrepForOnSlide();
+	UpdatePlanetPosition();
 }
 
 void UIGalaxy::SetOnZoom(std::function<void(float)> onZoom) {
@@ -192,7 +281,9 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		}
 	}
 
-
+	for (auto& p : m_uiPlanets) {
+		p->CheckAndUpdate(mousePosition, appContext);
+	}
 
 }
 void UIGalaxy::Render(AppContext const& appContext) {
@@ -206,8 +297,16 @@ void UIGalaxy::Render(AppContext const& appContext) {
 		3.0f,
 		PURPLE
 	);
+
+	for (auto& p : m_uiPlanets) {
+		if (IsPlanetInColider(p)) {
+			p->Render(appContext);
+		}
+	}
 }
 void UIGalaxy::Resize(Vector2 resolution, AppContext const& appContext) {
+	m_resolution = resolution;
+
 	m_colider = {
 	m_pos.x * resolution.x,
 	m_pos.y * resolution.y,
@@ -215,6 +314,10 @@ void UIGalaxy::Resize(Vector2 resolution, AppContext const& appContext) {
 	m_size.y * resolution.y
 	};
 	// need to scale m_absoluteSize
+
+	for (auto& p : m_uiPlanets) {
+		p->Resize(resolution, appContext);
+	}
 }
 
 
@@ -228,4 +331,10 @@ Rectangle UIGalaxy::GetCollider() const {
 	return m_colider;
 }
 
-void UIGalaxy::OnEvent(Event const& event) {}
+void UIGalaxy::OnEvent(Event const& event) {
+	
+	if (auto const* GalaxyEvent = dynamic_cast<SendGalaxyCopyEvent const*>(&event)) {
+		Initialize(GalaxyEvent->GetGalaxy());
+		return;
+	}
+}

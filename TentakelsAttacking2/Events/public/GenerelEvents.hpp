@@ -140,16 +140,16 @@ public:
 	}
 };
 
-class GenerateGalaxyEvent : public Event { };
-class GalaxyGeneratedUIEvent : public Event { };
+class GenerateGalaxyEvent final : public Event { };
+class GalaxyGeneratedUIEvent final : public Event { };
 
-class GetGalaxyCopy final : public Event { };
-class SendGalaxyCopy final : public Event {
+class GetGalaxyCopyEvent final : public Event { };
+class SendGalaxyCopyEvent final : public Event {
 private:
 	Galaxy const *const m_galaxy;
 
 public:
-	SendGalaxyCopy(Galaxy const *const galaxy)
+	SendGalaxyCopyEvent(Galaxy const *const galaxy)
 		: m_galaxy(galaxy) { }
 
 	[[nodiscard]] Galaxy const *const GetGalaxy() const {
