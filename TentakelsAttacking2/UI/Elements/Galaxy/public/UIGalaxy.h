@@ -8,6 +8,7 @@
 #include "EventListener.hpp"
 #include "Focusable.h"
 #include <functional>
+#include <memory>
 #include <vector>
 
 class Galaxy;
