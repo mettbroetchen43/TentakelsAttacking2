@@ -40,6 +40,10 @@ Color UIPlanet::GetColor() const {
 	return m_color;
 }
 
+unsigned int UIPlanet::GetID() const {
+	return m_ID;
+}
+
 void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	if (CheckCollisionPointRec(mousePosition, m_colider)) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {

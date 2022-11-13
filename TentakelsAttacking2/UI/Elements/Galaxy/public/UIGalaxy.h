@@ -24,6 +24,7 @@ private:
 	};
 	bool m_isEnabled = true;
 	bool m_isScaling = true;
+	bool m_isScrollingByMouse = false;
 	float m_scaleFacor = 1.0f;
 	Vector2 m_lastMousePosition = { 0.0f,0.0f };
 	Vector2 m_resolution;
@@ -32,6 +33,7 @@ private:
 	std::vector<std::shared_ptr<UIPlanet>> m_uiPlanets;
 	std::function<void(float)> m_onZoom = [](float) {};
 	std::function<void(float, bool)> m_onSlide = [](float, bool) {};
+	std::function<void(unsigned int)> m_onPlanetClick = [](unsigned int) {};
 
 	void Initialize(Galaxy const* const galaxy);
 	[[nodiscard]] Vector2 GetAbsolutePosition(Vector2 pos, AppContext const& appContext) const;
@@ -59,6 +61,7 @@ public:
 
 	void SetOnZoom(std::function<void(float)> onZoom);
 	void SetOnSlide(std::function<void(float, bool)> onSlide);
+	void SetOnPlanetClick(std::function<void(unsigned int)> onPlanetClick);
 
 	void UpdateColider(Vector2 resolution) override;
 

@@ -10,7 +10,6 @@
 #include "UIPlanet.h"
 #include "HInput.h"
 #include "HFocusEvents.h"
-#include <iostream> // for SelectPlanet -> remove after implementation
 
 void UIGalaxy::Initialize(Galaxy const* const galaxy) {
 	AppContext& appContext = AppContext::GetInstance();
@@ -86,7 +85,7 @@ void UIGalaxy::UpdatePlanetPosition() {
 	}
 }
 void UIGalaxy::SelectPlanet(UIPlanet* planet) {
-	std::cout << "HIT! | " << planet->GetFocusID() << '\n';
+	m_onPlanetClick(planet->GetID());
 }
 
 void UIGalaxy::CheckPosition() {
@@ -255,6 +254,9 @@ void UIGalaxy::SetOnZoom(std::function<void(float)> onZoom) {
 void UIGalaxy::SetOnSlide(std::function<void(float, bool)> onSlide) {
 	m_onSlide = onSlide;
 }
+void UIGalaxy::SetOnPlanetClick(std::function<void(unsigned int)> onPlanetClick) {
+	m_onPlanetClick = onPlanetClick;
+}
 
 void UIGalaxy::UpdateColider(Vector2 resolution) {
 	m_colider = {
@@ -281,12 +283,16 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		if (IsKeyDown(KEY_RIGHT)) { MoveByKey(Direction::RIGHT, 1.5f); }
 
 		if (CheckCollisionPointRec(mousePosition, m_colider)) {
-			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-				MoveByMouse(mousePosition);
+			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+				m_isScrollingByMouse = true;
 			}
+		}
+		if (m_isScrollingByMouse) {
+			MoveByMouse(mousePosition);
 		}
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 			m_lastMousePosition = { 0.0f, 0.0f };
+			m_isScrollingByMouse = false;
 		}
 	}
 
