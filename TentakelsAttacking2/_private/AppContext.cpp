@@ -45,19 +45,26 @@ void AppContext::Validate() {
 	ValidateMinCurrentMax<size_t>(constants.world.minPlanetCount, constants.world.currentPlanetCount,
 		constants.world.maxPlanetCount);
 
-	ValidateMinMax<size_t>(constants.world.minDiemnsionX, constants.world.maxDiemnsionX,
+	ValidateMinMax<int>(constants.world.minDiemnsionX, constants.world.maxDiemnsionX,
 		"Min World Width", "Max World Width");
-	ValidateMinCurrentMax<size_t>(constants.world.minDiemnsionX, constants.world.currentDimensionX,
+	ValidateMinCurrentMax<int>(constants.world.minDiemnsionX, constants.world.currentDimensionX,
 		constants.world.maxDiemnsionX);
 
-	ValidateMinMax<size_t>(constants.world.minDiemnsionY, constants.world.maxDiemnsionY,
+	ValidateMinMax<int>(constants.world.minDiemnsionY, constants.world.maxDiemnsionY,
 		"Min World Height", "Max World Height");
-	ValidateMinCurrentMax<size_t>(constants.world.minDiemnsionY, constants.world.currentDimensionY,
+	ValidateMinCurrentMax<int>(constants.world.minDiemnsionY, constants.world.currentDimensionY,
 		constants.world.maxDiemnsionY);
 
 	// Sound
 	ValidateLowerThan<float>(constants.sound.masterVolume, 100.0f, "Master Volume");
 	ValidateGreaterThan<float>(constants.sound.masterVolume, 0.0f, "Master Volume");
+
+	// Planet
+	ValidateLowerThan<float>(constants.planet.homeworldSpacing, 1.0f, "Homeworld Spacing");
+	ValidateGreaterThan<float>(constants.planet.homeworldSpacing, 0.0f, "Homeworld Spacing");
+
+	ValidateLowerThan<float>(constants.planet.globalSpacing, 1.0f, "Global Spacing");
+	ValidateGreaterThan<float>(constants.planet.globalSpacing, 0.0f, "Global Spacing");
 }
 
 void AppContext::OnEvent(Event const& event) {

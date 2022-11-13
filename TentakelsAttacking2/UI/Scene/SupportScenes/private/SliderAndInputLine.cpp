@@ -151,4 +151,5 @@ void SliderAndInputLine::RandomValue() {
 	m_currentValue = static_cast<int>(random.random(m_maxValue - m_minValue) + m_minValue);
 	m_inputLine->SetValue(m_currentValue);
 	SetSliderValue();
+	SaveValue();
 }

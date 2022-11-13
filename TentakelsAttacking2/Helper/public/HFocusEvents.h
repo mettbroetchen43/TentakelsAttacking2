@@ -12,4 +12,5 @@ void DeleteFocusLayer(bool isPopUp = false);
 void AddFocusElement(Focusable* focusable, bool isPopUp = false);
 void DeleteFocusElement(Focusable* focusable, bool isPopUp = false);
 
+void SelectNextFocusElement();
 void SelectFocusElement(Focusable* focusable, bool isPopUp = false);

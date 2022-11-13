@@ -12,6 +12,8 @@ private:
 	bool m_isHorizontal;
 	bool m_isPressed = false;
 	bool m_isScroll = false;
+	float m_absoluteDimension = 1.0f;
+	Vector2 m_resolution;
 	Texture2D* m_texture;
 	Rectangle m_textureRec;
 	Rectangle m_colider;
@@ -19,7 +21,7 @@ private:
 	SliderButton m_btn;
 	std::function<void(float)> m_onSlide =[](float) {};
 
-	void CalculateInitialButton(Vector2 resolution, float absolutDimension);
+	void CalculateInitialButton();
 
 	void CalculateOnSlide() const;
 	void Slide();
@@ -46,6 +48,9 @@ public:
 
 	void SetScrolling(bool isScroll);
 	[[nodiscard]] bool IsScrolling() const;
+
+	void SetAboluteDimension(float absolutDimension);
+	[[nodiscard]] float GetAbsoluteDimension() const;
 
 	void SetEnabled(bool isEnabled);
 };

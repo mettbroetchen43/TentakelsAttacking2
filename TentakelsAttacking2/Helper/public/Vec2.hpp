@@ -5,7 +5,11 @@
 
 #pragma once
 #include <string>
+#ifdef USE_FMT_FORMAT
+#include <fmt/format.h>
+#else
 #include <format>
+#endif
 #include <stdexcept>
 #include <cmath>
 
@@ -14,9 +18,7 @@ struct Vec2 final {
 	T x, y;
 
 	Vec2(T x, T y)
-		: x(x), y(y) {
-		static_assert(std::is_floating_point_v<T>, "floting point required");
-	}
+		: x(x), y(y) { }
 	Vec2(const Vec2<T>& toCopy)
 		: x(toCopy.x), y(toCopy.y) {}
 
@@ -31,7 +33,13 @@ struct Vec2 final {
 		return std::sqrt((X * X) + (Y * Y));
 	}
 	[[nodiscard]] std::string Display() const {
-		return std::format("x -> {} / y -> {}", x, y);
+		return
+#ifdef USE_FMT_FORMAT
+			fmt::format(
+#else
+			std::format(
+#endif
+				"x -> {} / y -> {}", x, y);
 	}
 
 	bool operator== (const Vec2<T>& other) const {
@@ -47,10 +55,10 @@ struct Vec2 final {
 		return Vec2<T>(x * other.x, y * other.y);
 	}
 
-	template<typename To>
-	Vec2<To> To() const {
-		static_assert(std::is_floating_point_v<To>, "floting point required");
-		return Vec2<To>(static_cast<To>(x), static_cast<To>(y));
+	template<typename Scalar>
+	Vec2<Scalar> To() const {
+		static_assert(std::is_floating_point_v<Scalar>, "floting point required");
+		return Vec2<Scalar>(static_cast<Scalar>(x), static_cast<Scalar>(y));
 	}
 	[[nodiscard]] std::string ToString() const {
 		return "X: " + std::to_string(x) + " Y: " + std::to_string(y);

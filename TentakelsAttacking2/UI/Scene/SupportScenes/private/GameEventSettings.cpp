@@ -11,6 +11,7 @@
 #include "AppContext.h"
 #include "HRandom.h"
 #include <array>
+#include <iostream>
 
 
 void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
@@ -25,6 +26,7 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 		"Events",
 		resolution
 	));
+
 	// Line
 	m_elements.push_back(std::make_shared<Line>(
 		GetElementPosition(0.5f, 0.15f),

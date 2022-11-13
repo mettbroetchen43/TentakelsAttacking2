@@ -172,6 +172,15 @@ PlayerData PlayerCollection::GetPlayerByColor(Color color) const {
 	throw std::out_of_range("Accecing non existing Color");
 }
 
+Color PlayerCollection::GetColorByID(unsigned int ID) const {
+	for (auto& p : m_playerData) {
+		if (p.ID == ID) {
+			return p.color;
+		}
+	}
+	return WHITE;
+}
+
 void PlayerCollection::OnEvent(Event const& event) {
 
 	if (auto const* playerEvent = dynamic_cast<AddPlayerUIEvent const*>(&event)) {
