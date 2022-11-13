@@ -9,15 +9,14 @@
 
 class Slider;
 class Line;
-class Text;
 class ClassicButton;
 class UIGalaxy;
 
 class GalaxyScene final : public Scene {
 private:
 	bool m_isEnabled = true;
-	std::shared_ptr<Line> m_scaleLine;
-	std::shared_ptr<Text> m_scaleText;
+	std::shared_ptr<Line> m_scaleLineX;
+	std::shared_ptr<Line> m_scaleLineY;
 	std::shared_ptr<Slider> m_verticalSlider;
 	std::shared_ptr<Slider> m_horisontalSlider;
 	std::shared_ptr<ClassicButton> m_zoomInBtn;
@@ -27,7 +26,7 @@ private:
 	Vector2 m_resolution;
 
 	void Initialize(Vector2 resolution, bool isShowGalaxy);
-	void Zoom(float scaleFactor, float referenceScale);
+	void Zoom(float scaleFactor, Vector2 referenceScale);
 	void Slide(float position, bool isHorisontal);
 
 public:

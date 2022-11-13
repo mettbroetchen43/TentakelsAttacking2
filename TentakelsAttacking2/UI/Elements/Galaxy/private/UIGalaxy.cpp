@@ -188,8 +188,11 @@ void UIGalaxy::MoveByMouse(Vector2 mousePosition) {
 	UpdatePlanetPosition();
 }
 
-float UIGalaxy::GetCurrentScaleReference() const {
-	return m_absoluteSize.width / m_currentGalaxy->GetSize().x * 10;
+Vector2 UIGalaxy::GetCurrentScaleReference() const {
+	return {
+		m_absoluteSize.width / m_currentGalaxy->GetSize().x * 10,
+		m_absoluteSize.height / m_currentGalaxy->GetSize().y * 10
+	};
 }
 
 UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,
@@ -225,22 +228,23 @@ bool UIGalaxy::IsScaling() const {
 }
 
 float UIGalaxy::GetScaleFactor() const {
-	return m_scaleFacor;
+	return m_scaleFactor;
 }
 
 void UIGalaxy::Zoom(bool zoomIn, int factor) {
 	if (!m_isScaling) { return; }
 
-	if (zoomIn) { m_scaleFacor += 0.01f * factor; }
-	else { m_scaleFacor -= 0.01f * factor; }
+	if (zoomIn) { m_scaleFactor += 0.01f * factor; }
+	else { m_scaleFactor -= 0.01f * factor; }
 
-	if (m_scaleFacor < 1.0f) { m_scaleFacor = 1.0f; }
+	if (m_scaleFactor < 1.0f) { m_scaleFactor = 1.0f; }
+	if (m_scaleFactor > 7.5f) { m_scaleFactor = 7.5f; }
 
 	Rectangle newSize = {
 		m_absoluteSize.x,
 		m_absoluteSize.y,
-		m_colider.width * m_scaleFacor,
-		m_colider.height * m_scaleFacor,
+		m_colider.width * m_scaleFactor,
+		m_colider.height * m_scaleFactor,
 	};
 
 	Vector2 differenz = {
@@ -262,7 +266,7 @@ void UIGalaxy::Zoom(bool zoomIn, int factor) {
 
 	CheckPosition();
 
-	m_onZoom(m_scaleFacor, GetCurrentScaleReference());
+	m_onZoom(m_scaleFactor, GetCurrentScaleReference());
 	PrepForOnSlide();
 	UpdatePlanetPosition();
 }
@@ -282,7 +286,7 @@ void UIGalaxy::Slide(float position, bool isHorizontal) {
 	UpdatePlanetPosition();
 }
 
-void UIGalaxy::SetOnZoom(std::function<void(float, float)> onZoom) {
+void UIGalaxy::SetOnZoom(std::function<void(float, Vector2)> onZoom) {
 	m_onZoom = onZoom;
 }
 void UIGalaxy::SetOnSlide(std::function<void(float, bool)> onSlide) {
