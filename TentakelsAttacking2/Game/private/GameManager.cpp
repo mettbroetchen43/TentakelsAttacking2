@@ -67,7 +67,7 @@ void GameManager::AddPlayer(AddPlayerEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(AddEvent);
 }
 void GameManager::EditPlayer(EditPlayerEvent const* event) const {
-	
+
 	if (!IsExistingID(event->GetID())) {
 		auto UIEvent = ShowMessagePopUpEvent(
 			"Invalid ID",
@@ -112,7 +112,7 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 }
 void GameManager::ResetPlayer() {
 	m_players.clear();
-	
+
 	auto event = ResetPlayerUIEvent();
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
@@ -167,7 +167,7 @@ void GameManager::GenerateGalaxy() {
 		appContext.constants.world.currentPlanetCount,
 		m_players,
 		m_npcs[PlayerType::NEUTRAL]
-	);
+		);
 
 	if (galaxy->IsValidGalaxy()) {
 		m_galaxy = galaxy;
@@ -177,14 +177,30 @@ void GameManager::GenerateGalaxy() {
 }
 void GameManager::GenerateShowGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
+	Vec2<size_t> size = {
+		appContext.constants.world.showDimensionX,
+		appContext.constants.world.showDimensionY,
+	};
 
+	auto galaxy = std::make_shared<Galaxy>(
+		size,
+		appContext.constants.world.showPlanetCount,
+		std::vector<std::shared_ptr<Player>>(),
+		m_npcs[PlayerType::NEUTRAL]
+		);
 
-	if (m_showGalaxy) {
+	if (galaxy) {
+		m_showGalaxy = galaxy;
 		auto event = SendGalaxyPointerEvent(m_showGalaxy.get());
 		appContext.eventManager.InvokeEvent(event);
 	}
+	else if (m_showGalaxy) {
+		auto event = SendGalaxyPointerEvent(m_showGalaxy.get());
+		appContext.eventManager.InvokeEvent(event);
+		Print("Could not geneared ShowGalaxy -> Use old Galaxy", PrintType::EXPECTED_ERROR);
+	}
 	else {
-		Print("Could not geneared ShowGalaxy", PrintType::EXPECTED_ERROR);
+		Print("Could not geneared ShowGalaxy -> No Galaxy", PrintType::ERROR);
 	}
 }
 
@@ -229,7 +245,7 @@ void GameManager::OnEvent(Event const& event) {
 	}
 
 	// Game Events
-	if (auto const* GameEvent = dynamic_cast<UpdateCheckGameEvent const *>(&event)) {
+	if (auto const* GameEvent = dynamic_cast<UpdateCheckGameEvent const*>(&event)) {
 		SetGameEventActive(GameEvent);
 		return;
 	}

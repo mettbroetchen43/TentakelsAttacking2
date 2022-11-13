@@ -25,6 +25,7 @@ private:
 	bool m_isEnabled = true;
 	bool m_isScaling = true;
 	bool m_isScrollingByMouse = false;
+	bool m_isShowGalaxy = false;
 	float m_scaleFacor = 1.0f;
 	Vector2 m_lastMousePosition = { 0.0f,0.0f };
 	Vector2 m_resolution;
@@ -50,7 +51,7 @@ private:
 
 public:
 	UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution, bool isShowGalaxy);
+		Vector2 resolution, bool isShowGalaxy = false);
 	~UIGalaxy();
 
 	void SetIsScaling(bool isScaling);

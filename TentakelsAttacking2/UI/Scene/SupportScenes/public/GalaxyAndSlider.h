@@ -25,7 +25,7 @@ private:
 
 public:
 	GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution, bool isShowGalaxy);
+		Vector2 resolution, bool isShowGalaxy = false);
 
 	void SetIsScaling(bool isScaling);
 	[[nodiscard]] bool IsScaling() const;

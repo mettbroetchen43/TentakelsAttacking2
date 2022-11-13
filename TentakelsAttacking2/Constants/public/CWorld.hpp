@@ -17,4 +17,8 @@ struct CWorld final {
 	size_t minDiemnsionY = 20;
 	size_t currentDimensionY = 80;
 	size_t maxDiemnsionY = 160;
+
+	size_t showPlanetCount = 25;
+	size_t showDimensionX = 200;
+	size_t showDimensionY = 150;
 };
