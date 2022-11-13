@@ -94,6 +94,7 @@ class SelectFocusPopUpElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
+class SelectNextFocusElementEvent final: public Event { };
 class NewFocusPopUpLayerEvent final :public Event { };
 class NewFocusLayerEvent final :public Event { };
 class DeleteFocusPopUpLayerEvent final : public Event { };

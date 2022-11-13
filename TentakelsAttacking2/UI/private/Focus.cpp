@@ -385,6 +385,10 @@ void Focus::OnEvent(Event const& event) {
 		SetSpecificPopUpFocus(focusEvent->GetFocusable());
 		return;
 	}
+	if (auto const focusEvent = dynamic_cast<SelectNextFocusElementEvent const*>(&event)) {
+		SetNextFocus();
+		return;
+	}
 
 	if (auto const focusEvent = dynamic_cast<NewFocusLayerEvent const*>(&event)) {
 		AddNormalLayer();

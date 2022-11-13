@@ -8,7 +8,9 @@
 #include "AppContext.h"
 #include "Galaxy.h"
 #include "UIPlanet.h"
-#include <iostream>
+#include "HInput.h"
+#include "HFocusEvents.h"
+#include <iostream> // for SelectPlanet -> remove after implementation
 
 void UIGalaxy::Initialize(Galaxy const* const galaxy) {
 	AppContext& appContext = AppContext::GetInstance();
@@ -68,7 +70,7 @@ Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext const& appContext)
 	};
 }
 
-bool UIGalaxy::IsPlanetInColider(std::shared_ptr<UIPlanet> planet) const {
+bool UIGalaxy::IsPlanetInCollider(std::shared_ptr<UIPlanet> planet) const {
 	Rectangle planetColider = planet->GetCollider();
 
 	if (planetColider.x < m_colider.x) { return false; }
@@ -275,8 +277,8 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 
 		if (IsKeyDown(KEY_UP)) { MoveByKey(Direction::UP, 2.0f); }
 		if (IsKeyDown(KEY_DOWN)) { MoveByKey(Direction::DOWN, 2.0f); }
-		if (IsKeyDown(KEY_LEFT)) { MoveByKey(Direction::LEFT, 2.0f); }
-		if (IsKeyDown(KEY_RIGHT)) { MoveByKey(Direction::RIGHT, 2.0f); }
+		if (IsKeyDown(KEY_LEFT)) { MoveByKey(Direction::LEFT, 1.5f); }
+		if (IsKeyDown(KEY_RIGHT)) { MoveByKey(Direction::RIGHT, 1.5f); }
 
 		if (CheckCollisionPointRec(mousePosition, m_colider)) {
 			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
@@ -290,8 +292,34 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 
 	if (m_isEnabled) {
 		for (auto& p : m_uiPlanets) {
-			if (IsPlanetInColider(p)) {
+
+			if (IsPlanetInCollider(p) != p->IsEnabled()) {
+				p->SetEnabled(IsPlanetInCollider(p));
+				if (!IsPlanetInCollider(p) && p->IsFocused()) {
+					SelectNextFocusElement();
+				}
+			}
+
+			if (IsPlanetInCollider(p)) {
 				p->CheckAndUpdate(mousePosition, appContext);
+			}
+		}
+
+		if (IsFocused() && !IsNestedFocus()) {
+			if (IsConfirmInputPressed()) {
+				m_isNestedFocus = true;
+				AddFocusLayer();
+				for (auto& p : m_uiPlanets) {
+					AddFocusElement(p.get());
+				}
+			}
+		}
+
+		if (IsNestedFocus()) {
+			if (IsBackInputPressed()
+				|| !CheckCollisionPointRec(mousePosition, m_colider)) {
+				DeleteFocusLayer();
+				m_isNestedFocus = false;
 			}
 		}
 	}
@@ -309,7 +337,7 @@ void UIGalaxy::Render(AppContext const& appContext) {
 	);*/
 
 	for (auto& p : m_uiPlanets) {
-		if (IsPlanetInColider(p)) {
+		if (IsPlanetInCollider(p)) {
 			p->Render(appContext);
 		}
 	}

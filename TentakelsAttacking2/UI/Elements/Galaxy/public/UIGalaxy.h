@@ -37,7 +37,7 @@ private:
 	[[nodiscard]] Vector2 GetAbsolutePosition(Vector2 pos, AppContext const& appContext) const;
 	[[nodiscard]] Vector2 GetRelativePosition(Vector2 pos, AppContext const& appContext) const;
 
-	[[nodiscard]] bool IsPlanetInColider(std::shared_ptr<UIPlanet> planet) const;
+	[[nodiscard]] bool IsPlanetInCollider(std::shared_ptr<UIPlanet> planet) const;
 	void UpdatePlanetPosition();
 	void SelectPlanet(UIPlanet* planet);
 

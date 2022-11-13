@@ -4,6 +4,7 @@
 //
 
 #include "UIPlanet.h"
+#include "HInput.h"
 #include "AppContext.h"
 
 UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, Vector2 pos, Color color,
@@ -44,6 +45,9 @@ void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			m_onClick(this);
 		}
+	}
+	if (IsFocused() && IsConfirmInputPressed()) {
+		m_onClick(this);
 	}
 }
 void UIPlanet::Render(AppContext const& appContext) {
