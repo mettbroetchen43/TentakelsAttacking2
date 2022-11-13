@@ -20,7 +20,7 @@ private:
 	// m_fleets
 	// m_targetPoints
 
-	Vec2<size_t> m_size;
+	Vec2<int> m_size;
 
 	[[nodiscard]] unsigned int GetNextID() const;
 	void InitialzePlanets(size_t planetCount, std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer);
@@ -29,12 +29,12 @@ private:
 	[[nodiscard]] bool IsValidNewPlanet(std::shared_ptr<Planet> newPlanet, AppContext const& appContext) const;
 
 public:
-	Galaxy(Vec2<size_t> size, size_t planetCount, std::vector<std::shared_ptr<Player>> players,
+	Galaxy(Vec2<int> size, size_t planetCount, std::vector<std::shared_ptr<Player>> players,
 		std::shared_ptr<Player> neutralPlayer);
 	Galaxy(Galaxy const&);
 
 	[[nodiscard]] bool IsValidGalaxy() const;
 
-	[[nodiscard]] Vec2<size_t> GetSize() const;
+	[[nodiscard]] Vec2<int> GetSize() const;
 	[[nodiscard]] std::vector<std::shared_ptr<Planet>> const GetPlanets() const;
 };

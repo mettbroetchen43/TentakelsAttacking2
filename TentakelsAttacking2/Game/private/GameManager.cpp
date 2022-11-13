@@ -158,7 +158,7 @@ void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 
 void GameManager::GenerateGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
-	Vec2<size_t> size = {
+	Vec2<int> size = {
 		appContext.constants.world.currentDimensionX,
 		appContext.constants.world.currentDimensionY
 	};
@@ -181,7 +181,7 @@ void GameManager::GenerateGalaxy() {
 }
 void GameManager::GenerateShowGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
-	Vec2<size_t> size = {
+	Vec2<int> size = {
 		appContext.constants.world.showDimensionX,
 		appContext.constants.world.showDimensionY,
 	};
@@ -207,7 +207,6 @@ void GameManager::GenerateShowGalaxy() {
 		Print("Could not geneared ShowGalaxy -> No Galaxy", PrintType::ERROR);
 	}
 }
-
 
 GameManager::GameManager() {
 	AppContext::GetInstance().eventManager.AddListener(this);

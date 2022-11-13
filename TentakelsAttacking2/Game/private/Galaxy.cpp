@@ -48,9 +48,9 @@ int Galaxy::GenerateHomePlanets(std::vector<std::shared_ptr<Player>> players) {
     for (auto& p : players) {
         int counter = 0;
         while (true) {
-            Vec2<size_t> newPosition = {
-               static_cast<size_t>(random.random(m_size.x)),
-               static_cast<size_t>(random.random(m_size.y))
+            Vec2<int> newPosition = {
+               static_cast<int>(random.random(m_size.x)),
+               static_cast<int>(random.random(m_size.y))
             };
 
             auto newPlanet = std::make_shared<Planet>(
@@ -89,9 +89,9 @@ void Galaxy::GenerateOtherPlanets(size_t planetCount, int currentPlanet,
     for (;currentPlanet <= planetCount; ++currentPlanet) {
         int counter = 0;
         while (true) {
-            Vec2<size_t> newPosition = {
-                static_cast<size_t>(random.random(m_size.x)),
-                static_cast<size_t>(random.random(m_size.y))
+            Vec2<int> newPosition = {
+                static_cast<int>(random.random(m_size.x)),
+                static_cast<int>(random.random(m_size.y))
             };
 
             auto newPlanet = std::make_shared<Planet>(
@@ -105,7 +105,6 @@ void Galaxy::GenerateOtherPlanets(size_t planetCount, int currentPlanet,
             if (IsValidNewPlanet(newPlanet, appContext)) {
                 m_objects.push_back(newPlanet);
                 m_planets.push_back(newPlanet);
-                ++currentPlanet;
                 break;
             }
 
@@ -140,7 +139,7 @@ bool Galaxy::IsValidNewPlanet(std::shared_ptr<Planet> newPlanet,
     return validPlanet;
 }
 
-Galaxy::Galaxy(Vec2<size_t> size, size_t planetCount,
+Galaxy::Galaxy(Vec2<int> size, size_t planetCount,
     std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer)
     : m_size(size) {
 
@@ -154,7 +153,7 @@ bool Galaxy::IsValidGalaxy() const {
     return m_validGalaxy;
 }
 
-Vec2<size_t> Galaxy::GetSize() const {
+Vec2<int> Galaxy::GetSize() const {
     return m_size;
 }
 std::vector<std::shared_ptr<Planet>> const Galaxy::GetPlanets() const {
