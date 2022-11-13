@@ -15,8 +15,7 @@ void TestScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.05f, 0.05f),
 		GetElementSize(0.7f, 0.7f),
 		Alignment::TOP_LEFT,
-		resolution,
-		true
+		resolution
 		);
 	galaxyScene->SetActive(true, appContext);
 	m_elements.push_back(galaxyScene);

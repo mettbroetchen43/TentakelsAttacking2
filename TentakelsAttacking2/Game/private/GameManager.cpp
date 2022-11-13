@@ -174,6 +174,10 @@ void GameManager::GenerateGalaxy() {
 		auto event = GalaxyGeneratedUIEvent();
 		appContext.eventManager.InvokeEvent(event);
 	}
+	else {
+		auto event = ShowMessagePopUpEvent("Galaxy", "Unable to generate the Galaxy.\nTo many Plantes.");
+		appContext.eventManager.InvokeEvent(event);
+	}
 }
 void GameManager::GenerateShowGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
@@ -185,11 +189,11 @@ void GameManager::GenerateShowGalaxy() {
 	auto galaxy = std::make_shared<Galaxy>(
 		size,
 		appContext.constants.world.showPlanetCount,
-		std::vector<std::shared_ptr<Player>>(),
+		m_players,
 		m_npcs[PlayerType::NEUTRAL]
 		);
 
-	if (galaxy) {
+	if (galaxy->IsValidGalaxy()) {
 		m_showGalaxy = galaxy;
 		auto event = SendGalaxyPointerEvent(m_showGalaxy.get());
 		appContext.eventManager.InvokeEvent(event);

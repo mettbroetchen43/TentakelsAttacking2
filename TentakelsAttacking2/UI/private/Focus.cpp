@@ -294,32 +294,44 @@ void Focus::SetLayerAfterPopUp() {
 		m_toAddOrDelete.pop_back();
 
 		for (auto f : m_removeElementRequest) {
-			DeleteElement(f, false);
+			if (f) {
+				DeleteElement(f, false);
+			}
 		}
 		m_removeElementRequest.RemoveLayer();
 
 		for (auto f : m_addElementRequest) {
-			AddElement(f, false);
+			if (f) {
+				AddElement(f, false);
+			}
 		}
 		m_addElementRequest.RemoveLayer();
 
 		for (auto f : m_toSelectRequest) {
-			SetSpecificFocus(f);
+			if (f) {
+				SetSpecificFocus(f);
+			}
 		}
 		m_toSelectRequest.RemoveLayer();
 	}
 
 	for (auto f : m_removeElementRequest) {
+		if (f) {
 		DeleteElement(f, false);
+		}
 	}
 	m_removeElementRequest.RemoveLayer();
-		for (auto f : m_addElementRequest) {
-		AddElement(f, false);
+	for (auto f : m_addElementRequest) {
+		if (f) {
+			AddElement(f, false);
+		}
 	}
 	m_addElementRequest.RemoveLayer();
 
 	for (auto f : m_toSelectRequest) {
-		SetSpecificFocus(f);
+		if (f) {
+			SetSpecificFocus(f);
+		}
 	}
 	m_toSelectRequest.RemoveLayer();
 	

@@ -7,6 +7,7 @@
 #include "AppContext.h"
 #include "UIManager.h"
 #include "ClassicButton.h"
+#include "GalaxyAndSlider.h"
 #include "Title.h"
 #include "Text.h"
 #include <memory>
@@ -52,7 +53,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 			);
 		}
 	);
-	// loadGameBtn->SetEnabled(false);
+	loadGameBtn->SetEnabled(false);
 	m_elements.push_back(loadGameBtn);
 
 	btnPosY += 0.15f;
@@ -109,6 +110,18 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		);
 	quitBtn->SetOnClick([]() {AppContext::GetInstance().eventManager.InvokeEvent(CloseWindowEvent());});
 	m_elements.push_back(quitBtn);
+
+	auto galaxy = std::make_shared<GalaxyScene>(
+		GetElementPosition(0.95f, 0.95f),
+		GetElementSize(0.7f, 0.7f),
+		Alignment::BOTTOM_RIGHT,
+		resolution,
+		true
+		);
+	galaxy->SetActive(true, appContext);
+	galaxy->SetIsScaling(false);
+	galaxy->SetIsEnabled(false);
+	m_elements.push_back(galaxy);
 
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.625f, 0.025f),

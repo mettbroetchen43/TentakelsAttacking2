@@ -114,6 +114,16 @@ bool GalaxyScene::IsScaling() const {
 	return m_galaxy->IsScaling();;
 }
 
+void GalaxyScene::SetIsEnabled(bool isEnabled) {
+	m_isEnabled = isEnabled;
+	m_galaxy->SetEnabled(isEnabled);
+	m_zoomInBtn->SetEnabled(isEnabled);
+	m_zoomOutBtn->SetEnabled(isEnabled);
+}
+bool GalaxyScene::IsEnabled() const {
+	return m_isEnabled;
+}
+
 void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 

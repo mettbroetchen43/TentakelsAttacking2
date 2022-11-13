@@ -13,6 +13,7 @@ class UIGalaxy;
 
 class GalaxyScene final : public Scene {
 private:
+	bool m_isEnabled = true;
 	std::shared_ptr<Slider> m_verticalSlider;
 	std::shared_ptr<Slider> m_horisontalSlider;
 	std::shared_ptr<ClassicButton> m_zoomInBtn;
@@ -29,6 +30,9 @@ public:
 
 	void SetIsScaling(bool isScaling);
 	[[nodiscard]] bool IsScaling() const;
+
+	void SetIsEnabled(bool isEnabled);
+	[[nodiscard]] bool IsEnabled() const;
 
 	void Render(AppContext const& appContext) override;
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;

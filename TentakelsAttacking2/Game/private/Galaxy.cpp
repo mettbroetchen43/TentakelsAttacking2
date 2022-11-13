@@ -72,8 +72,6 @@ int Galaxy::GenerateHomePlanets(std::vector<std::shared_ptr<Player>> players) {
 
             if (counter > 10) {
                 m_validGalaxy = false;
-                auto event = ShowMessagePopUpEvent("Galaxy", "Unable to generate the Galaxy.\nTo many Home-Plantes.");
-                appContext.eventManager.InvokeEvent(event);
                 return 0;
             }
         }
@@ -115,8 +113,6 @@ void Galaxy::GenerateOtherPlanets(size_t planetCount, int currentPlanet,
 
             if (counter > 10) {
                 m_validGalaxy = false;
-                auto event = ShowMessagePopUpEvent("Galaxy", "Unable to generate the Galaxy.\nTo many Plantes.");
-                appContext.eventManager.InvokeEvent(event);
                 return;
             }
         }
