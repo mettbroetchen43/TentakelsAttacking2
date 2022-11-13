@@ -86,7 +86,11 @@ void LoadConfig() {
 		&constants.world.minDiemnsionX,
 		&constants.world.maxDiemnsionX,
 		&constants.world.minDiemnsionY,
-		&constants.world.maxDiemnsionY
+		&constants.world.maxDiemnsionY,
+
+		&constants.world.showPlanetCount,
+		&constants.world.showDimensionX,
+		&constants.world.showDimensionY
 	};
 	addSize_t(size_tEntries, file, input, nextEntry);
 
@@ -171,6 +175,10 @@ void SaveConfig() {
 	entry(std::to_string(constants.world.maxDiemnsionX), "Max Dimension X", toSave);
 	entry(std::to_string(constants.world.minDiemnsionY), "Min Dimension Y", toSave);
 	entry(std::to_string(constants.world.maxDiemnsionY), "Max Dimension Y", toSave);
+
+	entry(std::to_string(constants.world.showPlanetCount), "Show Galaxy Planet Count", toSave);
+	entry(std::to_string(constants.world.showDimensionX), "Show Galaxy Dinmension X", toSave);
+	entry(std::to_string(constants.world.showDimensionY), "Show Galaxy Sinamension Y", toSave);
 
 	headline("Sound", toSave);
 	entry(std::to_string(constants.sound.muteVolume), "Volume Mute (1 = mute)", toSave);

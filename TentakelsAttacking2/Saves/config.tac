@@ -22,6 +22,9 @@
 300 / Max Dimension X
 20 / Min Dimension Y
 160 / Max Dimension Y
+25 / Show Galaxy Planet Count
+200 / Show Galaxy Dinmension X
+150 / Show Galaxy Sinamension Y
 
 // Sound
 0 / Volume Mute (1 = mute)
