@@ -6,6 +6,8 @@
 #pragma once
 #include <memory>
 #include "Vec2.hpp"
+#include <string>
+#include <memory>
 #include "LogicUpdate.hpp"
 
 class Player;
