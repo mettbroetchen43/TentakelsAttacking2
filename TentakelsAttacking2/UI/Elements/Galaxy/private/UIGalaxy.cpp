@@ -265,7 +265,14 @@ void UIGalaxy::UpdateColider(Vector2 resolution) {
 		m_size.x * resolution.x,
 		m_size.y * resolution.y
 	};
-	// need to scale m_absoluteSize
+	m_absoluteSize = {
+	m_absoluteSize.x / m_resolution.x * resolution.x,
+	m_absoluteSize.y / m_resolution.y * resolution.y,
+	m_absoluteSize.width / m_resolution.x * resolution.x,
+	m_absoluteSize.height / m_resolution.y * resolution.y,
+	};
+
+	m_resolution = resolution;
 }
 
 void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
