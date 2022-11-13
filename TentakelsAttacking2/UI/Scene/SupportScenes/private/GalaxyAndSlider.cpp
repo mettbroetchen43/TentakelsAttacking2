@@ -6,6 +6,8 @@
 #include "GalaxyAndSlider.h"
 #include "AppContext.h"
 #include "Slider.h"
+#include "Line.h"
+#include "Text.h"
 #include "UIGalaxy.h"
 #include "ClassicButton.h"
 
@@ -20,8 +22,8 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 		resolution,
 		isShowGalaxy
 		);
-	m_galaxy->SetOnZoom([this](float scaleFactor) {
-		this->Zoom(scaleFactor);
+	m_galaxy->SetOnZoom([this](float scaleFactor, float referenceScale) {
+		this->Zoom(scaleFactor, referenceScale);
 		});
 	m_galaxy->SetOnSlide([this](float position, bool isHorzontal) {
 		this->Slide(position, isHorzontal);
@@ -83,11 +85,36 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 		this->m_galaxy->Zoom(false);
 		});
 	m_elementsOutUpdates.push_back(m_zoomOutBtn);
+
+	// scale
+	m_scaleLine = std::make_shared<Line>(
+		GetElementPosition(0.1f, 0.93f),
+		GetElementSize(0.2f, 0.0f),
+		Alignment::BOTTOM_LEFT,
+		2.0f,
+		resolution
+		);
+
+	m_scaleText = std::make_shared<Text>(
+		GetElementPosition(0.1f, 0.96f),
+		GetElementSize(0.2f, 0.02f),
+		Alignment::BOTTOM_LEFT,
+		Alignment::BOTTOM_LEFT,
+		0.02f,
+		"10",
+		resolution
+		);
+
+	m_galaxy->Zoom(false, 0);
 }
 
-void GalaxyScene::Zoom(float scaleFactor) {
+void GalaxyScene::Zoom(float scaleFactor, float referenceScale) {
 	m_verticalSlider->SetAboluteDimension(scaleFactor);
 	m_horisontalSlider->SetAboluteDimension(scaleFactor);
+	m_scaleLine->SetSize(
+		Vector2(referenceScale / m_resolution.x, 0.0f),
+		m_resolution
+	);
 }
 void GalaxyScene::Slide(float position, bool isHorisontal) {
 	if (isHorisontal) {
@@ -100,7 +127,7 @@ void GalaxyScene::Slide(float position, bool isHorisontal) {
 
 GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution, bool isShowGalaxy)
-	: Scene(pos, size, alignment) {
+	: Scene(pos, size, alignment), m_resolution(resolution) {
 	GetAlignedCollider(m_pos, m_size, alignment, resolution);
 
 	Initialize(resolution, isShowGalaxy);
@@ -147,13 +174,19 @@ void GalaxyScene::Render(AppContext const& appContext) {
 	if (IsScaling()) {
 		m_zoomInBtn->Render(appContext);
 		m_zoomOutBtn->Render(appContext);
+		m_scaleLine->Render(appContext);
+		m_scaleText->Render(appContext);
 	}
 }
 void GalaxyScene::Resize(Vector2 resolution, AppContext const& appContext) {
+	m_resolution = resolution;
+
 	Scene::Resize(resolution, appContext);
 
 	m_verticalSlider->Resize(resolution, appContext);
 	m_horisontalSlider->Resize(resolution, appContext);
 	m_zoomInBtn->Resize(resolution, appContext);
 	m_zoomOutBtn->Resize(resolution, appContext);
+	m_scaleLine->Resize(resolution, appContext);
+	m_scaleText->Resize(resolution, appContext);
 }
