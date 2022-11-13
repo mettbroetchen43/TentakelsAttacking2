@@ -44,7 +44,7 @@ unsigned int UIPlanet::GetID() const {
 	return m_ID;
 }
 
-void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const&) {
 	if (CheckCollisionPointRec(mousePosition, m_colider)) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			m_onClick(this);
@@ -70,7 +70,7 @@ void UIPlanet::Render(AppContext const& appContext) {
 		WHITE
 	);*/
 }
-void UIPlanet::Resize(Vector2 resolution, AppContext const& appContext) {
+void UIPlanet::Resize(Vector2 resolution, AppContext const&) {
 	m_colider = {
 		resolution.x * m_pos.x,
 		resolution.y * m_pos.y,

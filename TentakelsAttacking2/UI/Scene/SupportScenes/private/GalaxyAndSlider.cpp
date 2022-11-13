@@ -10,7 +10,6 @@
 #include "ClassicButton.h"
 
 void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
-	AppContext& appContext = AppContext::GetInstance();
 
 	// Galaxy
 	m_galaxy = std::make_shared<UIGalaxy>(
