@@ -6,6 +6,7 @@
 #include "GameManager.h"
 #include "AppContext.h"
 #include "GenerelEvents.hpp"
+#include "HPrint.h"
 #include <cassert>
 
 // player
@@ -174,6 +175,19 @@ void GameManager::GenerateGalaxy() {
 		appContext.eventManager.InvokeEvent(event);
 	}
 }
+void GameManager::GenerateShowGalaxy() {
+	AppContext& appContext = AppContext::GetInstance();
+
+
+	if (m_showGalaxy) {
+		auto event = SendGalaxyPointerEvent(m_showGalaxy.get());
+		appContext.eventManager.InvokeEvent(event);
+	}
+	else {
+		Print("Could not geneared ShowGalaxy", PrintType::EXPECTED_ERROR);
+	}
+}
+
 
 GameManager::GameManager() {
 	AppContext::GetInstance().eventManager.AddListener(this);
@@ -226,14 +240,18 @@ void GameManager::OnEvent(Event const& event) {
 	}
 
 	// Galaxy
-	if (auto const* GalaxyEvent = dynamic_cast<GenerateGalaxyEvent const*>(&event)) {
+	if (auto const* galaxyEvent = dynamic_cast<GenerateGalaxyEvent const*>(&event)) {
 		GenerateGalaxy();
 		return;
 	}
-	if (auto const* GalaxyEvent = dynamic_cast<GetGalaxyCopyEvent const*>(&event)) {
+	if (auto const* galaxyEvent = dynamic_cast<GetGalaxyPointerEvent const*>(&event)) {
 		assert(m_galaxy);
-		auto retunEvent = SendGalaxyCopyEvent(m_galaxy.get());
+		auto retunEvent = SendGalaxyPointerEvent(m_galaxy.get());
 		AppContext::GetInstance().eventManager.InvokeEvent(retunEvent);
+		return;
+	}
+	if (auto const* galaxyEvent = dynamic_cast<GetShowGalaxyPointerEvent const*> (&event)) {
+		GenerateShowGalaxy();
 		return;
 	}
 }

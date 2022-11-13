@@ -19,12 +19,13 @@ private:
 	std::shared_ptr<ClassicButton> m_zoomOutBtn;
 	std::shared_ptr<UIGalaxy> m_galaxy;
 
-	void Initialize(Vector2 resolution);
+	void Initialize(Vector2 resolution, bool isShowGalaxy);
 	void Zoom(float scaleFactor);
 	void Slide(float position, bool isHorisontal);
 
 public:
-	GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution);
+	GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
+		Vector2 resolution, bool isShowGalaxy);
 
 	void SetIsScaling(bool isScaling);
 	[[nodiscard]] bool IsScaling() const;

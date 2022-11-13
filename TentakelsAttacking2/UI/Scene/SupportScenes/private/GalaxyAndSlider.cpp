@@ -1,7 +1,7 @@
 //
 // Purpur Tentakel
 // 09.11.2022
-//
+// 
 
 #include "GalaxyAndSlider.h"
 #include "AppContext.h"
@@ -9,7 +9,7 @@
 #include "UIGalaxy.h"
 #include "ClassicButton.h"
 
-void GalaxyScene::Initialize(Vector2 resolution) {
+void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 	AppContext& appContext = AppContext::GetInstance();
 
 	// Galaxy
@@ -18,7 +18,8 @@ void GalaxyScene::Initialize(Vector2 resolution) {
 		GetElementPosition(1.0f, 0.0f),
 		GetElementSize(0.955f, 0.93f),
 		Alignment::TOP_RIGHT,
-		resolution
+		resolution,
+		isShowGalaxy
 		);
 	m_galaxy->SetOnZoom([this](float scaleFactor) {
 		this->Zoom(scaleFactor);
@@ -99,11 +100,11 @@ void GalaxyScene::Slide(float position, bool isHorisontal) {
 }
 
 GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution)
+	Vector2 resolution, bool isShowGalaxy)
 	: Scene(pos, size, alignment) {
 	GetAlignedCollider(m_pos, m_size, alignment, resolution);
 
-	Initialize(resolution);
+	Initialize(resolution, isShowGalaxy);
 }
 
 void GalaxyScene::SetIsScaling(bool isScaling) {

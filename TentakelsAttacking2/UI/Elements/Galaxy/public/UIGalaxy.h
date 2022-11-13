@@ -49,7 +49,8 @@ private:
 	void MoveByMouse(Vector2 mousePosition);
 
 public:
-	UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution);
+	UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,
+		Vector2 resolution, bool isShowGalaxy);
 	~UIGalaxy();
 
 	void SetIsScaling(bool isScaling);

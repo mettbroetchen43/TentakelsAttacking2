@@ -167,7 +167,8 @@ void UIGalaxy::MoveByMouse(Vector2 mousePosition) {
 	UpdatePlanetPosition();
 }
 
-UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
+UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,
+	Vector2 resolution, bool isShowGalaxy)
 	:Focusable(ID), UIElement(pos, size, alignment), m_resolution(resolution) {
 	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	m_absoluteSize = m_colider; // just for testing. need to chance to actual galaxy size.
@@ -176,8 +177,15 @@ UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignme
 
 	appContext.eventManager.AddListener(this);
 
-	auto event = GetGalaxyCopyEvent();
-	appContext.eventManager.InvokeEvent(event);
+	if (isShowGalaxy) {
+		auto event = GetShowGalaxyPointerEvent();
+		appContext.eventManager.InvokeEvent(event);
+	}
+	else {
+		auto event = GetGalaxyPointerEvent();
+		appContext.eventManager.InvokeEvent(event);
+	}
+
 }
 UIGalaxy::~UIGalaxy() {
 	AppContext::GetInstance().eventManager.RemoveListener(this);
@@ -390,7 +398,7 @@ Rectangle UIGalaxy::GetCollider() const {
 
 void UIGalaxy::OnEvent(Event const& event) {
 	
-	if (auto const* GalaxyEvent = dynamic_cast<SendGalaxyCopyEvent const*>(&event)) {
+	if (auto const* GalaxyEvent = dynamic_cast<SendGalaxyPointerEvent const*>(&event)) {
 		Initialize(GalaxyEvent->GetGalaxy());
 		return;
 	}

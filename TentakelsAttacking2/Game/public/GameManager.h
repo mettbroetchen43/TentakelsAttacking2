@@ -19,6 +19,7 @@ private:
 	std::vector<std::shared_ptr<Player>> m_players;
 	std::unordered_map<GameEventType, bool> m_gameEvents;
 	std::shared_ptr<Galaxy> m_galaxy = nullptr;
+	std::shared_ptr<Galaxy> m_showGalaxy = nullptr;
 
 	// player
 	[[nodiscard]] bool ValidAddPlayer() const;
@@ -36,6 +37,7 @@ private:
 
 	// galaxy
 	void GenerateGalaxy();
+	void GenerateShowGalaxy();
 
 public:
 	GameManager();
