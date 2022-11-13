@@ -1,35 +1,89 @@
 //
-// PurpurTentakel
-// 08.08.22
+// Purpur Tentakel
+// 06.11.2022
 //
 
 #pragma once
+#include <memory>
 #include "Vec2.hpp"
-#include <string>
+#include "LogicUpdate.hpp"
 
-class Galaxy;
 class Player;
 
-class SpaceObject {
+class SpaceObject /*: public LogicUpdate */ {
 protected:
-	int m_id;
-	int m_ships;
-	Vec2<double> m_position;
+	using vec2pos = Vec2<size_t>;
+	unsigned int m_ID;
+	size_t m_ships = 0;
+	vec2pos m_position;
+	std::shared_ptr<Player> m_player;
 
 public:
-	std::weak_ptr<Player> player;
-	SpaceObject(int id,double x, double y,int ships, std::weak_ptr<Player> player);
+	SpaceObject(unsigned int ID, vec2pos position, std::shared_ptr<Player> player);
+	SpaceObject(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Player> player);
+	virtual ~SpaceObject() = default;
 
-	virtual void PreUpdate(Galaxy const& galaxy) = 0; // bevor main update -> z.B. move
-	virtual void Update(Galaxy const& galaxy) = 0; // main update
-	virtual void PostUpdate(Galaxy const& galaxy) = 0; // after main update
-	[[nodiscard]] virtual std::string ToString() const = 0; // debug Print
+	[[nodiscard]] unsigned int GetID() const;
 
-	[[nodiscard]] Vec2<double> GetPosition() const;
-	[[nodiscard]] int GetId() const;
+	void SetPlayer(std::shared_ptr<Player> player);
+	[[nodiscard]] std::shared_ptr<Player> GetPlayer() const;
 
-	friend void operator+=(SpaceObject& lhs, int ships);
-	friend void operator-=(SpaceObject& lhs, int ships);
-	friend bool operator==(SpaceObject const& lhs, SpaceObject const& rhs);
+	void SetPos(vec2pos pos);
+	[[nodiscard]] vec2pos GetPos() const;
+
+	friend size_t operator+ (SpaceObject const& object, size_t ships);
+	friend size_t operator+ (size_t ships, SpaceObject const& object);
+	friend size_t operator+ (SpaceObject const& lhs, SpaceObject const& rhs);
+
+	friend size_t operator- (SpaceObject const& object, size_t ships);
+	friend size_t operator- (size_t ships, SpaceObject const& object);
+	friend size_t operator- (SpaceObject const& lhs, SpaceObject const& rhs);
+
+	friend bool operator< (SpaceObject const& object, size_t ships);
+	friend bool operator< (size_t ships, SpaceObject const& object);
+	friend bool operator< (SpaceObject const& lhs, SpaceObject const& rhs);
+
+	friend bool operator<= (SpaceObject const& object, size_t ships);
+	friend bool operator<= (size_t ships, SpaceObject const& object);
+	friend bool operator<= (SpaceObject const& lhs, SpaceObject const& rhs);
+
+	friend bool operator> (SpaceObject const& object, size_t ships);
+	friend bool operator> (size_t ships, SpaceObject const& object);
+	friend bool operator> (SpaceObject const& lhs, SpaceObject const& rhs);
+
+	friend bool operator>= (SpaceObject const& object, size_t ships);
+	friend bool operator>= (size_t ships, SpaceObject const& object);
+	friend bool operator>= (SpaceObject const& lhs, SpaceObject const& rhs);
+
+	SpaceObject& operator+=(size_t ships);
+	SpaceObject& operator+=(SpaceObject const& object);
+
+	SpaceObject& operator-=(size_t ships);
+	SpaceObject& operator-=(SpaceObject const& object);
+
+	[[nodiscard]] bool operator== (SpaceObject const& other) const;
 };
 
+[[nodiscard]] size_t operator+ (SpaceObject const& object, size_t ships);
+[[nodiscard]] size_t operator+ (size_t ships, SpaceObject& object);
+[[nodiscard]] size_t operator+ (SpaceObject const& lhs, SpaceObject const& rhs);
+
+[[nodiscard]] size_t operator- (SpaceObject const& object, size_t ships);
+[[nodiscard]] size_t operator- (size_t ships, SpaceObject const& object);
+[[nodiscard]] size_t operator- (SpaceObject const& lhs, SpaceObject const& rhs);
+
+[[nodiscard]] bool operator< (SpaceObject const& object, size_t ships);
+[[nodiscard]] bool operator< (size_t ships, SpaceObject const& object);
+[[nodiscard]] bool operator< (SpaceObject const& lhs, SpaceObject const& rhs);
+
+[[nodiscard]] bool operator<= (SpaceObject const& object, size_t ships);
+[[nodiscard]] bool operator<= (size_t ships, SpaceObject const& object);
+[[nodiscard]] bool operator<= (SpaceObject const& lhs, SpaceObject const& rhs);
+
+[[nodiscard]] bool operator> (SpaceObject const& object, size_t ships);
+[[nodiscard]] bool operator> (size_t ships, SpaceObject const& object);
+[[nodiscard]] bool operator> (SpaceObject const& lhs, SpaceObject const& rhs);
+
+[[nodiscard]] bool operator>= (SpaceObject const& object, size_t ships);
+[[nodiscard]] bool operator>= (size_t ships, SpaceObject const& object);
+[[nodiscard]] bool operator>= (SpaceObject const& lhs, SpaceObject const& rhs);

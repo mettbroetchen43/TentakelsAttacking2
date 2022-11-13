@@ -1,6 +1,6 @@
 //
-// PurpurTentakel
-// 10.08.22
+// Purpur Tentakel
+// 07.11.2022
 //
 
 #pragma once
@@ -8,17 +8,19 @@
 
 class Planet final : public SpaceObject {
 private:
-	int m_production;
-	size_t m_maxShips;
+	using vec2pos = Vec2<size_t>;
+	bool m_isHomePlanet;
+	bool m_isDestroyed = false;
+	int m_planetNumber;
+	size_t m_maxShips; // set from config
+	size_t m_production; // set from config
+
 public:
-	Planet(int id, double x, double y, int ships, std::weak_ptr<Player> player, int production);
-	
-	void PreUpdate(Galaxy const& gameManager) override;
-	void Update(Galaxy const& gameManager) override;
-	void PostUpdate(Galaxy const& gameManager) override;
-	[[nodiscard]] std::string ToString() const override;
+	Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
+		bool isHomePlanet, int m_planetNumber);
 
-	void ProduceShips();
-	void ResetMaxShips();
+	[[nodiscard]] bool IsHomePlanet() const;
+
+	void SetIsDestroyed(bool isDestroyed);
+	[[nodiscard]] bool IsDestroyed() const;
 };
-

@@ -8,5 +8,6 @@
 enum class PlayerType {
 	DEFAULT,
 	HUMAN,
+	NEUTRAL,
 	PIRATE,
 };

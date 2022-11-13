@@ -5,7 +5,11 @@
 
 #include "GameManager.h"
 #include "AppContext.h"
+#include "GenerelEvents.hpp"
+#include "HPrint.h"
+#include <cassert>
 
+// player
 bool GameManager::ValidAddPlayer() const {
 	return AppContext::GetInstance().constants.player.maxPlayerCount
 		> m_players.size();
@@ -63,7 +67,7 @@ void GameManager::AddPlayer(AddPlayerEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(AddEvent);
 }
 void GameManager::EditPlayer(EditPlayerEvent const* event) const {
-	
+
 	if (!IsExistingID(event->GetID())) {
 		auto UIEvent = ShowMessagePopUpEvent(
 			"Invalid ID",
@@ -108,7 +112,7 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 }
 void GameManager::ResetPlayer() {
 	m_players.clear();
-	
+
 	auto event = ResetPlayerUIEvent();
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
@@ -137,6 +141,7 @@ void GameManager::CheckPlayerCount() const {
 	appContext.eventManager.InvokeEvent(event);
 }
 
+// events
 void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 	if (event->GetType() == GameEventType::GLOBAL) {
 		for (auto e : settableGameEventTypes) {
@@ -151,24 +156,73 @@ void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
 }
 
+void GameManager::GenerateGalaxy() {
+	AppContext& appContext = AppContext::GetInstance();
+	Vec2<size_t> size = {
+		appContext.constants.world.currentDimensionX,
+		appContext.constants.world.currentDimensionY
+	};
+	auto galaxy = std::make_shared<Galaxy>(
+		size,
+		appContext.constants.world.currentPlanetCount,
+		m_players,
+		m_npcs[PlayerType::NEUTRAL]
+		);
+
+	if (galaxy->IsValidGalaxy()) {
+		m_galaxy = galaxy;
+		auto event = GalaxyGeneratedUIEvent();
+		appContext.eventManager.InvokeEvent(event);
+	}
+	else {
+		auto event = ShowMessagePopUpEvent("Galaxy", "Unable to generate the Galaxy.\nTo many Plantes.");
+		appContext.eventManager.InvokeEvent(event);
+	}
+}
+void GameManager::GenerateShowGalaxy() {
+	AppContext& appContext = AppContext::GetInstance();
+	Vec2<size_t> size = {
+		appContext.constants.world.showDimensionX,
+		appContext.constants.world.showDimensionY,
+	};
+
+	auto galaxy = std::make_shared<Galaxy>(
+		size,
+		appContext.constants.world.showPlanetCount,
+		m_players,
+		m_npcs[PlayerType::NEUTRAL]
+		);
+
+	if (galaxy->IsValidGalaxy()) {
+		m_showGalaxy = galaxy;
+		auto event = SendGalaxyPointerEvent(m_showGalaxy.get());
+		appContext.eventManager.InvokeEvent(event);
+	}
+	else if (m_showGalaxy) {
+		auto event = SendGalaxyPointerEvent(m_showGalaxy.get());
+		appContext.eventManager.InvokeEvent(event);
+		Print("Could not geneared ShowGalaxy -> Use old Galaxy", PrintType::EXPECTED_ERROR);
+	}
+	else {
+		Print("Could not geneared ShowGalaxy -> No Galaxy", PrintType::ERROR);
+	}
+}
+
+
 GameManager::GameManager() {
 	AppContext::GetInstance().eventManager.AddListener(this);
 	for (auto e : settableGameEventTypes) {
 		m_gameEvents[e] = true;
 	}
-}
-
-std::vector<std::shared_ptr<Player>>& GameManager::GetPlayers() {
-	return m_players;
-}
-std::vector<std::shared_ptr<Player>> const& GameManager::GetPlayers() const {
-	return m_players;
+	m_npcs[PlayerType::NEUTRAL] = std::make_shared<Player>(100, PlayerType::NEUTRAL);
 }
 
 void GameManager::Update() {
-	m_galaxy.PreUpdate(); // bevor main update -> z.B. move
-	m_galaxy.Update();  // main update
-	m_galaxy.PostUpdate(); // debug Print
+	/*
+	preUpdate -> moving and stuff
+	Update -> general update
+	postUpdate -> cleanup
+	*/
 }
 void GameManager::OnEvent(Event const& event) {
 
@@ -195,13 +249,29 @@ void GameManager::OnEvent(Event const& event) {
 	}
 
 	// Game Events
-	if (auto const* GameEvent = dynamic_cast<UpdateCheckGameEvent const *>(&event)) {
+	if (auto const* GameEvent = dynamic_cast<UpdateCheckGameEvent const*>(&event)) {
 		SetGameEventActive(GameEvent);
 		return;
 	}
 	if (auto const* GameEvent = dynamic_cast<InitialCheckGameEventDataEvent const*>(&event)) {
 		auto updateEvent = UpdateCheckGameEventsUI(&m_gameEvents);
 		AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
+		return;
+	}
+
+	// Galaxy
+	if (auto const* galaxyEvent = dynamic_cast<GenerateGalaxyEvent const*>(&event)) {
+		GenerateGalaxy();
+		return;
+	}
+	if (auto const* galaxyEvent = dynamic_cast<GetGalaxyPointerEvent const*>(&event)) {
+		assert(m_galaxy);
+		auto retunEvent = SendGalaxyPointerEvent(m_galaxy.get());
+		AppContext::GetInstance().eventManager.InvokeEvent(retunEvent);
+		return;
+	}
+	if (auto const* galaxyEvent = dynamic_cast<GetShowGalaxyPointerEvent const*> (&event)) {
+		GenerateShowGalaxy();
 		return;
 	}
 }

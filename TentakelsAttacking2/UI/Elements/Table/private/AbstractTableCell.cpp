@@ -27,7 +27,7 @@ AbstractTableCell::AbstractTableCell(unsigned int ID, Vector2 pos, Vector2 size,
 	m_colider = GetAlignedCollider(m_size, m_pos, alignment, resolution);
 }
 
-[[nodiscard]] void AbstractTableCell::SetEditable(bool editable) {
+void AbstractTableCell::SetEditable(bool editable) {
 	m_editable = editable;
 }
 [[nodiscard]] bool AbstractTableCell::IsEnabled() const {

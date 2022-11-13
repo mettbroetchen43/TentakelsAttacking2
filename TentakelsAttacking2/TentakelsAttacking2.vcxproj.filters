@@ -21,15 +21,6 @@
     <ClInclude Include="Helper\public\HRandom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game\public\SpaceObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\public\GroupTarget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\public\Fleet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Game\public\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -37,12 +28,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game\public\PlayerType.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\public\Galaxy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\public\Planet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\Button\public\Button.h">
@@ -267,6 +252,30 @@
     <ClInclude Include="UI\Scene\SupportScenes\public\CreditTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game\public\SpaceObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\public\LogicUpdate.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\public\Planet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants\public\CPlanet.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\public\Galaxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Scene\SupportScenes\public\GalaxyAndSlider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Elements\Galaxy\public\UIPlanet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Elements\Galaxy\public\UIGalaxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -275,25 +284,10 @@
     <ClCompile Include="_private\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game\private\SpaceObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\private\GroupTarget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\private\Fleet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Game\private\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game\private\GameManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\private\Galaxy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\private\Planet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Button\private\Button.cpp">
@@ -441,6 +435,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Scene\SupportScenes\private\CreditTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\private\SpaceObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\private\Planet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\private\Galaxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Scene\SupportScenes\private\GalaxyAndSlider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\Galaxy\private\UIPlanet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\Galaxy\private\UIGalaxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

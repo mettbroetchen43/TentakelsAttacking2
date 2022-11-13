@@ -28,7 +28,7 @@ public:
 	virtual void Render(AppContext const& appContext) = 0;
 	virtual void Resize(Vector2 resolution, AppContext const& appContext) = 0;
 
-	[[nodiscard]] void SetEditable(bool editable);
+	void SetEditable(bool editable);
 	[[nodiscard]] bool IsEnabled() const override;
 	[[nodiscard]] virtual Rectangle GetCollider() const = 0;
 

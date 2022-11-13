@@ -50,6 +50,10 @@ void DeleteFocusElement(Focusable* focusable, bool isPopUp) {
 	}
 }
 
+void SelectNextFocusElement() {
+	auto event = SelectNextFocusElementEvent();
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
 void SelectFocusElement(Focusable* focusable, bool isPopUp) {
 	if (isPopUp) {
 		auto event = SelectFocusPopUpElementEvent(focusable);

@@ -9,9 +9,15 @@
 #include "AppContext.h"
 #include "HFocusEvents.h"
 
-void Scene::SetFocusActive([[maybe_unused]] AppContext const& appContext) {
+void Scene::SetFocusActive(AppContext const&) {
 	if (m_active) {
 		for (auto& element : m_elements) {
+			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
+				AddFocusElement(focusable);
+				continue;
+			}
+		}
+		for (auto& element : m_elementsOutUpdates) {
 			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
 				AddFocusElement(focusable);
 				continue;

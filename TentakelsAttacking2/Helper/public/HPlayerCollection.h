@@ -39,6 +39,8 @@ public:
 	[[nodiscard]] PlayerData GetPlayerByID(unsigned int ID) const;
 	[[nodiscard]] PlayerData GetPlayerByName(std::string const& name) const;
 	[[nodiscard]] PlayerData GetPlayerByColor(Color color) const;
-	
+
+	[[nodiscard]] Color GetColorByID(unsigned int ID) const;
+
 	void OnEvent(Event const& event) override;
 };

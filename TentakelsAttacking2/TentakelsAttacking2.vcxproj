@@ -76,9 +76,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/Galaxy/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,8 +113,10 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/Galaxy/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,6 +146,7 @@
     <ClInclude Include="Constants\public\CConstants.hpp" />
     <ClInclude Include="Constants\public\CFiles.hpp" />
     <ClInclude Include="Constants\public\ConfigIO.h" />
+    <ClInclude Include="Constants\public\CPlanet.hpp" />
     <ClInclude Include="Constants\public\CPlayer.hpp" />
     <ClInclude Include="Constants\public\CWorld.hpp" />
     <ClInclude Include="Constants\public\CGlobal.hpp" />
@@ -153,9 +158,10 @@
     <ClInclude Include="Events\public\MainEvent.hpp" />
     <ClInclude Include="Game\public\Galaxy.h" />
     <ClInclude Include="Game\public\GameManager.h" />
-    <ClInclude Include="Game\public\Fleet.h" />
-    <ClInclude Include="Game\public\GroupTarget.h" />
+    <ClInclude Include="Game\public\Planet.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
+    <ClInclude Include="Game\public\SpaceObject.h" />
+    <ClInclude Include="Game\public\LogicUpdate.hpp" />
     <ClInclude Include="Helper\public\GameEventTypes.hpp" />
     <ClInclude Include="Helper\public\HColors.h" />
     <ClInclude Include="Helper\public\HFocusEvents.h" />
@@ -168,14 +174,14 @@
     <ClInclude Include="Helper\public\HTextProcessing.h" />
     <ClInclude Include="Helper\public\HPlayerData.hpp" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
-    <ClInclude Include="Game\public\SpaceObject.h" />
     <ClInclude Include="Game\public\Player.h" />
-    <ClInclude Include="Game\public\Planet.h" />
     <ClInclude Include="UI\Elements\Default\public\CheckBox.h" />
     <ClInclude Include="UI\Elements\Default\public\Line.h" />
     <ClInclude Include="UI\Elements\Default\public\Picture.h" />
     <ClInclude Include="UI\Elements\Default\public\Text.h" />
     <ClInclude Include="UI\Elements\Default\public\Title.h" />
+    <ClInclude Include="UI\Elements\Galaxy\public\UIPlanet.h" />
+    <ClInclude Include="UI\Elements\Galaxy\public\UIGalaxy.h" />
     <ClInclude Include="UI\Elements\PopUp\public\AllPopUp.hpp" />
     <ClInclude Include="UI\Elements\PopUp\public\CellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\ColorCellPopUp.h" />
@@ -199,6 +205,7 @@
     <ClInclude Include="UI\Scene\public\BaseMainScene.h" />
     <ClInclude Include="UI\public\PopUpManager.h" />
     <ClInclude Include="UI\Scene\SupportScenes\public\CreditTable.h" />
+    <ClInclude Include="UI\Scene\SupportScenes\public\GalaxyAndSlider.h" />
     <ClInclude Include="UI\Scene\SupportScenes\public\GameEventSettings.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\Intro.h" />
     <ClInclude Include="UI\public\SceneManager.h" />
@@ -226,13 +233,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Constants\private\ConfigIO.cpp" />
-    <ClCompile Include="Game\private\Galaxy.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />
-    <ClCompile Include="Game\private\Fleet.cpp" />
-    <ClCompile Include="Game\private\GroupTarget.cpp" />
+    <ClCompile Include="Game\private\SpaceObject.cpp" />
+    <ClCompile Include="Game\private\Planet.cpp" />
+    <ClCompile Include="Game\private\Galaxy.cpp" />
     <ClCompile Include="Helper\private\HRandom.cpp" />
     <ClCompile Include="Game\private\Player.cpp" />
-    <ClCompile Include="Game\private\Planet.cpp" />
     <ClCompile Include="Helper\private\HTextProcessing.cpp" />
     <ClCompile Include="Helper\private\HGeneral.cpp" />
     <ClCompile Include="Helper\private\HPlayerCollection.cpp" />
@@ -245,6 +251,8 @@
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Line.cpp" />
     <ClCompile Include="UI\Elements\Default\private\CheckBox.cpp" />
+    <ClCompile Include="UI\Elements\Galaxy\private\UIPlanet.cpp" />
+    <ClCompile Include="UI\Elements\Galaxy\private\UIGalaxy.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\CellPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\ColorCellPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\PopUp.cpp" />
@@ -280,8 +288,8 @@
     <ClCompile Include="UI\Scene\SupportScenes\private\GameEventSettings.cpp" />
     <ClCompile Include="UI\Scene\SupportScenes\private\SliderAndInputLine.cpp" />
     <ClCompile Include="UI\Scene\SupportScenes\private\CreditTable.cpp" />
+    <ClCompile Include="UI\Scene\SupportScenes\private\GalaxyAndSlider.cpp" />
     <ClCompile Include="_private\Main.cpp" />
-    <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="_private\AppContext.cpp" />
   </ItemGroup>
   <ItemGroup>

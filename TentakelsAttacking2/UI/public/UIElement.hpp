@@ -8,6 +8,7 @@
 #include "HAssetType.hpp"
 #include "UIEvents.hpp"
 #include "Allignment.h"
+#include <raylib.h>
 
 
 struct AppContext;

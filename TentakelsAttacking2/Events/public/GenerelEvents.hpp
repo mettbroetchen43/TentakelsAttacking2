@@ -9,6 +9,7 @@
 #include <raylib.h>
 
 enum class GameEventType;
+class Galaxy;
 
 class PlayerEvent : public Event {
 private:
@@ -136,5 +137,23 @@ public:
 
 	[[nodiscard]] int GetLastRound() const {
 		return m_lastRound;
+	}
+};
+
+class GenerateGalaxyEvent final : public Event { };
+class GalaxyGeneratedUIEvent final : public Event { };
+
+class GetGalaxyPointerEvent final : public Event { };
+class GetShowGalaxyPointerEvent final : public Event { };
+class SendGalaxyPointerEvent final : public Event {
+private:
+	Galaxy const *const m_galaxy;
+
+public:
+	SendGalaxyPointerEvent(Galaxy const *const galaxy)
+		: m_galaxy(galaxy) { }
+
+	[[nodiscard]] Galaxy const *const GetGalaxy() const {
+		return m_galaxy;
 	}
 };

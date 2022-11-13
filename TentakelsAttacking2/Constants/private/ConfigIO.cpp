@@ -86,7 +86,11 @@ void LoadConfig() {
 		&constants.world.minDiemnsionX,
 		&constants.world.maxDiemnsionX,
 		&constants.world.minDiemnsionY,
-		&constants.world.maxDiemnsionY
+		&constants.world.maxDiemnsionY,
+
+		&constants.world.showPlanetCount,
+		&constants.world.showDimensionX,
+		&constants.world.showDimensionY
 	};
 	addSize_t(size_tEntries, file, input, nextEntry);
 
@@ -99,6 +103,24 @@ void LoadConfig() {
 	std::vector<float*> floatEltries = {
 		// Sound
 		&constants.sound.masterVolume
+	};
+	addFloat(floatEltries, file, input, nextEntry);
+
+	size_tEntries = {
+		// Planet
+		&constants.planet.maxShips,
+		&constants.planet.statringHumanShipsMultiplicator,
+		&constants.planet.statringGlobalShipsMultiplicator,
+		&constants.planet.homeworldProduction,
+		&constants.planet.minProduction,
+		&constants.planet.maxProduction,
+	};
+	addSize_t(size_tEntries, file, input, nextEntry);
+
+	floatEltries = {
+		// Planet
+		&constants.planet.homeworldSpacing,
+		&constants.planet.globalSpacing,
 	};
 	addFloat(floatEltries, file, input, nextEntry);
 
@@ -154,9 +176,23 @@ void SaveConfig() {
 	entry(std::to_string(constants.world.minDiemnsionY), "Min Dimension Y", toSave);
 	entry(std::to_string(constants.world.maxDiemnsionY), "Max Dimension Y", toSave);
 
+	entry(std::to_string(constants.world.showPlanetCount), "Show Galaxy Planet Count", toSave);
+	entry(std::to_string(constants.world.showDimensionX), "Show Galaxy Dinmension X", toSave);
+	entry(std::to_string(constants.world.showDimensionY), "Show Galaxy Sinamension Y", toSave);
+
 	headline("Sound", toSave);
 	entry(std::to_string(constants.sound.muteVolume), "Volume Mute (1 = mute)", toSave);
 	entry(std::to_string(constants.sound.masterVolume), "Master Volume (0.0 - 100.0)", toSave);
+
+	headline("Planet", toSave);
+	entry(std::to_string(constants.planet.maxShips), "Max Ships", toSave);
+	entry(std::to_string(constants.planet.statringHumanShipsMultiplicator), "Starting Ships Multiplicator for Humans", toSave);
+	entry(std::to_string(constants.planet.statringGlobalShipsMultiplicator), "Starting Ships Multiplicator for Global", toSave);
+	entry(std::to_string(constants.planet.homeworldProduction), "HomeWorld Production", toSave);
+	entry(std::to_string(constants.planet.minProduction), "Min Production", toSave);
+	entry(std::to_string(constants.planet.maxProduction), "Max Production", toSave);
+	entry(std::to_string(constants.planet.homeworldSpacing), "Homeworld Spacing (0.0 - 1.0)", toSave);
+	entry(std::to_string(constants.planet.globalSpacing), "Global Spacing (0.0 - 1.0)", toSave);
 
 	file << toSave;
 	file.close();

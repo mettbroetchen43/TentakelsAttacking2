@@ -129,10 +129,17 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 }
 void Button::Render(AppContext const& appContext) {
 	m_textureRec.y = static_cast<int>(m_state) * m_textureRec.height;
-	DrawTexturePro(*m_texture, m_textureRec, m_colider, Vector2(0.0f, 0.0f), 0, WHITE);
+	DrawTexturePro(
+		*m_texture,
+		m_textureRec,
+		m_colider,
+		Vector2(0.0f, 0.0f),
+		0,
+		WHITE
+	);
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()), m_text.c_str(),
-		Vector2(m_textPosition.x, m_textPosition.y),
+		Vector2{ m_textPosition.x, m_textPosition.y },
 		static_cast<float>(m_textSize),
 		0,
 		WHITE);

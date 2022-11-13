@@ -1,38 +1,43 @@
 //
-// PurpurTentakel
-// 10.08.22
+// Purpur Tentakel
+// 07.11.2022
 //
 
 #include "Planet.h"
+#include "HRandom.h"
+#include "AppContext.h"
 #include "Player.h"
 
-Planet::Planet(int id, double x, double y, int ships, std::weak_ptr<Player> player, int production)
-	:SpaceObject(id,x,y,ships,player),m_production(production),m_maxShips(300) {}
+Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
+	bool isHomePlanet, int planetNumber)
+	: SpaceObject(ID, position, player), m_isHomePlanet(isHomePlanet),
+	m_planetNumber(planetNumber) {
 
-void Planet::PreUpdate(Galaxy const& gameManager) {
-}
+	AppContext& appContext = AppContext::GetInstance();
+	m_maxShips = appContext.constants.planet.maxShips;
 
-void Planet::Update(Galaxy const& gameManager) {
-	ProduceShips();
-}
-
-void Planet::PostUpdate(Galaxy const& gameManager) {
-}
-
-std::string Planet::ToString() const {
-	return "Planet // " + std::to_string(m_id) + " // " + m_position.ToString();
-}
-
-void Planet::ProduceShips() {
-	m_ships += m_production;
-	ResetMaxShips();
-}
-
-void Planet::ResetMaxShips() {
-	if (player.lock()->IsHumanPlayer()) {
-		return;
+	if (m_isHomePlanet) {
+		m_production = appContext.constants.planet.homeworldProduction;
+		m_ships = m_production * appContext.constants.planet.statringHumanShipsMultiplicator;
 	}
-	if (m_ships > m_maxShips) {
-		m_ships = static_cast<int>(m_maxShips);
+	else {
+		Random& random = Random::GetInstance();
+		size_t r = static_cast<size_t>(random.random(
+			appContext.constants.planet.maxProduction -
+			appContext.constants.planet.minProduction
+		));
+		m_production = r + appContext.constants.planet.minProduction;
+		m_ships = m_production * appContext.constants.planet.statringGlobalShipsMultiplicator;
 	}
+}
+
+bool Planet::IsHomePlanet() const {
+	return m_isHomePlanet;
+}
+
+void Planet::SetIsDestroyed(bool isDestroyed) {
+	m_isDestroyed = isDestroyed;
+}
+bool Planet::IsDestroyed() const {
+	return m_isDestroyed;
 }

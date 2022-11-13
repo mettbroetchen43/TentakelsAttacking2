@@ -5,6 +5,7 @@
 
 #pragma once
 #include "EventListener.hpp"
+#include <algorithm>
 #include <vector>
 
  class  EventManager final {

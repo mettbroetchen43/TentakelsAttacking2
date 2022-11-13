@@ -11,13 +11,17 @@
 #include "GenerelEvents.hpp"
 #include "GameEventTypes.hpp"
 #include <vector>
+#include <memory>
 
 class GameManager final : public EventListener {
 private:
+	std::unordered_map<PlayerType, std::shared_ptr<Player>> m_npcs;
 	std::vector<std::shared_ptr<Player>> m_players;
 	std::unordered_map<GameEventType, bool> m_gameEvents;
-	Galaxy m_galaxy;
+	std::shared_ptr<Galaxy> m_galaxy = nullptr;
+	std::shared_ptr<Galaxy> m_showGalaxy = nullptr;
 
+	// player
 	[[nodiscard]] bool ValidAddPlayer() const;
 	[[nodiscard]] unsigned int GetNextID() const;
 	[[nodiscard]] bool IsExistingID(unsigned int ID) const;
@@ -28,13 +32,15 @@ private:
 	void ResetPlayer();
 	void CheckPlayerCount() const;
 
+	// events
 	void SetGameEventActive(UpdateCheckGameEvent const* event);
+
+	// galaxy
+	void GenerateGalaxy();
+	void GenerateShowGalaxy();
 
 public:
 	GameManager();
-
-	[[nodiscard]] std::vector<std::shared_ptr<Player>>& GetPlayers();
-	[[nodiscard]] std::vector<std::shared_ptr<Player>> const& GetPlayers() const;
 
 	void Update();
 

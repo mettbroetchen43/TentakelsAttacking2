@@ -4,6 +4,7 @@
 //
 
 #pragma once
+#include <algorithm> // for std::remove
 #include <vector>
 #include <stdexcept>
 #include <string>
