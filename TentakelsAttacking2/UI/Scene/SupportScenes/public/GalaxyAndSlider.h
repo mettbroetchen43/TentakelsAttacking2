@@ -8,20 +8,25 @@
 #include <vector>
 
 class Slider;
+class Line;
 class ClassicButton;
 class UIGalaxy;
 
 class GalaxyScene final : public Scene {
 private:
 	bool m_isEnabled = true;
+	std::shared_ptr<Line> m_scaleLineX;
+	std::shared_ptr<Line> m_scaleLineY;
 	std::shared_ptr<Slider> m_verticalSlider;
 	std::shared_ptr<Slider> m_horisontalSlider;
 	std::shared_ptr<ClassicButton> m_zoomInBtn;
 	std::shared_ptr<ClassicButton> m_zoomOutBtn;
 	std::shared_ptr<UIGalaxy> m_galaxy;
 
+	Vector2 m_resolution;
+
 	void Initialize(Vector2 resolution, bool isShowGalaxy);
-	void Zoom(float scaleFactor);
+	void Zoom(float scaleFactor, Vector2 referenceScale);
 	void Slide(float position, bool isHorisontal);
 
 public:

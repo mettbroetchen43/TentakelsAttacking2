@@ -7,5 +7,5 @@
 
 struct CSound final {
 	bool muteVolume = false;
-	float masterVolume = 100.0f;
+	float masterVolume = 50.0f;
 };

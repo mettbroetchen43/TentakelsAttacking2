@@ -58,6 +58,13 @@ void LoadConfig() {
 			}
 		}
 	};
+	auto addInt = [](std::vector<int*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
+		for (auto e : entries) {
+			if (nextEntry(file, input)) {
+				*e = std::stoi(input);
+			}
+		}
+	};
 	auto addFloat = [](std::vector<float*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
@@ -82,17 +89,21 @@ void LoadConfig() {
 		// World
 		&constants.world.minPlanetCount,
 		&constants.world.maxPlanetCount,
+		&constants.world.showPlanetCount,
+	};
+	addSize_t(size_tEntries, file, input, nextEntry);
 
+	std::vector<int*> intEntries {
+		// World
 		&constants.world.minDiemnsionX,
 		&constants.world.maxDiemnsionX,
 		&constants.world.minDiemnsionY,
 		&constants.world.maxDiemnsionY,
 
-		&constants.world.showPlanetCount,
 		&constants.world.showDimensionX,
 		&constants.world.showDimensionY
 	};
-	addSize_t(size_tEntries, file, input, nextEntry);
+	addInt(intEntries, file, input, nextEntry);
 
 	boolEntries = {
 		// Sound
@@ -170,13 +181,13 @@ void SaveConfig() {
 	headline("World", toSave);
 	entry(std::to_string(constants.world.minPlanetCount), "Min Planet Count", toSave);
 	entry(std::to_string(constants.world.maxPlanetCount), "Max Planet Count", toSave);
+	entry(std::to_string(constants.world.showPlanetCount), "Show Galaxy Planet Count", toSave);
 
 	entry(std::to_string(constants.world.minDiemnsionX), "Min Dimension X", toSave);
 	entry(std::to_string(constants.world.maxDiemnsionX), "Max Dimension X", toSave);
 	entry(std::to_string(constants.world.minDiemnsionY), "Min Dimension Y", toSave);
 	entry(std::to_string(constants.world.maxDiemnsionY), "Max Dimension Y", toSave);
 
-	entry(std::to_string(constants.world.showPlanetCount), "Show Galaxy Planet Count", toSave);
 	entry(std::to_string(constants.world.showDimensionX), "Show Galaxy Dinmension X", toSave);
 	entry(std::to_string(constants.world.showDimensionY), "Show Galaxy Sinamension Y", toSave);
 

@@ -26,13 +26,14 @@ private:
 	bool m_isScaling = true;
 	bool m_isScrollingByMouse = false;
 	bool m_isShowGalaxy = false;
-	float m_scaleFacor = 1.0f;
+	float m_scaleFactor = 1.0f;
 	Vector2 m_lastMousePosition = { 0.0f,0.0f };
 	Vector2 m_resolution;
 	Rectangle m_colider;
 	Rectangle m_absoluteSize;
+	Galaxy const* m_currentGalaxy = nullptr;
 	std::vector<std::shared_ptr<UIPlanet>> m_uiPlanets;
-	std::function<void(float)> m_onZoom = [](float) {};
+	std::function<void(float, Vector2)> m_onZoom = [](float, Vector2) {};
 	std::function<void(float, bool)> m_onSlide = [](float, bool) {};
 	std::function<void(unsigned int)> m_onPlanetClick = [](unsigned int) {};
 
@@ -49,6 +50,8 @@ private:
 	void MoveByKey(Direction direction, float speed);
 	void MoveByMouse(Vector2 mousePosition);
 
+	[[nodiscard]] Vector2 GetCurrentScaleReference() const;
+
 public:
 	UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,
 		Vector2 resolution, bool isShowGalaxy = false);
@@ -61,7 +64,7 @@ public:
 	void Zoom(bool zoomIn, int factor = 2);
 	void Slide(float position, bool isHorizontal);
 
-	void SetOnZoom(std::function<void(float)> onZoom);
+	void SetOnZoom(std::function<void(float, Vector2)> onZoom);
 	void SetOnSlide(std::function<void(float, bool)> onSlide);
 	void SetOnPlanetClick(std::function<void(unsigned int)> onPlanetClick);
 

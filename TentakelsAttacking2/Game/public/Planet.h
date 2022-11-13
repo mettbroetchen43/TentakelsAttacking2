@@ -8,7 +8,7 @@
 
 class Planet final : public SpaceObject {
 private:
-	using vec2pos = Vec2<size_t>;
+	using vec2pos = Vec2<int>;
 	bool m_isHomePlanet;
 	bool m_isDestroyed = false;
 	int m_planetNumber;

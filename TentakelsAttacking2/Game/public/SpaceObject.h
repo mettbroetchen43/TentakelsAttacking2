@@ -12,7 +12,7 @@ class Player;
 
 class SpaceObject /*: public LogicUpdate */ {
 protected:
-	using vec2pos = Vec2<size_t>;
+	using vec2pos = Vec2<int>;
 	unsigned int m_ID;
 	size_t m_ships = 0;
 	vec2pos m_position;
