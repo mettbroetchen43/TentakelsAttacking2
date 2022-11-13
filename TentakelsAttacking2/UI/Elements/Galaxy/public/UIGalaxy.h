@@ -54,7 +54,7 @@ public:
 	[[nodiscard]] bool IsScaling() const;
 
 	[[nodiscard]] float GetScaleFactor() const;
-	void Zoom(bool zoomIn, int factor = 1);
+	void Zoom(bool zoomIn, int factor = 2);
 	void Slide(float position, bool isHorizontal);
 
 	void SetOnZoom(std::function<void(float)> onZoom);

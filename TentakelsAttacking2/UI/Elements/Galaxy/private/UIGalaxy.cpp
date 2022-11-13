@@ -35,6 +35,7 @@ void UIGalaxy::Initialize(Galaxy const* const galaxy) {
 		planet->SetOnClick([this](UIPlanet* planet) {
 			this->SelectPlanet(planet);
 			});
+		planet->UpdatePosition(m_absoluteSize);
 		m_uiPlanets.push_back(planet);
 	}
 }
@@ -268,11 +269,11 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
 			float mouseWheel = GetMouseWheelMove();
 			if (mouseWheel != 0.0f) {
-				Zoom(mouseWheel > 0.0f, 3);
+				Zoom(mouseWheel > 0.0f, 5);
 			}
 		}
 
-		if (IsKeyDown(KEY_UP)) { MoveByKey(Direction::UP,2.0f); }
+		if (IsKeyDown(KEY_UP)) { MoveByKey(Direction::UP, 2.0f); }
 		if (IsKeyDown(KEY_DOWN)) { MoveByKey(Direction::DOWN, 2.0f); }
 		if (IsKeyDown(KEY_LEFT)) { MoveByKey(Direction::LEFT, 2.0f); }
 		if (IsKeyDown(KEY_RIGHT)) { MoveByKey(Direction::RIGHT, 2.0f); }
@@ -298,14 +299,14 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 void UIGalaxy::Render(AppContext const& appContext) {
 	DrawRectangleLinesEx(
 		m_colider,
-		3.0f,
+		2.0f,
 		WHITE
 	);
-	DrawRectangleLinesEx(
+	/*DrawRectangleLinesEx(
 		m_absoluteSize,
 		3.0f,
 		PURPLE
-	);
+	);*/
 
 	for (auto& p : m_uiPlanets) {
 		if (IsPlanetInColider(p)) {
@@ -335,7 +336,6 @@ void UIGalaxy::Resize(Vector2 resolution, AppContext const& appContext) {
 		p->UpdatePosition(m_absoluteSize);
 	}
 }
-
 
 void UIGalaxy::SetEnabled(bool isEnabled) {
 	m_isEnabled = isEnabled;
