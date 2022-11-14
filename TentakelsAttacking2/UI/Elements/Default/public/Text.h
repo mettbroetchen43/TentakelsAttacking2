@@ -11,6 +11,7 @@ class Text final : public UIElement {
 private:
 	std::string m_text;
 	std::string m_toRender;
+	std::string m_URL = "";
 	float m_textHeight;
 	float m_textSize;
 	Alignment m_textAlignment;
@@ -25,6 +26,8 @@ private:
 
 	void UpdateColider(Vector2 resolution) override;
 
+	void OpenURL() const;
+
 public:
 	Text(Vector2 pos, Vector2 size, Alignment alignment,
 		Alignment textAlignment, float textHeight,
@@ -36,6 +39,10 @@ public:
 
 	void SetText(std::string text);
 	std::string GetText() const;
+
+	void SetURL(std::string URL);
+	void ClearURL();
+	[[nodiscard]] std::string GetURL() const;
 
 	void LineBreaks(bool lineBreaks);
 	void RenderRectangle(bool renderRectangle);
