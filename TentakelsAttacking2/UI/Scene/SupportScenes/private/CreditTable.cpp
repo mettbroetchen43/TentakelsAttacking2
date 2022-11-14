@@ -8,6 +8,8 @@
 #include "Line.h"
 #include "AppContext.h"
 #include <cassert>
+#include <stdexcept>
+
 
 void CreditTableScene::Initialize(Vector2 resolution, std::string const& headline, 
 	creditEntries const& entries, bool containsLink) {
@@ -38,9 +40,9 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 	for (size_t i = 0; i < entries.size(); ++i) {
 		auto e = entries.at(i);
 		if (e.size() == 0) { continue; }
-		if (containsLink && e.size() % 2 != 0) { throw _invalid_parameter; }
-		if (e.size() > 4) { throw std::_Xout_of_range; }
-		if (!containsLink && e.size() > 2) { throw std::_Xout_of_range; }
+		if (containsLink && e.size() % 2 != 0) { throw std::out_of_range("not able to bevide by 2 with link"); }
+		if (e.size() > 4) { throw std::out_of_range("too many Entries with link"); }
+		if (!containsLink && e.size() > 2) { throw std::out_of_range("too many Entries without link"); }
 
 		size_t position = 0;
 		if (e.size() == 2 && !containsLink or e.size() == 4 && containsLink) {
