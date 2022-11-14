@@ -111,7 +111,15 @@ void PopUpManager::NewInitialSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent con
 	auto focusEvent = NewFocusPopUpLayerEvent();
 	m_appContext->eventManager.InvokeEvent(focusEvent);
 
-	
+	m_popUps.push_back(std::make_unique<InitialSoundLevelPopUp>(
+		Vector2(0.5f,0.5f),
+		Vector2(0.5f,0.5f),
+		Alignment::MID_MID,
+		m_resolution,
+		event->GetTitle(),
+		const_cast<std::string&>(event->GetSubTitle())
+		)
+	);
 }
 
 void PopUpManager::DeleteLastPopUp(PopUp* toDelete) {
@@ -146,7 +154,7 @@ void PopUpManager::CheckForDeleteRemainingPopUps() {
 				found = true;
 				DeleteFocusLayer(true);
 				m_popUps.pop_back();
-				
+
 				m_toDelete.erase(std::remove(
 					m_toDelete.begin(), m_toDelete.end(), p),
 					m_toDelete.end());
