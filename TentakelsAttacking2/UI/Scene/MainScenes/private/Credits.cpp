@@ -124,8 +124,8 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	// lib
 	using creditEntries = std::vector<std::vector<std::string>>;
 	creditEntries libVec = {
-		{"raylib", "", "www.raylib.com", "www.raylib.com"},
-		{"random lib", "", "www.github.com/mgerhold", "www.github.com/mgerhold"},
+		{"raylib", "", "www.raylib.com", "https://www.raylib.com"},
+		{"random lib", "", "www.github.com/mgerhold", "https://www.github.com/mgerhold"},
 	};
 	// inperation
 	creditEntries inspreationVec = {
@@ -149,9 +149,9 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	};
 	// contact
 	creditEntries contactVec = {
-		{"discord", "", "www.discord.gg/JG5fsFZqEE", "www.discord.gg/JG5fsFZqEE"},
-		{"twitch", "", "www.twitch.tv/codingPurpurTentakel", "www.twitch.tv/codingpurpurtentakel"},
-		{"gitHub", "", "www.github.com/PurpurTentakel97", "www.github.com/PurpurTentakel97"},
+		{"discord", "", "www.discord.gg/JG5fsFZqEE", "https://www.discord.gg/JG5fsFZqEE"},
+		{"twitch", "", "www.twitch.tv/codingPurpurTentakel", "https://www.twitch.tv/codingpurpurtentakel"},
+		{"gitHub", "", "www.github.com/PurpurTentakel97", "https://www.github.com/PurpurTentakel97"},
 	};
 
 	// credits table
