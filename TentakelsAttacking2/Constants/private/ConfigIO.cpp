@@ -21,7 +21,7 @@ void LoadConfig() {
 		SaveConfig();
 
 		auto event = ShowInitialSoundLevelPopUpEvent(
-			"Initial Sound Level",
+			"Sound Level",
 			"Set the Initial Sound Level"
 		);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
