@@ -51,12 +51,17 @@ void PopUpManager::OnEvent(Event const& event) {
 		return;
 	}
 
+	// Initial Sound Pop Up
+	if (auto const PopUpEvent = dynamic_cast<ShowInitialSoundLevelPopUpEvent const*>(&event)) {
+		NewInitialSoundLevelPopUp(PopUpEvent);
+		return;
+	}
+
 	// Close Pop Up
 	if (auto const PopUpEvent = dynamic_cast<ClosePopUpEvent const*>(&event)) {
 		DeleteLastPopUp(PopUpEvent->GetPop());
 		return;
 	}
-
 }
 
 void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
@@ -103,6 +108,8 @@ void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
 		)
 	);
 }
+
+void PopUpManager::NewInitialSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event) {}
 
 void PopUpManager::DeleteLastPopUp(PopUp* toDelete) {
 	if (m_popUps.size() == 0) {

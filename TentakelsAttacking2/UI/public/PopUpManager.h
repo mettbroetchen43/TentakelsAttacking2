@@ -29,6 +29,7 @@ public:
 	void NewMessagePopUp(ShowMessagePopUpEvent const* event);
 	void NewDeletePlayerPopUp(ShowDeletePlayerPopUpEvent const* event);
 	void NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event);
+	void NewInitialSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event);
 	template<typename EntryType, typename eventType>
 	void NewTableCellPopUp(eventType const* event) {
 		auto focusEvent = NewFocusPopUpLayerEvent();
