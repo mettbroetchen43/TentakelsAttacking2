@@ -91,7 +91,6 @@ void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerPopUpEvent const* event)
 		event->GetOnClick()
 		));
 }
-
 void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
 	auto focusEvent = NewFocusPopUpLayerEvent();
 	m_appContext->eventManager.InvokeEvent(focusEvent);
@@ -108,8 +107,12 @@ void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
 		)
 	);
 }
+void PopUpManager::NewInitialSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event) {
+	auto focusEvent = NewFocusPopUpLayerEvent();
+	m_appContext->eventManager.InvokeEvent(focusEvent);
 
-void PopUpManager::NewInitialSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event) {}
+	
+}
 
 void PopUpManager::DeleteLastPopUp(PopUp* toDelete) {
 	if (m_popUps.size() == 0) {
