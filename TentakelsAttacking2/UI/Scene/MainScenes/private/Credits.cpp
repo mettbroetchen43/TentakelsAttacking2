@@ -122,35 +122,36 @@ void CreditsScene::Initialize(Vector2 resolution) {
 
 	// credits vector
 	// lib
-	std::vector<std::string> libVec = {
-		"raylib", "www.raylib.com",
-		"random lib", "www.github.com/mgerhold"
+	using creditEntries = std::vector<std::vector<std::string>>;
+	creditEntries libVec = {
+		{"raylib", "", "www.raylib.com", "https://www.raylib.com"},
+		{"random lib", "", "www.github.com/mgerhold", "https://www.github.com/mgerhold"},
 	};
 	// inperation
-	std::vector<std::string> inspreationVec = {
-		"my Dad",
-		"coder2k",
+	creditEntries inspreationVec = {
+		{"my Dad"},
+		{"coder2k"},
 	};
 	// tester
-	std::vector<std::string> testerVec = {
-		"TODO",
+	creditEntries testerVec = {
+		{"TODO"},
 	};
 	// special thanks
-	std::vector<std::string> specialThancsVec = {
-		"coder2k",
-		"r00tifant",
-		"Clemens",
-		"CrazyNightowl01",
-		"NECROMENZER",
-		"german coding commuinty on twitch",
-		"the discord of coder2k",
-		"TODO: more to come",
+	creditEntries specialThancsVec = {
+		{"coder2k"},
+		{"r00tifant"},
+		{"Clemens"},
+		{"CrazyNightowl01"},
+		{"NECROMENZER"},
+		{"german coding commuinty on twitch"},
+		{"the discord of coder2k"},
+		{"TODO: more to come"},
 	};
 	// contact
-	std::vector<std::string> contactVec = {
-		"discord", "discord.gg/JG5fsFZqEE",
-		"twitch", "www.twitch.tv/codingpurpurtentakel",
-		"gitHub", "github.com/PurpurTentakel97",
+	creditEntries contactVec = {
+		{"discord", "", "www.discord.gg/JG5fsFZqEE", "https://www.discord.gg/JG5fsFZqEE"},
+		{"twitch", "", "www.twitch.tv/codingPurpurTentakel", "https://www.twitch.tv/codingpurpurtentakel"},
+		{"gitHub", "", "www.github.com/PurpurTentakel97", "https://www.github.com/PurpurTentakel97"},
 	};
 
 	// credits table
@@ -161,8 +162,8 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		Alignment::TOP_MID,
 		"Libraries",
 		libVec,
-		true,
-		resolution
+		resolution,
+		true
 		);
 	libTable->SetActive(true, appContext);
 	AddMovingElement(libTable);
@@ -174,7 +175,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		Alignment::TOP_MID,
 		"Inspiration",
 		inspreationVec,
-		false,
 		resolution
 		);
 	inspirationTable->SetActive(true, appContext);
@@ -187,7 +187,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		Alignment::TOP_MID,
 		"Testers",
 		testerVec,
-		false,
 		resolution
 		);
 	testersTable->SetActive(true, appContext);
@@ -200,7 +199,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		Alignment::TOP_MID,
 		"Special Thanks",
 		specialThancsVec,
-		false,
 		resolution
 		);
 	spacialThanksTable->SetActive(true, appContext);
@@ -213,8 +211,8 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		Alignment::TOP_MID,
 		"Contact",
 		contactVec,
-		true,
-		resolution
+		resolution,
+		true
 		);
 	contactTable->SetActive(true, appContext);
 	AddMovingElement(contactTable);

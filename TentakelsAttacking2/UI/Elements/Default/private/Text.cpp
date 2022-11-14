@@ -32,6 +32,12 @@ void Text::UpdateColider(Vector2 resolution) {
 	m_textPosition = GetVerticalAlignedTextPosition(m_toRender, m_textSize, m_colider, m_textAlignment);
 }
 
+void Text::OpenURL() const {
+	if (!m_URL.empty()) {
+		::OpenURL(m_URL.c_str());
+	}
+}
+
 Text::Text(Vector2 pos, Vector2 size, Alignment alignment,
 	Alignment textAlignment, float textHeight,
 	std::string text, Vector2 resolution)
@@ -41,8 +47,13 @@ Text::Text(Vector2 pos, Vector2 size, Alignment alignment,
 	CreateToRender(AppContext::GetInstance());
 }
 
-void Text::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
-	[[maybe_unused]] AppContext const& appContext) { }
+void Text::CheckAndUpdate(Vector2 const& mousePosition, AppContext const&) {
+	if (CheckCollisionPointRec(mousePosition, m_colider)) {
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			OpenURL();
+		}
+	}
+}
 void Text::Render(AppContext const& appContext) {
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
@@ -77,6 +88,17 @@ void Text::SetText(std::string text) {
 }
 std::string Text::GetText() const {
 	return m_text;
+}
+
+void Text::SetURL(std::string URL) {
+	StripString(URL);
+	m_URL = URL;
+}
+void Text::ClearURL() {
+	m_URL.clear();
+}
+std::string Text::GetURL() const {
+	return m_URL;
 }
 
 void Text::LineBreaks(bool lineBreaks) {
