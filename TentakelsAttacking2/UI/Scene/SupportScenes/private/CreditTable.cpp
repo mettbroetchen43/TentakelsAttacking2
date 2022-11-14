@@ -45,7 +45,7 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 		size_t position = 0;
 		if (e.size() == 2 && !containsLink or e.size() == 4 && containsLink) {
 			auto entry = std::make_shared<Text>(
-				GetElementPosition(0.49f, 0.2f + textHeight * (i / 2)),
+				GetElementPosition(0.49f, 0.2f + textHeight * i),
 				GetElementSize(0.5f, textHeight),
 				Alignment::TOP_RIGHT,
 				Alignment::TOP_RIGHT,
@@ -62,7 +62,7 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 			}
 
 			entry = std::make_shared<Text>(
-				GetElementPosition(0.51f, 0.2f + textHeight * (i / 2)),
+				GetElementPosition(0.51f, 0.2f + textHeight * i),
 				GetElementSize(0.5f, textHeight),
 				Alignment::TOP_LEFT,
 				Alignment::TOP_LEFT,
