@@ -19,8 +19,7 @@ class Focusable;
 class PopUp;
 enum class SceneType;
 
-class CloseWindowEvent final :public Event {
-};
+class CloseWindowEvent final :public Event { };
 
 class PlaySoundEvent final : public Event {
 public:
@@ -163,11 +162,11 @@ public:
 	}
 
 };
-class ShowDeletePlayerEvent final : public PopUpEvent {
+class ShowDeletePlayerPopUpEvent final : public PopUpEvent {
 	std::function<void(unsigned int)> m_onClick = [](unsigned int) {};
 
 public:
-	ShowDeletePlayerEvent(std::string const& title,
+	ShowDeletePlayerPopUpEvent(std::string const& title,
 		std::string const& subTitle, std::function<void(unsigned int)> onClick)
 		: PopUpEvent(title, subTitle), m_onClick(onClick) { }
 
@@ -175,5 +174,4 @@ public:
 		return m_onClick;
 	}
 };
-
 class ToggleFullscreenEvent final : public Event { };

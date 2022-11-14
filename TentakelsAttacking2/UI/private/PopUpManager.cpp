@@ -24,7 +24,7 @@ void PopUpManager::OnEvent(Event const& event) {
 	}
 
 	// Delete Player Pop Up
-	if (auto const PopUpEvent = dynamic_cast<ShowDeletePlayerEvent const*>(&event)) {
+	if (auto const PopUpEvent = dynamic_cast<ShowDeletePlayerPopUpEvent const*>(&event)) {
 		NewDeletePlayerPopUp(PopUpEvent);
 		return;
 	}
@@ -73,7 +73,7 @@ void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
 		)
 	);
 }
-void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerEvent const* event) {
+void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerPopUpEvent const* event) {
 	AddFocusLayer(true);
 
 	m_popUps.push_back(std::make_unique<DeletePlayerPopUp>(

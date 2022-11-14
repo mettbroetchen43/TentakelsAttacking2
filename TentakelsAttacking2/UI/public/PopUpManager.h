@@ -27,7 +27,7 @@ public:
 	void OnEvent(Event const& event) override;
 
 	void NewMessagePopUp(ShowMessagePopUpEvent const* event);
-	void NewDeletePlayerPopUp(ShowDeletePlayerEvent const* event);
+	void NewDeletePlayerPopUp(ShowDeletePlayerPopUpEvent const* event);
 	void NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event);
 	template<typename EntryType, typename eventType>
 	void NewTableCellPopUp(eventType const* event) {

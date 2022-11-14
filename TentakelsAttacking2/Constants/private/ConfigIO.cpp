@@ -19,6 +19,9 @@ void LoadConfig() {
 	if (!std::filesystem::exists(constants.files.configFile)) {
 		Print("config does not exists", PrintType::EXPECTED_ERROR);
 		SaveConfig();
+
+
+
 		return;
 	}
 
