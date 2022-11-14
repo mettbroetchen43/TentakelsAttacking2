@@ -18,3 +18,6 @@
 #include "CellPopUp.h"
 #include "PrimitiveCellPopUp.hpp"
 #include "ColorCellPopUp.h"
+
+// Sound
+#include "InitialSoundLevelPopUp.h"
