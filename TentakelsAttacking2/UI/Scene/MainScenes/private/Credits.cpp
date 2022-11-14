@@ -150,7 +150,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	// contact
 	creditEntries contactVec = {
 		{"discord", "", "www.discord.gg/JG5fsFZqEE", "www.discord.gg/JG5fsFZqEE"},
-		{"twitch", "", "www.twitch.tv/codingpurpurtentakel", "www.twitch.tv/codingpurpurtentakel"},
+		{"twitch", "", "www.twitch.tv/codingPurpurTentakel", "www.twitch.tv/codingpurpurtentakel"},
 		{"gitHub", "", "www.github.com/PurpurTentakel97", "www.github.com/PurpurTentakel97"},
 	};
 
