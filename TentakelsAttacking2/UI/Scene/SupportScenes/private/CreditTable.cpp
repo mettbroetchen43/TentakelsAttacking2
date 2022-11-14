@@ -10,7 +10,7 @@
 #include <cassert>
 
 void CreditTableScene::Initialize(Vector2 resolution, std::string const& headline, 
-	std::vector<std::string> const& entries, bool doubleColumn) {
+	creditEntries const& entries, bool containsLink) {
 	// headline
 	auto headlineText = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.0f),
@@ -35,49 +35,74 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 	// elements
 	float textHeight = 0.07f;
 
-	if (doubleColumn) {
-		assert(entries.size() % 2 == 0);
-		for (size_t i = 0; i < entries.size(); i += 2) {
-			m_elements.push_back(std::make_shared<Text>(
+	for (size_t i = 0; i < entries.size(); ++i) {
+		auto e = entries.at(i);
+		if (e.size() == 0) { continue; }
+		if (containsLink && e.size() % 2 != 0) { throw _invalid_parameter; }
+		if (e.size() > 4) { throw std::_Xout_of_range; }
+		if (!containsLink && e.size() > 2) { throw std::_Xout_of_range; }
+
+		size_t position = 0;
+		if (e.size() == 2 && !containsLink or e.size() == 4 && containsLink) {
+			auto entry = std::make_shared<Text>(
 				GetElementPosition(0.49f, 0.2f + textHeight * (i / 2)),
 				GetElementSize(0.5f, textHeight),
 				Alignment::TOP_RIGHT,
 				Alignment::TOP_RIGHT,
 				textHeight * m_size.y,
-				entries.at(i),
+				e.at(position),
 				resolution
-			));
+				);
+			m_elements.push_back(entry);
+			++position;
 
-			m_elements.push_back(std::make_shared<Text>(
+			if (containsLink) {
+				entry->SetURL(e.at(position));
+				++position;
+			}
+
+			entry = std::make_shared<Text>(
 				GetElementPosition(0.51f, 0.2f + textHeight * (i / 2)),
 				GetElementSize(0.5f, textHeight),
 				Alignment::TOP_LEFT,
 				Alignment::TOP_LEFT,
 				textHeight * m_size.y,
-				entries.at(i + 1),
+				e.at(position),
 				resolution
-			));
+				);
+			m_elements.push_back(entry);
+			++position;
+
+			if (containsLink) {
+				entry->SetURL(e.at(position));
+				++position;
+			}
 		}
-	}
-	else {
-		for (size_t i = 0; i < entries.size(); ++i) {
-			m_elements.push_back(std::make_shared<Text>(
+		else {
+			auto entry = std::make_shared<Text>(
 				GetElementPosition(0.5f, 0.23f + textHeight * i),
 				GetElementSize(0.5f, textHeight),
 				Alignment::MID_MID,
 				Alignment::MID_MID,
 				textHeight * m_size.y,
-				entries.at(i),
+				e.at(position),
 				resolution
-			));
+				);
+			m_elements.push_back(entry);
+			++position;
+
+			if (containsLink) {
+				entry->SetURL(e.at(position));
+				++position;
+			}
 		}
 	}
 }
 
 CreditTableScene::CreditTableScene(Vector2 pos, Vector2 size, Alignment alignment,
-	std::string const& headline, std::vector<std::string> const& entries,
-	bool doubleColumn, Vector2 resolution)
+	std::string const& headline, creditEntries const& entries,
+	Vector2 resolution, bool containsLink)
 	: Scene(pos, size, alignment) {
 	GetAlignedCollider(m_pos, m_size, alignment, resolution);
-	Initialize(resolution, headline, entries, doubleColumn);
+	Initialize(resolution, headline, entries, containsLink);
 }
