@@ -20,7 +20,11 @@ void LoadConfig() {
 		Print("config does not exists", PrintType::EXPECTED_ERROR);
 		SaveConfig();
 
-
+		auto event = ShowInitialSoundLevelPopUpEvent(
+			"Initial Sound Level",
+			"Set the Initial Sound Level"
+		);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
 
 		return;
 	}
