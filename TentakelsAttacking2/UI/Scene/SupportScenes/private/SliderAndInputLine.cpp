@@ -119,16 +119,6 @@ void SliderAndInputLine::CheckAndUpdate(Vector2 const& mousePosition,
 		}
 	}
 }
-void SliderAndInputLine::Render(AppContext const& appContext) {
-	
-	Scene::Render(appContext);
-
-	DrawRectangleLinesEx(
-		m_slider->GetColider(),
-		2.0f,
-		LIGHTGRAY
-	);
-}
 
 void SliderAndInputLine::SetEnabled(bool isEnabled) {
 	m_isEnabled = isEnabled;

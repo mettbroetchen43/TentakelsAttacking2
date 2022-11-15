@@ -5,7 +5,9 @@
 
 #include "InitialSoundLevelPopUp.h"
 #include "ClassicButton.h"
-#include "SliderAndInputLine.h"
+#include "AppContext.h"
+#include "HGeneral.h"
+#include "Slider.h"
 #include "Text.h"
 #include "CheckBox.h"
 #include "HFocusEvents.h"
@@ -13,22 +15,14 @@
 void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 	AppContext& appContext = AppContext::GetInstance();
 	
-	m_slider = std::make_shared<SliderAndInputLine>(
-		2, // 3
-		GetElementPosition(m_pos, m_size, 0.5f, 0.7f),
+	m_slider = std::make_shared<Slider>(
+		GetElementPosition(m_pos, m_size, 0.5f, 0.65f),
 		GetElementSize(m_size, 0.7f, 0.1f),
 		Alignment::BOTTOM_MID,
-		0,
-		100,
-		static_cast<int>(appContext.constants.sound.masterVolume),
+		true,
+		10.0f,
 		resolution
 		);
-	m_slider->SetActive(true, appContext);
-	m_slider->SetEnabled(!appContext.constants.sound.muteVolume);
-	m_slider->SetOnSave([](int value) {
-		auto event = SetMasterVolumeEvent(static_cast<float>(value));
-		AppContext::GetInstance().eventManager.InvokeEvent(event);
-		});
 	m_elements.push_back(m_slider);
 
 	m_checkBox = std::make_shared<CheckBox>(
@@ -79,4 +73,15 @@ InitialSoundLevelPopUp::InitialSoundLevelPopUp(Vector2 pos, Vector2 size,
 	:PopUp(pos, size, alignment, resolution, title, subTitle, AssetType::QUESTION_MARK) {
 
 	Initialize(resolution);
+}
+
+void InitialSoundLevelPopUp::Render(AppContext const& appContext) {
+	
+	PopUp::Render(appContext);
+
+	DrawRectangleLinesEx(
+		m_slider->GetColider(),
+		2.0f,
+		WHITE
+	);
 }

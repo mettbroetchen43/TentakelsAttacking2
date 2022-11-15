@@ -34,7 +34,6 @@ public:
 		int minValue, int maxValue, int currentValue, Vector2 resolution);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
-	void Render(AppContext const& appContext) override;
 
 	void SetEnabled(bool isEnabled);
 
