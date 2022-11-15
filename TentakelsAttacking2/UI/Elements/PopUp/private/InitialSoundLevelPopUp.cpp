@@ -22,7 +22,29 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 		resolution
 		);
 	m_slider->SetActive(true, appContext);
+	m_slider->SetEnabled(appContext.constants.sound.muteVolume);
+	m_slider->SetOnSave([](int value) {
+		auto event = SetMasterVolumeEvent(static_cast<float>(value));
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		});
 	m_elements.push_back(m_slider);
+
+	m_checkBox = std::make_shared<CheckBox>(
+		4,
+		GetElementPosition(m_pos, m_size, 0.25f, 0.77f),
+		GetElementSize(m_size, 0.0f, 0.02f).y,
+		Alignment::TOP_LEFT,
+		1,
+		resolution
+		);
+	m_checkBox->SetChecked(appContext.constants.sound.muteVolume);
+	m_checkBox->SetOnCheck([this](unsigned int, bool isChecked) {
+		AppContext& appContext = AppContext::GetInstance();
+		auto event = MuteMasterVolumeEvent(isChecked);
+		appContext.eventManager.InvokeEvent(event);
+		m_slider->SetEnabled(!isChecked);
+		});
+	m_elements.push_back(m_checkBox);
 
 	m_acceptBtn = std::make_shared<ClassicButton>(
 		1,
