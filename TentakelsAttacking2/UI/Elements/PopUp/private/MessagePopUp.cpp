@@ -31,7 +31,7 @@ void MessagePopUp::Initialize(Vector2 resolution) {
 }
 
 MessagePopUp::MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	std::string const& title, std::string& subTitle,AssetType infoTexture)
+	std::string const& title, std::string& subTitle, AssetType infoTexture)
 	: PopUp(pos, size, alignment, resolution, title, subTitle, infoTexture) {
 
 	Initialize(resolution);

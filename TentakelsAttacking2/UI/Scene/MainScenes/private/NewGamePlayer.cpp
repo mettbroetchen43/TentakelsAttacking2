@@ -298,7 +298,7 @@ void NewGamePlayerScene::UpdatePlayerColor([[maybe_unused]] AbstractTableCell co
 }
 void NewGamePlayerScene::CreateDeletePlayer() {
 	AppContext& appContext = AppContext::GetInstance();
-	auto event = ShowDeletePlayerEvent(
+	auto event = ShowDeletePlayerPopUpEvent(
 		"Delete Player?",
 		"",
 		[this](unsigned int ID) {this->DeletePlayer(ID);}

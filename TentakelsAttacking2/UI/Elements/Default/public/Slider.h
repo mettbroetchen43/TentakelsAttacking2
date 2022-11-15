@@ -43,6 +43,8 @@ public:
 	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
 
+	[[nodiscard]] Rectangle GetColider() const;
+ 
 	void SetOnSlide(std::function<void(float)> onSlide);
 	void SetButtonPosition(float position);
 

@@ -50,11 +50,13 @@ void SoundManager::MuteMasterSoundLevel(bool mute) const {
 }
 void SoundManager::SetMasterSoundLevel(float level) const {
 	AppContext& appCpntext = AppContext::GetInstance();
+
+	appCpntext.constants.sound.masterVolume = level;
 	if (appCpntext.constants.sound.muteVolume) {
 		SetMasterVolume(0.0f);
 		return;
 	}
-	appCpntext.constants.sound.masterVolume = level;
+
 	level /= 100;
 	SetMasterVolume(level);
 }

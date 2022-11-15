@@ -24,7 +24,7 @@ void PopUpManager::OnEvent(Event const& event) {
 	}
 
 	// Delete Player Pop Up
-	if (auto const PopUpEvent = dynamic_cast<ShowDeletePlayerEvent const*>(&event)) {
+	if (auto const PopUpEvent = dynamic_cast<ShowDeletePlayerPopUpEvent const*>(&event)) {
 		NewDeletePlayerPopUp(PopUpEvent);
 		return;
 	}
@@ -51,12 +51,17 @@ void PopUpManager::OnEvent(Event const& event) {
 		return;
 	}
 
+	// Initial Sound Pop Up
+	if (auto const PopUpEvent = dynamic_cast<ShowInitialSoundLevelPopUpEvent const*>(&event)) {
+		NewInitialSoundLevelPopUp(PopUpEvent);
+		return;
+	}
+
 	// Close Pop Up
 	if (auto const PopUpEvent = dynamic_cast<ClosePopUpEvent const*>(&event)) {
 		DeleteLastPopUp(PopUpEvent->GetPop());
 		return;
 	}
-
 }
 
 void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
@@ -73,7 +78,7 @@ void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
 		)
 	);
 }
-void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerEvent const* event) {
+void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerPopUpEvent const* event) {
 	AddFocusLayer(true);
 
 	m_popUps.push_back(std::make_unique<DeletePlayerPopUp>(
@@ -86,7 +91,6 @@ void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerEvent const* event) {
 		event->GetOnClick()
 		));
 }
-
 void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
 	auto focusEvent = NewFocusPopUpLayerEvent();
 	m_appContext->eventManager.InvokeEvent(focusEvent);
@@ -100,6 +104,20 @@ void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
 		AssetType::LOGO,
 		event->GetCurrentValue(),
 		event->GetOnClick()
+		)
+	);
+}
+void PopUpManager::NewInitialSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event) {
+	auto focusEvent = NewFocusPopUpLayerEvent();
+	m_appContext->eventManager.InvokeEvent(focusEvent);
+
+	m_popUps.push_back(std::make_unique<InitialSoundLevelPopUp>(
+		Vector2(0.5f,0.5f),
+		Vector2(0.5f,0.5f),
+		Alignment::MID_MID,
+		m_resolution,
+		event->GetTitle(),
+		const_cast<std::string&>(event->GetSubTitle())
 		)
 	);
 }
@@ -136,7 +154,7 @@ void PopUpManager::CheckForDeleteRemainingPopUps() {
 				found = true;
 				DeleteFocusLayer(true);
 				m_popUps.pop_back();
-				
+
 				m_toDelete.erase(std::remove(
 					m_toDelete.begin(), m_toDelete.end(), p),
 					m_toDelete.end());
