@@ -11,6 +11,7 @@
 #include "Text.h"
 #include "CheckBox.h"
 #include "HFocusEvents.h"
+#include <iostream>
 
 void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 	AppContext& appContext = AppContext::GetInstance();
@@ -23,6 +24,11 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 		10.0f,
 		resolution
 		);
+	m_slider->SetEnabled(!appContext.constants.sound.muteVolume);
+	m_slider->SetButtonPosition(appContext.constants.sound.masterVolume);
+	m_slider->SetOnSlide([this](float position) {
+		AppContext::GetInstance().eventManager.InvokeEvent(SetMasterVolumeEvent(position));
+		});
 	m_elements.push_back(m_slider);
 
 	m_checkBox = std::make_shared<CheckBox>(
