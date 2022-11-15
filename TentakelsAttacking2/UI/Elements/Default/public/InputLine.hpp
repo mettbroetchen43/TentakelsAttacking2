@@ -45,14 +45,6 @@ protected:
 			AppContext::GetInstance().eventManager.InvokeEvent(event);
 		}
 	}
-	[[nodiscard]] bool IsAnyKeyPressed() {
-		int key = GetKeyPressed();
-		bool valid = (key >= 32 and key <= 126) or
-			(key >= 320 and key <= 329) or
-			key == 330;
-
-		return valid;
-	}
 	[[nodiscard]] bool IsValidKey(int key) = delete;
 
 	void UpdateColider(Vector2 resolution) override {
@@ -112,19 +104,17 @@ public:
 			}
 		}
 
-		if (!IsAnyKeyPressed()) { return; }
-
 		while (true) {
 			int key = GetCharPressed();
 
-			if (key <= 0) { return; }
+			if (key <= 0) { break; }
 
 			if (!IsValidKey(key)) { continue; }
 
 			if (!AddChar(key)) {
 				auto event = ShowMessagePopUpEvent("Max Input", "Maximum number of input values reached");
 				appContext.eventManager.InvokeEvent(event);
-				return;
+				break;
 			}
 		}
 	}
