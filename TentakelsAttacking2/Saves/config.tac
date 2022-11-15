@@ -28,7 +28,7 @@
 
 // Sound
 0 / Volume Mute (1 = mute)
-94.000000 / Master Volume (0.0 - 100.0)
+44.000000 / Master Volume (0.0 - 100.0)
 
 // Planet
 200 / Max Ships

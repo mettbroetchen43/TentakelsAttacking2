@@ -8,6 +8,7 @@
 #include "SliderAndInputLine.h"
 #include "Text.h"
 #include "CheckBox.h"
+#include "HFocusEvents.h"
 
 void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 	AppContext& appContext = AppContext::GetInstance();
