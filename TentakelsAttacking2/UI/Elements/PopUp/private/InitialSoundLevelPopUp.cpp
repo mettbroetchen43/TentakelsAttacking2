@@ -33,7 +33,7 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 
 	m_checkBox = std::make_shared<CheckBox>(
 		4,
-		GetElementPosition(m_pos, m_size, 0.15f, 0.7f),
+		GetElementPosition(m_pos, m_size, 0.15f, 0.66f),
 		GetElementSize(m_size, 0.0f, 0.04f).y,
 		Alignment::TOP_LEFT,
 		1,
@@ -49,7 +49,7 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 	m_elements.push_back(m_checkBox);
 
 	m_elements.push_back(std::make_shared<Text>(
-		GetElementPosition(m_pos, m_size, 0.18f, 0.695f),
+		GetElementPosition(m_pos, m_size, 0.18f, 0.655f),
 		GetElementSize(m_size, 0.2f, 0.3f),
 		Alignment::TOP_LEFT,
 		Alignment::TOP_LEFT,
