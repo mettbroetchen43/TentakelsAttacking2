@@ -234,8 +234,8 @@ float UIGalaxy::GetScaleFactor() const {
 void UIGalaxy::Zoom(bool zoomIn, int factor) {
 	if (!m_isScaling) { return; }
 
-	if (zoomIn) { m_scaleFactor += 0.01f * factor; }
-	else { m_scaleFactor -= 0.01f * factor; }
+	if (zoomIn) { m_scaleFactor *= 1.0f + 0.01f * factor; }
+	else { m_scaleFactor *= 1.0f - 0.01f * factor; }
 
 	if (m_scaleFactor < 1.0f) { m_scaleFactor = 1.0f; }
 	if (m_scaleFactor > 7.5f) { m_scaleFactor = 7.5f; }
