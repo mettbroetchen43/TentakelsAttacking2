@@ -7,7 +7,7 @@
 // Min Count >= 0
 
 // Globals
-0 / Starting Full Screen (0 = window)
+1 / Starting Full Screen (0 = window)
 20 / Min Game Rounds
 100 / Max Game Rounds
 
@@ -28,7 +28,7 @@
 
 // Sound
 0 / Volume Mute (1 = mute)
-98.776459 / Master Volume (0.0 - 100.0)
+81.084663 / Master Volume (0.0 - 100.0)
 
 // Planet
 200 / Max Ships

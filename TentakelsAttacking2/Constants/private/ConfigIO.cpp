@@ -19,6 +19,13 @@ void LoadConfig() {
 	if (!std::filesystem::exists(constants.files.configFile)) {
 		Print("config does not exists", PrintType::EXPECTED_ERROR);
 		SaveConfig();
+
+		auto event = ShowInitialSoundLevelPopUpEvent(
+			"Sound Level",
+			"Set the Initial Sound Level"
+		);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+
 		return;
 	}
 
@@ -142,13 +149,6 @@ void LoadConfig() {
 #endif // _DEBUG
 
 	Print("config loaded");
-
-	auto event = ShowInitialSoundLevelPopUpEvent(
-		"Sound Level",
-		"Set the Initial Sound Level"
-	);
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
-
 }
 void SaveConfig() {
 	auto& constants = AppContext::GetInstance().constants;
