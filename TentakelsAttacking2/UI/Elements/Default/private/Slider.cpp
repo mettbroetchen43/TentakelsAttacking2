@@ -179,6 +179,10 @@ void Slider::Resize(Vector2 resolution, AppContext const& appContext) {
 	m_btn.Resize(resolution, appContext);
 }
 
+Rectangle Slider::GetColider() const {
+	return m_colider;
+}
+
 void Slider::SetOnSlide(std::function<void(float)> onSlide) {
 	m_onSlide = onSlide;
 }

@@ -22,7 +22,7 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 		resolution
 		);
 	m_slider->SetActive(true, appContext);
-	m_slider->SetEnabled(appContext.constants.sound.muteVolume);
+	m_slider->SetEnabled(!appContext.constants.sound.muteVolume);
 	m_slider->SetOnSave([](int value) {
 		auto event = SetMasterVolumeEvent(static_cast<float>(value));
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
