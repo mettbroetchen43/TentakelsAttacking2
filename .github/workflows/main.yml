@@ -77,18 +77,24 @@ jobs:
       # On Windows runners, let's ensure to have the Developer Command Prompt environment setup correctly. As used here the Developer Command Prompt created is targeting x64 and using the default the Windows SDK.
       - uses: ilammy/msvc-dev-cmd@v1
 
-      # Run CMake to generate Ninja project files, using the vcpkg's toolchain file to resolve and install the dependencies as specified in vcpkg.json.
-      - name: Install dependencies and generate project files
+      # Run CMake to generate Ninja project files
+      - name: Install dependencies and generate project files on Ubuntu
         run: |
-          cmake --preset ${{ matrix.preset }}
-        # The working directory is needed since the CMakePresets.json is searched in the current working directory only.
+          cmake -S . -B build -G "Ninja"
         working-directory: "${{ github.workspace }}"
+        if: ${{ matrix.os == 'ubuntu-22.04' }}
+
+      # Run CMake to generate Ninja project files, using the vcpkg's toolchain file to resolve and install the dependencies as specified in vcpkg.json.
+      - name: Install dependencies and generate project files on Windows
+        run: |
+          cmake -S . -B build -G "Ninja" -DCMAKE_TOOLCHAIN_FILE="${{ env.VCPKG_ROOT }}/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}
+        working-directory: "${{ github.workspace }}"
+        if: ${{ matrix.os != 'ubuntu-22.04' }}
 
       # Build the whole project with Ninja (which is spawn by CMake).
       - name: Build
         run: |
-          cmake --build --preset ${{ matrix.preset }} --config Release
-        # The working directory is needed since the CMakePresets.json is searched in the current working directory only.
+          cmake --build build --config Release
         working-directory: "${{ github.workspace }}"
 
       - name: Show content of workspace at its completion
