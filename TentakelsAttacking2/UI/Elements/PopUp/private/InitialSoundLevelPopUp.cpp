@@ -6,6 +6,7 @@
 #include "InitialSoundLevelPopUp.h"
 #include "ClassicButton.h"
 #include "SliderAndInputLine.h"
+#include "Text.h"
 #include "CheckBox.h"
 
 void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
@@ -13,7 +14,7 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 	
 	m_slider = std::make_shared<SliderAndInputLine>(
 		2, // 3
-		GetElementPosition(m_pos, m_size, 0.5f, 0.75f),
+		GetElementPosition(m_pos, m_size, 0.5f, 0.7f),
 		GetElementSize(m_size, 0.7f, 0.1f),
 		Alignment::BOTTOM_MID,
 		0,
@@ -31,8 +32,8 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 
 	m_checkBox = std::make_shared<CheckBox>(
 		4,
-		GetElementPosition(m_pos, m_size, 0.25f, 0.77f),
-		GetElementSize(m_size, 0.0f, 0.02f).y,
+		GetElementPosition(m_pos, m_size, 0.15f, 0.7f),
+		GetElementSize(m_size, 0.0f, 0.04f).y,
 		Alignment::TOP_LEFT,
 		1,
 		resolution
@@ -45,6 +46,16 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 		m_slider->SetEnabled(!isChecked);
 		});
 	m_elements.push_back(m_checkBox);
+
+	m_elements.push_back(std::make_shared<Text>(
+		GetElementPosition(m_pos, m_size, 0.18f, 0.695f),
+		GetElementSize(m_size, 0.2f, 0.3f),
+		Alignment::TOP_LEFT,
+		Alignment::TOP_LEFT,
+		0.025f,
+		"Mute",
+		resolution
+		));
 
 	m_acceptBtn = std::make_shared<ClassicButton>(
 		1,

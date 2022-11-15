@@ -16,16 +16,15 @@ void LoadConfig() {
 	auto& constants = AppContext::GetInstance().constants;
 	std::ifstream file;
 
+	auto event = ShowInitialSoundLevelPopUpEvent(
+		"Sound Level",
+		"Set the Initial Sound Level"
+	);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+
 	if (!std::filesystem::exists(constants.files.configFile)) {
 		Print("config does not exists", PrintType::EXPECTED_ERROR);
 		SaveConfig();
-
-		auto event = ShowInitialSoundLevelPopUpEvent(
-			"Sound Level",
-			"Set the Initial Sound Level"
-		);
-		AppContext::GetInstance().eventManager.InvokeEvent(event);
-
 		return;
 	}
 
