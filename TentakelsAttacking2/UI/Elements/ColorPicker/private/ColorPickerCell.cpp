@@ -14,8 +14,8 @@ void ColorPickerCell::SetColor() const {
 	m_colorPicker->SetColor(m_color);
 }
 
-ColorPickerCell::ColorPickerCell(unsigned int ID, Vector2 pos, Vector2 size, Vector2 resolution,
-	Alignment alignment, Color color, ColorPicker* colorPicker)
+ColorPickerCell::ColorPickerCell(unsigned int ID, Vector2 pos, Vector2 size, 
+	Alignment alignment, Vector2 resolution, Color color, ColorPicker* colorPicker)
 	: Focusable(ID), UIElement(pos, size, alignment, resolution),
 	m_color(color), m_colorPicker(colorPicker) {
 
@@ -40,6 +40,9 @@ void ColorPickerCell::SetEnabled(bool enabled) {
 }
 bool ColorPickerCell::IsEnabled() const {
 	return m_enabled;
+}
+Rectangle ColorPickerCell::GetCollider() const {
+	return UIElement::GetColider();
 }
 
 void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
