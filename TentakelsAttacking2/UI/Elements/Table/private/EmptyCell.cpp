@@ -21,16 +21,3 @@ void EmptyCell::Render([[maybe_unused]] AppContext const& appContext) {
 		WHITE
 	);
 };
-void EmptyCell::Resize(Vector2 resolution,
-	[[maybe_unused]] AppContext const& appContext) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
-};
-
-[[nodiscard]] Rectangle EmptyCell::GetCollider() const {
-	return m_colider;
-};

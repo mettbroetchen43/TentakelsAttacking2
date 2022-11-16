@@ -24,6 +24,8 @@ public:
 	void SetEditable(bool editable);
 	[[nodiscard]] bool IsEnabled() const override;
 
+	[[nodiscard]] Rectangle GetCollider() const;
+
 	void SetPosX(float posX, Vector2 resolution,
 		AppContext const& appContext, bool resize = true);
 	void SetPosY(float posY, Vector2 resolution,
