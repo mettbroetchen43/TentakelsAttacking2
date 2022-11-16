@@ -19,8 +19,6 @@ private:
 	std::vector<std::unique_ptr<AbstractTableCell>> m_cells;
 	size_t m_rows;
 	size_t m_columns;
-	Rectangle m_colider;
-	Vector2 m_resolution;
 	std::function<void(AbstractTableCell const*, std::string, std::string)> m_updatedStringCell = [](AbstractTableCell const*, std::string, std::string) {};
 	std::function<void(AbstractTableCell const*, int, int)> m_updatedIntCell = [](AbstractTableCell const*, int, int) {};
 	std::function<void(AbstractTableCell const*, float, float)> m_updatedFloatCell = [](AbstractTableCell const*, float, float) {};
@@ -88,11 +86,9 @@ private:
 		SetElementFocus(m_cells.at(index).get());
 	}
 
-	void UpdateColider(Vector2 resolution) override;
-
 public:
-	Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
-		size_t rows, size_t columns, Vector2 resolution, bool isPopUp = false);
+	Table(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+		size_t rows, size_t columns, bool isPopUp = false);
 	~Table();
 
 	template<typename T>
