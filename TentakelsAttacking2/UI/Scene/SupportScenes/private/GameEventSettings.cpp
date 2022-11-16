@@ -21,10 +21,10 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 		GetElementPosition(0.5f, 0.0f),
 		GetElementSize(0.4f, 0.4f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		"Events",
-		resolution
+		"Events"
 	));
 
 	// Line
@@ -32,8 +32,8 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 		GetElementPosition(0.5f, 0.15f),
 		GetElementSize(0.3f, 0.0f),
 		Alignment::TOP_MID,
-		3.0f,
-		resolution
+		resolution,
+		3.0f
 	));
 
 	// Text and Check Box
@@ -56,10 +56,10 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 			GetElementPosition(textX, firstRow + row * i * 2),
 			GetElementSize(textX, row * 3),
 			Alignment::MID_RIGHT,
+			resolution,
 			Alignment::MID_RIGHT,
 			row,
-			text.at(i),
-			resolution
+			text.at(i)
 		));
 
 		auto element = std::make_shared<CheckBox>(
@@ -67,8 +67,8 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 			GetElementPosition(cbX, firstRow + row * i * 2),
 			GetElementSize(0.0f, row*1.5f).y,
 			Alignment::MID_LEFT,
-			i,
-			resolution
+			resolution,
+			i
 		);
 		element->SetOnCheck([this](unsigned int ID, bool isChecked) {
 			this->SetChecked(ID, isChecked);
@@ -138,11 +138,10 @@ found:
 
 GameEventSettings::GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution)
-	: Scene(pos, size, alignment) {
+	: Scene(pos, size, alignment, resolution) {
 	AppContext& appContext = AppContext::GetInstance();
 	appContext.eventManager.AddListener(this);
 
-	GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	Initialize(resolution, focusID);
 
 	auto event = InitialCheckGameEventDataEvent();
