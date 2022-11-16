@@ -92,8 +92,8 @@ void SliderAndInputLine::SetSliderValue() const {
 	m_slider->SetButtonPosition(percent);
 }
 
-SliderAndInputLine::SliderAndInputLine(unsigned int focusID, Vector2 pos, Vector2 resolution,
-	Vector2 size, Alignment alignment,
+SliderAndInputLine::SliderAndInputLine(unsigned int focusID, Vector2 pos, 
+	Vector2 size, Alignment alignment, Vector2 resolution,
 	int minValue, int maxValue, int initialValue)
 	: Scene(pos, size, alignment, resolution), m_minValue(minValue), m_maxValue(maxValue) {
 	

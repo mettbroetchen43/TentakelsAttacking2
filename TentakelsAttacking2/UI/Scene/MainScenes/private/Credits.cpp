@@ -261,7 +261,7 @@ void CreditsScene::Move() {
 	for (auto& e : m_movingElements) {
 		auto position = e->GetPosition();
 		position.y += (m_speed * m_speedLevel);
-		e->SetPosition(position, m_resolution);
+		e->SetPosition(position);
 	}
 
 }
