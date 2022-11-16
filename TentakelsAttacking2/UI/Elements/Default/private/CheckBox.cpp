@@ -23,19 +23,10 @@ void CheckBox::Check(AppContext const& appContext) {
 	m_onCheck(m_ID, m_isChecked);
 }
 
-void CheckBox::UpdateColider(Vector2 resolution) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
-}
 
 CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height,
-	Alignment alignment, unsigned int checkBoxID,
-	Vector2 resolution)
-	: UIElement(pos, { 0.0f, height }, alignment), Focusable(focusID),
+	Alignment alignment, Vector2 resolution, unsigned int checkBoxID)
+	: UIElement(pos, { 0.0f, height }, alignment, resolution), Focusable(focusID),
 	m_ID(checkBoxID) {
 
 	m_size.x = resolution.y / resolution.x * m_size.y;
@@ -81,7 +72,7 @@ bool CheckBox::IsEnabled() const {
 }
 
 Rectangle CheckBox::GetCollider() const {
-	return m_colider;
+	return UIElement::GetColider();
 }
 
 void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
@@ -161,13 +152,4 @@ void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 			WHITE
 		);
 	}
-}
-void CheckBox::Resize(Vector2 resolution,
-	[[maybe_unused]] AppContext const& appContext) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
 }
