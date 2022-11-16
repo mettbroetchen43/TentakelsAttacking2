@@ -52,10 +52,10 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.15f),
 		GetElementSize(0.25f, 0.15f),
 		Alignment::MID_MID,
+		resolution,
 		Alignment::MID_MID,
 		0.15f,
-		"Credits",
-		resolution
+		"Credits"
 		);
 	AddMovingElement(creditsText);
 
@@ -63,8 +63,8 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.21f),
 		GetElementSize(0.21f, 0.0f),
 		Alignment::MID_MID,
-		3.0f,
-		resolution
+		resolution,
+		3.0f
 		);
 	AddMovingElement(creditsLine);
 
@@ -74,8 +74,8 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.5f),
 		GetElementSize(0.9f, 0.4f),
 		Alignment::MID_MID,
-		true,
 		resolution,
+		true,
 		appContext
 		);
 	AddMovingElement(m_title);
@@ -84,8 +84,8 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.5f),
 		GetElementSize(0.9f, 0.0f),
 		Alignment::MID_MID,
-		5.0f,
-		resolution
+		resolution,
+		5.0f
 		);
 	// Added to Element when moving is true
 
@@ -102,8 +102,8 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
-		AssetType::LOGO,
-		resolution
+		resolution,
+		AssetType::LOGO
 		);
 	AddMovingElement(logo);
 
@@ -112,10 +112,10 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_MID,
 		0.08f,
-		"A Purpur Tentakel Production",
-		resolution
+		"A Purpur Tntakel Production"
 		);
 	AddMovingElement(logoText);
 
@@ -160,9 +160,9 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
+		resolution,
 		"Libraries",
 		libVec,
-		resolution,
 		true
 		);
 	libTable->SetActive(true, appContext);
@@ -173,9 +173,9 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
+		resolution,
 		"Inspiration",
-		inspreationVec,
-		resolution
+		inspreationVec
 		);
 	inspirationTable->SetActive(true, appContext);
 	AddMovingElement(inspirationTable);
@@ -185,9 +185,9 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
+		resolution,
 		"Testers",
-		testerVec,
-		resolution
+		testerVec
 		);
 	testersTable->SetActive(true, appContext);
 	AddMovingElement(testersTable);
@@ -197,9 +197,9 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
+		resolution,
 		"Special Thanks",
-		specialThancsVec,
-		resolution
+		specialThancsVec
 		);
 	spacialThanksTable->SetActive(true, appContext);
 	AddMovingElement(spacialThanksTable);
@@ -209,9 +209,9 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
+		resolution,
 		"Contact",
 		contactVec,
-		resolution,
 		true
 		);
 	contactTable->SetActive(true, appContext);
@@ -274,7 +274,7 @@ void CreditsScene::CheckCreditsFinished() {
 }
 
 CreditsScene::CreditsScene(Vector2 resolution)
-	:Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT), m_resolution(resolution) {
+	:Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution), m_resolution(resolution) {
 	Initialize(resolution);
 }
 
