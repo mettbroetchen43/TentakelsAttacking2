@@ -7,11 +7,10 @@
 #include "HInput.h"
 #include "AppContext.h"
 
-UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, Vector2 pos, Color color,
-	Vector2 coliderPos, Vector2 resolution)
-	:Focusable(focusID), UIElement(pos, { 0.01f,0.02f }, Alignment::MID_MID),m_ID(ID),
-	m_color(color), m_coliderPos(coliderPos) {
-	m_colider = GetAlignedCollider(m_pos, m_size, m_alignment, resolution);
+UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, Vector2 pos, Vector2 resolution,
+	Color color, Vector2 coliderPos)
+	:Focusable(focusID), UIElement(pos, { 0.01f,0.02f }, Alignment::MID_MID, resolution)
+	,m_ID(ID), m_color(color), m_coliderPos(coliderPos) {
 	m_stringID = std::to_string(m_ID);
 }
 
@@ -22,15 +21,6 @@ void UIPlanet::UpdatePosition(Rectangle newColider) {
 
 void UIPlanet::SetOnClick(std::function<void(UIPlanet*)> onClick) {
 	m_onClick = onClick;
-}
-
-void UIPlanet::UpdateColider(Vector2 resolution) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y,
-	};
 }
 
 void UIPlanet::SetColor(Color color) {
@@ -70,14 +60,6 @@ void UIPlanet::Render(AppContext const& appContext) {
 		WHITE
 	);*/
 }
-void UIPlanet::Resize(Vector2 resolution, AppContext const&) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y,
-	};
-}
 
 bool UIPlanet::IsEnabled() const {
 	return m_isEnabled;
@@ -87,5 +69,5 @@ void UIPlanet::SetEnabled(bool isEnabled) {
 }
 
 Rectangle UIPlanet::GetCollider() const {
-	return m_colider;
+	return UIElement::GetColider();
 }
