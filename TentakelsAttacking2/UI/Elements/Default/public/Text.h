@@ -17,21 +17,18 @@ private:
 	Alignment m_textAlignment;
 	Vector2 m_textPosition;
 
-	Rectangle m_colider = { 0.0f,0.0f,0.0f,0.0f };
 	bool m_lineBreaks = false;
 	bool m_renderRectangle = false;
 
 	void CreateToRender(AppContext const& appContext);
 	std::string BreakLines(std::string toBreak, AppContext const& appContext) const;
 
-	void UpdateColider(Vector2 resolution) override;
-
 	void OpenURL() const;
 
 public:
-	Text(Vector2 pos, Vector2 size, Alignment alignment,
+	Text(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		Alignment textAlignment, float textHeight,
-		std::string text, Vector2 resolution);
+		std::string text);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);

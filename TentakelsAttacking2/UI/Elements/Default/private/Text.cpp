@@ -22,28 +22,18 @@ std::string Text::BreakLines(std::string toBreak, AppContext const& appContext) 
 	return toBreak;
 }
 
-void Text::UpdateColider(Vector2 resolution) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
-	m_textPosition = GetVerticalAlignedTextPosition(m_toRender, m_textSize, m_colider, m_textAlignment);
-}
-
 void Text::OpenURL() const {
 	if (!m_URL.empty()) {
 		::OpenURL(m_URL.c_str());
 	}
 }
 
-Text::Text(Vector2 pos, Vector2 size, Alignment alignment,
+Text::Text(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	Alignment textAlignment, float textHeight,
-	std::string text, Vector2 resolution)
-	: UIElement(pos, size, alignment), m_textSize(textHeight * resolution.y),
+	std::string text)
+	: UIElement(pos, size, alignment, resolution), m_textSize(textHeight * resolution.y),
 	m_text(text), m_textHeight(textHeight), m_textAlignment(textAlignment) {
-	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+
 	CreateToRender(AppContext::GetInstance());
 }
 
@@ -72,12 +62,8 @@ void Text::Render(AppContext const& appContext) {
 	}
 }
 void Text::Resize(Vector2 resolution, AppContext const& appContext) {
-	m_colider = {
-		m_pos.x * resolution.x,
-		m_pos.y * resolution.y,
-		m_size.x * resolution.x,
-		m_size.y * resolution.y
-	};
+	
+	UIElement::Resize(resolution, appContext);
 	m_textSize = m_textHeight * resolution.y;
 	CreateToRender(appContext);
 }
