@@ -22,7 +22,7 @@ void TestScene::Initialize(Vector2 resolution,
 
 	auto galaxyPos = GetElementPosition(0.05f, 0.05f);
 	auto galaxySize = GetElementSize(0.7f, 0.7f);
-	m_coldier = {
+	m_colider = {
 		galaxyPos.x * resolution.x,
 		galaxyPos.y * resolution.y,
 		galaxySize.x * resolution.x,
@@ -47,7 +47,7 @@ void TestScene::Initialize(Vector2 resolution,
 }
 
 TestScene::TestScene(Vector2 resolution)
-	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT), m_resolution(resolution) {
+	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
 	Initialize(resolution, AppContext::GetInstance());
 }
 
