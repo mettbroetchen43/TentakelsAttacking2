@@ -15,5 +15,7 @@
 [[nodiscard]] bool IsBackInputDown();
 [[nodiscard]] bool IsBackInputUp();
 
+[[npdiscard]] bool IsToggleFullscreenInput();
+
 [[nodiscard]] bool IsQuitInput();
 

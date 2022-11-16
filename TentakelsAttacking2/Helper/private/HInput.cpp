@@ -40,6 +40,12 @@ bool IsBackInputUp() {
     return IsKeyUp(KEY_ESCAPE);
 }
 
+bool IsToggleFullscreenInput() {
+    return IsKeyPressed(KEY_F11)
+        || (IsKeyDown(KEY_LEFT_ALT)
+            && (IsKeyPressed(KEY_ENTER)));
+}
+
 bool IsQuitInput() {
     return IsKeyDown(KEY_LEFT_ALT)
         and IsKeyDown(KEY_F4);
