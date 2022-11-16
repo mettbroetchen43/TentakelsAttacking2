@@ -87,7 +87,6 @@ ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution, bool isPopUp)
 	: Focusable(ID), UIElement(pos, size, alignment, resolution), m_isPopUp(isPopUp) {
 
-	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	m_backGround = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
 	Initialise(resolution);
 }
