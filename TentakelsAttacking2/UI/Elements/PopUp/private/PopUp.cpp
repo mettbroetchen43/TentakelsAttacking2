@@ -19,8 +19,8 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		Vector2(0.0f, 0.0f),
 		Vector2(1.0f, 1.0f),
 		Alignment::DEFAULT,
-		AssetType::GREY_50,
-		resolution
+		resolution,
+		AssetType::GREY_50
 		);
 	m_elements.push_back(globalBackground);
 
@@ -28,8 +28,8 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		m_pos,
 		m_size,
 		Alignment::DEFAULT,
-		AssetType::GREY,
-		resolution
+		resolution,
+		AssetType::GREY
 		);
 	m_elements.push_back(background);
 
@@ -37,8 +37,8 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		GetElementPosition(m_pos, m_size, 0.15f, 0.05f),
 		GetElementSize(m_size, 0.25f, 0.3f),
 		Alignment::TOP_MID,
-		infoTexture,
-		resolution
+		resolution,
+		infoTexture
 		);
 	m_elements.push_back(icon);
 
@@ -46,10 +46,10 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		GetElementPosition(m_pos, m_size, 0.6f, 0.1f),
 		GetElementSize(m_size, 0.7f, 0.2f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_MID,
 		GetElementTextHight(m_size, 0.2f),
-		title,
-		resolution
+		title
 		);
 	m_elements.push_back(textTitle);
 
@@ -65,10 +65,10 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		GetElementPosition(m_pos, m_size, 0.5f, 0.4f),
 		GetElementSize(m_size, 0.9f, 0.4f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_MID,
 		textHeight,
-		subTitle,
-		resolution
+		subTitle
 		);
 	m_elements.push_back(textSubTitle);
 }
@@ -101,8 +101,7 @@ Rectangle PopUp::GetColiderWithMaxValues(Texture2D* texture, float maxWidth, flo
 
 PopUp::PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, std::string& subTitle, AssetType infoTexture)
-	: UIElement(pos, size, alignment) {
-	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+	: UIElement(pos, size, alignment, resolution) {
 	
 	Initialize(title, subTitle, infoTexture, resolution);
 

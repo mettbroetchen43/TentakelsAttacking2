@@ -13,7 +13,6 @@ class PopUp : public UIElement {
 protected:
 	bool m_firstEnter = false;
 	std::vector<std::shared_ptr<UIElement>> m_elements;
-	Rectangle m_colider;
 
 	void Initialize(std::string const& title, std::string& subTitle,
 		AssetType infoTexture, Vector2 resolution);
