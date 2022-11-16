@@ -14,25 +14,14 @@ void ColorPickerCell::SetColor() const {
 	m_colorPicker->SetColor(m_color);
 }
 
-void ColorPickerCell::UpdateColider(Vector2 resolution) {
-	m_colider = {
-	resolution.x * m_pos.x,
-	resolution.y * m_pos.y,
-	resolution.x * m_size.x,
-	resolution.y * m_size.y
-	};
-}
-
-ColorPickerCell::ColorPickerCell(unsigned int ID, Vector2 pos, Vector2 size,
-	Alignment alignment, Vector2 resolution, Color color, ColorPicker* colorPicker)
-	: Focusable(ID), UIElement(pos, size, alignment),
+ColorPickerCell::ColorPickerCell(unsigned int ID, Vector2 pos, Vector2 size, Vector2 resolution,
+	Alignment alignment, Color color, ColorPicker* colorPicker)
+	: Focusable(ID), UIElement(pos, size, alignment, resolution),
 	m_color(color), m_colorPicker(colorPicker) {
 
 	if (IsBlankCell()) {
 		m_enabled = false;
 	}
-
-	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 }
 
 Color ColorPickerCell::GetColor() const {
@@ -51,9 +40,6 @@ void ColorPickerCell::SetEnabled(bool enabled) {
 }
 bool ColorPickerCell::IsEnabled() const {
 	return m_enabled;
-}
-Rectangle ColorPickerCell::GetCollider() const {
-	return m_colider;
 }
 
 void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
@@ -97,13 +83,4 @@ void ColorPickerCell::Render([[maybe_unused]] AppContext const& appContext) {
 		3.0f,
 		color
 	);
-}
-void ColorPickerCell::Resize(Vector2 resolution,
-	[[maybe_unused]] AppContext const& appContext) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
 }
