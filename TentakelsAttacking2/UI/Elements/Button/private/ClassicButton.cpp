@@ -10,8 +10,8 @@
 ClassicButton::ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size,
 	Alignment allignment, Vector2 resolution, std::string const& text,
 	SoundType releaseSound)
-	: Focusable(focusID), Button(pos, size, allignment, text,
-		releaseSound, resolution) { }
+	: Focusable(focusID), Button(pos, size, allignment, resolution, text,
+		releaseSound) { }
 
 [[nodiscard]] bool ClassicButton::IsEnabled() const{
 	return m_state != State::DISABLED;
@@ -67,8 +67,4 @@ void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition,
 	}
 
 	Button::CheckAndUpdate(mousePosition, appContext);
-}
-
-Rectangle ClassicButton::GetCollider() const {
-	return m_colider;
 }
