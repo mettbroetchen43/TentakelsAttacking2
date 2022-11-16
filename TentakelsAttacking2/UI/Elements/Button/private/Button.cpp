@@ -34,9 +34,9 @@ bool Button::IsSameState(State state) const {
 	return m_state == state;
 }
 
-Button::Button(Vector2 pos, Vector2 size, Alignment alignment,
-	std::string const& text, SoundType releaseSound, Vector2 resolution)
-	: UIElement(pos, size, alignment), m_text(text), m_sound(releaseSound) {
+Button::Button(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	std::string const& text, SoundType releaseSound)
+	: UIElement(pos, size, alignment, resolution), m_text(text), m_sound(releaseSound) {
 	
 	m_texture = AppContext::GetInstance().assetManager.GetTexture(AssetType::BUTTON_DEFAULT);
 	m_textureRec = {
@@ -45,15 +45,14 @@ Button::Button(Vector2 pos, Vector2 size, Alignment alignment,
 		static_cast<float>(m_texture->width),
 		static_cast<float>(m_texture->height / m_buttonParts)
 	};
-	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 
 	SetTextSizeAndPosition(resolution, AppContext::GetInstance());
 }
 
 Button::Button()
-	: UIElement(Vector2(0.0f,0.0f), Vector2(0.0f,0.0f), Alignment::TOP_LEFT),
-	m_colider({ 0.0f,0.0f,0.0f,0.0f }), m_sound(SoundType::CLICKED_RELEASE_STD),
-	m_textPosition({ 0.0f,0.0f }), m_texture(nullptr), m_textureRec({0.0f,0.0f,0.0f,0.0f}) {}
+	: UIElement(Vector2(0.0f,0.0f), Vector2(0.0f,0.0f), Alignment::TOP_LEFT, Vector2(0.0f,0.0f)),
+	m_sound(SoundType::CLICKED_RELEASE_STD), m_textPosition({ 0.0f,0.0f }),
+	m_texture(nullptr), m_textureRec({0.0f,0.0f,0.0f,0.0f}) {}
 
 void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	bool const hover = CheckCollisionPointRec(mousePosition, m_colider);
@@ -135,11 +134,7 @@ void Button::Render(AppContext const& appContext) {
 		WHITE);
 }
 void Button::Resize(Vector2 resolution, AppContext const& appContext) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y };
+	UIElement::Resize(resolution, appContext);
 	SetTextSizeAndPosition(resolution, appContext);
 }
 
@@ -171,13 +166,10 @@ bool Button::IsEnabled() const {
 	return m_state != State::DISABLED;
 }
 
-Rectangle Button::GetCollider() const {
-	return m_colider;
-}
 void Button::SetCollider(Rectangle collider) {
 	m_textPosition.x += (collider.x - m_colider.x);
 	m_textPosition.y += (collider.y - m_colider.y);
-	m_colider = collider;
+	UIElement::SetCollider(collider);
 }
 
 void Button::Move(Vector2 offset) {

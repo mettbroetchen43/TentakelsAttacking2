@@ -19,7 +19,6 @@ protected:
 	bool m_isPressed = false;
 	Texture2D* m_texture;
 	Rectangle m_textureRec;
-	Rectangle m_colider;
 	State m_state = State::ENABLED;
 	int m_buttonParts = 4;
 
@@ -36,8 +35,8 @@ protected:
 	[[nodiscard]] bool IsSameState(State state) const;
 
 public:
-	Button(Vector2 pos, Vector2 size, Alignment alignment, std::string const& text,
-		SoundType releaseSound, Vector2 resolution);
+	Button(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+		std::string const& text, SoundType releaseSound);
 	Button();
 	Button(Button const&) = default;
 	Button(Button&& old) = default;
@@ -56,7 +55,6 @@ public:
 
 	void SetEnabled(bool enabled);
 	[[nodiscard]] bool IsEnabled() const;
-	[[nodiscard]] Rectangle GetCollider() const;
-	void SetCollider(Rectangle collider);
+	void SetCollider(Rectangle collider) override;
 	void Move(Vector2 offset);
 };

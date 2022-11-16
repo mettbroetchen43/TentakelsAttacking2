@@ -68,7 +68,7 @@ public:
 	[[nodiscard]] Vector2 GetResolution() const {
 		return m_resolution;
 	}
-	void SetCollider(Rectangle colider) {
+	virtual void SetCollider(Rectangle colider) {
 		m_colider = colider;
 		UpdateColiderReverse();
 	}
