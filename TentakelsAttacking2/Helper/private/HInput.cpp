@@ -31,6 +31,27 @@ bool IsConfirmInputUp() {
         && !IsSkipInput();
 }
 
+bool IsOnlyEnterConfirmInputPressed() {
+    return (IsKeyPressed(KEY_ENTER)
+        or IsKeyPressed(KEY_KP_ENTER))
+        && !IsSkipInput();
+}
+bool IsOnlyEnterConfirmInputReleased() {
+    return (IsKeyReleased(KEY_ENTER)
+        or IsKeyReleased(KEY_KP_ENTER))
+        && !IsSkipInput();
+}
+bool IsOnlyEnterConfirmInputDown() {
+    return (IsKeyDown(KEY_ENTER)
+        or IsKeyDown(KEY_KP_ENTER))
+        && !IsSkipInput();
+}
+bool IsOnlyEnterConfirmInputUp() {
+    return (IsKeyUp(KEY_ENTER)
+        or IsKeyUp(KEY_KP_ENTER))
+        && !IsSkipInput();
+}
+
 bool IsBackInputPressed() {
     return IsKeyPressed(KEY_ESCAPE);
 }
