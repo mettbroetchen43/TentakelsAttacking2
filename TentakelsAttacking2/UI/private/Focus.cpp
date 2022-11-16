@@ -9,6 +9,7 @@
 #include "UIEvents.hpp"
 #include <stdexcept>
 #include <functional>
+#include <iostream>
 
 bool Focus::HasAnyEnabledElements() const {
 	for (auto e : m_focus) {
@@ -430,6 +431,8 @@ void Focus::CheckAndUpdate() {
 	if (!m_currentFocus) {
 		return;
 	}
+
+	std::cout << "!JA!\n";
 
 	if (IsKeyPressed(KEY_TAB)) {
 		m_renderFocus = true;
