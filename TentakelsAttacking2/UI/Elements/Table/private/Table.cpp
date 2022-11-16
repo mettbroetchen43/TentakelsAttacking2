@@ -186,7 +186,7 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition,
 			bool mouseAction =
 				CheckCollisionPointRec(mousePosition, m_colider)
 				and IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
-			bool enterAction = IsConfirmInputPressed() && !IsSkipInput();
+			bool enterAction = IsConfirmInputPressed();
 			bool focusCell =
 				enterAction
 				or mouseAction;

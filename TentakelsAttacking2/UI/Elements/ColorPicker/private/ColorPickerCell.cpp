@@ -74,8 +74,7 @@ void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
 
 	bool enterClick =
 		IsFocused()
-		&& IsConfirmInputPressed()
-		&& !IsSkipInput();
+		&& IsConfirmInputPressed();
 	if (mouseClick or enterClick) {
 		m_colorPicker->SetColor(m_color);
 	}

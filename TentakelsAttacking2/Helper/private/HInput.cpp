@@ -7,24 +7,28 @@
 #include <raylib.h>
 
 bool IsConfirmInputPressed() {
-    return IsKeyPressed(KEY_ENTER)
+    return (IsKeyPressed(KEY_ENTER)
         or IsKeyPressed(KEY_KP_ENTER)
-        or IsKeyPressed(KEY_SPACE);
+        or IsKeyPressed(KEY_SPACE))
+        && !IsSkipInput();
 }
 bool IsConfirmInputReleased() {
-    return IsKeyReleased(KEY_ENTER)
+    return (IsKeyReleased(KEY_ENTER)
         or IsKeyReleased(KEY_KP_ENTER)
-        or IsKeyReleased(KEY_SPACE);
+        or IsKeyReleased(KEY_SPACE))
+        && !IsSkipInput();
 }
 bool IsConfirmInputDown() {
-    return IsKeyDown(KEY_ENTER)
+    return (IsKeyDown(KEY_ENTER)
         or IsKeyDown(KEY_KP_ENTER)
-        or IsKeyDown(KEY_SPACE);
+        or IsKeyDown(KEY_SPACE))
+        && !IsSkipInput();
 }
 bool IsConfirmInputUp() {
-    return IsKeyUp(KEY_ENTER)
+    return (IsKeyUp(KEY_ENTER)
         or IsKeyUp(KEY_KP_ENTER)
-        or IsKeyUp(KEY_SPACE);
+        or IsKeyUp(KEY_SPACE))
+        && !IsSkipInput();
 }
 
 bool IsBackInputPressed() {

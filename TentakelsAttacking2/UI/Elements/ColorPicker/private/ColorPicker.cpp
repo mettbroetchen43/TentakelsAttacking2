@@ -201,7 +201,7 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 		}
 	}
 
-	if (IsConfirmInputPressed() and IsFocused() and not IsSkipInput()) {
+	if (IsConfirmInputPressed() and IsFocused()) {
 		if (!m_isNestedFocus) {
 			SetCellFocuses(appContext);
 		}

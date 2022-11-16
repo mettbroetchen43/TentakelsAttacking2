@@ -90,7 +90,7 @@ void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
 	bool check = false;
 
 	if (IsFocused()) {
-		if (IsConfirmInputPressed() && !IsSkipInput()) {
+		if (IsConfirmInputPressed()) {
 			if (m_isEnabled) {
 				check = true;
 			}
