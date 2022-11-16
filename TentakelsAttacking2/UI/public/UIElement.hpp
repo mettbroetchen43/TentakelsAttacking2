@@ -16,31 +16,50 @@ struct AppContext;
 class UIElement {
 protected:
 	Vector2 m_pos, m_size;
+	Vector2 m_resolution;
+	Rectangle m_colider;
 	Alignment m_alignment;
 
-	virtual void UpdateColider(Vector2 resolution) = 0;
+	void UpdateColider() {
+		m_colider = {
+			m_pos.x * m_resolution.x,
+			m_pos.y * m_resolution.y,
+			m_size.x * m_resolution.x,
+			m_size.y * m_resolution.y
+		};
+	}
 
 public:
-	UIElement(Vector2 pos, Vector2 size, Alignment alignment)
-		: m_pos(pos), m_size(size), m_alignment(alignment) { }
+	UIElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
+		: m_pos(pos), m_size(size), m_alignment(alignment), m_resolution(resolution) {
+		
+		m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+	}
 	virtual ~UIElement() = default;
 
-	virtual void SetPosition(Vector2 pos, Vector2 resoltion) {
+	void SetPosition(Vector2 pos) {
 		m_pos = pos;
-		UpdateColider(resoltion);
+		UpdateColider();
 	}
 	Vector2 GetPosition() const {
 		return m_pos;
 	}
-	virtual void SetSize(Vector2 size, Vector2 resoltion) {
+	void SetSize(Vector2 size) {
 		m_size = size;
-		UpdateColider(resoltion);
+		UpdateColider();
 	}
 	Vector2 GetSize() const {
 		return m_size;
 	}
+	void SetResolution(Vector2 resolution) {
+		m_resolution = resolution;
+		UpdateColider();
+	}
 
 	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) = 0;
 	virtual void Render(AppContext const& appContext) = 0;
-	virtual void Resize(Vector2 resolution, AppContext const& appContext) = 0;
+	virtual void Resize(Vector2 resolution, AppContext const& appContext) {
+		m_resolution = resolution;
+		UpdateColider();
+	};
 };
