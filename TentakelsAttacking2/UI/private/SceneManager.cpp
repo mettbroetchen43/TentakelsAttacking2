@@ -55,8 +55,13 @@ void SceneManager::SwitchScene(AppContext const& appCpntext) {
 		return;
 	}
 
-	auto event1 = ClearFocusEvent();
-	appCpntext.eventManager.InvokeEvent(event1);
+	if (!m_first) {
+		auto event1 = ClearFocusEvent();
+		appCpntext.eventManager.InvokeEvent(event1);
+	}
+	else {
+		m_first = true;
+	}
 
 	auto event2 = NewFocusLayerEvent();
 	appCpntext.eventManager.InvokeEvent(event2);

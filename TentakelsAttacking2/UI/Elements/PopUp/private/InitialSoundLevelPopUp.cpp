@@ -46,6 +46,7 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 		appContext.eventManager.InvokeEvent(event);
 		m_slider->SetEnabled(!isChecked);
 		});
+	AddFocusElement(m_checkBox.get(), true);
 	m_elements.push_back(m_checkBox);
 
 	m_elements.push_back(std::make_shared<Text>(
@@ -70,6 +71,8 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 	m_acceptBtn->SetOnClick([this]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(ClosePopUpEvent(this));
 		});
+	AddFocusElement(m_acceptBtn.get(), true);
+	SelectFocusElement(m_acceptBtn.get(), true);
 	m_elements.push_back(m_acceptBtn);
 }
 

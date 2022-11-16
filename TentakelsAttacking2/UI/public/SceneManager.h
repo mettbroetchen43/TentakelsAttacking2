@@ -20,6 +20,7 @@ class UIManager;
 
 class SceneManager final : public EventListener {
 private:
+	bool m_first = true;
 	UIManager* m_uiManager;
 	PopUpManager m_popUpManager;
 
