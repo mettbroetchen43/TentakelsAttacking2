@@ -24,12 +24,12 @@ void UIGalaxy::Initialize(Galaxy const* const galaxy) {
 				static_cast<float>(p->GetPos().x),
 				static_cast<float>(p->GetPos().y),
 				}, appContext),
-				appContext.playerCollection.GetColorByID(p->GetID()),
+			m_resolution,
+			appContext.playerCollection.GetColorByID(p->GetID()),
 			GetRelativePosition({
 				static_cast<float>(p->GetPos().x),
 				static_cast<float>(p->GetPos().y),
-				}, appContext),
-			m_resolution
+				}, appContext)
 			);
 		if (p->IsDestroyed()) {
 			planet->SetEnabled(false);
@@ -197,9 +197,8 @@ Vector2 UIGalaxy::GetCurrentScaleReference() const {
 
 UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution, bool isShowGalaxy)
-	:Focusable(ID), UIElement(pos, size, alignment), m_resolution(resolution),
+	:Focusable(ID), UIElement(pos, size, alignment, resolution),
 	m_isShowGalaxy(isShowGalaxy) {
-	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	m_absoluteSize = m_colider;
 
 	AppContext& appContext = AppContext::GetInstance();
@@ -296,23 +295,6 @@ void UIGalaxy::SetOnPlanetClick(std::function<void(unsigned int)> onPlanetClick)
 	m_onPlanetClick = onPlanetClick;
 }
 
-void UIGalaxy::UpdateColider(Vector2 resolution) {
-	m_colider = {
-		m_pos.x * resolution.x,
-		m_pos.y * resolution.y,
-		m_size.x * resolution.x,
-		m_size.y * resolution.y
-	};
-	m_absoluteSize = {
-	m_absoluteSize.x / m_resolution.x * resolution.x,
-	m_absoluteSize.y / m_resolution.y * resolution.y,
-	m_absoluteSize.width / m_resolution.x * resolution.x,
-	m_absoluteSize.height / m_resolution.y * resolution.y,
-	};
-
-	m_resolution = resolution;
-}
-
 void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	if (m_isScaling) {
 		if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
@@ -395,12 +377,6 @@ void UIGalaxy::Render(AppContext const& appContext) {
 }
 void UIGalaxy::Resize(Vector2 resolution, AppContext const& appContext) {
 
-	m_colider = {
-	m_pos.x * resolution.x,
-	m_pos.y * resolution.y,
-	m_size.x * resolution.x,
-	m_size.y * resolution.y
-	};
 	m_absoluteSize = {
 		m_absoluteSize.x / m_resolution.x * resolution.x,
 		m_absoluteSize.y / m_resolution.y * resolution.y,
@@ -408,7 +384,7 @@ void UIGalaxy::Resize(Vector2 resolution, AppContext const& appContext) {
 		m_absoluteSize.height / m_resolution.y * resolution.y,
 	};
 
-	m_resolution = resolution;
+	UIElement::Resize(resolution, appContext);
 
 	for (auto& p : m_uiPlanets) {
 		p->Resize(resolution, appContext);
@@ -423,7 +399,7 @@ bool UIGalaxy::IsEnabled() const {
 	return m_isEnabled;
 }
 Rectangle UIGalaxy::GetCollider() const {
-	return m_colider;
+	return UIElement::GetColider();
 }
 
 void UIGalaxy::OnEvent(Event const& event) {
