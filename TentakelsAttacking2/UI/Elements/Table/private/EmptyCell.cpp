@@ -13,8 +13,7 @@ EmptyCell::EmptyCell(unsigned int ID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution)
 	:AbstractTableCell(ID, pos, size, alignment, resolution) { }
 
-void EmptyCell::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
-	[[maybe_unused]] AppContext const& appContext) { }
+void EmptyCell::CheckAndUpdate(Vector2 const&, AppContext const&) { }
 void EmptyCell::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawRectangleLinesEx(
 		m_colider,

@@ -7,24 +7,49 @@
 #include <raylib.h>
 
 bool IsConfirmInputPressed() {
-    return IsKeyPressed(KEY_ENTER)
+    return (IsKeyPressed(KEY_ENTER)
         or IsKeyPressed(KEY_KP_ENTER)
-        or IsKeyPressed(KEY_SPACE);
+        or IsKeyPressed(KEY_SPACE))
+        && !IsSkipInput();
 }
 bool IsConfirmInputReleased() {
-    return IsKeyReleased(KEY_ENTER)
+    return (IsKeyReleased(KEY_ENTER)
         or IsKeyReleased(KEY_KP_ENTER)
-        or IsKeyReleased(KEY_SPACE);
+        or IsKeyReleased(KEY_SPACE))
+        && !IsSkipInput();
 }
 bool IsConfirmInputDown() {
-    return IsKeyDown(KEY_ENTER)
+    return (IsKeyDown(KEY_ENTER)
         or IsKeyDown(KEY_KP_ENTER)
-        or IsKeyDown(KEY_SPACE);
+        or IsKeyDown(KEY_SPACE))
+        && !IsSkipInput();
 }
 bool IsConfirmInputUp() {
-    return IsKeyUp(KEY_ENTER)
+    return (IsKeyUp(KEY_ENTER)
         or IsKeyUp(KEY_KP_ENTER)
-        or IsKeyUp(KEY_SPACE);
+        or IsKeyUp(KEY_SPACE))
+        && !IsSkipInput();
+}
+
+bool IsOnlyEnterConfirmInputPressed() {
+    return (IsKeyPressed(KEY_ENTER)
+        or IsKeyPressed(KEY_KP_ENTER))
+        && !IsSkipInput();
+}
+bool IsOnlyEnterConfirmInputReleased() {
+    return (IsKeyReleased(KEY_ENTER)
+        or IsKeyReleased(KEY_KP_ENTER))
+        && !IsSkipInput();
+}
+bool IsOnlyEnterConfirmInputDown() {
+    return (IsKeyDown(KEY_ENTER)
+        or IsKeyDown(KEY_KP_ENTER))
+        && !IsSkipInput();
+}
+bool IsOnlyEnterConfirmInputUp() {
+    return (IsKeyUp(KEY_ENTER)
+        or IsKeyUp(KEY_KP_ENTER))
+        && !IsSkipInput();
 }
 
 bool IsBackInputPressed() {
@@ -38,6 +63,16 @@ bool IsBackInputDown() {
 }
 bool IsBackInputUp() {
     return IsKeyUp(KEY_ESCAPE);
+}
+
+bool IsToggleFullscreenInput() {
+    return IsKeyPressed(KEY_F11)
+        || (IsKeyDown(KEY_LEFT_ALT)
+            && (IsKeyPressed(KEY_ENTER)));
+}
+
+bool IsSkipInput() {
+    return IsKeyDown(KEY_LEFT_ALT);
 }
 
 bool IsQuitInput() {

@@ -5,6 +5,7 @@
 
 #include "UIManager.h"
 #include "TestScene.h"
+#include "HInput.h"
 
 Vector2 UIManager::GetResolution() const {
 	Vector2 newResolution;
@@ -42,15 +43,12 @@ void UIManager::CheckAndUpdateResolution() {
 void UIManager::CheckAndUpdate() {
 	m_gameManager.Update();
 
-	bool quit = 
-		IsKeyDown(KeyboardKey::KEY_LEFT_ALT)
-		and IsKeyPressed(KeyboardKey::KEY_F4);
-	if (quit) {
+	if (IsQuitInput()) {
 		auto event = CloseWindowEvent();
 		m_appContext.eventManager.InvokeEvent(event);
 	}
 
-	if (IsKeyPressed(KEY_F11)) {
+	if (IsToggleFullscreenInput()) {
 		ToggleFullScreen();
 	}
 

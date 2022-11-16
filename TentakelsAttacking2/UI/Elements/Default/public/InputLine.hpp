@@ -8,6 +8,7 @@
 #include "Focusable.h"
 #include "AppContext.h"
 #include "HTextProcessing.h"
+#include "HInput.h"
 #include <raylib.h>
 #include <string>
 #include <functional>
@@ -87,7 +88,8 @@ public:
 
 		if (!IsFocused()) { return; }
 
-		if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_KP_ENTER)) {
+		bool enter = IsOnlyEnterConfirmInputPressed();
+		if (enter) {
 			m_onEnter();
 		}
 
