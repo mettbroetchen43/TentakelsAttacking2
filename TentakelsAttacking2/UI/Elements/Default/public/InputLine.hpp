@@ -88,7 +88,10 @@ public:
 
 		if (!IsFocused()) { return; }
 
-		if (IsKeyPressed(KEY_ENTER) or IsKeyPressed(KEY_KP_ENTER) and not IsSkipInput()) {
+		bool enter = (IsKeyPressed(KEY_ENTER)
+			or IsKeyPressed(KEY_KP_ENTER))
+			and not IsSkipInput();
+		if (enter) {
 			m_onEnter();
 		}
 
