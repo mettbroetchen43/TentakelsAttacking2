@@ -16,16 +16,16 @@ void Slider::CalculateInitialButton() {
 		m_pos,
 		Vector2(sizeX, sizeY),
 		Alignment::TOP_LEFT,
+		m_resolution,
 		"",
-		SoundType::CLICKED_RELEASE_STD,
-		m_resolution
+		SoundType::CLICKED_RELEASE_STD
 	);
 	m_btn.SetOnPress([this]() {this->Slide();});
 }
 
 void Slider::CalculateOnSlide() const {
 
-	auto btnColider = m_btn.GetCollider();
+	auto btnColider = m_btn.GetColider();
 
 	float total = m_isHorizontal
 		? m_colider.width - btnColider.width
@@ -41,7 +41,7 @@ void Slider::CalculateOnSlide() const {
 void Slider::Slide() {
 	m_isPressed = true;
 	Vector2 mousePosition = GetMousePosition();
-	Rectangle btnCollider = m_btn.GetCollider();
+	Rectangle btnCollider = m_btn.GetColider();
 
 	float mousePoint = m_isHorizontal ? mousePosition.x : mousePosition.y;
 	float* btnColliderPoint = m_isHorizontal ? &btnCollider.x : &btnCollider.y;
@@ -95,7 +95,7 @@ void Slider::SlideIfScroll() {
 	if (mouseWheel == 0.0f) { return; }
 	if (m_isHorizontal != (IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT))) { return; }
 
-	auto btnColider = m_btn.GetCollider();
+	auto btnColider = m_btn.GetColider();
 	float total = m_isHorizontal
 		? m_colider.width - btnColider.width
 		: m_colider.height - btnColider.height;
@@ -119,19 +119,10 @@ void Slider::SlideIfScroll() {
 	CalculateOnSlide();
 }
 
-void Slider::UpdateColider(Vector2 resolution) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
-}
-
-Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal,
-	float absoluteDimension, Vector2 resolution)
-	: UIElement(pos, size, alignment), m_isHorizontal(isHorizontal),
-	m_absoluteDimension(absoluteDimension), m_resolution(resolution) {
+Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, 
+	bool isHorizontal, float absoluteDimension)
+	: UIElement(pos, size, alignment, resolution), m_isHorizontal(isHorizontal),
+	m_absoluteDimension(absoluteDimension) {
 	m_texture = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
 	m_textureRec = {
 		0.0f,
@@ -139,7 +130,6 @@ Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, bool isHorizontal
 		static_cast<float>(m_texture->width),
 		static_cast<float>(m_texture->height)
 	};
-	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	CalculateInitialButton();
 }
 
@@ -169,25 +159,17 @@ void Slider::Render(AppContext const& appContext) {
 	m_btn.Render(appContext);
 }
 void Slider::Resize(Vector2 resolution, AppContext const& appContext) {
-	m_resolution = resolution;
-	m_colider = {
-		m_pos.x * resolution.x,
-		m_pos.y * resolution.y,
-		m_size.x * resolution.x,
-		m_size.y * resolution.y
-	};
-	m_btn.Resize(resolution, appContext);
-}
 
-Rectangle Slider::GetColider() const {
-	return m_colider;
+	UIElement::Resize(resolution, appContext);
+
+	m_btn.Resize(resolution, appContext);
 }
 
 void Slider::SetOnSlide(std::function<void(float)> onSlide) {
 	m_onSlide = onSlide;
 }
 void Slider::SetButtonPosition(float position) {
-	auto btnColider = m_btn.GetCollider();
+	auto btnColider = m_btn.GetColider();
 
 	float total = m_isHorizontal
 		? m_colider.width - btnColider.width

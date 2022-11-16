@@ -13,10 +13,8 @@ private:
 	bool m_isPressed = false;
 	bool m_isScroll = false;
 	float m_absoluteDimension = 1.0f;
-	Vector2 m_resolution;
 	Texture2D* m_texture;
 	Rectangle m_textureRec;
-	Rectangle m_colider;
 
 	SliderButton m_btn;
 	std::function<void(float)> m_onSlide =[](float) {};
@@ -29,11 +27,9 @@ private:
 	void MoveButtonIfColiderIsPressed(Vector2 const& mousePosition);
 	void SlideIfScroll();
 
-	void UpdateColider(Vector2 resolution) override;
-
 public:
-	Slider(Vector2 pos,Vector2 size, Alignment alignment, bool isHorizontal, 
-		float absoluteDimension, Vector2 resolution);
+	Slider(Vector2 pos,Vector2 size, Alignment alignment, Vector2 resolution,
+		bool isHorizontal, float absoluteDimension);
 	Slider(Slider const&) = default;
 	Slider(Slider&&) = default;
 	Slider& operator=(Slider const&) = default;
@@ -42,8 +38,6 @@ public:
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
-
-	[[nodiscard]] Rectangle GetColider() const;
  
 	void SetOnSlide(std::function<void(float)> onSlide);
 	void SetButtonPosition(float position);
