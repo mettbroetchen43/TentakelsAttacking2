@@ -34,9 +34,9 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 		GetElementPosition(0.00f, 0.46f),
 		GetElementSize(0.03f, 0.5f),
 		Alignment::MID_LEFT,
+		resolution,
 		false,
-		m_galaxy->GetScaleFactor(),
-		resolution
+		m_galaxy->GetScaleFactor()
 		);
 	m_verticalSlider->SetOnSlide([this](float position) {
 		this->m_galaxy->Slide(position, false);
@@ -47,9 +47,9 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 		GetElementPosition(0.5175f, 1.0f),
 		GetElementSize(0.5f, 0.05f),
 		Alignment::BOTTOM_MID,
+		resolution,
 		true,
-		m_galaxy->GetScaleFactor(),
-		resolution
+		m_galaxy->GetScaleFactor()
 		);
 	m_horisontalSlider->SetOnSlide([this](float position) {
 		this->m_galaxy->Slide(position, true);
@@ -90,16 +90,16 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 		GetElementPosition(0.041f, 0.94f),
 		GetElementSize(0.2f, 0.0f),
 		Alignment::BOTTOM_LEFT,
-		2.0f,
-		resolution
+		resolution,
+		2.0f
 		);
 
 	m_scaleLineY = std::make_shared<Line>(
 		GetElementPosition(0.036f, 0.93f),
 		GetElementSize(0.0f, 0.2f),
 		Alignment::BOTTOM_LEFT,
-		2.0f,
-		resolution
+		resolution,
+		2.0f
 		);
 
 	m_galaxy->Zoom(false, 0);
@@ -109,18 +109,15 @@ void GalaxyScene::Zoom(float scaleFactor, Vector2 referenceScale) {
 	m_verticalSlider->SetAboluteDimension(scaleFactor);
 	m_horisontalSlider->SetAboluteDimension(scaleFactor);
 	m_scaleLineX->SetSize(
-		Vector2(referenceScale.x / m_resolution.x, 0.0f),
-		m_resolution
+		Vector2(referenceScale.x / m_resolution.x, 0.0f)
 	);
 	Vector2 size = m_scaleLineY->GetSize();
 	Vector2 pos = m_scaleLineY->GetPosition();
 	m_scaleLineY->SetSize(
-		Vector2(0.0f, referenceScale.y / m_resolution.y),
-		m_resolution
+		Vector2(0.0f, referenceScale.y / m_resolution.y)
 	);
 	m_scaleLineY->SetPosition(
-		Vector2(pos.x, pos.y + size.y - m_scaleLineY->GetSize().y),
-		m_resolution
+		Vector2(pos.x, pos.y + size.y - m_scaleLineY->GetSize().y)
 	);
 }
 void GalaxyScene::Slide(float position, bool isHorisontal) {
@@ -134,7 +131,7 @@ void GalaxyScene::Slide(float position, bool isHorisontal) {
 
 GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution, bool isShowGalaxy)
-	: Scene(pos, size, alignment), m_resolution(resolution) {
+	: Scene(pos, size, alignment, resolution) {
 	GetAlignedCollider(m_pos, m_size, alignment, resolution);
 
 	Initialize(resolution, isShowGalaxy);
@@ -186,7 +183,6 @@ void GalaxyScene::Render(AppContext const& appContext) {
 	}
 }
 void GalaxyScene::Resize(Vector2 resolution, AppContext const& appContext) {
-	m_resolution = resolution;
 
 	Scene::Resize(resolution, appContext);
 
