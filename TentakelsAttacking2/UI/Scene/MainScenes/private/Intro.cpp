@@ -21,8 +21,8 @@ void Intro::Initialize(AppContext& appContext, Vector2 resolution) {
 		GetElementPosition(0.5f, 0.1f),
 		GetElementSize(0.9f, 0.3f),
 		Alignment::TOP_MID,
-		true,
 		resolution,
+		true,
 		appContext
 		);
 	m_elements.push_back(m_title);
@@ -43,10 +43,10 @@ void Intro::Initialize(AppContext& appContext, Vector2 resolution) {
 		GetElementPosition(0.99f, 0.98f),
 		GetElementSize(0.11f, 0.03f),
 		Alignment::BOTTOM_RIGHT,
+		resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
-		"skip with [ESC]",
-		resolution
+		"skip with [ESC]"
 		);
 	m_elements.push_back(skipText);
 
@@ -81,7 +81,7 @@ void Intro::StartGame() {
 }
 
 Intro::Intro(Vector2 resolution)
-	:Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT) {
+	:Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
 
 	AppContext& appContext = AppContext::GetInstance();
 	Initialize(appContext, resolution);
