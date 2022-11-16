@@ -28,6 +28,16 @@ protected:
 			m_size.y * m_resolution.y
 		};
 	}
+	void UpdateColiderReverse() {
+		m_pos = {
+			m_colider.x / m_resolution.x,
+			m_colider.y / m_resolution.y
+		};
+		m_size = {
+			m_colider.width / m_resolution.x,
+			m_colider.height / m_resolution.y
+		};
+	}
 
 public:
 	UIElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
@@ -41,24 +51,34 @@ public:
 		m_pos = pos;
 		UpdateColider();
 	}
-	Vector2 GetPosition() const {
+	[[nodiscard]] Vector2 GetPosition() const {
 		return m_pos;
 	}
 	void SetSize(Vector2 size) {
 		m_size = size;
 		UpdateColider();
 	}
-	Vector2 GetSize() const {
+	[[nodiscard]] Vector2 GetSize() const {
 		return m_size;
 	}
 	void SetResolution(Vector2 resolution) {
 		m_resolution = resolution;
 		UpdateColider();
 	}
+	[[nodiscard]] Vector2 GetResolution() const {
+		return m_resolution;
+	}
+	void SetCollider(Rectangle colider) {
+		m_colider = colider;
+		UpdateColiderReverse();
+	}
+	[[nodiscard]] Rectangle GetColider() const {
+		return m_colider;
+	}
 
 	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) = 0;
 	virtual void Render(AppContext const& appContext) = 0;
-	virtual void Resize(Vector2 resolution, AppContext const& appContext) {
+	virtual void Resize(Vector2 resolution, AppContext const&) {
 		m_resolution = resolution;
 		UpdateColider();
 	};
