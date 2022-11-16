@@ -17,5 +17,7 @@
 
 [[nodiscard]] bool IsToggleFullscreenInput();
 
+[[nodiscard]] bool IsSkipInput();
+
 [[nodiscard]] bool IsQuitInput();
 

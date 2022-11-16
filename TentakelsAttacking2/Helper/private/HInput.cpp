@@ -46,6 +46,10 @@ bool IsToggleFullscreenInput() {
             && (IsKeyPressed(KEY_ENTER)));
 }
 
+bool IsSkipInput() {
+    return IsKeyDown(KEY_LEFT_ALT);
+}
+
 bool IsQuitInput() {
     return IsKeyDown(KEY_LEFT_ALT)
         and IsKeyDown(KEY_F4);
