@@ -21,8 +21,6 @@ protected:
 
 	Rectangle GetColiderWithMaxValues(Texture2D* texture, float maxWidth, float maxHeight) const;
 
-	void UpdateColider(Vector2 resolution) override;
-
 public:
 	PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, 
 		std::string const& title, std::string& subTitle, AssetType infoTexture);

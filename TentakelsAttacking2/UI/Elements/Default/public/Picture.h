@@ -11,16 +11,12 @@ enum class AssetType;
 class Picture final : public UIElement {
 private:
 	Texture2D* m_texture = nullptr;
-	Rectangle m_colider = { 0.0f,0.0f,0.0f,0.0f };
 	bool m_isScaleToFit = false;
 
-	void UpdateColider(Vector2 resolution) override;
-
 public:
-	Picture(Vector2 pos, Vector2 size, Alignment alignment,
-		AssetType assetType, Vector2 resolution);
+	Picture(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+		AssetType assetType);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);
-	void Resize(Vector2 resolution, AppContext const& appContext);
 };

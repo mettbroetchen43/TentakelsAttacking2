@@ -7,24 +7,14 @@
 #include "UIManager.h"
 #include "AppContext.h"
 
-void Picture::UpdateColider(Vector2 resolution) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
-}
-
-Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment,
-	AssetType assetType, Vector2 resolution)
-	: UIElement(pos, size, alignment) {
+Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	AssetType assetType)
+	: UIElement(pos, size, alignment, resolution) {
 	m_texture = AppContext::GetInstance().assetManager.GetTexture(assetType);
 	m_size.x =
 		static_cast<float>(m_texture->width) / m_texture->height
 		* resolution.y / resolution.x
 		* m_size.y;
-	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 }
 
 void Picture::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
@@ -43,12 +33,4 @@ void Picture::Render([[maybe_unused]] AppContext const& appContext) {
 		0.0f,
 		WHITE
 	);
-}
-void Picture::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) {
-	m_colider = {
-		m_pos.x * resolution.x,
-		m_pos.y * resolution.y,
-		m_size.x * resolution.x,
-		m_size.y * resolution.y
-	};
 }

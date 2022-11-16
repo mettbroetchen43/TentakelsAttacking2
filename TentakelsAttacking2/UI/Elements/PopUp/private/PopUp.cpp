@@ -98,14 +98,6 @@ Rectangle PopUp::GetColiderWithMaxValues(Texture2D* texture, float maxWidth, flo
 	return rectangle;
 }
 
-void PopUp::UpdateColider(Vector2 resolution) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
-}
 
 PopUp::PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, std::string& subTitle, AssetType infoTexture)
