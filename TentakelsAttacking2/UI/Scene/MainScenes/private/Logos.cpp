@@ -18,8 +18,8 @@ void LogoScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.1f),
 		GetElementSize(0.0f, 0.5f),
 		Alignment::TOP_MID,
-		AssetType::LOGO,
-		resolution
+		resolution,
+		AssetType::LOGO
 		);
 	m_elements.push_back(logo);
 
@@ -27,10 +27,10 @@ void LogoScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.65f),
 		GetElementSize(0.45f, 0.1f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		"A Purpur Tentakel production",
-		resolution
+		"A Purpur Tentakel production"
 		);
 	m_elements.push_back(mainText);
 
@@ -38,16 +38,16 @@ void LogoScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.99f, 0.98f),
 		GetElementSize(0.11f, 0.03f),
 		Alignment::BOTTOM_RIGHT,
+		resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
-		"skip with [ESC]",
-		resolution
+		"skip with [ESC]"
 		);
 	m_elements.push_back(skipText);
 }
 
 LogoScene::LogoScene(Vector2 resolution)
-	:Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT),
+	:Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution),
 	m_time(GetTime()) {
 	Initialize(resolution);
 }
