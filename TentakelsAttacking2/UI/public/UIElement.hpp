@@ -47,14 +47,14 @@ public:
 	}
 	virtual ~UIElement() = default;
 
-	void SetPosition(Vector2 pos) {
+	virtual void SetPosition(Vector2 pos) {
 		m_pos = pos;
 		UpdateColider();
 	}
 	[[nodiscard]] Vector2 GetPosition() const {
 		return m_pos;
 	}
-	void SetSize(Vector2 size) {
+	virtual void SetSize(Vector2 size) {
 		m_size = size;
 		UpdateColider();
 	}

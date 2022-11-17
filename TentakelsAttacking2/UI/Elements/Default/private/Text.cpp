@@ -68,6 +68,18 @@ void Text::Resize(Vector2 resolution, AppContext const& appContext) {
 	CreateToRender(appContext);
 }
 
+void Text::SetPosition(Vector2 pos) {
+
+	UIElement::SetPosition(pos);
+	CreateToRender(AppContext::GetInstance());
+}
+
+void Text::SetSize(Vector2 size) {
+
+	UIElement::SetSize(size);
+	CreateToRender(AppContext::GetInstance());
+}
+
 void Text::SetText(std::string text) {
 	m_text = text;
 	CreateToRender(AppContext::GetInstance());

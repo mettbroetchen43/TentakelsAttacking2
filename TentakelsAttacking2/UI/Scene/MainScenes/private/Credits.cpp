@@ -115,7 +115,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_MID,
 		0.08f,
-		"A Purpur Tntakel Production"
+		"A Purpur Tentakel Production"
 		);
 	AddMovingElement(logoText);
 

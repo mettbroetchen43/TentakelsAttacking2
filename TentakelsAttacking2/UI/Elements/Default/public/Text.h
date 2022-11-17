@@ -34,6 +34,9 @@ public:
 	void Render(AppContext const& appContext);
 	void Resize(Vector2 resolution, AppContext const& appContext);
 
+	void SetPosition(Vector2 pos) override;
+	void SetSize(Vector2 size) override;
+
 	void SetText(std::string text);
 	std::string GetText() const;
 
