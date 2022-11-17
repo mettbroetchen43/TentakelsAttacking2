@@ -90,6 +90,7 @@ void LoadConfig() {
 		// Globals
 		&constants.global.minRounds,
 		&constants.global.maxRounds,
+		&constants.global.FPS,
 		// Player
 		&constants.player.minPlayerCount,
 		&constants.player.maxPlayerCount,
@@ -180,6 +181,8 @@ void SaveConfig() {
 
 	entry(std::to_string(constants.global.minRounds), "Min Game Rounds", toSave);
 	entry(std::to_string(constants.global.maxRounds), "Max Game Rounds", toSave);
+
+	entry(std::to_string(constants.global.FPS), "Target FPS", toSave);
 
 	headline("Player", toSave);
 	entry(std::to_string(constants.player.minPlayerCount), "Min Player Count", toSave);
