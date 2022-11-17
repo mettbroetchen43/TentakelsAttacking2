@@ -63,11 +63,13 @@ void Intro::MoveBtn() {
 		BtnMoveFinish();
 		return;
 	}
-	m_btn->Move({ 0.0f, BTN_SPEED });
+	Vector2 pos = m_btn->GetPosition();
+	pos.y += BTN_SPEED;
+	m_btn->SetPosition(pos);
 }
 void Intro::BtnMoveFinish(){
 	auto btnPos = m_btn->GetPosition();
-	m_btn->Move({ 0.0f, m_maxBtnPosition - btnPos.y });
+	m_btn->SetPosition({ btnPos.x, m_maxBtnPosition});
 	m_btnMovmendFinish = true;
 
 	AppContext& appContext = AppContext::GetInstance();

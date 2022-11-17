@@ -6,7 +6,7 @@
 #include "Button.h"
 #include "AppContext.h"
 
-void Button::SetTextSizeAndPosition(Vector2 resolution, AppContext const& appContext) {
+void Button::SetTextSizeAndPosition(AppContext const& appContext) {
 	m_textSize = m_colider.height / 2;
 	Vector2 textSize = MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
@@ -26,8 +26,8 @@ void Button::SetTextSizeAndPosition(Vector2 resolution, AppContext const& appCon
 			0.0f);
 	}
 
-	m_textPosition.x = resolution.x * m_pos.x + (resolution.x * m_size.x / 2 - textSize.x / 2);
-	m_textPosition.y = resolution.y * m_pos.y + (resolution.y * m_size.y / 2 - m_textSize / 2);
+	m_textPosition.x = m_resolution.x * m_pos.x + (m_resolution.x * m_size.x / 2 - textSize.x / 2);
+	m_textPosition.y = m_resolution.y * m_pos.y + (m_resolution.y * m_size.y / 2 - m_textSize / 2);
 }
 
 bool Button::IsSameState(State state) const {
@@ -46,7 +46,7 @@ Button::Button(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 		static_cast<float>(m_texture->height / m_buttonParts)
 	};
 
-	SetTextSizeAndPosition(resolution, AppContext::GetInstance());
+	SetTextSizeAndPosition(AppContext::GetInstance());
 }
 
 Button::Button()
@@ -135,7 +135,7 @@ void Button::Render(AppContext const& appContext) {
 }
 void Button::Resize(Vector2 resolution, AppContext const& appContext) {
 	UIElement::Resize(resolution, appContext);
-	SetTextSizeAndPosition(resolution, appContext);
+	SetTextSizeAndPosition(appContext);
 }
 
 void Button::SetOnClick(std::function<void()> onClick) {
@@ -145,9 +145,9 @@ void Button::SetOnPress(std::function<void()> onPress) {
 	m_onPress = onPress;
 }
 
-void Button::SetText(Vector2 resolution, std::string const& text) {
+void Button::SetText(std::string const& text) {
 	m_text = text;
-	SetTextSizeAndPosition(resolution, AppContext::GetInstance());
+	SetTextSizeAndPosition(AppContext::GetInstance());
 }
 std::string Button::GetText() const {
 	return m_text;
@@ -172,17 +172,7 @@ void Button::SetCollider(Rectangle collider) {
 	UIElement::SetCollider(collider);
 }
 
-void Button::Move(Vector2 offset) {
-	Vector2 resolution = {
-		m_colider.x / m_pos.x,
-		m_colider.y / m_pos.y
-	};
-
-	m_pos.x += offset.x;
-	m_pos.y += offset.y;
-
-	m_colider.x = resolution.x * m_pos.x;
-	m_colider.y = resolution.y * m_pos.y;
-	m_textPosition.x += resolution.x * offset.x;
-	m_textPosition.y += resolution.y * offset.y;
+void Button::SetPosition(Vector2 pos) {
+	UIElement::SetPosition(pos);
+	SetTextSizeAndPosition(AppContext::GetInstance());
 }

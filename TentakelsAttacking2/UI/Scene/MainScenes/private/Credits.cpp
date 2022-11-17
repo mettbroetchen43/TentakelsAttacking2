@@ -251,7 +251,7 @@ void CreditsScene::ToggleSpeedLevel() {
 	std::string text = m_speedBTN->GetText();
 	text = text.substr(0, text.size() - 4);
 	text += " " + std::to_string(m_speedLevel) + "/" + std::to_string(m_maxSpeedLevel);
-	m_speedBTN->SetText(m_resolution, text);
+	m_speedBTN->SetText(text);
 
 }
 void CreditsScene::Move() {

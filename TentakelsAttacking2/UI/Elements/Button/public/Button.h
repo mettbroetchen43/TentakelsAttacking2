@@ -31,7 +31,7 @@ protected:
 	std::function<void()> m_onClick = []() {};
 	std::function<void()> m_onPress = []() {};
 
-	void SetTextSizeAndPosition(Vector2 resolution, AppContext const& appContext);
+	void SetTextSizeAndPosition(AppContext const& appContext);
 	[[nodiscard]] bool IsSameState(State state) const;
 
 public:
@@ -50,11 +50,12 @@ public:
 	void SetOnClick(std::function<void()> onClick);
 	void SetOnPress(std::function<void()> onPress);
 
-	void SetText(Vector2 resolution, std::string const& text);
+	void SetText(std::string const& text);
 	[[nodiscard]] std::string GetText() const;
 
 	void SetEnabled(bool enabled);
 	[[nodiscard]] bool IsEnabled() const;
 	void SetCollider(Rectangle collider) override;
-	void Move(Vector2 offset);
+	
+	void SetPosition(Vector2 pos) override;
 };
