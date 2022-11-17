@@ -67,17 +67,17 @@ void Scene::SetActive(bool active, AppContext const& appContext) {
 }
 
 void Scene::SetPosition(Vector2 pos) {
-	/*Vector2 dif = {
+	Vector2 dif = {
 		m_pos.x - pos.x,
 		m_pos.y - pos.y
-	};*/
+	};
 
 	for (auto e : m_elements) {
 		Vector2 ePos = e->GetPosition();
-		/*ePos = {
+		ePos = {
 			ePos.x - dif.x,
 			ePos.y - dif.y
-		};*/
+		};
 		e->SetPosition(ePos);
 	}
 
