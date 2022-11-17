@@ -14,7 +14,7 @@
 #include "HInput.h"
 
 
-#define BTN_SPEED -0.003f
+#define BTN_SPEED 0.2f
 
 void Intro::Initialize(AppContext& appContext, Vector2 resolution) {
 	m_title = std::make_shared<Title>(
@@ -59,12 +59,12 @@ void Intro::Initialize(AppContext& appContext, Vector2 resolution) {
 
 void Intro::MoveBtn() {
 	auto btnPos = m_btn->GetPosition();
-	if (btnPos.y + BTN_SPEED < m_maxBtnPosition) {
+	if (btnPos.y - (BTN_SPEED * GetFrameTime()) < m_maxBtnPosition) {
 		BtnMoveFinish();
 		return;
 	}
-	btnPos.y += BTN_SPEED;
-	m_btn->SetPosition(btnPos);
+	btnPos.y -= BTN_SPEED;
+	m_btn->Move(btnPos);
 }
 void Intro::BtnMoveFinish(){
 	auto btnPos = m_btn->GetPosition();

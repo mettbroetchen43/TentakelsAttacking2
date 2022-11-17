@@ -76,6 +76,17 @@ public:
 		return m_colider;
 	}
 
+	virtual void Move(Vector2 pos) {
+		float time = GetFrameTime();
+		float diffX = (m_pos.x - pos.x) * time;
+		float diffY = (m_pos.y - pos.y) * time;
+
+		SetPosition(Vector2(
+			m_pos.x - diffX,
+			m_pos.y - diffY
+		));
+	}
+
 	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) = 0;
 	virtual void Render(AppContext const& appContext) = 0;
 	virtual void Resize(Vector2 resolution, AppContext const&) {
