@@ -132,7 +132,6 @@ void GalaxyScene::Slide(float position, bool isHorisontal) {
 GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution, bool isShowGalaxy)
 	: Scene(pos, size, alignment, resolution) {
-	GetAlignedCollider(m_pos, m_size, alignment, resolution);
 
 	Initialize(resolution, isShowGalaxy);
 }
