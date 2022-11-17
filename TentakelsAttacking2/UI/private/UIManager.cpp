@@ -90,7 +90,6 @@ void UIManager::UILoop() {
 	}
 	StopSoundMulti();
 	CloseWindow();
-
 }
 
 UIManager::UIManager()

@@ -14,6 +14,7 @@
 #include <iostream>
 
 int main() {
+	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(100, 100, "");
 	AppContext& appContext = AppContext::GetInstance();
 	UIManager uiManager;

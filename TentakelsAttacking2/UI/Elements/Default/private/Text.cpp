@@ -70,8 +70,13 @@ void Text::Resize(Vector2 resolution, AppContext const& appContext) {
 
 void Text::SetPosition(Vector2 pos) {
 
+	float diff = m_resolution.x * m_pos.x - m_resolution.x * pos.x;
+	m_textPosition.x -= diff;
+
+	diff = m_resolution.y * m_pos.y - m_resolution.y * pos.y;
+	m_textPosition.y -= diff;
+
 	UIElement::SetPosition(pos);
-	CreateToRender(AppContext::GetInstance());
 }
 
 void Text::SetSize(Vector2 size) {
