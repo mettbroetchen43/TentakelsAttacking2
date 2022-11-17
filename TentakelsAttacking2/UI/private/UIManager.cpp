@@ -95,7 +95,7 @@ void UIManager::UILoop() {
 
 UIManager::UIManager()
 	: m_appContext(AppContext::GetInstance()), m_resolution({ 0.0f,0.0f }), m_sceneManager(this) {
-	SetTargetFPS(m_appContext.constants.global.FPS);
+	SetTargetFPS(static_cast<int>(m_appContext.constants.global.FPS));
 	Print("FPS Set: " + std::to_string(m_appContext.constants.global.FPS));
 	SetExitKey(KeyboardKey::KEY_NULL);
 
