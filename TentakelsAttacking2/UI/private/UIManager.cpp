@@ -61,6 +61,21 @@ void UIManager::Render() {
 	ClearBackground(BLACK);
 	m_sceneManager.Render(m_appContext);
 	m_focus.Render();
+
+#ifdef _DEBUG
+	int fps = GetFPS();
+	DrawTextEx(
+		*(m_appContext.assetManager.GetFont()),
+		("FPS: " + std::to_string(fps)).c_str(),
+		Vector2(
+			m_resolution.x * 0.94f,
+			m_resolution.y * 0.01f),
+		m_resolution.y * 0.03f,
+		0.0f,
+		WHITE
+	);
+#endif // _DEBUG
+
 	EndDrawing();
 }
 

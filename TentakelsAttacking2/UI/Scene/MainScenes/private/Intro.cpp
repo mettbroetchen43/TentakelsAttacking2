@@ -63,9 +63,8 @@ void Intro::MoveBtn() {
 		BtnMoveFinish();
 		return;
 	}
-	Vector2 pos = m_btn->GetPosition();
-	pos.y += BTN_SPEED;
-	m_btn->SetPosition(pos);
+	btnPos.y += BTN_SPEED;
+	m_btn->SetPosition(btnPos);
 }
 void Intro::BtnMoveFinish(){
 	auto btnPos = m_btn->GetPosition();
