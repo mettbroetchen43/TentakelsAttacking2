@@ -432,8 +432,6 @@ void Focus::CheckAndUpdate() {
 		return;
 	}
 
-	std::cout << "!JA!\n";
-
 	if (IsKeyPressed(KEY_TAB)) {
 		m_renderFocus = true;
 		if (IsKeyDown(KEY_LEFT_SHIFT) or IsKeyDown(KEY_RIGHT_SHIFT)) {
