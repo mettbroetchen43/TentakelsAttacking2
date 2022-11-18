@@ -6,6 +6,7 @@
 #include "AppContext.h"
 #include "ConfigIO.h"
 #include "GenerelEvents.hpp"
+#include "UIEvents.hpp"
 
 
 AppContext& AppContext::GetInstance() {
@@ -23,6 +24,9 @@ void AppContext::LoadConfig() {
 		SetMasterVolume(constants.sound.masterVolume / 100);
 	}
 	
+	auto event = SetTargetFPSEvent(constants.global.FPS);
+	eventManager.InvokeEvent(event);
+
 }
 void AppContext::SaveConfig() {
 	::SaveConfig();
