@@ -9,7 +9,7 @@
 #include "Line.h"
 #include "Picture.h"
 #include "ClassicButton.h"
-#include "SceneType.hpp"
+#include "SceneType.h"
 #include "CreditTable.h"
 #include "AppContext.h"
 

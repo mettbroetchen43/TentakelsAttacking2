@@ -9,7 +9,7 @@
 #include "ClassicButton.h"
 #include "Text.h"
 #include "Title.h"
-#include "SceneType.hpp"
+#include "SceneType.h"
 #include "HRandom.h"
 #include "HInput.h"
 

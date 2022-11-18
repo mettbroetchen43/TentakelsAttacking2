@@ -10,7 +10,7 @@
 #include "Line.h"
 #include "ClassicButton.h"
 #include "UIEvents.hpp"
-#include "SceneType.hpp"
+#include "SceneType.h"
 #include "GameEventSettings.h"
 #include "SliderAndInputLine.h"
 #include <iostream>

@@ -7,7 +7,7 @@
 #include "Title.h"
 #include "Text.h"
 #include "ClassicButton.h"
-#include "SceneType.hpp"
+#include "SceneType.h"
 #include "GameEventSettings.h"
 #include "SliderAndInputLine.h"
 #include "CheckBox.h"

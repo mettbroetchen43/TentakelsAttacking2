@@ -4,7 +4,7 @@
 //
 
 #include "Logos.h"
-#include "SceneType.hpp"
+#include "SceneType.h"
 #include "AppContext.h"
 #include "UIManager.h"
 #include "Text.h"

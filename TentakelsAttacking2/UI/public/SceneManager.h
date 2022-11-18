@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#include "SceneType.hpp"
+#include "SceneType.h"
 #include "PopUp.h"
 #include "PopUpManager.h"
 #include <unordered_map>

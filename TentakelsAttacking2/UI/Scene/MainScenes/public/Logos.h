@@ -5,7 +5,7 @@
 
 #pragma once
 #include "Scene.h"
-#include "SceneType.hpp"
+#include "SceneType.h"
 #include <functional>
 
 struct AppContext;

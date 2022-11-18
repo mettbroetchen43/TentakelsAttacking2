@@ -5,6 +5,7 @@
 
 #include "SceneManager.h"
 #include "Scene.h"
+#include "SceneType.h"
 #include "MessagePopUp.h"
 #include "UIManager.h"
 #include "Scenes.hpp"
@@ -72,7 +73,9 @@ void SceneManager::SwitchScene(AppContext const& appCpntext) {
 	m_currentScene->SetActive(true, appCpntext);
 	m_currentSceneType = m_nextSceneType;
 
-	Print("Scene switched");
+
+
+	Print("Scene switched to " + GetStringBySceneType(m_currentSceneType));
 }
 
 SceneManager::SceneManager(UIManager* uiManager)
