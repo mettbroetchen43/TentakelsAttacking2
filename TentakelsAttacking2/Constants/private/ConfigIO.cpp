@@ -156,8 +156,9 @@ void SaveConfig() {
 	std::ofstream file;
 
 	if (!std::filesystem::exists(constants.files.savesDir)) {
+		Print("saves dir does not exists", PrintType::EXPECTED_ERROR);
 		std::filesystem::create_directory(constants.files.savesDir);
-		Print("generate saves dir", PrintType::EXPECTED_ERROR);
+		Print("generate saves dir");
 	}
 
 	if (!std::filesystem::exists(constants.files.configFile)) {
