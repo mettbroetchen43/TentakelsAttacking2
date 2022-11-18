@@ -5,10 +5,12 @@
 
 #include "PopUpManager.h"
 #include "HFocusEvents.h"
+#include "HPrint.h"
 
 PopUpManager::PopUpManager(Vector2 resolution)
 	: m_appContext(&(AppContext::GetInstance())), m_resolution(resolution) {
 	m_appContext->eventManager.AddListener(this);
+	Print("PopUpManager", PrintType::INITIALIZE);
 }
 
 bool PopUpManager::IsActivePopUp() const {

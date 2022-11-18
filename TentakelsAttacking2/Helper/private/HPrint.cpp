@@ -19,6 +19,9 @@ void Print(std::string const& message, PrintType printType) {
 		case PrintType::ERROR:
 			toPrint += "ERROR";
 			break;
+		case PrintType::INITIALIZE:
+			toPrint += "INITIALIZE";
+			break;
 	}
 
 	toPrint += "] " + message + '\n';

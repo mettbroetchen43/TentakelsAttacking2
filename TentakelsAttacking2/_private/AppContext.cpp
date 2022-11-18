@@ -7,6 +7,7 @@
 #include "ConfigIO.h"
 #include "GenerelEvents.hpp"
 #include "UIEvents.hpp"
+#include "HPrint.h"
 
 
 AppContext& AppContext::GetInstance() {
@@ -83,4 +84,6 @@ AppContext::AppContext() {
 	eventManager.AddListener(&soundManager);
 	eventManager.AddListener(&playerCollection);
 	eventManager.AddListener(this);
+
+	Print("AppContext initialized");
 }

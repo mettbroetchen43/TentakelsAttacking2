@@ -7,6 +7,7 @@
 #include "Focusable.h"
 #include "AppContext.h"
 #include "UIEvents.hpp"
+#include "HPrint.h"
 #include <stdexcept>
 #include <functional>
 #include <iostream>
@@ -358,6 +359,8 @@ Focus::Focus() {
 	AddLayer();
 	AppContext& appContext = AppContext::GetInstance();
 	appContext.eventManager.AddListener(this);
+
+	Print("Focus", PrintType::INITIALIZE);
 }
 
 void Focus::Clear() {

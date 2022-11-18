@@ -158,11 +158,11 @@ void SaveConfig() {
 	if (!std::filesystem::exists(constants.files.savesDir)) {
 		Print("saves dir does not exists", PrintType::EXPECTED_ERROR);
 		std::filesystem::create_directory(constants.files.savesDir);
-		Print("generate saves dir");
+		Print("saves dir generated");
 	}
 
 	if (!std::filesystem::exists(constants.files.configFile)) {
-		Print("generate config");
+		Print("config generated");
 	}
 
 	file.open(constants.files.configFile);

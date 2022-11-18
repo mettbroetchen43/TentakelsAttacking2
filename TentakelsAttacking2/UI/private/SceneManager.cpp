@@ -9,6 +9,7 @@
 #include "UIManager.h"
 #include "Scenes.hpp"
 #include "AppContext.h"
+#include "HPrint.h"
 #include <raylib.h>
 
 
@@ -70,11 +71,14 @@ void SceneManager::SwitchScene(AppContext const& appCpntext) {
 
 	m_currentScene->SetActive(true, appCpntext);
 	m_currentSceneType = m_nextSceneType;
+
+	Print("Scene switched");
 }
 
 SceneManager::SceneManager(UIManager* uiManager)
 	: m_uiManager(uiManager), m_popUpManager(uiManager->GetResolution()) {
 	AppContext::GetInstance().eventManager.AddListener(this);
+	Print("SceneManager", PrintType::INITIALIZE);
 }
 
 void SceneManager::CheckAndUpdate(Vector2 const& mousePosition,

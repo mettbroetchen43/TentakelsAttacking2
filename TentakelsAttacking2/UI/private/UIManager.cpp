@@ -106,6 +106,8 @@ UIManager::UIManager()
 	m_resolution = GetResolution();
 	SetWindowSize(static_cast<int>(m_resolution.x), static_cast<int>(m_resolution.y));
 	m_appContext.eventManager.AddListener(this);
+
+	Print("UIManager", PrintType::INITIALIZE);
 }
 
 void UIManager::StartUI() {
@@ -117,6 +119,8 @@ void UIManager::StartUI() {
 	else {
 		SetWindowPosition(0,10);
 	}
+
+	Print("\"UI\" started");
 
 	UILoop();
 }
