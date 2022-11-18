@@ -80,6 +80,11 @@ void UIManager::Render() {
 	EndDrawing();
 }
 
+void UIManager::SetTargetFPS(SetTargetFPSEvent const* event) {
+	::SetTargetFPS(static_cast<int>(event->GetFPS()));
+	Print("FPS Set: " + std::to_string(event->GetFPS()));
+}
+
 void UIManager::UILoop() {
 	while (!WindowShouldClose()) {
 		CheckAndUpdateResolution();
@@ -95,8 +100,7 @@ void UIManager::UILoop() {
 
 UIManager::UIManager()
 	: m_appContext(AppContext::GetInstance()), m_resolution({ 0.0f,0.0f }), m_sceneManager(this) {
-	SetTargetFPS(static_cast<int>(m_appContext.constants.global.FPS));
-	Print("FPS Set: " + std::to_string(m_appContext.constants.global.FPS));
+	
 	SetExitKey(KeyboardKey::KEY_NULL);
 
 	m_resolution = GetResolution();
@@ -118,13 +122,18 @@ void UIManager::StartUI() {
 }
 
 void UIManager::OnEvent(Event const& event) {
-	if (auto const& CloseEvent = dynamic_cast<CloseWindowEvent const*>(&event)) {
+	if (auto const* CloseEvent = dynamic_cast<CloseWindowEvent const*>(&event)) {
 		m_closeWindow = true;
 		return;
 	}
 
-	if (auto const& ToggleEvent = dynamic_cast<ToggleFullscreenEvent const*>(&event)) {
+	if (auto const* ToggleEvent = dynamic_cast<ToggleFullscreenEvent const*>(&event)) {
 		ToggleFullScreen();
+		return;
+	}
+
+	if (auto const* FPSEvent = dynamic_cast<SetTargetFPSEvent const*>(&event)) {
+		SetTargetFPS(FPSEvent);
 		return;
 	}
 }
