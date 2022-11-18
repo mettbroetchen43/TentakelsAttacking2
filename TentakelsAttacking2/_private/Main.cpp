@@ -17,10 +17,11 @@ int main() {
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(100, 100, "");
 	AppContext& appContext = AppContext::GetInstance();
-	appContext.LoadConfig();
 
 	UIManager uiManager;
 	SetWindowTitle(("Tentakels Attacking " + appContext.constants.global.version).c_str());
+
+	appContext.LoadConfig();
 
 	uiManager.StartUI();
 
