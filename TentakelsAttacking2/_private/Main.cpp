@@ -10,6 +10,7 @@
 #include "UIManager.h"
 #include "Slider.h"
 #include "ClassicButton.h"
+#include "HPrint.h"
 #include <vector>
 #include <iostream>
 
@@ -17,6 +18,14 @@ int main() {
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(100, 100, "");
 	AppContext& appContext = AppContext::GetInstance();
+
+#ifdef _DEBUG
+	Print("Debug", PrintType::BUILD);
+#else
+	Print("Release", PrintType::BUILD);
+#endif // _DEBUG
+
+	Print(appContext.constants.global.version , PrintType::BUILD);
 
 	UIManager uiManager;
 	SetWindowTitle(("Tentakels Attacking " + appContext.constants.global.version).c_str());
