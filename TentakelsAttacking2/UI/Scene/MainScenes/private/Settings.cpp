@@ -7,7 +7,7 @@
 #include "Title.h"
 #include "Text.h"
 #include "ClassicButton.h"
-#include "SceneType.hpp"
+#include "SceneType.h"
 #include "GameEventSettings.h"
 #include "SliderAndInputLine.h"
 #include "CheckBox.h"
@@ -27,8 +27,8 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
 		Alignment::TOP_MID,
-		false,
 		resolution,
+		false,
 		appContext
 		));
 
@@ -37,10 +37,10 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.2f),
 		GetElementSize(0.3f, 0.1f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		"Settings",
-		resolution
+		"Settings"
 		));
 
 	// line
@@ -48,8 +48,8 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, elementY),
 		GetElementSize(0.0f, 0.65f),
 		Alignment::TOP_MID,
-		2.0f,
-		resolution
+		resolution,
+		2.0f
 		));
 
 	// events
@@ -68,10 +68,10 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Volume:",
-		resolution
+		"Volume:"
 		));
 
 	m_volume = std::make_shared<SliderAndInputLine>(
@@ -79,10 +79,10 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, elementY + sliderOffset),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
+		resolution,
 		0,
 		100,
-		static_cast<int>(appContext.constants.sound.masterVolume),
-		resolution
+		static_cast<int>(appContext.constants.sound.masterVolume)
 		);
 	m_volume->SetActive(true,appContext);
 	m_volume->SetEnabled(!appContext.constants.sound.muteVolume);
@@ -97,8 +97,8 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.55f, elementY + sliderOffset + 0.05f),
 		GetElementSize(0.0f, 0.02f).y,
 		Alignment::TOP_LEFT,
-		1,
-		resolution
+		resolution,
+		1
 		);
 	muteCB->SetChecked(appContext.constants.sound.muteVolume);
 	muteCB->SetOnCheck([this](unsigned int, bool isChecked) {
@@ -113,10 +113,10 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.565f, elementY + sliderOffset + 0.05f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_LEFT,
+		resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
-		"Mute",
-		resolution
+		"Mute"
 		));
 
 	elementY += elementOffset;
@@ -125,10 +125,10 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"ca. Last Round:",
-		resolution
+		"ca. Last Round:"
 		));
 
 	auto lastRound = std::make_shared<SliderAndInputLine>(
@@ -136,10 +136,10 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, elementY + sliderOffset),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
+		resolution,
 		static_cast<int>(appContext.constants.global.minRounds),
 		static_cast<int>(appContext.constants.global.maxRounds),
-		static_cast<int>(appContext.constants.global.currentRounds),
-		resolution
+		static_cast<int>(appContext.constants.global.currentRounds)
 		);
 	lastRound->SetActive(true, appContext);
 	lastRound->SetOnSave([](int value) {
@@ -195,6 +195,6 @@ void SettingsScene::Initialize(Vector2 resolution) {
 }
 
 SettingsScene::SettingsScene(Vector2 resolution)
-	:Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT) {
+	:Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
 	Initialize(resolution);
 }

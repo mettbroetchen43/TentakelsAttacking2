@@ -90,6 +90,7 @@ void LoadConfig() {
 		// Globals
 		&constants.global.minRounds,
 		&constants.global.maxRounds,
+		&constants.global.FPS,
 		// Player
 		&constants.player.minPlayerCount,
 		&constants.player.maxPlayerCount,
@@ -155,12 +156,13 @@ void SaveConfig() {
 	std::ofstream file;
 
 	if (!std::filesystem::exists(constants.files.savesDir)) {
+		Print("saves dir does not exists", PrintType::EXPECTED_ERROR);
 		std::filesystem::create_directory(constants.files.savesDir);
-		Print("generate saves dir", PrintType::EXPECTED_ERROR);
+		Print("saves dir generated");
 	}
 
 	if (!std::filesystem::exists(constants.files.configFile)) {
-		Print("generate config");
+		Print("config generated");
 	}
 
 	file.open(constants.files.configFile);
@@ -180,6 +182,8 @@ void SaveConfig() {
 
 	entry(std::to_string(constants.global.minRounds), "Min Game Rounds", toSave);
 	entry(std::to_string(constants.global.maxRounds), "Max Game Rounds", toSave);
+
+	entry(std::to_string(constants.global.FPS), "Target FPS", toSave);
 
 	headline("Player", toSave);
 	entry(std::to_string(constants.player.minPlayerCount), "Min Player Count", toSave);

@@ -23,7 +23,6 @@ private:
 	"  \\/-__",
 	};
 	std::vector<std::string>* m_title;
-	Rectangle m_textPosition;
 	float m_fontSize;
 	size_t m_charCount = 0;
 	size_t m_maxCharCount;
@@ -36,15 +35,12 @@ private:
 
 	void MeasureTitleLength();
 	void SetColider(AppContext const& appContext, Vector2 const& resolution);
-	void ResizeText(AppContext const& appContext, Vector2 resolution);
 
 	void TitleFinish(AppContext const& appContext);
 
-	void UpdateColider(Vector2 resolution) override;
-
 public:
-	Title(Vector2 pos, Vector2 size, Alignment alignment, bool drawTitle,
-		Vector2 resolution, AppContext& appContext);
+	Title(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+		bool drawTitle, AppContext& appContext);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;

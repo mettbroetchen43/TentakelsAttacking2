@@ -50,10 +50,9 @@ Focusable* Scene::GetFocusableByFocusID(unsigned int ID) const {
 	return nullptr;
 }
 
-void Scene::UpdateColider([[maybe_unused]] Vector2 resolution) { }
 	
-Scene::Scene(Vector2 pos, Vector2 size, Alignment alignment)
-	:UIElement(pos, size, alignment), m_firstFocusID(0) { }
+Scene::Scene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
+	:UIElement(pos, size, alignment, resolution), m_firstFocusID(0) { }
 
 bool Scene::IsActive() const {
 	return m_active;
@@ -67,7 +66,7 @@ void Scene::SetActive(bool active, AppContext const& appContext) {
 	SetFocusActive(appContext);
 }
 
-void Scene::SetPosition(Vector2 pos, Vector2 resolution) {
+void Scene::SetPosition(Vector2 pos) {
 	Vector2 dif = {
 		m_pos.x - pos.x,
 		m_pos.y - pos.y
@@ -79,12 +78,12 @@ void Scene::SetPosition(Vector2 pos, Vector2 resolution) {
 			ePos.x - dif.x,
 			ePos.y - dif.y
 		};
-		e->SetPosition(ePos, resolution);
+		e->SetPosition(ePos);
 	}
 
-	UIElement::SetPosition(pos, resolution);
+	UIElement::SetPosition(pos);
 }
-void Scene::SetSize(Vector2 size, Vector2 resolution) {
+void Scene::SetSize(Vector2 size) {
 	Vector2 dif = {
 	m_size.x - size.x,
 	m_size.y - size.y
@@ -96,10 +95,10 @@ void Scene::SetSize(Vector2 size, Vector2 resolution) {
 			eSize.x - dif.x,
 			eSize.y - dif.y
 		};
-		e->SetSize(eSize, resolution);
+		e->SetSize(eSize);
 	}
 
-	UIElement::SetSize(size, resolution);
+	UIElement::SetSize(size);
 }
 
 void Scene::CheckAndUpdate(Vector2 const& mousePosition,
@@ -122,6 +121,9 @@ void Scene::Render(AppContext const& appContext) {
 	}
 }
 void Scene::Resize(Vector2 resolution, AppContext const& appContext) {
+
+	UIElement::Resize(resolution, appContext);
+
 	for (auto& element : m_elements) {
 		element->Resize(resolution, appContext);
 	}

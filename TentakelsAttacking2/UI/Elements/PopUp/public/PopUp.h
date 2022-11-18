@@ -13,15 +13,12 @@ class PopUp : public UIElement {
 protected:
 	bool m_firstEnter = false;
 	std::vector<std::shared_ptr<UIElement>> m_elements;
-	Rectangle m_colider;
 
 	void Initialize(std::string const& title, std::string& subTitle,
 		AssetType infoTexture, Vector2 resolution);
 	void LateUpdate();
 
 	Rectangle GetColiderWithMaxValues(Texture2D* texture, float maxWidth, float maxHeight) const;
-
-	void UpdateColider(Vector2 resolution) override;
 
 public:
 	PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, 

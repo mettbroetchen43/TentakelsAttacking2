@@ -10,6 +10,8 @@ enum class PrintType {
 	INFO,
 	EXPECTED_ERROR,
 	ERROR,
+	INITIALIZE,
+	BUILD,
 };
 
 void Print(std::string const& message, PrintType printType = PrintType::INFO);

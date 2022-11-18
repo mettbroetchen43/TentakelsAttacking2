@@ -214,6 +214,8 @@ GameManager::GameManager() {
 		m_gameEvents[e] = true;
 	}
 	m_npcs[PlayerType::NEUTRAL] = std::make_shared<Player>(100, PlayerType::NEUTRAL);
+	
+	Print("GameManager", PrintType::INITIALIZE);
 }
 
 void GameManager::Update() {

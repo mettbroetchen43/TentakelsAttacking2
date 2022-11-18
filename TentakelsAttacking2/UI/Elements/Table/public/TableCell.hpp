@@ -149,12 +149,9 @@ public:
 		);
 	}
 	void Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) override {
-		m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-		};
+		
+		UIElement::Resize(resolution, appContext);
+
 		m_textSize = m_colider.height / 2;
 		m_textPosition = {
 		m_colider.x + m_colider.width / 20,
@@ -185,7 +182,7 @@ public:
 	}
 	
 	[[nodiscard]] Rectangle GetCollider() const override {
-		return m_colider;
+		return UIElement::GetColider();
 	}
 };
 

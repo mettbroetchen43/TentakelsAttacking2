@@ -223,7 +223,7 @@
     <ClInclude Include="UI\public\UIElement.hpp" />
     <ClInclude Include="UI\public\UIManager.h" />
     <ClInclude Include="UI\Scene\public\Scene.h" />
-    <ClInclude Include="UI\Scene\public\SceneType.hpp" />
+    <ClInclude Include="UI\Scene\public\SceneType.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\Logos.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\MainMenu.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\NewGamePlayer.h" />
@@ -285,6 +285,7 @@
     <ClCompile Include="UI\Scene\private\Scene.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\Logos.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\MainMenu.cpp" />
+    <ClCompile Include="UI\Scene\private\SceneType.cpp" />
     <ClCompile Include="UI\Scene\SupportScenes\private\TestScene.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\NewGamePlayer.cpp" />
     <ClCompile Include="UI\Scene\SupportScenes\private\GameEventSettings.cpp" />

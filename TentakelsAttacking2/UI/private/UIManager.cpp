@@ -6,6 +6,7 @@
 #include "UIManager.h"
 #include "TestScene.h"
 #include "HInput.h"
+#include "HPrint.h"
 
 Vector2 UIManager::GetResolution() const {
 	Vector2 newResolution;
@@ -61,7 +62,27 @@ void UIManager::Render() {
 	ClearBackground(BLACK);
 	m_sceneManager.Render(m_appContext);
 	m_focus.Render();
+
+#ifdef _DEBUG
+	int fps = GetFPS();
+	DrawTextEx(
+		*(m_appContext.assetManager.GetFont()),
+		("FPS: " + std::to_string(fps)).c_str(),
+		Vector2(
+			m_resolution.x * 0.94f,
+			m_resolution.y * 0.01f),
+		m_resolution.y * 0.03f,
+		0.0f,
+		WHITE
+	);
+#endif // _DEBUG
+
 	EndDrawing();
+}
+
+void UIManager::SetTargetFPS(SetTargetFPSEvent const* event) {
+	::SetTargetFPS(static_cast<int>(event->GetFPS()));
+	Print("FPS Set: " + std::to_string(event->GetFPS()));
 }
 
 void UIManager::UILoop() {
@@ -75,17 +96,18 @@ void UIManager::UILoop() {
 	}
 	StopSoundMulti();
 	CloseWindow();
-
 }
 
 UIManager::UIManager()
 	: m_appContext(AppContext::GetInstance()), m_resolution({ 0.0f,0.0f }), m_sceneManager(this) {
-	SetTargetFPS(60);
+	
 	SetExitKey(KeyboardKey::KEY_NULL);
 
 	m_resolution = GetResolution();
 	SetWindowSize(static_cast<int>(m_resolution.x), static_cast<int>(m_resolution.y));
 	m_appContext.eventManager.AddListener(this);
+
+	Print("UIManager", PrintType::INITIALIZE);
 }
 
 void UIManager::StartUI() {
@@ -98,17 +120,24 @@ void UIManager::StartUI() {
 		SetWindowPosition(0,10);
 	}
 
+	Print("\"UI\" started");
+
 	UILoop();
 }
 
 void UIManager::OnEvent(Event const& event) {
-	if (auto const& CloseEvent = dynamic_cast<CloseWindowEvent const*>(&event)) {
+	if (auto const* CloseEvent = dynamic_cast<CloseWindowEvent const*>(&event)) {
 		m_closeWindow = true;
 		return;
 	}
 
-	if (auto const& ToggleEvent = dynamic_cast<ToggleFullscreenEvent const*>(&event)) {
+	if (auto const* ToggleEvent = dynamic_cast<ToggleFullscreenEvent const*>(&event)) {
 		ToggleFullScreen();
+		return;
+	}
+
+	if (auto const* FPSEvent = dynamic_cast<SetTargetFPSEvent const*>(&event)) {
+		SetTargetFPS(FPSEvent);
 		return;
 	}
 }

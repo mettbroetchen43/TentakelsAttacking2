@@ -15,8 +15,8 @@ void SliderAndInputLine::Initialize(unsigned int focusID, Vector2 resolution) {
 		GetElementPosition(0.77f, 0.0f),
 		GetElementSize(0.13f, 1.0f),
 		Alignment::TOP_LEFT,
-		5,
-		resolution
+		resolution,
+		5
 		);
 	m_inputLine->SetOnEnter([this]() {
 		this->BtnPressed();
@@ -48,9 +48,9 @@ void SliderAndInputLine::Initialize(unsigned int focusID, Vector2 resolution) {
 		GetElementPosition(0.0f, 0.1f),
 		GetElementSize(0.75f, 0.8f),
 		Alignment::TOP_LEFT,
+		resolution,
 		true,
-		10.0f,
-		resolution
+		10.0f
 		);
 	m_slider->SetOnSlide([this](float position) {
 		Slide(position);
@@ -92,15 +92,13 @@ void SliderAndInputLine::SetSliderValue() const {
 	m_slider->SetButtonPosition(percent);
 }
 
-SliderAndInputLine::SliderAndInputLine(unsigned int focusID, Vector2 pos,
-	Vector2 size, Alignment alignment,
-	int minValue, int maxValue, int initialValue,
-	Vector2 resolution)
-	: Scene(pos, size, alignment), m_minValue(minValue), m_maxValue(maxValue) {
-	GetAlignedCollider(m_pos, m_size, alignment, resolution);
+SliderAndInputLine::SliderAndInputLine(unsigned int focusID, Vector2 pos, 
+	Vector2 size, Alignment alignment, Vector2 resolution,
+	int minValue, int maxValue, int initialValue)
+	: Scene(pos, size, alignment, resolution), m_minValue(minValue), m_maxValue(maxValue) {
+	
 	m_currentValue = initialValue;
 	Initialize(focusID, resolution);
-
 }
 
 void SliderAndInputLine::CheckAndUpdate(Vector2 const& mousePosition,

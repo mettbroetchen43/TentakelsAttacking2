@@ -13,20 +13,17 @@ private:
 	unsigned int m_ID;
 	std::string m_stringID;
 	bool m_isEnabled = true;
-	Rectangle m_colider;
 	Vector2 m_coliderPos;
 	Color m_color;
 	std::function<void(UIPlanet*)> m_onClick = [](UIPlanet*) {};
 
 public:
-	UIPlanet(unsigned int focusID, unsigned int ID, Vector2 pos, Color color,
-		Vector2 coliderPos, Vector2 resolution);
+	UIPlanet(unsigned int focusID, unsigned int ID, Vector2 pos, Vector2 resolution, 
+		Color color, Vector2 coliderPos);
 
 	void UpdatePosition(Rectangle newColider);
 
 	void SetOnClick(std::function<void(UIPlanet*)> onClick);
-
-	void UpdateColider(Vector2 resolution) override;
 
 	void SetColor(Color color);
 	[[nodiscard]] Color GetColor() const;
@@ -35,7 +32,6 @@ public:
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
 
 	[[nodiscard]] bool IsEnabled() const override;
 	void SetEnabled(bool isEnabled);

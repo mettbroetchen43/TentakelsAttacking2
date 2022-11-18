@@ -14,4 +14,6 @@ struct CGlobal final {
 	size_t minRounds = 20;
 	size_t currentRounds = 50;
 	size_t maxRounds = 100;
+
+	size_t FPS = 60;
 };

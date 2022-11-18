@@ -21,8 +21,8 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
 		Alignment::TOP_MID,
-		false,
 		resolution,
+		false,
 		appContext
 		);
 	m_elements.push_back(title);
@@ -31,10 +31,10 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.1f, 0.28f),
 		GetElementSize(0.25f, 0.05f),
 		Alignment::TOP_LEFT,
+		resolution,
 		Alignment::TOP_LEFT,
 		0.05f,
-		"Add Player:",
-		resolution
+		"Add Player:"
 		);
 	m_elements.push_back(addPlayerText);
 
@@ -43,8 +43,8 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.1f, 0.35f),
 		GetElementSize(0.35f, 0.05f),
 		Alignment::TOP_LEFT,
-		20,
-		resolution
+		resolution,
+		20
 		);
 	inputLine->SetPlaceholderText("Player Name");
 	inputLine->SetOnEnter([this]() {
@@ -98,8 +98,8 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.5f, 0.25f),
 		GetElementSize(0.0f, 0.7f),
 		Alignment::TOP_MID,
-		2.0f,
-		resolution
+		resolution,
+		2.0f
 		);
 	m_elements.push_back(line);
 
@@ -107,10 +107,10 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.55f, 0.28f),
 		GetElementSize(0.25f, 0.05f),
 		Alignment::TOP_LEFT,
+		resolution,
 		Alignment::TOP_LEFT,
 		0.05f,
-		"Current Player:",
-		resolution
+		"Current Player:"
 		);
 	m_elements.push_back(currentPlayerText);
 
@@ -118,21 +118,21 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.55f, 0.33f),
 		GetElementSize(0.25f, 0.05f),
 		Alignment::TOP_LEFT,
+		resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
-		"current min player count: " + std::to_string(appContext.constants.player.minPlayerCount),
-		resolution
+		"current min player count: " + std::to_string(appContext.constants.player.minPlayerCount)
 		);
 	m_elements.push_back(currentPlayerCount);
 
 	auto table = std::make_shared<Table>(
+		5,
 		GetElementPosition(0.9f, 0.35f),
 		GetElementSize(0.35f, 0.45f),
 		Alignment::TOP_RIGHT,
-		5,
+		resolution,
 		appContext.constants.player.maxPlayerCount + 1,
-		3,
-		resolution
+		3
 		);
 	table->SetRowEditable(0, false);
 	table->SetColumnEditable(0, false);
@@ -345,7 +345,7 @@ void NewGamePlayerScene::SetNextButton(AppContext const& appContext) {
 }
 
 NewGamePlayerScene::NewGamePlayerScene(Vector2 resolution)
-	: Scene(Vector2(0.0f,0.0f), Vector2(1.0f,1.0f), Alignment::DEFAULT) {
+	: Scene(Vector2(0.0f,0.0f), Vector2(1.0f,1.0f), Alignment::DEFAULT, resolution) {
 
 	AppContext& appContext = AppContext::GetInstance();
 	Initialize(resolution, appContext);

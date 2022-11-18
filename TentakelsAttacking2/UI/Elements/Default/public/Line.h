@@ -10,15 +10,11 @@
 class Line final : public UIElement {
 private:
 	float m_thick;
-	Rectangle m_colider;
-
-	void UpdateColider(Vector2 resolution) override;
 
 public:
-	Line(Vector2 pos, Vector2 size, Alignment alignment,
-		float thick, Vector2 resolution);
+	Line(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+		float thick);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	void Render(AppContext const& appContext);
-	void Resize(Vector2 resolution, AppContext const& appContext);
 };

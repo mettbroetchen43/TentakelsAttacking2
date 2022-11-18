@@ -19,7 +19,19 @@ class Focusable;
 class PopUp;
 enum class SceneType;
 
-class CloseWindowEvent final :public Event { };
+class CloseWindowEvent final : public Event { };
+class SetTargetFPSEvent final : public Event {
+private:
+	size_t m_fps;
+
+public:
+	SetTargetFPSEvent(size_t fps)
+		:m_fps(fps) { }
+
+	[[nodiscard]] size_t GetFPS() const {
+		return m_fps;
+	}
+};
 
 class PlaySoundEvent final : public Event {
 public:

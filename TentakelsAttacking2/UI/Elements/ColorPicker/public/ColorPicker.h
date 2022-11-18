@@ -17,7 +17,6 @@ private:
 	size_t m_countX;
 	size_t m_countY;
 	Texture* m_backGround;
-	Rectangle m_colider;
 	std::vector<std::unique_ptr<ColorPickerCell>> m_cells;
 	ColorPickerCell* m_currentColorCell = nullptr;
 	ColorPickerCell* m_previousColorCell = nullptr;
@@ -27,8 +26,6 @@ private:
 	void SetUsedColors(AppContext const& appContext);
 	void SetColorFromFocus();
 	void CheckforValidColor(AppContext const& appContext);
-
-	void UpdateColider(Vector2 resolution) override;
 
 public:
 	ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
@@ -45,10 +42,11 @@ public:
 	void SetCellFocuses(AppContext const& appContext);
 	void SetEnabled(bool enabled, Color color);
 	[[nodiscard]] bool IsEnabled() const override;
-	[[nodiscard]] Rectangle GetCollider() const override;
 	[[nodiscard]] bool IsPopUp() const;
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
+
+	[[nodiscard]] Rectangle GetCollider() const override;
 };

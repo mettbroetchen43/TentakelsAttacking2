@@ -28,8 +28,6 @@ private:
 	bool m_isShowGalaxy = false;
 	float m_scaleFactor = 1.0f;
 	Vector2 m_lastMousePosition = { 0.0f,0.0f };
-	Vector2 m_resolution;
-	Rectangle m_colider;
 	Rectangle m_absoluteSize;
 	Galaxy const* m_currentGalaxy = nullptr;
 	std::vector<std::shared_ptr<UIPlanet>> m_uiPlanets;
@@ -67,8 +65,6 @@ public:
 	void SetOnZoom(std::function<void(float, Vector2)> onZoom);
 	void SetOnSlide(std::function<void(float, bool)> onSlide);
 	void SetOnPlanetClick(std::function<void(unsigned int)> onPlanetClick);
-
-	void UpdateColider(Vector2 resolution) override;
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;

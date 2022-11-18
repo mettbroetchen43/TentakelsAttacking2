@@ -23,10 +23,9 @@ protected:
 	Vector2 GetElementSize(float x, float y);
 	Focusable* GetFocusableByFocusID(unsigned int ID) const;
 
-	void UpdateColider(Vector2 resolution) override;
 
 public:
-	Scene(Vector2 pos, Vector2 size, Alignment alignment);
+	Scene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution);
 	Scene(Scene const&) = default;
 	Scene(Scene&&) = default;
 	Scene& operator= (Scene const&) = default;
@@ -36,8 +35,8 @@ public:
 	[[nodiscard]] bool IsActive() const;
 	virtual void SetActive(bool active, AppContext const& appContext);
 
-	void SetPosition(Vector2 pos, Vector2 resoltion) override;
-	void SetSize(Vector2 size, Vector2 resoltion) override;
+	void SetPosition(Vector2 pos);
+	void SetSize(Vector2 size);
 
 	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	virtual void Render(AppContext const& appContext) override;

@@ -12,19 +12,9 @@ void AbstractTableCell::CheckResizeCells(Vector2 resolution,
 	}
 }
 
-void AbstractTableCell::UpdateColider(Vector2 resolution) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
-}
-
 AbstractTableCell::AbstractTableCell(unsigned int ID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution)
-	:Focusable(ID), UIElement(pos, size, alignment) {
-	m_colider = GetAlignedCollider(m_size, m_pos, alignment, resolution);
+	:Focusable(ID), UIElement(pos, size, alignment, resolution) {
 }
 
 void AbstractTableCell::SetEditable(bool editable) {
@@ -32,6 +22,10 @@ void AbstractTableCell::SetEditable(bool editable) {
 }
 [[nodiscard]] bool AbstractTableCell::IsEnabled() const {
 	return m_editable;
+}
+
+[[nodiscard]] Rectangle AbstractTableCell::GetCollider() const {
+	return UIElement::GetColider();
 }
 
 void AbstractTableCell::SetPosX(float posX, Vector2 resolution,

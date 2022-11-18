@@ -18,10 +18,10 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 		GetElementPosition(0.5f, 0.0f),
 		GetElementSize(0.8f, 0.15f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_MID,
 		0.15f * m_size.y,
-		headline,
-		resolution
+		headline
 	);
 	m_elements.push_back(headlineText);
 
@@ -29,8 +29,8 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 		GetElementPosition(0.5f, 0.15f),
 		GetElementSize(0.7f, 0.0f),
 		Alignment::TOP_MID,
-		3.0f,
-		resolution
+		resolution,
+		3.0f
 	);
 	m_elements.push_back(headlineLine);
 
@@ -50,10 +50,10 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 				GetElementPosition(0.49f, 0.2f + textHeight * i),
 				GetElementSize(0.5f, textHeight),
 				Alignment::TOP_RIGHT,
+				resolution,
 				Alignment::TOP_RIGHT,
 				textHeight * m_size.y,
-				e.at(position),
-				resolution
+				e.at(position)
 				);
 			m_elements.push_back(entry);
 			++position;
@@ -67,10 +67,10 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 				GetElementPosition(0.51f, 0.2f + textHeight * i),
 				GetElementSize(0.5f, textHeight),
 				Alignment::TOP_LEFT,
+				resolution,
 				Alignment::TOP_LEFT,
 				textHeight * m_size.y,
-				e.at(position),
-				resolution
+				e.at(position)
 				);
 			m_elements.push_back(entry);
 			++position;
@@ -85,10 +85,10 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 				GetElementPosition(0.5f, 0.23f + textHeight * i),
 				GetElementSize(0.5f, textHeight),
 				Alignment::MID_MID,
+				resolution,
 				Alignment::MID_MID,
 				textHeight * m_size.y,
-				e.at(position),
-				resolution
+				e.at(position)
 				);
 			m_elements.push_back(entry);
 			++position;
@@ -102,9 +102,8 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 }
 
 CreditTableScene::CreditTableScene(Vector2 pos, Vector2 size, Alignment alignment,
-	std::string const& headline, creditEntries const& entries,
-	Vector2 resolution, bool containsLink)
-	: Scene(pos, size, alignment) {
-	GetAlignedCollider(m_pos, m_size, alignment, resolution);
+	Vector2 resolution, std::string const& headline, creditEntries const& entries,
+	bool containsLink)
+	: Scene(pos, size, alignment, resolution) {
 	Initialize(resolution, headline, entries, containsLink);
 }

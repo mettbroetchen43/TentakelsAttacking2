@@ -15,7 +15,6 @@ private:
 	bool m_isHovered = false;
 
 	unsigned int m_ID;
-	Rectangle m_colider;
 
 	Texture* m_texture;
 	Rectangle m_textureRec;
@@ -28,12 +27,9 @@ private:
 
 	void Check(AppContext const& appContext);
 
-	void UpdateColider(Vector2 resolution) override;
-
 public:
 	CheckBox(unsigned int focusID, Vector2 pos, float height,
-		Alignment alignment, unsigned int checkBoxID,
-		Vector2 resolution);
+		Alignment alignment, Vector2 resolution, unsigned int checkBoxID);
 
 	void SetOnCheck(std::function<void(unsigned int, bool)> onCheck);
 	[[nodiscard]] unsigned int GetID() const;
@@ -47,5 +43,4 @@ public:
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
 };

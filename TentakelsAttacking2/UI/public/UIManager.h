@@ -30,6 +30,7 @@ private:
 	void CheckAndUpdate();
 	void Render();
 
+	void SetTargetFPS(SetTargetFPSEvent const* event);
 	void UILoop();
 
 public:

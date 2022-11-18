@@ -19,7 +19,6 @@ protected:
 	bool m_isPressed = false;
 	Texture2D* m_texture;
 	Rectangle m_textureRec;
-	Rectangle m_colider;
 	State m_state = State::ENABLED;
 	int m_buttonParts = 4;
 
@@ -32,14 +31,12 @@ protected:
 	std::function<void()> m_onClick = []() {};
 	std::function<void()> m_onPress = []() {};
 
-	void SetTextSizeAndPosition(Vector2 resolution, AppContext const& appContext);
+	void SetTextSizeAndPosition(AppContext const& appContext);
 	[[nodiscard]] bool IsSameState(State state) const;
 
-	void UpdateColider(Vector2 resolution) override;
-
 public:
-	Button(Vector2 pos, Vector2 size, Alignment alignment, std::string const& text,
-		SoundType releaseSound, Vector2 resolution);
+	Button(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+		std::string const& text, SoundType releaseSound);
 	Button();
 	Button(Button const&) = default;
 	Button(Button&& old) = default;
@@ -53,12 +50,12 @@ public:
 	void SetOnClick(std::function<void()> onClick);
 	void SetOnPress(std::function<void()> onPress);
 
-	void SetText(Vector2 resolution, std::string const& text);
+	void SetText(std::string const& text);
 	[[nodiscard]] std::string GetText() const;
 
 	void SetEnabled(bool enabled);
 	[[nodiscard]] bool IsEnabled() const;
-	[[nodiscard]] Rectangle GetCollider() const;
-	void SetCollider(Rectangle collider);
-	void Move(Vector2 offset);
+	void SetCollider(Rectangle collider) override;
+	
+	void SetPosition(Vector2 pos) override;
 };

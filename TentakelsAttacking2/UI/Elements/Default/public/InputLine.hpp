@@ -18,7 +18,6 @@ class InputLine final : public UIElement, public Focusable {
 protected:
 	bool m_isEnabled = true;
 	unsigned int m_charLimit;
-	Rectangle m_colider;
 	std::string m_value;
 	std::string m_oldValue;
 	std::string m_placeholderText;
@@ -48,21 +47,11 @@ protected:
 	}
 	[[nodiscard]] bool IsValidKey(int key) = delete;
 
-	void UpdateColider(Vector2 resolution) override {
-		m_colider = {
-			resolution.x * m_pos.x,
-			resolution.y * m_pos.y,
-			resolution.x * m_size.x,
-			resolution.y * m_size.y
-		};
-	}
-
 public:
 	InputLine(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
-		unsigned int charLimit, Vector2 resolution)
-		: UIElement(pos, size, alignment), Focusable(focusID), m_charLimit(charLimit) {
+		Vector2 resolution, unsigned int charLimit)
+		: UIElement(pos, size, alignment, resolution), Focusable(focusID), m_charLimit(charLimit) {
 		m_texture = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
-		m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	}
 	InputLine(InputLine const&) = default;
 	InputLine(InputLine&&) = default;
@@ -213,10 +202,6 @@ public:
 			}
 		}
 	}
-	void Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) override {
-		m_colider = { resolution.x * m_pos.x, resolution.y * m_pos.y,
-			resolution.x * m_size.x, resolution.y * m_size.y };
-	}
 
 	void SetPlaceholderText(std::string placeholderText) {
 		m_placeholderText = placeholderText;
@@ -230,7 +215,7 @@ public:
 	}
 
 	[[nodiscard]] Rectangle GetCollider() const override {
-		return m_colider;
+		return UIElement::GetColider();
 	}
 	[[nodiscard]] bool HasValue() const {
 		return !m_value.empty();

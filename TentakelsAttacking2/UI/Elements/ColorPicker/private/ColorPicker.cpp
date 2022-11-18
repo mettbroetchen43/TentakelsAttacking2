@@ -83,20 +83,10 @@ void ColorPicker::CheckforValidColor(AppContext const& appContext) {
 	SetColor(color);
 }
 
-void ColorPicker::UpdateColider(Vector2 resolution) {
-	m_colider = {
-	resolution.x * m_pos.x,
-	resolution.y * m_pos.y,
-	resolution.x * m_size.x,
-	resolution.y * m_size.y
-	};
-}
-
 ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution, bool isPopUp)
-	: Focusable(ID), UIElement(pos, size, alignment), m_isPopUp(isPopUp) {
+	: Focusable(ID), UIElement(pos, size, alignment, resolution), m_isPopUp(isPopUp) {
 
-	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	m_backGround = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
 	Initialise(resolution);
 }
@@ -178,9 +168,7 @@ void ColorPicker::SetEnabled(bool enabled, Color color) {
 bool ColorPicker::IsEnabled() const {
 	return true;
 }
-Rectangle ColorPicker::GetCollider() const {
-	return m_colider;
-}
+
 [[nodiscard]] bool ColorPicker::IsPopUp() const {
 	return m_isPopUp;
 }
@@ -255,14 +243,14 @@ void ColorPicker::Render(AppContext const& appContext) {
 	}
 }
 void ColorPicker::Resize(Vector2 resolution, AppContext const& appContext) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
+
+	UIElement::Resize(resolution, appContext);
 
 	for (auto& c : m_cells) {
 		c->Resize(resolution, appContext);
 	}
+}
+
+Rectangle ColorPicker::GetCollider() const {
+	return UIElement::GetColider();
 }

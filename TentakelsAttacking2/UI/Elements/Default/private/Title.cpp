@@ -13,7 +13,7 @@ void Title::RenderTitle(AppContext const& appContext) {
 		DrawTextEx(
 			*(appContext.assetManager.GetFont()),
 			m_title->at(i).c_str(),
-			Vector2(m_textPosition.x, m_textPosition.y + m_fontSize * i),
+			Vector2(m_colider.x, m_colider.y + m_fontSize * i),
 			m_fontSize,
 			0.0f,
 			WHITE
@@ -33,7 +33,7 @@ void Title::RenderTitleSequens(AppContext const& appContext) {
 		DrawTextEx(
 			*(appContext.assetManager.GetFont()),
 			dummyText.c_str(),
-			Vector2(m_textPosition.x, m_textPosition.y + m_fontSize * i),
+			Vector2(m_colider.x, m_colider.y + m_fontSize * i),
 			m_fontSize,
 			0.0f,
 			WHITE
@@ -45,7 +45,7 @@ void Title::RenderTitleSequens(AppContext const& appContext) {
 	}
 
 	Random& random = Random::GetInstance();
-	float prefixPosition = m_textPosition.x +
+	float prefixPosition = m_colider.x +
 		(dummyText.size() *
 			MeasureTextEx(
 				*(appContext.assetManager.GetFont()),
@@ -57,7 +57,7 @@ void Title::RenderTitleSequens(AppContext const& appContext) {
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_postFixes.at(random.random(m_postFixes.size())).c_str(),
-		Vector2(prefixPosition, m_textPosition.y + m_fontSize * i),
+		Vector2(prefixPosition, m_colider.y + m_fontSize * i),
 		m_fontSize,
 		0.0f,
 		WHITE
@@ -111,15 +111,6 @@ void Title::SetColider(AppContext const& appContext, Vector2 const& resolution) 
 
 	m_size.x = size;
 }
-void Title::ResizeText(AppContext const& appContext, Vector2 resolution) {
-	SetColider(appContext, resolution);
-	m_textPosition = {
-		m_pos.x * resolution.x,
-		m_pos.y * resolution.y,
-		m_size.x * resolution.x,
-		m_size.y * resolution.y
-	};
-}
 
 void Title::TitleFinish(AppContext const& appContext) {
 	m_titleFinish = true;
@@ -127,25 +118,13 @@ void Title::TitleFinish(AppContext const& appContext) {
 	appContext.eventManager.InvokeEvent(event);
 }
 
-void Title::UpdateColider(Vector2 resolution) {
-	m_textPosition = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
-}
-
-Title::Title(Vector2 pos, Vector2 size, Alignment alignment, bool drawTitle,
-	Vector2 resolution, AppContext& appContext)
-	: UIElement(pos, size, alignment), m_titleFinish(!drawTitle) {
+Title::Title(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, bool drawTitle,
+	AppContext& appContext)
+	: UIElement(pos, size, alignment, resolution), m_titleFinish(!drawTitle) {
 
 	m_title = appContext.assetManager.GetTitle();
 	MeasureTitleLength();
 	SetColider(appContext, resolution);
-
-	m_textPosition = GetAlignedCollider(m_pos, m_size, alignment, resolution);
-
 }
 
 void Title::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition, AppContext const& appContext) {
@@ -168,8 +147,10 @@ void Title::Render(AppContext const& appContext) {
 		RenderTitle(appContext);
 	}
 }
-void Title::Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) {
-	ResizeText(AppContext::GetInstance(), resolution);
+void Title::Resize(Vector2 resolution,AppContext const& appContext) {
+
+	SetColider(appContext, resolution);
+	UIElement::Resize(resolution, appContext);
 }
 
 bool Title::HasFinishedTitle() const {

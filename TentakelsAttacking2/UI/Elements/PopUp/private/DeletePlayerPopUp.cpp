@@ -19,8 +19,8 @@ void DeletePlayerPopUp::Initialize(AppContext const& appContext,
 		GetElementPosition(m_pos, m_size, 0.5f, 0.45f),
 		GetElementSize(m_size, 0.5f, 0.1f),
 		Alignment::TOP_MID,
-		5,
-		resolution
+		resolution,
+		5
 		);
 	inputLine->SetPlaceholderText("Player ID");
 	m_inputLine = inputLine;

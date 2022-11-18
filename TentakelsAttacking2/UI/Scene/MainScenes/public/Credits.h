@@ -18,7 +18,7 @@ private:
 	std::shared_ptr<ClassicButton> m_speedBTN;
 	Vector2 m_resolution;
 	bool m_moving = false;
-	float m_speed = -0.001f;
+	float m_speed = 0.05f;
 	int m_maxSpeedLevel = 3;
 	int m_speedLevel = 1;
 	std::vector<std::shared_ptr<UIElement>> m_movingElements;

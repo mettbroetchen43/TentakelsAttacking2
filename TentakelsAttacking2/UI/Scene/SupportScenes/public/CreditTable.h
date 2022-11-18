@@ -13,7 +13,7 @@ private:
 		creditEntries const& entries, bool containsLink);
 
 public:
-	CreditTableScene(Vector2 pos, Vector2 size, Alignment alignment,
+	CreditTableScene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		std::string const& headline, creditEntries const& entries,
-		Vector2 resolution, bool containsLink = false);
+		bool containsLink = false);
 };

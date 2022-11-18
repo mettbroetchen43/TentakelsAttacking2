@@ -20,9 +20,9 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 		GetElementPosition(m_pos, m_size, 0.5f, 0.65f),
 		GetElementSize(m_size, 0.7f, 0.1f),
 		Alignment::BOTTOM_MID,
+		resolution,
 		true,
-		10.0f,
-		resolution
+		10.0f
 		);
 	m_slider->SetEnabled(!appContext.constants.sound.muteVolume);
 	m_slider->SetButtonPosition(appContext.constants.sound.masterVolume);
@@ -36,8 +36,8 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 		GetElementPosition(m_pos, m_size, 0.15f, 0.66f),
 		GetElementSize(m_size, 0.0f, 0.04f).y,
 		Alignment::TOP_LEFT,
-		1,
-		resolution
+		resolution,
+		1
 		);
 	m_checkBox->SetChecked(appContext.constants.sound.muteVolume);
 	m_checkBox->SetOnCheck([this](unsigned int, bool isChecked) {
@@ -53,10 +53,10 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 		GetElementPosition(m_pos, m_size, 0.18f, 0.655f),
 		GetElementSize(m_size, 0.2f, 0.3f),
 		Alignment::TOP_LEFT,
+		resolution,
 		Alignment::TOP_LEFT,
 		0.025f,
-		"Mute",
-		resolution
+		"Mute"
 		));
 
 	m_acceptBtn = std::make_shared<ClassicButton>(

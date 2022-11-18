@@ -6,7 +6,7 @@
 #pragma once
 #include "Scene.h"
 #include "AppContext.h"
-#include "SceneType.hpp"
+#include "SceneType.h"
 #include <string>
 #include <vector>
 #include <memory>

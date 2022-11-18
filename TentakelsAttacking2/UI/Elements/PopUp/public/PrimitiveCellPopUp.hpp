@@ -26,8 +26,8 @@ private:
 			GetElementPosition(m_pos, m_size, 0.5f, 0.55f),
 			GetElementSize(m_size, 0.9f, 0.2f),
 			Alignment::MID_MID,
-			50,
-			resolution
+			resolution,
+			50
 			);
 
 		auto event = NewFocusPopUpElementEvent(inputChance.get());

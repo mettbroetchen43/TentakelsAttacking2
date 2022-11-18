@@ -4,6 +4,7 @@
 //
 
 #pragma once
+#include <string>
 
 enum class SceneType {
 	TEST,
@@ -16,3 +17,5 @@ enum class SceneType {
 	CREDITS,
 	NONE,
 };
+
+[[nodiscard]] std::string GetStringBySceneType(SceneType sceneType);

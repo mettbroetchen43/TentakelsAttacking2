@@ -10,7 +10,7 @@
 #include "Line.h"
 #include "ClassicButton.h"
 #include "UIEvents.hpp"
-#include "SceneType.hpp"
+#include "SceneType.h"
 #include "GameEventSettings.h"
 #include "SliderAndInputLine.h"
 #include <iostream>
@@ -23,8 +23,8 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
 		Alignment::TOP_MID,
-		false,
 		resolution,
+		false,
 		appContext
 		));
 
@@ -34,10 +34,10 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.2f),
 		GetElementSize(0.3f, 0.1f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		"Parameter",
-		resolution
+		"Parameter"
 		));
 
 	// line
@@ -45,8 +45,8 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f,0.3f),
 		GetElementSize(0.0f,0.65f),
 		Alignment::TOP_MID,
-		2.0f,
-		resolution
+		resolution,
+		2.0f
 		));
 
 	// events
@@ -65,10 +65,10 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, 0.3f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Planet Count:",
-		resolution
+		"Planet Count:"
 		));
 
 	auto planetCount = std::make_shared<SliderAndInputLine>(
@@ -76,10 +76,10 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, 0.34f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
+		resolution,
 		static_cast<int>(appContext.constants.world.minPlanetCount),
 		static_cast<int>(appContext.constants.world.maxPlanetCount),
-		static_cast<int>(appContext.constants.world.currentPlanetCount),
-		resolution
+		static_cast<int>(appContext.constants.world.currentPlanetCount)
 		);
 	planetCount->SetActive(true,appContext);
 	planetCount->SetOnSave([this](int value) {
@@ -92,10 +92,10 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, 0.4f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Galaxy Width:",
-		resolution
+		"Galaxy Width:"
 		));
 
 	auto galaxyWidth = std::make_shared<SliderAndInputLine>(
@@ -103,10 +103,10 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, 0.44f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
+		resolution,
 		static_cast<int>(appContext.constants.world.minDiemnsionX),
 		static_cast<int>(appContext.constants.world.maxDiemnsionX),
-		static_cast<int>(appContext.constants.world.currentDimensionX),
-		resolution
+		static_cast<int>(appContext.constants.world.currentDimensionX)
 		);
 	galaxyWidth->SetActive(true, appContext);
 	galaxyWidth->SetOnSave([this](int value) {
@@ -119,10 +119,10 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, 0.5f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Galaxy Height:",
-		resolution
+		"Galaxy Height:"
 		));
 
 	auto galaxyHeight = std::make_shared<SliderAndInputLine>(
@@ -130,10 +130,10 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, 0.54f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
+		resolution,
 		static_cast<int>(appContext.constants.world.minDiemnsionY),
 		static_cast<int>(appContext.constants.world.maxDiemnsionY),
-		static_cast<int>(appContext.constants.world.currentDimensionY),
-		resolution
+		static_cast<int>(appContext.constants.world.currentDimensionY)
 		);
 	galaxyHeight->SetActive(true, appContext);
 	galaxyHeight->SetOnSave([this](int value) {
@@ -146,10 +146,10 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, 0.6f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
+		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"ca. Last Round:",
-		resolution
+		"ca. Last Round:"
 		));
 
 	auto lastRound = std::make_shared<SliderAndInputLine>(
@@ -157,10 +157,10 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, 0.64f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
+		resolution,
 		static_cast<int>(appContext.constants.global.minRounds),
 		static_cast<int>(appContext.constants.global.maxRounds),
-		static_cast<int>(appContext.constants.global.currentRounds),
-		resolution
+		static_cast<int>(appContext.constants.global.currentRounds)
 		);
 	lastRound->SetActive(true, appContext);
 	lastRound->SetOnSave([this](int value) {
@@ -246,7 +246,7 @@ void NewGameParameterScene::NextScene() const {
 }
 
 NewGameParameterScene::NewGameParameterScene(Vector2 resolution)
-	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT) {
+	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
 	Initialize(resolution);
 	AppContext::GetInstance().eventManager.AddListener(this);
 }

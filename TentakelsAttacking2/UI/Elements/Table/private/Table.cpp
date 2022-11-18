@@ -126,20 +126,12 @@ std::vector<float> Table::GetNewColumnPosition(
 	return positions;
 }
 
-void Table::UpdateColider(Vector2 resolution) {
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
-}
 
-Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int ID,
-	size_t rows, size_t columns, Vector2 resolution, bool isPopUp)
-	: UIElement(pos, size, alignment), Focusable(ID),
-	m_rows(rows), m_columns(columns), m_resolution(resolution), m_isPopUp(isPopUp) {
-	m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+Table::Table(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	size_t rows, size_t columns,bool isPopUp)
+	: UIElement(pos, size, alignment, resolution), Focusable(ID),
+	m_rows(rows), m_columns(columns), m_isPopUp(isPopUp) {
+
 	m_cells.reserve(m_columns * m_rows);
 	for (int row = 0; row < m_rows; ++row) {
 		for (int column = 0; column < m_columns; ++column) {
@@ -217,13 +209,8 @@ void Table::Render(AppContext const& appContext){
 	}
 }
 void Table::Resize(Vector2 resolution, AppContext const& appContext){
-	m_resolution = resolution;
-	m_colider = {
-		resolution.x * m_pos.x,
-		resolution.y * m_pos.y,
-		resolution.x * m_size.x,
-		resolution.y * m_size.y
-	};
+	
+	UIElement::Resize(resolution, appContext);
 
 	for (auto& c : m_cells) {
 		c->Resize(resolution, appContext);
@@ -256,11 +243,7 @@ bool Table::IsEnabled() const {
 	return true;
 }
 Rectangle Table::GetCollider() const {
-	return m_colider;
-}
-
-Vector2 Table::GetResolution() const {
-	return m_resolution;
+	return UIElement::GetColider();
 }
 
 size_t Table::GetRows() const {

@@ -9,8 +9,6 @@
 
 class TestScene : public Scene {
 private:
-	Rectangle m_coldier;
-	Vector2 m_resolution;
 
 	void Initialize(Vector2 resolution, AppContext& appContext);
 

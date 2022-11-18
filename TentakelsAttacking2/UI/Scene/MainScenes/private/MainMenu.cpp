@@ -127,8 +127,8 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		GetElementPosition(0.625f, 0.025f),
 		GetElementSize(0.7f, 0.2f),
 		Alignment::TOP_MID,
-		false,
 		resolution,
+		false,
 		appContext
 		);
 	m_elements.push_back(title);
@@ -137,17 +137,17 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		GetElementPosition(0.99f, 0.98f),
 		GetElementSize(0.1f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
+		resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.02f,
 		appContext.constants.global.version + '\n' 
-			+ appContext.constants.global.copyRight,
-		resolution
+			+ appContext.constants.global.copyRight
 		);
 	m_elements.push_back(versionAndCopyRight);
 }
 
 MainMenu::MainMenu(Vector2 resolution)
-	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT) {
+	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
 
 	AppContext& appContext = AppContext::GetInstance();
 	Initialize(resolution, appContext);
