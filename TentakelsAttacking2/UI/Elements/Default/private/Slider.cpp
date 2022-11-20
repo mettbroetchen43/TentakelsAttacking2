@@ -6,7 +6,6 @@
 #include "Slider.h"
 #include "Allignment.h"
 #include "AppContext.h"
-#include <iostream>
 
 void Slider::CalculateInitialButton() {
 	float sizeX = m_isHorizontal ? m_size.x / m_absoluteDimension : m_size.x;
@@ -42,10 +41,10 @@ void Slider::Slide() {
 	m_isPressed = true;
 	Vector2 mousePosition = GetMousePosition();
 	if (m_isHorizontal) {
-		mousePosition.x += m_btnOffset;
+		mousePosition.x -= m_btnOffset;
 	}
 	else {
-		mousePosition.y += m_btnOffset;
+		mousePosition.y -= m_btnOffset;
 	}
 	Rectangle btnCollider = m_btn.GetColider();
 
@@ -129,9 +128,14 @@ void Slider::SetOffset(Vector2 mousePosition) {
 
 	auto btnColider = m_btn.GetColider();
 
-	if (!IsMouseButtonDown(MOUSE_BUTTON_LEFT)) { m_btnOffset = 0.0f; return; }
-	if (!IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) { return; }
-	if (!CheckCollisionPointRec(mousePosition, btnColider)) { return; };
+	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)
+		&& !CheckCollisionPointRec(mousePosition, btnColider)) {
+		m_btnOffset = 0.0f;
+			return;
+	}
+
+	if (!IsMouseButtonPressed(MOUSE_BUTTON_LEFT)
+		|| !CheckCollisionPointRec(mousePosition, btnColider)) { return; }
 
 	if (m_isHorizontal) {
 		m_btnOffset = mousePosition.x - (btnColider.x + (btnColider.width / 2));
