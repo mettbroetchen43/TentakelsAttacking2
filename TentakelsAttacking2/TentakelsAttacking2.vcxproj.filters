@@ -279,6 +279,9 @@
     <ClInclude Include="UI\Elements\PopUp\public\InitialSoundLevelPopUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Scene\MainScenes\public\ValidateGalaxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -462,6 +465,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Scene\private\SceneType.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Scene\MainScenes\private\ValidateGalaxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

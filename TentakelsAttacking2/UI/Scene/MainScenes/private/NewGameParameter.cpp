@@ -241,7 +241,7 @@ void NewGameParameterScene::SetRandom() const {
 }
 
 void NewGameParameterScene::NextScene() const {
-	auto event = SwitchSceneEvent(SceneType::TEST); // TODO chance
+	auto event = SwitchSceneEvent(SceneType::VALIDATE_GALAXY);
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
