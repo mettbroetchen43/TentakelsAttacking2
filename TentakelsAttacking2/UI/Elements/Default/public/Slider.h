@@ -13,6 +13,7 @@ private:
 	bool m_isPressed = false;
 	bool m_isScroll = false;
 	float m_absoluteDimension = 1.0f;
+	float m_btnOffset = 0.0f;
 	Texture2D* m_texture;
 	Rectangle m_textureRec;
 
@@ -26,6 +27,7 @@ private:
 	void SlideIfPressed();
 	void MoveButtonIfColiderIsPressed(Vector2 const& mousePosition);
 	void SlideIfScroll();
+	void SetOffset(Vector2 mousePosition);
 
 public:
 	Slider(Vector2 pos,Vector2 size, Alignment alignment, Vector2 resolution,
