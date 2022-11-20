@@ -10,6 +10,7 @@
 #include "ClassicButton.h"
 #include "GalaxyAndSlider.h"
 #include "Text.h"
+#include <iostream>
 
 void ValidateGalaxyScene::Initialize() {
 
@@ -80,28 +81,22 @@ void ValidateGalaxyScene::InitializeGalaxy() {
 	m_elements.push_back(m_galaxy);
 }
 
-void ValidateGalaxyScene::NewGalaxy()
-{
+void ValidateGalaxyScene::NewGalaxy() {
+	AppContext& appContext = AppContext::GetInstance();
+
+	m_galaxy->SetActive(false, appContext);
+	m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), m_galaxy), m_elements.end());
+	m_galaxy = nullptr;
+
+	auto event = GenerateGalaxyEvent();
+	appContext.eventManager.InvokeEvent(event);
+
+	InitializeGalaxy();
 }
 
 ValidateGalaxyScene::ValidateGalaxyScene(Vector2 resolution)
 	: Scene({0.0f,0.0f}, {1.0f,1.0f}, Alignment::DEFAULT, resolution) {
-	
-	AppContext& appContext = AppContext::GetInstance();
-
-	appContext.eventManager.AddListener(this);
 
 	Initialize();
 	InitializeGalaxy();
-}
-ValidateGalaxyScene::~ValidateGalaxyScene() {
-	AppContext::GetInstance().eventManager.RemoveListener(this);
-}
-
-void ValidateGalaxyScene::OnEvent(Event const& event) {
-
-	if (auto const* GalaxyEvent = dynamic_cast<GenerateGalaxyEvent const*>(&event)) {
-		InitializeGalaxy();
-		return;
-	}
 }

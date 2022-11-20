@@ -11,7 +11,7 @@
 class GalaxyScene;
 class SendGalaxyPointerEvent;
 
-class ValidateGalaxyScene : public Scene, public EventListener {
+class ValidateGalaxyScene : public Scene{
 private:
 	std::shared_ptr<GalaxyScene> m_galaxy;
 
@@ -23,8 +23,5 @@ private:
 
 public:
 	ValidateGalaxyScene(Vector2 resolution);
-	~ValidateGalaxyScene();
-
-	void OnEvent(Event const& event) override;
 };
 
