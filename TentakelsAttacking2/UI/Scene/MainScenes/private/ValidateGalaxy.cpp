@@ -65,6 +65,7 @@ void ValidateGalaxyScene::Initialize() {
 	nextBtn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(SwitchSceneEvent(SceneType::MAIN_MENU));
 		});
+	nextBtn->SetEnabled(false);
 	m_elements.push_back(nextBtn);
 }
 
