@@ -67,8 +67,17 @@ void ValidateGalaxyScene::Initialize() {
 	m_elements.push_back(nextBtn);
 }
 
-void ValidateGalaxyScene::InitializeGalaxy(SendGalaxyPointerEvent const*)
-{
+void ValidateGalaxyScene::InitializeGalaxy() {
+	AppContext& appContext = AppContext::GetInstance();
+
+	m_galaxy = std::make_shared<GalaxyScene>(
+		GetElementPosition(0.5f, 0.465f),
+		GetElementSize(0.75f, 0.75f),
+		Alignment::MID_MID,
+		m_resolution
+		);
+	m_galaxy->SetActive(true, appContext);
+	m_elements.push_back(m_galaxy);
 }
 
 void ValidateGalaxyScene::NewGalaxy()
@@ -83,9 +92,7 @@ ValidateGalaxyScene::ValidateGalaxyScene(Vector2 resolution)
 	appContext.eventManager.AddListener(this);
 
 	Initialize();
-
-	auto event = GetGalaxyPointerEvent();
-	appContext.eventManager.InvokeEvent(event);
+	InitializeGalaxy();
 }
 ValidateGalaxyScene::~ValidateGalaxyScene() {
 	AppContext::GetInstance().eventManager.RemoveListener(this);
@@ -93,8 +100,8 @@ ValidateGalaxyScene::~ValidateGalaxyScene() {
 
 void ValidateGalaxyScene::OnEvent(Event const& event) {
 
-	if (auto const* GalaxyEvent = dynamic_cast<SendGalaxyPointerEvent const*>(&event)) {
-		InitializeGalaxy(GalaxyEvent);
+	if (auto const* GalaxyEvent = dynamic_cast<GenerateGalaxyEvent const*>(&event)) {
+		InitializeGalaxy();
 		return;
 	}
 }

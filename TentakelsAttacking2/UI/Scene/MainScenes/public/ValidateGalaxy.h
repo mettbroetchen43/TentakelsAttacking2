@@ -8,16 +8,16 @@
 #include "EventListener.hpp"
 #include <memory>
 
-class GalaxyAndSlider;
+class GalaxyScene;
 class SendGalaxyPointerEvent;
 
 class ValidateGalaxyScene : public Scene, public EventListener {
 private:
-	std::shared_ptr<GalaxyAndSlider> m_galaxy;
+	std::shared_ptr<GalaxyScene> m_galaxy;
 
 	void Initialize();
 
-	void InitializeGalaxy(SendGalaxyPointerEvent const*);
+	void InitializeGalaxy();
 
 	void NewGalaxy();
 
