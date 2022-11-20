@@ -203,6 +203,7 @@
     <ClInclude Include="UI\Scene\MainScenes\public\Credits.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\NewGameParameter.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\Settings.h" />
+    <ClInclude Include="UI\Scene\MainScenes\public\ValidateGalaxy.h" />
     <ClInclude Include="UI\Scene\public\BaseMainScene.h" />
     <ClInclude Include="UI\public\PopUpManager.h" />
     <ClInclude Include="UI\Scene\SupportScenes\public\CreditTable.h" />
@@ -269,6 +270,7 @@
     <ClCompile Include="UI\Scene\MainScenes\private\NewGameParameter.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\Settings.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\Credits.cpp" />
+    <ClCompile Include="UI\Scene\MainScenes\private\ValidateGalaxy.cpp" />
     <ClCompile Include="UI\Scene\private\BaseMainScene.cpp" />
     <ClCompile Include="UI\private\PopUpManager.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\Intro.cpp" />
