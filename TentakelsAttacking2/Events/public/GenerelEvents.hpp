@@ -82,6 +82,26 @@ public:
 };
 class ResetPlayerUIEvent final : public Event { };
 
+class PlayerIDEvent : public Event {
+private:
+	size_t m_ID;
+
+public:
+	PlayerIDEvent(size_t ID)
+		:m_ID(ID) { }
+	[[nodiscard]] size_t GetID() const {
+		return m_ID;
+	}
+};
+class GetCurrentPlayerIDEvent final : public Event { };
+class SendCurrentPlayerIDEvent final : public PlayerIDEvent {
+	using PlayerIDEvent::PlayerIDEvent;
+};
+class GetNextPlayerIDEvent final : public Event { };
+class SendNextPlayerIDEvent final : public PlayerIDEvent {
+	using PlayerIDEvent::PlayerIDEvent;
+};
+
 class ValidatePlayerCountEvent final : public Event { };
 class ValidatePlayerCountResultEvent final : public Event {
 private:
