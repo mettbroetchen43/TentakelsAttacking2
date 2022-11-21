@@ -154,6 +154,8 @@ bool GalaxyScene::IsEnabled() const {
 }
 
 void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	if (!IsActive()) { return; }
+
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
 	if (IsScaling()) {
@@ -167,6 +169,8 @@ void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const&
 	}
 }
 void GalaxyScene::Render(AppContext const& appContext) {
+	if (!IsActive()) { return; }
+
 	Scene::Render(appContext);
 
 	if (m_galaxy->GetScaleFactor() > 1.0f) {
