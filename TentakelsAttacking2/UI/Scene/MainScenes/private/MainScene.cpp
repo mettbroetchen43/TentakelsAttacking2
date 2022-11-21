@@ -91,7 +91,6 @@ void MainScene::Initialize() {
 		});
 	m_elements.push_back(nextBtn);
 }
-
 void MainScene::InitialzeGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
 	if (m_galaxy) {
