@@ -186,6 +186,10 @@ public:
 		return m_onClick;
 	}
 };
+class ShowValidateNextTermEvent final : public PopUpEvent {
+public:
+	using PopUpEvent::PopUpEvent;
+};
 class ShowInitialSoundLevelPopUpEvent final : public PopUpEvent {
 public:
 	using PopUpEvent::PopUpEvent;

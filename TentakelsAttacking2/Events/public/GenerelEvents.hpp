@@ -103,6 +103,16 @@ public:
 };
 
 class TriggerNextTermEvent final : public Event  { };
+class ValidatedNextTermEvent final : public Event { 
+private:
+	bool m_valid;
+public:
+	ValidatedNextTermEvent(bool valid)
+		:m_valid(valid) { }
+	[[nodiscard]] bool IsValid() const {
+		return m_valid;
+	}
+};
 class ShowNextTermEvent final : public Event { };
 class ShowNextRoundEvent final : public Event { };
 

@@ -115,6 +115,10 @@ void PopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	for (auto& e : m_elements) {
 		e->CheckAndUpdate(mousePosition, appContext);
 	}
+
+	if (m_schouldClose) {
+		appContext.eventManager.InvokeEvent(ClosePopUpEvent(this));
+	}
 }
 void PopUp::Render(AppContext const& appContext) {
 	for (auto& e : m_elements) {

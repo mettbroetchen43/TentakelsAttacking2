@@ -59,6 +59,12 @@ void PopUpManager::OnEvent(Event const& event) {
 		return;
 	}
 
+	// Term Events
+	if (auto const PopUpEvent = dynamic_cast<ShowValidateNextTermEvent const*>(&event)) {
+		NewValidateNextTermPopUp(PopUpEvent);
+		return;
+	}
+
 	// Close Pop Up
 	if (auto const PopUpEvent = dynamic_cast<ClosePopUpEvent const*>(&event)) {
 		DeleteLastPopUp(PopUpEvent->GetPop());
@@ -92,6 +98,20 @@ void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerPopUpEvent const* event)
 		AssetType::QUESTION_MARK,
 		event->GetOnClick()
 		));
+}
+void PopUpManager::NewValidateNextTermPopUp(ShowValidateNextTermEvent const* event) {
+	AddFocusLayer(true);
+
+	m_popUps.push_back(std::make_unique<NextTermPopUp>(
+		Vector2(0.5f, 0.5f),
+		Vector2(0.5f, 0.5f),
+		Alignment::MID_MID,
+		m_resolution,
+		event->GetTitle(),
+		const_cast<std::string&>(event->GetSubTitle()),
+		AssetType::LOGO
+		)
+	);
 }
 void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
 	auto focusEvent = NewFocusPopUpLayerEvent();
