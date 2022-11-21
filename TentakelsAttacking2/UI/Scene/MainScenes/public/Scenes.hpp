@@ -12,5 +12,6 @@
 #include "NewGamePlayer.h"
 #include "NewGameParameter.h"
 #include "ValidateGalaxy.h"
+#include "MainScene.h"
 #include "Settings.h"
 #include "Credits.h"

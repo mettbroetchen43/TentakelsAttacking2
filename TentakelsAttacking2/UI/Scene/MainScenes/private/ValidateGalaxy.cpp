@@ -63,9 +63,8 @@ void ValidateGalaxyScene::Initialize() {
 		SoundType::ACCEPTED
 		);
 	nextBtn->SetOnClick([]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(SwitchSceneEvent(SceneType::MAIN_MENU));
+		AppContext::GetInstance().eventManager.InvokeEvent(SwitchSceneEvent(SceneType::MAIN));
 		});
-	nextBtn->SetEnabled(false);
 	m_elements.push_back(nextBtn);
 }
 

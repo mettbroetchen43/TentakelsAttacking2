@@ -21,6 +21,8 @@ std::string GetStringBySceneType(SceneType sceneType) {
 			return "NEW_GAME_PARAMETER";
 		case SceneType::VALIDATE_GALAXY:
 			return "VALIDATE_GALAXY";
+		case SceneType::MAIN:
+			return "MAIN";
 		case SceneType::SETTINGS:
 			return "SETTINGS";
 		case SceneType::CREDITS:
