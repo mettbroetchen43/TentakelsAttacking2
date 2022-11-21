@@ -102,6 +102,9 @@ class SendNextPlayerIDEvent final : public PlayerIDEvent {
 	using PlayerIDEvent::PlayerIDEvent;
 };
 
+class TriggerNextTermEvent final : public Event  { };
+class ShowNextTermEvent final : public Event { };
+
 class ValidatePlayerCountEvent final : public Event { };
 class ValidatePlayerCountResultEvent final : public Event {
 private:

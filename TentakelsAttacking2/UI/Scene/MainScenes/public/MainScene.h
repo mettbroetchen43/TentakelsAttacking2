@@ -32,8 +32,6 @@ private:
 	void Initialize();
 	void InitialzeGalaxy();
 
-	[[nodiscard]] bool IsValidNextTerm() const;
-
 	void NextTerm();
 	void NextRound();
 

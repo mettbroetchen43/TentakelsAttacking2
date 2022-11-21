@@ -8,6 +8,7 @@
 #include "GenerelEvents.hpp"
 #include "HPrint.h"
 #include <cassert>
+#include <iostream>
 
 // player
 bool GameManager::ValidAddPlayer() const {
@@ -155,10 +156,17 @@ void GameManager::CheckPlayerCount() const {
 }
 
 void GameManager::NextRound() {
-
+	std::cout << "Triggert next round -> just for the paper. LUL\n";
 }
 void GameManager::NextTerm() {
 
+	if (m_currentRoundPlayers.empty()) { NextRound(); return; }
+
+	m_currentRoundPlayers.pop_back();
+
+	if (m_currentRoundPlayers.empty()) { NextRound(); return; }
+
+	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextTermEvent());
 }
 void GameManager::SetUpFirstRound() {
 	m_currentRoundPlayers = m_players;
@@ -343,6 +351,10 @@ void GameManager::OnEvent(Event const& event) {
 	// Game
 	if (auto const* gameEvent = dynamic_cast<StartGameEvent const*> (&event)) {
 		StartGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<TriggerNextTermEvent const*> (&event)) {
+		NextTerm();
 		return;
 	}
 }

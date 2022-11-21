@@ -89,8 +89,8 @@ void MainScene::Initialize() {
 		"next Player",
 		SoundType::ACCEPTED
 		);
-	m_nextBtn->SetOnClick([this]() {
-		this->InitialzeGalaxy();
+	m_nextBtn->SetOnClick([]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(TriggerNextTermEvent());
 		});
 	m_elements.push_back(m_nextBtn);
 
@@ -135,16 +135,7 @@ void MainScene::InitialzeGalaxy() {
 	m_elements.push_back(m_galaxy);
 }
 
-bool MainScene::IsValidNextTerm() const {
-
-	AppContext::GetInstance().eventManager.InvokeEvent(GetNextPlayerIDEvent());
-
-	return m_nextPlayerID != 0;
-}
-
 void MainScene::NextTerm() {
-	if (!IsValidNextTerm()) { NextRound(); return; }
-
 	SetPlayerText();
 	InitialzeGalaxy();
 }
@@ -199,12 +190,19 @@ MainScene::~MainScene() {
 
 void MainScene::OnEvent(Event const& event) {
 
+	// player
 	if (auto const* playerEvent = dynamic_cast<SendCurrentPlayerIDEvent const*>(&event)) {
 		m_currentPlayerID = playerEvent->GetID();
 		return;
 	}
 	if (auto const* playerEvent = dynamic_cast<SendNextPlayerIDEvent const*>(&event)) {
 		m_nextPlayerID = playerEvent->GetID();
+		return;
+	}
+
+	// terms and rounds
+	if (auto const* playerEvent = dynamic_cast<ShowNextTermEvent const*>(&event)) {
+		NextTerm();
 		return;
 	}
 }
