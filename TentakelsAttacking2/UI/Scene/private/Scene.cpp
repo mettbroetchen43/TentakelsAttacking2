@@ -24,6 +24,20 @@ void Scene::SetFocusActive(AppContext const&) {
 			}
 		}
 	}
+	else {
+		for (auto& element : m_elements) {
+			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
+				DeleteFocusElement(focusable);
+				continue;
+			}
+		}
+		for (auto& element : m_elementsOutUpdates) {
+			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
+				DeleteFocusElement(focusable);
+				continue;
+			}
+		}
+	}
 }
 
 Vector2 Scene::GetElementPosition(float x, float y) {
