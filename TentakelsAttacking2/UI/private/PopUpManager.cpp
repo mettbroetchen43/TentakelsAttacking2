@@ -60,8 +60,8 @@ void PopUpManager::OnEvent(Event const& event) {
 	}
 
 	// Term Events
-	if (auto const PopUpEvent = dynamic_cast<ShowValidateNextTermEvent const*>(&event)) {
-		NewValidateNextTermPopUp(PopUpEvent);
+	if (auto const PopUpEvent = dynamic_cast<ShowValidatePopUp const*>(&event)) {
+		NewValidatePopUp(PopUpEvent);
 		return;
 	}
 
@@ -99,17 +99,18 @@ void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerPopUpEvent const* event)
 		event->GetOnClick()
 		));
 }
-void PopUpManager::NewValidateNextTermPopUp(ShowValidateNextTermEvent const* event) {
+void PopUpManager::NewValidatePopUp(ShowValidatePopUp const* event) {
 	AddFocusLayer(true);
 
-	m_popUps.push_back(std::make_unique<NextTermPopUp>(
+	m_popUps.push_back(std::make_unique<ValidatePopUp>(
 		Vector2(0.5f, 0.5f),
 		Vector2(0.5f, 0.5f),
 		Alignment::MID_MID,
 		m_resolution,
 		event->GetTitle(),
 		const_cast<std::string&>(event->GetSubTitle()),
-		AssetType::LOGO
+		AssetType::QUESTION_MARK,
+		event->GetCallback()
 		)
 	);
 }

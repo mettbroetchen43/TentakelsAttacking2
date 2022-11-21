@@ -50,10 +50,10 @@ private:
 	// rounds
 	/** next round triggers the Evaluation
 	 */
-	void NextRound();
+	void NextRound(bool valid);
 	/** next term triggers the next player and changes the inforamtion that are send to UI so that only the current Player is displayed
 	 */
-	void NextTerm(ValidatedNextTermEvent const* event);
+	void NextTerm(bool valid);
 	void ValidateNextTerm();
 
 	// events

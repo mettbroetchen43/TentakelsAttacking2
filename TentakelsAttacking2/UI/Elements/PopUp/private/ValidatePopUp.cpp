@@ -3,13 +3,14 @@
 // 21.11.2022
 //
 
-#include "NextTermPopUp.h"
+#include "ValidatePopUp.h"
 #include "AppContext.h"
 #include "GenerelEvents.hpp"
 #include "ClassicButton.h"
 #include "HFocusEvents.h"
+#include "HInput.h"
 
-void NextTermPopUp::Initialize() {
+void ValidatePopUp::Initialize() {
 
 	auto acceptBtn = std::make_shared<ClassicButton>(
 		2,
@@ -21,7 +22,7 @@ void NextTermPopUp::Initialize() {
 		SoundType::ACCEPTED
 		);
 	acceptBtn->SetOnClick([this]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(ValidatedNextTermEvent(true));
+		this->m_callback(true);
 		this->Close();
 		});
 	AddFocusElement(acceptBtn.get(), true);
@@ -37,7 +38,7 @@ void NextTermPopUp::Initialize() {
 		SoundType::CLICKED_RELEASE_STD
 		);
 	cancelBtn->SetOnClick([this]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(ValidatedNextTermEvent(false));
+		this->m_callback(false);
 		this->Close();
 		});
 	AddFocusElement(cancelBtn.get(), true);
@@ -45,14 +46,20 @@ void NextTermPopUp::Initialize() {
 	m_elements.push_back(cancelBtn);
 }
 
-void NextTermPopUp::Close() {
+void ValidatePopUp::Close() {
 	m_schouldClose = true;
-	//AppContext::GetInstance().eventManager.InvokeEvent(ClosePopUpEvent(this));
 }
 
-NextTermPopUp::NextTermPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	std::string const& title, std::string& subTitle, AssetType infoTexture)
-	: PopUp(pos, size, alignment, resolution, title, subTitle, infoTexture) {
+ValidatePopUp::ValidatePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	std::string const& title, std::string& subTitle, AssetType infoTexture, std::function<void(bool)> callback)
+	: PopUp(pos, size, alignment, resolution, title, subTitle, infoTexture), m_callback(callback) {
 
 	Initialize();
+
+	if (IsConfirmInputReleased()) { m_firstEnter = true; }
+}
+
+void ValidatePopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	if (!m_firstEnter) { PopUp::CheckAndUpdate(mousePosition, appContext); }
+	else { LateUpdate(); }
 }

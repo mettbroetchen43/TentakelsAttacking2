@@ -155,7 +155,9 @@ void GameManager::CheckPlayerCount() const {
 	appContext.eventManager.InvokeEvent(event);
 }
 
-void GameManager::NextRound() {
+void GameManager::NextRound(bool valid) {
+
+	if (!valid) { return; }
 
 	AppContext& appContext = AppContext::GetInstance();
 	// events and so on first
@@ -169,15 +171,11 @@ void GameManager::NextRound() {
 
 	++appContext.constants.global.currentRound;
 
-	std::cout << "Triggert next round -> just for the paper. LUL\n";
-
 	appContext.eventManager.InvokeEvent(ShowNextRoundEvent());
 }
-void GameManager::NextTerm(ValidatedNextTermEvent const* event) {
+void GameManager::NextTerm(bool valid) {
 
-	if (!event->IsValid()) { return; }
-
-	if (m_currentRoundPlayers.size() <= 1) { NextRound(); return; }
+	if (!valid) { return; }
 
 	m_currentRoundPlayers.pop_back();
 
@@ -189,11 +187,27 @@ void GameManager::NextTerm(ValidatedNextTermEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextTermEvent());
 }
 void GameManager::ValidateNextTerm() {
-	auto event = ShowValidateNextTermEvent(
-		"next round?",
-		"your turn will be over."
-	);
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
+
+	if (m_currentRoundPlayers.size() <= 1) { 
+		auto event = ShowValidatePopUp(
+			"next round?",
+			"your turn will be over.",
+			[this](bool valid) {
+				this->NextRound(valid);
+			}
+		);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+	}
+	else {
+		auto event = ShowValidatePopUp(
+			"next player?",
+			"your turn will be over.",
+			[this](bool valid) {
+				this->NextTerm(valid);
+			}
+		);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+	}
 }
 
 void GameManager::SendCurrentPlayerID() {
@@ -374,10 +388,6 @@ void GameManager::OnEvent(Event const& event) {
 	}
 	if (auto const* gameEvent = dynamic_cast<TriggerNextTermEvent const*> (&event)) {
 		ValidateNextTerm();
-		return;
-	}
-	if (auto const* gameEvent = dynamic_cast<ValidatedNextTermEvent const*> (&event)) {
-		NextTerm(gameEvent);
 		return;
 	}
 }

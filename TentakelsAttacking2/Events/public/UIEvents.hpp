@@ -186,9 +186,17 @@ public:
 		return m_onClick;
 	}
 };
-class ShowValidateNextTermEvent final : public PopUpEvent {
+class ShowValidatePopUp final : public PopUpEvent {
+private:
+	std::function<void(bool)> m_callback;
+
 public:
-	using PopUpEvent::PopUpEvent;
+	ShowValidatePopUp(std::string const& title, std::string const& subTile, std::function<void(bool)> callback)
+		:PopUpEvent(title, subTile), m_callback(callback) { }
+
+	[[nodiscard]] std::function<void(bool)> GetCallback() const {
+		return m_callback;
+	}
 };
 class ShowInitialSoundLevelPopUpEvent final : public PopUpEvent {
 public:
