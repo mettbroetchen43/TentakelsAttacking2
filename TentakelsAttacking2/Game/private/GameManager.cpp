@@ -157,6 +157,7 @@ void GameManager::CheckPlayerCount() const {
 
 void GameManager::NextRound() {
 
+	AppContext& appContext = AppContext::GetInstance();
 	// events and so on first
 
 	m_startGalaxy = m_mainGalaxy;
@@ -166,9 +167,11 @@ void GameManager::NextRound() {
 	SendCurrentPlayerID();
 	SendNextPlayerID();
 
+	++appContext.constants.global.currentRound;
+
 	std::cout << "Triggert next round -> just for the paper. LUL\n";
 
-	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextRoundEvent());
+	appContext.eventManager.InvokeEvent(ShowNextRoundEvent());
 }
 void GameManager::NextTerm() {
 

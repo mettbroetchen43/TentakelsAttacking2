@@ -160,7 +160,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		static_cast<int>(appContext.constants.global.minRounds),
 		static_cast<int>(appContext.constants.global.maxRounds),
-		static_cast<int>(appContext.constants.global.currentRounds)
+		static_cast<int>(appContext.constants.global.currentTargetRound)
 		);
 	lastRound->SetActive(true, appContext);
 	lastRound->SetOnSave([this](int value) {
@@ -228,7 +228,7 @@ void NewGameParameterScene::SetValue(int value, int ID) const {
 			AppContext::GetInstance().constants.world.currentDimensionY = value;
 			return;
 		case 3:
-			AppContext::GetInstance().constants.global.currentRounds = value;
+			AppContext::GetInstance().constants.global.currentTargetRound = value;
 			return;
 	}
 }

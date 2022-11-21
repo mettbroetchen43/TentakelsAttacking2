@@ -14,6 +14,8 @@
 
 void MainScene::Initialize() {
 
+	AppContext& appContext = AppContext::GetInstance();
+
 	// Title
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.31f, 0.0f),
@@ -102,9 +104,33 @@ void MainScene::Initialize() {
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
-		"current player:"
+		"current player:" 
 		);
 	m_elements.push_back(m_currentPlayerText);
+
+	// text
+	m_currentRound = std::make_shared<Text>(
+		GetElementPosition(0.6f, 0.1f),
+		GetElementSize(0.3f, 0.02f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		"current round: " + std::to_string(appContext.constants.global.currentRound)
+		);
+	m_elements.push_back(m_currentRound);
+
+	// text
+	m_currentTargetRound = std::make_shared<Text>(
+		GetElementPosition(0.6f, 0.12f),
+		GetElementSize(0.3f, 0.02f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		"target round: " + std::to_string(appContext.constants.global.currentTargetRound)
+		);
+	m_elements.push_back(m_currentTargetRound);
 
 	m_nextPlayerText = std::make_shared<Text>(
 		GetElementPosition(0.99f, 0.98f),
@@ -140,8 +166,13 @@ void MainScene::NextTerm() {
 	InitialzeGalaxy();
 }
 void MainScene::NextRound() {
+	AppContext& appContext = AppContext::GetInstance();
+
 	SetPlayerText();
 	InitialzeGalaxy();
+
+	m_currentRound->SetText("current round: " +	std::to_string(appContext.constants.global.currentRound));
+	m_currentTargetRound->SetText("target round: " +	std::to_string(appContext.constants.global.currentTargetRound));
 }
 
 void MainScene::SetPlayerText() {

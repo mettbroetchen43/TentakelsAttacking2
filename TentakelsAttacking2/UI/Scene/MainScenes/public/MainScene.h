@@ -27,6 +27,8 @@ private:
 	std::shared_ptr<ClassicButton> m_nextBtn;
 	std::shared_ptr<Text> m_currentPlayerText;
 	std::shared_ptr<Text> m_nextPlayerText;
+	std::shared_ptr<Text> m_currentRound;
+	std::shared_ptr<Text> m_currentTargetRound;
 	unsigned int m_currentPlayerID, m_nextPlayerID;
 
 	void Initialize();
