@@ -54,9 +54,6 @@ private:
 	/** next term triggers the next player and changes the inforamtion that are send to UI so that only the current Player is displayed
 	 */
 	void NextTerm();
-	/** sets up the initial first round
-	 */
-	void SetUpFirstRound();
 
 	// events
 	void SetGameEventActive(UpdateCheckGameEvent const* event);

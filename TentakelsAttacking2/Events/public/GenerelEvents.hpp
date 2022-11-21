@@ -93,17 +93,18 @@ public:
 		return m_ID;
 	}
 };
-class GetCurrentPlayerIDEvent final : public Event { };
-class SendCurrentPlayerIDEvent final : public PlayerIDEvent {
+class UpdateCurrentPlayerIDEvent final : public PlayerIDEvent {
+public:
 	using PlayerIDEvent::PlayerIDEvent;
 };
-class GetNextPlayerIDEvent final : public Event { };
-class SendNextPlayerIDEvent final : public PlayerIDEvent {
+class UpdateNextPlayerIDEvent final : public PlayerIDEvent {
+public:
 	using PlayerIDEvent::PlayerIDEvent;
 };
 
 class TriggerNextTermEvent final : public Event  { };
 class ShowNextTermEvent final : public Event { };
+class ShowNextRoundEvent final : public Event { };
 
 class ValidatePlayerCountEvent final : public Event { };
 class ValidatePlayerCountResultEvent final : public Event {

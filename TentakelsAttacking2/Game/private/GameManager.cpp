@@ -156,20 +156,32 @@ void GameManager::CheckPlayerCount() const {
 }
 
 void GameManager::NextRound() {
+
+	// events and so on first
+
+	m_startGalaxy = m_mainGalaxy;
+	m_currentGalaxy = m_startGalaxy;
+	m_currentRoundPlayers = m_players; // TODO: shuffle
+
+	SendCurrentPlayerID();
+	SendNextPlayerID();
+
 	std::cout << "Triggert next round -> just for the paper. LUL\n";
+
+	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextRoundEvent());
 }
 void GameManager::NextTerm() {
 
-	if (m_currentRoundPlayers.empty()) { NextRound(); return; }
+	if (m_currentRoundPlayers.size() <= 1) { NextRound(); return; }
 
 	m_currentRoundPlayers.pop_back();
 
-	if (m_currentRoundPlayers.empty()) { NextRound(); return; }
+	m_currentGalaxy = m_startGalaxy; // TODO: filter for relevant data for current player
+
+	SendCurrentPlayerID();
+	SendNextPlayerID();
 
 	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextTermEvent());
-}
-void GameManager::SetUpFirstRound() {
-	m_currentRoundPlayers = m_players;
 }
 
 void GameManager::SendCurrentPlayerID() {
@@ -183,7 +195,7 @@ void GameManager::SendCurrentPlayerID() {
 		ID = 0;
 	}
 
-	auto event = SendCurrentPlayerIDEvent(ID);
+	auto event = UpdateCurrentPlayerIDEvent(ID);
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 void GameManager::SendNextPlayerID() {
@@ -197,7 +209,7 @@ void GameManager::SendNextPlayerID() {
 		ID = 0;
 	}
 
-	auto event = SendNextPlayerIDEvent(ID);
+	auto event = UpdateNextPlayerIDEvent(ID);
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
@@ -269,7 +281,10 @@ void GameManager::GenerateShowGalaxy() {
 }
 
 void GameManager::StartGame() {
-	SetUpFirstRound();
+	m_currentRoundPlayers = m_players;
+
+	SendCurrentPlayerID();
+	SendNextPlayerID();
 }
 
 GameManager::GameManager() {
@@ -310,14 +325,6 @@ void GameManager::OnEvent(Event const& event) {
 	}
 	if (auto const* playerEvent = dynamic_cast<ValidatePlayerCountEvent const*>(&event)) {
 		CheckPlayerCount();
-		return;
-	}
-	if (auto const* playerEvent = dynamic_cast<GetCurrentPlayerIDEvent const*>(&event)) {
-		SendCurrentPlayerID();
-		return;
-	}
-	if (auto const* playerEvent = dynamic_cast<GetNextPlayerIDEvent const*>(&event)) {
-		SendNextPlayerID();
 		return;
 	}
 

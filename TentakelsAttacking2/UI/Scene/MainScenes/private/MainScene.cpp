@@ -140,13 +140,12 @@ void MainScene::NextTerm() {
 	InitialzeGalaxy();
 }
 void MainScene::NextRound() {
+	SetPlayerText();
+	InitialzeGalaxy();
 }
 
 void MainScene::SetPlayerText() {
 	AppContext const& appContext = AppContext::GetInstance();
-
-	appContext.eventManager.InvokeEvent(GetCurrentPlayerIDEvent());
-	appContext.eventManager.InvokeEvent(GetNextPlayerIDEvent());
 
 	if (m_currentPlayerID != 0) {
 		std::string playerName = appContext.playerCollection.GetPlayerByID(m_currentPlayerID).name;
@@ -191,11 +190,11 @@ MainScene::~MainScene() {
 void MainScene::OnEvent(Event const& event) {
 
 	// player
-	if (auto const* playerEvent = dynamic_cast<SendCurrentPlayerIDEvent const*>(&event)) {
+	if (auto const* playerEvent = dynamic_cast<UpdateCurrentPlayerIDEvent const*>(&event)) {
 		m_currentPlayerID = playerEvent->GetID();
 		return;
 	}
-	if (auto const* playerEvent = dynamic_cast<SendNextPlayerIDEvent const*>(&event)) {
+	if (auto const* playerEvent = dynamic_cast<UpdateNextPlayerIDEvent const*>(&event)) {
 		m_nextPlayerID = playerEvent->GetID();
 		return;
 	}
@@ -203,6 +202,10 @@ void MainScene::OnEvent(Event const& event) {
 	// terms and rounds
 	if (auto const* playerEvent = dynamic_cast<ShowNextTermEvent const*>(&event)) {
 		NextTerm();
+		return;
+	}
+	if (auto const* playerEvent = dynamic_cast<ShowNextRoundEvent const*>(&event)) {
+		NextRound();
 		return;
 	}
 }
