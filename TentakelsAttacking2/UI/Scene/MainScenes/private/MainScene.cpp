@@ -86,16 +86,27 @@ void MainScene::Initialize() {
 		"next",
 		SoundType::ACCEPTED
 		);
+	nextBtn->SetOnClick([this]() {
+		this->InitialzeGalaxy();
+		});
 	m_elements.push_back(nextBtn);
+}
 
-	// galaxy
+void MainScene::InitialzeGalaxy() {
+	AppContext& appContext = AppContext::GetInstance();
+	if (m_galaxy) {
+		m_galaxy->SetActive(false, appContext);
+		m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), m_galaxy), m_elements.end());
+		m_galaxy = nullptr;
+	}
+
 	m_galaxy = std::make_shared<GalaxyScene>(
 		GetElementPosition(0.5f, 0.5f),
 		GetElementSize(0.75f, 0.75f),
 		Alignment::MID_MID,
 		m_resolution
 		);
-	m_galaxy->SetActive(true, AppContext::GetInstance());
+	m_galaxy->SetActive(true, appContext);
 	m_elements.push_back(m_galaxy);
 }
 
@@ -111,4 +122,5 @@ MainScene::MainScene(Vector2 resolution)
 	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
 
 	Initialize();
+	InitialzeGalaxy();
 }

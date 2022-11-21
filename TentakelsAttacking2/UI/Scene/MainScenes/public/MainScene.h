@@ -23,6 +23,7 @@ private:
 	// std::shared_ptr<GalaxyScene> m_fleetTable;
 
 	void Initialize();
+	void InitialzeGalaxy();
 
 	void Switch(MainSceneType sceneType);
 
