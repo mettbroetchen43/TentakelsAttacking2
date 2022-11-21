@@ -42,6 +42,19 @@ bool GameManager::IsExistingID(unsigned int ID) const {
 	return false;
 }
 
+bool GameManager::GetCurrentPlayer(std::shared_ptr<Player>& currentPlayer) const {
+	if (m_currentRoundPlayers.empty()) { return false; }
+
+	currentPlayer = m_currentRoundPlayers.back();
+	return true;
+}
+bool GameManager::GetNextPlayer(std::shared_ptr<Player>& nextPlayer) const {
+	if (m_currentRoundPlayers.size() < 2) { return false; }
+
+	nextPlayer = m_currentRoundPlayers.at(m_currentRoundPlayers.size() - 2);
+	return true;
+}
+
 void GameManager::AddPlayer(AddPlayerEvent const* event) {
 	if (!ValidAddPlayer()) {
 		auto UIEvent = ShowMessagePopUpEvent(
@@ -141,6 +154,45 @@ void GameManager::CheckPlayerCount() const {
 	appContext.eventManager.InvokeEvent(event);
 }
 
+void GameManager::NextRound() {
+
+}
+void GameManager::NextTerm() {
+
+}
+void GameManager::SetUpFirstRound() {
+	m_currentRoundPlayers = m_players;
+}
+
+void GameManager::SendCurrentPlayerID() {
+	unsigned int ID;
+	std::shared_ptr<Player> player;
+
+	if (GetCurrentPlayer(player)) {
+		ID = player->GetID();
+	}
+	else {
+		ID = 0;
+	}
+
+	auto event = SendCurrentPlayerIDEvent(ID);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+void GameManager::SendNextPlayerID() {
+	unsigned int ID;
+	std::shared_ptr<Player> player;
+
+	if (GetNextPlayer(player)) {
+		ID = player->GetID();
+	}
+	else {
+		ID = 0;
+	}
+
+	auto event = SendNextPlayerIDEvent(ID);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+
 // events
 void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 	if (event->GetType() == GameEventType::GLOBAL) {
@@ -170,7 +222,7 @@ void GameManager::GenerateGalaxy() {
 		);
 
 	if (galaxy->IsValidGalaxy()) {
-		m_galaxy = galaxy;
+		m_mainGalaxy = galaxy;
 		auto event = GalaxyGeneratedUIEvent();
 		appContext.eventManager.InvokeEvent(event);
 	}
@@ -206,6 +258,10 @@ void GameManager::GenerateShowGalaxy() {
 	else {
 		Print("Could not geneared ShowGalaxy -> No Galaxy", PrintType::ERROR);
 	}
+}
+
+void GameManager::StartGame() {
+	SetUpFirstRound();
 }
 
 GameManager::GameManager() {
@@ -248,8 +304,16 @@ void GameManager::OnEvent(Event const& event) {
 		CheckPlayerCount();
 		return;
 	}
+	if (auto const* playerEvent = dynamic_cast<GetCurrentPlayerIDEvent const*>(&event)) {
+		SendCurrentPlayerID();
+		return;
+	}
+	if (auto const* playerEvent = dynamic_cast<GetNextPlayerIDEvent const*>(&event)) {
+		SendNextPlayerID();
+		return;
+	}
 
-	// Game Events
+	// Events
 	if (auto const* GameEvent = dynamic_cast<UpdateCheckGameEvent const*>(&event)) {
 		SetGameEventActive(GameEvent);
 		return;
@@ -266,13 +330,19 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* galaxyEvent = dynamic_cast<GetGalaxyPointerEvent const*>(&event)) {
-		assert(m_galaxy);
-		auto retunEvent = SendGalaxyPointerEvent(m_galaxy.get());
+		assert(m_mainGalaxy);
+		auto retunEvent = SendGalaxyPointerEvent(m_mainGalaxy.get());
 		AppContext::GetInstance().eventManager.InvokeEvent(retunEvent);
 		return;
 	}
 	if (auto const* galaxyEvent = dynamic_cast<GetShowGalaxyPointerEvent const*> (&event)) {
 		GenerateShowGalaxy();
+		return;
+	}
+
+	// Game
+	if (auto const* gameEvent = dynamic_cast<StartGameEvent const*> (&event)) {
+		StartGame();
 		return;
 	}
 }

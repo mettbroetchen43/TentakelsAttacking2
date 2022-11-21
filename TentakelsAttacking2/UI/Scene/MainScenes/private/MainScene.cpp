@@ -7,7 +7,10 @@
 #include "GalaxyAndSlider.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
+#include "GenerelEvents.hpp"
+#include "HPlayerCollection.h"
 #include "Title.h"
+#include "Text.h"
 
 void MainScene::Initialize() {
 
@@ -77,19 +80,42 @@ void MainScene::Initialize() {
 		});
 	m_elements.push_back(fleetTableBtn);
 
-	auto nextBtn = std::make_shared<ClassicButton>(
+	m_nextBtn = std::make_shared<ClassicButton>(
 		4,
-		GetElementPosition(0.95f, 0.95f),
+		GetElementPosition(0.99f, 0.95f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
 		m_resolution,
-		"next",
+		"next Player",
 		SoundType::ACCEPTED
 		);
-	nextBtn->SetOnClick([this]() {
+	m_nextBtn->SetOnClick([this]() {
 		this->InitialzeGalaxy();
 		});
-	m_elements.push_back(nextBtn);
+	m_elements.push_back(m_nextBtn);
+
+	// text
+	m_currentPlayerText = std::make_shared<Text>(
+		GetElementPosition(0.6f, 0.08f),
+		GetElementSize(0.3f, 0.02f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		"current player:"
+		);
+	m_elements.push_back(m_currentPlayerText);
+
+	m_nextPlayerText = std::make_shared<Text>(
+		GetElementPosition(0.99f, 0.98f),
+		GetElementSize(0.13f, 0.02f),
+		Alignment::BOTTOM_RIGHT,
+		m_resolution,
+		Alignment::BOTTOM_RIGHT,
+		0.02f,
+		"next player:"
+		);
+	m_elements.push_back(m_nextPlayerText);
 }
 void MainScene::InitialzeGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
@@ -100,13 +126,52 @@ void MainScene::InitialzeGalaxy() {
 	}
 
 	m_galaxy = std::make_shared<GalaxyScene>(
-		GetElementPosition(0.5f, 0.5f),
-		GetElementSize(0.75f, 0.75f),
-		Alignment::MID_MID,
+		GetElementPosition(0.01f, 0.99f),
+		GetElementSize(0.85f, 0.85f),
+		Alignment::BOTTOM_LEFT,
 		m_resolution
 		);
 	m_galaxy->SetActive(true, appContext);
 	m_elements.push_back(m_galaxy);
+}
+
+bool MainScene::IsValidNextTerm() const {
+
+	AppContext::GetInstance().eventManager.InvokeEvent(GetNextPlayerIDEvent());
+
+	return m_nextPlayerID != 0;
+}
+
+void MainScene::NextTerm() {
+	if (!IsValidNextTerm()) { NextRound(); return; }
+
+	SetPlayerText();
+	InitialzeGalaxy();
+}
+void MainScene::NextRound() {
+}
+
+void MainScene::SetPlayerText() {
+	AppContext const& appContext = AppContext::GetInstance();
+
+	appContext.eventManager.InvokeEvent(GetCurrentPlayerIDEvent());
+	appContext.eventManager.InvokeEvent(GetNextPlayerIDEvent());
+
+	if (m_currentPlayerID != 0) {
+		std::string playerName = appContext.playerCollection.GetPlayerByID(m_currentPlayerID).name;
+		m_currentPlayerText->SetText("current player: " + playerName);
+	}
+	else {
+		m_currentPlayerText->SetText("current player: no player");
+	}
+
+	if (m_nextPlayerID != 0) {
+		std::string playerName = appContext.playerCollection.GetPlayerByID(m_nextPlayerID).name;
+		m_nextPlayerText->SetText("next player: " + playerName);
+	}
+	else {
+		m_nextPlayerText->SetText("next player: no player");
+	}
 }
 
 void MainScene::Switch(MainSceneType sceneType) {
@@ -120,6 +185,26 @@ void MainScene::Switch(MainSceneType sceneType) {
 MainScene::MainScene(Vector2 resolution)
 	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
 
+	AppContext& appContext = AppContext::GetInstance();
+	appContext.eventManager.AddListener(this);
+	appContext.eventManager.InvokeEvent(StartGameEvent());
+
 	Initialize();
 	InitialzeGalaxy();
+	SetPlayerText();
+}
+MainScene::~MainScene() {
+	AppContext::GetInstance().eventManager.RemoveListener(this);
+}
+
+void MainScene::OnEvent(Event const& event) {
+
+	if (auto const* playerEvent = dynamic_cast<SendCurrentPlayerIDEvent const*>(&event)) {
+		m_currentPlayerID = playerEvent->GetID();
+		return;
+	}
+	if (auto const* playerEvent = dynamic_cast<SendNextPlayerIDEvent const*>(&event)) {
+		m_nextPlayerID = playerEvent->GetID();
+		return;
+	}
 }

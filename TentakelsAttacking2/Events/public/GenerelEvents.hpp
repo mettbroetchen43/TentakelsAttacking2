@@ -116,6 +116,8 @@ public:
 	}
 };
 
+class StartGameEvent final : public Event { };
+
 class UpdateCheckGameEvent final : public Event {
 private:
 	GameEventType m_type;
