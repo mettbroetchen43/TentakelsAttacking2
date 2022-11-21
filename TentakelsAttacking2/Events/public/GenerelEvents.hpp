@@ -84,12 +84,12 @@ class ResetPlayerUIEvent final : public Event { };
 
 class PlayerIDEvent : public Event {
 private:
-	size_t m_ID;
+	unsigned int m_ID;
 
 public:
-	PlayerIDEvent(size_t ID)
+	PlayerIDEvent(unsigned int ID)
 		:m_ID(ID) { }
-	[[nodiscard]] size_t GetID() const {
+	[[nodiscard]] unsigned int GetID() const {
 		return m_ID;
 	}
 };
