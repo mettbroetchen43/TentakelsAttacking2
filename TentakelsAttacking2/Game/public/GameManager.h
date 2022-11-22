@@ -54,6 +54,10 @@ private:
 	/** next term triggers the next player and changes the inforamtion that are send to UI so that only the current Player is displayed
 	 */
 	void NextTerm(bool valid);
+	/** gets called from TriggerNextTermEvent
+	 *	calls an Popup if the to validate if the currnt term should really be over
+	 *	PopUp automactily calls the provided function
+	 */
 	void ValidateNextTerm();
 
 	// events

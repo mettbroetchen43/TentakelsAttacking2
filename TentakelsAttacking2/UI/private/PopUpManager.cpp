@@ -82,7 +82,8 @@ void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
 		m_resolution,
 		event->GetTitle(),
 		const_cast<std::string&>(event->GetSubTitle()),
-		AssetType::EXCLAMATION_MARK
+		AssetType::EXCLAMATION_MARK,
+		event->GetCallback()
 		)
 	);
 }

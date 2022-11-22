@@ -150,8 +150,14 @@ public:
 	}
 };
 class ShowMessagePopUpEvent final : public PopUpEvent {
+private:
+	std::function<void()> m_callback = []() {};
 public:
-	using PopUpEvent::PopUpEvent;
+	ShowMessagePopUpEvent(std::string const& title, std::string const& subTile, std::function<void()> callback = []() {})
+		:PopUpEvent(title, subTile), m_callback(callback) { }
+	[[nodiscard]] std::function<void()> GetCallback() const {
+		return m_callback;
+	}
 };
 
 template <typename EntryType>

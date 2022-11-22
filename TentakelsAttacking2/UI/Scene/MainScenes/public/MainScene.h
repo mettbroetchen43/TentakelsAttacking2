@@ -19,6 +19,7 @@ private:
 		GALAXY,
 		PLANET_TABLE,
 		FLEET_TABLE,
+		CLEAR,
 	};
 
 	std::shared_ptr<GalaxyScene> m_galaxy;

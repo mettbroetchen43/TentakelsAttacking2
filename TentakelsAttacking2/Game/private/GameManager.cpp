@@ -8,7 +8,6 @@
 #include "GenerelEvents.hpp"
 #include "HPrint.h"
 #include <cassert>
-#include <iostream>
 
 // player
 bool GameManager::ValidAddPlayer() const {

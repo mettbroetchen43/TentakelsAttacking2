@@ -157,13 +157,23 @@ void MainScene::InitialzeGalaxy() {
 		Alignment::BOTTOM_LEFT,
 		m_resolution
 		);
-	m_galaxy->SetActive(true, appContext);
 	m_elements.push_back(m_galaxy);
 }
 
 void MainScene::NextTerm() {
+	AppContext const& appContext = AppContext::GetInstance();
+	Switch(MainSceneType::CLEAR);
 	SetPlayerText();
 	InitialzeGalaxy();
+
+	auto event = ShowMessagePopUpEvent(
+		"start term?",
+		"next plyer: " + appContext.playerCollection.GetPlayerByID(m_currentPlayerID).name + "\naccept to start your trun",
+		[this]() {
+			this->Switch(MainSceneType::GALAXY);
+		}
+	);
+	appContext.eventManager.InvokeEvent(event);
 }
 void MainScene::NextRound() {
 	AppContext& appContext = AppContext::GetInstance();
@@ -173,6 +183,14 @@ void MainScene::NextRound() {
 
 	m_currentRound->SetText("current round: " +	std::to_string(appContext.constants.global.currentRound));
 	m_currentTargetRound->SetText("target round: " +	std::to_string(appContext.constants.global.currentTargetRound));
+
+	auto event = ShowMessagePopUpEvent(
+		"start round",
+		"next round is starting \n just for debug to know"
+	);
+	appContext.eventManager.InvokeEvent(event);
+
+	Switch(MainSceneType::GALAXY);
 }
 
 void MainScene::SetPlayerText() {
@@ -213,6 +231,7 @@ MainScene::MainScene(Vector2 resolution)
 	Initialize();
 	InitialzeGalaxy();
 	SetPlayerText();
+	Switch(MainSceneType::GALAXY);
 }
 MainScene::~MainScene() {
 	AppContext::GetInstance().eventManager.RemoveListener(this);
