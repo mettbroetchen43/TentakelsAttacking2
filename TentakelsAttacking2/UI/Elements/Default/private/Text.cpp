@@ -51,7 +51,7 @@ void Text::Render(AppContext const& appContext) {
 		m_textPosition,
 		m_textSize,
 		0.0f,
-		WHITE
+		m_color
 	);
 	if (m_renderRectangle) {
 		DrawRectangleLinesEx(
@@ -91,6 +91,14 @@ void Text::SetText(std::string text) {
 }
 std::string Text::GetText() const {
 	return m_text;
+}
+
+void Text::SetColor(Color color) {
+	m_color = color;
+}
+
+Color Text::GetColor() const{
+	return m_color;
 }
 
 void Text::SetURL(std::string URL) {

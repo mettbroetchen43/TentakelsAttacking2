@@ -7,9 +7,15 @@
 #include "GalaxyAndSlider.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
+#include "GenerelEvents.hpp"
+#include "HPlayerCollection.h"
 #include "Title.h"
+#include "Text.h"
+
 
 void MainScene::Initialize() {
+
+	AppContext& appContext = AppContext::GetInstance();
 
 	// Title
 	auto title = std::make_shared<Title>(
@@ -77,19 +83,111 @@ void MainScene::Initialize() {
 		});
 	m_elements.push_back(fleetTableBtn);
 
-	auto nextBtn = std::make_shared<ClassicButton>(
+	m_nextBtn = std::make_shared<ClassicButton>(
 		4,
-		GetElementPosition(0.95f, 0.95f),
+		GetElementPosition(0.99f, 0.95f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
 		m_resolution,
-		"next",
+		"next Player",
 		SoundType::ACCEPTED
 		);
-	nextBtn->SetOnClick([this]() {
-		this->InitialzeGalaxy();
+	m_nextBtn->SetOnClick([]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(TriggerNextTermEvent());
 		});
-	m_elements.push_back(nextBtn);
+	m_elements.push_back(m_nextBtn);
+
+	// text
+	auto currentPlayerLabel = std::make_shared<Text>(
+		GetElementPosition(0.6f, 0.08f),
+		GetElementSize(0.07f, 0.02f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		"current player:"
+		);
+	m_elements.push_back(currentPlayerLabel);
+
+	m_currentPlayerName = std::make_shared<Text>(
+		GetElementPosition(0.67f, 0.08f),
+		GetElementSize(0.2f, 0.02f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		"" 
+		);
+	m_elements.push_back(m_currentPlayerName);
+
+
+	auto currentRoundLabel = std::make_shared<Text>(
+		GetElementPosition(0.6f, 0.1f),
+		GetElementSize(0.07f, 0.02f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		"current round:"
+		);
+	m_elements.push_back(currentRoundLabel);
+
+	m_currentRound = std::make_shared<Text>(
+		GetElementPosition(0.67f, 0.1f),
+		GetElementSize(0.2f, 0.02f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		std::to_string(appContext.constants.global.currentRound)
+		);
+	m_elements.push_back(m_currentRound);
+
+
+	auto currentTargetRoundLabel = std::make_shared<Text>(
+		GetElementPosition(0.6f, 0.12f),
+		GetElementSize(0.07f, 0.02f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		"target round:"
+		);
+	m_elements.push_back(currentTargetRoundLabel);
+
+	m_currentTargetRound = std::make_shared<Text>(
+		GetElementPosition(0.67f, 0.12f),
+		GetElementSize(0.2f, 0.02f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		std::to_string(appContext.constants.global.currentTargetRound)
+		);
+	m_elements.push_back(m_currentTargetRound);
+
+
+	auto nextPlayerNameLabel = std::make_shared<Text>(
+		GetElementPosition(0.85f, 0.98f),
+		GetElementSize(0.06f, 0.02f),
+		Alignment::BOTTOM_LEFT,
+		m_resolution,
+		Alignment::BOTTOM_LEFT,
+		0.02f,
+		"next player:"
+		);
+	m_elements.push_back(nextPlayerNameLabel);
+
+	m_nextPlayerName = std::make_shared<Text>(
+		GetElementPosition(0.91f, 0.98f),
+		GetElementSize(0.13f, 0.02f),
+		Alignment::BOTTOM_LEFT,
+		m_resolution,
+		Alignment::BOTTOM_LEFT,
+		0.02f,
+		""
+		);
+	m_elements.push_back(m_nextPlayerName);
 }
 void MainScene::InitialzeGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
@@ -100,13 +198,54 @@ void MainScene::InitialzeGalaxy() {
 	}
 
 	m_galaxy = std::make_shared<GalaxyScene>(
-		GetElementPosition(0.5f, 0.5f),
-		GetElementSize(0.75f, 0.75f),
-		Alignment::MID_MID,
+		GetElementPosition(0.01f, 0.99f),
+		GetElementSize(0.85f, 0.85f),
+		Alignment::BOTTOM_LEFT,
 		m_resolution
 		);
-	m_galaxy->SetActive(true, appContext);
 	m_elements.push_back(m_galaxy);
+}
+
+void MainScene::NextTerm() {
+	AppContext const& appContext = AppContext::GetInstance();
+	Switch(MainSceneType::CLEAR);
+	SetPlayerText();
+	InitialzeGalaxy();
+
+	auto event = ShowMessagePopUpEvent(
+		"start term?",
+		"next plyer: " + m_currentPlayer.name + "\naccept to start your trun",
+		[this]() {
+			this->Switch(MainSceneType::GALAXY);
+		}
+	);
+	appContext.eventManager.InvokeEvent(event);
+}
+void MainScene::NextRound() {
+	AppContext& appContext = AppContext::GetInstance();
+
+	SetPlayerText();
+	InitialzeGalaxy();
+
+	m_currentRound->SetText(std::to_string(appContext.constants.global.currentRound));
+	m_currentTargetRound->SetText(std::to_string(appContext.constants.global.currentTargetRound));
+
+	auto event = ShowMessagePopUpEvent(
+		"start round",
+		"next round is starting \n just for debug to know"
+	);
+	appContext.eventManager.InvokeEvent(event);
+
+	Switch(MainSceneType::GALAXY);
+}
+
+void MainScene::SetPlayerText() {
+
+	m_currentPlayerName->SetText(m_currentPlayer.name);
+	m_currentPlayerName->SetColor(m_currentPlayer.color);
+
+	m_nextPlayerName->SetText(m_nextPlayer.name);
+	m_nextPlayerName->SetColor(m_nextPlayer.color);
 }
 
 void MainScene::Switch(MainSceneType sceneType) {
@@ -120,6 +259,39 @@ void MainScene::Switch(MainSceneType sceneType) {
 MainScene::MainScene(Vector2 resolution)
 	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
 
+	AppContext& appContext = AppContext::GetInstance();
+	appContext.eventManager.AddListener(this);
+	appContext.eventManager.InvokeEvent(StartGameEvent());
+
 	Initialize();
 	InitialzeGalaxy();
+	SetPlayerText();
+	Switch(MainSceneType::GALAXY);
+}
+MainScene::~MainScene() {
+	AppContext::GetInstance().eventManager.RemoveListener(this);
+}
+
+void MainScene::OnEvent(Event const& event) {
+	AppContext const& appContext = AppContext::GetInstance();
+	
+	// player
+	if (auto const* playerEvent = dynamic_cast<UpdateCurrentPlayerIDEvent const*>(&event)) {
+		m_currentPlayer = appContext.playerCollection.GetPlayerByID(playerEvent->GetID());
+		return;
+	}
+	if (auto const* playerEvent = dynamic_cast<UpdateNextPlayerIDEvent const*>(&event)) {
+		m_nextPlayer = appContext.playerCollection.GetPlayerByID(playerEvent->GetID());
+		return;
+	}
+
+	// terms and rounds
+	if (auto const* playerEvent = dynamic_cast<ShowNextTermEvent const*>(&event)) {
+		NextTerm();
+		return;
+	}
+	if (auto const* playerEvent = dynamic_cast<ShowNextRoundEvent const*>(&event)) {
+		NextRound();
+		return;
+	}
 }

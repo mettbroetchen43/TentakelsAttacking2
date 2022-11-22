@@ -7,6 +7,7 @@
 #include "Picture.h"
 #include "Text.h"
 #include "HGeneral.h"
+#include "HInput.h"
 #include "HTextProcessing.h"
 #include "AppContext.h"
 #include <iostream>
@@ -105,7 +106,7 @@ PopUp::PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	
 	Initialize(title, subTitle, infoTexture, resolution);
 
-	if (IsKeyDown(KEY_ENTER)) {
+	if (IsConfirmInputDown()) {
 		m_firstEnter = true;
 	}
 }
@@ -114,6 +115,10 @@ void PopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 	for (auto& e : m_elements) {
 		e->CheckAndUpdate(mousePosition, appContext);
+	}
+
+	if (m_schouldClose) {
+		appContext.eventManager.InvokeEvent(ClosePopUpEvent(this));
 	}
 }
 void PopUp::Render(AppContext const& appContext) {

@@ -37,7 +37,7 @@ void AppContext::Validate() {
 	// Global
 	ValidateMinMax<size_t>(constants.global.minRounds, constants.global.maxRounds,
 		"Min Game Rounds", "Max Game Rounds");
-	ValidateMinCurrentMax<size_t>(constants.global.minRounds, constants.global.currentRounds,
+	ValidateMinCurrentMax<size_t>(constants.global.minRounds, constants.global.currentTargetRound,
 		constants.global.maxRounds);
 
 	// Player
@@ -75,7 +75,7 @@ void AppContext::Validate() {
 void AppContext::OnEvent(Event const& event) {
 
 	if (auto const LastRoundEvent = dynamic_cast<SetCurrentLastRoundEvent const*>(&event)) {
-		constants.global.currentRounds = LastRoundEvent->GetLastRound();
+		constants.global.currentTargetRound = LastRoundEvent->GetLastRound();
 		return;
 	}
 }

@@ -12,6 +12,7 @@
 class PopUp : public UIElement {
 protected:
 	bool m_firstEnter = false;
+	bool m_schouldClose = false;
 	std::vector<std::shared_ptr<UIElement>> m_elements;
 
 	void Initialize(std::string const& title, std::string& subTitle,

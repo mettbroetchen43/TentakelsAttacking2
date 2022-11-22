@@ -257,7 +257,10 @@ void Focus::AddPopUpElement(Focusable* focusable) {
 	AddElement(focusable);
 }
 void Focus::DeleteElement(Focusable* focusable, bool setNextFocus) {
-	focusable->SetFocus(false);
+	/*if (focusable) {
+		focusable->SetFocus(false);
+	}*/
+
 	m_focus.RemoveElement(focusable);
 
 	if (!setNextFocus) {

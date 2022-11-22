@@ -59,9 +59,9 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 	// btn
 	m_zoomInBtn = std::make_shared<ClassicButton>(
 		101,
-		GetElementPosition(1.0f, 1.0f),
+		GetElementPosition(0.091f, 0.95f),
 		GetElementSize(0.05f, 0.05f),
-		Alignment::BOTTOM_RIGHT,
+		Alignment::TOP_LEFT,
 		resolution,
 		"+",
 		SoundType::CLICKED_RELEASE_STD
@@ -73,9 +73,9 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 
 	m_zoomOutBtn = std::make_shared<ClassicButton>(
 		102,
-		GetElementPosition(0.95f, 1.0f),
+		GetElementPosition(0.041f, 0.95f),
 		GetElementSize(0.05f, 0.05f),
-		Alignment::BOTTOM_RIGHT,
+		Alignment::TOP_LEFT,
 		resolution,
 		"-",
 		SoundType::CLICKED_RELEASE_STD

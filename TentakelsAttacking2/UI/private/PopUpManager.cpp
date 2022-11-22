@@ -59,6 +59,12 @@ void PopUpManager::OnEvent(Event const& event) {
 		return;
 	}
 
+	// Term Events
+	if (auto const PopUpEvent = dynamic_cast<ShowValidatePopUp const*>(&event)) {
+		NewValidatePopUp(PopUpEvent);
+		return;
+	}
+
 	// Close Pop Up
 	if (auto const PopUpEvent = dynamic_cast<ClosePopUpEvent const*>(&event)) {
 		DeleteLastPopUp(PopUpEvent->GetPop());
@@ -76,7 +82,8 @@ void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
 		m_resolution,
 		event->GetTitle(),
 		const_cast<std::string&>(event->GetSubTitle()),
-		AssetType::EXCLAMATION_MARK
+		AssetType::EXCLAMATION_MARK,
+		event->GetCallback()
 		)
 	);
 }
@@ -92,6 +99,21 @@ void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerPopUpEvent const* event)
 		AssetType::QUESTION_MARK,
 		event->GetOnClick()
 		));
+}
+void PopUpManager::NewValidatePopUp(ShowValidatePopUp const* event) {
+	AddFocusLayer(true);
+
+	m_popUps.push_back(std::make_unique<ValidatePopUp>(
+		Vector2(0.5f, 0.5f),
+		Vector2(0.5f, 0.5f),
+		Alignment::MID_MID,
+		m_resolution,
+		event->GetTitle(),
+		const_cast<std::string&>(event->GetSubTitle()),
+		AssetType::QUESTION_MARK,
+		event->GetCallback()
+		)
+	);
 }
 void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
 	auto focusEvent = NewFocusPopUpLayerEvent();

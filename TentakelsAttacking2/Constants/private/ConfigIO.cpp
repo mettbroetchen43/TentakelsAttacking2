@@ -89,6 +89,7 @@ void LoadConfig() {
 	std::vector<size_t*> size_tEntries = {
 		// Globals
 		&constants.global.minRounds,
+		&constants.global.currentTargetRound,
 		&constants.global.maxRounds,
 		&constants.global.FPS,
 		// Player
@@ -181,6 +182,7 @@ void SaveConfig() {
 	entry(std::to_string(constants.global.startingModeFullScreen), "Starting Full Screen (0 = window)", toSave);
 
 	entry(std::to_string(constants.global.minRounds), "Min Game Rounds", toSave);
+	entry(std::to_string(constants.global.currentTargetRound), "Current Target Game Round", toSave);
 	entry(std::to_string(constants.global.maxRounds), "Max Game Rounds", toSave);
 
 	entry(std::to_string(constants.global.FPS), "Target FPS", toSave);

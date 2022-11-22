@@ -8,6 +8,7 @@
 #include "GenerelEvents.hpp"
 #include "HPrint.h"
 #include <cassert>
+#include <algorithm>
 
 // player
 bool GameManager::ValidAddPlayer() const {
@@ -40,6 +41,19 @@ bool GameManager::IsExistingID(unsigned int ID) const {
 		}
 	}
 	return false;
+}
+
+bool GameManager::GetCurrentPlayer(std::shared_ptr<Player>& currentPlayer) const {
+	if (m_currentRoundPlayers.empty()) { return false; }
+
+	currentPlayer = m_currentRoundPlayers.back();
+	return true;
+}
+bool GameManager::GetNextPlayer(std::shared_ptr<Player>& nextPlayer) const {
+	if (m_currentRoundPlayers.size() < 2) { return false; }
+
+	nextPlayer = m_currentRoundPlayers.at(m_currentRoundPlayers.size() - 2);
+	return true;
 }
 
 void GameManager::AddPlayer(AddPlayerEvent const* event) {
@@ -140,6 +154,94 @@ void GameManager::CheckPlayerCount() const {
 	auto event = ValidatePlayerCountResultEvent(valid);
 	appContext.eventManager.InvokeEvent(event);
 }
+void GameManager::ShuffleCurrentRoundPlayer() {
+	std::shuffle(m_currentRoundPlayers.begin(), m_currentRoundPlayers.end(), m_random);
+}
+
+void GameManager::NextRound(bool valid) {
+
+	if (!valid) { return; }
+
+	AppContext& appContext = AppContext::GetInstance();
+	// events and so on first
+
+	m_startGalaxy = m_mainGalaxy;
+	m_currentGalaxy = m_startGalaxy;
+	m_currentRoundPlayers = m_players;
+
+	ShuffleCurrentRoundPlayer();
+	SendCurrentPlayerID();
+	SendNextPlayerID();
+
+	++appContext.constants.global.currentRound;
+
+	appContext.eventManager.InvokeEvent(ShowNextRoundEvent());
+}
+void GameManager::NextTerm(bool valid) {
+
+	if (!valid) { return; }
+
+	m_currentRoundPlayers.pop_back();
+
+	m_currentGalaxy = m_startGalaxy; // TODO: filter for relevant data for current player
+
+	SendCurrentPlayerID();
+	SendNextPlayerID();
+
+	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextTermEvent());
+}
+void GameManager::ValidateNextTerm() {
+
+	if (m_currentRoundPlayers.size() <= 1) { 
+		auto event = ShowValidatePopUp(
+			"next round?",
+			"your turn will be over.",
+			[this](bool valid) {
+				this->NextRound(valid);
+			}
+		);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+	}
+	else {
+		auto event = ShowValidatePopUp(
+			"next player?",
+			"your turn will be over.",
+			[this](bool valid) {
+				this->NextTerm(valid);
+			}
+		);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+	}
+}
+
+void GameManager::SendCurrentPlayerID() {
+	unsigned int ID;
+	std::shared_ptr<Player> player;
+
+	if (GetCurrentPlayer(player)) {
+		ID = player->GetID();
+	}
+	else {
+		ID = 0;
+	}
+
+	auto event = UpdateCurrentPlayerIDEvent(ID);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+void GameManager::SendNextPlayerID() {
+	unsigned int ID;
+	std::shared_ptr<Player> player;
+
+	if (GetNextPlayer(player)) {
+		ID = player->GetID();
+	}
+	else {
+		ID = 0;
+	}
+
+	auto event = UpdateNextPlayerIDEvent(ID);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
 
 // events
 void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
@@ -170,7 +272,7 @@ void GameManager::GenerateGalaxy() {
 		);
 
 	if (galaxy->IsValidGalaxy()) {
-		m_galaxy = galaxy;
+		m_mainGalaxy = galaxy;
 		auto event = GalaxyGeneratedUIEvent();
 		appContext.eventManager.InvokeEvent(event);
 	}
@@ -206,6 +308,14 @@ void GameManager::GenerateShowGalaxy() {
 	else {
 		Print("Could not geneared ShowGalaxy -> No Galaxy", PrintType::ERROR);
 	}
+}
+
+void GameManager::StartGame() {
+	m_currentRoundPlayers = m_players;
+
+	ShuffleCurrentRoundPlayer();
+	SendCurrentPlayerID();
+	SendNextPlayerID();
 }
 
 GameManager::GameManager() {
@@ -249,7 +359,7 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 
-	// Game Events
+	// Events
 	if (auto const* GameEvent = dynamic_cast<UpdateCheckGameEvent const*>(&event)) {
 		SetGameEventActive(GameEvent);
 		return;
@@ -266,13 +376,23 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* galaxyEvent = dynamic_cast<GetGalaxyPointerEvent const*>(&event)) {
-		assert(m_galaxy);
-		auto retunEvent = SendGalaxyPointerEvent(m_galaxy.get());
+		assert(m_mainGalaxy);
+		auto retunEvent = SendGalaxyPointerEvent(m_mainGalaxy.get());
 		AppContext::GetInstance().eventManager.InvokeEvent(retunEvent);
 		return;
 	}
 	if (auto const* galaxyEvent = dynamic_cast<GetShowGalaxyPointerEvent const*> (&event)) {
 		GenerateShowGalaxy();
+		return;
+	}
+
+	// Game
+	if (auto const* gameEvent = dynamic_cast<StartGameEvent const*> (&event)) {
+		StartGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<TriggerNextTermEvent const*> (&event)) {
+		ValidateNextTerm();
 		return;
 	}
 }

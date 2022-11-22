@@ -8,12 +8,13 @@
 #include <string>
 
 struct PlayerData final {
-	unsigned int ID;
-	std::string name;
-	Color color;
+	unsigned int ID = 0;
+	std::string name = "";
+	Color color = WHITE;
 
 	PlayerData(unsigned int _ID, std::string _name, Color _color)
 		: ID(_ID), name(_name), color(_color) { }
+	PlayerData() = default;
 };
 
 [[nodiscard]] inline bool StortPlayerByID_ASC(

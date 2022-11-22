@@ -22,6 +22,7 @@ void MessagePopUp::Initialize(Vector2 resolution) {
 		);
 
 	btn->SetOnClick([this]() {
+		this->m_callback();
 		AppContext::GetInstance().eventManager.InvokeEvent(ClosePopUpEvent(this));
 		});
 	auto event = NewFocusPopUpElementEvent(btn.get());
@@ -31,8 +32,8 @@ void MessagePopUp::Initialize(Vector2 resolution) {
 }
 
 MessagePopUp::MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	std::string const& title, std::string& subTitle, AssetType infoTexture)
-	: PopUp(pos, size, alignment, resolution, title, subTitle, infoTexture) {
+	std::string const& title, std::string& subTitle, AssetType infoTexture, std::function<void()> callback)
+	: PopUp(pos, size, alignment, resolution, title, subTitle, infoTexture), m_callback(callback) {
 
 	Initialize(resolution);
 }

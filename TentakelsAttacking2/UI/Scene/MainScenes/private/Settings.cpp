@@ -139,7 +139,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		resolution,
 		static_cast<int>(appContext.constants.global.minRounds),
 		static_cast<int>(appContext.constants.global.maxRounds),
-		static_cast<int>(appContext.constants.global.currentRounds)
+		static_cast<int>(appContext.constants.global.currentTargetRound)
 		);
 	lastRound->SetActive(true, appContext);
 	lastRound->SetOnSave([](int value) {

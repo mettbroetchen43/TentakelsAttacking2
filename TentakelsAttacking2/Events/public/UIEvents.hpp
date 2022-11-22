@@ -150,8 +150,14 @@ public:
 	}
 };
 class ShowMessagePopUpEvent final : public PopUpEvent {
+private:
+	std::function<void()> m_callback = []() {};
 public:
-	using PopUpEvent::PopUpEvent;
+	ShowMessagePopUpEvent(std::string const& title, std::string const& subTile, std::function<void()> callback = []() {})
+		:PopUpEvent(title, subTile), m_callback(callback) { }
+	[[nodiscard]] std::function<void()> GetCallback() const {
+		return m_callback;
+	}
 };
 
 template <typename EntryType>
@@ -184,6 +190,18 @@ public:
 
 	[[nodiscard]] std::function<void(unsigned int)> GetOnClick() const {
 		return m_onClick;
+	}
+};
+class ShowValidatePopUp final : public PopUpEvent {
+private:
+	std::function<void(bool)> m_callback;
+
+public:
+	ShowValidatePopUp(std::string const& title, std::string const& subTile, std::function<void(bool)> callback)
+		:PopUpEvent(title, subTile), m_callback(callback) { }
+
+	[[nodiscard]] std::function<void(bool)> GetCallback() const {
+		return m_callback;
 	}
 };
 class ShowInitialSoundLevelPopUpEvent final : public PopUpEvent {

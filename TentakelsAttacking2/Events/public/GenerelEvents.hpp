@@ -82,6 +82,30 @@ public:
 };
 class ResetPlayerUIEvent final : public Event { };
 
+class PlayerIDEvent : public Event {
+private:
+	unsigned int m_ID;
+
+public:
+	PlayerIDEvent(unsigned int ID)
+		:m_ID(ID) { }
+	[[nodiscard]] unsigned int GetID() const {
+		return m_ID;
+	}
+};
+class UpdateCurrentPlayerIDEvent final : public PlayerIDEvent {
+public:
+	using PlayerIDEvent::PlayerIDEvent;
+};
+class UpdateNextPlayerIDEvent final : public PlayerIDEvent {
+public:
+	using PlayerIDEvent::PlayerIDEvent;
+};
+
+class TriggerNextTermEvent final : public Event  { };
+class ShowNextTermEvent final : public Event { };
+class ShowNextRoundEvent final : public Event { };
+
 class ValidatePlayerCountEvent final : public Event { };
 class ValidatePlayerCountResultEvent final : public Event {
 private:
@@ -95,6 +119,8 @@ public:
 		return m_validPlayerCount;
 	}
 };
+
+class StartGameEvent final : public Event { };
 
 class UpdateCheckGameEvent final : public Event {
 private:

@@ -1,0 +1,65 @@
+//
+// Purpur Tentakel
+// 21.11.2022
+//
+
+#include "ValidatePopUp.h"
+#include "AppContext.h"
+#include "GenerelEvents.hpp"
+#include "ClassicButton.h"
+#include "HFocusEvents.h"
+#include "HInput.h"
+
+void ValidatePopUp::Initialize() {
+
+	auto acceptBtn = std::make_shared<ClassicButton>(
+		2,
+		GetElementPosition(m_pos, m_size, 0.33f, 0.9f),
+		GetElementSize(m_size, 0.2f, 0.15f),
+		Alignment::BOTTOM_MID,
+		m_resolution,
+		"accept",
+		SoundType::ACCEPTED
+		);
+	acceptBtn->SetOnClick([this]() {
+		this->m_callback(true);
+		this->Close();
+		});
+	AddFocusElement(acceptBtn.get(), true);
+	m_elements.push_back(acceptBtn);
+
+	auto cancelBtn = std::make_shared<ClassicButton>(
+		1,
+		GetElementPosition(m_pos, m_size, 0.66f, 0.9f),
+		GetElementSize(m_size, 0.2f, 0.15f),
+		Alignment::BOTTOM_MID,
+		m_resolution,
+		"cancel",
+		SoundType::CLICKED_RELEASE_STD
+		);
+	cancelBtn->SetOnClick([this]() {
+		this->m_callback(false);
+		this->Close();
+		});
+	AddFocusElement(cancelBtn.get(), true);
+	SelectFocusElement(cancelBtn.get(), true);
+	m_elements.push_back(cancelBtn);
+}
+
+void ValidatePopUp::Close() {
+	m_schouldClose = true;
+}
+
+ValidatePopUp::ValidatePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	std::string const& title, std::string& subTitle, AssetType infoTexture, std::function<void(bool)> callback)
+	: PopUp(pos, size, alignment, resolution, title, subTitle, infoTexture), m_callback(callback) {
+
+	Initialize();
+
+	if (IsConfirmInputReleased()) { m_firstEnter = true; }
+}
+
+void ValidatePopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	if (!m_firstEnter) { PopUp::CheckAndUpdate(mousePosition, appContext); }
+	else { LateUpdate(); }
+}

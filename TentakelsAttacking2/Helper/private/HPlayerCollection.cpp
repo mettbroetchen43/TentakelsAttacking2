@@ -78,6 +78,9 @@ void PlayerCollection::CheckRemainingName(std::string& name) {
 }
 
 PlayerData& PlayerCollection::GetPlayerByID(unsigned int ID) {
+
+	if (ID == m_defaultPlayer.ID) { return m_defaultPlayer; }
+
 	for (auto& p : m_playerData) {
 		if (p.ID == ID) {
 			return p;
@@ -145,6 +148,9 @@ std::vector<PlayerData> PlayerCollection::GetPlayerData() const {
 }
 
 PlayerData PlayerCollection::GetPlayerByID(unsigned int ID) const {
+
+	if (ID == m_defaultPlayer.ID) { return m_defaultPlayer; }
+
 	for (auto& p : m_playerData) {
 		if (p.ID == ID) {
 			return p;

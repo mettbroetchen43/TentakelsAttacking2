@@ -6,7 +6,6 @@
 #pragma once
 #include <raylib.h>
 
-
 class Focusable {
 private:
 	unsigned int m_focusID;
