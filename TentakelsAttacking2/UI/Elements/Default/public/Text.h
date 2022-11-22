@@ -16,6 +16,7 @@ private:
 	float m_textSize;
 	Alignment m_textAlignment;
 	Vector2 m_textPosition;
+	Color m_color = WHITE;
 
 	bool m_lineBreaks = false;
 	bool m_renderRectangle = false;
@@ -38,7 +39,10 @@ public:
 	void SetSize(Vector2 size) override;
 
 	void SetText(std::string text);
-	std::string GetText() const;
+	[[nodiscard]] std::string GetText() const;
+
+	void SetColor(Color color);
+	[[nodiscard]] Color GetColor() const;
 
 	void SetURL(std::string URL);
 	void ClearURL();

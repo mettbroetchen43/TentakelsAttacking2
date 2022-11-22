@@ -242,7 +242,10 @@ void MainScene::NextRound() {
 void MainScene::SetPlayerText() {
 
 	m_currentPlayerName->SetText(m_currentPlayer.name);
+	m_currentPlayerName->SetColor(m_currentPlayer.color);
+
 	m_nextPlayerName->SetText(m_nextPlayer.name);
+	m_nextPlayerName->SetColor(m_nextPlayer.color);
 }
 
 void MainScene::Switch(MainSceneType sceneType) {
