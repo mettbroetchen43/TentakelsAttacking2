@@ -11,10 +11,12 @@
 #include "GenerelEvents.hpp"
 #include "GameEventTypes.hpp"
 #include <vector>
+#include <random>
 #include <memory>
 
 class GameManager final : public EventListener {
 private:
+	std::default_random_engine m_random = std::default_random_engine();
 	std::unordered_map<PlayerType, std::shared_ptr<Player>> m_npcs;
 	std::vector<std::shared_ptr<Player>> m_players;
 	std::vector<std::shared_ptr<Player>> m_currentRoundPlayers;
@@ -37,6 +39,7 @@ private:
 	void DeletePlayer(DeletePlayerEvent const* event);
 	void ResetPlayer();
 	void CheckPlayerCount() const;
+	void ShuffleCurrentRoundPlayer();
 
 	/** send the current player ID via an event
 	 *  will send 0 if no player is active

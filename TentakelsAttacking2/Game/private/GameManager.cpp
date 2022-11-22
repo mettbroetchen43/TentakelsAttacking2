@@ -8,6 +8,7 @@
 #include "GenerelEvents.hpp"
 #include "HPrint.h"
 #include <cassert>
+#include <algorithm>
 
 // player
 bool GameManager::ValidAddPlayer() const {
@@ -153,6 +154,9 @@ void GameManager::CheckPlayerCount() const {
 	auto event = ValidatePlayerCountResultEvent(valid);
 	appContext.eventManager.InvokeEvent(event);
 }
+void GameManager::ShuffleCurrentRoundPlayer() {
+	std::shuffle(m_currentRoundPlayers.begin(), m_currentRoundPlayers.end(), m_random);
+}
 
 void GameManager::NextRound(bool valid) {
 
@@ -163,8 +167,9 @@ void GameManager::NextRound(bool valid) {
 
 	m_startGalaxy = m_mainGalaxy;
 	m_currentGalaxy = m_startGalaxy;
-	m_currentRoundPlayers = m_players; // TODO: shuffle
+	m_currentRoundPlayers = m_players;
 
+	ShuffleCurrentRoundPlayer();
 	SendCurrentPlayerID();
 	SendNextPlayerID();
 
@@ -308,6 +313,7 @@ void GameManager::GenerateShowGalaxy() {
 void GameManager::StartGame() {
 	m_currentRoundPlayers = m_players;
 
+	ShuffleCurrentRoundPlayer();
 	SendCurrentPlayerID();
 	SendNextPlayerID();
 }
