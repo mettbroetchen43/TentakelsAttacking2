@@ -85,7 +85,7 @@ std::string GetPritableTextInColider(std::string const& text,
 	auto constants = appContext.constants.textProcecing;
 	Vector2 textSize = MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
-		(text + constants.enter).c_str(),
+		(text + constants.cursor).c_str(),
 		fontSize,
 		0.0f);
 	if ((textSize.x + constants.cursorOffset) < colider.width) {
@@ -93,11 +93,11 @@ std::string GetPritableTextInColider(std::string const& text,
 	}
 
 	std::string toReturn = text;
-	std::string toCheck = constants.prefix + text + constants.enter;
+	std::string toCheck = constants.prefix + text + constants.cursor;
 
 	do {
 		toReturn = toReturn.substr(1, toReturn.size());
-		toCheck = constants.prefix + toReturn + constants.enter;
+		toCheck = constants.prefix + toReturn + constants.cursor;
 		textSize = MeasureTextEx(
 			*(appContext.assetManager.GetFont()),
 			toCheck.c_str(),

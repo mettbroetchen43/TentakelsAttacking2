@@ -190,7 +190,7 @@ public:
 			if (time % 2 == 0) {
 				DrawTextEx(
 					*(appContext.assetManager.GetFont()),
-					&constants.enter,
+					&constants.cursor,
 					Vector2(
 						posX + constants.cursorOffset + textLength.x,
 						posY + m_colider.height * 0.05f
