@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "SceneType.h"
 #include "EventListener.hpp"
+#include "HPlayerData.hpp"
 #include <memory>
 
 class GalaxyScene;
@@ -26,11 +27,11 @@ private:
 	// std::shared_ptr<GalaxyScene> m_planetTable;
 	// std::shared_ptr<GalaxyScene> m_fleetTable;
 	std::shared_ptr<ClassicButton> m_nextBtn;
-	std::shared_ptr<Text> m_currentPlayerText;
-	std::shared_ptr<Text> m_nextPlayerText;
+	std::shared_ptr<Text> m_currentPlayerName;
+	std::shared_ptr<Text> m_nextPlayerName;
 	std::shared_ptr<Text> m_currentRound;
 	std::shared_ptr<Text> m_currentTargetRound;
-	unsigned int m_currentPlayerID, m_nextPlayerID;
+	PlayerData m_currentPlayer, m_nextPlayer;
 
 	void Initialize();
 	void InitialzeGalaxy();

@@ -12,6 +12,7 @@
 #include "Title.h"
 #include "Text.h"
 
+
 void MainScene::Initialize() {
 
 	AppContext& appContext = AppContext::GetInstance();
@@ -97,7 +98,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(m_nextBtn);
 
 	// text
-	m_currentPlayerText = std::make_shared<Text>(
+	m_currentPlayerName = std::make_shared<Text>(
 		GetElementPosition(0.6f, 0.08f),
 		GetElementSize(0.3f, 0.02f),
 		Alignment::TOP_LEFT,
@@ -106,7 +107,7 @@ void MainScene::Initialize() {
 		0.02f,
 		"current player:" 
 		);
-	m_elements.push_back(m_currentPlayerText);
+	m_elements.push_back(m_currentPlayerName);
 
 	// text
 	m_currentRound = std::make_shared<Text>(
@@ -120,7 +121,6 @@ void MainScene::Initialize() {
 		);
 	m_elements.push_back(m_currentRound);
 
-	// text
 	m_currentTargetRound = std::make_shared<Text>(
 		GetElementPosition(0.6f, 0.12f),
 		GetElementSize(0.3f, 0.02f),
@@ -132,7 +132,7 @@ void MainScene::Initialize() {
 		);
 	m_elements.push_back(m_currentTargetRound);
 
-	m_nextPlayerText = std::make_shared<Text>(
+	m_nextPlayerName = std::make_shared<Text>(
 		GetElementPosition(0.99f, 0.98f),
 		GetElementSize(0.13f, 0.02f),
 		Alignment::BOTTOM_RIGHT,
@@ -141,7 +141,7 @@ void MainScene::Initialize() {
 		0.02f,
 		"next player:"
 		);
-	m_elements.push_back(m_nextPlayerText);
+	m_elements.push_back(m_nextPlayerName);
 }
 void MainScene::InitialzeGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
@@ -168,7 +168,7 @@ void MainScene::NextTerm() {
 
 	auto event = ShowMessagePopUpEvent(
 		"start term?",
-		"next plyer: " + appContext.playerCollection.GetPlayerByID(m_currentPlayerID).name + "\naccept to start your trun",
+		"next plyer: " + m_currentPlayer.name + "\naccept to start your trun",
 		[this]() {
 			this->Switch(MainSceneType::GALAXY);
 		}
@@ -194,22 +194,21 @@ void MainScene::NextRound() {
 }
 
 void MainScene::SetPlayerText() {
-	AppContext const& appContext = AppContext::GetInstance();
 
-	if (m_currentPlayerID != 0) {
-		std::string playerName = appContext.playerCollection.GetPlayerByID(m_currentPlayerID).name;
-		m_currentPlayerText->SetText("current player: " + playerName);
+	if (m_currentPlayer.ID != 0) {
+		std::string playerName = m_currentPlayer.name;
+		m_currentPlayerName->SetText("current player: " + playerName);
 	}
 	else {
-		m_currentPlayerText->SetText("current player: no player");
+		m_currentPlayerName->SetText("current player: no player");
 	}
 
-	if (m_nextPlayerID != 0) {
-		std::string playerName = appContext.playerCollection.GetPlayerByID(m_nextPlayerID).name;
-		m_nextPlayerText->SetText("next player: " + playerName);
+	if (m_nextPlayer.ID != 0) {
+		std::string playerName = m_nextPlayer.name;
+		m_nextPlayerName->SetText("next player: " + playerName);
 	}
 	else {
-		m_nextPlayerText->SetText("next player: no player");
+		m_nextPlayerName->SetText("next player: no player");
 	}
 }
 
@@ -238,14 +237,15 @@ MainScene::~MainScene() {
 }
 
 void MainScene::OnEvent(Event const& event) {
-
+	AppContext const& appContext = AppContext::GetInstance();
+	
 	// player
 	if (auto const* playerEvent = dynamic_cast<UpdateCurrentPlayerIDEvent const*>(&event)) {
-		m_currentPlayerID = playerEvent->GetID();
+		m_currentPlayer = appContext.playerCollection.GetPlayerByID(playerEvent->GetID());
 		return;
 	}
 	if (auto const* playerEvent = dynamic_cast<UpdateNextPlayerIDEvent const*>(&event)) {
-		m_nextPlayerID = playerEvent->GetID();
+		m_nextPlayer = appContext.playerCollection.GetPlayerByID(playerEvent->GetID());
 		return;
 	}
 
