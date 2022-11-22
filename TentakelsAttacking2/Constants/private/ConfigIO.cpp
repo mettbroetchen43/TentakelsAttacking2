@@ -16,7 +16,7 @@ void LoadConfig() {
 	auto& constants = AppContext::GetInstance().constants;
 	std::ifstream file;
 
-	if (!std::filesystem::exists(constants.files.configFile)) {
+	if (!std::filesystem::exists(constants.files.configFile())) {
 		Print("config does not exists", PrintType::EXPECTED_ERROR);
 		SaveConfig();
 
@@ -29,7 +29,7 @@ void LoadConfig() {
 		return;
 	}
 
-	file.open(constants.files.configFile);
+	file.open(constants.files.configFile());
 	if (!file.is_open()) {
 		Print("cant open config");
 		return;
@@ -162,11 +162,11 @@ void SaveConfig() {
 		Print("saves dir generated");
 	}
 
-	if (!std::filesystem::exists(constants.files.configFile)) {
+	if (!std::filesystem::exists(constants.files.configFile())) {
 		Print("config generated");
 	}
 
-	file.open(constants.files.configFile);
+	file.open(constants.files.configFile());
 
 	std::string toSave = "//\n// Purpur Tentakel\n// Tentakels Attacking\n// Config\n//\n\n// Min Count >= 0\n";
 
