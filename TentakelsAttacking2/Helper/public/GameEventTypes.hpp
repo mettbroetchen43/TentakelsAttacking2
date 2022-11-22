@@ -6,6 +6,9 @@
 #pragma once
 #include <array>
 
+/**
+ * provides the Types of all game events.
+ */
 enum class GameEventType {
 	GLOBAL,
 	PIRATES,
@@ -16,8 +19,8 @@ enum class GameEventType {
 	ENGINE_PROBLEM,
 };
 
-using EventTypeArray = std::array<GameEventType, 6>;
-constexpr EventTypeArray settableGameEventTypes = {
+using EventTypeArray = std::array<GameEventType, 6>; ///< type of the settable events
+constexpr EventTypeArray settableGameEventTypes = { ///< contains the settabel events
 	GameEventType::PIRATES,
 	GameEventType::REVOLTS,
 	GameEventType::RENEGADE_SHIPS,

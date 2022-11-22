@@ -6,6 +6,9 @@
 #pragma once
 #include <string>
 
+/**
+ * provides all kinds of print types.
+ */
 enum class PrintType {
 	INFO,
 	EXPECTED_ERROR,
@@ -14,4 +17,7 @@ enum class PrintType {
 	BUILD,
 };
 
+/**
+ * print to the console with a print type tag.
+ */
 void Print(std::string const& message, PrintType printType = PrintType::INFO);

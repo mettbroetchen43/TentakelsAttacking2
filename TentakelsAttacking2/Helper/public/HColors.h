@@ -7,10 +7,13 @@
 #include <array>
 #include <raylib.h>
 
+/**
+ * contains all available colors of the game and validates it.
+ */
 struct Colors final {
 private:
-	using ColorArray = std::array<Color, 16>;
-	ColorArray m_colors = {
+	using ColorArray = std::array<Color, 16>; ///< type of the color arrray
+	ColorArray m_colors = { ///< contains all colors of the game.
 	YELLOW,
 	GOLD,
 	PINK,
@@ -30,7 +33,13 @@ private:
 	};
 
 public:
-	bool CheckValidColor(Color& color);
+	/**
+	 * check if the provided color is valid.
+	 */
+	[[nodiscard]] bool CheckValidColor(Color& color);
 
+	/**
+	 * returns all colors.
+	 */
 	[[nodiscard]] ColorArray GetColors() const;
 };
