@@ -165,6 +165,7 @@
     <ClInclude Include="Game\public\LogicUpdate.hpp" />
     <ClInclude Include="Helper\public\GameEventTypes.hpp" />
     <ClInclude Include="Helper\public\HColors.h" />
+    <ClInclude Include="Helper\public\HConcepts.hpp" />
     <ClInclude Include="Helper\public\HFocusEvents.h" />
     <ClInclude Include="Helper\public\HInput.h" />
     <ClInclude Include="Helper\public\HPlayerCollection.h" />

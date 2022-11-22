@@ -12,32 +12,67 @@
 #include "UIEvents.hpp"
 #include "CConstants.hpp"
 #include "EventListener.hpp"
+#include "HConcepts.hpp"
 #include <string>
 
+/** 
+ * contains all global variables of the game.
+ * contains all assets and colors.
+ * contains the event managment.
+ * is a singleton.
+ */
 struct AppContext final : public EventListener {
 public:
-	SoundManager soundManager;
-	AssetManager assetManager;
-	EventManager eventManager;
-	PlayerCollection playerCollection;
-	Colors colors;
-	Constants constants;
+	SoundManager soundManager; ///< loads and manage all sounds
+	AssetManager assetManager; ///< loads and manage all assets
+	EventManager eventManager; ///< manage the EventListener and invokes events
+	PlayerCollection playerCollection; ///< contains non logic infos about player
+	Colors colors; ///< contains all colors and check valid color
+	Constants constants; ///< contains all constants of the game
 	
 
+	/**
+	 * creates a Sigleton.
+	 * returns an instance.
+	 */
 	[[nodiscard]] static AppContext& GetInstance();
 
+	/**
+	 * loads config.
+	 * if no config exists a config is generated.
+	 * validate loaded data.
+	 */
 	void LoadConfig();
-	void SaveConfig();
+	/**
+	 * saves the config.
+	 * is also used to generate a config if no confix exists.
+	 */
+	void SaveConfig(); 
 
+	/**
+	 * validate all constants in constants that can be loaded by the config.
+	 */
 	void Validate();
-	template<typename type>
-	void ValidateMinCurrentMax(type min, type& current, type max) {
+	/**
+	 * allows only arithmetic types.
+	 * validate if a current value is between min and max.
+	 * if not: the current value is set to the edge case.
+	 */
+	template<arithmetic D>
+	inline void ValidateMinCurrentMax(D min, D& current, D max) const {
+
 		current = min <= current ? current : min;
 		current = max >= current ? current : max;
 	}
-	template<typename type>
-	void ValidateMinMax(type& lhs, type& rhs,
-		std::string const& lhsMessage, std::string const& rhsMessage) {
+	/**
+	 * allows only arithmetic types.
+	 * validate if lhs is smaler than rhs.
+	 * if not: rhs is set to lhs +1.
+	 * generates a popup if rhs gets set.
+	 */
+	template<arithmetic D>
+	inline void ValidateMinMax(D& lhs, D& rhs,
+		std::string const& lhsMessage, std::string const& rhsMessage) const {
 
 		if (lhs < rhs) { return; }
 
@@ -47,9 +82,15 @@ public:
 		);
 		eventManager.InvokeEvent(event);
 	}
-	template<typename type>
-	void ValidateLowerThan(type& value, type max,
-		std::string const& valueMessage) {
+	/**
+	 * allows only arithmetic types.
+	 * validate if a value is smaller than or even to max.
+	 * if not: value is set to max.
+	 * generates a popup if value gets set.
+	 */
+	template<arithmetic D>
+	inline void ValidateLowerEqual(D& value, D max,
+		std::string const& valueMessage) const {
 
 		if (value <= max) { return; }
 
@@ -60,9 +101,15 @@ public:
 		);
 		eventManager.InvokeEvent(event);
 	}
-	template<typename type>
-	void ValidateGreaterThan(type& value, type min,
-		std::string const& valueMessage) {
+	/**
+	 * allows only arithmetic types.
+	 * validate if a value is greater than or even to min.
+	 * if not: value is set to min.
+	 * generates a popup if value gets set.
+	 */
+	template<arithmetic D>
+	inline void ValidateGreaterEqual(D& value, D min,
+		std::string const& valueMessage) const {
 
 		if (value >= min) { return; }
 
@@ -74,8 +121,16 @@ public:
 		eventManager.InvokeEvent(event);
 	}
 
+	/**
+	 * receves the events vom the manager.
+	 * checks if the exprcted event is depoyed if so it calls a member function.
+	 */
 	void OnEvent(Event const& event) override;
 
 private:
+	/**
+	 * private Constructor so that the member function GetInstance()
+	 * is the only place were an instace can be created.
+	 */
 	AppContext();
 };
