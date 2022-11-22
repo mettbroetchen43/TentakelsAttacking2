@@ -13,11 +13,11 @@
 #include "CPlanet.hpp"
 
 struct Constants final {
-	CGlobal global;
-	CTextProcecing textProcecing;
-	CPlayer player;
-	CWorld world;
-	CFiles files;
-	CSound sound;
-	CPlanet planet;
+	CGlobal global; ///< contains the golbal constats
+	CTextProcecing textProcecing; ///< contains the text procecing constants
+	CPlayer player; ///< contains the player constants
+	CWorld world; ///< contains the world constants
+	CFiles files; ///< contains the file constants
+	CSound sound; ///< contains the sound constants
+	CPlanet planet; ///< contains the planet constants
 };
