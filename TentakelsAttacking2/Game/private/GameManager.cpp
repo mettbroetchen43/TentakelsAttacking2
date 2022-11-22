@@ -271,7 +271,7 @@ void GameManager::GenerateGalaxy() {
 		m_npcs[PlayerType::NEUTRAL]
 		);
 
-	if (galaxy->IsValidGalaxy()) {
+	if (galaxy->IsValid()) {
 		m_mainGalaxy = galaxy;
 		auto event = GalaxyGeneratedUIEvent();
 		appContext.eventManager.InvokeEvent(event);
@@ -295,7 +295,7 @@ void GameManager::GenerateShowGalaxy() {
 		m_npcs[PlayerType::NEUTRAL]
 		);
 
-	if (galaxy->IsValidGalaxy()) {
+	if (galaxy->IsValid()) {
 		m_showGalaxy = galaxy;
 		auto event = SendGalaxyPointerEvent(m_showGalaxy.get());
 		appContext.eventManager.InvokeEvent(event);

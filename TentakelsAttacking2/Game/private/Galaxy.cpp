@@ -149,7 +149,7 @@ Galaxy::Galaxy(Galaxy const& old)
     : m_validGalaxy(old.m_validGalaxy), m_objects(old.m_objects),
     m_planets(old.m_planets), m_size(old.m_size) { }
 
-bool Galaxy::IsValidGalaxy() const {
+bool Galaxy::IsValid() const {
     return m_validGalaxy;
 }
 
