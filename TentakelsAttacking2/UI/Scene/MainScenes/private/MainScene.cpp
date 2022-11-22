@@ -98,48 +98,94 @@ void MainScene::Initialize() {
 	m_elements.push_back(m_nextBtn);
 
 	// text
-	m_currentPlayerName = std::make_shared<Text>(
+	auto currentPlayerLabel = std::make_shared<Text>(
 		GetElementPosition(0.6f, 0.08f),
-		GetElementSize(0.3f, 0.02f),
+		GetElementSize(0.07f, 0.02f),
 		Alignment::TOP_LEFT,
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
-		"current player:" 
+		"current player:"
+		);
+	m_elements.push_back(currentPlayerLabel);
+
+	m_currentPlayerName = std::make_shared<Text>(
+		GetElementPosition(0.67f, 0.08f),
+		GetElementSize(0.2f, 0.02f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		"" 
 		);
 	m_elements.push_back(m_currentPlayerName);
 
-	// text
-	m_currentRound = std::make_shared<Text>(
+
+	auto currentRoundLabel = std::make_shared<Text>(
 		GetElementPosition(0.6f, 0.1f),
-		GetElementSize(0.3f, 0.02f),
+		GetElementSize(0.07f, 0.02f),
 		Alignment::TOP_LEFT,
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
-		"current round: " + std::to_string(appContext.constants.global.currentRound)
+		"current round:"
+		);
+	m_elements.push_back(currentRoundLabel);
+
+	m_currentRound = std::make_shared<Text>(
+		GetElementPosition(0.67f, 0.1f),
+		GetElementSize(0.2f, 0.02f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		std::to_string(appContext.constants.global.currentRound)
 		);
 	m_elements.push_back(m_currentRound);
 
-	m_currentTargetRound = std::make_shared<Text>(
+
+	auto currentTargetRoundLabel = std::make_shared<Text>(
 		GetElementPosition(0.6f, 0.12f),
-		GetElementSize(0.3f, 0.02f),
+		GetElementSize(0.07f, 0.02f),
 		Alignment::TOP_LEFT,
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
-		"target round: " + std::to_string(appContext.constants.global.currentTargetRound)
+		"target round:"
+		);
+	m_elements.push_back(currentTargetRoundLabel);
+
+	m_currentTargetRound = std::make_shared<Text>(
+		GetElementPosition(0.67f, 0.12f),
+		GetElementSize(0.2f, 0.02f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		std::to_string(appContext.constants.global.currentTargetRound)
 		);
 	m_elements.push_back(m_currentTargetRound);
 
-	m_nextPlayerName = std::make_shared<Text>(
-		GetElementPosition(0.99f, 0.98f),
-		GetElementSize(0.13f, 0.02f),
-		Alignment::BOTTOM_RIGHT,
+
+	auto nextPlayerNameLabel = std::make_shared<Text>(
+		GetElementPosition(0.85f, 0.98f),
+		GetElementSize(0.06f, 0.02f),
+		Alignment::BOTTOM_LEFT,
 		m_resolution,
-		Alignment::BOTTOM_RIGHT,
+		Alignment::BOTTOM_LEFT,
 		0.02f,
 		"next player:"
+		);
+	m_elements.push_back(nextPlayerNameLabel);
+
+	m_nextPlayerName = std::make_shared<Text>(
+		GetElementPosition(0.91f, 0.98f),
+		GetElementSize(0.13f, 0.02f),
+		Alignment::BOTTOM_LEFT,
+		m_resolution,
+		Alignment::BOTTOM_LEFT,
+		0.02f,
+		""
 		);
 	m_elements.push_back(m_nextPlayerName);
 }
@@ -181,8 +227,8 @@ void MainScene::NextRound() {
 	SetPlayerText();
 	InitialzeGalaxy();
 
-	m_currentRound->SetText("current round: " +	std::to_string(appContext.constants.global.currentRound));
-	m_currentTargetRound->SetText("target round: " +	std::to_string(appContext.constants.global.currentTargetRound));
+	m_currentRound->SetText(std::to_string(appContext.constants.global.currentRound));
+	m_currentTargetRound->SetText(std::to_string(appContext.constants.global.currentTargetRound));
 
 	auto event = ShowMessagePopUpEvent(
 		"start round",
@@ -195,21 +241,8 @@ void MainScene::NextRound() {
 
 void MainScene::SetPlayerText() {
 
-	if (m_currentPlayer.ID != 0) {
-		std::string playerName = m_currentPlayer.name;
-		m_currentPlayerName->SetText("current player: " + playerName);
-	}
-	else {
-		m_currentPlayerName->SetText("current player: no player");
-	}
-
-	if (m_nextPlayer.ID != 0) {
-		std::string playerName = m_nextPlayer.name;
-		m_nextPlayerName->SetText("next player: " + playerName);
-	}
-	else {
-		m_nextPlayerName->SetText("next player: no player");
-	}
+	m_currentPlayerName->SetText(m_currentPlayer.name);
+	m_nextPlayerName->SetText(m_nextPlayer.name);
 }
 
 void MainScene::Switch(MainSceneType sceneType) {

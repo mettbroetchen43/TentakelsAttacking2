@@ -15,7 +15,7 @@
 class PlayerCollection final : public EventListener {
 private:
 	std::vector<PlayerData> m_playerData;
-	PlayerData m_defaultPlayer = { 0,"", WHITE };
+	PlayerData m_defaultPlayer = { 0,"no player", WHITE };
 
 	[[nodiscard]] bool ContainsName(std::string const& name) const;
 	[[nodiscard]] bool ContainsColor(Color color) const;
