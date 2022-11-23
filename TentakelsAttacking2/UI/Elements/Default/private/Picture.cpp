@@ -9,21 +9,22 @@
 #include <iostream>
 
 Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	AssetType assetType)
-	: UIElement(pos, size, alignment, resolution) {
+	AssetType assetType, bool scaleToFit)
+	: UIElement(pos, size, alignment, resolution), m_isScaleToFit(scaleToFit) {
 	m_texture = AppContext::GetInstance().assetManager.GetTexture(assetType);
 
-	float tempSize = m_size.x;
-	m_size.x =
-		static_cast<float>(m_texture->width) / m_texture->height
-		* resolution.y / resolution.x
-		* m_size.y;
-	m_pos.x -= (m_size.x - tempSize) / 2;
-	UpdateColider();
+	if (m_isScaleToFit) {
+		float tempSize = m_size.x;
+		m_size.x =
+			static_cast<float>(m_texture->width) / m_texture->height
+			* resolution.y / resolution.x
+			* m_size.y;
+		m_pos.x -= (m_size.x - tempSize) / 2;
+		UpdateColider();
+	}
 }
 
-void Picture::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
-	[[maybe_unused]] AppContext const& appContext) { }
+void Picture::CheckAndUpdate(Vector2 const& ,AppContext const& ) { }
 void Picture::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawTexturePro(
 		*m_texture,

@@ -90,7 +90,6 @@ void Slider::MoveButtonIfColiderIsPressed(Vector2 const& mousePosition) {
 
 	Slide();
 }
-
 void Slider::SlideIfScroll() {
 	if (!m_isScroll) { return; }
 	if (m_isPressed) { return; }
@@ -123,7 +122,6 @@ void Slider::SlideIfScroll() {
 	m_btn.SetCollider(btnColider);
 	CalculateOnSlide();
 }
-
 void Slider::SetOffset(Vector2 mousePosition) {
 
 	auto btnColider = m_btn.GetColider();

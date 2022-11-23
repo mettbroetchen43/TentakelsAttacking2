@@ -9,8 +9,7 @@ Line::Line(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	float thick)
 	: UIElement(pos, size, alignment, resolution), m_thick(thick) { }
 
-void Line::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition,
-	[[maybe_unused]] AppContext const& appContext) { }
+void Line::CheckAndUpdate(Vector2 const& ,AppContext const& ) { }
 void Line::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawLineEx(
 		Vector2(
