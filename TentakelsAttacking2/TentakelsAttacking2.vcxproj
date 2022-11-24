@@ -135,6 +135,7 @@
       <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Galaxy/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
