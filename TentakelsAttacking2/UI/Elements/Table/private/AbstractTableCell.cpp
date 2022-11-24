@@ -14,8 +14,7 @@ void AbstractTableCell::CheckResizeCells(Vector2 resolution,
 
 AbstractTableCell::AbstractTableCell(unsigned int ID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution)
-	:Focusable(ID), UIElement(pos, size, alignment, resolution) {
-}
+	:Focusable(ID), UIElement(pos, size, alignment, resolution) { }
 
 void AbstractTableCell::SetEditable(bool editable) {
 	m_editable = editable;
