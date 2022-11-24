@@ -11,13 +11,13 @@
 #include <iostream>
 #include <functional>
 
-template<typename EntryType>
+template<typename T>
 class TableCell final : public AbstractTableCell {
 protected:
-	EntryType m_value;
+	T m_value;
 
 	std::function<void()> m_resizeCells = []() {};
-	std::function<void(TableCell*, EntryType, EntryType)> m_updated = [](TableCell*, EntryType, EntryType) {};
+	std::function<void(TableCell*, T, T)> m_updated = [](TableCell*, T, T) {};
 
 	Vector2 m_textPosition;
 	float m_textSize;
@@ -72,8 +72,8 @@ protected:
 		neededSize.y = neededSize.y > m_maxSize.y ? m_maxSize.y : neededSize.y;
 	}
 
-	void UpdateValue([[maybe_unused]] EntryType value) {
-		EntryType oldValue = m_value;
+	void UpdateValue([[maybe_unused]] T value) {
+		T oldValue = m_value;
 		m_value = value;
 		m_resizeCells();
 		m_updated(this, oldValue, m_value);
@@ -83,7 +83,7 @@ public:
 	TableCell(unsigned int ID, Vector2 pos, Vector2 size,
 		Alignment alignment, Vector2 resolution,
 		std::function<void()> resizeCells,
-		std::function<void(TableCell*, EntryType, EntryType)> updated)
+		std::function<void(TableCell*, T, T)> updated)
 		: AbstractTableCell(ID, pos, size, alignment, resolution),
 			m_resizeCells(resizeCells), m_updated(updated){
 
@@ -118,10 +118,10 @@ public:
 		}
 
 		if (ShouldEdit(mousePosition)) {
-			auto event = ShowCellPopUpEvent<EntryType>(
+			auto event = ShowCellPopUpEvent<T>(
 				"Edit Entry",
 				m_value,
-				[this](EntryType value) {this->UpdateValue(value);}
+				[this](T value) {this->UpdateValue(value);}
 			);
 			appContext.eventManager.InvokeEvent(event);
 		}
@@ -159,10 +159,10 @@ public:
 		};
 	}
 
-	[[nodiscard]] EntryType GetValue() const {
+	[[nodiscard]] T GetValue() const {
 		return m_value;
 	};
-	void SetValue(EntryType value, bool resize = false) {
+	void SetValue(T value, bool resize = false) {
 		m_value = value;
 		
 		if (resize) {

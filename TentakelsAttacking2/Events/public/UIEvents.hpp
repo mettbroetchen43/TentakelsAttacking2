@@ -242,22 +242,22 @@ public:
  * use this to edit a table cell.
  * this will "freeze" the ui until the popup is closed.
  */
-template <typename EntryType>
+template <typename T>
 class ShowCellPopUpEvent final : public PopUpEvent {
 private:
-	EntryType m_currentValue;
-	std::function<void(EntryType)> m_onClick = [](EntryType) {};
+	T m_currentValue;
+	std::function<void(T)> m_onClick = [](T) {};
 
 public:
 	ShowCellPopUpEvent(std::string const& title,
-		EntryType currentValue, std::function<void(EntryType)> onClick)
+		T currentValue, std::function<void(T)> onClick)
 		: PopUpEvent(title, ""), m_currentValue(currentValue),
 		m_onClick(onClick) { }
 
-	[[nodiscard]] EntryType GetCurrentValue() const {
+	[[nodiscard]] T GetCurrentValue() const {
 		return m_currentValue;
 	}
-	[[nodiscard]] std::function<void(EntryType)> GetOnClick() const {
+	[[nodiscard]] std::function<void(T)> GetOnClick() const {
 		return m_onClick;
 	}
 

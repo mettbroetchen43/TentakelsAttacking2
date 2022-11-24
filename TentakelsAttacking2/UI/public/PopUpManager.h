@@ -31,12 +31,12 @@ public:
 	void NewValidatePopUp(ShowValidatePopUp const* event);
 	void NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event);
 	void NewInitialSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event);
-	template<typename EntryType, typename eventType>
+	template<typename T, typename eventType>
 	void NewTableCellPopUp(eventType const* event) {
 		auto focusEvent = NewFocusPopUpLayerEvent();
 		m_appContext->eventManager.InvokeEvent(focusEvent);
 
-		m_popUps.push_back(std::make_unique<PrivitiveCellPopUp<EntryType>>(
+		m_popUps.push_back(std::make_unique<PrivitiveCellPopUp<T>>(
 			Vector2(0.5f, 0.5f),
 			Vector2(0.7f, 0.7f),
 			Alignment::MID_MID,

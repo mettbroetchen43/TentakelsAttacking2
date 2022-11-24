@@ -65,21 +65,21 @@ private:
 	[[nodiscard]] std::vector<float> GetNewColumnPosition(
 		std::vector<float> const& newColumnWidths) const;
 
-	template<typename EntryType>
+	template<typename T>
 	void SetCell(size_t row, size_t column) {
 		const size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
 		const bool isEditable = m_cells.at(index)->IsEnabled();
 		DeleteElementFocus(m_cells.at(index).get());
 
-		m_cells.at(index) = std::make_unique<TableCell<EntryType>>(
+		m_cells.at(index) = std::make_unique<TableCell<T>>(
 			static_cast<unsigned int>(index),
 			GetElementPosition(row, column),
 			GetElementSize(),
 			Alignment::DEFAULT,
 			m_resolution,
 			[this]() {this->ResizeCells();},
-			[this](AbstractTableCell const* cell, EntryType oldValue, EntryType newValue)
-			{this->CellUpdated<EntryType>(cell, oldValue, newValue);}
+			[this](AbstractTableCell const* cell, T oldValue, T newValue)
+			{this->CellUpdated<T>(cell, oldValue, newValue);}
 			);
 
 		m_cells.at(index)->SetEditable(isEditable);

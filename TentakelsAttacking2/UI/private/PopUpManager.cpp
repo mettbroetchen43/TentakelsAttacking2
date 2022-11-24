@@ -135,7 +135,7 @@ void PopUpManager::NewInitialSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent con
 	auto focusEvent = NewFocusPopUpLayerEvent();
 	m_appContext->eventManager.InvokeEvent(focusEvent);
 
-	m_popUps.push_back(std::make_unique<InitialSoundLevelPopUp>(
+	m_popUps.push_back(std::make_unique<SoundLevelPopUp>(
 		Vector2(0.5f,0.5f),
 		Vector2(0.5f,0.5f),
 		Alignment::MID_MID,

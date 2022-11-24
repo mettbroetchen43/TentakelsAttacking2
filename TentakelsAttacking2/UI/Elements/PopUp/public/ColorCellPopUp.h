@@ -7,16 +7,30 @@
 #include "CellPopUp.h"
 #include "ColorPicker.h"
 
+/**
+ * provides a specific type of the cell popup for colors.
+ */
 class ColorCellPopUp final : public CellPopUp {
 private:
-	std::shared_ptr<ColorPicker> m_colorPicker;
-	std::function<void(Color)> m_onClick = [](Color) {};
-
+	std::shared_ptr<ColorPicker> m_colorPicker; ///< contains a pointer of a color picker for coosing a new color.
+	std::function<void(Color)> m_onClick = [](Color) {}; ///< contains the onClick lambda that gets called when the new color is accepted
+	 
+	/**
+	 * initialize all ui elements.
+	 */
 	void Initialize(AppContext const& appContext,
 		Vector2 resolution, Color currentColor);
+	/**
+	 * gets the new color from the color picker and calls the onClick.
+	 * set should close afterwords.
+	 */
 	void SetValue() override;
 
 public:
+	/**
+	 * ctor.
+	 * only initialisation.
+	 */
 	ColorCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		std::string const& title, AssetType infoTexture, Color currentColor,
 		std::function<void(Color)> onClick);

@@ -7,23 +7,49 @@
 #include "PopUp.h"
 #include "ClassicButton.h"
 
+/**
+ * provides the casic cell popup for editing the table.
+ */
 class CellPopUp : public PopUp {
 protected:
-	bool m_shouldClose = false;
+	bool m_shouldClose = false; ///< centains if the popup should close an the end of the tick
 
+	/**
+	 * initializes all ui emelents.
+	 */
 	virtual void Initialize(AppContext const& appContext, Vector2 resolution);
 	[[nodiscard]] std::shared_ptr<ClassicButton> InitializeAcceptButton(
 		AppContext const& appContext, Vector2 resolution);
 
+	/**
+	 * sets the should close bool to true so this popup will close at the end of the tick.
+	 */
 	void SetShouldClose();
+	/**
+	 * virtual function to make shure every cell popup can set a value to the table.
+	 */
 	virtual void SetValue() = 0;
 
+	/**
+	 * checks if ender is pressed an sets the value if so.
+	 */
 	void CheckEnter();
+	/**
+	 * calls the close event at the end of the tick.
+	 */
 	void Close(AppContext const& appContext);
 public:
+	/**
+	 * ctor.
+	 * only initialisation.
+	 */
 	CellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		std::string const& title, AssetType infoTexture);
 
+	/**
+	 * cell popup logic.
+	 * gets extended by chiled classes.
+	 */
 	virtual void CheckAndUpdate(Vector2 const& mousePosition,
 		AppContext const& appContext) override;
 };
