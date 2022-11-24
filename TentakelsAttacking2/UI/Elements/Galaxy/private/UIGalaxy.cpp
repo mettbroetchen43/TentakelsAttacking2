@@ -109,7 +109,7 @@ void UIGalaxy::SelectPlanet(UIPlanet* planet) {
 	m_onPlanetClick(planet->GetID());
 }
 
-void UIGalaxy::CheckPosition() {
+void UIGalaxy::ClampsPositionAndSize() {
 	m_absoluteSize.x = m_absoluteSize.x < m_colider.x
 		? m_absoluteSize.x
 		: m_colider.x;
@@ -168,7 +168,7 @@ void UIGalaxy::MoveByKey(Direction direction, float speed) {
 			Slide(percent, true);
 			break;
 	}
-	CheckPosition();
+	ClampsPositionAndSize();
 	UpdatePlanetPosition();
 }
 void UIGalaxy::MoveByMouse(Vector2 mousePosition) {
@@ -183,7 +183,7 @@ void UIGalaxy::MoveByMouse(Vector2 mousePosition) {
 
 	m_lastMousePosition = mousePosition;
 
-	CheckPosition();
+	ClampsPositionAndSize();
 	PrepForOnSlide();
 	UpdatePlanetPosition();
 }
@@ -263,7 +263,7 @@ void UIGalaxy::Zoom(bool zoomIn, int factor) {
 
 	m_absoluteSize = newSize;
 
-	CheckPosition();
+	ClampsPositionAndSize();
 
 	m_onZoom(m_scaleFactor, GetCurrentScaleReference());
 	PrepForOnSlide();
@@ -280,7 +280,7 @@ void UIGalaxy::Slide(float position, bool isHorizontal) {
 		float offset = differenz / 100 * position;
 		m_absoluteSize.y = m_colider.y - offset;
 	}
-	CheckPosition();
+	ClampsPositionAndSize();
 	PrepForOnSlide();
 	UpdatePlanetPosition();
 }
