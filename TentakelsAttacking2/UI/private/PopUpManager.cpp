@@ -14,7 +14,7 @@ PopUpManager::PopUpManager(Vector2 resolution)
 }
 
 bool PopUpManager::IsActivePopUp() const {
-	return m_popUps.size() > 0;
+	return !m_popUps.empty();
 }
 
 void PopUpManager::OnEvent(Event const& event) {
@@ -55,7 +55,7 @@ void PopUpManager::OnEvent(Event const& event) {
 
 	// Initial Sound Pop Up
 	if (auto const PopUpEvent = dynamic_cast<ShowInitialSoundLevelPopUpEvent const*>(&event)) {
-		NewInitialSoundLevelPopUp(PopUpEvent);
+		NewSoundLevelPopUp(PopUpEvent);
 		return;
 	}
 
@@ -131,7 +131,7 @@ void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
 		)
 	);
 }
-void PopUpManager::NewInitialSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event) {
+void PopUpManager::NewSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event) {
 	auto focusEvent = NewFocusPopUpLayerEvent();
 	m_appContext->eventManager.InvokeEvent(focusEvent);
 
@@ -198,7 +198,7 @@ void PopUpManager::CheckAndUpdate(Vector2 const& mousePosition,
 		return;
 	}
 
-	m_popUps.at(m_popUps.size() - 1)->CheckAndUpdate(mousePosition, appContext);
+	m_popUps.back()->CheckAndUpdate(mousePosition, appContext);
 }
 void PopUpManager::Render(AppContext const& appContext) {
 	for (auto& p : m_popUps) {
