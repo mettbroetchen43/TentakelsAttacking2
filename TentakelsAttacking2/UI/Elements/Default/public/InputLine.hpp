@@ -261,7 +261,7 @@ public:
 	 * returns the current collider.
 	 */
 	[[nodiscard]] Rectangle GetCollider() const override {
-		return UIElement::GetColider();
+		return UIElement::GetCollider();
 	}
 	/**
 	 * returns if the inputline has any value.

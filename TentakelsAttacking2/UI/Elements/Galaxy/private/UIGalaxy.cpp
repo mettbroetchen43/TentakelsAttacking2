@@ -399,7 +399,7 @@ bool UIGalaxy::IsEnabled() const {
 	return m_isEnabled;
 }
 Rectangle UIGalaxy::GetCollider() const {
-	return UIElement::GetColider();
+	return UIElement::GetCollider();
 }
 
 void UIGalaxy::OnEvent(Event const& event) {

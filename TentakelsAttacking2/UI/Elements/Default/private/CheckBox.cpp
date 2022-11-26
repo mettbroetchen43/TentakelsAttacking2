@@ -72,7 +72,7 @@ bool CheckBox::IsEnabled() const {
 }
 
 Rectangle CheckBox::GetCollider() const {
-	return UIElement::GetColider();
+	return UIElement::GetCollider();
 }
 
 void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,

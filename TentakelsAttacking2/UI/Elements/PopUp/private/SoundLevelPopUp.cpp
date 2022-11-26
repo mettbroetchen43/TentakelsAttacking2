@@ -89,7 +89,7 @@ void SoundLevelPopUp::Render(AppContext const& appContext) {
 	PopUp::Render(appContext);
 
 	DrawRectangleLinesEx(
-		m_slider->GetColider(),
+		m_slider->GetCollider(),
 		2.0f,
 		WHITE
 	);

@@ -243,7 +243,7 @@ bool Table::IsEnabled() const {
 	return true;
 }
 Rectangle Table::GetCollider() const {
-	return UIElement::GetColider();
+	return UIElement::GetCollider();
 }
 
 size_t Table::GetRows() const {

@@ -24,7 +24,7 @@ void AbstractTableCell::SetEditable(bool editable) {
 }
 
 [[nodiscard]] Rectangle AbstractTableCell::GetCollider() const {
-	return UIElement::GetColider();
+	return UIElement::GetCollider();
 }
 
 void AbstractTableCell::SetPosX(float posX, Vector2 resolution,

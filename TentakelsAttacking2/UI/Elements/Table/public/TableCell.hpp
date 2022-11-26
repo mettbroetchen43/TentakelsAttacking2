@@ -216,7 +216,7 @@ public:
 	}
 	
 	[[nodiscard]] Rectangle GetCollider() const override {
-		return UIElement::GetColider();
+		return UIElement::GetCollider();
 	}
 };
 
