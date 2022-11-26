@@ -16,26 +16,57 @@
 class ClassicButton;
 class Title;
 
+/**
+ * provides the intro scene.
+ */
 class Intro final : public Scene {
 private:
-	std::shared_ptr<Title> m_title = nullptr;
-	std::shared_ptr<ClassicButton> m_btn = nullptr;
-	bool m_btnMovmendFinish = false;
-	float m_maxBtnPosition = 0.5f;
-	SceneType m_nextScene = SceneType::MAIN_MENU;
+	std::shared_ptr<Title> m_title = nullptr; ///< contains the title
+	std::shared_ptr<ClassicButton> m_btn = nullptr; ///< contains the next button.
+	bool m_btnMovmendFinish = false; ///< contains if the button has finished moving
+	float m_maxBtnPosition = 0.5f; ///< contains the finish position.y of the button.
+	SceneType m_nextScene = SceneType::MAIN_MENU; ///< contains the next Scene Type that will be loaded
 	
-	void Initialize(AppContext& appContext, Vector2 resolution);
+	/**
+	 * initializes all ui elements.
+	 * connects the actions.
+	 */
+	void Initialize();
 
+	/**
+	 * moves the button until the button reaches the max position.y.
+	 * calls move finish then.
+	 */
 	void MoveBtn();
+	/**
+	 * sets the button to the defined position.
+	 * sets moving button to false.
+	 */
 	void BtnMoveFinish();
 
-	void StartGame();
-
 public:
+	/**
+	 * ctor.
+	 * only initialization.
+	 */
 	Intro(Vector2 resolution);
 
+	/**
+	 * calls tite to animate, then enables and moves the button.
+	 * checks for skip input.
+	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
+	/**
+	 * calls all elements to render.
+	 */
 	void Render(AppContext const& appContext);
+	/**
+	 * calls all elements to resize.
+	 */
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	/**
+	 * sets scene active.
+	 * selects the button as focus.
+	 */
 	void SetActive(bool active, AppContext const& appContext) override;
 };
