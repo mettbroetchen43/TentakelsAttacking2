@@ -81,8 +81,6 @@ void SceneManager::SwitchScene(AppContext const& appCpntext) {
 	m_currentScene->SetActive(true, appCpntext);
 	m_currentSceneType = m_nextSceneType;
 
-
-
 	Print("Scene switched to " + GetStringBySceneType(m_currentSceneType));
 }
 
