@@ -114,7 +114,7 @@ void SliderAndInputLine::CheckAndUpdate(Vector2 const& mousePosition,
 			m_btn->SetEnabled(true);
 		} else {
 			m_slided = false;
-		}
+		} 
 	}
 }
 

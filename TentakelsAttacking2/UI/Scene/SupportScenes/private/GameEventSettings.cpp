@@ -164,7 +164,7 @@ void GameEventSettings::SetRandom() {
 	AppContext& appContext = AppContext::GetInstance();
 
 	for (auto& c : m_checkBoxes) {
-		if (c->GetID() == 0) { continue; }
+		if (c->GetID() == 0) { continue; } ///< id 0 is the gloabl check box
 
 		bool r = random.random(2) == 1;
 		if (c->IsChecked() != r) {
