@@ -1,7 +1,8 @@
 #
 # Purpur Tentakel
-# count config
+# File Count
 # 17.11.2022
+# Python 3.10.
 #
 
 import count_config as cc
