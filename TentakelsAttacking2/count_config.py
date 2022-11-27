@@ -13,6 +13,6 @@ error_files: list[str, ...] = [
 
 ]
 
-single_line_comment: str = "//"
-multi_line_comment_begin: str = "/*"
-multi_line_comment_end: str = "*/"
+single_line_comment: list[str, ...] = ['/', '/']
+multi_line_comment_begin: list[str, ...] = ['/', '*']
+multi_line_comment_end: list[str, ...] = ['*', '/']
