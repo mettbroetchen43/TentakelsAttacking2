@@ -6,6 +6,9 @@
 #pragma once
 #include <string>
 
+/**
+ * provides all main scene types.
+ */
 enum class SceneType {
 	TEST,
 	LOGO,
@@ -20,4 +23,7 @@ enum class SceneType {
 	NONE,
 };
 
+/**
+ * returns a string representation of an main scene type.
+ */
 [[nodiscard]] std::string GetStringBySceneType(SceneType sceneType);

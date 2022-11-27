@@ -13,12 +13,12 @@
 #include <memory>
 
 
-void LogoScene::Initialize(Vector2 resolution) {
+void LogoScene::Initialize() {
 	auto logo = std::make_shared<Picture>(
 		GetElementPosition(0.5f, 0.1f),
 		GetElementSize(0.0f, 0.5f),
 		Alignment::TOP_MID,
-		resolution,
+		m_resolution,
 		AssetType::LOGO
 		);
 	m_elements.push_back(logo);
@@ -27,7 +27,7 @@ void LogoScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.65f),
 		GetElementSize(0.45f, 0.1f),
 		Alignment::TOP_MID,
-		resolution,
+		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
 		"A Purpur Tentakel production"
@@ -38,7 +38,7 @@ void LogoScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.99f, 0.98f),
 		GetElementSize(0.11f, 0.03f),
 		Alignment::BOTTOM_RIGHT,
-		resolution,
+		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		"skip with [ESC]"
@@ -49,7 +49,7 @@ void LogoScene::Initialize(Vector2 resolution) {
 LogoScene::LogoScene(Vector2 resolution)
 	:Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution),
 	m_time(GetTime()) {
-	Initialize(resolution);
+	Initialize();
 }
 void LogoScene::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
@@ -74,8 +74,4 @@ void LogoScene::Resize(Vector2 resolution, AppContext const& appContext){
 	for (auto e : m_elements) {
 		e->Resize(resolution, appContext);
 	}
-}
-
-void LogoScene::SetActive(bool active, AppContext const& appContext) {
-	Scene::SetActive(active, appContext);
 }

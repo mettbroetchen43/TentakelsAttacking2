@@ -271,7 +271,7 @@ void NewGamePlayerScene::UpdatePlayer(unsigned int ID, std::string const& name,
 
 	UpdateSceneEntries(appContext);
 }
-void NewGamePlayerScene::UpdatePlayerName([[maybe_unused]] AbstractTableCell const* cell,
+void NewGamePlayerScene::UpdatePlayerName(AbstractTableCell const*,
 	std::string oldValue, std::string newValue) {
 
 	AppContext& appContext = AppContext::GetInstance();
@@ -284,7 +284,7 @@ void NewGamePlayerScene::UpdatePlayerName([[maybe_unused]] AbstractTableCell con
 		appContext
 	);
 }
-void NewGamePlayerScene::UpdatePlayerColor([[maybe_unused]] AbstractTableCell const* cell,
+void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell const*,
 	Color oldValue, Color newValue){
 	AppContext& appContext = AppContext::GetInstance();
 	PlayerData playerData = appContext.playerCollection.GetPlayerByColor(oldValue);

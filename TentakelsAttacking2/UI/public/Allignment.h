@@ -6,6 +6,9 @@
 #pragma once
 #include <raylib.h>
 
+/**
+ * provides the over all alignment.
+ */
 enum class Alignment {
 	TOP_LEFT,
 	TOP_MID,
@@ -18,6 +21,9 @@ enum class Alignment {
 	BOTTOM_RIGHT,
 	DEFAULT,
 };
+/**
+ * provides the text alignment.
+ */
 enum class TextAlignment {
 	TOP,
 	MID,
@@ -26,8 +32,17 @@ enum class TextAlignment {
 	RIGHT,
 };
 
+/**
+ * recalculates the position witch the size and alignment.
+ */
 Rectangle GetAlignedCollider(Vector2& pos, Vector2 size,
 	Alignment allignment, Vector2 resolution);
 
+/**
+ * converts the over all alignment into horisontal text alignment.
+ */
 [[nodiscard]] TextAlignment GetHorisontalTextAlignment(Alignment alignment);
+/**
+ * converts the over all alignment into vertical text alignment.
+ */
 [[nodiscard]] TextAlignment GetVerticalTextAlignment(Alignment alignment);

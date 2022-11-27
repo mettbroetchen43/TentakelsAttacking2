@@ -7,6 +7,10 @@
 # include "Scene.h"
 # include "Table.h"
 
+/**
+ * no doc here.
+ * this contains the test scene that is only unsed to diplay new featurs temporary.
+ */
 class TestScene : public Scene {
 private:
 

@@ -243,7 +243,7 @@ bool Table::IsEnabled() const {
 	return true;
 }
 Rectangle Table::GetCollider() const {
-	return UIElement::GetColider();
+	return UIElement::GetCollider();
 }
 
 size_t Table::GetRows() const {
@@ -289,6 +289,7 @@ void Table::SetHeadlines(std::vector<std::string> const& headlines,
 
 	for (int i = 0; i < m_columns; ++i) {
 		SetValue<std::string>(0, i, headlines.at(i), false);
+		SetSingleCellEditable(0, i, false);
 	}
 
 	if (resizeCells) {

@@ -4,6 +4,9 @@
 //
 
 #pragma once
+/**
+ * just bundles all popup includes
+ */
 
 // Main
 #include "PopUp.h"
@@ -23,4 +26,4 @@
 #include "ColorCellPopUp.h"
 
 // Sound
-#include "InitialSoundLevelPopUp.h"
+#include "SoundLevelPopUp.h"

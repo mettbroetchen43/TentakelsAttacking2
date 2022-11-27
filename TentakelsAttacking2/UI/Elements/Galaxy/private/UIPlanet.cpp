@@ -69,5 +69,5 @@ void UIPlanet::SetEnabled(bool isEnabled) {
 }
 
 Rectangle UIPlanet::GetCollider() const {
-	return UIElement::GetColider();
+	return UIElement::GetCollider();
 }

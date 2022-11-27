@@ -135,6 +135,7 @@
       <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Table/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Galaxy/public;UI/Elements/Default/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,6 +166,7 @@
     <ClInclude Include="Game\public\LogicUpdate.hpp" />
     <ClInclude Include="Helper\public\GameEventTypes.hpp" />
     <ClInclude Include="Helper\public\HColors.h" />
+    <ClInclude Include="Helper\public\HConcepts.hpp" />
     <ClInclude Include="Helper\public\HFocusEvents.h" />
     <ClInclude Include="Helper\public\HInput.h" />
     <ClInclude Include="Helper\public\HPlayerCollection.h" />
@@ -187,7 +189,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\CellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\ColorCellPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\DeletePlayerPopUp.h" />
-    <ClInclude Include="UI\Elements\PopUp\public\InitialSoundLevelPopUp.h" />
+    <ClInclude Include="UI\Elements\PopUp\public\SoundLevelPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\ValidatePopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\PrimitiveCellPopUp.hpp" />
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h" />
@@ -262,7 +264,7 @@
     <ClCompile Include="UI\Elements\PopUp\private\PopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\MessagePopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\DeletePlayerPopUp.cpp" />
-    <ClCompile Include="UI\Elements\PopUp\private\InitialSoundLevelPopUp.cpp" />
+    <ClCompile Include="UI\Elements\PopUp\private\SoundLevelPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\ValidatePopUp.cpp" />
     <ClCompile Include="UI\Elements\Table\private\EmptyCell.cpp" />
     <ClCompile Include="UI\Elements\Table\private\AbstractTableCell.cpp" />

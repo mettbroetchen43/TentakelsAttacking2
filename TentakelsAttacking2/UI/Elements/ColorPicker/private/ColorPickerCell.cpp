@@ -42,7 +42,7 @@ bool ColorPickerCell::IsEnabled() const {
 	return m_enabled;
 }
 Rectangle ColorPickerCell::GetCollider() const {
-	return UIElement::GetColider();
+	return UIElement::GetCollider();
 }
 
 void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,

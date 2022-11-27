@@ -99,15 +99,18 @@ void UIManager::UILoop() {
 }
 
 UIManager::UIManager()
-	: m_appContext(AppContext::GetInstance()), m_resolution({ 0.0f,0.0f }), m_sceneManager(this) {
+	: m_appContext(AppContext::GetInstance()), m_resolution(GetResolution()), m_sceneManager(this) {
 	
 	SetExitKey(KeyboardKey::KEY_NULL);
 
-	m_resolution = GetResolution();
 	SetWindowSize(static_cast<int>(m_resolution.x), static_cast<int>(m_resolution.y));
 	m_appContext.eventManager.AddListener(this);
 
 	Print("UIManager", PrintType::INITIALIZE);
+}
+
+UIManager::~UIManager() {
+	m_appContext.eventManager.RemoveListener(this);
 }
 
 void UIManager::StartUI() {

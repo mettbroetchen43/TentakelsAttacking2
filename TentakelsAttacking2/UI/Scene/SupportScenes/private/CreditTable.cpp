@@ -11,14 +11,14 @@
 #include <stdexcept>
 
 
-void CreditTableScene::Initialize(Vector2 resolution, std::string const& headline, 
+void CreditTableScene::Initialize(std::string const& headline, 
 	creditEntries const& entries, bool containsLink) {
 	// headline
 	auto headlineText = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.0f),
 		GetElementSize(0.8f, 0.15f),
 		Alignment::TOP_MID,
-		resolution,
+		m_resolution,
 		Alignment::TOP_MID,
 		0.15f * m_size.y,
 		headline
@@ -29,7 +29,7 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 		GetElementPosition(0.5f, 0.15f),
 		GetElementSize(0.7f, 0.0f),
 		Alignment::TOP_MID,
-		resolution,
+		m_resolution,
 		3.0f
 	);
 	m_elements.push_back(headlineLine);
@@ -50,7 +50,7 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 				GetElementPosition(0.49f, 0.2f + textHeight * i),
 				GetElementSize(0.5f, textHeight),
 				Alignment::TOP_RIGHT,
-				resolution,
+				m_resolution,
 				Alignment::TOP_RIGHT,
 				textHeight * m_size.y,
 				e.at(position)
@@ -67,7 +67,7 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 				GetElementPosition(0.51f, 0.2f + textHeight * i),
 				GetElementSize(0.5f, textHeight),
 				Alignment::TOP_LEFT,
-				resolution,
+				m_resolution,
 				Alignment::TOP_LEFT,
 				textHeight * m_size.y,
 				e.at(position)
@@ -85,7 +85,7 @@ void CreditTableScene::Initialize(Vector2 resolution, std::string const& headlin
 				GetElementPosition(0.5f, 0.23f + textHeight * i),
 				GetElementSize(0.5f, textHeight),
 				Alignment::MID_MID,
-				resolution,
+				m_resolution,
 				Alignment::MID_MID,
 				textHeight * m_size.y,
 				e.at(position)
@@ -105,5 +105,5 @@ CreditTableScene::CreditTableScene(Vector2 pos, Vector2 size, Alignment alignmen
 	Vector2 resolution, std::string const& headline, creditEntries const& entries,
 	bool containsLink)
 	: Scene(pos, size, alignment, resolution) {
-	Initialize(resolution, headline, entries, containsLink);
+	Initialize(headline, entries, containsLink);
 }

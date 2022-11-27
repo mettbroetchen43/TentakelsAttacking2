@@ -61,12 +61,19 @@ Focusable* Scene::GetFocusableByFocusID(unsigned int ID) const {
 			}
 		}
 	}
+	for (auto element : m_elementsOutUpdates) {
+		if (auto focus = dynamic_cast<Focusable*>(element.get())) {
+			if (focus->GetFocusID() == ID) {
+				return focus;
+			}
+		}
+	}
 	return nullptr;
 }
 
 	
 Scene::Scene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
-	:UIElement(pos, size, alignment, resolution), m_firstFocusID(0) { }
+	:UIElement(pos, size, alignment, resolution) { }
 
 bool Scene::IsActive() const {
 	return m_active;
@@ -94,6 +101,14 @@ void Scene::SetPosition(Vector2 pos) {
 		};
 		e->SetPosition(ePos);
 	}
+	for (auto e : m_elementsOutUpdates) {
+		Vector2 ePos = e->GetPosition();
+		ePos = {
+			ePos.x - dif.x,
+			ePos.y - dif.y
+		};
+		e->SetPosition(ePos);
+	}
 
 	UIElement::SetPosition(pos);
 }
@@ -104,6 +119,14 @@ void Scene::SetSize(Vector2 size) {
 	};
 
 	for (auto e : m_elements) {
+		Vector2 eSize = e->GetSize();
+		eSize = {
+			eSize.x - dif.x,
+			eSize.y - dif.y
+		};
+		e->SetSize(eSize);
+	}
+	for (auto e : m_elementsOutUpdates) {
 		Vector2 eSize = e->GetSize();
 		eSize = {
 			eSize.x - dif.x,

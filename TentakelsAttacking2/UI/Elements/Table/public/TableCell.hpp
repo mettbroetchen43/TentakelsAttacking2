@@ -11,20 +11,26 @@
 #include <iostream>
 #include <functional>
 
-template<typename EntryType>
+/**
+ * provides a cell for the table call that can handle premitive datatypes.
+ */
+template<typename T>
 class TableCell final : public AbstractTableCell {
 protected:
-	EntryType m_value;
+	T m_value; ///< contains the current value
 
-	std::function<void()> m_resizeCells = []() {};
-	std::function<void(TableCell*, EntryType, EntryType)> m_updated = [](TableCell*, EntryType, EntryType) {};
+	std::function<void()> m_resizeCells = []() {}; ///< contains the resize lambda -> gets called to trigger the table to resize the sells
+	std::function<void(TableCell*, T, T)> m_updated = [](TableCell*, T, T) {}; ///< conains a lambda that provides that the value has chanced
 
-	Vector2 m_textPosition;
-	float m_textSize;
-	float m_textMargin;
-	Vector2 m_minSize;
-	Vector2 m_maxSize;
+	Vector2 m_textPosition; ///< contains the value position
+	float m_textSize; ///< contains the text size
+	float m_textMargin; ///< contains the text margin on the left side
+	Vector2 m_minSize; ///< contains the min size the cell needs
+	Vector2 m_maxSize; ///< contains the max size the cell needs
 
+	/**
+	 * returns whether the cell meets the requirements for the content to be updated.
+	 */
 	[[nodiscard]] bool ShouldEdit(Vector2 const& mousePosition) const {
 		bool edit = false;
 
@@ -51,6 +57,9 @@ protected:
 
 		return edit;
 	}
+	/**
+	 * calctulates and returns the size the cell needs to display the value perfectly. 
+	 */
 	[[nodiscard]] Vector2 CalculateNeededSize(Vector2& textSize) const {
 		textSize.x += 2 * m_textMargin;
 		textSize.y += m_textSize;
@@ -64,6 +73,9 @@ protected:
 
 		return neededSize;
 	}
+	/**
+	 * claps the calculated needed size between min and max.
+	 */
 	void ClampNeededSize(Vector2& neededSize) const {
 		neededSize.x = neededSize.x < m_minSize.x ? m_minSize.x : neededSize.x;
 		neededSize.x = neededSize.x > m_maxSize.x ? m_maxSize.x : neededSize.x;
@@ -72,18 +84,25 @@ protected:
 		neededSize.y = neededSize.y > m_maxSize.y ? m_maxSize.y : neededSize.y;
 	}
 
-	void UpdateValue([[maybe_unused]] EntryType value) {
-		EntryType oldValue = m_value;
+	/**
+	 * update the value to the provided value and calls the cells to resize.
+	 */
+	void UpdateValue([[maybe_unused]] T value) {
+		T oldValue = m_value;
 		m_value = value;
 		m_resizeCells();
 		m_updated(this, oldValue, m_value);
 	}
 
 public:
+	/**
+	 * ctor.
+	 * sets sizes.
+	 */
 	TableCell(unsigned int ID, Vector2 pos, Vector2 size,
 		Alignment alignment, Vector2 resolution,
 		std::function<void()> resizeCells,
-		std::function<void(TableCell*, EntryType, EntryType)> updated)
+		std::function<void(TableCell*, T, T)> updated)
 		: AbstractTableCell(ID, pos, size, alignment, resolution),
 			m_resizeCells(resizeCells), m_updated(updated){
 
@@ -104,6 +123,9 @@ public:
 			};
 	}
 
+	/**
+	 * cell logic.
+	 */
 	virtual void CheckAndUpdate(Vector2 const& mousePosition,
 		AppContext const& appContext) override {
 		if (!m_editable) {
@@ -118,14 +140,17 @@ public:
 		}
 
 		if (ShouldEdit(mousePosition)) {
-			auto event = ShowCellPopUpEvent<EntryType>(
+			auto event = ShowCellPopUpEvent<T>(
 				"Edit Entry",
 				m_value,
-				[this](EntryType value) {this->UpdateValue(value);}
+				[this](T value) {this->UpdateValue(value);}
 			);
 			appContext.eventManager.InvokeEvent(event);
 		}
 	}
+	/**
+	 * renders the cell.
+	 */
 	void Render(AppContext const& appContext) override {
 		std::string printableValue = GetPritablePlaceholderTextInColider(
 			std::to_string(m_value).c_str(),
@@ -148,6 +173,9 @@ public:
 			WHITE
 		);
 	}
+	/**
+	 * resizes the cell.
+	 */
 	void Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) override {
 		
 		UIElement::Resize(resolution, appContext);
@@ -159,10 +187,13 @@ public:
 		};
 	}
 
-	[[nodiscard]] EntryType GetValue() const {
+	/**
+	 * returns the current value.
+	 */
+	[[nodiscard]] T GetValue() const {
 		return m_value;
 	};
-	void SetValue(EntryType value, bool resize = false) {
+	void SetValue(T value, bool resize = false) {
 		m_value = value;
 		
 		if (resize) {
@@ -170,6 +201,9 @@ public:
 		}
 	};
 
+	/**
+	 * calctulates and returns the size the cell needs to display the value perfectly.
+	 */
 	[[nodiscard]] virtual Vector2 GetNeededSize() override {
 		Vector2 textSize = MeasureTextEx(
 			*(AppContext::GetInstance().assetManager.GetFont()),
@@ -182,12 +216,15 @@ public:
 	}
 	
 	[[nodiscard]] Rectangle GetCollider() const override {
-		return UIElement::GetColider();
+		return UIElement::GetCollider();
 	}
 };
 
 
-// needed size 
+/**
+ * calctulates and returns the size the cell needs to display the value perfectly.
+ * overloat is needed because std::to_string doesnt provide an overloat for std::string.
+ */
 template<>
 [[nodiscard]] inline Vector2 TableCell<std::string>::GetNeededSize() {
 	Vector2 textSize = MeasureTextEx(
@@ -199,12 +236,20 @@ template<>
 
 	return CalculateNeededSize(textSize);
 }
+/**
+ * returns the size for a color cell.
+ * overlaot is needed because its not possible to measue the size of an color.
+ */
 template<>
 [[nodiscard]] inline Vector2 TableCell<Color>::GetNeededSize() {
 	Vector2 neededSize = { 0.05f, 0.1f };
 	return neededSize;
 }
 
+/**
+ * renders the string cell.
+ * overloat is needed because std::to_string doesnt provide an overloat for std::string.
+ */
 template<>
 inline void TableCell<std::string>::Render(AppContext const& appContext) {
 	std::string printableValue = GetPritablePlaceholderTextInColider(
@@ -229,6 +274,10 @@ inline void TableCell<std::string>::Render(AppContext const& appContext) {
 	);
 }
 
+/**
+ * renders the color cell.
+ * overloat is needed because std::to_string doesnt provide an overloat for a color.
+ */
 template<>
 inline void TableCell<Color>::Render([[maybe_unused]]AppContext const& appContext) {
 	float spacing = 5.0f;

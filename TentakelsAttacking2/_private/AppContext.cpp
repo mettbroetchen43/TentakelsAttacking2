@@ -61,15 +61,15 @@ void AppContext::Validate() {
 		constants.world.maxDiemnsionY);
 
 	// Sound
-	ValidateLowerThan<float>(constants.sound.masterVolume, 100.0f, "Master Volume");
-	ValidateGreaterThan<float>(constants.sound.masterVolume, 0.0f, "Master Volume");
+	ValidateLowerEqual<float>(constants.sound.masterVolume, 100.0f, "Master Volume");
+	ValidateGreaterEqual<float>(constants.sound.masterVolume, 0.0f, "Master Volume");
 
 	// Planet
-	ValidateLowerThan<float>(constants.planet.homeworldSpacing, 1.0f, "Homeworld Spacing");
-	ValidateGreaterThan<float>(constants.planet.homeworldSpacing, 0.0f, "Homeworld Spacing");
+	ValidateLowerEqual<float>(constants.planet.homeworldSpacing, 1.0f, "Homeworld Spacing");
+	ValidateGreaterEqual<float>(constants.planet.homeworldSpacing, 0.0f, "Homeworld Spacing");
 
-	ValidateLowerThan<float>(constants.planet.globalSpacing, 1.0f, "Global Spacing");
-	ValidateGreaterThan<float>(constants.planet.globalSpacing, 0.0f, "Global Spacing");
+	ValidateLowerEqual<float>(constants.planet.globalSpacing, 1.0f, "Global Spacing");
+	ValidateGreaterEqual<float>(constants.planet.globalSpacing, 0.0f, "Global Spacing");
 }
 
 void AppContext::OnEvent(Event const& event) {

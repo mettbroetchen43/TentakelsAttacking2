@@ -19,7 +19,13 @@ class Focusable;
 class PopUp;
 enum class SceneType;
 
+/**
+ * use this to close the program at the end of one cyclus.
+ */
 class CloseWindowEvent final : public Event { };
+/**
+ * use this to set the target fps in the constatns an the raylib.
+ */
 class SetTargetFPSEvent final : public Event {
 private:
 	size_t m_fps;
@@ -33,6 +39,9 @@ public:
 	}
 };
 
+/**
+ * use this to play any sound inside the sound manager.
+ */
 class PlaySoundEvent final : public Event {
 public:
 	PlaySoundEvent(SoundType soundType)
@@ -44,6 +53,9 @@ public:
 private:
 	SoundType m_soundType;
 };
+/**
+ * use this to set the master volume in the constants and the raylib.
+ */
 class SetMasterVolumeEvent final : public Event {
 private:
 	float m_level;
@@ -56,6 +68,9 @@ public:
 		return m_level;
 	}
 };
+/**
+ * use this to set the mute in the constants and the set the volume of raylib to 0.
+ */
 class MuteMasterVolumeEvent final : public Event {
 private:
 	bool m_mute;
@@ -69,6 +84,9 @@ public:
 	}
 };
 
+/**
+ * general focus event to provide an focusable* to the Focus system.
+ */
 class FocusEvent : public Event {
 protected:
 	Focusable* m_focusable;
@@ -81,37 +99,88 @@ public:
 		return m_focusable;
 	}
 };
+/**
+ * use this to add an element to the focus.
+ * is held back in the case of a popup.
+ */
 class NewFocusElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
+/**
+ * use this to add an element to the focus.
+ * this is alway executed and blocks other elements until the popup is closed.
+ */
 class NewFocusPopUpElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
+/**
+ * use this to delete an element to the focus.
+ * is held back in the case of a popup.
+ */
 class DeleteFocusElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
+/**
+ * use this to delete an element to the focus.
+ * this is alway executed and blocks other elements until the popup is closed.
+ */
 class DeleteFocusPopUpElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
+/**
+ * use this to select an element to the focus.
+ * is held back in the case of a popup.
+ */
 class SelectFocusElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
+/**
+ * use this to select an element to the focus.
+ * this is alway executed and blocks other elements until the popup is closed.
+ */
 class SelectFocusPopUpElementEvent final : public FocusEvent {
 public:
 	using FocusEvent::FocusEvent;
 };
+/**
+ * use this to select any next element to the focus.
+ */
 class SelectNextFocusElementEvent final: public Event { };
+/**
+ * use this to add an layer to the focus.
+ * this is alway executed and blocks other elements until the popup is closed.
+ */
 class NewFocusPopUpLayerEvent final :public Event { };
+/**
+ * use this to add an layer to the focus.
+ * is held back in the case of a popup.
+ */
 class NewFocusLayerEvent final :public Event { };
+/**
+ * use this to delete an layer of the focus.
+ * this is alway executed and blocks other elements until the popup is closed.
+ */
 class DeleteFocusPopUpLayerEvent final : public Event { };
+/**
+ * use this to delete an layer of the focus.
+ * is held back in the case of a popup.
+ */
 class DeleteFocusLayerEvent final : public Event { };
+/**
+ * use this to delete all layer of the focus.
+ * this is alway executed.
+ */
 class ClearFocusEvent final : public Event { };
 
+/**
+ * use this to switch the scene at the end of a term.
+ * unloads the old scene and loands a new one
+ */
 class SwitchSceneEvent final :public Event {
 private:
 	SceneType m_sceneType;
@@ -122,6 +191,9 @@ public:
 		return m_sceneType;
 	}
 };
+/**
+ * use this to close the last popup generated.
+ */
 class ClosePopUpEvent final : public Event {
 private:
 	PopUp* m_popUp;
@@ -133,6 +205,9 @@ public:
 		return m_popUp;
 	}
 };
+/**
+ * genereal popup evenbt to provide title and subtitle
+ */
 class PopUpEvent : public Event {
 private:
 	std::string m_title;
@@ -149,6 +224,10 @@ public:
 		return m_subTitle;
 	}
 };
+/**
+ * use this to show a popup message.
+ * this will "freeze" the ui until the popup is closed.
+ */
 class ShowMessagePopUpEvent final : public PopUpEvent {
 private:
 	std::function<void()> m_callback = []() {};
@@ -159,27 +238,34 @@ public:
 		return m_callback;
 	}
 };
-
-template <typename EntryType>
+/**
+ * use this to edit a table cell.
+ * this will "freeze" the ui until the popup is closed.
+ */
+template <typename T>
 class ShowCellPopUpEvent final : public PopUpEvent {
 private:
-	EntryType m_currentValue;
-	std::function<void(EntryType)> m_onClick = [](EntryType) {};
+	T m_currentValue;
+	std::function<void(T)> m_onClick = [](T) {};
 
 public:
 	ShowCellPopUpEvent(std::string const& title,
-		EntryType currentValue, std::function<void(EntryType)> onClick)
+		T currentValue, std::function<void(T)> onClick)
 		: PopUpEvent(title, ""), m_currentValue(currentValue),
 		m_onClick(onClick) { }
 
-	[[nodiscard]] EntryType GetCurrentValue() const {
+	[[nodiscard]] T GetCurrentValue() const {
 		return m_currentValue;
 	}
-	[[nodiscard]] std::function<void(EntryType)> GetOnClick() const {
+	[[nodiscard]] std::function<void(T)> GetOnClick() const {
 		return m_onClick;
 	}
 
 };
+/**
+ * use this to delete a player by id.
+ * this will "freeze" the ui until the popup is closed.
+ */
 class ShowDeletePlayerPopUpEvent final : public PopUpEvent {
 	std::function<void(unsigned int)> m_onClick = [](unsigned int) {};
 
@@ -192,6 +278,11 @@ public:
 		return m_onClick;
 	}
 };
+/**
+ * use this to validate a current Situaltion.
+ * will call a callback function that returns a bool
+ * this will "freeze" the ui until the popup is closed.
+ */
 class ShowValidatePopUp final : public PopUpEvent {
 private:
 	std::function<void(bool)> m_callback;
@@ -204,8 +295,15 @@ public:
 		return m_callback;
 	}
 };
+/**
+ * use this to set the sound level.
+ * this will "freeze" the ui until the popup is closed.
+ */
 class ShowInitialSoundLevelPopUpEvent final : public PopUpEvent {
 public:
 	using PopUpEvent::PopUpEvent;
 };
+/**
+ * use this to trigger the appcontext to toggle fullscreen.
+ */
 class ToggleFullscreenEvent final : public Event { };

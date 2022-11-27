@@ -16,12 +16,13 @@
 
 #define BTN_SPEED 0.2f
 
-void Intro::Initialize(AppContext& appContext, Vector2 resolution) {
+void Intro::Initialize( ) {
+	AppContext& appContext = AppContext::GetInstance();
 	m_title = std::make_shared<Title>(
 		GetElementPosition(0.5f, 0.1f),
 		GetElementSize(0.9f, 0.3f),
 		Alignment::TOP_MID,
-		resolution,
+		m_resolution,
 		true,
 		appContext
 		);
@@ -32,7 +33,7 @@ void Intro::Initialize(AppContext& appContext, Vector2 resolution) {
 		GetElementPosition(0.5f, 1.1f),
 		GetElementSize(0.3f, 0.2f),
 		Alignment::MID_MID,
-		resolution,
+		m_resolution,
 		"Start Game",
 		SoundType::ACCEPTED
 		);
@@ -43,7 +44,7 @@ void Intro::Initialize(AppContext& appContext, Vector2 resolution) {
 		GetElementPosition(0.99f, 0.98f),
 		GetElementSize(0.11f, 0.03f),
 		Alignment::BOTTOM_RIGHT,
-		resolution,
+		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		"skip with [ESC]"
@@ -51,8 +52,8 @@ void Intro::Initialize(AppContext& appContext, Vector2 resolution) {
 	m_elements.push_back(skipText);
 
 
-	std::function<void()> gameStart = [this]() {
-		this->StartGame();
+	std::function<void()> gameStart = []() {
+		AppContext::GetInstance().eventManager.InvokeEvent(SwitchSceneEvent(SceneType::MAIN_MENU));
 	};
 	m_btn->SetOnClick(gameStart);
 }
@@ -76,16 +77,9 @@ void Intro::BtnMoveFinish(){
 	appContext.eventManager.InvokeEvent(event);
 }
 
-void Intro::StartGame() {
-	auto event = SwitchSceneEvent(m_nextScene);
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
-}
-
 Intro::Intro(Vector2 resolution)
 	:Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
-
-	AppContext& appContext = AppContext::GetInstance();
-	Initialize(appContext, resolution);
+	Initialize();
 }
 
 void Intro::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {

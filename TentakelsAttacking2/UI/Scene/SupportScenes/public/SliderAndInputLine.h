@@ -11,34 +11,90 @@
 class Slider;
 class ClassicButton;
 
+/**
+ * provides a scene that contains a slider, a button and an input line.
+ */
 class SliderAndInputLine : public Scene {
 private:
-	std::shared_ptr<Slider> m_slider;
-	std::shared_ptr<InputLine<int>> m_inputLine;
-	std::shared_ptr<ClassicButton> m_btn;
-	std::function<void(int)> m_onSave = [](int) {};
+	std::shared_ptr<Slider> m_slider; ///< contains a the slider
+	std::shared_ptr<InputLine<int>> m_inputLine; ///< contains a the input line
+	std::shared_ptr<ClassicButton> m_btn; ///< contains a the button
+	std::function<void(int)> m_onSave = [](int) {}; ///< contains the llambda that gets called on save -> provides the current value
 
-	bool m_isEnabled = true;
-	bool m_slided = false;
-	int m_minValue, m_maxValue, m_currentValue;
+	bool m_isEnabled = true; ///< contains if the scene is enabled
+	bool m_slided = false; ///< contains if the scene is currently sliding -> locks the button if the value in the input line chanched because of the slider
+	int m_minValue; ///< contains the provided min value that should can be set.
+	int m_maxValue; ///< contains the provided max value that should can be set.
+	int m_currentValue; ///< contains the current value
 
+	/**
+	 * initializes all ui elements.
+	 * connects the actions.
+	 */
 	void Initialize(unsigned int focusID, Vector2 resolution);
+	/**
+	 * saves the value.
+	 * sets the slider.
+	 * disables the button.
+	 */
 	void BtnPressed();
+	/**
+	 * calls validate value.
+	 * calls on save.
+	 */
 	void SaveValue();
+	/**
+	 * calculates current value.
+	 * sets input line.
+	 * calls save value.
+	 */
 	void Slide(float position);
+	/**
+	 * clamps the current value between min and max value.
+	 * sets the current value in the input line.
+	 * no need to net it nomewere else beacuse it gets not set here, just validated.
+	 */
 	void ValidateCurrentValue();
+	/**
+	 * calculates the current percentage.
+	 * sets the slider value.
+	 */
 	void SetSliderValue() const;
 
 public:
+	/**
+	 * ctor.
+	 * only initialization.
+	 */
 	SliderAndInputLine(unsigned int focusID, Vector2 pos, Vector2 size, 
 		Alignment alignment, Vector2 resolution, int minValue, int maxValue, int currentValue);
 
+	/**
+	 * scene logic.
+	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 
+	/**
+	 * sets if the scene is enabled.
+	 */
 	void SetEnabled(bool isEnabled);
 
+	/**
+	 * sets the lambda that gets called when the value is saved.
+	 * returns the current value.
+	 */
 	void SetOnSave(std::function<void(int)> onSave);
+	/**
+	 * sets a new current value.
+	 * validates the value.
+	 * sets it in slider and input line.
+	 */
 	void SetValue(int value);
 
+	/**
+	 * randomaizes a value between min and max value.
+	 * updates slider and inputline.
+	 * saves the value.
+	 */
 	void RandomValue();
 };

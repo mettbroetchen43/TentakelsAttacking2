@@ -252,5 +252,5 @@ void ColorPicker::Resize(Vector2 resolution, AppContext const& appContext) {
 }
 
 Rectangle ColorPicker::GetCollider() const {
-	return UIElement::GetColider();
+	return UIElement::GetCollider();
 }

@@ -3,7 +3,7 @@
 // 14.11.2022
 //
 
-#include "InitialSoundLevelPopUp.h"
+#include "SoundLevelPopUp.h"
 #include "ClassicButton.h"
 #include "AppContext.h"
 #include "HGeneral.h"
@@ -13,7 +13,7 @@
 #include "HFocusEvents.h"
 #include <iostream>
 
-void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
+void SoundLevelPopUp::Initialize(Vector2 resolution) {
 	AppContext& appContext = AppContext::GetInstance();
 	
 	m_slider = std::make_shared<Slider>(
@@ -76,7 +76,7 @@ void InitialSoundLevelPopUp::Initialize(Vector2 resolution) {
 	m_elements.push_back(m_acceptBtn);
 }
 
-InitialSoundLevelPopUp::InitialSoundLevelPopUp(Vector2 pos, Vector2 size,
+SoundLevelPopUp::SoundLevelPopUp(Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution, std::string const& title,
 	std::string& subTitle)
 	:PopUp(pos, size, alignment, resolution, title, subTitle, AssetType::QUESTION_MARK) {
@@ -84,12 +84,12 @@ InitialSoundLevelPopUp::InitialSoundLevelPopUp(Vector2 pos, Vector2 size,
 	Initialize(resolution);
 }
 
-void InitialSoundLevelPopUp::Render(AppContext const& appContext) {
+void SoundLevelPopUp::Render(AppContext const& appContext) {
 	
 	PopUp::Render(appContext);
 
 	DrawRectangleLinesEx(
-		m_slider->GetColider(),
+		m_slider->GetCollider(),
 		2.0f,
 		WHITE
 	);

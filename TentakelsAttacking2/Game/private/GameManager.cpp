@@ -15,7 +15,7 @@ bool GameManager::ValidAddPlayer() const {
 	return AppContext::GetInstance().constants.player.maxPlayerCount
 		> m_players.size();
 }
-unsigned int GameManager::GetNextID() const {
+unsigned int GameManager::GetNextPlayerID() const {
 	unsigned int nextID = 1;
 	while (true) {
 		bool freeID = true;
@@ -34,7 +34,7 @@ unsigned int GameManager::GetNextID() const {
 	}
 }
 
-bool GameManager::IsExistingID(unsigned int ID) const {
+bool GameManager::IsExistingPlayerID(unsigned int ID) const {
 	for (auto const& p : m_players) {
 		if (p->GetID() == ID) {
 			return true;
@@ -43,13 +43,13 @@ bool GameManager::IsExistingID(unsigned int ID) const {
 	return false;
 }
 
-bool GameManager::GetCurrentPlayer(std::shared_ptr<Player>& currentPlayer) const {
+bool GameManager::SetCurrentPlayer(std::shared_ptr<Player>& currentPlayer) const {
 	if (m_currentRoundPlayers.empty()) { return false; }
 
 	currentPlayer = m_currentRoundPlayers.back();
 	return true;
 }
-bool GameManager::GetNextPlayer(std::shared_ptr<Player>& nextPlayer) const {
+bool GameManager::SetNextPlayer(std::shared_ptr<Player>& nextPlayer) const {
 	if (m_currentRoundPlayers.size() < 2) { return false; }
 
 	nextPlayer = m_currentRoundPlayers.at(m_currentRoundPlayers.size() - 2);
@@ -66,7 +66,7 @@ void GameManager::AddPlayer(AddPlayerEvent const* event) {
 		return;
 	}
 
-	unsigned int newID = GetNextID();
+	unsigned int newID = GetNextPlayerID();
 	auto player = std::make_shared<Player>(
 		newID,
 		PlayerType::HUMAN
@@ -82,7 +82,7 @@ void GameManager::AddPlayer(AddPlayerEvent const* event) {
 }
 void GameManager::EditPlayer(EditPlayerEvent const* event) const {
 
-	if (!IsExistingID(event->GetID())) {
+	if (!IsExistingPlayerID(event->GetID())) {
 		auto UIEvent = ShowMessagePopUpEvent(
 			"Invalid ID",
 			"ID " + std::to_string(event->GetID()) + " is not existing"
@@ -218,7 +218,7 @@ void GameManager::SendCurrentPlayerID() {
 	unsigned int ID;
 	std::shared_ptr<Player> player;
 
-	if (GetCurrentPlayer(player)) {
+	if (SetCurrentPlayer(player)) {
 		ID = player->GetID();
 	}
 	else {
@@ -232,7 +232,7 @@ void GameManager::SendNextPlayerID() {
 	unsigned int ID;
 	std::shared_ptr<Player> player;
 
-	if (GetNextPlayer(player)) {
+	if (SetNextPlayer(player)) {
 		ID = player->GetID();
 	}
 	else {
@@ -271,7 +271,7 @@ void GameManager::GenerateGalaxy() {
 		m_npcs[PlayerType::NEUTRAL]
 		);
 
-	if (galaxy->IsValidGalaxy()) {
+	if (galaxy->IsValid()) {
 		m_mainGalaxy = galaxy;
 		auto event = GalaxyGeneratedUIEvent();
 		appContext.eventManager.InvokeEvent(event);
@@ -295,7 +295,7 @@ void GameManager::GenerateShowGalaxy() {
 		m_npcs[PlayerType::NEUTRAL]
 		);
 
-	if (galaxy->IsValidGalaxy()) {
+	if (galaxy->IsValid()) {
 		m_showGalaxy = galaxy;
 		auto event = SendGalaxyPointerEvent(m_showGalaxy.get());
 		appContext.eventManager.InvokeEvent(event);

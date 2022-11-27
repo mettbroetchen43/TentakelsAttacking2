@@ -7,9 +7,16 @@
 #include "Button.h"
 #include "Focusable.h"
 
+/**
+ * standard button  that calls fontcion if it gets relesed and is down.
+ */
 class ClassicButton final : public Button, public Focusable {
 private:
 public:
+	/**
+	 * ctor.
+	 * only initialisation
+	 */
 	ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
 		Vector2 resolution, std::string const& text, SoundType releaseSound);
 	ClassicButton(ClassicButton const&) = default;
@@ -18,9 +25,19 @@ public:
 	ClassicButton& operator= (ClassicButton&&) = default;
 	~ClassicButton() = default;
 
+	/**
+	 * returns if the button is enabled.
+	 */
 	[[nodiscard]] bool IsEnabled() const override;
 
+	/**
+	 * calculates the logic of the button and colla the other functions.
+	 * calls CheckAndUpdate in button.
+	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	
+	/**
+	 * return current colider of the button.
+	 */
 	[[nodiscard]] Rectangle GetCollider() const override;
 };

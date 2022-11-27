@@ -70,5 +70,5 @@ void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition,
 }
 
 Rectangle ClassicButton::GetCollider() const {
-	return UIElement::GetColider();
+	return UIElement::GetCollider();
 }

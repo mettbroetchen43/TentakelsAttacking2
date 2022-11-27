@@ -152,7 +152,3 @@ MainMenu::MainMenu(Vector2 resolution)
 	AppContext& appContext = AppContext::GetInstance();
 	Initialize(resolution, appContext);
 }
-
-void MainMenu::SetActive(bool active, AppContext const& appContext) {
-	Scene::SetActive(active, appContext);
-}

@@ -27,7 +27,7 @@ bool PlayerCollection::ContainsColor(Color color) const {
 	return false;
 }
 
-void PlayerCollection::CheckValidColor(Color color) {
+void PlayerCollection::CheckValidColor(Color& color) {
 	AppContext& appContext = AppContext::GetInstance();
 	if (appContext.colors.CheckValidColor(color)) {
 		auto event = ShowMessagePopUpEvent(
@@ -77,9 +77,7 @@ void PlayerCollection::CheckRemainingName(std::string& name) {
 	}
 }
 
-PlayerData& PlayerCollection::GetPlayerByID(unsigned int ID) {
-
-	if (ID == m_defaultPlayer.ID) { return m_defaultPlayer; }
+PlayerData& PlayerCollection::GetPlayerByIDmut(unsigned int ID) {
 
 	for (auto& p : m_playerData) {
 		if (p.ID == ID) {
@@ -106,7 +104,7 @@ void PlayerCollection::AddPlayer(unsigned int ID,
 void PlayerCollection::EditPlayer(unsigned int ID,
 	std::string name, Color color) {
 
-	PlayerData& playerData = GetPlayerByID(ID);
+	PlayerData& playerData = GetPlayerByIDmut(ID);
 
 	if (playerData.name != name) {
 		CheckRemainingName(name);
@@ -122,7 +120,7 @@ void PlayerCollection::EditPlayer(unsigned int ID,
 	SortPlayers();
 }
 void PlayerCollection::DeletePlayer(unsigned int ID) {
-	auto const& toDelete = GetPlayerByID(ID);
+	auto const& toDelete = GetPlayerByIDmut(ID);
 
 	m_playerData.erase(std::remove(
 		m_playerData.begin(), m_playerData.end(), toDelete
