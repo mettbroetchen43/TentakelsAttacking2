@@ -19,8 +19,19 @@ struct AppContext;
  */
 class UIElement {
 protected:
+	enum class MoveType { ///< contains the posible movment types of the element
+		LINEAR,
+		ASYNPTOTIC,
+		NONE,
+	};
+	MoveType m_moveType = MoveType::NONE; ///< contains the current movment type.
 	Vector2 m_pos, m_size; ///< contains the realtive position (top left) and size on the screen
 	Vector2 m_resolution; ///< contains the current resolution of the window
+	
+	Vector2 m_targetPosition = { 0.0f,0.0f }; ///< contains the target position the element is moving to
+	Vector2 m_startingPosition = { 0.0f,0.0f }; ///< contains the atsrting position the element is moving from
+	Vector2 m_speedPerSecond = { 0.0f, 0.0f }; ///< contains the speed the element is moving with
+	
 	Rectangle m_colider;  ///< contains the absolute position (top left) and size on the screen
 	Alignment m_alignment; ///< contains the alignment of the element
 
@@ -47,6 +58,19 @@ protected:
 			m_colider.width / m_resolution.x,
 			m_colider.height / m_resolution.y
 		};
+	}
+
+	/**
+	 * moves the element to the set position in a linar way.
+	 */
+	void MoveLinear() {
+		if (m_moveType != MoveType::LINEAR) { return; }
+	}
+	/**
+	 * moves the element to the set position in a asymptotic way.
+	 */
+	void MoveAsynptotic() {
+		if (m_moveType != MoveType::ASYNPTOTIC) { return; }
 	}
 
 public:
@@ -134,6 +158,34 @@ public:
 			m_pos.x - diffX,
 			m_pos.y - diffY
 		));
+	}
+
+	/**
+	 * moves the element at a certain speed until it gets stoppt by StopMoving().
+	 * result is a linear movment in one direction.
+	 */
+	void MoveBySpeed(float speedPerSecondX, float SpeedPerSecondY) {
+
+	}
+	/**
+	 * moves the element to the provided position at the provided speed.
+	 * result ia a linear movment in one direction.
+	 */
+	void MoveToPositionLinear(Vector2 position, float speedPerSecond) {
+
+	}
+	/**
+	 * moves the element to the provided position at the provided speed.
+	 * result is an asymptotic movment in one direction.
+	 */
+	void MoveToPositionAsymptotic(Vector2 position, float speedPerSecond) {
+		
+	}
+	/**
+	 * stops all kinds off movments immideatly.
+	 */
+	void StopMoving() {
+
 	}
 
 	/**
