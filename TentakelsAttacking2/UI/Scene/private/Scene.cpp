@@ -138,8 +138,10 @@ void Scene::SetSize(Vector2 size) {
 	UIElement::SetSize(size);
 }
 
-void Scene::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+void Scene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	if (!m_active) {
 		return;
 	}

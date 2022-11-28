@@ -26,11 +26,6 @@ public:
 		float thick);
 
 	/**
-	 * has no effect.
-	 * this member function is onpy implemented because UIElement needs it.
-	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
-	/**
 	 * renders the line.
 	 */
 	void Render(AppContext const& appContext);

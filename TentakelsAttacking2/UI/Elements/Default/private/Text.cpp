@@ -38,6 +38,9 @@ Text::Text(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 }
 
 void Text::CheckAndUpdate(Vector2 const& mousePosition, AppContext const&) {
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	if (CheckCollisionPointRec(mousePosition, m_colider)) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			OpenURL();

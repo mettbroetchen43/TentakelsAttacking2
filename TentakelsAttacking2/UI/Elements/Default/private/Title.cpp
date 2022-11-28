@@ -127,7 +127,10 @@ Title::Title(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	SetColider(appContext, resolution);
 }
 
-void Title::CheckAndUpdate([[maybe_unused]] Vector2 const& mousePosition, AppContext const& appContext) {
+void Title::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	bool skipTitle =
 		IsBackInputPressed()
 		and !m_titleFinish;

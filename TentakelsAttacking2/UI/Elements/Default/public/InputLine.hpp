@@ -90,6 +90,8 @@ public:
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override {
 
+		UIElement::CheckAndUpdate(mousePosition, appContext);
+
 		if (!m_isEnabled) { return; }
 
 		bool hover = CheckCollisionPointRec(mousePosition, m_colider);

@@ -78,6 +78,8 @@ Rectangle CheckBox::GetCollider() const {
 void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	bool check = false;
 
 	if (IsFocused()) {

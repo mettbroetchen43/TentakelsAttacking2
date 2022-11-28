@@ -158,6 +158,9 @@ Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 }
 
 void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	if (!m_isEnabled) { return; }
 
 	SetOffset(mousePosition);

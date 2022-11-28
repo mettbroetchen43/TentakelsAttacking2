@@ -296,6 +296,9 @@ void UIGalaxy::SetOnPlanetClick(std::function<void(unsigned int)> onPlanetClick)
 }
 
 void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	if (m_isScaling) {
 		if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
 			float mouseWheel = GetMouseWheelMove();

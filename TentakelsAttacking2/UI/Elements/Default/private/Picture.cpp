@@ -24,7 +24,6 @@ Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolut
 	}
 }
 
-void Picture::CheckAndUpdate(Vector2 const& ,AppContext const& ) { }
 void Picture::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawTexturePro(
 		*m_texture,

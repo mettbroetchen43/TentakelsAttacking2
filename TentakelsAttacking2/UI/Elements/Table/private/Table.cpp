@@ -150,8 +150,10 @@ Table::~Table() {
 	DeleteFocusLayer();
 }
 
-void Table::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+void Table::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	bool updateCells = false;
 
 	if (m_isNestedFocus) {

@@ -34,7 +34,10 @@ unsigned int UIPlanet::GetID() const {
 	return m_ID;
 }
 
-void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const&) {
+void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	if (CheckCollisionPointRec(mousePosition, m_colider)) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			m_onClick(this);

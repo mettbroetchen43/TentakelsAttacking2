@@ -55,6 +55,8 @@ Button::Button()
 	m_texture(nullptr), m_textureRec({0.0f,0.0f,0.0f,0.0f}) {}
 
 void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	bool const hover = CheckCollisionPointRec(mousePosition, m_colider);
 	if (m_state == State::DISABLED) {
 		if (hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {

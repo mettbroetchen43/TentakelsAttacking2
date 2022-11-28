@@ -175,6 +175,9 @@ bool ColorPicker::IsEnabled() const {
 
 void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	if (IsBackInputPressed()) {
 		if (!m_isNestedFocus) {
 			return;

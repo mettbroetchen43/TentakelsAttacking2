@@ -48,6 +48,8 @@ Rectangle ColorPickerCell::GetCollider() const {
 void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	if (!m_enabled) {
 		return;
 	}
