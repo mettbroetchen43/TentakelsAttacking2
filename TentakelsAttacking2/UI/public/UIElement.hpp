@@ -15,13 +15,14 @@ struct AppContext;
 
 /**
  * provides the basic UIElement.
- * all elements
+ * all elements in the ui should implement this.
  */
 class UIElement {
 protected:
 	enum class MoveType { ///< contains the posible movment types of the element
-		LINEAR,
-		ASYNPTOTIC,
+		POINT_LINEAR,
+		SPEED_LINEAR,
+		POINT_ASYNPTOTIC,
 		NONE,
 	};
 	MoveType m_moveType = MoveType::NONE; ///< contains the current movment type.
@@ -61,16 +62,38 @@ protected:
 	}
 
 	/**
-	 * moves the element to the set position in a linar way.
+	 * moves the element to the set position in a linear way.
 	 */
-	void MoveLinear() {
-		if (m_moveType != MoveType::LINEAR) { return; }
+	void MovePointLinear() {
+		if (m_moveType != MoveType::POINT_LINEAR) { return; }
 	}
 	/**
 	 * moves the element to the set position in a asymptotic way.
 	 */
-	void MoveAsynptotic() {
-		if (m_moveType != MoveType::ASYNPTOTIC) { return; }
+	void MovePointAsynptotic() {
+		if (m_moveType != MoveType::POINT_ASYNPTOTIC) { return; }
+	}
+	/**
+	 * moves the element at a certain speed in a linea way.
+	 */
+	void MoveSpeedLinear() {
+		if (m_moveType != MoveType::SPEED_LINEAR) { return; }
+	}
+	/**
+	 * moves the element by the offset.
+	 */
+	void Move(Vector2 offset) {
+
+	}
+	/**
+	 * checks if the element has arrived at the target point.
+	 * if so it calps the current position and stops the movement.
+	 */
+	void CheckStopMoving() {
+		if (m_moveType == MoveType::SPEED_LINEAR 
+			or m_moveType == MoveType::NONE) { return; }
+
+		StopMoving();
 	}
 
 public:
@@ -164,28 +187,44 @@ public:
 	 * moves the element at a certain speed until it gets stoppt by StopMoving().
 	 * result is a linear movment in one direction.
 	 */
-	void MoveBySpeed(float speedPerSecondX, float SpeedPerSecondY) {
+	void MoveBySpeed(Vector2 speedPerSecond, float angle) {
+		m_targetPosition = { 0.0f,0.0f };
+		m_startingPosition = { 0.0f,0.0f };
 
+		float speedX = 0.0f; // TODO
+		float speedY = 0.0f; // TODO
+
+		m_speedPerSecond = { speedX,speedY };
 	}
 	/**
 	 * moves the element to the provided position at the provided speed.
 	 * result ia a linear movment in one direction.
 	 */
 	void MoveToPositionLinear(Vector2 position, float speedPerSecond) {
-
+		m_moveType = MoveType::POINT_LINEAR;
+		m_startingPosition = m_pos;
+		m_targetPosition = position;
+		m_speedPerSecond = { speedPerSecond, speedPerSecond };
 	}
 	/**
 	 * moves the element to the provided position at the provided speed.
 	 * result is an asymptotic movment in one direction.
 	 */
 	void MoveToPositionAsymptotic(Vector2 position, float speedPerSecond) {
-		
+		m_moveType = MoveType::POINT_ASYNPTOTIC;
+		m_startingPosition = m_pos;
+		m_targetPosition = position;
+		m_speedPerSecond = { speedPerSecond, speedPerSecond };
 	}
 	/**
 	 * stops all kinds off movments immideatly.
+	 * resets all moving related values.
 	 */
 	void StopMoving() {
-
+		m_moveType == MoveType::NONE;
+		m_startingPosition = { 0.0f,0.0f };
+		m_targetPosition = { 0.0f,0.0f };
+		m_speedPerSecond = { 0.0f,0.0f };
 	}
 
 	/**
