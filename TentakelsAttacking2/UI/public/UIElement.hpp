@@ -9,6 +9,7 @@
 #include "UIEvents.hpp"
 #include "Allignment.h"
 #include <raylib.h>
+#include <cmath>
 
 
 struct AppContext;
@@ -66,24 +67,51 @@ protected:
 	 */
 	void MovePointLinear() {
 		if (m_moveType != MoveType::POINT_LINEAR) { return; }
+
+		float time = GetFrameTime();
+		Vector2 diff = {
+			(m_targetPosition.x - m_startingPosition.x) * m_speedPerSecond.x * time,
+			(m_targetPosition.y - m_startingPosition.y) * m_speedPerSecond.y * time
+		};
+		Move(diff);
 	}
 	/**
 	 * moves the element to the set position in a asymptotic way.
 	 */
 	void MovePointAsynptotic() {
 		if (m_moveType != MoveType::POINT_ASYNPTOTIC) { return; }
+
+		float time = GetFrameTime();
+		Vector2 diff = {
+			(m_targetPosition.x - m_pos.x) * m_speedPerSecond.x * time,
+			(m_targetPosition.y - m_pos.y) * m_speedPerSecond.y * time
+		};
+		Move(diff);
 	}
 	/**
 	 * moves the element at a certain speed in a linea way.
 	 */
 	void MoveSpeedLinear() {
 		if (m_moveType != MoveType::SPEED_LINEAR) { return; }
+
+		float time = GetFrameTime();
+		Vector2 diff = {
+			m_speedPerSecond.x * time,
+			m_speedPerSecond.y * time
+		};
+		Move(diff);
 	}
 	/**
 	 * moves the element by the offset.
 	 */
 	void Move(Vector2 offset) {
+		m_pos = {
+			m_pos.x + offset.x,
+			m_pos.y + offset.y
+		};
 
+		UpdateColider();
+		CheckStopMoving();
 	}
 	/**
 	 * checks if the element has arrived at the target point.
@@ -93,7 +121,11 @@ protected:
 		if (m_moveType == MoveType::SPEED_LINEAR 
 			or m_moveType == MoveType::NONE) { return; }
 
-		StopMoving();
+		bool shouldStop = (m_targetPosition.x - m_pos.x) < 0.001f
+			and (m_targetPosition.y - m_pos.y) < 0.001f;
+		if (shouldStop) {
+			StopMoving();
+		}
 	}
 
 public:
@@ -168,33 +200,18 @@ public:
 	}
 
 	/**
-	 * moves the element to a certain point in one second.
-	 * need to call this multiple times.
-	 * REIMPLEMENT! ISSUE ON GIT.
-	 */
-	virtual void Move(Vector2 pos) {
-		float time = GetFrameTime();
-		float diffX = (m_pos.x - pos.x) * time;
-		float diffY = (m_pos.y - pos.y) * time;
-
-		SetPosition(Vector2(
-			m_pos.x - diffX,
-			m_pos.y - diffY
-		));
-	}
-
-	/**
 	 * moves the element at a certain speed until it gets stoppt by StopMoving().
 	 * result is a linear movment in one direction.
 	 */
-	void MoveBySpeed(Vector2 speedPerSecond, float angle) {
+	void MoveBySpeed(float speedPerSecond, float angle) {
+		m_moveType = MoveType::SPEED_LINEAR;
 		m_targetPosition = { 0.0f,0.0f };
 		m_startingPosition = { 0.0f,0.0f };
 
-		float speedX = 0.0f; // TODO
-		float speedY = 0.0f; // TODO
+		float speedX = std::cos(angle) / speedPerSecond;
+		float speedY = std::sin(angle) / speedPerSecond;
 
-		m_speedPerSecond = { speedX,speedY };
+		m_speedPerSecond = { speedX, speedY };
 	}
 	/**
 	 * moves the element to the provided position at the provided speed.
@@ -228,11 +245,25 @@ public:
 	}
 
 	/**
-	 * just virtual.
-	 * to implement.
-	 * should contain the logic of the element.
+	 * checks if there is a current movment.
+	 * moves the element if so.
 	 */
-	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) = 0;
+	virtual void CheckAndUpdate(Vector2 const&, AppContext const& ) {
+		switch (m_moveType) {
+			default:
+			case MoveType::NONE:
+				break;
+			case MoveType::POINT_LINEAR:
+				MovePointLinear();
+				break;
+			case MoveType::POINT_ASYNPTOTIC:
+				MovePointAsynptotic();
+				break;
+			case MoveType::SPEED_LINEAR:
+				MoveSpeedLinear();
+				break;
+		}
+	}
 	/**
 	 * just virtual.
 	 * to implement.
