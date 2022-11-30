@@ -44,6 +44,12 @@ protected:
 	 */
 	[[nodiscard]] bool IsSameState(State state) const;
 
+	/**
+	 * calls UpdateCollider from the UIElement.
+	 * updated the text position and size.
+	 */
+	void UpdateCollider() override;
+
 public:
 	/**
 	 * ctor.

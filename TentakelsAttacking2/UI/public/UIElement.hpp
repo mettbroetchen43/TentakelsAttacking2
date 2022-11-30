@@ -42,7 +42,7 @@ protected:
 	/**
 	 * calculates the absolute position and size out of the relative position and size and the current resolution.
 	 */
-	void UpdateColider() {
+	virtual void UpdateCollider() {
 		m_collider = {
 			m_pos.x * m_resolution.x,
 			m_pos.y * m_resolution.y,
@@ -112,7 +112,7 @@ protected:
 			m_pos.y + offset.y
 		};
 
-		UpdateColider();
+		UpdateCollider();
 		CheckStopMoving();
 	}
 	/**
@@ -173,7 +173,7 @@ public:
 	 */
 	virtual void SetSize(Vector2 size) {
 		m_size = size;
-		UpdateColider();
+		UpdateCollider();
 	}
 	/**
 	 * returns the current relative size.
@@ -186,7 +186,7 @@ public:
 	 */
 	void SetResolution(Vector2 resolution) {
 		m_resolution = resolution;
-		UpdateColider();
+		UpdateCollider();
 	}
 	/**
 	 *  returns the current resolution.
@@ -289,6 +289,6 @@ public:
 	 */
 	virtual void Resize(Vector2 resolution, AppContext const&) {
 		m_resolution = resolution;
-		UpdateColider();
+		UpdateCollider();
 	};
 };

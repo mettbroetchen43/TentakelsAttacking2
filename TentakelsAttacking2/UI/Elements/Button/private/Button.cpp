@@ -34,6 +34,12 @@ bool Button::IsSameState(State state) const {
 	return m_state == state;
 }
 
+void Button::UpdateCollider() {
+	UIElement::UpdateCollider();
+
+	SetTextSizeAndPosition(AppContext::GetInstance());
+}
+
 Button::Button(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& text, SoundType releaseSound)
 	: UIElement(pos, size, alignment, resolution), m_text(text), m_sound(releaseSound) {

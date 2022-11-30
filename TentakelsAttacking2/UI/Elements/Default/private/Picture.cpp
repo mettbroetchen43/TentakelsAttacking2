@@ -20,7 +20,7 @@ Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolut
 			* resolution.y / resolution.x
 			* m_size.y;
 		m_pos.x -= (m_size.x - tempSize) / 2;
-		UpdateColider();
+		UpdateCollider();
 	}
 }
 
