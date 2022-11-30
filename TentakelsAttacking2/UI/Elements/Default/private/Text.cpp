@@ -28,6 +28,12 @@ void Text::OpenURL() const {
 	}
 }
 
+void Text::UpdateCollider() {
+	UIElement::UpdateCollider();
+
+	CreateToRender(AppContext::GetInstance());
+}
+
 Text::Text(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	Alignment textAlignment, float textHeight,
 	std::string text)

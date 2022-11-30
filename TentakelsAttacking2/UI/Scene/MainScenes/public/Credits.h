@@ -47,7 +47,7 @@ private:
 	 */
 	void Move();
 	/**
-	 * checks if the chredits are finished.
+	 * checks if the credits are finished.
 	 * sets moving to false if so.
 	 */
 	void CheckCreditsFinished();
