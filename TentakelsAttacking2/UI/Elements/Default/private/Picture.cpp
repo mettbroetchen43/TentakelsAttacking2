@@ -33,7 +33,7 @@ void Picture::Render([[maybe_unused]] AppContext const& appContext) {
 			static_cast<float>(m_texture->width),
 			static_cast<float>(m_texture->height)
 		),
-		m_colider,
+		m_collider,
 		Vector2(0.0f,0.0f),
 		0.0f,
 		WHITE

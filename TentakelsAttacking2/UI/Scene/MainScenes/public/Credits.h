@@ -19,7 +19,6 @@ private:
 	std::shared_ptr<Line> m_titleLine; ///< contains the line below title
 	std::shared_ptr<ClassicButton> m_finishBTN;  ///< contains the button that gets displayed at the end of the credits
 	std::shared_ptr<ClassicButton> m_speedBTN; ///< contains the button that can toggel the credit speed
-	bool m_moving = false; ///< contains if the credits are currently moving
 	float m_speed = 0.05f; ///< contains the base credit speed -> speedlevel 1
 	int m_maxSpeedLevel = 3; ///< contains the maximum speed level.
 	int m_speedLevel = 1; ///< cuntains the current speed level.

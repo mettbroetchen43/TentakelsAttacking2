@@ -9,7 +9,7 @@
 
 void SliderButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	UIElement::CheckAndUpdate(mousePosition, appContext);
-	bool const hover = CheckCollisionPointRec(mousePosition, m_colider);
+	bool const hover = CheckCollisionPointRec(mousePosition, m_collider);
 	if (m_state == State::DISABLED) {
 		if (hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 			auto event = PlaySoundEvent(SoundType::CLICKED_DISABLED_STD);

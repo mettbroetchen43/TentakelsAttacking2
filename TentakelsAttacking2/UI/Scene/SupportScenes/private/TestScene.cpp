@@ -22,7 +22,7 @@ void TestScene::Initialize(Vector2 resolution,
 
 	auto galaxyPos = GetElementPosition(0.05f, 0.05f);
 	auto galaxySize = GetElementSize(0.7f, 0.7f);
-	m_colider = {
+	m_collider = {
 		galaxyPos.x * resolution.x,
 		galaxyPos.y * resolution.y,
 		galaxySize.x * resolution.x,

@@ -12,12 +12,12 @@ Line::Line(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 void Line::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawLineEx(
 		Vector2(
-			m_colider.x,
-			m_colider.y
+			m_collider.x,
+			m_collider.y
 		),
 		Vector2(
-			m_colider.x + m_colider.width,
-			m_colider.y + m_colider.height
+			m_collider.x + m_collider.width,
+			m_collider.y + m_collider.height
 		),
 		m_thick,
 		WHITE

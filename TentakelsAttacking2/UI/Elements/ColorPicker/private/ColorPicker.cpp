@@ -187,7 +187,7 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 	}
 
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-		if (CheckCollisionPointRec(mousePosition, m_colider)) {
+		if (CheckCollisionPointRec(mousePosition, m_collider)) {
 			SelectFocusElement(this, m_isPopUp);
 		}
 	}
@@ -221,14 +221,14 @@ void ColorPicker::Render(AppContext const& appContext) {
 			static_cast<float>(m_backGround->width),
 			static_cast<float>(m_backGround->height)
 		),
-		m_colider,
+		m_collider,
 		Vector2(0.0f, 0.0f),
 		0.0f,
 		WHITE
 	);
 
 	DrawRectangleLinesEx(
-		m_colider,
+		m_collider,
 		3.0f,
 		PURPLE
 	);

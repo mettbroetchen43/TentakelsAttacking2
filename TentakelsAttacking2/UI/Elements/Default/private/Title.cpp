@@ -13,7 +13,7 @@ void Title::RenderTitle(AppContext const& appContext) {
 		DrawTextEx(
 			*(appContext.assetManager.GetFont()),
 			m_title->at(i).c_str(),
-			Vector2(m_colider.x, m_colider.y + m_fontSize * i),
+			Vector2(m_collider.x, m_collider.y + m_fontSize * i),
 			m_fontSize,
 			0.0f,
 			WHITE
@@ -33,7 +33,7 @@ void Title::RenderTitleSequens(AppContext const& appContext) {
 		DrawTextEx(
 			*(appContext.assetManager.GetFont()),
 			dummyText.c_str(),
-			Vector2(m_colider.x, m_colider.y + m_fontSize * i),
+			Vector2(m_collider.x, m_collider.y + m_fontSize * i),
 			m_fontSize,
 			0.0f,
 			WHITE
@@ -45,7 +45,7 @@ void Title::RenderTitleSequens(AppContext const& appContext) {
 	}
 
 	Random& random = Random::GetInstance();
-	float prefixPosition = m_colider.x +
+	float prefixPosition = m_collider.x +
 		(dummyText.size() *
 			MeasureTextEx(
 				*(appContext.assetManager.GetFont()),
@@ -57,7 +57,7 @@ void Title::RenderTitleSequens(AppContext const& appContext) {
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_postFixes.at(random.random(m_postFixes.size())).c_str(),
-		Vector2(prefixPosition, m_colider.y + m_fontSize * i),
+		Vector2(prefixPosition, m_collider.y + m_fontSize * i),
 		m_fontSize,
 		0.0f,
 		WHITE

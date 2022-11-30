@@ -9,15 +9,15 @@
 
 void Text::CreateToRender(AppContext const& appContext) {
 	m_toRender = BreakLines(m_text, appContext);
-	m_toRender = GetHorisontalAlignedText(m_toRender, m_colider, m_textSize, m_textAlignment);
-	m_textPosition = GetVerticalAlignedTextPosition(m_toRender, m_textSize, m_colider, m_textAlignment);
+	m_toRender = GetHorisontalAlignedText(m_toRender, m_collider, m_textSize, m_textAlignment);
+	m_textPosition = GetVerticalAlignedTextPosition(m_toRender, m_textSize, m_collider, m_textAlignment);
 }
 std::string Text::BreakLines(std::string toBreak, AppContext const& appContext) const {
 	if (!m_lineBreaks) {
 		return toBreak;
 	}
 
-	BreakText(toBreak, m_textSize, m_colider.width, appContext);
+	BreakText(toBreak, m_textSize, m_collider.width, appContext);
 
 	return toBreak;
 }
@@ -37,11 +37,11 @@ Text::Text(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	CreateToRender(AppContext::GetInstance());
 }
 
-void Text::CheckAndUpdate(Vector2 const& mousePosition, AppContext const&) {
+void Text::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
-	if (CheckCollisionPointRec(mousePosition, m_colider)) {
+	if (CheckCollisionPointRec(mousePosition, m_collider)) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			OpenURL();
 		}
@@ -58,7 +58,7 @@ void Text::Render(AppContext const& appContext) {
 	);
 	if (m_renderRectangle) {
 		DrawRectangleLinesEx(
-			m_colider,
+			m_collider,
 			1.0f,
 			PURPLE
 		);

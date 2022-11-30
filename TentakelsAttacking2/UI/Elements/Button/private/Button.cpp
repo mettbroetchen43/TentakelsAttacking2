@@ -7,13 +7,13 @@
 #include "AppContext.h"
 
 void Button::SetTextSizeAndPosition(AppContext const& appContext) {
-	m_textSize = m_colider.height / 2;
+	m_textSize = m_collider.height / 2;
 	Vector2 textSize = MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_text.c_str(),
 		m_textSize,
 		0.0f);
-	while (textSize.x > m_colider.width) {
+	while (textSize.x > m_collider.width) {
 		if (m_textSize == 1) {
 			break;
 		}
@@ -57,7 +57,7 @@ Button::Button()
 void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
-	bool const hover = CheckCollisionPointRec(mousePosition, m_colider);
+	bool const hover = CheckCollisionPointRec(mousePosition, m_collider);
 	if (m_state == State::DISABLED) {
 		if (hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 			auto event = PlaySoundEvent(SoundType::CLICKED_DISABLED_STD);
@@ -123,7 +123,7 @@ void Button::Render(AppContext const& appContext) {
 	DrawTexturePro(
 		*m_texture,
 		m_textureRec,
-		m_colider,
+		m_collider,
 		Vector2(0.0f, 0.0f),
 		0,
 		WHITE
@@ -169,8 +169,8 @@ bool Button::IsEnabled() const {
 }
 
 void Button::SetCollider(Rectangle collider) {
-	m_textPosition.x += (collider.x - m_colider.x);
-	m_textPosition.y += (collider.y - m_colider.y);
+	m_textPosition.x += (collider.x - m_collider.x);
+	m_textPosition.y += (collider.y - m_collider.y);
 	UIElement::SetCollider(collider);
 }
 

@@ -13,9 +13,6 @@
 #include "HRandom.h"
 #include "HInput.h"
 
-
-#define BTN_SPEED 0.2f
-
 void Intro::Initialize( ) {
 	AppContext& appContext = AppContext::GetInstance();
 	m_title = std::make_shared<Title>(
@@ -58,25 +55,6 @@ void Intro::Initialize( ) {
 	m_btn->SetOnClick(gameStart);
 }
 
-void Intro::MoveBtn() {
-	auto btnPos = m_btn->GetPosition();
-	if (btnPos.y - (BTN_SPEED * GetFrameTime()) < m_maxBtnPosition) {
-		BtnMoveFinish();
-		return;
-	}
-	btnPos.y -= BTN_SPEED;
-	m_btn->Move(btnPos);
-}
-void Intro::BtnMoveFinish(){
-	auto btnPos = m_btn->GetPosition();
-	m_btn->SetPosition({ btnPos.x, m_maxBtnPosition});
-	m_btnMovmendFinish = true;
-
-	AppContext& appContext = AppContext::GetInstance();
-	auto event = PlaySoundEvent(SoundType::ACCEPTED);
-	appContext.eventManager.InvokeEvent(event);
-}
-
 Intro::Intro(Vector2 resolution)
 	:Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
 	Initialize();
@@ -85,23 +63,24 @@ Intro::Intro(Vector2 resolution)
 void Intro::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	m_title->CheckAndUpdate(mousePosition, appContext);
 
-	if (m_title->IsTitleFinished()) {
-		m_btn->SetEnabled(true);
-		return;
-	}
-
 	bool skipBtn =
 		IsBackInputPressed()
 		and m_title->HasFinishedTitle()
-		and !m_btnMovmendFinish;
+		and m_btn->IsMoving();
 	if (skipBtn) {
-		BtnMoveFinish();
+		m_btn->StopMoving();
+		m_btn->SetPosition(Vector2(0.5f, 0.5f));
 		return;
 	}
 
-	if (m_title->HasFinishedTitle() and !m_btnMovmendFinish) {
-		MoveBtn();
+	if (m_title->IsTitleFinished()) {
+		m_btn->SetEnabled(true);
+		m_btn->MoveToPositionAsymptotic(
+			Vector2(0.5f, 0.5f),
+			1.0f
+		);
 	}
+
 	m_btn->CheckAndUpdate(mousePosition, appContext);
 }
 void Intro::Render(AppContext const& appContext) {

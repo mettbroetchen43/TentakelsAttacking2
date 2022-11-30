@@ -55,7 +55,7 @@ void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
 	}
 
 	bool mouseClick =
-		CheckCollisionPointRec(mousePosition, m_colider)
+		CheckCollisionPointRec(mousePosition, m_collider)
 		&& IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
 	if (mouseClick) {
 		m_colorPicker->SetCellFocuses(appContext);
@@ -76,7 +76,7 @@ void ColorPickerCell::Render([[maybe_unused]] AppContext const& appContext) {
 	}
 
 	DrawRectanglePro(
-		m_colider,
+		m_collider,
 		Vector2(0.0f, 0.0f),
 		0.0f,
 		m_color
@@ -84,7 +84,7 @@ void ColorPickerCell::Render([[maybe_unused]] AppContext const& appContext) {
 
 	Color color = m_color != PURPLE ? PURPLE : DARKPURPLE;
 	DrawRectangleLinesEx(
-		m_colider,
+		m_collider,
 		3.0f,
 		color
 	);

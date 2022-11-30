@@ -19,7 +19,7 @@ void EmptyCell::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& a
 }
 void EmptyCell::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawRectangleLinesEx(
-		m_colider,
+		m_collider,
 		3.0f,
 		WHITE
 	);

@@ -44,7 +44,7 @@ protected:
 				edit = true;
 			}
 		}
-		if (CheckCollisionPointRec(mousePosition, m_colider)) {
+		if (CheckCollisionPointRec(mousePosition, m_collider)) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				edit = true;
 			}
@@ -65,8 +65,8 @@ protected:
 		textSize.y += m_textSize;
 
 		Vector2 neededSize = {
-			(textSize.x / m_colider.width) * m_size.x,
-			(textSize.y / m_colider.height) * m_size.y
+			(textSize.x / m_collider.width) * m_size.x,
+			(textSize.y / m_collider.height) * m_size.y
 		};
 
 		ClampNeededSize(neededSize);
@@ -115,11 +115,11 @@ public:
 				m_size.y * 2
 			};
 
-			m_textSize = m_colider.height / 2;
-			m_textMargin = m_colider.width / 20;
+			m_textSize = m_collider.height / 2;
+			m_textMargin = m_collider.width / 20;
 			m_textPosition = {
-				m_colider.x + m_textMargin,
-				m_colider.y + m_colider.height / 4
+				m_collider.x + m_textMargin,
+				m_collider.y + m_collider.height / 4
 			};
 	}
 
@@ -132,7 +132,7 @@ public:
 			return;
 		}
 
-		if (CheckCollisionPointRec(mousePosition, m_colider)) {
+		if (CheckCollisionPointRec(mousePosition, m_collider)) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				auto event = SelectFocusElementEvent(this);
 				appContext.eventManager.InvokeEvent(event);
@@ -155,7 +155,7 @@ public:
 		std::string printableValue = GetPritablePlaceholderTextInColider(
 			std::to_string(m_value).c_str(),
 			m_textSize,
-			m_colider,
+			m_collider,
 			appContext
 		);
 		DrawTextEx(
@@ -168,7 +168,7 @@ public:
 		);
 
 		DrawRectangleLinesEx(
-			m_colider,
+			m_collider,
 			3.0f,
 			WHITE
 		);
@@ -180,10 +180,10 @@ public:
 		
 		UIElement::Resize(resolution, appContext);
 
-		m_textSize = m_colider.height / 2;
+		m_textSize = m_collider.height / 2;
 		m_textPosition = {
-		m_colider.x + m_colider.width / 20,
-		m_colider.y + m_colider.height / 4
+		m_collider.x + m_collider.width / 20,
+		m_collider.y + m_collider.height / 4
 		};
 	}
 
@@ -255,7 +255,7 @@ inline void TableCell<std::string>::Render(AppContext const& appContext) {
 	std::string printableValue = GetPritablePlaceholderTextInColider(
 		m_value.c_str(),
 		m_textSize,
-		m_colider,
+		m_collider,
 		appContext
 	);
 	DrawTextEx(
@@ -268,7 +268,7 @@ inline void TableCell<std::string>::Render(AppContext const& appContext) {
 	);
 
 	DrawRectangleLinesEx(
-		m_colider,
+		m_collider,
 		3.0f,
 		WHITE
 	);
@@ -282,10 +282,10 @@ template<>
 inline void TableCell<Color>::Render([[maybe_unused]]AppContext const& appContext) {
 	float spacing = 5.0f;
 	Rectangle toFill = {
-		 m_colider.x + spacing,
-		 m_colider.y + spacing,
-		 m_colider.width - 2 * spacing,
-		 m_colider.height - 2 * spacing
+		 m_collider.x + spacing,
+		 m_collider.y + spacing,
+		 m_collider.width - 2 * spacing,
+		 m_collider.height - 2 * spacing
 	};
 	DrawRectanglePro(
 		toFill,
@@ -295,7 +295,7 @@ inline void TableCell<Color>::Render([[maybe_unused]]AppContext const& appContex
 	);
 
 	DrawRectangleLinesEx(
-		m_colider,
+		m_collider,
 		3.0f,
 		WHITE
 	);

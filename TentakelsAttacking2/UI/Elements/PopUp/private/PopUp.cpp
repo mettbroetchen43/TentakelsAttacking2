@@ -129,7 +129,7 @@ void PopUp::Render(AppContext const& appContext) {
 	}
 
 	DrawRectangleLinesEx(
-		m_colider,
+		m_collider,
 		2.0f,
 		PURPLE
 	);

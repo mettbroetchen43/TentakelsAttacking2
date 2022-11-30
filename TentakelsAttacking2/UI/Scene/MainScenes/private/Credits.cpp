@@ -252,16 +252,9 @@ void CreditsScene::ToggleSpeedLevel() {
 	text = text.substr(0, text.size() - 4);
 	text += " " + std::to_string(m_speedLevel) + "/" + std::to_string(m_maxSpeedLevel);
 	m_speedBTN->SetText(text);
-
-}
-void CreditsScene::Move() {
-
-	if (!m_moving) { return; }
-
-	for (auto& e : m_movingElements) {
-		auto position = e->GetPosition();
-		position.y -= (m_speed * m_speedLevel);
-		e->Move(position);
+	
+	for (auto e : m_movingElements) {
+		e->MoveBySpeed(m_speed * m_speedLevel, 0.0f);
 	}
 
 }
@@ -269,7 +262,9 @@ void CreditsScene::CheckCreditsFinished() {
 	float shoudY = (m_resolution.y * 0.75f) - (m_finishBTN->GetCollider().height / 2);
 	float btnY = m_finishBTN->GetCollider().y;
 	if (btnY <= shoudY) {
-		m_moving = false;
+		for (auto& e : m_movingElements) {
+			e->StopMoving();
+		}
 	}
 }
 
@@ -282,14 +277,14 @@ void CreditsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
 	if (m_title->IsTitleFinished()) {
-		m_moving = true;
 		AddMovingElement(m_titleLine);
+		for (auto& e : m_movingElements) {
+			e->MoveBySpeed(m_speed * m_speedLevel, 0.0f);
+		}
 	}
 
-	if (m_moving) {
-		Move();
-		CheckCreditsFinished();
-	}
+	CheckCreditsFinished();
+
 
 	// for debugging
 	/*if (IsKeyPressed(KEY_ESCAPE)) {

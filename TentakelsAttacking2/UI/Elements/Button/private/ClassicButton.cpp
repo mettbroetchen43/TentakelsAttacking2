@@ -53,7 +53,7 @@ void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition,
 		}
 
 		if (IsConfirmInputReleased()) {
-			bool hover = CheckCollisionPointRec(mousePosition, m_colider);
+			bool hover = CheckCollisionPointRec(mousePosition, m_collider);
 			if (!hover or !IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 				m_state = hover ? State::HOVER : State::ENABLED;
 				m_isPressed = false;

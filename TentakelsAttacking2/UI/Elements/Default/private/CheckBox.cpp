@@ -94,7 +94,7 @@ void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
 		}
 	}
 
-	if (CheckCollisionPointRec(mousePosition, m_colider)) {
+	if (CheckCollisionPointRec(mousePosition, m_collider)) {
 		m_isHovered = true;
 
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
@@ -117,7 +117,7 @@ void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
 }
 void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawRectangleLinesEx(
-		m_colider,
+		m_collider,
 		3.0f,
 		WHITE
 	);
@@ -126,7 +126,7 @@ void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 		DrawTexturePro(
 			*m_texture,
 			m_textureRec,
-			m_colider,
+			m_collider,
 			Vector2(0.0f, 0.0f),
 			0.0f,
 			WHITE
@@ -137,7 +137,7 @@ void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 		DrawTexturePro(
 			*m_greyTexture,
 			m_greyTextureRec,
-			m_colider,
+			m_collider,
 			Vector2(0.0f, 0.0f),
 			0.0f,
 			WHITE
@@ -148,7 +148,7 @@ void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 		DrawTexturePro(
 			*m_greyTexture,
 			m_greyTextureRec,
-			m_colider,
+			m_collider,
 			Vector2(0.0f, 0.0f),
 			0.0f,
 			WHITE

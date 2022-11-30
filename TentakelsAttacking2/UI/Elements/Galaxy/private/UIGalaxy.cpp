@@ -45,12 +45,12 @@ void UIGalaxy::Initialize(Galaxy const* const galaxy) {
 }
 Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext const& appContext) const {
 	Vector2 newPos = {
-		(m_colider.x + m_resolution.x * 0.05f) / m_resolution.x,
-		(m_colider.y + m_resolution.y * 0.05f) / m_resolution.y,
+		(m_collider.x + m_resolution.x * 0.05f) / m_resolution.x,
+		(m_collider.y + m_resolution.y * 0.05f) / m_resolution.y,
 	};
 	Vector2 newSize = {
-		(m_colider.width - m_resolution.x * 0.1f) / m_resolution.x,
-		(m_colider.height - m_resolution.y * 0.1f) / m_resolution.y,
+		(m_collider.width - m_resolution.x * 0.1f) / m_resolution.x,
+		(m_collider.height - m_resolution.y * 0.1f) / m_resolution.y,
 	};
 	if (m_isShowGalaxy) {
 		return {
@@ -68,12 +68,12 @@ Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext const& appContext)
 }
 Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext const& appContext) const {
 	Vector2 newPos = {
-		m_resolution.x * 0.045f / m_colider.width,
-		m_resolution.y * 0.045f / m_colider.height,
+		m_resolution.x * 0.045f / m_collider.width,
+		m_resolution.y * 0.045f / m_collider.height,
 	};
 	Vector2 newSize = {
-		(m_colider.width - m_resolution.x * 0.1f) / m_colider.width,
-		(m_colider.height - m_resolution.y * 0.1f) / m_colider.height,
+		(m_collider.width - m_resolution.x * 0.1f) / m_collider.width,
+		(m_collider.height - m_resolution.y * 0.1f) / m_collider.height,
 	};
 	if (m_isShowGalaxy) {
 		return {
@@ -93,10 +93,10 @@ Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext const& appContext)
 bool UIGalaxy::IsPlanetInCollider(std::shared_ptr<UIPlanet> planet) const {
 	Rectangle planetColider = planet->GetCollider();
 
-	if (planetColider.x < m_colider.x) { return false; }
-	if (planetColider.y < m_colider.y) { return false; }
-	if (planetColider.x + planetColider.width > m_colider.x + m_colider.width) { return false; }
-	if (planetColider.y + planetColider.height > m_colider.y + m_colider.height) { return false; }
+	if (planetColider.x < m_collider.x) { return false; }
+	if (planetColider.y < m_collider.y) { return false; }
+	if (planetColider.x + planetColider.width > m_collider.x + m_collider.width) { return false; }
+	if (planetColider.y + planetColider.height > m_collider.y + m_collider.height) { return false; }
 
 	return true;
 }
@@ -110,30 +110,30 @@ void UIGalaxy::SelectPlanet(UIPlanet* planet) {
 }
 
 void UIGalaxy::ClampsPositionAndSize() {
-	m_absoluteSize.x = m_absoluteSize.x < m_colider.x
+	m_absoluteSize.x = m_absoluteSize.x < m_collider.x
 		? m_absoluteSize.x
-		: m_colider.x;
+		: m_collider.x;
 
-	m_absoluteSize.x = m_absoluteSize.x + m_absoluteSize.width > m_colider.x + m_colider.width
+	m_absoluteSize.x = m_absoluteSize.x + m_absoluteSize.width > m_collider.x + m_collider.width
 		? m_absoluteSize.x
-		: m_colider.x + m_colider.width - m_absoluteSize.width;
+		: m_collider.x + m_collider.width - m_absoluteSize.width;
 
-	m_absoluteSize.y = m_absoluteSize.y < m_colider.y 
+	m_absoluteSize.y = m_absoluteSize.y < m_collider.y 
 		? m_absoluteSize.y
-		: m_colider.y;
+		: m_collider.y;
 
-	m_absoluteSize.y = m_absoluteSize.y + m_absoluteSize.height > m_colider.y + m_colider.height
+	m_absoluteSize.y = m_absoluteSize.y + m_absoluteSize.height > m_collider.y + m_collider.height
 		? m_absoluteSize.y
-		: m_colider.y + m_colider.height - m_absoluteSize.height;
+		: m_collider.y + m_collider.height - m_absoluteSize.height;
 }
 void UIGalaxy::PrepForOnSlide() {
-	float differenz = m_absoluteSize.width - m_colider.width;
-	float offset = m_colider.x - m_absoluteSize.x;
+	float differenz = m_absoluteSize.width - m_collider.width;
+	float offset = m_collider.x - m_absoluteSize.x;
 	float percent = offset / differenz * 100;
 	m_onSlide(percent, true);
 
-	differenz = m_absoluteSize.height - m_colider.height;
-	offset = m_colider.y - m_absoluteSize.y;
+	differenz = m_absoluteSize.height - m_collider.height;
+	offset = m_collider.y - m_absoluteSize.y;
 	percent = offset / differenz * 100;
 	m_onSlide(percent, false);
 }
@@ -144,26 +144,26 @@ void UIGalaxy::MoveByKey(Direction direction, float speed) {
 
 	switch (direction) {
 		case Direction::UP:
-			differenz = m_absoluteSize.height - m_colider.height;
-			offset = m_colider.y - m_absoluteSize.y;
+			differenz = m_absoluteSize.height - m_collider.height;
+			offset = m_collider.y - m_absoluteSize.y;
 			percent = offset / differenz * 100 + speed;
 			Slide(percent, false);
 			break;
 		case Direction::DOWN:
-			differenz = m_absoluteSize.height - m_colider.height;
-			offset = m_colider.y - m_absoluteSize.y;
+			differenz = m_absoluteSize.height - m_collider.height;
+			offset = m_collider.y - m_absoluteSize.y;
 			percent = offset / differenz * 100 - speed;
 			Slide(percent, false);
 			break;
 		case Direction::LEFT:
-			differenz = m_absoluteSize.width - m_colider.width;
-			offset = m_colider.x - m_absoluteSize.x;
+			differenz = m_absoluteSize.width - m_collider.width;
+			offset = m_collider.x - m_absoluteSize.x;
 			percent = offset / differenz * 100 + speed;
 			Slide(percent, true);
 			break;
 		case Direction::RIGHT:
-			differenz = m_absoluteSize.width - m_colider.width;
-			offset = m_colider.x - m_absoluteSize.x;
+			differenz = m_absoluteSize.width - m_collider.width;
+			offset = m_collider.x - m_absoluteSize.x;
 			percent = offset / differenz * 100 - speed;
 			Slide(percent, true);
 			break;
@@ -199,7 +199,7 @@ UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignme
 	Vector2 resolution, bool isShowGalaxy)
 	:Focusable(ID), UIElement(pos, size, alignment, resolution),
 	m_isShowGalaxy(isShowGalaxy) {
-	m_absoluteSize = m_colider;
+	m_absoluteSize = m_collider;
 
 	AppContext& appContext = AppContext::GetInstance();
 
@@ -242,8 +242,8 @@ void UIGalaxy::Zoom(bool zoomIn, int factor) {
 	Rectangle newSize = {
 		m_absoluteSize.x,
 		m_absoluteSize.y,
-		m_colider.width * m_scaleFactor,
-		m_colider.height * m_scaleFactor,
+		m_collider.width * m_scaleFactor,
+		m_collider.height * m_scaleFactor,
 	};
 
 	Vector2 differenz = {
@@ -253,9 +253,9 @@ void UIGalaxy::Zoom(bool zoomIn, int factor) {
 
 	Vector2 mouseFacor = { 0.5f,0.5f };
 	Vector2 mousePosition = GetMousePosition();
-	if (CheckCollisionPointRec(mousePosition, m_colider)) {
-		mouseFacor.x = (mousePosition.x - m_colider.x) / m_colider.width;
-		mouseFacor.y = (mousePosition.y - m_colider.y) / m_colider.height;
+	if (CheckCollisionPointRec(mousePosition, m_collider)) {
+		mouseFacor.x = (mousePosition.x - m_collider.x) / m_collider.width;
+		mouseFacor.y = (mousePosition.y - m_collider.y) / m_collider.height;
 	}
 
 	newSize.x -= differenz.x * mouseFacor.x;
@@ -271,14 +271,14 @@ void UIGalaxy::Zoom(bool zoomIn, int factor) {
 }
 void UIGalaxy::Slide(float position, bool isHorizontal) {
 	if (isHorizontal) {
-		float differenz = m_absoluteSize.width - m_colider.width;
+		float differenz = m_absoluteSize.width - m_collider.width;
 		float offset = differenz / 100 * position;
-		m_absoluteSize.x = m_colider.x - offset;
+		m_absoluteSize.x = m_collider.x - offset;
 	}
 	else {
-		float differenz = m_absoluteSize.height - m_colider.height;
+		float differenz = m_absoluteSize.height - m_collider.height;
 		float offset = differenz / 100 * position;
-		m_absoluteSize.y = m_colider.y - offset;
+		m_absoluteSize.y = m_collider.y - offset;
 	}
 	ClampsPositionAndSize();
 	PrepForOnSlide();
@@ -312,7 +312,7 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		if (IsKeyDown(KEY_LEFT)) { MoveByKey(Direction::LEFT, 1.5f); }
 		if (IsKeyDown(KEY_RIGHT)) { MoveByKey(Direction::RIGHT, 1.5f); }
 
-		if (CheckCollisionPointRec(mousePosition, m_colider)) {
+		if (CheckCollisionPointRec(mousePosition, m_collider)) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				m_isScrollingByMouse = true;
 			}
@@ -353,7 +353,7 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 
 		if (IsNestedFocus()) {
 			if (IsBackInputPressed()
-				|| !CheckCollisionPointRec(mousePosition, m_colider)) {
+				|| !CheckCollisionPointRec(mousePosition, m_collider)) {
 				DeleteFocusLayer();
 				m_isNestedFocus = false;
 			}

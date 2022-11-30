@@ -10,6 +10,8 @@
 #include "Allignment.h"
 #include <raylib.h>
 #include <cmath>
+#include <numbers>
+#include <iostream>
 
 
 struct AppContext;
@@ -34,14 +36,14 @@ protected:
 	Vector2 m_startingPosition = { 0.0f,0.0f }; ///< contains the atsrting position the element is moving from
 	Vector2 m_speedPerSecond = { 0.0f, 0.0f }; ///< contains the speed the element is moving with
 	
-	Rectangle m_colider;  ///< contains the absolute position (top left) and size on the screen
+	Rectangle m_collider;  ///< contains the absolute position (top left) and size on the screen
 	Alignment m_alignment; ///< contains the alignment of the element
 
 	/**
 	 * calculates the absolute position and size out of the relative position and size and the current resolution.
 	 */
 	void UpdateColider() {
-		m_colider = {
+		m_collider = {
 			m_pos.x * m_resolution.x,
 			m_pos.y * m_resolution.y,
 			m_size.x * m_resolution.x,
@@ -53,12 +55,12 @@ protected:
 	 */
 	void UpdateColiderReverse() {
 		m_pos = {
-			m_colider.x / m_resolution.x,
-			m_colider.y / m_resolution.y
+			m_collider.x / m_resolution.x,
+			m_collider.y / m_resolution.y
 		};
 		m_size = {
-			m_colider.width / m_resolution.x,
-			m_colider.height / m_resolution.y
+			m_collider.width / m_resolution.x,
+			m_collider.height / m_resolution.y
 		};
 	}
 
@@ -122,7 +124,9 @@ protected:
 			or m_moveType == MoveType::NONE) { return; }
 
 		bool shouldStop = (m_targetPosition.x - m_pos.x) < 0.001f
-			and (m_targetPosition.y - m_pos.y) < 0.001f;
+			&& (m_targetPosition.x - m_pos.x) > -0.001f
+			&& (m_targetPosition.y - m_pos.y) < 0.001f
+			&& (m_targetPosition.y - m_pos.y) > -0.001f;
 		if (shouldStop) {
 			StopMoving();
 		}
@@ -136,7 +140,7 @@ public:
 	UIElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
 		: m_pos(pos), m_size(size), m_alignment(alignment), m_resolution(resolution) {
 		
-		m_colider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+		m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	}
 	/**
 	 * default virtual dtor.
@@ -144,12 +148,18 @@ public:
 	virtual ~UIElement() = default;
 
 	/**
+	 * returns if the element is currently moving
+	 */
+	[[nodiscard]] bool IsMoving() const {
+		return m_moveType != MoveType::NONE;
+	}
+	/**
 	 * sets a new relative position.
 	 * calls to update the collider.
 	 */
 	virtual void SetPosition(Vector2 pos) {
 		m_pos = pos;
-		UpdateColider();
+		m_collider = GetAlignedCollider(m_pos, m_size, m_alignment, m_resolution);
 	}
 	/**
 	 * returns the current relative position. 
@@ -189,27 +199,30 @@ public:
 	 * calles to update the relative position and size.
 	 */
 	virtual void SetCollider(Rectangle colider) {
-		m_colider = colider;
+		m_collider = colider;
 		UpdateColiderReverse();
 	}
 	/**
 	 * returns the current absolute position and size.
 	 */
 	[[nodiscard]] Rectangle GetCollider() const {
-		return m_colider;
+		return m_collider;
 	}
 
 	/**
-	 * moves the element at a certain speed until it gets stoppt by StopMoving().
+	 * moves the element at a certain speed in a certain direction until it gets stoppt by StopMoving().
 	 * result is a linear movment in one direction.
+	 * the angle is clockwise.
 	 */
-	void MoveBySpeed(float speedPerSecond, float angle) {
+	void MoveBySpeed(float relativeSpeed, float angle) {
 		m_moveType = MoveType::SPEED_LINEAR;
 		m_targetPosition = { 0.0f,0.0f };
 		m_startingPosition = { 0.0f,0.0f };
 
-		float speedX = std::cos(angle) / speedPerSecond;
-		float speedY = std::sin(angle) / speedPerSecond;
+		float tau = std::numbers::pi_v<float> * 2.0f;
+
+		float speedX = std::sin(angle * tau / 360.0f) * relativeSpeed;
+		float speedY = -(std::cos(angle * tau / 360.0f) * relativeSpeed);
 
 		m_speedPerSecond = { speedX, speedY };
 	}
@@ -220,7 +233,7 @@ public:
 	void MoveToPositionLinear(Vector2 position, float speedPerSecond) {
 		m_moveType = MoveType::POINT_LINEAR;
 		m_startingPosition = m_pos;
-		m_targetPosition = position;
+		m_targetPosition = GetAllignedPosition(m_alignment, position, m_size);
 		m_speedPerSecond = { speedPerSecond, speedPerSecond };
 	}
 	/**
@@ -230,7 +243,7 @@ public:
 	void MoveToPositionAsymptotic(Vector2 position, float speedPerSecond) {
 		m_moveType = MoveType::POINT_ASYNPTOTIC;
 		m_startingPosition = m_pos;
-		m_targetPosition = position;
+		m_targetPosition = GetAllignedPosition(m_alignment, position, m_size);
 		m_speedPerSecond = { speedPerSecond, speedPerSecond };
 	}
 	/**
@@ -238,7 +251,7 @@ public:
 	 * resets all moving related values.
 	 */
 	void StopMoving() {
-		m_moveType == MoveType::NONE;
+		m_moveType = MoveType::NONE;
 		m_startingPosition = { 0.0f,0.0f };
 		m_targetPosition = { 0.0f,0.0f };
 		m_speedPerSecond = { 0.0f,0.0f };
