@@ -167,3 +167,33 @@ void Scene::Resize(Vector2 resolution, AppContext const& appContext) {
 		element->Resize(resolution, appContext);
 	}
 }
+
+void Scene::MoveBySpeed(float relativeSpeed, float angle) {
+	UIElement::MoveBySpeed(relativeSpeed, angle);
+
+	for (auto e : m_elements) {
+		e->MoveBySpeed(relativeSpeed, angle);
+	}
+	for (auto e : m_elementsOutUpdates) {
+		e->MoveBySpeed(relativeSpeed, angle);
+	}
+}
+
+void Scene::MoveToPositionLinear(Vector2 position, float relativeSpeed) {
+
+}
+
+void Scene::MoveToPositionAsymptotic(Vector2 position, float relativeSpeed) {
+
+}
+
+void Scene::StopMoving() {
+	UIElement::StopMoving();
+
+	for (auto e : m_elements) {
+		e->StopMoving();
+	}
+	for (auto e : m_elementsOutUpdates) {
+		e->StopMoving();
+	}
+}

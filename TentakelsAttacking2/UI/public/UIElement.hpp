@@ -34,7 +34,7 @@ protected:
 	
 	Vector2 m_targetPosition = { 0.0f,0.0f }; ///< contains the target position the element is moving to
 	Vector2 m_startingPosition = { 0.0f,0.0f }; ///< contains the atsrting position the element is moving from
-	Vector2 m_speedPerSecond = { 0.0f, 0.0f }; ///< contains the speed the element is moving with
+	Vector2 m_relativeSpeed = { 0.0f, 0.0f }; ///< contains the speed the element is moving with
 	
 	Rectangle m_collider;  ///< contains the absolute position (top left) and size on the screen
 	Alignment m_alignment; ///< contains the alignment of the element
@@ -72,8 +72,8 @@ protected:
 
 		float time = GetFrameTime();
 		Vector2 diff = {
-			(m_targetPosition.x - m_startingPosition.x) * m_speedPerSecond.x * time,
-			(m_targetPosition.y - m_startingPosition.y) * m_speedPerSecond.y * time
+			(m_targetPosition.x - m_startingPosition.x) * m_relativeSpeed.x * time,
+			(m_targetPosition.y - m_startingPosition.y) * m_relativeSpeed.y * time
 		};
 		Move(diff);
 	}
@@ -85,8 +85,8 @@ protected:
 
 		float time = GetFrameTime();
 		Vector2 diff = {
-			(m_targetPosition.x - m_pos.x) * m_speedPerSecond.x * time,
-			(m_targetPosition.y - m_pos.y) * m_speedPerSecond.y * time
+			(m_targetPosition.x - m_pos.x) * m_relativeSpeed.x * time,
+			(m_targetPosition.y - m_pos.y) * m_relativeSpeed.y * time
 		};
 		Move(diff);
 	}
@@ -98,8 +98,8 @@ protected:
 
 		float time = GetFrameTime();
 		Vector2 diff = {
-			m_speedPerSecond.x * time,
-			m_speedPerSecond.y * time
+			m_relativeSpeed.x * time,
+			m_relativeSpeed.y * time
 		};
 		Move(diff);
 	}
@@ -214,7 +214,7 @@ public:
 	 * result is a linear movment in one direction.
 	 * the angle is clockwise.
 	 */
-	void MoveBySpeed(float relativeSpeed, float angle) {
+	virtual void MoveBySpeed(float relativeSpeed, float angle) {
 		m_moveType = MoveType::SPEED_LINEAR;
 		m_targetPosition = { 0.0f,0.0f };
 		m_startingPosition = { 0.0f,0.0f };
@@ -224,37 +224,37 @@ public:
 		float speedX = std::sin(angle * tau / 360.0f) * relativeSpeed;
 		float speedY = -(std::cos(angle * tau / 360.0f) * relativeSpeed);
 
-		m_speedPerSecond = { speedX, speedY };
+		m_relativeSpeed = { speedX, speedY };
 	}
 	/**
 	 * moves the element to the provided position at the provided speed.
 	 * result ia a linear movment in one direction.
 	 */
-	void MoveToPositionLinear(Vector2 position, float speedPerSecond) {
+	virtual void MoveToPositionLinear(Vector2 position, float relativeSpeed) {
 		m_moveType = MoveType::POINT_LINEAR;
 		m_startingPosition = m_pos;
 		m_targetPosition = GetAllignedPosition(m_alignment, position, m_size);
-		m_speedPerSecond = { speedPerSecond, speedPerSecond };
+		m_relativeSpeed = { relativeSpeed, relativeSpeed };
 	}
 	/**
 	 * moves the element to the provided position at the provided speed.
 	 * result is an asymptotic movment in one direction.
 	 */
-	void MoveToPositionAsymptotic(Vector2 position, float speedPerSecond) {
+	virtual void MoveToPositionAsymptotic(Vector2 position, float relativeSpeed) {
 		m_moveType = MoveType::POINT_ASYNPTOTIC;
 		m_startingPosition = m_pos;
 		m_targetPosition = GetAllignedPosition(m_alignment, position, m_size);
-		m_speedPerSecond = { speedPerSecond, speedPerSecond };
+		m_relativeSpeed = { relativeSpeed, relativeSpeed };
 	}
 	/**
 	 * stops all kinds off movments immideatly.
 	 * resets all moving related values.
 	 */
-	void StopMoving() {
+	virtual void StopMoving() {
 		m_moveType = MoveType::NONE;
 		m_startingPosition = { 0.0f,0.0f };
 		m_targetPosition = { 0.0f,0.0f };
-		m_speedPerSecond = { 0.0f,0.0f };
+		m_relativeSpeed = { 0.0f,0.0f };
 	}
 
 	/**

@@ -86,4 +86,29 @@ public:
 	 * sesizes all elements in elements and elements out update.
 	 */
 	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
+
+	/**
+	 * moves the scene and all its elements by a certian speed to a certain direction.
+	 * result is a linear movement.
+	 * moved until it gets Stopped with StopMoving.
+	 * the angle is clockwise.
+	 */
+	void MoveBySpeed(float relativeSpeed, float angle) override;
+	/**
+	 * moves the scene and all elements to the provided position.
+	 * result is a linear movement.
+	 * stops movment when the position is reached.
+	 */
+	void MoveToPositionLinear(Vector2 position, float relativeSpeed) override;
+	/**
+	 * moves the scene and all elements to the provided position.
+	 * result is a asymptotic movement.
+	 * stops movment when the position is reached.
+	 */
+	void MoveToPositionAsymptotic(Vector2 position, float relativeSpeed) override;
+	/**
+	 * Stopps every movement immediately.
+	 * resets all movement parameters. 
+	 */
+	void StopMoving() override;
 };
