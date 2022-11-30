@@ -33,6 +33,7 @@ protected:
 	Vector2 m_targetPosition = { 0.0f,0.0f }; ///< contains the target position the element is moving to
 	Vector2 m_startingPosition = { 0.0f,0.0f }; ///< contains the atsrting position the element is moving from
 	Vector2 m_relativeSpeed = { 0.0f, 0.0f }; ///< contains the speed the element is moving with
+	float m_targetDiff = 1.0f; ///< contains the difference between the target position and the current position of the last tick
 	
 	Rectangle m_collider;  ///< contains the absolute position (top left) and size on the screen
 	Alignment m_alignment; ///< contains the alignment of the element
@@ -120,6 +121,7 @@ protected:
 	void CheckStopMoving() {
 		if (m_moveType == MoveType::SPEED_LINEAR 
 			or m_moveType == MoveType::NONE) { return; }
+
 
 		bool shouldStop = (m_targetPosition.x - m_pos.x) < 0.001f
 			&& (m_targetPosition.x - m_pos.x) > -0.001f
@@ -259,6 +261,7 @@ public:
 		m_startingPosition = { 0.0f,0.0f };
 		m_targetPosition = { 0.0f,0.0f };
 		m_relativeSpeed = { 0.0f,0.0f };
+		m_targetDiff = 1.0f;
 	}
 
 	/**
