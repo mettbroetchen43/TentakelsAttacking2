@@ -7,12 +7,15 @@
 # include "Scene.h"
 # include "Table.h"
 
+class GameEventSettings;
+
 /**
  * no doc here.
  * this contains the test scene that is only unsed to diplay new featurs temporary.
  */
 class TestScene : public Scene {
 private:
+	std::shared_ptr<GameEventSettings> m_settings;
 
 	void Initialize(Vector2 resolution, AppContext& appContext);
 

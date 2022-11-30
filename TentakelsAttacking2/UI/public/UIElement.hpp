@@ -11,8 +11,6 @@
 #include <raylib.h>
 #include <cmath>
 #include <numbers>
-#include <iostream>
-
 
 struct AppContext;
 
@@ -152,6 +150,12 @@ public:
 	 */
 	[[nodiscard]] bool IsMoving() const {
 		return m_moveType != MoveType::NONE;
+	}
+	/**
+	 * returns the current alignment.
+	 */
+	[[nodiscard]] Alignment GetAlignment() const {
+		return m_alignment;
 	}
 	/**
 	 * sets a new relative position.

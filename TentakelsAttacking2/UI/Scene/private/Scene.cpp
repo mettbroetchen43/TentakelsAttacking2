@@ -140,8 +140,6 @@ void Scene::SetSize(Vector2 size) {
 
 void Scene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 
-	UIElement::CheckAndUpdate(mousePosition, appContext);
-
 	if (!m_active) {
 		return;
 	}
@@ -149,6 +147,8 @@ void Scene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 	for (auto& element : m_elements) {
 		element->CheckAndUpdate(mousePosition, appContext);
 	}
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
 }
 void Scene::Render(AppContext const& appContext) {
 	if (!m_active) {
@@ -180,11 +180,29 @@ void Scene::MoveBySpeed(float relativeSpeed, float angle) {
 }
 
 void Scene::MoveToPositionLinear(Vector2 position, float relativeSpeed) {
+	UIElement::MoveToPositionLinear(position, relativeSpeed);
 
+	for (auto e : m_elements) {
+		auto pos = GetAllignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
+		e->MoveToPositionLinear({position.x + pos.x - m_pos.x, position.y + pos.y - m_pos.y }, relativeSpeed);
+	}
+	for (auto e : m_elementsOutUpdates) {
+		auto pos = GetAllignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
+		e->MoveToPositionLinear({ position.x + pos.x - m_pos.x, position.y + pos.y - m_pos.y }, relativeSpeed);
+	}
 }
 
 void Scene::MoveToPositionAsymptotic(Vector2 position, float relativeSpeed) {
+	UIElement::MoveToPositionAsymptotic(position, relativeSpeed);
 
+	for (auto e : m_elements) {
+		auto pos = GetAllignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
+		e->MoveToPositionAsymptotic({ position.x + pos.x - m_pos.x, position.y + pos.y - m_pos.y }, relativeSpeed);
+	}
+	for (auto e : m_elementsOutUpdates) {
+		auto pos = GetAllignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
+		e->MoveToPositionAsymptotic({ position.x + pos.x - m_pos.x, position.y + pos.y - m_pos.y }, relativeSpeed);
+	}
 }
 
 void Scene::StopMoving() {

@@ -98,6 +98,50 @@ Vector2 GetAllignedPosition(Alignment allignment, Vector2 position, Vector2 size
 
 	return position;
 }
+Vector2 GetAllignedPositionReversed(Alignment allignment, Vector2 position, Vector2 size) {
+	switch (allignment) {
+	case Alignment::TOP_LEFT:
+	case Alignment::DEFAULT:
+	default:
+		// no adjustment of x necessary
+		// no adjustment of y necessary
+		break;
+	case Alignment::TOP_MID:
+		position.x += size.x / 2;
+		// no adjustment of y necessary
+		break;
+	case Alignment::TOP_RIGHT:
+		position.x += size.x;
+		// no adjustment of y necessary
+		break;
+	case Alignment::MID_LEFT:
+		// no adjustment of x necessary
+		position.y += size.y / 2;
+		break;
+	case Alignment::MID_MID:
+		position.x += size.x / 2;
+		position.y += size.y / 2;
+		break;
+	case Alignment::MID_RIGHT:
+		position.x += size.x;
+		position.y += size.y / 2;
+		break;
+	case Alignment::BOTTOM_LEFT:
+		// no adjustment of x necessary
+		position.y += size.y;
+		break;
+	case Alignment::BOTTOM_MID:
+		position.x += size.x / 2;
+		position.y += size.y;
+		break;
+	case Alignment::BOTTOM_RIGHT:
+		position.x += size.x;
+		position.y += size.y;
+		break;
+	}
+
+	return position;
+}
 
 TextAlignment GetHorisontalTextAlignment(Alignment alignment) {
 	switch(alignment) {

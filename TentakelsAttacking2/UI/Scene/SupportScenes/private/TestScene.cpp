@@ -5,29 +5,21 @@
 
 #include "TestScene.h"
 #include "UIManager.h"
-#include "GalaxyAndSlider.h"
+#include "GameEventSettings.h"
 #include <iostream>
 
 void TestScene::Initialize(Vector2 resolution,
 	[[maybe_unused]] AppContext& appContext) {
 
-	auto galaxyScene = std::make_shared<GalaxyScene>(
-		GetElementPosition(0.05f, 0.05f),
-		GetElementSize(0.7f, 0.7f),
+	m_settings = std::make_shared<GameEventSettings>(
+		1,
+		GetElementPosition(0.0f, 0.0f),
+		GetElementSize(0.5f, 0.5f),
 		Alignment::TOP_LEFT,
-		resolution
+		m_resolution
 		);
-	galaxyScene->SetActive(true, appContext);
-	m_elements.push_back(galaxyScene);
-
-	auto galaxyPos = GetElementPosition(0.05f, 0.05f);
-	auto galaxySize = GetElementSize(0.7f, 0.7f);
-	m_collider = {
-		galaxyPos.x * resolution.x,
-		galaxyPos.y * resolution.y,
-		galaxySize.x * resolution.x,
-		galaxySize.y * resolution.y,
-	};
+	m_settings->SetActive(true, appContext);
+	m_elements.push_back(m_settings);
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -62,9 +54,33 @@ void TestScene::TestLambda(float value) {
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
+	if (!m_settings->IsMoving()) {
+		std::cout << m_settings->IsMoving() << " | " << m_settings->GetPosition().x << '\n';
+		if (m_settings->GetPosition().x <= 0.001f) {
+			m_settings->MoveToPositionAsymptotic(Vector2(0.5f, 0.5f), 2.0f);
+		}
+		else {
+			m_settings->MoveToPositionLinear(Vector2(0.0f, 0.0f), 0.5f);
+		}
+	}
 }
 
 void TestScene::Render(AppContext const& appContext) {
 	Scene::Render(appContext);
+
+	DrawRectangleLinesEx(
+		m_settings->GetCollider(),
+		3.0f,
+		WHITE
+	);
+
+	auto col = m_settings->GetCollider();
+	DrawLine(
+		col.x + col.width / 2,
+		col.y,
+		col.x + col.width / 2,
+		col.y + col.height,
+		WHITE
+	);
 }
 

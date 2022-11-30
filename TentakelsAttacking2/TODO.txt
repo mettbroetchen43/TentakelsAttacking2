@@ -1,2 +1,1 @@
-Scene: move Elements in Scenes if Move... is called.
 Galaxy: y scale line is moving out if the window. 
