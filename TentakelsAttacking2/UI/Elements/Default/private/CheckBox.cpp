@@ -30,7 +30,7 @@ CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height,
 	m_ID(checkBoxID) {
 
 	m_size.x = resolution.y / resolution.x * m_size.y;
-	UpdateColider();
+	UpdateCollider();
 
 	AppContext& appCpntext = AppContext::GetInstance();
 	m_texture = appCpntext.assetManager.GetTexture(AssetType::CHECK);
@@ -78,6 +78,8 @@ Rectangle CheckBox::GetCollider() const {
 void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	bool check = false;
 
 	if (IsFocused()) {
@@ -92,7 +94,7 @@ void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
 		}
 	}
 
-	if (CheckCollisionPointRec(mousePosition, m_colider)) {
+	if (CheckCollisionPointRec(mousePosition, m_collider)) {
 		m_isHovered = true;
 
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
@@ -115,7 +117,7 @@ void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
 }
 void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawRectangleLinesEx(
-		m_colider,
+		m_collider,
 		3.0f,
 		WHITE
 	);
@@ -124,7 +126,7 @@ void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 		DrawTexturePro(
 			*m_texture,
 			m_textureRec,
-			m_colider,
+			m_collider,
 			Vector2(0.0f, 0.0f),
 			0.0f,
 			WHITE
@@ -135,7 +137,7 @@ void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 		DrawTexturePro(
 			*m_greyTexture,
 			m_greyTextureRec,
-			m_colider,
+			m_collider,
 			Vector2(0.0f, 0.0f),
 			0.0f,
 			WHITE
@@ -146,7 +148,7 @@ void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 		DrawTexturePro(
 			*m_greyTexture,
 			m_greyTextureRec,
-			m_colider,
+			m_collider,
 			Vector2(0.0f, 0.0f),
 			0.0f,
 			WHITE

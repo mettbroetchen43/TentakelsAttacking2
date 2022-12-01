@@ -111,8 +111,10 @@ PopUp::PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	}
 }
 
-void PopUp::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+void PopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	for (auto& e : m_elements) {
 		e->CheckAndUpdate(mousePosition, appContext);
 	}
@@ -127,7 +129,7 @@ void PopUp::Render(AppContext const& appContext) {
 	}
 
 	DrawRectangleLinesEx(
-		m_colider,
+		m_collider,
 		2.0f,
 		PURPLE
 	);

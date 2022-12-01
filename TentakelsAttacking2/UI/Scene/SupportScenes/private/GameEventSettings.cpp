@@ -73,8 +73,8 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 		element->SetOnCheck([this](unsigned int ID, bool isChecked) {
 			this->SetChecked(ID, isChecked);
 			});
-		m_elements.push_back(element);
 		m_checkBoxes.push_back(element);
+		m_elements.push_back(element);
 	}
 }
 

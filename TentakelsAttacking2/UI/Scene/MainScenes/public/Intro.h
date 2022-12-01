@@ -24,7 +24,6 @@ private:
 	std::shared_ptr<Title> m_title = nullptr; ///< contains the title
 	std::shared_ptr<ClassicButton> m_btn = nullptr; ///< contains the next button.
 	bool m_btnMovmendFinish = false; ///< contains if the button has finished moving
-	float m_maxBtnPosition = 0.5f; ///< contains the finish position.y of the button.
 	SceneType m_nextScene = SceneType::MAIN_MENU; ///< contains the next Scene Type that will be loaded
 	
 	/**
@@ -32,17 +31,6 @@ private:
 	 * connects the actions.
 	 */
 	void Initialize();
-
-	/**
-	 * moves the button until the button reaches the max position.y.
-	 * calls move finish then.
-	 */
-	void MoveBtn();
-	/**
-	 * sets the button to the defined position.
-	 * sets moving button to false.
-	 */
-	void BtnMoveFinish();
 
 public:
 	/**

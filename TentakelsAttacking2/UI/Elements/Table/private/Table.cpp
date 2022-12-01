@@ -150,8 +150,10 @@ Table::~Table() {
 	DeleteFocusLayer();
 }
 
-void Table::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+void Table::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
 	bool updateCells = false;
 
 	if (m_isNestedFocus) {
@@ -165,7 +167,7 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition,
 
 	if (!m_isNestedFocus) {
 		if (!IsFocused()) {
-			if (CheckCollisionPointRec(mousePosition, m_colider)) {
+			if (CheckCollisionPointRec(mousePosition, m_collider)) {
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 					SelectElementFocus(this);
 
@@ -176,7 +178,7 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition,
 
 		if (IsFocused()) {
 			bool mouseAction =
-				CheckCollisionPointRec(mousePosition, m_colider)
+				CheckCollisionPointRec(mousePosition, m_collider)
 				and IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
 			bool enterAction = IsConfirmInputPressed();
 			bool focusCell =

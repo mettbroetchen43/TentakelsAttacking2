@@ -15,8 +15,8 @@ UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, Vector2 pos, Vector2 r
 }
 
 void UIPlanet::UpdatePosition(Rectangle newColider) {
-	m_colider.x = newColider.x + newColider.width * m_coliderPos.x;
-	m_colider.y = newColider.y + newColider.height * m_coliderPos.y;
+	m_collider.x = newColider.x + newColider.width * m_coliderPos.x;
+	m_collider.y = newColider.y + newColider.height * m_coliderPos.y;
 }
 
 void UIPlanet::SetOnClick(std::function<void(UIPlanet*)> onClick) {
@@ -34,8 +34,11 @@ unsigned int UIPlanet::GetID() const {
 	return m_ID;
 }
 
-void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const&) {
-	if (CheckCollisionPointRec(mousePosition, m_colider)) {
+void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
+
+	if (CheckCollisionPointRec(mousePosition, m_collider)) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			m_onClick(this);
 		}
@@ -48,8 +51,8 @@ void UIPlanet::Render(AppContext const& appContext) {
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_stringID.c_str(),
-		{ m_colider.x, m_colider.y },
-		m_colider.height,
+		{ m_collider.x, m_collider.y },
+		m_collider.height,
 		0.0f,
 		m_color
 	);

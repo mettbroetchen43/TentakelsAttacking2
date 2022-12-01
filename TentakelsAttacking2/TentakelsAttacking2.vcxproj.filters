@@ -288,6 +288,9 @@
     <ClInclude Include="Helper\public\HConcepts.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Helper\public\HVector2Operator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -479,8 +482,12 @@
     <ClCompile Include="UI\Elements\PopUp\private\ValidatePopUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Helper\private\HVector2Operator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\title.txt" />
+    <Text Include="TODO.txt" />
   </ItemGroup>
 </Project>

@@ -106,18 +106,20 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 }
 
 void GalaxyScene::Zoom(float scaleFactor, Vector2 referenceScale) {
+
 	m_verticalSlider->SetAboluteDimension(scaleFactor);
 	m_horisontalSlider->SetAboluteDimension(scaleFactor);
+
 	m_scaleLineX->SetSize(
 		Vector2(referenceScale.x / m_resolution.x, 0.0f)
 	);
+
 	Vector2 size = m_scaleLineY->GetSize();
-	Vector2 pos = m_scaleLineY->GetPosition();
 	m_scaleLineY->SetSize(
 		Vector2(0.0f, referenceScale.y / m_resolution.y)
 	);
 	m_scaleLineY->SetPosition(
-		Vector2(pos.x, pos.y + size.y - m_scaleLineY->GetSize().y)
+		GetElementPosition(0.036f, 0.93f)
 	);
 }
 void GalaxyScene::Slide(float position, bool isHorisontal) {

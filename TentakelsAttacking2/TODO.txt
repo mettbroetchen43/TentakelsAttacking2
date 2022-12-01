@@ -1,0 +1,1 @@
+Galaxy: y scale line is moving out if the window. 

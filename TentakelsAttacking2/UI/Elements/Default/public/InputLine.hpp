@@ -90,9 +90,11 @@ public:
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override {
 
+		UIElement::CheckAndUpdate(mousePosition, appContext);
+
 		if (!m_isEnabled) { return; }
 
-		bool hover = CheckCollisionPointRec(mousePosition, m_colider);
+		bool hover = CheckCollisionPointRec(mousePosition, m_collider);
 		bool validSelect = !IsFocused() and
 			hover and IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 
@@ -154,7 +156,7 @@ public:
 		DrawTexturePro(
 			*m_texture,
 			textureRec,
-			m_colider,
+			m_collider,
 			Vector2(0.0f, 0.0f),
 			0.0f,
 			WHITE
@@ -162,22 +164,22 @@ public:
 
 		if (m_isEnabled) {
 			DrawRectangleLinesEx(
-				m_colider,
+				m_collider,
 				2.0f,
 				PURPLE
 			);
 		}
 
-		float posX = m_colider.x + 10.0f;
-		float posY = m_colider.y + m_colider.height * 0.1f;
-		float fontSize = m_colider.height * 0.8f;
+		float posX = m_collider.x + 10.0f;
+		float posY = m_collider.y + m_collider.height * 0.1f;
+		float fontSize = m_collider.height * 0.8f;
 		std::string printableInput;
 
 		if (m_value.size() > 0) {
 			printableInput = GetPritableTextInColider(
 				m_value,
 				fontSize,
-				m_colider,
+				m_collider,
 				appContext
 			);
 			DrawTextEx(
@@ -193,7 +195,7 @@ public:
 			std::string printablePlaceholder = GetPritablePlaceholderTextInColider(
 				m_placeholderText,
 				fontSize,
-				m_colider,
+				m_collider,
 				appContext
 			);
 			DrawTextEx(
@@ -222,7 +224,7 @@ public:
 					&constants.cursor,
 					Vector2(
 						posX + constants.cursorOffset + textLength.x,
-						posY + m_colider.height * 0.05f
+						posY + m_collider.height * 0.05f
 					),
 					fontSize,
 					0,

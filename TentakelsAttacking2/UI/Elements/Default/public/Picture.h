@@ -26,11 +26,6 @@ public:
 		AssetType assetType, bool scaleToFit = true);
 
 	/**
-	 * no code here.
-	 * just implemented because UIElement need it to implement.
-	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
-	/**
 	 * renders the picture.
 	 */
 	void Render(AppContext const& appContext);

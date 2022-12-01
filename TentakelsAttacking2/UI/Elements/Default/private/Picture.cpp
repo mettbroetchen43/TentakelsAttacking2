@@ -20,11 +20,10 @@ Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolut
 			* resolution.y / resolution.x
 			* m_size.y;
 		m_pos.x -= (m_size.x - tempSize) / 2;
-		UpdateColider();
+		UpdateCollider();
 	}
 }
 
-void Picture::CheckAndUpdate(Vector2 const& ,AppContext const& ) { }
 void Picture::Render([[maybe_unused]] AppContext const& appContext) {
 	DrawTexturePro(
 		*m_texture,
@@ -34,7 +33,7 @@ void Picture::Render([[maybe_unused]] AppContext const& appContext) {
 			static_cast<float>(m_texture->width),
 			static_cast<float>(m_texture->height)
 		),
-		m_colider,
+		m_collider,
 		Vector2(0.0f,0.0f),
 		0.0f,
 		WHITE

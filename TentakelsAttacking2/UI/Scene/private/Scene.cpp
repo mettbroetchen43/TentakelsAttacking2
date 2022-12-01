@@ -138,8 +138,8 @@ void Scene::SetSize(Vector2 size) {
 	UIElement::SetSize(size);
 }
 
-void Scene::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+void Scene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
 	if (!m_active) {
 		return;
 	}
@@ -147,6 +147,8 @@ void Scene::CheckAndUpdate(Vector2 const& mousePosition,
 	for (auto& element : m_elements) {
 		element->CheckAndUpdate(mousePosition, appContext);
 	}
+
+	UIElement::CheckAndUpdate(mousePosition, appContext);
 }
 void Scene::Render(AppContext const& appContext) {
 	if (!m_active) {
@@ -163,5 +165,53 @@ void Scene::Resize(Vector2 resolution, AppContext const& appContext) {
 
 	for (auto& element : m_elements) {
 		element->Resize(resolution, appContext);
+	}
+}
+
+void Scene::MoveBySpeed(float relativeSpeed, float angle) {
+	UIElement::MoveBySpeed(relativeSpeed, angle);
+
+	for (auto e : m_elements) {
+		e->MoveBySpeed(relativeSpeed, angle);
+	}
+	for (auto e : m_elementsOutUpdates) {
+		e->MoveBySpeed(relativeSpeed, angle);
+	}
+}
+
+void Scene::MoveToPositionLinear(Vector2 position, float relativeSpeed) {
+	UIElement::MoveToPositionLinear(position, relativeSpeed);
+
+	for (auto e : m_elements) {
+		auto pos = GetAllignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
+		e->MoveToPositionLinear({position.x + pos.x - m_pos.x, position.y + pos.y - m_pos.y }, relativeSpeed);
+	}
+	for (auto e : m_elementsOutUpdates) {
+		auto pos = GetAllignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
+		e->MoveToPositionLinear({ position.x + pos.x - m_pos.x, position.y + pos.y - m_pos.y }, relativeSpeed);
+	}
+}
+
+void Scene::MoveToPositionAsymptotic(Vector2 position, float relativeSpeed) {
+	UIElement::MoveToPositionAsymptotic(position, relativeSpeed);
+
+	for (auto e : m_elements) {
+		auto pos = GetAllignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
+		e->MoveToPositionAsymptotic({ position.x + pos.x - m_pos.x, position.y + pos.y - m_pos.y }, relativeSpeed);
+	}
+	for (auto e : m_elementsOutUpdates) {
+		auto pos = GetAllignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
+		e->MoveToPositionAsymptotic({ position.x + pos.x - m_pos.x, position.y + pos.y - m_pos.y }, relativeSpeed);
+	}
+}
+
+void Scene::StopMoving() {
+	UIElement::StopMoving();
+
+	for (auto e : m_elements) {
+		e->StopMoving();
+	}
+	for (auto e : m_elementsOutUpdates) {
+		e->StopMoving();
 	}
 }

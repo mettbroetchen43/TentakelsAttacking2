@@ -41,6 +41,12 @@ private:
 	 */
 	void OpenURL() const;
 
+	/**
+	 * calls UpdateCollider of the UIElement.
+	 * updates the text position.
+	 */
+	void UpdateCollider() override;
+
 public:
 	/**
 	 * ctor.
