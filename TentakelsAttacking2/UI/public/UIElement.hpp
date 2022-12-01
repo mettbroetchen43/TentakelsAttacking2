@@ -8,6 +8,7 @@
 #include "HAssetType.hpp"
 #include "UIEvents.hpp"
 #include "Allignment.h"
+#include "HVector2Operator.h"
 #include <raylib.h>
 #include <cmath>
 #include <numbers>
@@ -80,6 +81,7 @@ protected:
 	 * moves the element to the set position in a asymptotic way.
 	 */
 	void MovePointAsynptotic() {
+
 		if (m_moveType != MoveType::POINT_ASYNPTOTIC) { return; }
 
 		float time = GetFrameTime();
@@ -122,13 +124,20 @@ protected:
 		if (m_moveType == MoveType::SPEED_LINEAR 
 			or m_moveType == MoveType::NONE) { return; }
 
+		Vector2 diffVec = m_targetPosition - m_pos;
+		float diff = LenVec2(diffVec);
 
-		bool shouldStop = (m_targetPosition.x - m_pos.x) < 0.001f
-			&& (m_targetPosition.x - m_pos.x) > -0.001f
-			&& (m_targetPosition.y - m_pos.y) < 0.001f
-			&& (m_targetPosition.y - m_pos.y) > -0.001f;
-		if (shouldStop) {
+		bool stopMoving = diffVec.x < 0.001f && diffVec.x > -0.001f
+			&& diffVec.y < 0.001f && diffVec.y > -0.001f;
+
+		if (diff > m_targetDiff
+			|| stopMoving) {
+			m_pos = m_targetPosition;
+			UpdateCollider();
 			StopMoving();
+		}
+		else {
+			m_targetDiff = diff;
 		}
 	}
 

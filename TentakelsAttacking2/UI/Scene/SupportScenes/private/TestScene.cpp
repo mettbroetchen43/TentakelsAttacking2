@@ -56,7 +56,7 @@ void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& a
 
 	if (!m_settings->IsMoving()) {
 		std::cout << m_settings->IsMoving() << " | " << m_settings->GetPosition().x << '\n';
-		if (m_settings->GetPosition().x <= 0.001f) {
+		if (m_settings->GetPosition().x <= 0.25f) {
 			m_settings->MoveToPositionAsymptotic(Vector2(0.5f, 0.5f), 2.0f);
 		}
 		else {

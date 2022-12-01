@@ -171,6 +171,7 @@
     <ClInclude Include="Helper\public\HInput.h" />
     <ClInclude Include="Helper\public\HPlayerCollection.h" />
     <ClInclude Include="Helper\public\HPrint.h" />
+    <ClInclude Include="Helper\public\HVector2Operator.h" />
     <ClInclude Include="Helper\public\LayeredVector.hpp" />
     <ClInclude Include="Helper\public\HRandom.h" />
     <ClInclude Include="Constants\public\CTextProcecing.hpp" />
@@ -252,6 +253,7 @@
     <ClCompile Include="Helper\private\HFocusEvents.cpp" />
     <ClCompile Include="Helper\private\HInput.cpp" />
     <ClCompile Include="Helper\private\HPrint.cpp" />
+    <ClCompile Include="Helper\private\HVector2Operator.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />
