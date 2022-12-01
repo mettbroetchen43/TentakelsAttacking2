@@ -56,9 +56,13 @@ public:
 	~AssetManager();
 
 	/**
-	 * returns a texture* acordung to the AssetType
+	 * returns a texture* acordung to the AssetType.
 	 */
 	[[nodiscard]] Texture* GetTexture(AssetType assetType);
+	/**
+	 * returns a texture* acordung to the AssetType const.
+	 */
+	[[nodiscard]] Texture const* GetTexture(AssetType assetType) const;
 	/**
 	 * returns the title pointer.
 	 */
