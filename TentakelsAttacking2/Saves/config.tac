@@ -9,7 +9,7 @@
 // Globals
 0 / Starting Full Screen (0 = window)
 20 / Min Game Rounds
-20 / Current Target Game Round
+77 / Current Target Game Round
 100 / Max Game Rounds
 60 / Target FPS
 
