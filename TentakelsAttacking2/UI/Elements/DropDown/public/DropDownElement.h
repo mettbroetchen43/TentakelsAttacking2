@@ -8,7 +8,7 @@
 #include "Focusable.h"
 #include <functional>
 
-class DropSownElement : public UIElement, public Focusable {
+class DropDownElement : public UIElement, public Focusable {
 private:
 	bool m_isEnabled = true; ///< contains if the element is currently enabled
 	bool m_hover = false; ///< contains if the mouse if currently hovering over the element
@@ -17,7 +17,7 @@ private:
 	std::string m_toRender; ///< contains the string that gets rendered
 	std::string m_text; ///< contains the raw string
 	Vector2 m_textPosition; ///< contains the positon the text gets renderd at
-	std::function<void(unsigned int)> m_onClick = [](unsigned int ID) {}; ///< contains the action that gets called on click or enter
+	std::function<void(unsigned int)> m_onClick = [](unsigned int) {}; ///< contains the action that gets called on click or enter
 
 	Texture* m_grey50; ///< contains a pointer to a texture in the appContext
 	Rectangle m_textureRecGrey50; ///< contains the absolute dimensions of the texture
@@ -27,12 +27,14 @@ private:
 	 */
 	void CreateToRender();
 
+
+
 public:
 	/**
 	 * ctor.
 	 * create toRender.
 	 */
-	DropSownElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	DropDownElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		unsigned int focusID, unsigned int ID, std::string text);
 
 	/**

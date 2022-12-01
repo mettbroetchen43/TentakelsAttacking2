@@ -277,7 +277,7 @@ public:
 	 * checks if there is a current movment.
 	 * moves the element if so.
 	 */
-	virtual void CheckAndUpdate(Vector2 const&, AppContext const& ) {
+	virtual void CheckAndUpdate(Vector2 const&, AppContext const&) {
 		switch (m_moveType) {
 			default:
 			case MoveType::NONE:

@@ -35,7 +35,9 @@ DropSownElement::DropSownElement(Vector2 pos, Vector2 size, Alignment alignment,
     CreateToRender();
 }
 
-void DropSownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext){
+void DropSownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+    UIElement::CheckAndUpdate(mousePosition, appContext);
 
     m_hover = CheckCollisionPointRec(mousePosition, m_collider);
 
