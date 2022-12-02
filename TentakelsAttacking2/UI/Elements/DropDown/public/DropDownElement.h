@@ -27,8 +27,6 @@ private:
 	 */
 	void CreateToRender();
 
-
-
 public:
 	/**
 	 * ctor.

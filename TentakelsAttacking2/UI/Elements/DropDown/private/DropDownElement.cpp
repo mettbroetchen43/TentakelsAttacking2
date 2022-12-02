@@ -8,7 +8,7 @@
 #include "HInput.h"
 #include "AppContext.h"
 
-void DropSownElement::CreateToRender() {
+void DropDownElement::CreateToRender() {
     m_toRender = m_text;
     StripString(m_toRender);
     m_fontSize = GetElementTextHeight(m_size, m_collider.height);
@@ -20,7 +20,7 @@ void DropSownElement::CreateToRender() {
     };
 }
 
-DropSownElement::DropSownElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+DropDownElement::DropDownElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
     unsigned int focusID, unsigned int ID, std::string text)
     : UIElement(pos, size, alignment, resolution), Focusable(focusID), m_ID(ID), m_text(text) {
 
@@ -35,7 +35,7 @@ DropSownElement::DropSownElement(Vector2 pos, Vector2 size, Alignment alignment,
     CreateToRender();
 }
 
-void DropSownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void DropDownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 
     UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -45,7 +45,7 @@ void DropSownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext co
 
     if (IsFocused() && IsConfirmInputPressed()) { m_onClick(m_ID); }
 }
-void DropSownElement::Render(AppContext const& appContext) {
+void DropDownElement::Render(AppContext const& appContext) {
 
     if (m_hover) {
         DrawTexturePro(
@@ -76,21 +76,21 @@ void DropSownElement::Render(AppContext const& appContext) {
     );
 }
 
-bool DropSownElement::IsEnabled() const {
+bool DropDownElement::IsEnabled() const {
 
     return m_isEnabled;
 }
-void DropSownElement::SetEnabled(bool isEnabled) {
+void DropDownElement::SetEnabled(bool isEnabled) {
     m_isEnabled = isEnabled;
 }
 
-void DropSownElement::SetText(std::string text) {
+void DropDownElement::SetText(std::string text) {
     m_text = text;
     CreateToRender();
 }
-void DropSownElement::SetOnClick(std::function<void(unsigned int)> onClick) {
+void DropDownElement::SetOnClick(std::function<void(unsigned int)> onClick) {
     m_onClick = onClick;
 }
-Rectangle DropSownElement::GetCollider() const {
+Rectangle DropDownElement::GetCollider() const {
     return m_collider;
 }
