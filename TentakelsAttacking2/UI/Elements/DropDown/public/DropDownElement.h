@@ -12,7 +12,7 @@ class DropDownElement : public UIElement, public Focusable {
 private:
 	bool m_isEnabled = true; ///< contains if the element is currently enabled
 	bool m_hover = false; ///< contains if the mouse if currently hovering over the element
-	unsigned int m_ID; ///< contains the unique Element ID
+	unsigned int m_ID; ///< contains the unique element ID
 	float m_fontSize; ///< contains the font height
 	std::string m_toRender; ///< contains the string that gets rendered
 	std::string m_text; ///< contains the raw string

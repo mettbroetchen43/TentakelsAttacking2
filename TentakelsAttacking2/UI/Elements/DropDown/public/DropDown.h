@@ -58,6 +58,13 @@ private:
 	 */
 	[[nodiscard]] Rectangle GetTemporaryCollider(Rectangle collider) const;
 
+	/**
+	 * checks if the elements in overaping with the drop down collider.
+	 * sets the element active if so.
+	 * sets it inactive if not.
+	 */
+	void CheckAndSetElementsEnabled();
+
 public:
 	/**
 	 * ctor.

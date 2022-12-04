@@ -21,7 +21,8 @@ void DropDownElement::CreateToRender() {
 }
 
 DropDownElement::DropDownElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-    unsigned int focusID, unsigned int ID, std::string const& text, std::function<Rectangle(Rectangle)> getTemoraryCollider)
+    unsigned int focusID, unsigned int ID, std::string const& text,
+    std::function<Rectangle(Rectangle)> getTemoraryCollider)
     : UIElement(pos, size, alignment, resolution), Focusable(focusID), m_ID(ID), m_text(text), m_getTemoraryCollider(getTemoraryCollider) {
 
     m_grey50 = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY_50);
