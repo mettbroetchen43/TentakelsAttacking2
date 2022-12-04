@@ -18,6 +18,10 @@ private:
 	bool m_isFouldout = false; ///< contains if the element is currents folded out
 	std::vector<std::shared_ptr<DropDownElement>> m_dropDownElements; ///< contains all elements in the drop down
 	
+	Texture2D* m_arrowTexture; ///< contains the texture of the arrow that conntrols if the menu is droped down
+	Rectangle m_arrowTextureRec; ///< contains the dimensions onto the texture
+	Rectangle m_arrowCollider; ///< contains the absolute domensions of the arrow
+
 	std::shared_ptr<DropDownElement> m_currentElement = nullptr; ///< contains the current element
 	std::string m_currentElementText = ""; ///< contains the text of the current element
 	float m_fontSize = 0.0f; ///< contains the height of the text of the current element
@@ -32,7 +36,6 @@ private:
 	 * conntext the on click.
 	 */
 	void Initialize(std::vector<std::string> const& elements, unsigned int startFocusID);
-
 	/**
 	 * gets called of the elements as on click action.
 	 */

@@ -39,6 +39,15 @@ void DropDown::Render(AppContext const& appContext) {
         );
     }
 
+    DrawTexturePro(
+        *m_arrowTexture,
+        m_arrowTextureRec,
+        m_arrowCollider,
+        { 0.0f,0.0f },
+        0.0f,
+        WHITE
+    );
+
     BeginScissorMode(
         static_cast<int>(m_dropDownCollider.x),
         static_cast<int>(m_dropDownCollider.y),
@@ -130,12 +139,31 @@ DropDown::DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resol
     unsigned int focusID, unsigned int startElementFocusID, std::vector<std::string> const& elements)
     : UIElement(pos, size, alignment, resolution), Focusable(focusID), m_dropDownHeight(dropDownHeight) {
 
-    m_dropDownCollider = {
-        m_collider.x,
-        m_collider.y + m_collider.height,
-        m_collider.width,
-        m_resolution.y * m_dropDownHeight
+
+
+    m_arrowTexture = AppContext::GetInstance().assetManager.GetTexture(AssetType::ARROW_UP);
+    m_arrowTextureRec = {
+        0.0f,
+        0.0f,
+        static_cast<float>(m_arrowTexture->width),
+        static_cast<float>(m_arrowTexture->height)
     };
+    m_arrowCollider = {
+        m_collider.x + m_collider.width - m_collider.height,
+        m_collider.y,
+        m_collider.height,
+        m_collider.height
+    };
+
+    m_dropDownCollider = {
+    m_collider.x,
+    m_collider.y + m_collider.height,
+    m_collider.width - m_arrowCollider.width,
+    m_resolution.y * m_dropDownHeight
+    };
+
+    m_collider.width -= m_arrowCollider.width;
+    UpdateColiderReverse();
 
     Initialize(elements, startElementFocusID);
 }
