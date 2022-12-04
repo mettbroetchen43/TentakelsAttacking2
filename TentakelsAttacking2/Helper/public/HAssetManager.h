@@ -17,7 +17,7 @@
  */
 class AssetManager final {
 private:
-	using FileArray = std::array<std::string, 7>; ///< the datatype for the files
+	using FileArray = std::array<std::string, 11>; ///< the datatype for the files
 	FileArray m_files = { ///< contains all asset file strings
 		"Assets/btn_f_default.png",
 		"Assets/grey.png",
@@ -26,6 +26,10 @@ private:
 		"Assets/question_mark.png",
 		"Assets/check.png",
 		"Assets/logo.png",
+		"Assets/arrow_top",
+		"Assets/arrow_right",
+		"Assets/arrow_down",
+		"Assets/arrow_left",
 	};
 	std::unordered_map<AssetType, Texture2D> m_assets; ///< contains all assets
 	std::vector<std::string> m_title; ///< contains the tile

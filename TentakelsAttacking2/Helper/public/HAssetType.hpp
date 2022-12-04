@@ -16,4 +16,8 @@ enum class AssetType {
 	QUESTION_MARK,
 	CHECK,
 	LOGO,
+	ARROW_TOP,
+	ARROW_RIGHT,
+	ARROW_DOWN,
+	ARROW_LEFT,
 };
