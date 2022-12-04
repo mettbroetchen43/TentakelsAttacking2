@@ -26,7 +26,7 @@ private:
 		"Assets/question_mark.png",
 		"Assets/check.png",
 		"Assets/logo.png",
-		"Assets/arrow_top",
+		"Assets/arrow_up",
 		"Assets/arrow_right",
 		"Assets/arrow_down",
 		"Assets/arrow_left",
