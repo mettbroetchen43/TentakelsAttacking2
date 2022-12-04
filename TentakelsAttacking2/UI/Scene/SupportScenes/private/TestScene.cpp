@@ -4,22 +4,66 @@
 //
 
 #include "TestScene.h"
-#include "UIManager.h"
-#include "GameEventSettings.h"
+#include "ClassicButton.h"
+#include "SceneType.h"
+#include "DropDown.h"
 #include <iostream>
 
 void TestScene::Initialize(Vector2 resolution,
 	[[maybe_unused]] AppContext& appContext) {
 
-	m_settings = std::make_shared<GameEventSettings>(
+	std::vector<std::string> entries = {
+		"Eintrag 1",
+		"Eintrag 2",
+		"Eintrag 3",
+		"Eintrag 4",
+		"Eintrag 5",
+		"Eintrag 6",
+		"Eintrag 7",
+		"Eintrag 9",
+		"Eintrag 10",
+		"Eintrag 11",
+		"Eintrag 12",
+		"Eintrag 13",
+		"Eintrag 14",
+		"Eintrag 15",
+		"Eintrag 16",
+		"Eintrag 17",
+		"Eintrag 18",
+		"Eintrag 19",
+		"Eintrag 20",
+		"Eintrag 21",
+		"Eintrag 22",
+		"Eintrag 23",
+		"Eintrag 24",
+		"Eintrag 25",
+		"Eintrag 26",
+		"Eintrag 27",
+		"Eintrag 28",
+		"Eintrag 29",
+		"Eintrag 30",
+		"Eintrag 31",
+		"Eintrag 32",
+		"Eintrag 33",
+		"Eintrag 34",
+		"Eintrag 35",
+		"Eintrag 36",
+		"Eintrag 37",
+		"Eintrag 38",
+		"Eintrag 39",
+	};
+
+	m_dropDown = std::make_shared<DropDown>(
+		GetElementPosition(0.5f, 0.25f),
+		GetElementSize(0.25f, 0.03f),
+		Alignment::TOP_MID,
+		m_resolution,
+		0.5f,
 		1,
-		GetElementPosition(0.0f, 0.0f),
-		GetElementSize(0.5f, 0.5f),
-		Alignment::TOP_LEFT,
-		m_resolution
+		10,
+		entries
 		);
-	m_settings->SetActive(true, appContext);
-	m_elements.push_back(m_settings);
+	m_elements.push_back(m_dropDown);
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -53,34 +97,9 @@ void TestScene::TestLambda(float value) {
 
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
-
-	if (!m_settings->IsMoving()) {
-		std::cout << m_settings->IsMoving() << " | " << m_settings->GetPosition().x << '\n';
-		if (m_settings->GetPosition().x <= 0.25f) {
-			m_settings->MoveToPositionAsymptotic(Vector2(0.5f, 0.5f), 2.0f);
-		}
-		else {
-			m_settings->MoveToPositionLinear(Vector2(0.0f, 0.0f), 0.5f);
-		}
-	}
 }
 
 void TestScene::Render(AppContext const& appContext) {
 	Scene::Render(appContext);
-
-	DrawRectangleLinesEx(
-		m_settings->GetCollider(),
-		3.0f,
-		WHITE
-	);
-
-	auto col = m_settings->GetCollider();
-	DrawLine(
-		col.x + col.width / 2,
-		col.y,
-		col.x + col.width / 2,
-		col.y + col.height,
-		WHITE
-	);
 }
 

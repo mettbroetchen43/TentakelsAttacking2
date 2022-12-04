@@ -18,6 +18,7 @@ private:
 	std::string m_text; ///< contains the raw string
 	Vector2 m_textPosition; ///< contains the positon the text gets renderd at
 	std::function<void(unsigned int)> m_onClick = [](unsigned int) {}; ///< contains the action that gets called on click or enter
+	std::function<Rectangle(Rectangle)> m_getTemoraryCollider = [](Rectangle) -> Rectangle {};
 
 	Texture* m_grey50; ///< contains a pointer to a texture in the appContext
 	Rectangle m_textureRecGrey50; ///< contains the absolute dimensions of the texture
@@ -33,7 +34,7 @@ public:
 	 * create toRender.
 	 */
 	DropDownElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		unsigned int focusID, unsigned int ID, std::string text);
+		unsigned int focusID, unsigned int ID, std::string const& text, std::function<Rectangle(Rectangle)> getTemoraryCollider);
 
 	/**
 	 * calls the CheckAndUpdate member function of the UIElement.
@@ -58,6 +59,11 @@ public:
 	 * sets the current text of the element.
 	 */
 	void SetText(std::string text);
+
+	/**
+	 * returns the ID of the Entry.
+	 */
+	[[nodiscard]] unsigned int GetID() const;
 
 	/**
 	 * sets the lambda that gets calld on click or enter.

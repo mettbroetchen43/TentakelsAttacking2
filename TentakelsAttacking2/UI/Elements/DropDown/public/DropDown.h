@@ -8,6 +8,7 @@
 #include "Focusable.h"
 #include <memory>
 #include <vector>
+#include <functional>
 
 class DropDownElement;
 
@@ -17,42 +18,46 @@ private:
 	bool m_isFouldout = false; ///< contains if the element is currents folded out
 	std::vector<std::shared_ptr<DropDownElement>> m_dropDownElements; ///< contains all elements in the drop down
 	std::shared_ptr<DropDownElement> m_currentElement = nullptr; ///< contains the current element
-	Rectangle m_fouldoutCollider; ///< contains the collider of the outfolded part
+	float m_dropDownHeight; ///< contains the relative height of the drop down part
+	Rectangle m_dropDownCollider; ///< contains the collider of the drop down part
+	std::function<void(unsigned int)> m_onSave = [](unsigned int) {}; ///< gets called of save
 
 	/**
 	 * initializes all ui elements.
 	 * conntext the on click.
 	 */
-	void Initialize(std::vector<std::string const> const& elements);
+	void Initialize(std::vector<std::string> const& elements, unsigned int startFocusID);
 
 	/**
 	 * gets called of the elements as on click action.
 	 */
-	void OnElementClick() const;
-
+	void OnElementClick(unsigned int ID);
+	
 	/**
-	 * checks all elements if they are inside of the fouldoutCollider.
-	 * sets the elements true if so else sets it false.
+	 * calculates a collider that represets the area where the provided collider
+	 * overlaps with the drop down collider.
+	 * returns the themorary collider.
 	 */
-	void CheckIfElementsIsFouldoutCollider();
+	[[nodiscard]] Rectangle GetTemporaryCollider(Rectangle collider) const;
 
 public:
 	/**
 	 * ctor.
 	 * only initialization.
 	 */
-	DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
-		std::vector<std::string const> const& elements);
+	DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, float dropDownSize, 
+		unsigned int focusID, unsigned int startElementFocusID, std::vector<std::string> const& elements);
 
 
 	/**
 	 * returns the current element.
 	 */
-	[[nodiscard]] DropDownElement GetCurrentElement() const;
+	[[nodiscard]] std::shared_ptr<DropDownElement> GetCurrentElement() const;
 	/**
 	 * sets the element of the provided ID as current element.
+	 * returns if the element was set.
 	 */
-	void SetCurrentElementByID(unsigned int ID);
+	bool SetCurrentElementByID(unsigned int ID);
 
 
 	/**

@@ -11,7 +11,7 @@
 void DropDownElement::CreateToRender() {
     m_toRender = m_text;
     StripString(m_toRender);
-    m_fontSize = GetElementTextHeight(m_size, m_collider.height);
+    m_fontSize = GetElementTextHeight(m_size, m_resolution.y);
     m_toRender = GetPritableTextInColider(m_toRender, m_fontSize, m_collider, AppContext::GetInstance());
 
     m_textPosition = {
@@ -21,8 +21,8 @@ void DropDownElement::CreateToRender() {
 }
 
 DropDownElement::DropDownElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-    unsigned int focusID, unsigned int ID, std::string text)
-    : UIElement(pos, size, alignment, resolution), Focusable(focusID), m_ID(ID), m_text(text) {
+    unsigned int focusID, unsigned int ID, std::string const& text, std::function<Rectangle(Rectangle)> getTemoraryCollider)
+    : UIElement(pos, size, alignment, resolution), Focusable(focusID), m_ID(ID), m_text(text), m_getTemoraryCollider(getTemoraryCollider) {
 
     m_grey50 = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY_50);
     m_textureRecGrey50 = {
@@ -39,28 +39,18 @@ void DropDownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext co
 
     UIElement::CheckAndUpdate(mousePosition, appContext);
 
-    m_hover = CheckCollisionPointRec(mousePosition, m_collider);
+    Rectangle themporaryCollider = m_getTemoraryCollider(m_collider);
+
+    m_hover = CheckCollisionPointRec(mousePosition, themporaryCollider);
 
     if (m_hover && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) { m_onClick(m_ID); }
-
     if (IsFocused() && IsConfirmInputPressed()) { m_onClick(m_ID); }
 }
 void DropDownElement::Render(AppContext const& appContext) {
 
-    if (m_hover) {
-        DrawTexturePro(
-            *m_grey50,
-            m_textureRecGrey50,
-            m_collider,
-            { 0.0f,0.0f },
-            0.0f,
-            WHITE
-        );
-    }
-
     DrawRectangleLinesEx(
         m_collider,
-        2.0f,
+        1.0f,
         WHITE
     );
 
@@ -74,10 +64,20 @@ void DropDownElement::Render(AppContext const& appContext) {
         0.0f,
         WHITE
     );
+
+    if (m_hover) {
+        DrawTexturePro(
+            *m_grey50,
+            m_textureRecGrey50,
+            m_collider,
+            { 0.0f,0.0f },
+            0.0f,
+            WHITE
+        );
+    }
 }
 
 bool DropDownElement::IsEnabled() const {
-
     return m_isEnabled;
 }
 void DropDownElement::SetEnabled(bool isEnabled) {
@@ -87,6 +87,9 @@ void DropDownElement::SetEnabled(bool isEnabled) {
 void DropDownElement::SetText(std::string text) {
     m_text = text;
     CreateToRender();
+}
+unsigned int DropDownElement::GetID() const {
+    return m_ID;
 }
 void DropDownElement::SetOnClick(std::function<void(unsigned int)> onClick) {
     m_onClick = onClick;

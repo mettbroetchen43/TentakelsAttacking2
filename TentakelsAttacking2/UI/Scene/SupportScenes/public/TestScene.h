@@ -7,7 +7,7 @@
 # include "Scene.h"
 # include "Table.h"
 
-class GameEventSettings;
+class DropDown;
 
 /**
  * no doc here.
@@ -15,7 +15,7 @@ class GameEventSettings;
  */
 class TestScene : public Scene {
 private:
-	std::shared_ptr<GameEventSettings> m_settings;
+	std::shared_ptr<DropDown> m_dropDown;
 
 	void Initialize(Vector2 resolution, AppContext& appContext);
 
