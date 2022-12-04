@@ -6,6 +6,7 @@
 
 file_endings: list[str, ...] = [
     ".cpp",
+    ".hpp",
     ".h",
 ]
 
