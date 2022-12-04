@@ -26,10 +26,10 @@ private:
 		"Assets/question_mark.png",
 		"Assets/check.png",
 		"Assets/logo.png",
-		"Assets/arrow_up",
-		"Assets/arrow_right",
-		"Assets/arrow_down",
-		"Assets/arrow_left",
+		"Assets/arrow_up.png",
+		"Assets/arrow_right.png",
+		"Assets/arrow_down.png",
+		"Assets/arrow_left.png",
 	};
 	std::unordered_map<AssetType, Texture2D> m_assets; ///< contains all assets
 	std::vector<std::string> m_title; ///< contains the tile
