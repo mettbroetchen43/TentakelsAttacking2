@@ -59,6 +59,10 @@ public:
 	 * sets the current text of the element.
 	 */
 	void SetText(std::string text);
+	/**
+	 * returns the current entry text.
+	 */
+	[[nodiscard]] std::string GetText() const;
 
 	/**
 	 * returns the ID of the Entry.

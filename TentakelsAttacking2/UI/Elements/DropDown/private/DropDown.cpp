@@ -5,6 +5,8 @@
 
 #include "DropDown.h"
 #include "DropDownElement.h"
+#include "HTextProcessing.h"
+#include "AppContext.h"
 #include <algorithm>
 
 void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
@@ -23,6 +25,19 @@ void DropDown::Render(AppContext const& appContext) {
         2.0f,
         WHITE
     );
+
+    if (m_currentElement) {
+        DrawTextPro(
+            *(appContext.assetManager.GetFont()),
+            m_currentElementText.c_str(),
+            m_textPosition,
+            { 0.0f,0.0f },
+            0.0f,
+            m_fontSize,
+            0.0f,
+            WHITE
+        );
+    }
 
     BeginScissorMode(
         static_cast<int>(m_dropDownCollider.x),
@@ -75,13 +90,35 @@ void DropDown::Initialize(std::vector<std::string> const& elements, unsigned int
         y += height;
 
         if (i == 0) {
-            m_currentElement = entry;
+            SetCurrentElement(entry);
         }
     }
 }
 
 void DropDown::OnElementClick(unsigned int ID) {
     SetCurrentElementByID(ID);
+}
+
+void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
+    m_currentElement = element;
+
+    m_currentElementText = element->GetText();
+    StripString(m_currentElementText);
+    m_fontSize = GetElementTextHeight(
+        m_size,
+        m_resolution.y
+    );
+    m_currentElementText = GetPritableTextInColider(
+        m_currentElementText,
+        m_fontSize,
+        m_collider,
+        AppContext::GetInstance()
+    );
+
+    m_textPosition = {
+        m_collider.x + 5.0f,
+        m_collider.y + (m_collider.height - m_fontSize) / 2
+    };
 }
 
 Rectangle DropDown::GetTemporaryCollider(Rectangle collider) const {

@@ -88,6 +88,10 @@ void DropDownElement::SetText(std::string text) {
     m_text = text;
     CreateToRender();
 }
+std::string DropDownElement::GetText() const {
+    return m_text;
+}
+
 unsigned int DropDownElement::GetID() const {
     return m_ID;
 }
