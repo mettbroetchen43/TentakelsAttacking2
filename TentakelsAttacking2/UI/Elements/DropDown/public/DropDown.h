@@ -18,7 +18,7 @@ private:
 	bool m_isFouldout = false; ///< contains if the element is currents folded out
 	std::vector<std::shared_ptr<DropDownElement>> m_dropDownElements; ///< contains all elements in the drop down
 	
-	Texture2D* m_arrowTexture; ///< contains the texture of the arrow that conntrols if the menu is droped down
+	Texture const* m_arrowTexture; ///< contains the texture of the arrow that conntrols if the menu is droped down
 	Rectangle m_arrowTextureRec; ///< contains the dimensions onto the texture
 	Rectangle m_arrowCollider; ///< contains the absolute domensions of the arrow
 
@@ -45,6 +45,11 @@ private:
 	 * sets the current element and current element text.
 	 */
 	void SetCurrentElement(std::shared_ptr<DropDownElement> element);
+
+	/**
+	 * toggles the drop down menu.
+	 */
+	void ToggleFoldedOut();
 
 	/**
 	 * calculates a collider that represets the area where the provided collider

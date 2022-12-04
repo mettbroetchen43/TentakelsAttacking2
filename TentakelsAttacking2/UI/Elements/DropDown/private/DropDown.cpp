@@ -6,12 +6,31 @@
 #include "DropDown.h"
 #include "DropDownElement.h"
 #include "HTextProcessing.h"
+#include "HInput.h"
+#include "UIEvents.hpp"
 #include "AppContext.h"
 #include <algorithm>
 
 void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 
     UIElement::CheckAndUpdate(mousePosition, appContext);
+
+    bool hover = (CheckCollisionPointRec(mousePosition, m_collider)
+        || CheckCollisionPointRec(mousePosition, m_arrowCollider));
+
+    if (hover) {
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            ToggleFoldedOut();
+        }
+    }
+    if (IsFocused()) {
+        if (IsConfirmInputPressed() && !IsNestedFocus() && !m_isFouldout) {
+            ToggleFoldedOut();
+        }
+        if (IsBackInputPressed() && m_isFouldout) {
+            ToggleFoldedOut();
+        }
+    }
 
     for (auto e : m_dropDownElements) {
         e->CheckAndUpdate(mousePosition, appContext);
@@ -48,18 +67,21 @@ void DropDown::Render(AppContext const& appContext) {
         WHITE
     );
 
-    BeginScissorMode(
-        static_cast<int>(m_dropDownCollider.x),
-        static_cast<int>(m_dropDownCollider.y),
-        static_cast<int>(m_dropDownCollider.width),
-        static_cast<int>(m_dropDownCollider.height)
-    );
+    if (m_isFouldout) {
 
-    for (auto e : m_dropDownElements) {
-        e->Render(appContext);
+        BeginScissorMode(
+            static_cast<int>(m_dropDownCollider.x),
+            static_cast<int>(m_dropDownCollider.y),
+            static_cast<int>(m_dropDownCollider.width),
+            static_cast<int>(m_dropDownCollider.height)
+        );
+
+        for (auto e : m_dropDownElements) {
+            e->Render(appContext);
+        }
+
+        EndScissorMode();
     }
-
-    EndScissorMode();
 }
 
 bool DropDown::IsEnabled() const {
@@ -128,6 +150,22 @@ void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
         m_collider.x + 5.0f,
         m_collider.y + (m_collider.height - m_fontSize) / 2
     };
+}
+
+void DropDown::ToggleFoldedOut() {
+
+    AppContext& appContext = AppContext::GetInstance();
+
+    m_isFouldout = !m_isFouldout;
+
+    appContext.eventManager.InvokeEvent(PlaySoundEvent(SoundType::CLICKED_PRESS_STD));
+
+    if (m_isFouldout) {
+        m_arrowTexture = appContext.assetManager.GetTexture(AssetType::ARROW_DOWN);
+    }
+    else {
+        m_arrowTexture = appContext.assetManager.GetTexture(AssetType::ARROW_UP);
+    }
 }
 
 Rectangle DropDown::GetTemporaryCollider(Rectangle collider) const {
