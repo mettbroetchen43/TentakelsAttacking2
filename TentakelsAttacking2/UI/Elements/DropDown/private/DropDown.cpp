@@ -108,6 +108,42 @@ void DropDown::CheckAndSetElementsEnabled() {
     }
 }
 
+void DropDown::Scroll(float wheel) {
+
+    for (auto e : m_dropDownElements) {
+        Vector2 pos = e->GetPosition();
+        pos.y +=  0.025f * wheel;
+        e->SetPositionUnalligned(pos);
+    }
+    CheckAndSetElementsEnabled();
+    ClampScolling();
+}
+void DropDown::ClampScolling() {
+
+    float offset = 0.0f;
+    auto element = m_dropDownElements.front();
+    float dropDownValue = m_dropDownCollider.y;
+    float elementValue = element->GetCollider().y;
+    if (dropDownValue < elementValue) {
+        offset = dropDownValue - elementValue;
+    }
+
+    element = m_dropDownElements.back();
+    dropDownValue  = m_dropDownCollider.y + m_dropDownCollider.height;
+    elementValue = element->GetCollider().y + element->GetCollider().height;
+    if (dropDownValue > elementValue) {
+        offset = dropDownValue - elementValue;
+    }
+
+    if (offset == 0.0f) { return; }
+
+    for (auto e : m_dropDownElements) {
+        Rectangle col = e->GetCollider();
+        col.y += offset;
+        e->SetCollider(col);
+    }
+}
+
 DropDown::DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, float dropDownHeight,
     unsigned int focusID, unsigned int startElementFocusID, std::vector<std::string> const& elements)
     : UIElement(pos, size, alignment, resolution), Focusable(focusID), m_dropDownHeight(dropDownHeight) {
@@ -145,6 +181,7 @@ std::shared_ptr<DropDownElement> DropDown::GetCurrentElement() const {
 
     return m_currentElement;
 }
+
 bool DropDown::SetCurrentElementByID(unsigned int ID) {
     
     for (auto e : m_dropDownElements) {
@@ -179,6 +216,13 @@ void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
         if (IsBackInputPressed() && m_isFouldout) {
             ToggleFoldedOut();
             first = true;
+        }
+    }
+
+    if (m_isFouldout) {
+        float wheel = GetMouseWheelMove();
+        if (wheel != 0.0f) {
+            Scroll(wheel);
         }
     }
 

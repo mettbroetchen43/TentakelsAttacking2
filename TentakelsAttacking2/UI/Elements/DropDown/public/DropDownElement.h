@@ -28,6 +28,17 @@ private:
 	 */
 	void CreateToRender();
 
+	/**
+	 * calls UpdateCollider of the UIElement.
+	 * Updates the text.
+	 */
+	void UpdateCollider() override;
+	/**
+	 * calls UpdateReverseCollider of the UIElement.
+	 * Updates the text.
+	 */
+	void UpdateColiderReverse() override;
+
 public:
 	/**
 	 * ctor.

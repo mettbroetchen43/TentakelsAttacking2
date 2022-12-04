@@ -20,6 +20,15 @@ void DropDownElement::CreateToRender() {
     };
 }
 
+void DropDownElement::UpdateCollider() {
+    UIElement::UpdateCollider();
+    CreateToRender();
+}
+void DropDownElement::UpdateColiderReverse() {
+    UIElement::UpdateColiderReverse();
+    CreateToRender();
+}
+
 DropDownElement::DropDownElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
     unsigned int focusID, unsigned int ID, std::string const& text,
     std::function<Rectangle(Rectangle)> getTemoraryCollider)

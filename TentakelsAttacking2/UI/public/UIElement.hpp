@@ -53,7 +53,7 @@ protected:
 	/**
 	 * calculates the relative position and size out of the absolute position and size and the current resolution.
 	 */
-	void UpdateColiderReverse() {
+	virtual void UpdateColiderReverse() {
 		m_pos = {
 			m_collider.x / m_resolution.x,
 			m_collider.y / m_resolution.y
@@ -170,11 +170,19 @@ public:
 	}
 	/**
 	 * sets a new relative position.
-	 * calls to update the collider.
+	 * calls to update and allign the collider.
 	 */
 	virtual void SetPosition(Vector2 pos) {
 		m_pos = pos;
 		m_collider = GetAlignedCollider(m_pos, m_size, m_alignment, m_resolution);
+	}
+	/**
+	 * sets a new relative position.
+	 * calls to update the collider.
+	 */
+	virtual void SetPositionUnalligned(Vector2 pos) {
+		m_pos = pos;
+		UpdateCollider();
 	}
 	/**
 	 * returns the current relative position. 
