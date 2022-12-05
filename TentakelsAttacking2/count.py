@@ -32,6 +32,7 @@ def print_directory_or_file(filename: str, layer: int) -> None:
 
 def print_result() -> None:
     print("counted directory: " + os.getcwd())
+    print("counted file types: " + str([x for x in cc.file_endings]))
     print("-----")
     print("directories:        " + str(directories))
     print("-----")
