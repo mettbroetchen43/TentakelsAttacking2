@@ -16,6 +16,7 @@ class DropDown : public UIElement, public Focusable {
 private:
 	bool m_isEnabled = true; ///< contains if the element is currently enabled
 	bool m_isFouldout = false; ///< contains if the element is currents folded out
+	bool m_isScolling = true; ///< countais if the DropDown in able to scroll
 	std::vector<std::shared_ptr<DropDownElement>> m_dropDownElements; ///< contains all elements in the drop down
 	
 	Texture const* m_arrowTexture; ///< contains the texture of the arrow that conntrols if the menu is droped down
@@ -73,7 +74,11 @@ private:
 	/**
 	 * clampes the first and last value into the drop down collider.
 	 */
-	void ClampScolling();
+	void ClampScrolling();
+	/**
+	 * Checks if scolling should be enabled.
+	 */
+	void CheckIfScolling();
 public:
 	/**
 	 * ctor.

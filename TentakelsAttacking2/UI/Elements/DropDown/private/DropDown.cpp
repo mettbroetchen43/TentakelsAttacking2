@@ -110,15 +110,17 @@ void DropDown::CheckAndSetElementsEnabled() {
 
 void DropDown::Scroll(float wheel) {
 
+    if (!m_isScolling) { return; }
+
     for (auto e : m_dropDownElements) {
         Vector2 pos = e->GetPosition();
         pos.y +=  0.025f * wheel;
         e->SetPositionUnalligned(pos);
     }
     CheckAndSetElementsEnabled();
-    ClampScolling();
+    ClampScrolling();
 }
-void DropDown::ClampScolling() {
+void DropDown::ClampScrolling() {
 
     float offset = 0.0f;
     auto element = m_dropDownElements.front();
@@ -142,6 +144,16 @@ void DropDown::ClampScolling() {
         col.y += offset;
         e->SetCollider(col);
     }
+}
+void DropDown::CheckIfScolling() {
+    float sum = 0;
+
+    for (auto e : m_dropDownElements) {
+        sum += e->GetCollider().height;
+        if (m_dropDownCollider.height < sum) { m_isScolling = true; return; }
+    }
+
+    m_isScolling = sum > m_dropDownCollider.height;
 }
 
 DropDown::DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, float dropDownHeight,
@@ -222,6 +234,7 @@ void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
     if (m_isFouldout) {
         float wheel = GetMouseWheelMove();
         if (wheel != 0.0f) {
+            CheckIfScolling();
             Scroll(wheel);
         }
     }
