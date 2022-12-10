@@ -15,7 +15,6 @@
 #include "Line.h"
 #include "AppContext.h"
 #include "UIEvents.hpp"
-#include <iostream>
 
 void SettingsScene::Initialize() {
 

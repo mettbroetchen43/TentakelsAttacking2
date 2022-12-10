@@ -7,6 +7,7 @@
 #include "HResolution.hpp"
 #include <vector>
 #include <string>
+#include <array>
 
 
 
@@ -21,5 +22,6 @@ struct CWindow {
 
 	[[nodiscard]] std::vector<std::string> GetAllResolutionsAsString ( );
 	[[nodiscard]] std::string GetStringFromResolution ( Resolution resolution );
+	[[nodiscard]] std::array<int, 2> GetIntFromResolution ( Resolution resolution );
 };
 

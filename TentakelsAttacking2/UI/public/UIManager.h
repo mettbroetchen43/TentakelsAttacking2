@@ -27,6 +27,7 @@ private:
 	GameManager m_gameManager; ///< contains the game logic
 	Vector2 m_resolution; ///< contains the current resolution of the window
 	bool m_closeWindow = false; ///< contains if the game will quit at the end of the tick
+	Resolution m_nextResolution;
 
 	/**
 	 * Toggles between follscreen and window mode.
@@ -34,10 +35,10 @@ private:
 	void ToggleFullScreen(bool first = false);
 
 	/**
-	 * chaks if the resolution has chanced.
-	 * updated if the resultion has chanced.
+	 * converts and Updates the reosultion in Window mode.
 	 */
-	void CheckAndUpdateResolution();
+	void CheckAndSetNewResolution ( );
+
 	/**
 	 * calls the game logic to update.
 	 * checks the quit input.

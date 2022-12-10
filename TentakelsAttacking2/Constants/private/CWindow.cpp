@@ -34,3 +34,18 @@ std::string CWindow::GetStringFromResolution ( Resolution resolution ) {
 			return "invalid Resoluion";
 	}
 }
+
+std::array<int, 2> CWindow::GetIntFromResolution ( Resolution resolution ) {
+	switch ( resolution ) {
+		case Resolution::UHD:
+			return  { 3840,2162 };
+		case Resolution::FULL_HD:
+			return { 1920, 1080 };
+		case Resolution::HD:
+			return { 1280,720 };
+		case Resolution::LAST:
+		default:
+			Print ( "invalud resoltion selected: " + static_cast<int>(resolution), PrintType::ERROR );
+			return { 100,100 };
+	}
+}
