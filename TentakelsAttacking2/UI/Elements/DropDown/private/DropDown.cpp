@@ -72,6 +72,8 @@ void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
         m_collider.x + 5.0f,
         m_collider.y + (m_collider.height - m_fontSize) / 2
     };
+
+    m_onSave(element->GetID());
 }
 
 void DropDown::ToggleFoldedOut() {
@@ -300,4 +302,8 @@ void DropDown::SetEnabled(bool isEnabled) {
 
 Rectangle DropDown::GetCollider() const {
     return m_collider;
+}
+
+void DropDown::SetOnSave(std::function<void(unsigned int)> onSave) {
+    m_onSave = onSave;
 }

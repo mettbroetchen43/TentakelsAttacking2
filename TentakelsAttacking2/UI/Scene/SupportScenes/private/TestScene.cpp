@@ -12,47 +12,6 @@
 void TestScene::Initialize(Vector2 resolution,
 	[[maybe_unused]] AppContext& appContext) {
 
-	std::vector<std::string> entries = {
-		"Eintrag 1",
-		"Eintrag 2",
-		"Eintrag 3",
-		"Eintrag 4",
-		"Eintrag 5",
-		"Eintrag 6",
-		"Eintrag 7",
-		"Eintrag 9",
-		"Eintrag 10",
-		"Eintrag 11",
-		"Eintrag 12",
-		"Eintrag 13",
-		"Eintrag 14",
-		"Eintrag 15",
-		"Eintrag 16",
-		"Eintrag 17",
-		"Eintrag 18",
-		"Eintrag 19",
-		"Eintrag 20",
-		"Eintrag 21",
-		"Eintrag 22",
-		"Eintrag 23",
-		"Eintrag 24",
-		"Eintrag 25",
-		"Eintrag 26",
-		"Eintrag 27",
-		"Eintrag 28",
-		"Eintrag 29",
-		"Eintrag 30",
-		"Eintrag 31",
-		"Eintrag 32",
-		"Eintrag 33",
-		"Eintrag 34",
-		"Eintrag 35",
-		"Eintrag 36",
-		"Eintrag 37",
-		"Eintrag 38",
-		"Eintrag 39",
-	};
-
 	m_dropDown = std::make_shared<DropDown>(
 		GetElementPosition(0.5f, 0.25f),
 		GetElementSize(0.25f, 0.03f),
@@ -61,8 +20,11 @@ void TestScene::Initialize(Vector2 resolution,
 		0.5f,
 		1,
 		10,
-		entries
+		m_entries
 		);
+	m_dropDown->SetOnSave([this](unsigned int index) {
+		this->TestLambda(index);
+		});
 	m_elements.push_back(m_dropDown);
 
 	// to get Back No testing
@@ -91,8 +53,9 @@ void TestScene::SetActive(bool active, AppContext const& appContext) {
 	Scene::SetActive(active, appContext);
 }
 
-void TestScene::TestLambda(float value) {
-	std::cout << "Value Triggert -> " << value << '\n';
+void TestScene::TestLambda(unsigned int value) {
+	std::cout << "Index Triggert -> " << value << '\n';
+	std::cout << "Value Triggert -> " << m_entries[value - 1] << '\n';
 }
 
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {

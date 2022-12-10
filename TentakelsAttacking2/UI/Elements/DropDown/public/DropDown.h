@@ -122,4 +122,10 @@ public:
 	 * returns the current collider of the element.
 	 */
 	[[nodiscard]] Rectangle GetCollider() const override;
+
+	/**
+	 * sets the lambda that gets called when a value gets set.
+	 * provides the element ID when it gets called.
+	 */
+	void SetOnSave(std::function<void(unsigned int)> onSave);
 };
