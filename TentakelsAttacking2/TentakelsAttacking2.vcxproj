@@ -150,6 +150,7 @@
     <ClInclude Include="Constants\public\ConfigIO.h" />
     <ClInclude Include="Constants\public\CPlanet.hpp" />
     <ClInclude Include="Constants\public\CPlayer.hpp" />
+    <ClInclude Include="Constants\public\CWindow.h" />
     <ClInclude Include="Constants\public\CWorld.hpp" />
     <ClInclude Include="Constants\public\CGlobal.hpp" />
     <ClInclude Include="Constants\public\CSound.hpp" />

@@ -24,7 +24,7 @@ void UIManager::ToggleFullScreen(bool first) {
 		SetWindowPosition(0, 10);
 	}
 	if (!first) {
-		auto& fullScreen = AppContext::GetInstance().constants.global.startingModeFullScreen;
+		auto& fullScreen = AppContext::GetInstance().constants.window.startingModeFullScreen;
 		fullScreen = !fullScreen;
 	}
 }
@@ -116,7 +116,7 @@ UIManager::~UIManager() {
 void UIManager::StartUI() {
 	auto event = SwitchSceneEvent(SceneType::LOGO);
 	m_appContext.eventManager.InvokeEvent(event);
-	if (m_appContext.constants.global.startingModeFullScreen) {
+	if (m_appContext.constants.window.startingModeFullScreen) {
 		ToggleFullScreen(true);
 	}
 	else {

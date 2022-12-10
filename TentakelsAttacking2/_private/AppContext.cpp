@@ -25,7 +25,7 @@ void AppContext::LoadConfig() {
 		SetMasterVolume(constants.sound.masterVolume / 100);
 	}
 	
-	auto event = SetTargetFPSEvent(constants.global.FPS);
+	auto event = SetTargetFPSEvent(constants.window.FPS);
 	eventManager.InvokeEvent(event);
 
 }
