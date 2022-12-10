@@ -18,6 +18,7 @@ class ColorCell;
 class Focusable;
 class PopUp;
 enum class SceneType;
+enum class Resolution;
 
 /**
  * use this to close the program at the end of one cyclus.
@@ -36,6 +37,25 @@ public:
 
 	[[nodiscard]] size_t GetFPS() const {
 		return m_fps;
+	}
+};
+/**
+ * use this to trigger the appcontext to toggle fullscreen.
+ */
+class ToggleFullscreenEvent final : public Event { };
+/**
+ * use this for setting a new resolutionan the AppContext.
+ */
+class SetNewResolutionEvent final : public Event {
+private:
+	Resolution m_resolution;
+
+public:
+	SetNewResolutionEvent(Resolution resolution )
+		: m_resolution(resolution ){ }
+
+	[[nodiscard]] Resolution GetResolution ( ) const {
+		return m_resolution;
 	}
 };
 
@@ -303,7 +323,3 @@ class ShowInitialSoundLevelPopUpEvent final : public PopUpEvent {
 public:
 	using PopUpEvent::PopUpEvent;
 };
-/**
- * use this to trigger the appcontext to toggle fullscreen.
- */
-class ToggleFullscreenEvent final : public Event { };

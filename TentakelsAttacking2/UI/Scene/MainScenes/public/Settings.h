@@ -19,7 +19,7 @@ private:
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize(Vector2 resolution);
+	void Initialize();
 
 public:
 	/**

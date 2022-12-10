@@ -201,7 +201,9 @@ bool DropDown::SetCurrentElementByID(unsigned int ID) {
     for (auto e : m_dropDownElements) {
         if (e->GetID() == ID) {
             SetCurrentElement(e);
-            ToggleFoldedOut();
+            if ( m_isFouldout ) {
+                ToggleFoldedOut ( );
+            }
             return true;
         }
     }

@@ -7,6 +7,7 @@
 #include "ClassicButton.h"
 #include "SceneType.h"
 #include "DropDown.h"
+#include "AppContext.h"
 #include <iostream>
 
 void TestScene::Initialize(Vector2 resolution,
@@ -46,7 +47,12 @@ void TestScene::Initialize(Vector2 resolution,
 
 TestScene::TestScene(Vector2 resolution)
 	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
-	Initialize(resolution, AppContext::GetInstance());
+
+	AppContext &appContext = AppContext::GetInstance ( );
+
+	m_entries = appContext.constants.window.GetAllResolutionsAsString ( );
+
+	Initialize(resolution, appContext );
 }
 
 void TestScene::SetActive(bool active, AppContext const& appContext) {
