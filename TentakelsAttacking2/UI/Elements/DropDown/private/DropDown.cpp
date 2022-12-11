@@ -159,13 +159,22 @@ void DropDown::CheckIfScolling() {
 }
 
 void DropDown::UpdateCollider() {
+
     UIElement::UpdateCollider();
     SetCurrentElement(m_currentElement);
+
     m_arrowCollider = {
-    m_collider.x + m_collider.width,
-    m_collider.y,
-    m_collider.height,
-    m_collider.height
+        m_collider.x + m_collider.width,
+        m_collider.y,
+        m_collider.height,
+        m_collider.height
+    };
+
+    m_dropDownCollider = {
+        m_collider.x,
+        m_collider.y + m_collider.height,
+        m_collider.width,
+        m_resolution.y * m_dropDownHeight
     };
 }
 
@@ -311,7 +320,7 @@ void DropDown::Resize(Vector2 resolution, AppContext const& appContext) {
 
 
     for(auto element : m_dropDownElements) {
-        //element->Resize(resolution, appContext);
+        element->Resize(resolution, appContext);
     }
 }
 
