@@ -18,7 +18,7 @@ private:
 	bool m_isFouldout = false; ///< contains if the element is currents folded out
 	bool m_isScolling = true; ///< countais if the DropDown in able to scroll
 	std::vector<std::shared_ptr<DropDownElement>> m_dropDownElements; ///< contains all elements in the drop down
-	
+
 	Texture const* m_arrowTexture; ///< contains the texture of the arrow that conntrols if the menu is droped down
 	Rectangle m_arrowTextureRec; ///< contains the dimensions onto the texture
 	Rectangle m_arrowCollider; ///< contains the absolute domensions of the arrow
@@ -27,7 +27,7 @@ private:
 	std::string m_currentElementText = ""; ///< contains the text of the current element
 	float m_fontSize = 0.0f; ///< contains the height of the text of the current element
 	Vector2 m_textPosition = { 0.0f,0.0f }; ///< contains the position of the current element
-	
+
 	float m_dropDownHeight; ///< contains the relative height of the drop down part
 	Rectangle m_dropDownCollider; ///< contains the collider of the drop down part
 	std::function<void(unsigned int)> m_onSave = [](unsigned int) {}; ///< gets called of save
@@ -41,7 +41,7 @@ private:
 	 * gets called of the elements as on click action.
 	 */
 	void OnElementClick(unsigned int ID);
-	
+
 	/**
 	 * sets the current element and current element text.
 	 */
@@ -79,13 +79,20 @@ private:
 	 * Checks if scolling should be enabled.
 	 */
 	void CheckIfScolling();
+
+	/**
+	 * calles UpdateCollider from UIElement.
+	 * sets a new position of the arrow and the current element text.
+	 */
+	void UpdateCollider() override;
+
 public:
 	/**
 	 * ctor.
 	 * only initialization.
 	 */
-	DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, float dropDownSize, 
-		unsigned int focusID, unsigned int startElementFocusID, std::vector<std::string> const& elements);
+	DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, float dropDownSize,
+			 unsigned int focusID, unsigned int startElementFocusID, std::vector<std::string> const& elements);
 
 
 	/**
@@ -108,6 +115,10 @@ public:
 	 * renders the DropDown.
 	 */
 	void Render(AppContext const& appContext) override;
+	/**
+	 * rezises itself and alle elements it contains.
+	 */
+	void Resize(Vector2 resolution, AppContext const& appContext) override;
 
 	/**
 	 * returns if the element is currently enabled.

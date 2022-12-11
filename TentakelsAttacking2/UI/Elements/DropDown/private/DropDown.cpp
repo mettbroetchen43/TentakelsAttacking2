@@ -158,6 +158,17 @@ void DropDown::CheckIfScolling() {
     m_isScolling = sum > m_dropDownCollider.height;
 }
 
+void DropDown::UpdateCollider() {
+    UIElement::UpdateCollider();
+    SetCurrentElement(m_currentElement);
+    m_arrowCollider = {
+    m_collider.x + m_collider.width,
+    m_collider.y,
+    m_collider.height,
+    m_collider.height
+    };
+}
+
 DropDown::DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, float dropDownHeight,
     unsigned int focusID, unsigned int startElementFocusID, std::vector<std::string> const& elements)
     : UIElement(pos, size, alignment, resolution), Focusable(focusID), m_dropDownHeight(dropDownHeight) {
@@ -292,6 +303,15 @@ void DropDown::Render(AppContext const& appContext) {
         }
 
         EndScissorMode();
+    }
+}
+void DropDown::Resize(Vector2 resolution, AppContext const& appContext) {
+
+    UIElement::Resize(resolution, appContext);
+
+
+    for(auto element : m_dropDownElements) {
+        //element->Resize(resolution, appContext);
     }
 }
 
