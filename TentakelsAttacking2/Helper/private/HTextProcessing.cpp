@@ -96,6 +96,9 @@ std::string GetPritableTextInColider(std::string const& text,
 	std::string toCheck = constants.prefix + text + constants.cursor;
 
 	do {
+		if ( toReturn.size( ) == 0 ) {
+			break;
+		}
 		toReturn = toReturn.substr(1, toReturn.size());
 		toCheck = constants.prefix + toReturn + constants.cursor;
 		textSize = MeasureTextEx(

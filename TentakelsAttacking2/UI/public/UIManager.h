@@ -57,6 +57,10 @@ private:
 	void Render();
 
 	/**
+	 * sets the current window size from the config to raylib.
+	 */
+	void SetWindowSize( );
+	/**
 	 * sets the target FPS in the raylib.
 	 */
 	void SetTargetFPS(SetTargetFPSEvent const* event);
@@ -95,11 +99,10 @@ public:
 	 * receives all events and calls the member functions.
 	 */
 	void OnEvent(Event const& event);
-
 	/**
-	 * returns the current resolution of the current monitor.
+	 * return the current resolution.
 	 */
-	[[nodiscard]] Vector2 GetResolution() const;
+	[[nodiscard]] Vector2 GetResolution( ) const;
 	/**
 	 * returns an reference if the current focus instance.
 	 */
