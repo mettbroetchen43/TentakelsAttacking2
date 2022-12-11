@@ -24,6 +24,8 @@ std::string CWindow::GetStringFromResolution ( Resolution resolution ) {
 	switch ( resolution ) {
 		case Resolution::UHD:
 			return "UHD (3840 x 2162)";
+		case Resolution::WQHD:
+			return "WQHD (2560 x 1440)";
 		case Resolution::FULL_HD:
 			return "Full HD (1920 x 1080)";
 		case Resolution::HD:
@@ -39,6 +41,8 @@ std::array<int, 2> CWindow::GetIntFromResolution ( Resolution resolution ) {
 	switch ( resolution ) {
 		case Resolution::UHD:
 			return  { 3840,2162 };
+		case Resolution::WQHD:
+			return { 2560,1440 };
 		case Resolution::FULL_HD:
 			return { 1920, 1080 };
 		case Resolution::HD:

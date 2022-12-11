@@ -37,7 +37,7 @@ private:
 	/**
 	 * converts and Updates the reosultion in Window mode.
 	 */
-	void CheckAndSetNewResolution ( );
+	void CheckAndSetNewResolution();
 
 	/**
 	 * calls the game logic to update.
@@ -59,10 +59,14 @@ private:
 	/**
 	 * sets the current window size from the config to raylib.
 	 */
-	void SetWindowSize( );
+	void SetWindowSize();
 	/**
-	 * sets the target FPS in the raylib.
+	 * sets the pintow position if in window mode.
 	 */
+	void SetWindowPosition();
+	/**
+	* sets the target FPS in the raylib.
+	*/
 	void SetTargetFPS(SetTargetFPSEvent const* event);
 	/**
 	 * main loop of the programm.
@@ -102,7 +106,7 @@ public:
 	/**
 	 * return the current resolution.
 	 */
-	[[nodiscard]] Vector2 GetResolution( ) const;
+	[[nodiscard]] Vector2 GetResolution() const;
 	/**
 	 * returns an reference if the current focus instance.
 	 */

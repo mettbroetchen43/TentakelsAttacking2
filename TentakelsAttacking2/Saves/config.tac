@@ -12,7 +12,7 @@
 50 / Max Game Rounds
 
 // Window
-2 / contains the current solution as an enum
+3 / contains the current solution as an enum
 0 / Starting Full Screen (0 = window)
 60 / Target FPS
 

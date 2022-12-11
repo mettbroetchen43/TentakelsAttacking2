@@ -15,7 +15,6 @@
 #include "Line.h"
 #include "AppContext.h"
 #include "UIEvents.hpp"
-#include <iostream>
 
 void SettingsScene::Initialize() {
 
@@ -164,8 +163,6 @@ void SettingsScene::Initialize() {
 		301,
 		appContext.constants.window.GetAllResolutionsAsString ( )
 		);
-	std::cout << static_cast<unsigned int>(appContext.constants.window.current_resolution) << '\n';
-	std::cout << static_cast<unsigned int>(appContext.constants.window.current_resolution) + 1 << '\n';
 	resolution->SetCurrentElementByID ( static_cast<unsigned int>(appContext.constants.window.current_resolution) + 1 );
 	resolution->SetOnSave ( [this] ( unsigned int ID ) {
 		auto event = SetNewResolutionEvent ( static_cast<Resolution>(ID - 1) );
