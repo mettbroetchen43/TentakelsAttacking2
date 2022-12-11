@@ -27,6 +27,7 @@ private:
 	GameManager m_gameManager; ///< contains the game logic
 	Vector2 m_resolution; ///< contains the current resolution of the window
 	bool m_closeWindow = false; ///< contains if the game will quit at the end of the tick
+	Resolution m_nextResolution;
 
 	/**
 	 * Toggles between follscreen and window mode.
@@ -34,10 +35,10 @@ private:
 	void ToggleFullScreen(bool first = false);
 
 	/**
-	 * chaks if the resolution has chanced.
-	 * updated if the resultion has chanced.
+	 * converts and Updates the reosultion in Window mode.
 	 */
-	void CheckAndUpdateResolution();
+	void CheckAndSetNewResolution();
+
 	/**
 	 * calls the game logic to update.
 	 * checks the quit input.
@@ -56,8 +57,16 @@ private:
 	void Render();
 
 	/**
-	 * sets the target FPS in the raylib.
+	 * sets the current window size from the config to raylib.
 	 */
+	void SetWindowSize();
+	/**
+	 * sets the pintow position if in window mode.
+	 */
+	void SetWindowPosition();
+	/**
+	* sets the target FPS in the raylib.
+	*/
 	void SetTargetFPS(SetTargetFPSEvent const* event);
 	/**
 	 * main loop of the programm.
@@ -94,9 +103,8 @@ public:
 	 * receives all events and calls the member functions.
 	 */
 	void OnEvent(Event const& event);
-
 	/**
-	 * returns the current resolution of the current monitor.
+	 * return the current resolution.
 	 */
 	[[nodiscard]] Vector2 GetResolution() const;
 	/**

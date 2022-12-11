@@ -12,6 +12,7 @@ directories: int = 0
 files: int = 0
 
 global_lines: int = 0
+lines_with_entry: int = 0
 code_lines: int = 0
 comment_lines: int = 0
 
@@ -31,12 +32,14 @@ def print_directory_or_file(filename: str, layer: int) -> None:
 
 def print_result() -> None:
     print("counted directory: " + os.getcwd())
+    print("counted file types: " + str([x for x in cc.file_endings]))
     print("-----")
     print("directories:        " + str(directories))
     print("-----")
     print("files:              " + str(files))
     print("-----")
-    print("global_lines:       " + str(global_lines))
+    print("global_lines        " + str(global_lines))
+    print("lines_with_entry:   " + str(lines_with_entry))
     print("code_lines:         " + str(code_lines))
     print("comment_lines:      " + str(comment_lines))
     print("-----")
@@ -103,14 +106,17 @@ def count_characters(line: str) -> None:
 
 def count_line(line: str) -> None:
     global global_lines
+    global lines_with_entry
     global code_lines
     global comment_lines
+
+    global_lines += 1
     line = line.strip()
 
     if len(line) == 0:
         return
 
-    global_lines += 1
+    lines_with_entry += 1
     if block_comment:
         comment_lines += 1
     elif is_check_comment(line, cc.single_line_comment):

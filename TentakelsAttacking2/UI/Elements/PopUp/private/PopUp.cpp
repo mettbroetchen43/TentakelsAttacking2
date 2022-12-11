@@ -49,12 +49,12 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		Alignment::TOP_MID,
 		resolution,
 		Alignment::TOP_MID,
-		GetElementTextHight(m_size, 0.2f),
+		GetElementTextHeight(m_size, 0.2f),
 		title
 		);
 	m_elements.push_back(textTitle);
 
-	float textHeight = GetElementTextHight(m_size, 0.1f);
+	float textHeight = GetElementTextHeight(m_size, 0.1f);
 	BreakText(
 		subTitle,
 		textHeight,

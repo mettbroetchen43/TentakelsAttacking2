@@ -8,48 +8,41 @@
 #include "HInput.h"
 #include "HPrint.h"
 
-Vector2 UIManager::GetResolution() const {
-	Vector2 newResolution;
-	int display = GetCurrentMonitor();
-	newResolution.x = static_cast<float>(GetMonitorWidth(display));
-	newResolution.y = static_cast<float>(GetMonitorHeight(display));
-	return newResolution;
-}
 Focus& UIManager::GetFocus() {
 	return m_focus;
 }
 void UIManager::ToggleFullScreen(bool first) {
 	ToggleFullscreen();
-	if (!IsWindowFullscreen()) {
-		SetWindowPosition(0, 10);
+	if(!IsWindowFullscreen()) {
+		SetWindowSize();
+		SetWindowPosition();
 	}
-	if (!first) {
-		auto& fullScreen = AppContext::GetInstance().constants.global.startingModeFullScreen;
+	if(!first) {
+		auto& fullScreen = AppContext::GetInstance().constants.window.startingModeFullScreen;
 		fullScreen = !fullScreen;
 	}
 }
-void UIManager::CheckAndUpdateResolution() {
-	Vector2 newResolution = GetResolution();
 
-	bool isNewResolution = (m_resolution.x != newResolution.x)
-		or (m_resolution.y != newResolution.y);
+void UIManager::CheckAndSetNewResolution() {
+	if(m_nextResolution == m_appContext.constants.window.current_resolution) { return; }
 
-	if (isNewResolution) {
-		m_resolution = newResolution;
-		SetWindowSize(static_cast<int>(m_resolution.x), static_cast<int>(m_resolution.y));
-		m_sceneManager.Resize(newResolution, m_appContext);
-	}
+	m_appContext.constants.window.current_resolution = m_nextResolution;
+
+	SetWindowSize();
+	SetWindowPosition();
+
+	m_sceneManager.Resize(m_resolution, m_appContext);
 }
 
 void UIManager::CheckAndUpdate() {
 	m_gameManager.Update();
 
-	if (IsQuitInput()) {
+	if(IsQuitInput()) {
 		auto event = CloseWindowEvent();
 		m_appContext.eventManager.InvokeEvent(event);
 	}
 
-	if (IsToggleFullscreenInput()) {
+	if(IsToggleFullscreenInput()) {
 		ToggleFullScreen();
 	}
 
@@ -80,17 +73,43 @@ void UIManager::Render() {
 	EndDrawing();
 }
 
+void UIManager::SetWindowSize() {
+	auto values = m_appContext.constants.window.GetIntFromResolution(m_nextResolution);
+	m_resolution = { static_cast<float>(values[0]), static_cast<float>(values[1]) };
+
+	bool was_fullscreen = IsWindowFullscreen();
+	if(was_fullscreen) { ToggleFullScreen(); }
+
+	::SetWindowSize(values[0], values[1]);
+	if(was_fullscreen) { ToggleFullScreen(); }
+}
+
+void UIManager::SetWindowPosition() {
+	if(IsWindowFullscreen()) { return; }
+
+	int screen = GetCurrentMonitor();
+	int screenHeight = GetMonitorHeight(screen);
+	int screenWidth = GetMonitorWidth(screen);
+
+	int differenceWidth = (screenWidth - static_cast<int>(m_resolution.x)) / 2;
+	int differenceHeight = (screenHeight - static_cast<int>(m_resolution.y)) / 2;
+
+	if(differenceHeight < 0) { differenceHeight = 0; }
+
+	::SetWindowPosition(differenceWidth, differenceHeight);
+}
+
 void UIManager::SetTargetFPS(SetTargetFPSEvent const* event) {
 	::SetTargetFPS(static_cast<int>(event->GetFPS()));
 	Print("FPS Set: " + std::to_string(event->GetFPS()));
 }
 
 void UIManager::UILoop() {
-	while (!WindowShouldClose()) {
-		CheckAndUpdateResolution();
+	while(!WindowShouldClose()) {
+		CheckAndSetNewResolution();
 		CheckAndUpdate();
 		Render();
-		if (m_closeWindow) {
+		if(m_closeWindow) {
 			break;
 		}
 	}
@@ -99,11 +118,11 @@ void UIManager::UILoop() {
 }
 
 UIManager::UIManager()
-	: m_appContext(AppContext::GetInstance()), m_resolution(GetResolution()), m_sceneManager(this) {
-	
+	: m_appContext(AppContext::GetInstance()), m_resolution({ 0.0f,0.0f }), m_sceneManager(this),
+	m_nextResolution(Resolution::LAST) {
+
 	SetExitKey(KeyboardKey::KEY_NULL);
 
-	SetWindowSize(static_cast<int>(m_resolution.x), static_cast<int>(m_resolution.y));
 	m_appContext.eventManager.AddListener(this);
 
 	Print("UIManager", PrintType::INITIALIZE);
@@ -114,33 +133,46 @@ UIManager::~UIManager() {
 }
 
 void UIManager::StartUI() {
+
+	m_nextResolution = m_appContext.constants.window.current_resolution;
+	SetWindowSize();
+
 	auto event = SwitchSceneEvent(SceneType::LOGO);
 	m_appContext.eventManager.InvokeEvent(event);
-	if (m_appContext.constants.global.startingModeFullScreen) {
+
+
+	if(m_appContext.constants.window.startingModeFullScreen) {
 		ToggleFullScreen(true);
-	}
-	else {
-		SetWindowPosition(0,10);
+	} else {
+		SetWindowPosition();
 	}
 
-	Print("\"UI\" started");
+	Print("\"UI Loop\" started");
 
 	UILoop();
 }
 
 void UIManager::OnEvent(Event const& event) {
-	if (auto const* CloseEvent = dynamic_cast<CloseWindowEvent const*>(&event)) {
+	if(auto const* CloseEvent = dynamic_cast<CloseWindowEvent const*>(&event)) {
 		m_closeWindow = true;
 		return;
 	}
 
-	if (auto const* ToggleEvent = dynamic_cast<ToggleFullscreenEvent const*>(&event)) {
+	if(auto const* ResolutionEvent = dynamic_cast<SetNewResolutionEvent const*>(&event)) {
+		m_nextResolution = ResolutionEvent->GetResolution();
+	}
+
+	if(auto const* ToggleEvent = dynamic_cast<ToggleFullscreenEvent const*>(&event)) {
 		ToggleFullScreen();
 		return;
 	}
 
-	if (auto const* FPSEvent = dynamic_cast<SetTargetFPSEvent const*>(&event)) {
+	if(auto const* FPSEvent = dynamic_cast<SetTargetFPSEvent const*>(&event)) {
 		SetTargetFPS(FPSEvent);
 		return;
 	}
+}
+
+Vector2 UIManager::GetResolution() const {
+	return m_resolution;
 }

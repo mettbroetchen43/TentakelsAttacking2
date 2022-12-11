@@ -7,7 +7,7 @@
 # include "Scene.h"
 # include "Table.h"
 
-class GameEventSettings;
+class DropDown;
 
 /**
  * no doc here.
@@ -15,7 +15,8 @@ class GameEventSettings;
  */
 class TestScene : public Scene {
 private:
-	std::shared_ptr<GameEventSettings> m_settings;
+	std::vector<std::string> m_entries;
+	std::shared_ptr<DropDown> m_dropDown;
 
 	void Initialize(Vector2 resolution, AppContext& appContext);
 
@@ -23,7 +24,7 @@ public:
 	TestScene(Vector2 resolution);
 	void SetActive(bool active, AppContext const& appContext) override;
 
-	void TestLambda(float value);
+	void TestLambda(unsigned int value);
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
 };

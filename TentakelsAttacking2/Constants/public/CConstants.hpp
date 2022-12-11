@@ -11,6 +11,7 @@
 #include "CFiles.hpp"
 #include "CSound.hpp"
 #include "CPlanet.hpp"
+#include "CWindow.h"
 
 /**
  * contains all constants.
@@ -23,4 +24,5 @@ struct Constants final {
 	CFiles files; ///< contains the file constants
 	CSound sound; ///< contains the sound constants
 	CPlanet planet; ///< contains the planet constants
+	CWindow window; ///< contains the window constants
 };

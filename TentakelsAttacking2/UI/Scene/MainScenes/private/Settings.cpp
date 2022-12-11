@@ -11,10 +11,12 @@
 #include "GameEventSettings.h"
 #include "SliderAndInputLine.h"
 #include "CheckBox.h"
+#include "DropDown.h"
 #include "Line.h"
 #include "AppContext.h"
+#include "UIEvents.hpp"
 
-void SettingsScene::Initialize(Vector2 resolution) {
+void SettingsScene::Initialize() {
 
 	AppContext& appContext = AppContext::GetInstance();
 
@@ -27,7 +29,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
 		Alignment::TOP_MID,
-		resolution,
+		m_resolution,
 		false,
 		appContext
 		));
@@ -37,7 +39,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.2f),
 		GetElementSize(0.3f, 0.1f),
 		Alignment::TOP_MID,
-		resolution,
+		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
 		"Settings"
@@ -48,7 +50,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, elementY),
 		GetElementSize(0.0f, 0.65f),
 		Alignment::TOP_MID,
-		resolution,
+		m_resolution,
 		2.0f
 		));
 
@@ -58,7 +60,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.25f, elementY),
 		GetElementSize(0.25f, 0.5f),
 		Alignment::TOP_MID,
-		resolution
+		m_resolution
 		);
 	eventSettings->SetActive(true, appContext);
 	m_elements.push_back(eventSettings);
@@ -68,7 +70,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
-		resolution,
+		m_resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
 		"Volume:"
@@ -79,7 +81,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, elementY + sliderOffset),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
-		resolution,
+		m_resolution,
 		0,
 		100,
 		static_cast<int>(appContext.constants.sound.masterVolume)
@@ -97,7 +99,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.55f, elementY + sliderOffset + 0.05f),
 		GetElementSize(0.0f, 0.02f).y,
 		Alignment::TOP_LEFT,
-		resolution,
+		m_resolution,
 		1
 		);
 	muteCB->SetChecked(appContext.constants.sound.muteVolume);
@@ -113,7 +115,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.565f, elementY + sliderOffset + 0.05f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_LEFT,
-		resolution,
+		m_resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
 		"Mute"
@@ -125,7 +127,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
-		resolution,
+		m_resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
 		"ca. Last Round:"
@@ -136,7 +138,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.75f, elementY + sliderOffset),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
-		resolution,
+		m_resolution,
 		static_cast<int>(appContext.constants.global.minRounds),
 		static_cast<int>(appContext.constants.global.maxRounds),
 		static_cast<int>(appContext.constants.global.currentTargetRound)
@@ -148,13 +150,33 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		});
 	m_elements.push_back(lastRound);
 
+	elementY += elementOffset;
+
+	// drop down
+	auto resolution = std::make_shared<DropDown> (
+		GetElementPosition ( 0.75f, elementY ),
+		GetElementSize ( 0.4f, 0.05f ),
+		Alignment::TOP_MID,
+		m_resolution,
+		0.25f,
+		300,
+		301,
+		appContext.constants.window.GetAllResolutionsAsString ( )
+		);
+	resolution->SetCurrentElementByID ( static_cast<unsigned int>(appContext.constants.window.current_resolution) + 1 );
+	resolution->SetOnSave ( [this] ( unsigned int ID ) {
+		auto event = SetNewResolutionEvent ( static_cast<Resolution>(ID - 1) );
+		AppContext::GetInstance ( ).eventManager.InvokeEvent ( event );
+		} );
+	m_elements.push_back ( resolution );
+
 	// btn
 	auto finishBtn = std::make_shared<ClassicButton>(
-		300,
+		400,
 		GetElementPosition(0.55f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
-		resolution,
+		m_resolution,
 		"End Game",
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -162,11 +184,11 @@ void SettingsScene::Initialize(Vector2 resolution) {
 	m_elements.push_back(finishBtn);
 
 	auto fullscreenToggleBtn = std::make_shared<ClassicButton>(
-		301,
+		401,
 		GetElementPosition(0.95f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
-		resolution,
+		m_resolution,
 		"Toggle Fullscreen",
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -181,7 +203,7 @@ void SettingsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.1f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
-		resolution,
+		m_resolution,
 		"Back",
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -196,5 +218,5 @@ void SettingsScene::Initialize(Vector2 resolution) {
 
 SettingsScene::SettingsScene(Vector2 resolution)
 	:Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
-	Initialize(resolution);
+	Initialize();
 }

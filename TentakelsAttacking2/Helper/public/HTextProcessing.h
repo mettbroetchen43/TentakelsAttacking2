@@ -17,9 +17,9 @@ void BreakText(std::string& toBreak, float fontSize, float length,
 	AppContext const& appContext);
 
 /**
- * returns the text height based of the parent size.
+ * returns the text absoluteHeight based of the parent relativeSize.
  */
-[[nodiscard]] float GetElementTextHight(Vector2 const& size, float height);
+[[nodiscard]] float GetElementTextHeight(Vector2 const& relativeSize, float absoluteHeight);
 
 /**
  * modifies the string so it fits into a colider.

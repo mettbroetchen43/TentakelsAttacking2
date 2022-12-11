@@ -48,6 +48,9 @@ AssetManager::~AssetManager() {
 Texture* AssetManager::GetTexture(AssetType assetType) {
 	return &m_assets.at(assetType);
 }
+Texture const* AssetManager::GetTexture(AssetType assetType) const {
+	return &m_assets.at(assetType);
+}
 std::vector<std::string>* AssetManager::GetTitle() {
 	return &m_title;
 }

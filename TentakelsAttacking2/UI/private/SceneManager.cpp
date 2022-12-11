@@ -18,7 +18,7 @@ void SceneManager::InitializeNewScene(SceneType sceneType) {
 	switch (sceneType) {
 		case SceneType::TEST:
 			m_currentScene = std::make_shared<TestScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution( ));
 			return;
 		case SceneType::LOGO:
 			m_currentScene= std::make_shared<LogoScene>(

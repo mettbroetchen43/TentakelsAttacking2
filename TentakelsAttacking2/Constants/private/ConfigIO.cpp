@@ -80,18 +80,26 @@ void LoadConfig() {
 		}
 	};
 	std::string input;
-	std::vector<bool*> boolEntries = {
-		// Globals
-		&constants.global.startingModeFullScreen,
-	};
-	addBools(boolEntries, file, input, nextEntry);
-
+	size_t temporary;
 	std::vector<size_t*> size_tEntries = {
 		// Globals
 		&constants.global.minRounds,
 		&constants.global.currentTargetRound,
 		&constants.global.maxRounds,
-		&constants.global.FPS,
+		&temporary,
+	};
+	addSize_t(size_tEntries, file, input, nextEntry);
+	constants.window.current_resolution = static_cast<Resolution>(temporary);
+
+	std::vector<bool*> boolEntries = {
+		// Window
+		&constants.window.startingModeFullScreen,
+	};
+	addBools(boolEntries, file, input, nextEntry);
+
+	size_tEntries = {
+		// Window
+		&constants.window.FPS,
 		// Player
 		&constants.player.minPlayerCount,
 		&constants.player.maxPlayerCount,
@@ -147,7 +155,7 @@ void LoadConfig() {
 	file.close();
 
 #ifdef _DEBUG
-	constants.global.startingModeFullScreen = false;
+	constants.window.startingModeFullScreen = false;
 #endif // _DEBUG
 
 	Print("config loaded");
@@ -179,13 +187,18 @@ void SaveConfig() {
 	};
 
 	headline("Globals", toSave);
-	entry(std::to_string(constants.global.startingModeFullScreen), "Starting Full Screen (0 = window)", toSave);
+	
 
 	entry(std::to_string(constants.global.minRounds), "Min Game Rounds", toSave);
 	entry(std::to_string(constants.global.currentTargetRound), "Current Target Game Round", toSave);
 	entry(std::to_string(constants.global.maxRounds), "Max Game Rounds", toSave);
 
-	entry(std::to_string(constants.global.FPS), "Target FPS", toSave);
+
+
+	headline("Window", toSave);
+	entry(std::to_string(static_cast<int>(constants.window.current_resolution)), "contains the current solution as an enum", toSave);
+	entry(std::to_string(constants.window.startingModeFullScreen), "Starting Full Screen (0 = window)", toSave);
+	entry(std::to_string(constants.window.FPS), "Target FPS", toSave);
 
 	headline("Player", toSave);
 	entry(std::to_string(constants.player.minPlayerCount), "Min Player Count", toSave);
