@@ -91,8 +91,8 @@ void UIManager::SetWindowPosition() {
 	int screenHeight = GetMonitorHeight(screen);
 	int screenWidth = GetMonitorWidth(screen);
 
-	int differenceWidth = (screenWidth - m_resolution.x) / 2;
-	int differenceHeight = (screenHeight - m_resolution.y) / 2;
+	int differenceWidth = (screenWidth - static_cast<int>(m_resolution.x)) / 2;
+	int differenceHeight = (screenHeight - static_cast<int>(m_resolution.y)) / 2;
 
 	if(differenceHeight < 0) { differenceHeight = 0; }
 
@@ -118,7 +118,8 @@ void UIManager::UILoop() {
 }
 
 UIManager::UIManager()
-	: m_appContext(AppContext::GetInstance()), m_resolution({ 0.0f,0.0f }), m_sceneManager(this) {
+	: m_appContext(AppContext::GetInstance()), m_resolution({ 0.0f,0.0f }), m_sceneManager(this),
+	m_nextResolution(Resolution::LAST) {
 
 	SetExitKey(KeyboardKey::KEY_NULL);
 
