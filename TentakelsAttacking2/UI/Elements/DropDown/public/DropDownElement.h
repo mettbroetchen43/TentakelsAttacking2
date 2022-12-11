@@ -18,7 +18,7 @@ private:
 	std::string m_text; ///< contains the raw string
 	Vector2 m_textPosition; ///< contains the positon the text gets renderd at
 	std::function<void(unsigned int)> m_onClick = [](unsigned int) {}; ///< contains the action that gets called on click or enter
-	std::function<Rectangle(Rectangle)> m_getTemoraryCollider = [](Rectangle) -> Rectangle {};
+	std::function<Rectangle(Rectangle)> m_getTemoraryCollider;
 
 	Texture* m_grey50; ///< contains a pointer to a texture in the appContext
 	Rectangle m_textureRecGrey50; ///< contains the absolute dimensions of the texture
