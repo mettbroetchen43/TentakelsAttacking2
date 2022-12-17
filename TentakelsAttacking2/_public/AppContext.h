@@ -52,7 +52,7 @@ public:
 	/**
 	 * validate all constants in constants that can be loaded by the config.
 	 */
-	void Validate();
+	void ValidateConfig();
 	/**
 	 * allows only arithmetic types.
 	 * validate if a current value is between min and max.

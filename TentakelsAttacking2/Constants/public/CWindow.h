@@ -12,7 +12,7 @@
 
 
 struct CWindow {
-	Resolution current_resolution = Resolution::FULL_HD; ///< contains the current resolution in window mode (override by contig)
+	Resolution current_resolution = Resolution::LAST; ///< contains the current resolution in window mode (override by contig)
 	
 	bool startingModeFullScreen = true; ///< defines if the game is starting in fullscreen mode (override by config)
 	bool isCurrentFullScreenMode = true; ///< defines if the game is currently in fullscreen mode (overritten by config)

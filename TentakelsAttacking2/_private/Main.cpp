@@ -28,11 +28,14 @@ int main() {
 	Print(appContext.constants.global.version , PrintType::BUILD);
 
 	UIManager uiManager;
-	SetWindowTitle(("Tentakels Attacking " + appContext.constants.global.version).c_str());
 
 	appContext.LoadConfig();
 
 	uiManager.StartUI();
+
+	appContext.ValidateConfig();
+
+	uiManager.StartUILoop();
 
 	appContext.SaveConfig();
 

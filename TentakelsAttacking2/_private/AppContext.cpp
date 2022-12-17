@@ -17,7 +17,6 @@ AppContext& AppContext::GetInstance() {
 
 void AppContext::LoadConfig() {
 	::LoadConfig();
-	Validate();
 	if (constants.sound.muteVolume) {
 		SetMasterVolume(0.0f);
 	}
@@ -33,7 +32,7 @@ void AppContext::SaveConfig() {
 	::SaveConfig();
 }
 
-void AppContext::Validate() {
+void AppContext::ValidateConfig() {
 	// Global
 	ValidateMinMax<size_t>(constants.global.minRounds, constants.global.maxRounds,
 		"Min Game Rounds", "Max Game Rounds");
@@ -70,6 +69,8 @@ void AppContext::Validate() {
 
 	ValidateLowerEqual<float>(constants.planet.globalSpacing, 1.0f, "Global Spacing");
 	ValidateGreaterEqual<float>(constants.planet.globalSpacing, 0.0f, "Global Spacing");
+
+	Print("Contig validated");
 }
 
 void AppContext::OnEvent(Event const& event) {
