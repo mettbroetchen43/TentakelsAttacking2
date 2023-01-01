@@ -11,6 +11,7 @@
 #include "Slider.h"
 #include "ClassicButton.h"
 #include "HPrint.h"
+#include "HErrorLog.h"
 #include <vector>
 #include <iostream>
 
@@ -18,7 +19,6 @@ int main() {
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(100, 100, "");
 	AppContext& appContext = AppContext::GetInstance();
-
 #ifdef _DEBUG
 	Print("Debug", PrintType::BUILD);
 #else
@@ -38,6 +38,8 @@ int main() {
 	uiManager.StartUILoop();
 
 	appContext.SaveConfig();
+
+	CloseErrorStream();
 
 	return 0;
 }

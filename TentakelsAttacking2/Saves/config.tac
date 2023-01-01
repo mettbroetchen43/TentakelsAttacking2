@@ -13,7 +13,7 @@
 
 // Window
 2 / contains the current solution as an enum
-0 / Starting Full Screen (0 = window)
+1 / Starting Full Screen (0 = window)
 60 / Target FPS
 
 // Player
@@ -33,7 +33,7 @@
 
 // Sound
 0 / Volume Mute (1 = mute)
-38.921963 / Master Volume (0.0 - 100.0)
+50.000000 / Master Volume (0.0 - 100.0)
 
 // Planet
 200 / Max Ships

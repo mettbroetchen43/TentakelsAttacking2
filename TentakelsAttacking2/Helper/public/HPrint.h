@@ -15,6 +15,7 @@ enum class PrintType {
 	ERROR,
 	INITIALIZE,
 	BUILD,
+	DEBUG,
 };
 
 /**
