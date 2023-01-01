@@ -6,16 +6,30 @@
 #include "HSoundManager.h"
 #include "UIEvents.hpp"
 #include "HRandom.h"
+#include "HPrint.h"
 #include "AppContext.h"
 #include <filesystem>
 
 void SoundManager::LoadSounds() {
 	for (int i = 0; i < m_files.size(); ++i) {
-		Sound sound = LoadSound(("Sounds/" + m_files[i]).c_str());
+		auto const filename = "Assets/Sounds/" + m_files[i];
+
+		if (!std::filesystem::exists(filename)) {
+			Print("Sound does not exists -> " + filename, PrintType::ERROR);
+			return;
+		}
+
+		Sound sound = LoadSound(filename.c_str());
 		m_sounds[static_cast<SoundType>(i)] = sound;
 	}
 
-	std::string files = "Sounds/TextSounds";
+	std::string files = "Assets/Sounds/TextSounds";
+
+	if (!std::filesystem::exists(files)) {
+		Print("Textsounds does not exists -> " + files, PrintType::ERROR);
+		return;
+	}
+
 	for (auto const& entry : std::filesystem::directory_iterator(files)) {
 		Sound sound = LoadSound(entry.path().string().c_str());
 		m_textSounds.push_back(sound);
