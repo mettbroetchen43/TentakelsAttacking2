@@ -6,11 +6,26 @@
 #include "ConfigIO.h"
 #include "AppContext.h"
 #include "HPrint.h"
+#include "HTextProcessing.h"
 #include <fstream>
 #include <filesystem>
 #include <vector>
+#include <charconv>
+#include <iomanip>
 
 static constexpr char token = '/';
+
+template<typename T>
+std::optional<T> ParseNumber(std::string& input) {
+	StripString(input);
+	T value{};
+	auto const result = std::from_chars(input.data(), input.data() + input.length(), value);
+	if (result.ec != std::errc() or result.ptr != input.data() + input.length()) {
+		Print("not able to load config -> \"" + input + "\"", PrintType::ERROR);
+		return {};
+	}
+	return value;
+};
 
 void LoadConfig() {
 	auto& constants = AppContext::GetInstance().constants;
@@ -43,32 +58,40 @@ void LoadConfig() {
 	auto addBools = [](std::vector<bool*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
-				*e = static_cast<bool>(std::stoi(input));
+				auto value = ParseNumber<int>(input);
+				if (value.has_value()) {
+					*e = static_cast<bool>(value.value());
+				}
 			}
 		}
 	};
 	auto addSize_t = [](std::vector<size_t*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
-				int i = std::stoi(input);
-				if (i < 0) {
-					i = 0;
+				auto value = ParseNumber<std::size_t>(input);
+				if (value.has_value()) {
+					*e = value.value();
 				}
-				*e = i;
 			}
 		}
 	};
 	auto addInt = [](std::vector<int*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
-				*e = std::stoi(input);
+				auto value = ParseNumber<int>(input);
+				if (value.has_value()) {
+					*e = value.value();
+				}
 			}
 		}
 	};
 	auto addFloat = [](std::vector<float*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
-				*e = std::stof(input);
+				auto value = ParseNumber<float>(input);
+				if (value.has_value()) {
+					*e = value.value();
+				}
 			}
 		}
 	};
