@@ -10,6 +10,7 @@
 #include <fstream>
 #include <filesystem>
 #include <vector>
+#include <optional>
 #include <charconv>
 #include <iomanip>
 
