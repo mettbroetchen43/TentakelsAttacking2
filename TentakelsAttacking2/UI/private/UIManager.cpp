@@ -134,8 +134,33 @@ UIManager::~UIManager() {
 
 void UIManager::StartUI() {
 
-	m_nextResolution = m_appContext.constants.window.current_resolution;
-	SetWindowSize();
+	SetWindowTitle(("Tentakels Attacking " + m_appContext.constants.global.version).c_str());
+
+	if(m_appContext.constants.window.current_resolution == Resolution::LAST) {
+
+		m_nextResolution = Resolution::FULL_HD;
+		m_appContext.constants.window.current_resolution = Resolution::FULL_HD;
+
+		SetWindowSize();
+		SetWindowPosition();
+
+		m_sceneManager.SetResolution(m_resolution);
+
+		auto event = ShowInitialSoundLevelPopUpEvent(
+			"Sound Level",
+			"Set the Initial Sound Level"
+		);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+	} else {
+		m_nextResolution = m_appContext.constants.window.current_resolution;
+		SetWindowSize();
+		m_sceneManager.SetResolution(m_resolution);
+	}
+
+	Print("\"UI\" started");
+}
+
+void UIManager::StartUILoop() {
 
 	auto event = SwitchSceneEvent(SceneType::LOGO);
 	m_appContext.eventManager.InvokeEvent(event);
@@ -151,6 +176,9 @@ void UIManager::StartUI() {
 
 	UILoop();
 }
+
+
+
 
 void UIManager::OnEvent(Event const& event) {
 	if(auto const* CloseEvent = dynamic_cast<CloseWindowEvent const*>(&event)) {

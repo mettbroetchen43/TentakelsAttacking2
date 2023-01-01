@@ -99,6 +99,9 @@ public:
 	 */
 	void StartUI();
 
+
+	void StartUILoop();
+
 	/**
 	 * receives all events and calls the member functions.
 	 */

@@ -110,6 +110,10 @@ void SceneManager::Resize(Vector2 resolution, AppContext const& appContext) {
 	m_popUpManager.Resize(resolution, appContext);
 }
 
+void SceneManager::SetResolution(Vector2 resolution) {
+	m_popUpManager.Resize(resolution, AppContext::GetInstance());
+}
+
 void SceneManager::OnEvent(Event const& event) {
 
 	if (auto const SceneEvent = dynamic_cast<SwitchSceneEvent const*>(&event)) {

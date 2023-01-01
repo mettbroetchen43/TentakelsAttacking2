@@ -67,6 +67,8 @@ public:
 	 */
 	void Resize(Vector2 resolution, AppContext const& appContext);
 
+	void SetResolution(Vector2 resolution);
+
 	/**
 	 * receives all events and calls the member functions.
 	 */

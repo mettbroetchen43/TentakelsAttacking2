@@ -7,12 +7,12 @@
 // Min Count >= 0
 
 // Globals
-0 / Min Game Rounds
-20 / Current Target Game Round
-50 / Max Game Rounds
+20 / Min Game Rounds
+50 / Current Target Game Round
+100 / Max Game Rounds
 
 // Window
-3 / contains the current solution as an enum
+2 / contains the current solution as an enum
 0 / Starting Full Screen (0 = window)
 60 / Target FPS
 
@@ -33,7 +33,7 @@
 
 // Sound
 0 / Volume Mute (1 = mute)
-50.000000 / Master Volume (0.0 - 100.0)
+38.921963 / Master Volume (0.0 - 100.0)
 
 // Planet
 200 / Max Ships
