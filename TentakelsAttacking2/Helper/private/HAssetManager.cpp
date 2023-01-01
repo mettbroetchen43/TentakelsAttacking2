@@ -4,8 +4,9 @@
 //
 
 #include "HAssetManager.h"
-#include <iostream>
+#include "HPrint.h"
 #include <fstream>
+#include <filesystem>
 
 
 void AssetManager::LoadTitle() {
@@ -13,22 +14,47 @@ void AssetManager::LoadTitle() {
 	m_title.clear();
 	std::string line;
 
-	newFile.open("Assets/title.txt", std::ios::in);
-	if (newFile.is_open()) {
-		while (getline(newFile, line)) {
-			m_title.push_back(line);
-		}
-		newFile.close();
+	std::string const filename = "Assets/Text/title.txt";
+	if (!std::filesystem::exists(filename)) {
+		Print("title does not exists -> " + filename, PrintType::ERROR);
+		return;
 	}
+
+	newFile.open(filename, std::ios::in);
+
+	if (!newFile.is_open()) {
+		Print("cant open title -> " + filename, PrintType::ERROR);
+		return;
+	}
+
+	while (getline(newFile, line)) {
+		m_title.push_back(line);
+	}
+
+	newFile.close();
 }
 void AssetManager::LoadFont() {
-	m_font = LoadFontEx("Assets/default_font.ttf", 128, 0, 250);
+	std::string const filename = "Assets/Fonts/default_font.ttf";
+
+	if (!std::filesystem::exists(filename)) {
+		Print("font does not exists -> " + filename, PrintType::ERROR);
+		return;
+	}
+
+	m_font = LoadFontEx(filename.c_str(), 128, 0, 250);
+
 }
 
 void AssetManager::LoadFiles() {
 	for (int i = 0; i < m_files.size(); ++i) {
-		char const* test = (m_files.at(i)).c_str();
-		Texture2D texture = LoadTexture(test);
+		auto const filename = "Assets/Pictures/" + m_files.at(i);
+
+		if (!std::filesystem::exists(filename)) {
+			Print("Asset does not exists -> " + filename, PrintType::ERROR);
+			continue;
+		}
+
+		Texture2D texture = LoadTexture(filename.c_str());
 		m_assets[static_cast<AssetType>(i)] = texture;
 	}
 }
