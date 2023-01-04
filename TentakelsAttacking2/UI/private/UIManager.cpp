@@ -12,23 +12,37 @@ Focus& UIManager::GetFocus() {
 	return m_focus;
 }
 void UIManager::ToggleFullScreen(bool first) {
-	ToggleFullscreen();
-	if(!IsWindowFullscreen()) {
-		SetWindowSize();
+	if (IsWindowFullscreen()) {
+		::ToggleFullscreen();
+		SetWindowSize(false);
 		SetWindowPosition();
+	}
+	else {
+		SetWindowSize(true);
+		::ToggleFullscreen();
 	}
 	if(!first) {
 		auto& fullScreen = AppContext::GetInstance().constants.window.startingModeFullScreen;
 		fullScreen = !fullScreen;
+		m_sceneManager.Resize(m_resolution, m_appContext);
 	}
 }
 
 void UIManager::CheckAndSetNewResolution() {
 	if(m_nextResolution == m_appContext.constants.window.current_resolution) { return; }
 
+	bool validResolution = m_appContext.constants.window.IsPossibleResolution(m_nextResolution);
+	if (!validResolution) { 
+		Print("Invalid resolution for this screen: " + m_appContext.constants.window.GetStringFromResolution(m_nextResolution),
+			PrintType::EXPECTED_ERROR);
+		return;
+	}
+
 	m_appContext.constants.window.current_resolution = m_nextResolution;
 
-	SetWindowSize();
+	if (IsWindowFullscreen()) { return; }
+
+	SetWindowSize(false);
 	SetWindowPosition();
 
 	m_sceneManager.Resize(m_resolution, m_appContext);
@@ -73,15 +87,18 @@ void UIManager::Render() {
 	EndDrawing();
 }
 
-void UIManager::SetWindowSize() {
-	auto values = m_appContext.constants.window.GetIntFromResolution(m_nextResolution);
+void UIManager::SetWindowSize(bool fullscreen) {
+	std::array<int,2> values;
+	if (fullscreen) {
+		values = m_appContext.constants.window.GetIntFromResolution(Resolution::SCREEN);
+	}
+	else {
+		values = m_appContext.constants.window.GetIntFromResolution(m_nextResolution);
+	}
+
 	m_resolution = { static_cast<float>(values[0]), static_cast<float>(values[1]) };
 
-	bool was_fullscreen = IsWindowFullscreen();
-	if(was_fullscreen) { ToggleFullScreen(); }
-
 	::SetWindowSize(values[0], values[1]);
-	if(was_fullscreen) { ToggleFullScreen(); }
 }
 
 void UIManager::SetWindowPosition() {
@@ -94,7 +111,8 @@ void UIManager::SetWindowPosition() {
 	int differenceWidth = (screenWidth - static_cast<int>(m_resolution.x)) / 2;
 	int differenceHeight = (screenHeight - static_cast<int>(m_resolution.y)) / 2;
 
-	if(differenceHeight < 0) { differenceHeight = 0; }
+	if(differenceWidth < 0) { differenceWidth = 0; }
+	if(differenceHeight < 0) { differenceHeight = 10; }
 
 	::SetWindowPosition(differenceWidth, differenceHeight);
 }
@@ -138,10 +156,10 @@ void UIManager::StartUI() {
 
 	if(m_appContext.constants.window.current_resolution == Resolution::LAST) {
 
-		m_nextResolution = Resolution::FULL_HD;
-		m_appContext.constants.window.current_resolution = Resolution::FULL_HD;
+		m_nextResolution = Resolution::SCREEN;
+		m_appContext.constants.window.current_resolution = Resolution::SCREEN;
 
-		SetWindowSize();
+		SetWindowSize(false);
 		SetWindowPosition();
 
 		m_sceneManager.SetResolution(m_resolution);
@@ -153,7 +171,18 @@ void UIManager::StartUI() {
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	} else {
 		m_nextResolution = m_appContext.constants.window.current_resolution;
-		SetWindowSize();
+
+		if (!m_appContext.constants.window.IsPossibleResolution(m_nextResolution)) {
+
+			Print("invalid resolution " + m_appContext.constants.window.GetStringFromResolution(m_nextResolution)
+				+ " - resolution set to: " + m_appContext.constants.window.GetStringFromResolution(Resolution::SCREEN),
+				PrintType::EXPECTED_ERROR);
+
+			m_nextResolution = Resolution::SCREEN;
+			m_appContext.constants.window.current_resolution = Resolution::SCREEN;
+		}
+
+		SetWindowSize(false);
 		m_sceneManager.SetResolution(m_resolution);
 	}
 
