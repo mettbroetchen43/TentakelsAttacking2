@@ -77,11 +77,16 @@ void UIManager::SetWindowSize() {
 	auto values = m_appContext.constants.window.GetIntFromResolution(m_nextResolution);
 	m_resolution = { static_cast<float>(values[0]), static_cast<float>(values[1]) };
 
-	bool was_fullscreen = IsWindowFullscreen();
-	if(was_fullscreen) { ToggleFullScreen(); }
+	std::string str = "return: width: " + std::to_string(values[0]) + " / height: " + std::to_string(values[1]);
+	Print(str, PrintType::DEBUG);
+	str = "stored: width: " + std::to_string(m_resolution.x) + " / height: " + std::to_string(m_resolution.y);
+	Print(str, PrintType::DEBUG);
 
-	::SetWindowSize(values[0], values[1]);
+	/*bool was_fullscreen = IsWindowFullscreen();
 	if(was_fullscreen) { ToggleFullScreen(); }
+	*/
+	::SetWindowSize(values[0], values[1]);
+	//if(was_fullscreen) { ToggleFullScreen(); }
 }
 
 void UIManager::SetWindowPosition() {
@@ -94,7 +99,8 @@ void UIManager::SetWindowPosition() {
 	int differenceWidth = (screenWidth - static_cast<int>(m_resolution.x)) / 2;
 	int differenceHeight = (screenHeight - static_cast<int>(m_resolution.y)) / 2;
 
-	if(differenceHeight < 0) { differenceHeight = 0; }
+	if(differenceWidth < 0) { differenceWidth = 0; }
+	if(differenceHeight < 0) { differenceHeight = 10; }
 
 	::SetWindowPosition(differenceWidth, differenceHeight);
 }

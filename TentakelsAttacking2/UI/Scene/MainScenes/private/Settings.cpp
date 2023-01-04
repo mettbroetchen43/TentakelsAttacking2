@@ -86,11 +86,11 @@ void SettingsScene::Initialize() {
 		100,
 		static_cast<int>(appContext.constants.sound.masterVolume)
 		);
-	m_volume->SetActive(true,appContext);
+	m_volume->SetActive(true, appContext);
 	m_volume->SetEnabled(!appContext.constants.sound.muteVolume);
 	m_volume->SetOnSave([](int value) {
-			auto event = SetMasterVolumeEvent(static_cast<float>(value));
-			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		auto event = SetMasterVolumeEvent(static_cast<float>(value));
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 		});
 	m_elements.push_back(m_volume);
 
@@ -104,10 +104,10 @@ void SettingsScene::Initialize() {
 		);
 	muteCB->SetChecked(appContext.constants.sound.muteVolume);
 	muteCB->SetOnCheck([this](unsigned int, bool isChecked) {
-			AppContext& appContext = AppContext::GetInstance();
-			auto event = MuteMasterVolumeEvent(isChecked);
-			appContext.eventManager.InvokeEvent(event);
-			m_volume->SetEnabled(!isChecked);
+		AppContext& appContext = AppContext::GetInstance();
+	auto event = MuteMasterVolumeEvent(isChecked);
+	appContext.eventManager.InvokeEvent(event);
+	m_volume->SetEnabled(!isChecked);
 		});
 	m_elements.push_back(muteCB);
 
@@ -145,30 +145,42 @@ void SettingsScene::Initialize() {
 		);
 	lastRound->SetActive(true, appContext);
 	lastRound->SetOnSave([](int value) {
-			auto event = SetCurrentLastRoundEvent(value);
-			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		auto event = SetCurrentLastRoundEvent(value);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 		});
 	m_elements.push_back(lastRound);
 
 	elementY += elementOffset;
 
 	// drop down
-	auto resolution = std::make_shared<DropDown> (
-		GetElementPosition ( 0.75f, elementY ),
-		GetElementSize ( 0.4f, 0.05f ),
+	auto resolution_text = std::make_shared<Text>(
+		GetElementPosition(0.75f, elementY),
+		GetElementSize(0.4f, 0.02f),
+		Alignment::TOP_MID,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.02f,
+		"this setting is only visible in window mode"
+		);
+	m_elements.push_back(resolution_text);
+
+	elementY += 0.02f;
+	auto resolution = std::make_shared<DropDown>(
+		GetElementPosition(0.75f, elementY),
+		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		m_resolution,
 		0.25f,
 		300,
 		301,
-		appContext.constants.window.GetAllResolutionsAsString ( )
+		appContext.constants.window.GetAllResolutionsAsString()
 		);
-	resolution->SetCurrentElementByID ( static_cast<unsigned int>(appContext.constants.window.current_resolution) + 1 );
-	resolution->SetOnSave ( [this] ( unsigned int ID ) {
-		auto event = SetNewResolutionEvent ( static_cast<Resolution>(ID - 1) );
-		AppContext::GetInstance ( ).eventManager.InvokeEvent ( event );
-		} );
-	m_elements.push_back ( resolution );
+	resolution->SetCurrentElementByID(static_cast<unsigned int>(appContext.constants.window.current_resolution) + 1);
+	resolution->SetOnSave([this](unsigned int ID) {
+		auto event = SetNewResolutionEvent(static_cast<Resolution>(ID - 1));
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+		});
+	m_elements.push_back(resolution);
 
 	// btn
 	auto finishBtn = std::make_shared<ClassicButton>(
@@ -193,8 +205,8 @@ void SettingsScene::Initialize() {
 		SoundType::CLICKED_RELEASE_STD
 		);
 	fullscreenToggleBtn->SetOnClick([]() {
-			auto event = ToggleFullscreenEvent();
-			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		auto event = ToggleFullscreenEvent();
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 		});
 	m_elements.push_back(fullscreenToggleBtn);
 
@@ -210,7 +222,7 @@ void SettingsScene::Initialize() {
 	backBtn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(
 			SwitchSceneEvent(SceneType::MAIN_MENU)
-			);
+		);
 		}
 	);
 	m_elements.push_back(backBtn);
