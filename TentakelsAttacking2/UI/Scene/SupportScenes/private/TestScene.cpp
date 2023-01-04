@@ -6,27 +6,11 @@
 #include "TestScene.h"
 #include "ClassicButton.h"
 #include "SceneType.h"
-#include "DropDown.h"
 #include "AppContext.h"
 #include <iostream>
 
 void TestScene::Initialize(Vector2 resolution,
 	[[maybe_unused]] AppContext& appContext) {
-
-	m_dropDown = std::make_shared<DropDown>(
-		GetElementPosition(0.5f, 0.25f),
-		GetElementSize(0.25f, 0.03f),
-		Alignment::TOP_MID,
-		m_resolution,
-		0.5f,
-		1,
-		10,
-		m_entries
-		);
-	m_dropDown->SetOnSave([this](unsigned int index) {
-		this->TestLambda(index);
-		});
-	m_elements.push_back(m_dropDown);
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -49,8 +33,6 @@ TestScene::TestScene(Vector2 resolution)
 	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
 
 	AppContext &appContext = AppContext::GetInstance ( );
-
-	m_entries = appContext.constants.window.GetAllResolutionsAsString ( );
 
 	Initialize(resolution, appContext );
 }

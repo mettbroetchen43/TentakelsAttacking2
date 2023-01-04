@@ -173,13 +173,13 @@ void SettingsScene::Initialize() {
 		0.25f,
 		300,
 		301,
-		appContext.constants.window.GetAllResolutionsAsString()
+		GetStringsFromResolutionEntries()
 		);
 	resolution->SetCurrentElementByID(static_cast<unsigned int>(appContext.constants.window.current_resolution) + 1);
 	resolution->SetOnSave([this](unsigned int ID) {
-		auto event = SetNewResolutionEvent(static_cast<Resolution>(ID - 1));
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
-		});
+		auto event = SetNewResolutionEvent(this->m_rawResolutionEntries[ID-1].first);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+	});
 	m_elements.push_back(resolution);
 
 	// btn
@@ -206,8 +206,8 @@ void SettingsScene::Initialize() {
 		);
 	fullscreenToggleBtn->SetOnClick([]() {
 		auto event = ToggleFullscreenEvent();
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
-		});
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+	});
 	m_elements.push_back(fullscreenToggleBtn);
 
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -228,7 +228,18 @@ void SettingsScene::Initialize() {
 	m_elements.push_back(backBtn);
 }
 
+std::vector<std::string> SettingsScene::GetStringsFromResolutionEntries() const {
+	std::vector<std::string> toReturn;
+
+	for (auto const& e : m_rawResolutionEntries) {
+		toReturn.push_back(e.second);
+	}
+
+	return toReturn;
+}
+
 SettingsScene::SettingsScene(Vector2 resolution)
 	:Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
+	m_rawResolutionEntries = AppContext::GetInstance().constants.window.GetAllResolutionsAsString();
 	Initialize();
 }

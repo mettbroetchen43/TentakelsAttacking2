@@ -19,8 +19,8 @@ bool CWindow::IsPossibleResolution(Resolution toProove) {
 	return true;
 }
 
-std::vector<std::string> CWindow::GetAllResolutionsAsString() {
-	std::vector<std::string> toReturn;
+std::vector<std::pair<Resolution,std::string>> CWindow::GetAllResolutionsAsString() {
+	std::vector<std::pair<Resolution,std::string>> toReturn;
 
 	for (int i = 0; i != static_cast<int>(Resolution::LAST); ++i) {
 
@@ -28,7 +28,7 @@ std::vector<std::string> CWindow::GetAllResolutionsAsString() {
 
 		if (!IsPossibleResolution(entry)) { continue; }
 
-		toReturn.push_back(GetStringFromResolution(entry));
+		toReturn.emplace_back(entry, GetStringFromResolution(entry));
 	}
 
 	return toReturn;
