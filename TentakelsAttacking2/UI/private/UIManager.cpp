@@ -12,10 +12,14 @@ Focus& UIManager::GetFocus() {
 	return m_focus;
 }
 void UIManager::ToggleFullScreen(bool first) {
-	ToggleFullscreen();
-	if(!IsWindowFullscreen()) {
-		SetWindowSize();
+	if (IsWindowFullscreen()) {
+		::ToggleFullscreen();
+		SetWindowSize(false);
 		SetWindowPosition();
+	}
+	else {
+		SetWindowSize(true);
+		::ToggleFullscreen();
 	}
 	if(!first) {
 		auto& fullScreen = AppContext::GetInstance().constants.window.startingModeFullScreen;
@@ -34,7 +38,7 @@ void UIManager::CheckAndSetNewResolution() {
 
 	if (IsWindowFullscreen()) { return; }
 
-	SetWindowSize();
+	SetWindowSize(false);
 	SetWindowPosition();
 
 	m_sceneManager.Resize(m_resolution, m_appContext);
@@ -79,8 +83,15 @@ void UIManager::Render() {
 	EndDrawing();
 }
 
-void UIManager::SetWindowSize() {
-	auto values = m_appContext.constants.window.GetIntFromResolution(m_nextResolution);
+void UIManager::SetWindowSize(bool fullscreen) {
+	std::array<int,2> values;
+	if (fullscreen) {
+		values = m_appContext.constants.window.GetIntFromResolution(Resolution::SCREEN);
+	}
+	else {
+		values = m_appContext.constants.window.GetIntFromResolution(m_nextResolution);
+	}
+
 	m_resolution = { static_cast<float>(values[0]), static_cast<float>(values[1]) };
 
 	::SetWindowSize(values[0], values[1]);
@@ -141,10 +152,10 @@ void UIManager::StartUI() {
 
 	if(m_appContext.constants.window.current_resolution == Resolution::LAST) {
 
-		m_nextResolution = Resolution::FULL_HD;
-		m_appContext.constants.window.current_resolution = Resolution::FULL_HD;
+		m_nextResolution = Resolution::SCREEN;
+		m_appContext.constants.window.current_resolution = Resolution::SCREEN;
 
-		SetWindowSize();
+		SetWindowSize(false);
 		SetWindowPosition();
 
 		m_sceneManager.SetResolution(m_resolution);
@@ -156,7 +167,7 @@ void UIManager::StartUI() {
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	} else {
 		m_nextResolution = m_appContext.constants.window.current_resolution;
-		SetWindowSize();
+		SetWindowSize(false);
 		m_sceneManager.SetResolution(m_resolution);
 	}
 

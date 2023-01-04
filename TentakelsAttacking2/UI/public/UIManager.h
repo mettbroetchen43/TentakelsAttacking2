@@ -58,7 +58,7 @@ private:
 	/**
 	 * sets the current window size from the config to raylib.
 	 */
-	void SetWindowSize();
+	void SetWindowSize(bool fullscreen);
 	/**
 	 * sets the pintow position if in window mode.
 	 */
