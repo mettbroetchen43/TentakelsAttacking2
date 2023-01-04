@@ -6,10 +6,29 @@
 #pragma once
 
 enum class Resolution {
-	UHD = 0,
+	// 16:9
+	UHD2 = 0,
+	_5K,
+	UHD1,
 	WQHD,
 	FULL_HD,
 	HD,
+
+	// 21:9
+	_5K_ULTRAWIDE,
+	UWQHD,
+	UWHD,
+
+	// 4:3
+	QXGA,
+	UXGA,
+	SXGA_Plus,
+	XGA_plus,
+	XGA,
+	SVGA,
+	PAL,
+	VGA,
+
 	SCREEN,
 	LAST,
 };
