@@ -5,6 +5,7 @@
 
 #include "CWindow.h"
 #include "HPrint.h"
+#include <raylib.h>
 
 std::vector<std::string> CWindow::GetAllResolutionsAsString() {
 	std::vector<std::string> toReturn;
@@ -30,6 +31,10 @@ std::string CWindow::GetStringFromResolution(Resolution resolution) {
 		return "Full HD (1920 x 1080)";
 	case Resolution::HD:
 		return "HD (1280 x 720)";
+	case Resolution::SCREEN: {
+		auto value = GetIntFromResolution(resolution);
+		return "Screen (" + std::to_string(value[0]) + " x " + std::to_string(value[1]) + ")";
+	}
 	case Resolution::LAST:
 	default:
 		Print("invalud resoltion selected: " + static_cast<int>(resolution), PrintType::ERROR);
@@ -47,6 +52,13 @@ std::array<int, 2> CWindow::GetIntFromResolution(Resolution resolution) {
 			return { 1920, 1080 };
 		case Resolution::HD:
 			return { 1280,720 };
+		case Resolution::SCREEN: {
+			int screen = GetCurrentMonitor();
+			int height = GetMonitorHeight(screen);
+			int width = GetMonitorWidth(screen);
+
+			return { width,height };
+		}
 		case Resolution::LAST:
 		default:
 			Print("invalud resoltion selected: " + static_cast<int>(resolution), PrintType::ERROR);

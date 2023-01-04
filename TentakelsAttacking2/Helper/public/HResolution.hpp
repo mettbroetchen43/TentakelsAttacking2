@@ -10,5 +10,6 @@ enum class Resolution {
 	WQHD,
 	FULL_HD,
 	HD,
+	SCREEN,
 	LAST,
 };

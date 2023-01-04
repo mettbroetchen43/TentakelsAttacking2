@@ -64,8 +64,8 @@ private:
 	 */
 	void SetWindowPosition();
 	/**
-	* sets the target FPS in the raylib.
-	*/
+	 * sets the target FPS in the raylib.
+	 */
 	void SetTargetFPS(SetTargetFPSEvent const* event);
 	/**
 	 * main loop of the programm.

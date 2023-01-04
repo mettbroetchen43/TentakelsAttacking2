@@ -20,6 +20,7 @@ void UIManager::ToggleFullScreen(bool first) {
 	if(!first) {
 		auto& fullScreen = AppContext::GetInstance().constants.window.startingModeFullScreen;
 		fullScreen = !fullScreen;
+		m_sceneManager.Resize(m_resolution, m_appContext);
 	}
 }
 
@@ -27,6 +28,8 @@ void UIManager::CheckAndSetNewResolution() {
 	if(m_nextResolution == m_appContext.constants.window.current_resolution) { return; }
 
 	m_appContext.constants.window.current_resolution = m_nextResolution;
+
+	if (IsWindowFullscreen()) { return; }
 
 	SetWindowSize();
 	SetWindowPosition();
@@ -77,16 +80,7 @@ void UIManager::SetWindowSize() {
 	auto values = m_appContext.constants.window.GetIntFromResolution(m_nextResolution);
 	m_resolution = { static_cast<float>(values[0]), static_cast<float>(values[1]) };
 
-	std::string str = "return: width: " + std::to_string(values[0]) + " / height: " + std::to_string(values[1]);
-	Print(str, PrintType::DEBUG);
-	str = "stored: width: " + std::to_string(m_resolution.x) + " / height: " + std::to_string(m_resolution.y);
-	Print(str, PrintType::DEBUG);
-
-	/*bool was_fullscreen = IsWindowFullscreen();
-	if(was_fullscreen) { ToggleFullScreen(); }
-	*/
 	::SetWindowSize(values[0], values[1]);
-	//if(was_fullscreen) { ToggleFullScreen(); }
 }
 
 void UIManager::SetWindowPosition() {
