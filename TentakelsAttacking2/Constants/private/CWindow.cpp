@@ -37,13 +37,13 @@ std::vector<std::string> CWindow::GetAllResolutionsAsString() {
 std::string CWindow::GetStringFromResolution(Resolution resolution) {
 	switch (resolution) {
 	case Resolution::UHD:
-		return "UHD (3840 x 2162)";
+		return "UHD 16:9 (3840 x 2162)";
 	case Resolution::WQHD:
-		return "WQHD (2560 x 1440)";
+		return "WQHD 16:9 (2560 x 1440)";
 	case Resolution::FULL_HD:
-		return "Full HD (1920 x 1080)";
+		return "Full HD 16:9 (1920 x 1080)";
 	case Resolution::HD:
-		return "HD (1280 x 720)";
+		return "HD 16:9 (1280 x 720)";
 	case Resolution::SCREEN: {
 		auto value = GetIntFromResolution(resolution);
 		return "Screen (" + std::to_string(value[0]) + " x " + std::to_string(value[1]) + ")";
