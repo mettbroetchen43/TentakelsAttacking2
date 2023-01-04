@@ -32,7 +32,11 @@ void UIManager::CheckAndSetNewResolution() {
 	if(m_nextResolution == m_appContext.constants.window.current_resolution) { return; }
 
 	bool validResolution = m_appContext.constants.window.IsPossibleResolution(m_nextResolution);
-	if (!validResolution) { return; }
+	if (!validResolution) { 
+		Print("Invalid resolution for this screen: " + m_appContext.constants.window.GetStringFromResolution(m_nextResolution),
+			PrintType::EXPECTED_ERROR);
+		return;
+	}
 
 	m_appContext.constants.window.current_resolution = m_nextResolution;
 
@@ -167,6 +171,17 @@ void UIManager::StartUI() {
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	} else {
 		m_nextResolution = m_appContext.constants.window.current_resolution;
+
+		if (!m_appContext.constants.window.IsPossibleResolution(m_nextResolution)) {
+
+			Print("invalid resolution " + m_appContext.constants.window.GetStringFromResolution(m_nextResolution)
+				+ " - resolution set to: " + m_appContext.constants.window.GetStringFromResolution(Resolution::SCREEN),
+				PrintType::EXPECTED_ERROR);
+
+			m_nextResolution = Resolution::SCREEN;
+			m_appContext.constants.window.current_resolution = Resolution::SCREEN;
+		}
+
 		SetWindowSize(false);
 		m_sceneManager.SetResolution(m_resolution);
 	}
