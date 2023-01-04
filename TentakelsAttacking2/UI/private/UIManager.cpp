@@ -27,6 +27,9 @@ void UIManager::ToggleFullScreen(bool first) {
 void UIManager::CheckAndSetNewResolution() {
 	if(m_nextResolution == m_appContext.constants.window.current_resolution) { return; }
 
+	bool validResolution = m_appContext.constants.window.IsPossibleResolution(m_nextResolution);
+	if (!validResolution) { return; }
+
 	m_appContext.constants.window.current_resolution = m_nextResolution;
 
 	if (IsWindowFullscreen()) { return; }

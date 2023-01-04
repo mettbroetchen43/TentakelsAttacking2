@@ -6,7 +6,7 @@
 #pragma once
 
 enum class Resolution {
-	UHD,
+	UHD = 0,
 	WQHD,
 	FULL_HD,
 	HD,

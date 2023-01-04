@@ -19,7 +19,7 @@ struct CWindow {
 	
 	size_t FPS = 60; ///< contains the target FPS (override by config)
 
-
+	[[nodiscard]] bool IsPossibleResolution(Resolution toProove);
 	[[nodiscard]] std::vector<std::string> GetAllResolutionsAsString ( );
 	[[nodiscard]] std::string GetStringFromResolution ( Resolution resolution );
 	[[nodiscard]] std::array<int, 2> GetIntFromResolution ( Resolution resolution );

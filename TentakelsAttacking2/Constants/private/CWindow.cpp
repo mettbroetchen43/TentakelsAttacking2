@@ -7,15 +7,28 @@
 #include "HPrint.h"
 #include <raylib.h>
 
+bool CWindow::IsPossibleResolution(Resolution toProove) {
+	int screen = GetCurrentMonitor();
+	int height = GetMonitorHeight(screen);
+	int width = GetMonitorWidth(screen);
+
+	auto value = GetIntFromResolution(toProove);
+
+	if (width < value[0]) { return false; }
+	if (height < value[1]) { return false; }
+	return true;
+}
+
 std::vector<std::string> CWindow::GetAllResolutionsAsString() {
 	std::vector<std::string> toReturn;
 
-	for (Resolution entry = Resolution::UHD; entry != Resolution::LAST;) {
-		toReturn.push_back(GetStringFromResolution(entry));
+	for (int i = 0; i != static_cast<int>(Resolution::LAST); ++i) {
 
-		auto temporary = static_cast<int>(entry);
-		++temporary;
-		entry = static_cast<Resolution>(temporary);
+		Resolution entry = static_cast<Resolution>(i);
+
+		if (!IsPossibleResolution(entry)) { continue; }
+
+		toReturn.push_back(GetStringFromResolution(entry));
 	}
 
 	return toReturn;
@@ -44,24 +57,24 @@ std::string CWindow::GetStringFromResolution(Resolution resolution) {
 
 std::array<int, 2> CWindow::GetIntFromResolution(Resolution resolution) {
 	switch (resolution) {
-		case Resolution::UHD:
-			return  { 3840,2162 };
-		case Resolution::WQHD:
-			return { 2560,1440 };
-		case Resolution::FULL_HD:
-			return { 1920, 1080 };
-		case Resolution::HD:
-			return { 1280,720 };
-		case Resolution::SCREEN: {
-			int screen = GetCurrentMonitor();
-			int height = GetMonitorHeight(screen);
-			int width = GetMonitorWidth(screen);
+	case Resolution::UHD:
+		return  { 3840,2162 };
+	case Resolution::WQHD:
+		return { 2560,1440 };
+	case Resolution::FULL_HD:
+		return { 1920, 1080 };
+	case Resolution::HD:
+		return { 1280,720 };
+	case Resolution::SCREEN: {
+		int screen = GetCurrentMonitor();
+		int height = GetMonitorHeight(screen);
+		int width = GetMonitorWidth(screen);
 
-			return { width,height };
-		}
-		case Resolution::LAST:
-		default:
-			Print("invalud resoltion selected: " + static_cast<int>(resolution), PrintType::ERROR);
-			return { 100,100 };
+		return { width,height };
+	}
+	case Resolution::LAST:
+	default:
+		Print("invalud resoltion selected: " + static_cast<int>(resolution), PrintType::ERROR);
+		return { 100,100 };
 	}
 }
