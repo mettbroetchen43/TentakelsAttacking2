@@ -170,7 +170,7 @@ void SettingsScene::Initialize() {
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		m_resolution,
-		0.25f,
+		0.17f,
 		300,
 		301,
 		GetStringsFromResolutionEntries()
