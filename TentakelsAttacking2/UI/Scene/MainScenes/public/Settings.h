@@ -26,6 +26,10 @@ private:
 	 * returs the strings out of the raw resolution data.
 	 */
 	std::vector<std::string> GetStringsFromResolutionEntries() const;
+	/**
+	 * returns index from resoluton enum.
+	 */
+	int GetIndexFromResolution(Resolution resolution) const;
 
 public:
 	/**

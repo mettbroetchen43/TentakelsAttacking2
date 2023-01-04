@@ -175,7 +175,7 @@ void SettingsScene::Initialize() {
 		301,
 		GetStringsFromResolutionEntries()
 		);
-	resolution->SetCurrentElementByID(static_cast<unsigned int>(appContext.constants.window.current_resolution) + 1);
+	resolution->SetCurrentElementByID(GetIndexFromResolution(appContext.constants.window.current_resolution) + 1);
 	resolution->SetOnSave([this](unsigned int ID) {
 		auto event = SetNewResolutionEvent(this->m_rawResolutionEntries[ID-1].first);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
@@ -236,6 +236,14 @@ std::vector<std::string> SettingsScene::GetStringsFromResolutionEntries() const 
 	}
 
 	return toReturn;
+}
+
+int SettingsScene::GetIndexFromResolution(Resolution resolution) const {
+	for (int i = 0; i < m_rawResolutionEntries.size(); ++i) {
+		if (m_rawResolutionEntries[i].first == resolution) {
+			return i;
+		}
+	}
 }
 
 SettingsScene::SettingsScene(Vector2 resolution)
