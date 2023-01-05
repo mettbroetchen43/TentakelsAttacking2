@@ -25,24 +25,26 @@ void LogoScene::Initialize() {
 
 	auto mainText = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.65f),
-		GetElementSize(0.45f, 0.1f),
+		GetElementSize(1.0f, 0.1f),
 		Alignment::TOP_MID,
 		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
 		"A Purpur Tentakel production"
 		);
+	//mainText->RenderRectangle(true);
 	m_elements.push_back(mainText);
 
 	auto skipText = std::make_shared<Text>(
-		GetElementPosition(0.99f, 0.98f),
-		GetElementSize(0.11f, 0.03f),
+		GetElementPosition(0.99f, 0.97f),
+		GetElementSize(0.2f, 0.03f),
 		Alignment::BOTTOM_RIGHT,
 		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		"skip with [ESC]"
 		);
+	// skipText->RenderRectangle(true);
 	m_elements.push_back(skipText);
 }
 

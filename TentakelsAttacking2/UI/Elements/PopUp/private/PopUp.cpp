@@ -30,7 +30,8 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		m_size,
 		Alignment::DEFAULT,
 		resolution,
-		AssetType::GREY
+		AssetType::GREY,
+		false
 		);
 	m_elements.push_back(background);
 

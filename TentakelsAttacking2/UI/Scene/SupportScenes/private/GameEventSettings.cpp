@@ -17,15 +17,17 @@
 void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 
 	// Title
-	m_elements.push_back(std::make_shared<Text>(
+	auto title = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.0f),
-		GetElementSize(0.4f, 0.4f),
+		GetElementSize(0.8f, 0.2f),
 		Alignment::TOP_MID,
 		resolution,
 		Alignment::TOP_MID,
 		0.07f,
 		"Events"
-	));
+	);
+	// title->RenderRectangle(true);
+	m_elements.push_back(title);
 
 	// Line
 	m_elements.push_back(std::make_shared<Line>(
@@ -52,20 +54,22 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 	};
 
 	for (unsigned int i = 0; i < text.size(); ++i) {
-		m_elements.push_back(std::make_shared<Text>(
+		auto displayText = std::make_shared<Text>(
 			GetElementPosition(textX, firstRow + row * i * 2),
-			GetElementSize(textX, row * 3),
+			GetElementSize(textX + 0.15f, row * 3),
 			Alignment::MID_RIGHT,
 			resolution,
 			Alignment::MID_RIGHT,
 			row,
 			text.at(i)
-		));
+		);
+		// displayText->RenderRectangle(true);
+		m_elements.push_back(displayText);
 
 		auto element = std::make_shared<CheckBox>(
 			i + focusID,
 			GetElementPosition(cbX, firstRow + row * i * 2),
-			GetElementSize(0.0f, row*1.5f).y,
+			GetElementSize(0.0f, row * 1.5f).y,
 			Alignment::MID_LEFT,
 			resolution,
 			i

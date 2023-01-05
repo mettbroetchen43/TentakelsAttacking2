@@ -51,18 +51,19 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	// credits
 	auto creditsText = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.15f),
-		GetElementSize(0.25f, 0.15f),
+		GetElementSize(0.5f, 0.15f),
 		Alignment::MID_MID,
 		resolution,
 		Alignment::MID_MID,
 		0.15f,
 		"Credits"
 		);
+	// creditsText->RenderRectangle(true);
 	AddMovingElement(creditsText);
 
 	auto creditsLine = std::make_shared<Line>(
 		GetElementPosition(0.5f, 0.21f),
-		GetElementSize(0.21f, 0.0f),
+		GetElementSize(0.5f, 0.0f),
 		Alignment::MID_MID,
 		resolution,
 		3.0f
@@ -111,13 +112,14 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	setHeight(0.1f, 0.02f);
 	auto logoText = std::make_shared<Text>(
 		GetElementPosition(0.5f, Y),
-		GetElementSize(0.5f, height),
+		GetElementSize(1.0f, height),
 		Alignment::TOP_MID,
 		resolution,
 		Alignment::TOP_MID,
 		0.08f,
 		"A Purpur Tentakel Production"
 		);
+	// logoText->RenderRectangle(true);
 	AddMovingElement(logoText);
 
 
