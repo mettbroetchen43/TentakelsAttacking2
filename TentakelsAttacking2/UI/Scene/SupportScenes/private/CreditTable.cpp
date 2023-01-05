@@ -23,6 +23,7 @@ void CreditTableScene::Initialize(std::string const& headline,
 		0.15f * m_size.y,
 		headline
 	);
+	// headlineText->RenderRectangle(true);
 	m_elements.push_back(headlineText);
 
 	auto headlineLine = std::make_shared<Line>(
@@ -55,6 +56,7 @@ void CreditTableScene::Initialize(std::string const& headline,
 				textHeight * m_size.y,
 				e.at(position)
 				);
+			// entry->RenderRectangle(true);
 			m_elements.push_back(entry);
 			++position;
 
@@ -72,6 +74,7 @@ void CreditTableScene::Initialize(std::string const& headline,
 				textHeight * m_size.y,
 				e.at(position)
 				);
+			// entry->RenderRectangle(true);
 			m_elements.push_back(entry);
 			++position;
 
@@ -83,13 +86,14 @@ void CreditTableScene::Initialize(std::string const& headline,
 		else {
 			auto entry = std::make_shared<Text>(
 				GetElementPosition(0.5f, 0.23f + textHeight * i),
-				GetElementSize(0.5f, textHeight),
+				GetElementSize(1.0f, textHeight),
 				Alignment::MID_MID,
 				m_resolution,
 				Alignment::MID_MID,
 				textHeight * m_size.y,
 				e.at(position)
 				);
+			// entry->RenderRectangle(true);
 			m_elements.push_back(entry);
 			++position;
 
