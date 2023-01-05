@@ -62,7 +62,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 
 	auto creditsLine = std::make_shared<Line>(
 		GetElementPosition(0.5f, 0.21f),
-		GetElementSize(0.21f, 0.0f),
+		GetElementSize(0.5f, 0.0f),
 		Alignment::MID_MID,
 		resolution,
 		3.0f
