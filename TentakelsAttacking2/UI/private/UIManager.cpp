@@ -76,7 +76,7 @@ void UIManager::Render() {
 		*(m_appContext.assetManager.GetFont()),
 		("FPS: " + std::to_string(fps)).c_str(),
 		Vector2(
-			m_resolution.x * 0.94f,
+			m_resolution.x * 0.92f,
 			m_resolution.y * 0.01f),
 		m_resolution.y * 0.03f,
 		0.0f,
