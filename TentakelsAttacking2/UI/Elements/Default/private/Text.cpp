@@ -64,14 +64,17 @@ void Text::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCon
 	}
 }
 void Text::Render(AppContext const& appContext) {
-	DrawTextEx(
-		*(appContext.assetManager.GetFont()),
-		m_toRender.c_str(),
-		m_textPosition,
-		m_textSize,
-		0.0f,
-		m_color
-	);
+	for (auto [text, position] : m_toRender) {
+		DrawTextEx(
+			*(appContext.assetManager.GetFont()),
+			text.c_str(),
+			position,
+			m_textSize,
+			0.0f,
+			m_color
+		);
+	}
+
 	if (m_renderRectangle) {
 		DrawRectangleLinesEx(
 			m_collider,
@@ -89,13 +92,9 @@ void Text::Resize(Vector2 resolution, AppContext const& appContext) {
 
 void Text::SetPosition(Vector2 pos) {
 
-	float diff = m_resolution.x * m_pos.x - m_resolution.x * pos.x;
-	m_textPosition.x -= diff;
-
-	diff = m_resolution.y * m_pos.y - m_resolution.y * pos.y;
-	m_textPosition.y -= diff;
-
 	UIElement::SetPosition(pos);
+
+	CreateToRender(AppContext::GetInstance());
 }
 
 void Text::SetSize(Vector2 size) {

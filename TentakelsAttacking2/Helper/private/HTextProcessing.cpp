@@ -108,6 +108,8 @@ std::vector<std::string>  BreakTextInVector(std::string const& toBreak, float fo
 			lhs = rhs + 1;
 		}
 	}
+
+	return toReturn;
 }
 
 float GetElementTextHeight(Vector2 const& relativeSize, float absoluteHeight) {
@@ -242,7 +244,7 @@ std::vector<float> GetVerticalAlignedOffset(std::vector<std::string> text,
 		}
 	}
 
-	for (auto const& line : text) {
+	for (int i = 0; i < text.size(); ++i) {
 		toReturn.push_back(value);
 		value += textSize.y;
 	}
@@ -311,7 +313,7 @@ std::vector<float> GetHorisontalAlignedOffset(std::vector<std::string> text, Rec
 	std::vector<float> toReturn;
 
 	if (textAlignment == TextAlignment::LEFT) {
-		for (auto const& line : text) {
+		for (int i = 0; i < text.size(); ++i) {
 			toReturn.push_back(0.0f);
 		}
 		return toReturn;
