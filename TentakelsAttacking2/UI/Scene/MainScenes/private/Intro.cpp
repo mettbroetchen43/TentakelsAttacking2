@@ -38,14 +38,15 @@ void Intro::Initialize( ) {
 	m_elements.push_back(m_btn);
 
 	auto skipText = std::make_shared<Text>(
-		GetElementPosition(0.99f, 0.98f),
-		GetElementSize(0.11f, 0.03f),
+		GetElementPosition(0.99f, 0.97f),
+		GetElementSize(0.2f, 0.03f),
 		Alignment::BOTTOM_RIGHT,
 		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		"skip with [ESC]"
 		);
+	// skipText->RenderRectangle(true);
 	m_elements.push_back(skipText);
 
 
