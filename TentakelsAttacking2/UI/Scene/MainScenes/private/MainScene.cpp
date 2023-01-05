@@ -20,7 +20,7 @@ void MainScene::Initialize() {
 	// Title
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.31f, 0.0f),
-		GetElementSize(0.6f, 0.2f),
+		GetElementSize(0.55f, 0.2f),
 		Alignment::TOP_MID,
 		m_resolution,
 		false,
@@ -99,18 +99,19 @@ void MainScene::Initialize() {
 
 	// text
 	auto currentPlayerLabel = std::make_shared<Text>(
-		GetElementPosition(0.6f, 0.08f),
-		GetElementSize(0.07f, 0.02f),
-		Alignment::TOP_LEFT,
+		GetElementPosition(0.7f, 0.08f),
+		GetElementSize(0.1f, 0.02f),
+		Alignment::TOP_RIGHT,
 		m_resolution,
-		Alignment::TOP_LEFT,
+		Alignment::TOP_RIGHT,
 		0.02f,
 		"current player:"
 		);
+	// currentPlayerLabel->RenderRectangle(true);
 	m_elements.push_back(currentPlayerLabel);
 
 	m_currentPlayerName = std::make_shared<Text>(
-		GetElementPosition(0.67f, 0.08f),
+		GetElementPosition(0.7f, 0.08f),
 		GetElementSize(0.2f, 0.02f),
 		Alignment::TOP_LEFT,
 		m_resolution,
@@ -118,22 +119,24 @@ void MainScene::Initialize() {
 		0.02f,
 		"" 
 		);
+	// m_currentPlayerName->RenderRectangle(true);
 	m_elements.push_back(m_currentPlayerName);
 
 
 	auto currentRoundLabel = std::make_shared<Text>(
-		GetElementPosition(0.6f, 0.1f),
-		GetElementSize(0.07f, 0.02f),
-		Alignment::TOP_LEFT,
+		GetElementPosition(0.7f, 0.1f),
+		GetElementSize(0.1f, 0.02f),
+		Alignment::TOP_RIGHT,
 		m_resolution,
-		Alignment::TOP_LEFT,
+		Alignment::TOP_RIGHT,
 		0.02f,
 		"current round:"
 		);
+	// currentRoundLabel->RenderRectangle(true);
 	m_elements.push_back(currentRoundLabel);
 
 	m_currentRound = std::make_shared<Text>(
-		GetElementPosition(0.67f, 0.1f),
+		GetElementPosition(0.7f, 0.1f),
 		GetElementSize(0.2f, 0.02f),
 		Alignment::TOP_LEFT,
 		m_resolution,
@@ -141,22 +144,24 @@ void MainScene::Initialize() {
 		0.02f,
 		std::to_string(appContext.constants.global.currentRound)
 		);
+	// m_currentRound->RenderRectangle(true);
 	m_elements.push_back(m_currentRound);
 
 
 	auto currentTargetRoundLabel = std::make_shared<Text>(
-		GetElementPosition(0.6f, 0.12f),
-		GetElementSize(0.07f, 0.02f),
-		Alignment::TOP_LEFT,
+		GetElementPosition(0.7f, 0.12f),
+		GetElementSize(0.1f, 0.02f),
+		Alignment::TOP_RIGHT,
 		m_resolution,
-		Alignment::TOP_LEFT,
+		Alignment::TOP_RIGHT,
 		0.02f,
 		"target round:"
 		);
+	// currentTargetRoundLabel->RenderRectangle(true);
 	m_elements.push_back(currentTargetRoundLabel);
 
 	m_currentTargetRound = std::make_shared<Text>(
-		GetElementPosition(0.67f, 0.12f),
+		GetElementPosition(0.7f, 0.12f),
 		GetElementSize(0.2f, 0.02f),
 		Alignment::TOP_LEFT,
 		m_resolution,
@@ -164,29 +169,32 @@ void MainScene::Initialize() {
 		0.02f,
 		std::to_string(appContext.constants.global.currentTargetRound)
 		);
+	// m_currentTargetRound->RenderRectangle(true);
 	m_elements.push_back(m_currentTargetRound);
 
 
 	auto nextPlayerNameLabel = std::make_shared<Text>(
-		GetElementPosition(0.85f, 0.98f),
-		GetElementSize(0.06f, 0.02f),
-		Alignment::BOTTOM_LEFT,
+		GetElementPosition(0.9f, 0.98f),
+		GetElementSize(0.1f, 0.02f),
+		Alignment::BOTTOM_RIGHT,
 		m_resolution,
-		Alignment::BOTTOM_LEFT,
+		Alignment::BOTTOM_RIGHT,
 		0.02f,
 		"next player:"
 		);
+	// nextPlayerNameLabel->RenderRectangle(true);
 	m_elements.push_back(nextPlayerNameLabel);
 
 	m_nextPlayerName = std::make_shared<Text>(
-		GetElementPosition(0.91f, 0.98f),
-		GetElementSize(0.13f, 0.02f),
+		GetElementPosition(0.9f, 0.98f),
+		GetElementSize(0.25f, 0.02f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
 		Alignment::BOTTOM_LEFT,
 		0.02f,
 		""
 		);
+	// m_nextPlayerName->RenderRectangle(true);
 	m_elements.push_back(m_nextPlayerName);
 }
 void MainScene::InitialzeGalaxy() {
