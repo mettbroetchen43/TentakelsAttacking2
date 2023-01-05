@@ -163,7 +163,7 @@ void SettingsScene::Initialize() {
 	// drop down
 	auto resolutionText = std::make_shared<Text>(
 		GetElementPosition(0.75f, elementY),
-		GetElementSize(0.4, 0.05),
+		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		m_resolution,
 		Alignment::TOP_LEFT,
@@ -267,6 +267,7 @@ int SettingsScene::GetIndexFromResolution(Resolution resolution) const {
 			return i;
 		}
 	}
+	throw std::runtime_error("resolution not exsisting");
 }
 
 SettingsScene::SettingsScene(Vector2 resolution)
