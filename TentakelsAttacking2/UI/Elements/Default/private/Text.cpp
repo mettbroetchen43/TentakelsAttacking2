@@ -17,7 +17,8 @@ void Text::CreateToRender(AppContext const& appContext) {
 
 	m_toRender.clear();
 	for (int i = 0; i < splitedText.size(); ++i) {
-		std::pair<std::string, Vector2> a = { splitedText[i],{horizontalOffset[i],verticalOffset[i]} };
+		std::pair<std::string, Vector2> a =
+			{ splitedText[i],{horizontalOffset[i] + m_collider.x, verticalOffset[i] + m_collider.y} };
 		m_toRender.emplace_back(a);
 	}
 }
