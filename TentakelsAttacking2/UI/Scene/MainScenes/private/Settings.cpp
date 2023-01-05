@@ -35,7 +35,7 @@ void SettingsScene::Initialize() {
 		));
 
 	// headline
-	m_elements.push_back(std::make_shared<Text>(
+	auto settingsText = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.2f),
 		GetElementSize(0.3f, 0.1f),
 		Alignment::TOP_MID,
@@ -43,7 +43,9 @@ void SettingsScene::Initialize() {
 		Alignment::TOP_MID,
 		0.07f,
 		"Settings"
-		));
+		);
+	// settingsText->RenderRectangle(true);
+	m_elements.push_back(settingsText);
 
 	// line
 	m_elements.push_back(std::make_shared<Line>(
@@ -66,7 +68,7 @@ void SettingsScene::Initialize() {
 	m_elements.push_back(eventSettings);
 
 	// volume
-	m_elements.push_back(std::make_shared<Text>(
+	auto eventText = std::make_shared<Text>(
 		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
@@ -74,7 +76,9 @@ void SettingsScene::Initialize() {
 		Alignment::TOP_LEFT,
 		0.04f,
 		"Volume:"
-		));
+		);
+	// eventText->RenderRectangle(true);
+	m_elements.push_back(eventText);
 
 	m_volume = std::make_shared<SliderAndInputLine>(
 		100,
@@ -111,19 +115,21 @@ void SettingsScene::Initialize() {
 		});
 	m_elements.push_back(muteCB);
 
-	m_elements.push_back(std::make_shared<Text>(
-		GetElementPosition(0.565f, elementY + sliderOffset + 0.05f),
+	auto muteText = std::make_shared<Text>(
+		GetElementPosition(0.566f, elementY + sliderOffset + 0.05f),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_LEFT,
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
 		"Mute"
-		));
+		);
+	// muteText->RenderRectangle(true);
+	m_elements.push_back(muteText);
 
 	elementY += elementOffset;
 	// last round
-	m_elements.push_back(std::make_shared<Text>(
+	auto lastRoundText = std::make_shared<Text>(
 		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
@@ -131,7 +137,9 @@ void SettingsScene::Initialize() {
 		Alignment::TOP_LEFT,
 		0.04f,
 		"ca. Last Round:"
-		));
+		);
+	// lastRoundText->RenderRectangle(true);
+	m_elements.push_back(lastRoundText);
 
 	auto lastRound = std::make_shared<SliderAndInputLine>(
 		200,
@@ -153,16 +161,30 @@ void SettingsScene::Initialize() {
 	elementY += elementOffset;
 
 	// drop down
-	auto resolution_text = std::make_shared<Text>(
+	auto resolutionText = std::make_shared<Text>(
+		GetElementPosition(0.75f, elementY),
+		GetElementSize(0.4, 0.05),
+		Alignment::TOP_MID,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.04f,
+		"Resolution"
+		);
+	// resolutionText->RenderRectangle(true);
+	m_elements.push_back(resolutionText);
+
+	elementY += 0.04f;
+	auto resolutionHintText = std::make_shared<Text>(
 		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.02f),
 		Alignment::TOP_MID,
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
-		"this setting is only visible in window mode"
+		"this setting is only effecting window mode"
 		);
-	m_elements.push_back(resolution_text);
+	// resolutionHintText->RenderRectangle(true);
+	m_elements.push_back(resolutionHintText);
 
 	elementY += 0.02f;
 	auto resolution = std::make_shared<DropDown>(
@@ -170,7 +192,7 @@ void SettingsScene::Initialize() {
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		m_resolution,
-		0.17f,
+		0.13f,
 		300,
 		301,
 		GetStringsFromResolutionEntries()
@@ -181,6 +203,7 @@ void SettingsScene::Initialize() {
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	});
 	m_elements.push_back(resolution);
+
 
 	// btn
 	auto finishBtn = std::make_shared<ClassicButton>(

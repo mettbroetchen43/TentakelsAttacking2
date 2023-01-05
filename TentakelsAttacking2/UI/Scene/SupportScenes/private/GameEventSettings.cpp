@@ -17,15 +17,17 @@
 void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 
 	// Title
-	m_elements.push_back(std::make_shared<Text>(
+	auto title = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.0f),
-		GetElementSize(0.4f, 0.4f),
+		GetElementSize(0.8f, 0.2f),
 		Alignment::TOP_MID,
 		resolution,
 		Alignment::TOP_MID,
 		0.07f,
 		"Events"
-	));
+	);
+	// title->RenderRectangle(true);
+	m_elements.push_back(title);
 
 	// Line
 	m_elements.push_back(std::make_shared<Line>(
