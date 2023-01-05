@@ -6,20 +6,29 @@
 #include "Text.h"
 #include "HTextProcessing.h"
 #include "AppContext.h"
+#include <cassert>
 
 void Text::CreateToRender(AppContext const& appContext) {
-	m_toRender = BreakLines(m_text, appContext);
-	m_toRender = GetHorisontalAlignedText(m_toRender, m_collider, m_textSize, m_textAlignment);
-	m_textPosition = GetVerticalAlignedTextPosition(m_toRender, m_textSize, m_collider, m_textAlignment);
+	std::vector<std::string> splitedText = BreakLines(m_text, appContext);
+	std::vector<float> horizontalOffset = GetHorisontalAlignedOffset(splitedText, m_collider, m_textSize, m_textAlignment);
+	std::vector<float> verticalOffset = GetVerticalAlignedOffset(splitedText, m_textSize, m_collider, m_textAlignment);
+
+	assert(splitedText.size() == horizontalOffset.size() == verticalOffset.size());
+
+	m_toRender.clear();
+	for (int i = 0; i < splitedText.size(); ++i) {
+		std::pair<std::string, Vector2> a = { splitedText[i],{horizontalOffset[i],verticalOffset[i]} };
+		m_toRender.emplace_back(a);
+	}
 }
-std::string Text::BreakLines(std::string toBreak, AppContext const& appContext) const {
+std::vector<std::string> Text::BreakLines(std::string toBreak, AppContext const& appContext) const {
 	if (!m_lineBreaks) {
-		return toBreak;
+		return { toBreak };
 	}
 
-	BreakText(toBreak, m_textSize, m_collider.width, appContext);
+	std::vector<std::string> toReturn = BreakTextInVector(toBreak, m_textSize, m_collider.width, appContext);
 
-	return toBreak;
+	return toReturn;
 }
 
 void Text::OpenURL() const {

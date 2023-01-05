@@ -15,6 +15,11 @@ enum class Alignment;
  */
 void BreakText(std::string& toBreak, float fontSize, float length,
 	AppContext const& appContext);
+/**
+ * splits the string and returns a vector.
+ */
+[[nodiscard]] std::vector<std::string> BreakTextInVector(std::string const& toBreak, float fontSite,
+	float length, AppContext const& appContext);
 
 /**
  * returns the text absoluteHeight based of the parent relativeSize.
@@ -40,12 +45,22 @@ void BreakText(std::string& toBreak, float fontSize, float length,
 void StripString(std::string& toStrip);
 
 /**
- * modifyes a string so it gets vertical aligned
+ * modifyes a string so it gets vertical aligned.
  */
 [[nodiscard]] Vector2 GetVerticalAlignedTextPosition(std::string const& text,
 	float fontSize, Rectangle colider, Alignment alignment);
 /**
- * modifyes a string so it gets horisontal aligned
+ * returns the vertical offset per line in a vector.
+ */
+[[nodiscard]] std::vector<float> GetVerticalAlignedOffset(std::vector<std::string> text,
+	float fontSize, Rectangle colider, Alignment alignment);
+/**
+ * modifyes a string so it gets horisontal aligned.
  */
 [[nodiscard]] std::string GetHorisontalAlignedText(std::string const& text,
+	Rectangle colider, float fontSize, Alignment alignment);
+/**
+ * returns the horisintal offset per line in a vector.
+ */
+[[nodiscard]] std::vector<float> GetHorisontalAlignedOffset(std::vector<std::string> text,
 	Rectangle colider, float fontSize, Alignment alignment);

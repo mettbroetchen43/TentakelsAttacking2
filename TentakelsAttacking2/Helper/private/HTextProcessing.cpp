@@ -76,6 +76,40 @@ void BreakText(std::string& toBreak, float fontSize, float length,
 	}
 }
 
+std::vector<std::string>  BreakTextInVector(std::string const& toBreak, float fontSize,
+	float length, AppContext const& appContext) {
+	size_t lhs = 0;
+	size_t rhs = 0;
+	std::vector<std::string> toReturn;
+
+	while (true) {
+		rhs = toBreak.find_first_of(' ', rhs + 1);
+		if (rhs == std::string::npos) {
+			break;
+		}
+
+		std::string line(toBreak.c_str() + lhs, rhs - lhs);
+		Vector2 textSize = MeasureTextEx(
+			*(appContext.assetManager.GetFont()),
+			line.data(),
+			fontSize,
+			0.0f
+		);
+
+		if (textSize.x > length) {
+			rhs = toBreak.find_last_of(' ', rhs - 1);
+			if (rhs == std::string::npos) {
+				rhs = toBreak.find_first_of(' ');
+				if (rhs == std::string::npos) {
+					break;
+				}
+			}
+			toReturn.push_back(toBreak.substr(lhs, rhs));
+			lhs = rhs + 1;
+		}
+	}
+}
+
 float GetElementTextHeight(Vector2 const& relativeSize, float absoluteHeight) {
 	return relativeSize.y * absoluteHeight;
 }
@@ -178,6 +212,44 @@ Vector2 GetVerticalAlignedTextPosition(std::string const& text,
 	return { colider.x, colider.y + difference };
 }
 
+std::vector<float> GetVerticalAlignedOffset(std::vector<std::string> text,
+	float fontSize, Rectangle colider, Alignment alignment) {
+	
+	AppContext& appContext = AppContext::GetInstance();
+	TextAlignment textAlignment = GetVerticalTextAlignment(alignment);
+	std::vector<float> toReturn;
+
+	float value;
+	Vector2 textSize = MeasureTextEx(
+		*(appContext.assetManager.GetFont()),
+		text.at(0).c_str(),
+		fontSize,
+		0.0f
+	);
+
+	if (textAlignment == TextAlignment::TOP) {
+		value = 0.0f;
+	}
+	else {
+
+		float offset = colider.height - (textSize.y * text.size());
+
+		if (textAlignment == TextAlignment::MID) {
+			value = offset / 2;
+		}
+		else {
+			value = offset;
+		}
+	}
+
+	for (auto const& line : text) {
+		toReturn.push_back(value);
+		value += textSize.y;
+	}
+
+	return toReturn;
+}
+
 std::string GetHorisontalAlignedText(std::string const& text,
 	Rectangle colider, float fontSize,
 	Alignment alignment) {
@@ -228,6 +300,43 @@ std::string GetHorisontalAlignedText(std::string const& text,
 
 
 	std::string toReturn = GetStringFromVector(alignedSlicedText);
+
+	return toReturn;
+}
+
+std::vector<float> GetHorisontalAlignedOffset(std::vector<std::string> text, Rectangle colider, float fontSize, Alignment alignment) {
+	AppContext& appContext = AppContext::GetInstance();
+	TextAlignment textAlignment = GetHorisontalTextAlignment(alignment);
+
+	std::vector<float> toReturn;
+
+	if (textAlignment == TextAlignment::LEFT) {
+		for (auto const& line : text) {
+			toReturn.push_back(0.0f);
+		}
+		return toReturn;
+	}
+
+	for (auto const& line : text) {
+
+		Vector2 textSize = MeasureTextEx(
+			*(appContext.assetManager.GetFont()),
+			line.c_str(),
+			fontSize,
+			0.0f
+		);
+
+		if (colider.width < textSize.x) {
+			toReturn.push_back(0.0f);
+			continue;
+		}
+
+		float difference = colider.width - textSize.x;
+		difference = textAlignment == TextAlignment::MID ?
+			difference / 2 : difference;
+
+		toReturn.push_back(difference);
+	}
 
 	return toReturn;
 }

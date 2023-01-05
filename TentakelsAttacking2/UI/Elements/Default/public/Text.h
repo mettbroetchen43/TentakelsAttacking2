@@ -12,13 +12,13 @@
  */
 class Text final : public UIElement {
 private:
+	using render_ty = std::vector<std::pair<std::string const, Vector2>>;
 	std::string m_text; ///< contains the raw string that was set to the text
-	std::string m_toRender; ///< contains the modified string that gets renderd
+	render_ty m_toRender;///< contains the modified string that gets renderd and the position of each line
 	std::string m_URL = ""; ///< contains an URL that can be opend by klick
 	float m_textHeight; ///< contains the absolute textheight in px
 	float m_textSize; ///< contains the relativ text size
 	Alignment m_textAlignment; ///< contains the text alignemnt
-	Vector2 m_textPosition; ///< contains the absolute text position in px
 	Color m_color = WHITE; ///< contains the color the text will be rendered in
 
 	bool m_lineBreaks = false; ///< contains if the text is automaticly breaks in multiple lines
@@ -33,7 +33,7 @@ private:
 	 * calls a helper function that replayes some whatespace with \n.
 	 * returns directly if the linebreak is deactivated.
 	 */
-	std::string BreakLines(std::string toBreak, AppContext const& appContext) const;
+	std::vector<std::string> BreakLines(std::string toBreak, AppContext const& appContext) const;
 
 	/**
 	 * opens the provided URL if one is provided.
