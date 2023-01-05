@@ -30,7 +30,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 
 
 	// parameters
-	m_elements.push_back(std::make_shared<Text>(
+	auto parameterText = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.2f),
 		GetElementSize(0.3f, 0.1f),
 		Alignment::TOP_MID,
@@ -38,7 +38,9 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		Alignment::TOP_MID,
 		0.07f,
 		"Parameter"
-		));
+		);
+	// parameterText->RenderRectangle(true);
+	m_elements.push_back(parameterText);
 
 	// line
 	m_elements.push_back(std::make_shared<Line>(
