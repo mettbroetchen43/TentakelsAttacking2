@@ -29,6 +29,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	m_speedBTN->SetOnClick([this]() {
 		this->ToggleSpeedLevel();
 		});
+	m_speedBTN->SetEnabled(false);
 	m_elements.push_back(m_speedBTN);
 
 	auto backBTN = std::make_shared<ClassicButton>(
@@ -242,6 +243,9 @@ void CreditsScene::AddMovingElement(std::shared_ptr<UIElement> element) {
 }
 
 void CreditsScene::ToggleSpeedLevel() {
+
+	if (!m_title->HasFinishedTitle()) { return; }
+
 	++m_speedLevel;
 
 	if (m_speedLevel > m_maxSpeedLevel) {
@@ -277,6 +281,7 @@ void CreditsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
 	if (m_title->IsTitleFinished()) {
+		m_speedBTN->SetEnabled(true);
 		AddMovingElement(m_titleLine);
 		for (auto& e : m_movingElements) {
 			e->MoveBySpeed(m_speed * m_speedLevel, 0.0f);
