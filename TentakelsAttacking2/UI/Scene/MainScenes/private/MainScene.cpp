@@ -111,7 +111,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(currentPlayerLabel);
 
 	m_currentPlayerName = std::make_shared<Text>(
-		GetElementPosition(0.7f, 0.08f),
+		GetElementPosition(0.71f, 0.08f),
 		GetElementSize(0.2f, 0.02f),
 		Alignment::TOP_LEFT,
 		m_resolution,
@@ -136,7 +136,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(currentRoundLabel);
 
 	m_currentRound = std::make_shared<Text>(
-		GetElementPosition(0.7f, 0.1f),
+		GetElementPosition(0.71f, 0.1f),
 		GetElementSize(0.2f, 0.02f),
 		Alignment::TOP_LEFT,
 		m_resolution,
@@ -161,7 +161,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(currentTargetRoundLabel);
 
 	m_currentTargetRound = std::make_shared<Text>(
-		GetElementPosition(0.7f, 0.12f),
+		GetElementPosition(0.71f, 0.12f),
 		GetElementSize(0.2f, 0.02f),
 		Alignment::TOP_LEFT,
 		m_resolution,
@@ -186,7 +186,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(nextPlayerNameLabel);
 
 	m_nextPlayerName = std::make_shared<Text>(
-		GetElementPosition(0.9f, 0.98f),
+		GetElementPosition(0.91f, 0.98f),
 		GetElementSize(0.25f, 0.02f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
