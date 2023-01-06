@@ -13,7 +13,7 @@
 
 // Window
 17 / contains the current solution as an enum
-1 / Starting Full Screen (0 = window)
+0 / Starting Full Screen (0 = window)
 60 / Target FPS
 
 // Player
