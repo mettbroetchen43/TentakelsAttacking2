@@ -78,39 +78,36 @@ void BreakText(std::string& toBreak, float fontSize, float length,
 }
 
 std::vector<std::string>  BreakTextInVector(std::string const& toBreak, float fontSize,
-	float length, AppContext const& appContext) {
-	size_t lhs = 0;
-	size_t rhs = 0;
-	std::vector<std::string> toReturn;
-
-	auto textLength = [fontSize, appContext](std::string const& text) -> float {
-		auto textSize = MeasureTextEx(
-			*(appContext.assetManager.GetFont()),
-			text.c_str(),
+	float length) {
+	auto getTextLength = [fontSize](std::string const& text)->float {
+		Vector2 textSize = MeasureTextEx(
+			*(AppContext::GetInstance().assetManager.GetFont()),
+			text.data(),
 			fontSize,
 			0.0f
 		);
 		return textSize.x;
 	};
+	
+	size_t lhs = 0;
+	size_t rhs = 0;
+	std::vector<std::string> toReturn;
+
 
 	while (true) {
 		rhs = toBreak.find_first_of(' ', rhs + 1);
-
-		std::string line = toBreak.substr(lhs, rhs - lhs);
-		float textSize = textLength(line);
-
 		if (rhs == std::string::npos) {
-
-			//if (textSize <= length) {
-				toReturn.push_back(toBreak.substr(lhs, rhs - lhs));
-				break;
-			//}
+			toReturn.push_back(toBreak.substr(lhs, rhs - lhs));
+			break;
 		}
 
-		if (textSize > length) {
+		std::string line(toBreak.c_str() + lhs, rhs - lhs);
+		auto textLength = getTextLength(line);
+
+		if (textLength > length) {
 			rhs = toBreak.find_last_of(' ', rhs - 1);
 			if (rhs == std::string::npos) {
-				rhs = toBreak.find_first_of(' ', lhs);
+				rhs = toBreak.find_first_of(' ');
 				if (rhs == std::string::npos) {
 					toReturn.push_back(toBreak.substr(lhs, rhs - lhs));
 					break;

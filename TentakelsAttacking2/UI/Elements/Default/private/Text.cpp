@@ -8,8 +8,8 @@
 #include "AppContext.h"
 #include <cassert>
 
-void Text::CreateToRender(AppContext const& appContext) {
-	std::vector<std::string> splitedText = BreakLines(m_text, appContext);
+void Text::CreateToRender() {
+	std::vector<std::string> splitedText = BreakLines(m_text);
 	std::vector<float> horizontalOffset = GetHorisontalAlignedOffset(splitedText, m_collider, m_textSize, m_textAlignment);
 	std::vector<float> verticalOffset = GetVerticalAlignedOffset(splitedText, m_textSize, m_collider, m_textAlignment);
 
@@ -23,12 +23,12 @@ void Text::CreateToRender(AppContext const& appContext) {
 		m_toRender.emplace_back(a);
 	}
 }
-std::vector<std::string> Text::BreakLines(std::string toBreak, AppContext const& appContext) const {
+std::vector<std::string> Text::BreakLines(std::string toBreak) const {
 	if (!m_lineBreaks) {
 		return { toBreak };
 	}
 
-	std::vector<std::string> toReturn = BreakTextInVector(toBreak, m_textSize, m_collider.width, appContext);
+	std::vector<std::string> toReturn = BreakTextInVector(toBreak, m_textSize, m_collider.width);
 
 	return toReturn;
 }
@@ -42,7 +42,7 @@ void Text::OpenURL() const {
 void Text::UpdateCollider() {
 	UIElement::UpdateCollider();
 
-	CreateToRender(AppContext::GetInstance());
+	CreateToRender();
 }
 
 Text::Text(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
@@ -51,7 +51,7 @@ Text::Text(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	: UIElement(pos, size, alignment, resolution), m_textSize(textHeight * resolution.y),
 	m_text(text), m_textHeight(textHeight), m_textAlignment(textAlignment) {
 
-	CreateToRender(AppContext::GetInstance());
+	CreateToRender();
 }
 
 void Text::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
@@ -88,25 +88,25 @@ void Text::Resize(Vector2 resolution, AppContext const& appContext) {
 	
 	UIElement::Resize(resolution, appContext);
 	m_textSize = m_textHeight * resolution.y;
-	CreateToRender(appContext);
+	CreateToRender();
 }
 
 void Text::SetPosition(Vector2 pos) {
 
 	UIElement::SetPosition(pos);
 
-	CreateToRender(AppContext::GetInstance());
+	CreateToRender();
 }
 
 void Text::SetSize(Vector2 size) {
 
 	UIElement::SetSize(size);
-	CreateToRender(AppContext::GetInstance());
+	CreateToRender();
 }
 
 void Text::SetText(std::string text) {
 	m_text = text;
-	CreateToRender(AppContext::GetInstance());
+	CreateToRender();
 }
 std::string Text::GetText() const {
 	return m_text;
@@ -133,7 +133,7 @@ std::string Text::GetURL() const {
 
 void Text::LineBreaks(bool lineBreaks) {
 	m_lineBreaks = lineBreaks;
-	CreateToRender(AppContext::GetInstance());
+	CreateToRender();
 }
 void Text::RenderRectangle(bool renderRectangle) {
 	m_renderRectangle = renderRectangle;

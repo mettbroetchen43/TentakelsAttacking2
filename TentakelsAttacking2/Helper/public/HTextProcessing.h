@@ -20,7 +20,7 @@ void BreakText(std::string& toBreak, float fontSize, float length,
  * splits the string and returns a vector.
  */
 [[nodiscard]] std::vector<std::string> BreakTextInVector(std::string const& toBreak, float fontSite,
-	float length, AppContext const& appContext);
+	float length);
 
 /**
  * returns the text absoluteHeight based of the parent relativeSize.
