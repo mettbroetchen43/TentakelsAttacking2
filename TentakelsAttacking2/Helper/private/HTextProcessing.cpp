@@ -7,7 +7,8 @@
 #include "AppContext.h"
 #include "Allignment.h"
 #include <raylib.h>
-#include <string_view>
+//#include <string_view>
+#include <cassert>
 
 [[nodiscard]] std::vector<std::string> GetSerializedText(
 	std::string const& text) {
@@ -77,34 +78,42 @@ void BreakText(std::string& toBreak, float fontSize, float length,
 }
 
 std::vector<std::string>  BreakTextInVector(std::string const& toBreak, float fontSize,
-	float length, AppContext const& appContext) {
+	float length) {
+	auto getTextLength = [fontSize](std::string const& text)->float {
+		Vector2 textSize = MeasureTextEx(
+			*(AppContext::GetInstance().assetManager.GetFont()),
+			text.data(),
+			fontSize,
+			0.0f
+		);
+		return textSize.x;
+	};
+	
 	size_t lhs = 0;
 	size_t rhs = 0;
 	std::vector<std::string> toReturn;
 
+
 	while (true) {
 		rhs = toBreak.find_first_of(' ', rhs + 1);
 		if (rhs == std::string::npos) {
+			toReturn.push_back(toBreak.substr(lhs, rhs - lhs));
 			break;
 		}
 
 		std::string line(toBreak.c_str() + lhs, rhs - lhs);
-		Vector2 textSize = MeasureTextEx(
-			*(appContext.assetManager.GetFont()),
-			line.data(),
-			fontSize,
-			0.0f
-		);
+		auto textLength = getTextLength(line);
 
-		if (textSize.x > length) {
+		if (textLength > length) {
 			rhs = toBreak.find_last_of(' ', rhs - 1);
 			if (rhs == std::string::npos) {
 				rhs = toBreak.find_first_of(' ');
 				if (rhs == std::string::npos) {
+					toReturn.push_back(toBreak.substr(lhs, rhs - lhs));
 					break;
 				}
 			}
-			toReturn.push_back(toBreak.substr(lhs, rhs));
+			toReturn.push_back(toBreak.substr(lhs, rhs - lhs));
 			lhs = rhs + 1;
 		}
 	}
@@ -132,7 +141,7 @@ std::string GetPritableTextInColider(std::string const& text,
 	std::string toCheck = constants.prefix + text + constants.cursor;
 
 	do {
-		if ( toReturn.size( ) == 0 ) {
+		if (toReturn.size() == 0) {
 			break;
 		}
 		toReturn = toReturn.substr(1, toReturn.size());
@@ -188,7 +197,7 @@ void StripString(std::string& toStrip) {
 
 Vector2 GetVerticalAlignedTextPosition(std::string const& text,
 	float fontSize, Rectangle colider, Alignment alignment) {
-	
+
 	TextAlignment textAlignment = GetVerticalTextAlignment(alignment);
 
 	if (textAlignment == TextAlignment::TOP) {
@@ -216,10 +225,12 @@ Vector2 GetVerticalAlignedTextPosition(std::string const& text,
 
 std::vector<float> GetVerticalAlignedOffset(std::vector<std::string> text,
 	float fontSize, Rectangle colider, Alignment alignment) {
-	
+
 	AppContext& appContext = AppContext::GetInstance();
 	TextAlignment textAlignment = GetVerticalTextAlignment(alignment);
 	std::vector<float> toReturn;
+
+	assert(text.size() > 0);
 
 	float value;
 	Vector2 textSize = MeasureTextEx(

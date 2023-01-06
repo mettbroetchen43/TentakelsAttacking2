@@ -28,12 +28,12 @@ private:
 	 * generates a printable version if the raw string.
 	 * that contains the alignment and the line breaks.
 	 */
-	void CreateToRender(AppContext const& appContext);
+	void CreateToRender();
 	/**
 	 * calls a helper function that replayes some whatespace with \n.
 	 * returns directly if the linebreak is deactivated.
 	 */
-	std::vector<std::string> BreakLines(std::string toBreak, AppContext const& appContext) const;
+	std::vector<std::string> BreakLines(std::string toBreak) const;
 
 	/**
 	 * opens the provided URL if one is provided.
