@@ -7,10 +7,131 @@
 #include "ClassicButton.h"
 #include "SceneType.h"
 #include "AppContext.h"
+#include "Text.h"
 #include <iostream>
 
 void TestScene::Initialize(Vector2 resolution,
 	[[maybe_unused]] AppContext& appContext) {
+
+	auto input = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+
+	auto text = std::make_shared<Text>(
+		GetElementPosition(0.0f, 0.0f),
+		GetElementSize(0.33f, 0.33f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.025f,
+		input
+		);
+	text->RenderRectangle(true);
+	text->LineBreaks(true);
+	m_elements.push_back(text);
+
+	text = std::make_shared<Text>(
+		GetElementPosition(0.5f, 0.0f),
+		GetElementSize(0.33f, 0.33f),
+		Alignment::TOP_MID,
+		m_resolution,
+		Alignment::TOP_MID,
+		0.025f,
+		input
+		);
+	text->RenderRectangle(true);
+	text->LineBreaks(true);
+	m_elements.push_back(text);
+
+	text = std::make_shared<Text>(
+		GetElementPosition(1.0f, 0.0f),
+		GetElementSize(0.33f, 0.33f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		Alignment::TOP_RIGHT,
+		0.025f,
+		input
+		);
+	text->RenderRectangle(true);
+	text->LineBreaks(true);
+	m_elements.push_back(text);
+
+	text = std::make_shared<Text>(
+		GetElementPosition(0.0f, 0.5f),
+		GetElementSize(0.33f, 0.33f),
+		Alignment::MID_LEFT,
+		m_resolution,
+		Alignment::MID_LEFT,
+		0.025f,
+		input
+		);
+	text->RenderRectangle(true);
+	text->LineBreaks(true);
+	m_elements.push_back(text);
+
+	text = std::make_shared<Text>(
+		GetElementPosition(0.5f, 0.5f),
+		GetElementSize(0.33f, 0.33f),
+		Alignment::MID_MID,
+		m_resolution,
+		Alignment::MID_MID,
+		0.025f,
+		input
+		);
+	text->RenderRectangle(true);
+	text->LineBreaks(true);
+	m_elements.push_back(text);
+
+	text = std::make_shared<Text>(
+		GetElementPosition(1.0f, 0.5f),
+		GetElementSize(0.33f, 0.33f),
+		Alignment::MID_RIGHT,
+		m_resolution,
+		Alignment::MID_RIGHT,
+		0.025f,
+		input
+		);
+	text->RenderRectangle(true);
+	text->LineBreaks(true);
+	m_elements.push_back(text);
+
+	text = std::make_shared<Text>(
+		GetElementPosition(0.0f, 1.0f),
+		GetElementSize(0.33f, 0.33f),
+		Alignment::BOTTOM_LEFT,
+		m_resolution,
+		Alignment::BOTTOM_LEFT,
+		0.025f,
+		input
+		);
+	text->RenderRectangle(true);
+	text->LineBreaks(true);
+	m_elements.push_back(text);
+
+	text = std::make_shared<Text>(
+		GetElementPosition(0.5f, 1.0f),
+		GetElementSize(0.33f, 0.33f),
+		Alignment::BOTTOM_MID,
+		m_resolution,
+		Alignment::BOTTOM_MID,
+		0.025f,
+		input
+		);
+	text->RenderRectangle(true);
+	text->LineBreaks(true);
+	m_elements.push_back(text);
+
+	text = std::make_shared<Text>(
+		GetElementPosition(1.0f, 1.0f),
+		GetElementSize(0.33f, 0.33f),
+		Alignment::BOTTOM_RIGHT,
+		m_resolution,
+		Alignment::BOTTOM_RIGHT,
+		0.025f,
+		input
+		);
+	text->RenderRectangle(true);
+	text->LineBreaks(true);
+	m_elements.push_back(text);
+
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(

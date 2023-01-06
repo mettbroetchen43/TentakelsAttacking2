@@ -13,7 +13,8 @@ void Text::CreateToRender(AppContext const& appContext) {
 	std::vector<float> horizontalOffset = GetHorisontalAlignedOffset(splitedText, m_collider, m_textSize, m_textAlignment);
 	std::vector<float> verticalOffset = GetVerticalAlignedOffset(splitedText, m_textSize, m_collider, m_textAlignment);
 
-	assert(splitedText.size() == horizontalOffset.size() == verticalOffset.size());
+	assert(splitedText.size() == horizontalOffset.size());
+	assert(splitedText.size() == verticalOffset.size());
 
 	m_toRender.clear();
 	for (int i = 0; i < splitedText.size(); ++i) {
