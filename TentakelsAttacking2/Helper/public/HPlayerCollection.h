@@ -16,7 +16,7 @@
  */
 class PlayerCollection final : public EventListener {
 private:
-	std::vector<PlayerData> m_playerData; ///< contans player data
+	std::vector<PlayerData> m_playerData; ///< contains player data
 	PlayerData m_defaultPlayer = { 0,"no player", WHITE }; ///< contains default player witch is return if no other player is found.
 
 	/**
@@ -104,6 +104,11 @@ public:
 	 * if the id is not existing white will be returned.
 	 */
 	[[nodiscard]] Color GetColorByID(unsigned int ID) const;
+
+	/**
+	 * returns the current player count.
+	 */
+	[[nodiscard]] size_t GetPlayerCount() const;
 
 	/**
 	 * received all events an alls the function whithin this object.

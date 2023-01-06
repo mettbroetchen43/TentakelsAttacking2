@@ -17,6 +17,7 @@
 
 void NewGamePlayerScene::Initialize(Vector2 resolution,
 	AppContext& appContext) {
+
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
