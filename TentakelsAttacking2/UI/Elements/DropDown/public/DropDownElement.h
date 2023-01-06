@@ -21,8 +21,9 @@ private:
 	std::function<Rectangle(Rectangle)> m_getTemoraryCollider;
 
 	Texture* m_grey50; ///< contains a pointer to a texture in the appContext
-	Rectangle m_textureRecGrey50; ///< contains the absolute dimensions of the texture
-
+	Rectangle m_textureRecGrey50; ///< contains the absolute dimensions of the grey 50 texture
+	Texture* m_grey; ///< contains a pointer to a texture in the appContext
+	Rectangle m_texturerecGrey; //< contains the absolute dimensions of the grey texture
 	/**
 	 * generates the toRender string out of the raw string.
 	 */
