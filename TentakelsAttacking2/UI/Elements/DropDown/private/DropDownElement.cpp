@@ -35,12 +35,21 @@ DropDownElement::DropDownElement(Vector2 pos, Vector2 size, Alignment alignment,
     : UIElement(pos, size, alignment, resolution), Focusable(focusID), m_ID(ID), m_text(text),
     m_getTemoraryCollider(getTemoraryCollider) {
 
-    m_grey50 = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY_50);
+
+    AppContext& appContext = AppContext::GetInstance();
+    m_grey50 = appContext.assetManager.GetTexture(AssetType::GREY_50);
     m_textureRecGrey50 = {
         0.0f,
         0.0f,
         static_cast<float>(m_grey50->width),
         static_cast<float>(m_grey50->height)
+    };
+    m_grey = appContext.assetManager.GetTexture(AssetType::GREY);
+    m_textureRecGrey50 = {
+    0.0f,
+    0.0f,
+    static_cast<float>(m_grey->width),
+    static_cast<float>(m_grey->height)
     };
 
     CreateToRender();
@@ -58,6 +67,15 @@ void DropDownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext co
     if (IsFocused() && IsConfirmInputPressed()) { m_onClick(m_ID); }
 }
 void DropDownElement::Render(AppContext const& appContext) {
+
+    DrawTexturePro(
+        *m_grey,
+        m_texturerecGrey,
+        m_collider,
+        { 0.0f,0.0f },
+        0.0f,
+        WHITE
+    );
 
     DrawRectangleLinesEx(
         m_collider,
