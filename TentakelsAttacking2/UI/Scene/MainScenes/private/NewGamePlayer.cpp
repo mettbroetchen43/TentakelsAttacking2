@@ -256,11 +256,12 @@ void NewGamePlayerScene::UpdateSceneEntries(AppContext const& appContext) {
 		m_table->SetValue<std::string>(index, 1, p.name, false);
 		m_table->SetValue<Color>(index, 2, p.color, false);
 
-		size_t _ID = p.ID;
+		unsigned int _ID = p.ID;
 		m_playerButtons.at(index - 1)->SetEnabled(true);
 		m_playerButtons.at(index - 1)->SetOnClick([this, _ID]() {
 			this->DeletePlayer(_ID);
 			});
+
 		++index;
 	}
 	for (int row = index; row < m_table->GetRows(); ++row) {
