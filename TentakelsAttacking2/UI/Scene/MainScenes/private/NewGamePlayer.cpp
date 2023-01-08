@@ -219,9 +219,14 @@ void NewGamePlayerScene::InitializePlayerButtons(AppContext& appContext) {
 			"X",
 			SoundType::CLICKED_RELEASE_STD
 			);
+
+		button->SetEnabled(i < currentPlayerCount);
+		button->SetOnClick([this, i]() {
+			this->DeletePlayer(i + 1);
+			});
+
 		m_elements.push_back(button);
 		m_playerButtons.push_back(button);
-		button->SetEnabled(i < currentPlayerCount);
 	}
 }
 
@@ -263,7 +268,11 @@ void NewGamePlayerScene::UpdateSceneEntries(AppContext const& appContext) {
 		m_table->SetValue<std::string>(index, 1, p.name, false);
 		m_table->SetValue<Color>(index, 2, p.color, false);
 
+		size_t _ID = p.ID;
 		m_playerButtons.at(index - 1)->SetEnabled(true);
+		m_playerButtons.at(index - 1)->SetOnClick([this, _ID]() {
+			this->DeletePlayer(_ID);
+			});
 		++index;
 	}
 	for (int row = index; row < m_table->GetRows(); ++row) {
@@ -323,15 +332,6 @@ void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell const*,
 		newValue,
 		appContext
 	);
-}
-void NewGamePlayerScene::CreateDeletePlayer() {
-	AppContext& appContext = AppContext::GetInstance();
-	auto event = ShowDeletePlayerPopUpEvent(
-		"Delete Player?",
-		"",
-		[this](unsigned int ID) {this->DeletePlayer(ID);}
-	);
-	appContext.eventManager.InvokeEvent(event);
 }
 void NewGamePlayerScene::DeletePlayer(unsigned int ID) {
 	AppContext& appContext = AppContext::GetInstance();

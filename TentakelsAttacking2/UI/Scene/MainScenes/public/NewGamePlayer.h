@@ -72,12 +72,7 @@ private:
 	void UpdatePlayerColor(AbstractTableCell const* cell,
 		Color oldValue, Color newValue);
 	/**
-	 * updates a player color.
-	 * calls the update player.
-	 */
-	void CreateDeletePlayer();
-	/**
-	 * ceates an popup to get the id that should get deleted.
+	 * delets an player via event.
 	 */
 	void DeletePlayer(unsigned int ID);
 	/**
