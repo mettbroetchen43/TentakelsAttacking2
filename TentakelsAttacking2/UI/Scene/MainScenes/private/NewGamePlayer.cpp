@@ -99,18 +99,6 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		});
 	m_elements.push_back(backBtn);
 
-	/*auto removePlayerBtn = std::make_shared<ClassicButton>(
-		4,
-		GetElementPosition(0.1f, 0.85f),
-		GetElementSize(0.15f, 0.1f),
-		Alignment::TOP_LEFT,
-		resolution,
-		"Remove Player",
-		SoundType::CLICKED_RELEASE_STD
-		);
-	removePlayerBtn->SetOnClick([this]() {	CreateDeletePlayer(); });
-	m_elements.push_back(removePlayerBtn);*/
-
 	auto line = std::make_shared<Line>(
 		GetElementPosition(0.5f, 0.25f),
 		GetElementSize(0.0f, 0.7f),
