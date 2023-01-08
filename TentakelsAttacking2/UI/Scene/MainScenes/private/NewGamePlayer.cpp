@@ -205,6 +205,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 void NewGamePlayerScene::InitializePlayerButtons(AppContext& appContext) {
 
 	size_t maxPlayerCount = appContext.constants.player.maxPlayerCount;
+	size_t currentPlayerCount = appContext.playerCollection.GetPlayerCount();
 	float rowHeight = 0.45f / (maxPlayerCount + 1);
 	float initialY = 0.35f + rowHeight;
 
@@ -220,6 +221,7 @@ void NewGamePlayerScene::InitializePlayerButtons(AppContext& appContext) {
 			);
 		m_elements.push_back(button);
 		m_playerButtons.push_back(button);
+		button->SetEnabled(i < currentPlayerCount);
 	}
 }
 
@@ -261,12 +263,14 @@ void NewGamePlayerScene::UpdateSceneEntries(AppContext const& appContext) {
 		m_table->SetValue<std::string>(index, 1, p.name, false);
 		m_table->SetValue<Color>(index, 2, p.color, false);
 
+		m_playerButtons.at(index - 1)->SetEnabled(true);
 		++index;
 	}
 	for (int row = index; row < m_table->GetRows(); ++row) {
 		for (int column = 0; column < m_table->GetColumns(); ++column) {
 			m_table->SetEmptyCell(row, column, false);
 		}
+		m_playerButtons.at(row - 1)->SetEnabled(false);
 	}
 
 	m_table->ResizeCells();
