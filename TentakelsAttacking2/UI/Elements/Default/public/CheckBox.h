@@ -81,4 +81,9 @@ public:
 	 * renders the checkbox.
 	 */
 	void Render(AppContext const& appContext) override;
+	/**
+	 * resizes the checkbox and calls the ui-element to resize.
+	 * updates horisontal size.
+	 */
+	void Resize(Vector2 resolution, AppContext const& appContext) override;
 };

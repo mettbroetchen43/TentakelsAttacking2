@@ -155,3 +155,10 @@ void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 		);
 	}
 }
+
+void CheckBox::Resize(Vector2 resolution, AppContext const& appContext) {
+
+	m_size.x = resolution.y / resolution.x * m_size.y;
+
+	UIElement::Resize(resolution, appContext);
+}
