@@ -69,21 +69,37 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 	m_nestedFocus.push_back(colorPicker.get());
 	m_colorPicker = colorPicker.get();
 
-	auto addPlayerBtn = std::make_shared<ClassicButton>(
-		3,
+	auto resetBTN = std::make_shared<ClassicButton>(
+		7,
 		GetElementPosition(0.45f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_RIGHT,
 		resolution,
-		"Add Player",
+		"Reset",
 		SoundType::ACCEPTED
 		);
-	addPlayerBtn->SetOnClick([this]() {
-		this->AddPlayer();
+	resetBTN->SetOnClick([this]() {
+		this->Reset();
 		});
-	m_elements.push_back(addPlayerBtn);
+	m_elements.push_back(resetBTN);
 
-	auto removePlayerBtn = std::make_shared<ClassicButton>(
+	auto backBtn = std::make_shared<ClassicButton>(
+		8,
+		GetElementPosition(0.1f, 0.85f),
+		GetElementSize(0.15f, 0.1f),
+		Alignment::TOP_LEFT,
+		resolution,
+		"Back",
+		SoundType::CLICKED_RELEASE_STD
+		);
+	backBtn->SetOnClick([]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(
+			SwitchSceneEvent(SceneType::MAIN_MENU)
+		);
+		});
+	m_elements.push_back(backBtn);
+
+	/*auto removePlayerBtn = std::make_shared<ClassicButton>(
 		4,
 		GetElementPosition(0.1f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
@@ -93,7 +109,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		SoundType::CLICKED_RELEASE_STD
 		);
 	removePlayerBtn->SetOnClick([this]() {	CreateDeletePlayer(); });
-	m_elements.push_back(removePlayerBtn);
+	m_elements.push_back(removePlayerBtn);*/
 
 	auto line = std::make_shared<Line>(
 		GetElementPosition(0.5f, 0.25f),
@@ -155,10 +171,24 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 	m_nestedFocus.push_back(table.get());
 	m_table = table.get();
 
+	auto addPlayerBtn = std::make_shared<ClassicButton>(
+		3,
+		GetElementPosition(0.55f, 0.85f),
+		GetElementSize(0.15f, 0.1f),
+		Alignment::TOP_LEFT,
+		resolution,
+		"Add Player",
+		SoundType::ACCEPTED
+		);
+	addPlayerBtn->SetOnClick([this]() {
+		this->AddPlayer();
+		});
+	m_elements.push_back(addPlayerBtn);
+
 	m_nextBTN = std::make_shared<ClassicButton>(
 		6,
 		GetElementPosition(0.9f, 0.85f),
-		GetElementSize(0.11f, 0.1f),
+		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_RIGHT,
 		resolution,
 		"Next",
@@ -169,35 +199,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		});
 	m_elements.push_back(m_nextBTN);
 
-	auto resetBTN = std::make_shared<ClassicButton>(
-		7,
-		GetElementPosition(0.78f, 0.85f),
-		GetElementSize(0.11f, 0.1f),
-		Alignment::TOP_RIGHT,
-		resolution,
-		"Reset",
-		SoundType::ACCEPTED
-		);
-	resetBTN->SetOnClick([this]() {
-		this->Reset();
-		});
-	m_elements.push_back(resetBTN);
 
-	auto backBtn = std::make_shared<ClassicButton>(
-		8,
-		GetElementPosition(0.55f, 0.85f),
-		GetElementSize(0.11f, 0.1f),
-		Alignment::TOP_LEFT,
-		resolution,
-		"Back",
-		SoundType::CLICKED_RELEASE_STD
-		);
-	backBtn->SetOnClick([]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::MAIN_MENU)
-		);
-		});
-	m_elements.push_back(backBtn);
 }
 
 void NewGamePlayerScene::CheckForNestedFocus(Vector2 const& mousePosition,
