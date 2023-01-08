@@ -24,12 +24,18 @@ private:
 	Table* m_table; ///< contains the table where the current playere where displayed
 	std::shared_ptr<ClassicButton> m_nextBTN; ///< contains the button, witch the calls the next scene
 	std::vector<Focusable*> m_nestedFocus; ///< contains focusable* that are abe to have an nested focus
+	std::vector<std::shared_ptr<ClassicButton>> m_playerButtons; ///< contains the remove player buttons
 
 	/**
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
 	void Initialize(Vector2 resolution, AppContext& appContext);
+	/**
+	 * initializes remove player button.
+	 * connects the actions.
+	 */
+	void InitializePlayerButtons(AppContext& appContext);
 	/**
 	 * checks  if the element has an nested focus and if the mouse position is outside the curtain collider.
 	 * if so, a focus layer gets deleted and the nested focus gets set to false.
@@ -66,12 +72,7 @@ private:
 	void UpdatePlayerColor(AbstractTableCell const* cell,
 		Color oldValue, Color newValue);
 	/**
-	 * updates a player color.
-	 * calls the update player.
-	 */
-	void CreateDeletePlayer();
-	/**
-	 * ceates an popup to get the id that should get deleted.
+	 * delets an player via event.
 	 */
 	void DeletePlayer(unsigned int ID);
 	/**

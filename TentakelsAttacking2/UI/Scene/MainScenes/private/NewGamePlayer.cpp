@@ -17,6 +17,7 @@
 
 void NewGamePlayerScene::Initialize(Vector2 resolution,
 	AppContext& appContext) {
+
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
@@ -68,31 +69,35 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 	m_nestedFocus.push_back(colorPicker.get());
 	m_colorPicker = colorPicker.get();
 
-	auto addPlayerBtn = std::make_shared<ClassicButton>(
-		3,
+	auto resetBTN = std::make_shared<ClassicButton>(
+		7,
 		GetElementPosition(0.45f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_RIGHT,
 		resolution,
-		"Add Player",
+		"Reset",
 		SoundType::ACCEPTED
 		);
-	addPlayerBtn->SetOnClick([this]() {
-		this->AddPlayer();
+	resetBTN->SetOnClick([this]() {
+		this->Reset();
 		});
-	m_elements.push_back(addPlayerBtn);
+	m_elements.push_back(resetBTN);
 
-	auto removePlayerBtn = std::make_shared<ClassicButton>(
-		4,
+	auto backBtn = std::make_shared<ClassicButton>(
+		8,
 		GetElementPosition(0.1f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_LEFT,
 		resolution,
-		"Remove Player",
+		"Back",
 		SoundType::CLICKED_RELEASE_STD
 		);
-	removePlayerBtn->SetOnClick([this]() {	CreateDeletePlayer(); });
-	m_elements.push_back(removePlayerBtn);
+	backBtn->SetOnClick([]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(
+			SwitchSceneEvent(SceneType::MAIN_MENU)
+		);
+		});
+	m_elements.push_back(backBtn);
 
 	auto line = std::make_shared<Line>(
 		GetElementPosition(0.5f, 0.25f),
@@ -154,10 +159,24 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 	m_nestedFocus.push_back(table.get());
 	m_table = table.get();
 
+	auto addPlayerBtn = std::make_shared<ClassicButton>(
+		3,
+		GetElementPosition(0.55f, 0.85f),
+		GetElementSize(0.15f, 0.1f),
+		Alignment::TOP_LEFT,
+		resolution,
+		"Add Player",
+		SoundType::ACCEPTED
+		);
+	addPlayerBtn->SetOnClick([this]() {
+		this->AddPlayer();
+		});
+	m_elements.push_back(addPlayerBtn);
+
 	m_nextBTN = std::make_shared<ClassicButton>(
 		6,
 		GetElementPosition(0.9f, 0.85f),
-		GetElementSize(0.11f, 0.1f),
+		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_RIGHT,
 		resolution,
 		"Next",
@@ -168,35 +187,35 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		});
 	m_elements.push_back(m_nextBTN);
 
-	auto resetBTN = std::make_shared<ClassicButton>(
-		7,
-		GetElementPosition(0.78f, 0.85f),
-		GetElementSize(0.11f, 0.1f),
-		Alignment::TOP_RIGHT,
-		resolution,
-		"Reset",
-		SoundType::ACCEPTED
-		);
-	resetBTN->SetOnClick([this]() {
-		this->Reset();
-		});
-	m_elements.push_back(resetBTN);
+	InitializePlayerButtons(appContext);
+}
 
-	auto backBtn = std::make_shared<ClassicButton>(
-		8,
-		GetElementPosition(0.55f, 0.85f),
-		GetElementSize(0.11f, 0.1f),
-		Alignment::TOP_LEFT,
-		resolution,
-		"Back",
-		SoundType::CLICKED_RELEASE_STD
-		);
-	backBtn->SetOnClick([]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::MAIN_MENU)
-		);
-		});
-	m_elements.push_back(backBtn);
+void NewGamePlayerScene::InitializePlayerButtons(AppContext& appContext) {
+
+	size_t maxPlayerCount = appContext.constants.player.maxPlayerCount;
+	size_t currentPlayerCount = appContext.playerCollection.GetPlayerCount();
+	float rowHeight = 0.45f / (maxPlayerCount + 1);
+	float initialY = 0.35f + rowHeight;
+
+	for (int i = 0; i < maxPlayerCount; ++i) {
+		auto button = std::make_shared<ClassicButton>(
+			100 + i,
+			GetElementPosition(0.905f, initialY + rowHeight * i + 0.005f),
+			GetElementSize(rowHeight * 0.7f, rowHeight - 0.01f),
+			Alignment::TOP_LEFT,
+			m_resolution,
+			"X",
+			SoundType::CLICKED_RELEASE_STD
+			);
+
+		button->SetEnabled(i < currentPlayerCount);
+		button->SetOnClick([this, i]() {
+			this->DeletePlayer(i + 1);
+			});
+
+		m_elements.push_back(button);
+		m_playerButtons.push_back(button);
+	}
 }
 
 void NewGamePlayerScene::CheckForNestedFocus(Vector2 const& mousePosition,
@@ -237,12 +256,19 @@ void NewGamePlayerScene::UpdateSceneEntries(AppContext const& appContext) {
 		m_table->SetValue<std::string>(index, 1, p.name, false);
 		m_table->SetValue<Color>(index, 2, p.color, false);
 
+		unsigned int _ID = p.ID;
+		m_playerButtons.at(index - 1)->SetEnabled(true);
+		m_playerButtons.at(index - 1)->SetOnClick([this, _ID]() {
+			this->DeletePlayer(_ID);
+			});
+
 		++index;
 	}
 	for (int row = index; row < m_table->GetRows(); ++row) {
 		for (int column = 0; column < m_table->GetColumns(); ++column) {
 			m_table->SetEmptyCell(row, column, false);
 		}
+		m_playerButtons.at(row - 1)->SetEnabled(false);
 	}
 
 	m_table->ResizeCells();
@@ -295,15 +321,6 @@ void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell const*,
 		newValue,
 		appContext
 	);
-}
-void NewGamePlayerScene::CreateDeletePlayer() {
-	AppContext& appContext = AppContext::GetInstance();
-	auto event = ShowDeletePlayerPopUpEvent(
-		"Delete Player?",
-		"",
-		[this](unsigned int ID) {this->DeletePlayer(ID);}
-	);
-	appContext.eventManager.InvokeEvent(event);
 }
 void NewGamePlayerScene::DeletePlayer(unsigned int ID) {
 	AppContext& appContext = AppContext::GetInstance();

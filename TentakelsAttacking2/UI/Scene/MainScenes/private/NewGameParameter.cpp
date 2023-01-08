@@ -174,7 +174,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 	// btn
 	auto randomBtn = std::make_shared<ClassicButton>(
 		1002,
-		GetElementPosition(0.25f, 0.95f),
+		GetElementPosition(0.625f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
 		resolution,
@@ -188,7 +188,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 
 	auto backBtn = std::make_shared<ClassicButton>(
 		1001,
-		GetElementPosition(0.625f, 0.95f),
+		GetElementPosition(0.25f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
 		resolution,

@@ -185,6 +185,10 @@ Color PlayerCollection::GetColorByID(unsigned int ID) const {
 	return WHITE;
 }
 
+size_t PlayerCollection::GetPlayerCount() const {
+	return m_playerData.size();
+}
+
 void PlayerCollection::OnEvent(Event const& event) {
 
 	if (auto const* playerEvent = dynamic_cast<AddPlayerUIEvent const*>(&event)) {
