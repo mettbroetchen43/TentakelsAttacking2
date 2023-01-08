@@ -199,7 +199,28 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		});
 	m_elements.push_back(m_nextBTN);
 
+	InitializePlayerButtons(appContext);
+}
 
+void NewGamePlayerScene::InitializePlayerButtons(AppContext& appContext) {
+
+	size_t maxPlayerCount = appContext.constants.player.maxPlayerCount;
+	float rowHeight = 0.45f / (maxPlayerCount + 1);
+	float initialY = 0.35f + rowHeight;
+
+	for (int i = 0; i < maxPlayerCount; ++i) {
+		auto button = std::make_shared<ClassicButton>(
+			100 + i,
+			GetElementPosition(0.905f, initialY + rowHeight * i + 0.005f),
+			GetElementSize(rowHeight * 0.7f, rowHeight - 0.01f),
+			Alignment::TOP_LEFT,
+			m_resolution,
+			"X",
+			SoundType::CLICKED_RELEASE_STD
+			);
+		m_elements.push_back(button);
+		m_playerButtons.push_back(button);
+	}
 }
 
 void NewGamePlayerScene::CheckForNestedFocus(Vector2 const& mousePosition,
