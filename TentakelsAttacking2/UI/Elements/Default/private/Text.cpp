@@ -6,6 +6,7 @@
 #include "Text.h"
 #include "HTextProcessing.h"
 #include "AppContext.h"
+#include "HPrint.h"
 #include <cassert>
 
 void Text::CreateToRender() {
@@ -102,6 +103,17 @@ void Text::SetSize(Vector2 size) {
 
 	UIElement::SetSize(size);
 	CreateToRender();
+}
+
+void Text::SetCollider(Rectangle collider) {
+
+	UIElement::SetCollider(collider);
+	CreateToRender();
+}
+
+float Text::GetRelativeTextHeight() {
+
+	return m_textSize;
 }
 
 void Text::SetText(std::string text) {

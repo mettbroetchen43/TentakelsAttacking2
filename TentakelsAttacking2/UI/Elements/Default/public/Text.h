@@ -79,6 +79,16 @@ public:
 	 * updates the text size and the collider.
 	 */
 	void SetSize(Vector2 size) override;
+	/**
+	 * calls UIElement to set collider.
+	 * create a new render text.
+	 */
+	void SetCollider(Rectangle colider) override;
+
+	/**
+	 * returns the current relative text hight.
+	 */
+	[[nodiscard]] float GetRelativeTextHeight();
 
 	/**
 	 * sets a new raw string.

@@ -6,7 +6,10 @@
 #pragma once
 #include "UIElement.hpp"
 #include "Focusable.h"
+#include "Text.h"
+#include "HPlayerData.hpp"
 #include <functional>
+#include <memory>
 
 /**
  * provieds a Ui representaition if the logic Planet.
@@ -18,16 +21,25 @@ private:
 	std::string m_stringID; ///< contains the id as string so it dont gets castet every tick.
 	bool m_isEnabled = true; ///< contains if the element is enabled
 	Vector2 m_coliderPos; ///< the position of the colider
-	Color m_color; ///< contain the color in that the planet is renderd
+	PlayerData m_currentPlayer; ///< contains the current player data that own the planet
+	Color m_color; ///< contains the current color -> ma match the player color
 	std::function<void(UIPlanet*)> m_onClick = [](UIPlanet*) {}; ///< contains on click that gets called when the planet is clicked
+	std::unique_ptr<Text> m_hoverText; ///< contains the hover text
+	bool m_renderHover = false; ///< contains if the hover text should be rendered
+
+	Rectangle m_hoverTextureRec;
+	Texture* m_hoverTexture;
+
+	void SetHoverTextPosition(Vector2 mousePosition);
+	void SetHoverTextDimension();
 
 public:
 	/**
 	 * ctor.
 	 * converts the id to a string.
 	 */
-	UIPlanet(unsigned int focusID, unsigned int ID, Vector2 pos, Vector2 resolution, 
-		Color color, Vector2 coliderPos);
+	UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution, 
+		Vector2 coliderPos);
 
 	/**
 	 * Updates the position with the colider position.
@@ -41,7 +53,15 @@ public:
 	void SetOnClick(std::function<void(UIPlanet*)> onClick);
 
 	/**
-	 * sets a color in that the planet is renderd.
+	 * sets a player the planet ist currently owning.
+	 */
+	void SetPlayer(PlayerData player);
+	/**
+	 * returns the current player of the UIPlanet.
+	 */
+	[[nodiscard]] PlayerData GetPlayer() const;
+	/**
+	 * sets the current color if it schould not match the playercolor.
 	 */
 	void SetColor(Color color);
 	/**
@@ -55,6 +75,11 @@ public:
 	[[nodiscard]] unsigned int GetID() const;
 
 	/**
+	 * returns if the mouse is currently over the planet.
+	 */
+	[[nodiscard]] bool IsHover() const;
+
+	/**
 	 * planet logic.
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
@@ -62,7 +87,12 @@ public:
 	 * renders the planet.
 	 */
 	void Render(AppContext const& appContext) override;
-
+	/**
+	/**
+	 * resizes the planet.
+	 * calls the hover text to resize.
+	 */
+	void Resize(Vector2 resolution, AppContext const& appContext) override;
 
 	/**
 	 * sets if the planets is enabled.
