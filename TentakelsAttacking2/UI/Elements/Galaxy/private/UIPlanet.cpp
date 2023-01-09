@@ -10,6 +10,12 @@
 
 void UIPlanet::SetHoverTextPosition(Vector2 mousePosition) {
 
+	Rectangle currentCollider = m_hoverText->GetCollider();
+	
+	currentCollider.x = mousePosition.x + 2.0f;
+	currentCollider.y = mousePosition.y - currentCollider.height - 2.0f;
+
+	m_hoverText->SetCollider(currentCollider);
 }
 
 void UIPlanet::SetHoverTextDimension() {
@@ -42,6 +48,14 @@ UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vec
 	Vector2 coliderPos)
 	:Focusable(focusID), UIElement(pos, { 0.01f,0.02f }, Alignment::MID_MID, resolution)
 	, m_ID(ID), m_currentPlayer(player), m_coliderPos(coliderPos) {
+
+	m_hoverTexture = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
+	m_hoverTextureRec = {
+		0.0f,
+		0.0f,
+		static_cast<float>(m_hoverTexture->width),
+		static_cast<float>(m_hoverTexture->height)
+	};
 
 	m_color = m_currentPlayer.color;
 	m_stringID = std::to_string(m_ID);
@@ -93,6 +107,10 @@ unsigned int UIPlanet::GetID() const {
 	return m_ID;
 }
 
+bool UIPlanet::IsHover() const {
+	return m_renderHover;
+}
+
 void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
@@ -127,6 +145,16 @@ void UIPlanet::Render(AppContext const& appContext) {
 	);
 
 	if (m_renderHover) {
+
+		DrawTexturePro(
+			*m_hoverTexture,
+			m_hoverTextureRec,
+			m_hoverText->GetCollider(),
+			{ 0.0f,0.0f },
+			0.0f,
+			WHITE
+		);
+
 		m_hoverText->Render(appContext);
 	}
 
@@ -148,6 +176,8 @@ bool UIPlanet::IsEnabled() const {
 void UIPlanet::SetEnabled(bool isEnabled) {
 	m_isEnabled = isEnabled;
 }
+
+
 
 Rectangle UIPlanet::GetCollider() const {
 	return UIElement::GetCollider();

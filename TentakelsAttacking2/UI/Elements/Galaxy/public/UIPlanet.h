@@ -27,6 +27,9 @@ private:
 	std::unique_ptr<Text> m_hoverText; ///< contains the hover text
 	bool m_renderHover = false; ///< contains if the hover text should be rendered
 
+	Rectangle m_hoverTextureRec;
+	Texture* m_hoverTexture;
+
 	void SetHoverTextPosition(Vector2 mousePosition);
 	void SetHoverTextDimension();
 
@@ -72,6 +75,11 @@ public:
 	[[nodiscard]] unsigned int GetID() const;
 
 	/**
+	 * returns if the mouse is currently over the planet.
+	 */
+	[[nodiscard]] bool IsHover() const;
+
+	/**
 	 * planet logic.
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
@@ -85,7 +93,6 @@ public:
 	 * calls the hover text to resize.
 	 */
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
-
 
 	/**
 	 * sets if the planets is enabled.

@@ -362,20 +362,30 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 }
 void UIGalaxy::Render(AppContext const& appContext) {
 	/*DrawRectangleLinesEx(
-		m_colider,
+		m_collider,
 		2.0f,
 		WHITE
-	);*/
-	/*DrawRectangleLinesEx(
+	);
+	DrawRectangleLinesEx(
 		m_absoluteSize,
 		3.0f,
 		PURPLE
 	);*/
 
+	std::shared_ptr<UIPlanet> renderWithHover = nullptr;
+
 	for (auto& p : m_uiPlanets) {
 		if (IsPlanetInCollider(p)) {
+			if (p->IsHover()) {
+				renderWithHover = p;
+				continue;
+			}
 			p->Render(appContext);
 		}
+	}
+
+	if (renderWithHover) {
+		renderWithHover->Render(appContext);
 	}
 }
 void UIGalaxy::Resize(Vector2 resolution, AppContext const& appContext) {
