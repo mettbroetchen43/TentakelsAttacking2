@@ -65,7 +65,7 @@ UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vec
 		GetElementSize(m_size, 0.0f, 0.0f),
 		Alignment::BOTTOM_LEFT,
 		resolution,
-		Alignment::BOTTOM_MID,
+		Alignment::MID_MID,
 		0.03f,
 		player.name
 		);
@@ -144,7 +144,7 @@ void UIPlanet::Render(AppContext const& appContext) {
 		m_currentPlayer.color
 	);
 
-	if (m_renderHover) {
+	if (m_renderHover && m_currentPlayer.ID != 0) {
 
 		DrawTexturePro(
 			*m_hoverTexture,
