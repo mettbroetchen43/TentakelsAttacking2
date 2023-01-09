@@ -20,12 +20,12 @@ void UIGalaxy::Initialize(Galaxy const* const galaxy) {
 		auto planet = std::make_shared<UIPlanet>(
 			p->GetID(),
 			p->GetID(),
+			appContext.playerCollection.GetPlayerByIDOrDefaultPlayer(p->GetID()),
 			GetAbsolutePosition({
 				static_cast<float>(p->GetPos().x),
 				static_cast<float>(p->GetPos().y),
 				}, appContext),
 			m_resolution,
-			appContext.playerCollection.GetColorByID(p->GetID()),
 			GetRelativePosition({
 				static_cast<float>(p->GetPos().x),
 				static_cast<float>(p->GetPos().y),

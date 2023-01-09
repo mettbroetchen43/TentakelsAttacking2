@@ -91,6 +91,11 @@ public:
 	 */
 	[[nodiscard]] PlayerData GetPlayerByID(unsigned int ID) const;
 	/**
+	 * returns a player by id.
+	 * if no matching player was found, the default player gets returned.
+	 */
+	[[nodiscard]] PlayerData GetPlayerByIDOrDefaultPlayer(unsigned int ID) const;
+	/**
 	 * returns a player by name.
 	 */
 	[[nodiscard]] PlayerData GetPlayerByName(std::string const& name) const;

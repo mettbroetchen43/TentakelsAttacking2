@@ -104,6 +104,11 @@ void Text::SetSize(Vector2 size) {
 	CreateToRender();
 }
 
+float Text::GetRelativeTextHeight() {
+
+	return m_textSize;
+}
+
 void Text::SetText(std::string text) {
 	m_text = text;
 	CreateToRender();

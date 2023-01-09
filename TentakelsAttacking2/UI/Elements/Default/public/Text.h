@@ -81,6 +81,11 @@ public:
 	void SetSize(Vector2 size) override;
 
 	/**
+	 * returns the current relative text hight.
+	 */
+	[[nodiscard]] float GetRelativeTextHeight();
+
+	/**
 	 * sets a new raw string.
 	 * generates a new render string.
 	 */

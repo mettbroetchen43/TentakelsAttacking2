@@ -157,6 +157,16 @@ PlayerData PlayerCollection::GetPlayerByID(unsigned int ID) const {
 
 	throw std::out_of_range("Accecing non existing ID");
 }
+PlayerData PlayerCollection::GetPlayerByIDOrDefaultPlayer(unsigned int ID) const {
+
+	for (auto& p : m_playerData) {
+		if (ID == p.ID) {
+			return p;
+		}
+	}
+
+	return m_defaultPlayer;
+}
 PlayerData PlayerCollection::GetPlayerByName(std::string const& name) const {
 	for (auto& p : m_playerData) {
 		if (p.name == name) {
