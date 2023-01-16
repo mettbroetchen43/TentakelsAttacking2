@@ -17,7 +17,7 @@
 // Delete Player PopUp
 #include "DeletePlayerPopUp.h"
 
-// Next Term PopUp
+// Next Turn PopUp
 #include "ValidatePopUp.h"
 
 // TableCell PopUps

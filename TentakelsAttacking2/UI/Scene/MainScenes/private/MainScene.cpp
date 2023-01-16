@@ -93,7 +93,7 @@ void MainScene::Initialize() {
 		SoundType::ACCEPTED
 		);
 	m_nextBtn->SetOnClick([]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(TriggerNextTermEvent());
+		AppContext::GetInstance().eventManager.InvokeEvent(TriggerNextTurnEvent());
 		});
 	m_elements.push_back(m_nextBtn);
 
@@ -214,14 +214,14 @@ void MainScene::InitialzeGalaxy() {
 	m_elements.push_back(m_galaxy);
 }
 
-void MainScene::NextTerm() {
+void MainScene::NextTurn() {
 	AppContext const& appContext = AppContext::GetInstance();
 	Switch(MainSceneType::CLEAR);
 	SetPlayerText();
 	InitialzeGalaxy();
 
 	auto event = ShowMessagePopUpEvent(
-		"start term?",
+		"start turn?",
 		"next plyer: " + m_currentPlayer.name + "\naccept to start your trun",
 		[this]() {
 			this->Switch(MainSceneType::GALAXY);
@@ -293,9 +293,9 @@ void MainScene::OnEvent(Event const& event) {
 		return;
 	}
 
-	// terms and rounds
-	if (auto const* playerEvent = dynamic_cast<ShowNextTermEvent const*>(&event)) {
-		NextTerm();
+	// turns and rounds
+	if (auto const* playerEvent = dynamic_cast<ShowNextTurnEvent const*>(&event)) {
+		NextTurn();
 		return;
 	}
 	if (auto const* playerEvent = dynamic_cast<ShowNextRoundEvent const*>(&event)) {

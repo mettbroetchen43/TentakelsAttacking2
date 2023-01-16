@@ -177,7 +177,7 @@ void GameManager::NextRound(bool valid) {
 
 	appContext.eventManager.InvokeEvent(ShowNextRoundEvent());
 }
-void GameManager::NextTerm(bool valid) {
+void GameManager::NextTurn(bool valid) {
 
 	if (!valid) { return; }
 
@@ -188,9 +188,9 @@ void GameManager::NextTerm(bool valid) {
 	SendCurrentPlayerID();
 	SendNextPlayerID();
 
-	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextTermEvent());
+	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextTurnEvent());
 }
-void GameManager::ValidateNextTerm() {
+void GameManager::ValidateNextTurn() {
 
 	if (m_currentRoundPlayers.size() <= 1) { 
 		auto event = ShowValidatePopUp(
@@ -207,7 +207,7 @@ void GameManager::ValidateNextTerm() {
 			"next player?",
 			"your turn will be over.",
 			[this](bool valid) {
-				this->NextTerm(valid);
+				this->NextTurn(valid);
 			}
 		);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
@@ -391,8 +391,8 @@ void GameManager::OnEvent(Event const& event) {
 		StartGame();
 		return;
 	}
-	if (auto const* gameEvent = dynamic_cast<TriggerNextTermEvent const*> (&event)) {
-		ValidateNextTerm();
+	if (auto const* gameEvent = dynamic_cast<TriggerNextTurnEvent const*> (&event)) {
+		ValidateNextTurn();
 		return;
 	}
 }

@@ -59,7 +59,7 @@ void PopUpManager::OnEvent(Event const& event) {
 		return;
 	}
 
-	// Term Events
+	// Turn Events
 	if (auto const PopUpEvent = dynamic_cast<ShowValidatePopUp const*>(&event)) {
 		NewValidatePopUp(PopUpEvent);
 		return;

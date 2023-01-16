@@ -29,7 +29,7 @@ private:
 	std::shared_ptr<GalaxyScene> m_galaxy; ///< contains the current ui galaxy
 	// std::shared_ptr<GalaxyScene> m_planetTable; 
 	// std::shared_ptr<GalaxyScene> m_fleetTable;
-	std::shared_ptr<ClassicButton> m_nextBtn; ///< contains the next term / round button
+	std::shared_ptr<ClassicButton> m_nextBtn; ///< contains the next turn / round button
 	std::shared_ptr<Text> m_currentPlayerName; ///< contains the current player name
 	std::shared_ptr<Text> m_nextPlayerName; ///< contains the next player name
 	std::shared_ptr<Text> m_currentRound;  ///< contains the current round count
@@ -53,7 +53,7 @@ private:
 	 * updates player text and initializes a new galaxy.
 	 * generates an popup.
 	 */
-	void NextTerm();
+	void NextTurn();
 	/**
 	 * updates player text and rouns.
 	 * initialzes a new galaxy.

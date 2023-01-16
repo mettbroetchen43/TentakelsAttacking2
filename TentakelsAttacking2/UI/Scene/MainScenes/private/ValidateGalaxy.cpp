@@ -67,14 +67,41 @@ void ValidateGalaxyScene::Initialize() {
 		});
 	m_elements.push_back(nextBtn);
 }
+void ValidateGalaxyScene::InitializePlayerLegend() {
+	AppContext const& appContext = AppContext::GetInstance();
 
+	auto const players = appContext.playerCollection.GetPlayerData();
+
+	float width = 0.15f;
+	float height = 0.03f;
+	float X = 0.97f;
+	float Y = 0.5f - (height * players.size() / 2);
+
+	for (auto const& player : players) {
+		auto text = std::make_shared<Text>(
+			GetElementPosition(X, Y),
+			GetElementSize(width, height),
+			Alignment::TOP_RIGHT,
+			m_resolution,
+			Alignment::TOP_RIGHT,
+			height,
+			player.name
+		);
+		text->SetColor(player.color);
+
+		m_elements.push_back(text);
+
+		Y += height;
+	}
+
+}
 void ValidateGalaxyScene::InitializeGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
 
 	m_galaxy = std::make_shared<GalaxyScene>(
-		GetElementPosition(0.5f, 0.465f),
+		GetElementPosition(0.05f, 0.465f),
 		GetElementSize(0.75f, 0.75f),
-		Alignment::MID_MID,
+		Alignment::MID_LEFT,
 		m_resolution
 		);
 	m_galaxy->SetActive(true, appContext);
@@ -99,4 +126,5 @@ ValidateGalaxyScene::ValidateGalaxyScene(Vector2 resolution)
 
 	Initialize();
 	InitializeGalaxy();
+	InitializePlayerLegend();
 }

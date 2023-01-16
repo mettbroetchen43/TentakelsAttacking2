@@ -198,7 +198,7 @@ class DeleteFocusLayerEvent final : public Event { };
 class ClearFocusEvent final : public Event { };
 
 /**
- * use this to switch the scene at the end of a term.
+ * use this to switch the scene at the end of a turn.
  * unloads the old scene and loands a new one
  */
 class SwitchSceneEvent final :public Event {
