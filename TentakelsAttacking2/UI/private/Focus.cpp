@@ -355,7 +355,7 @@ void Focus::CheckNewID(unsigned int newID) {
 		if (focus->GetFocusID() == newID) {
 			throw std::invalid_argument("ID already exists, ID: " + newID);
 		}
-	}
+		}
 }
 
 Focus::Focus() {

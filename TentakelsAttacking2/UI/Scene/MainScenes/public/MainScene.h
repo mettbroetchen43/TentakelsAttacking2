@@ -13,6 +13,8 @@
 class GalaxyScene;
 class ClassicButton;
 class Text;
+template<typename T>
+class InputLine;
 
 /**
  * provides the main scene.
@@ -36,6 +38,13 @@ private:
 	std::shared_ptr<Text> m_currentTargetRound;  ///< contains the current taregt round count
 	PlayerData m_currentPlayer; ///< contains the data of the current player
 	PlayerData m_nextPlayer; ///< contains the data of the next player
+
+	std::shared_ptr<InputLine<int>> m_origin; ///< provides the origin planet ID
+	std::shared_ptr<InputLine<int>> m_destination; ///< provides the destination planet ID
+	std::shared_ptr<InputLine<int>> m_shipCount; ///< provides the ship count
+
+	std::shared_ptr<ClassicButton> m_acceptBtn; ///< sends the fleet event into the logic
+	std::shared_ptr<ClassicButton> m_resetBtn; ///< clears the input lines
 
 	/**
 	 * initializes all ui elements.

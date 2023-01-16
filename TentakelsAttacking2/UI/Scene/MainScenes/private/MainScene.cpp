@@ -11,6 +11,7 @@
 #include "HPlayerCollection.h"
 #include "Title.h"
 #include "Text.h"
+#include "InputLine.hpp"
 
 
 void MainScene::Initialize() {
@@ -196,6 +197,73 @@ void MainScene::Initialize() {
 		);
 	// m_nextPlayerName->RenderRectangle(true);
 	m_elements.push_back(m_nextPlayerName);
+
+	// ship input
+	auto text = std::make_shared<Text>(
+		GetElementPosition(0.99f, 0.25f),
+		GetElementSize(0.2f, 0.05f),
+		Alignment::BOTTOM_RIGHT,
+		m_resolution,
+		Alignment::BOTTOM_RIGHT,
+		0.03f,
+		"origin:"
+	);
+	m_elements.push_back(text);
+
+	m_origin = std::make_shared<InputLine<int>>(
+		1000,
+		GetElementPosition(0.99f, 0.25f),
+		GetElementSize(0.08f, 0.04f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		3
+	);
+	m_elements.push_back(m_origin);
+
+	text = std::make_shared<Text>(
+		GetElementPosition(0.99f, 0.35f),
+		GetElementSize(0.2f, 0.05f),
+		Alignment::BOTTOM_RIGHT,
+		m_resolution,
+		Alignment::BOTTOM_RIGHT,
+		0.03f,
+		"destination:"
+		);
+	m_elements.push_back(text);
+
+	m_destination = std::make_shared<InputLine<int>>(
+		1001,
+		GetElementPosition(0.99f, 0.35f),
+		GetElementSize(0.08f, 0.04f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		3
+		);
+	m_elements.push_back(m_destination);
+
+	text = std::make_shared<Text>(
+		GetElementPosition(0.99f, 0.45f),
+		GetElementSize(0.2f, 0.05f),
+		Alignment::BOTTOM_RIGHT,
+		m_resolution,
+		Alignment::BOTTOM_RIGHT,
+		0.03f,
+		"ship count:"
+		);
+	m_elements.push_back(text);
+
+	m_shipCount = std::make_shared<InputLine<int>>(
+		1002,
+		GetElementPosition(0.99f, 0.45f),
+		GetElementSize(0.08f, 0.04f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		4
+		);
+	m_elements.push_back(m_shipCount);
+
+	auto event = SelectFocusElementEvent(m_origin.get());
+	appContext.eventManager.InvokeEvent(event);
 }
 void MainScene::InitialzeGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
@@ -240,7 +308,7 @@ void MainScene::NextRound() {
 
 	auto event = ShowMessagePopUpEvent(
 		"start round",
-		"next round is starting \n just for debug to know"
+		"next round is starting\n just for debug to know"
 	);
 	appContext.eventManager.InvokeEvent(event);
 
