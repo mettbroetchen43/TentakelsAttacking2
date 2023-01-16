@@ -24,7 +24,11 @@ private:
 	 * connects the actions.
 	 */
 	void Initialize();
-
+	/**
+	 * initializes the player legen.
+	 * matches the colors.
+	 */
+	void InitializePlayerLegend();
 	/**
 	 * initializes a ui galaxy.
 	 */

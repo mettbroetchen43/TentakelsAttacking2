@@ -27,7 +27,7 @@ private:
 	std::unordered_map<GameEventType, bool> m_gameEvents; ///< contains whether the game Events are active or not
 	std::shared_ptr<Galaxy> m_mainGalaxy = nullptr; ///< contains the global galaxy with all changes.
 	std::shared_ptr<Galaxy> m_startGalaxy = nullptr; ///< contains the data at round begin. every round it gets overwritten by the main galaxy
-	std::shared_ptr<Galaxy> m_currentGalaxy = nullptr; ///< is used to store the player data of one player. every term it gets overwritten by the start Galaxy
+	std::shared_ptr<Galaxy> m_currentGalaxy = nullptr; ///< is used to store the player data of one player. every turn it gets overwritten by the start Galaxy
 	std::shared_ptr<Galaxy> m_showGalaxy = nullptr; ///< is a hardcoded galaxy that is used to garaty, that it generation is valid.
 
 	// player
@@ -109,16 +109,16 @@ private:
 	 */
 	void NextRound(bool valid);
 	/** 
-	 * next term triggers the next player and changes the inforamtion that are send to ui 
+	 * next turn triggers the next player and changes the inforamtion that are send to ui 
 	 * so that only the current Player is displayed
 	 */
-	void NextTerm(bool valid);
+	void NextTurn(bool valid);
 	/**
-	 * gets called from TriggerNextTermEvent
-	 * calls an Popup if the to validate if the currnt term should really be over
+	 * gets called from TriggerNextTurnEvent
+	 * calls an Popup if the to validate if the currnt turn should really be over
 	 * PopUp automactily calls the provided function
 	 */
-	void ValidateNextTerm();
+	void ValidateNextTurn();
 
 	// events
 	/**

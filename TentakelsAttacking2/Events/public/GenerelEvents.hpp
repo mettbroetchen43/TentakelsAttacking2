@@ -146,13 +146,13 @@ public:
 };
 
 /**
- * use this to trigger the logic to evaluate the next term or round if no player remaining.
+ * use this to trigger the logic to evaluate the next turn or round if no player remaining.
  */
-class TriggerNextTermEvent final : public Event  { };
+class TriggerNextTurnEvent final : public Event  { };
 /**
- * use this to trigger the ui to show the next term.
+ * use this to trigger the ui to show the next turn.
  */
-class ShowNextTermEvent final : public Event { };
+class ShowNextTurnEvent final : public Event { };
 /**
  * use this to trigger the ui to show the next round.
  */
