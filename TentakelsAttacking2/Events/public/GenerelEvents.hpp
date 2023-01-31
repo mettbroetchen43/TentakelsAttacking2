@@ -277,3 +277,28 @@ public:
 		return m_galaxy;
 	}
 };
+
+
+/**
+ * send a ship instruction into the logic.
+ */
+class SendShipInstructionEvent : public Event {
+private:
+	size_t m_origin;
+	size_t m_destination;
+	size_t m_shipCount;
+
+public:
+	SendShipInstructionEvent(size_t origin, size_t destination, size_t shipCount)
+		: m_origin(origin), m_destination(destination), m_shipCount(shipCount) { }
+
+	[[nodiscard]] size_t GetOrigin() const {
+		return m_origin;
+	}
+	[[nodiscard]] size_t GetDestination() const {
+		return m_destination;
+	}
+	[[nodiscard]] size_t GetShipCount() const {
+		return m_shipCount;
+	}
+};
