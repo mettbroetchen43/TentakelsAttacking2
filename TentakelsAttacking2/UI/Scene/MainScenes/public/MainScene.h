@@ -86,6 +86,20 @@ private:
 	 */
 	bool HasAnyInputLineFocus();
 
+	/**
+	 * sets the accept button active or inactive.
+	 */
+	void SetAcceptButon();
+
+	/**
+	 * sends the ship instruction event.
+	 */
+	void SendShipInstruction();
+	/**
+	 * resets the input lines
+	 */
+	void ClearInputLines();
+
 public:
 	/**
 	 * ctor.

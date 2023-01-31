@@ -219,6 +219,12 @@ void MainScene::Initialize() {
 		m_resolution,
 		3
 	);
+	m_origin->SetOnEnter([this]() {
+		this->SendShipInstruction();
+		});
+	m_origin->SetOnValueChanced([this]() {
+			SetAcceptButon();
+		});
 	m_elements.push_back(m_origin);
 
 	text = std::make_shared<Text>(
@@ -240,6 +246,12 @@ void MainScene::Initialize() {
 		m_resolution,
 		3
 		);
+	m_destination->SetOnEnter([this]() {
+		this->SendShipInstruction();
+	m_destination->SetOnValueChanced([this]() {
+		SetAcceptButon();
+		});
+		});
 	m_elements.push_back(m_destination);
 
 	text = std::make_shared<Text>(
@@ -261,12 +273,41 @@ void MainScene::Initialize() {
 		m_resolution,
 		4
 		);
+	m_shipCount->SetOnEnter([this]() {
+		this->SendShipInstruction();
+		});
+	m_shipCount->SetOnValueChanced([this]() {
+		SetAcceptButon();
+		});
 	m_elements.push_back(m_shipCount);
 
-	/*
-	auto event = SelectFocusElementEvent(m_origin.get());
-	appContext.eventManager.InvokeEvent(event);
-	*/
+	m_acceptBtn = std::make_shared<ClassicButton>(
+		1003,
+		GetElementPosition(0.99f, 0.52f),
+		GetElementSize(0.04f, 0.04f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		"+",
+		SoundType::ACCEPTED
+		);
+	m_acceptBtn->SetOnClick([this]() {
+		this->SendShipInstruction();
+		});
+	m_elements.push_back(m_acceptBtn);
+
+	m_resetBtn = std::make_shared<ClassicButton>(
+		1004,
+		GetElementPosition(0.95f, 0.52f),
+		GetElementSize(0.04f, 0.04f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		"X",
+		SoundType::ACCEPTED
+		);
+	m_resetBtn->SetOnClick([this]() {
+		this->ClearInputLines();
+		});
+	m_elements.push_back(m_resetBtn);
 }
 void MainScene::InitialzeGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
@@ -344,6 +385,39 @@ bool MainScene::HasAnyInputLineFocus() {
 	return false;
 }
 
+void MainScene::SetAcceptButon() {
+
+	bool valid =
+		m_origin->HasValue()
+		&& m_destination->HasValue()
+		&& m_shipCount->HasValue();
+
+	m_acceptBtn->SetEnabled(valid);
+}
+
+void MainScene::SendShipInstruction() {
+
+	// TODO: validate input -> implement validation in logic first
+
+	Print("< ship instruction event");
+
+	auto event = SendShipInstructionEvent(
+		m_origin->GetValue(),
+		m_destination->GetValue(),
+		m_shipCount->GetValue()
+	);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+void MainScene::ClearInputLines() {
+
+	m_origin->Clear();
+	m_destination->Clear();
+	m_shipCount->Clear();
+
+	auto event = SelectFocusElementEvent(m_origin.get());
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+
 MainScene::MainScene(Vector2 resolution)
 	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
 
@@ -355,6 +429,7 @@ MainScene::MainScene(Vector2 resolution)
 	InitialzeGalaxy();
 	SetPlayerText();
 	Switch(MainSceneType::GALAXY);
+	SetAcceptButon();
 }
 MainScene::~MainScene() {
 	AppContext::GetInstance().eventManager.RemoveListener(this);
