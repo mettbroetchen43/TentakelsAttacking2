@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "HRandom.h"
 #include "UIEvents.hpp"
+#include <stdexcept>
 
 unsigned int Galaxy::GetNextID() const {
 
@@ -158,4 +159,14 @@ Vec2<int> Galaxy::GetSize() const {
 }
 std::vector<std::shared_ptr<Planet>> const Galaxy::GetPlanets() const {
     return m_planets;
+}
+
+std::shared_ptr<Planet> const Galaxy::GetPlanetByID(unsigned int ID) const {
+    for (auto const& planet : m_planets) {
+        if (planet->GetID() == ID) {
+            return planet;
+        }
+    }
+
+    throw std::runtime_error("no planet with this ID: " + std::to_string(ID));
 }

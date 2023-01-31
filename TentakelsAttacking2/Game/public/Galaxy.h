@@ -79,4 +79,8 @@ public:
 	 * returns the planets of the galaxy.
 	 */
 	[[nodiscard]] std::vector<std::shared_ptr<Planet>> const GetPlanets() const;
+	/**
+	 * returns a specific planet by ID.
+	 */
+	[[nodiscard]] std::shared_ptr<Planet> const GetPlanetByID(unsigned int ID) const;
 };

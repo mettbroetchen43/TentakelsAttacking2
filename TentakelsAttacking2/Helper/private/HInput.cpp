@@ -18,7 +18,6 @@ bool IsConfirmInputPressed() {
     if (triggered) { AppContext::GetInstance().constants.global.acceptInputTriggered = true; }
 
     return triggered;
-        
 }
 bool IsConfirmInputReleased() {
     bool triggered =

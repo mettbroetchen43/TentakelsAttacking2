@@ -43,13 +43,13 @@ bool GameManager::IsExistingPlayerID(unsigned int ID) const {
 	return false;
 }
 
-bool GameManager::SetCurrentPlayer(std::shared_ptr<Player>& currentPlayer) const {
+bool GameManager::GetCurrentPlayer(std::shared_ptr<Player>& currentPlayer) const {
 	if (m_currentRoundPlayers.empty()) { return false; }
 
 	currentPlayer = m_currentRoundPlayers.back();
 	return true;
 }
-bool GameManager::SetNextPlayer(std::shared_ptr<Player>& nextPlayer) const {
+bool GameManager::GetNextPlayer(std::shared_ptr<Player>& nextPlayer) const {
 	if (m_currentRoundPlayers.size() < 2) { return false; }
 
 	nextPlayer = m_currentRoundPlayers.at(m_currentRoundPlayers.size() - 2);
@@ -162,7 +162,7 @@ void GameManager::SendCurrentPlayerID() {
 	unsigned int ID;
 	std::shared_ptr<Player> player;
 
-	if (SetCurrentPlayer(player)) {
+	if (GetCurrentPlayer(player)) {
 		ID = player->GetID();
 	}
 	else {
@@ -176,7 +176,7 @@ void GameManager::SendNextPlayerID() {
 	unsigned int ID;
 	std::shared_ptr<Player> player;
 
-	if (SetNextPlayer(player)) {
+	if (GetNextPlayer(player)) {
 		ID = player->GetID();
 	}
 	else {
@@ -315,23 +315,33 @@ void GameManager::GenerateShowGalaxy() {
 // Fleet
 bool GameManager::ValidateAddFleet(SendFleedInstructionEvent const* event) {
 
-	auto popup = [](std::string const& title, std::string const& text) {
-		auto popupEvent = ShowMessagePopUpEvent(title, text);
+	auto popup = [](std::string const& text) {
+		auto popupEvent = ShowMessagePopUpEvent("Invalid Input", text);
 		AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
 	};
 	
 	if (event->GetOrigin() <= 0) {
-		popup("invalid input", "input in origin to low: " + std::to_string(event->GetOrigin()));
+		popup("input in origin to low: " + std::to_string(event->GetOrigin()));
 		return false;
 	}
 	if (event->GetDestination() <= 0) {
-		popup("invalid input", "input in destination to low: " + std::to_string(event->GetDestination()));
+		popup("input in destination to low: " + std::to_string(event->GetDestination()));
 		return false;
 	}
 	if (event->GetShipCount() <= 0) {
-		popup("invalid input", "input in ship count to low: " + std::to_string(event->GetShipCount()));
+		popup("input in ship count to low : " + std::to_string(event->GetShipCount()));
 		return false;
 	}
+
+	auto planets = m_mainGalaxy->GetPlanets();
+	if (event->GetOrigin() > planets.size()) {
+		popup("input in origin to high: " + std::to_string(event->GetOrigin()));
+	}
+	if (event->GetDestination() > planets.size()) {
+		popup("input in destination to high: " + std::to_string(event->GetDestination()));
+	}
+
+	auto currentPlanet = m_mainGalaxy->GetPlanetByID(event->GetOrigin());
 
 	return true;
 }
@@ -342,8 +352,6 @@ void GameManager::AddFleet(SendFleedInstructionEvent const* event) {
 
 	Print("valid fleet");
 }
-
-
 
 // game
 void GameManager::StartGame() {
