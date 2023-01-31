@@ -12,6 +12,7 @@
 #include "Title.h"
 #include "Text.h"
 #include "InputLine.hpp"
+#include "HPrint.h"
 
 
 void MainScene::Initialize() {
@@ -262,8 +263,10 @@ void MainScene::Initialize() {
 		);
 	m_elements.push_back(m_shipCount);
 
+	/*
 	auto event = SelectFocusElementEvent(m_origin.get());
 	appContext.eventManager.InvokeEvent(event);
+	*/
 }
 void MainScene::InitialzeGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
@@ -332,6 +335,15 @@ void MainScene::Switch(MainSceneType sceneType) {
 	// m_fleetTable->SetActive(sceneType == MainSceneType::FLEET_TABLE, appContext);
 }
 
+bool MainScene::HasAnyInputLineFocus() {
+	
+	if (m_origin->IsFocused()) { return true; }
+	if (m_destination->IsFocused()) { return true; }
+	if (m_shipCount->IsFocused()) { return true; }
+
+	return false;
+}
+
 MainScene::MainScene(Vector2 resolution)
 	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
 
@@ -370,4 +382,17 @@ void MainScene::OnEvent(Event const& event) {
 		NextRound();
 		return;
 	}
+}
+
+void MainScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+	if (!HasAnyInputLineFocus()) {
+
+		m_destination->ExtendValue(1);
+
+		Print("should set Focus");
+	}
+
+
+	Scene::CheckAndUpdate(mousePosition, appContext);
 }

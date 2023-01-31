@@ -81,6 +81,11 @@ private:
 	 */
 	void Switch(MainSceneType sceneType);
 
+	/**
+	 * return if any input line in in focus.
+	 */
+	bool HasAnyInputLineFocus();
+
 public:
 	/**
 	 * ctor.
@@ -96,4 +101,10 @@ public:
 	 * receives all evenets and calls the member functions.
 	 */
 	void OnEvent(Event const& event) override;
+
+	/**
+	 * updates all elements in elements.
+	 * calls the CheckAndUpdate from the Scene.
+	 */
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 };

@@ -248,6 +248,13 @@ public:
 		m_value = std::to_string(value);
 	}
 	/**
+	 * extens the current value.
+	 * adds the provided text an the end oif the current text.
+	 */
+	void ExtendValue(T value) {
+		m_value += std::to_string(value);
+	}
+	/**
 	 * gets deleted here because it is overloaded for each of the provided datatypes.
 	 * returns the value.
 	 */
@@ -424,4 +431,12 @@ template<>
 template<>
 inline void InputLine<std::string>::SetValue(std::string value) {
 	m_value = value;
+}
+/**
+ * sets the value for a string input line.
+ * need of this overload because std::to_string doesnt provides an overloas for an std::string.
+ */
+template<>
+inline void InputLine<std::string>::ExtendValue(std::string value) {
+	m_value += value;
 }
