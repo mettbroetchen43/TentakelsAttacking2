@@ -110,7 +110,7 @@ public:
 
 		if (!IsFocused()) { return; }
 
-		bool enter = IsOnlyEnterConfirmInputPressed();
+		bool enter = IsOnlyEnterConfirmInputReleased();
 		if (enter) {
 			m_onEnter();
 		}

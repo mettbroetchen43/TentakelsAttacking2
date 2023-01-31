@@ -282,14 +282,14 @@ public:
 /**
  * send a ship instruction into the logic.
  */
-class SendShipInstructionEvent : public Event {
+class SendFleedInstructionEvent : public Event {
 private:
 	size_t m_origin;
 	size_t m_destination;
 	size_t m_shipCount;
 
 public:
-	SendShipInstructionEvent(size_t origin, size_t destination, size_t shipCount)
+	SendFleedInstructionEvent(size_t origin, size_t destination, size_t shipCount)
 		: m_origin(origin), m_destination(destination), m_shipCount(shipCount) { }
 
 	[[nodiscard]] size_t GetOrigin() const {

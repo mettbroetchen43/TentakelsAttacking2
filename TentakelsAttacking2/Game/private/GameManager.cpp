@@ -158,6 +158,36 @@ void GameManager::ShuffleCurrentRoundPlayer() {
 	std::shuffle(m_currentRoundPlayers.begin(), m_currentRoundPlayers.end(), m_random);
 }
 
+void GameManager::SendCurrentPlayerID() {
+	unsigned int ID;
+	std::shared_ptr<Player> player;
+
+	if (SetCurrentPlayer(player)) {
+		ID = player->GetID();
+	}
+	else {
+		ID = 0;
+	}
+
+	auto event = UpdateCurrentPlayerIDEvent(ID);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+void GameManager::SendNextPlayerID() {
+	unsigned int ID;
+	std::shared_ptr<Player> player;
+
+	if (SetNextPlayer(player)) {
+		ID = player->GetID();
+	}
+	else {
+		ID = 0;
+	}
+
+	auto event = UpdateNextPlayerIDEvent(ID);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+
+// rounds
 void GameManager::NextRound(bool valid) {
 
 	if (!valid) { return; }
@@ -214,35 +244,6 @@ void GameManager::ValidateNextTurn() {
 	}
 }
 
-void GameManager::SendCurrentPlayerID() {
-	unsigned int ID;
-	std::shared_ptr<Player> player;
-
-	if (SetCurrentPlayer(player)) {
-		ID = player->GetID();
-	}
-	else {
-		ID = 0;
-	}
-
-	auto event = UpdateCurrentPlayerIDEvent(ID);
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
-}
-void GameManager::SendNextPlayerID() {
-	unsigned int ID;
-	std::shared_ptr<Player> player;
-
-	if (SetNextPlayer(player)) {
-		ID = player->GetID();
-	}
-	else {
-		ID = 0;
-	}
-
-	auto event = UpdateNextPlayerIDEvent(ID);
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
-}
-
 // events
 void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 	if (event->GetType() == GameEventType::GLOBAL) {
@@ -258,6 +259,7 @@ void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
 }
 
+// galaxy
 void GameManager::GenerateGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
 	Vec2<int> size = {
@@ -310,6 +312,40 @@ void GameManager::GenerateShowGalaxy() {
 	}
 }
 
+// Fleet
+bool GameManager::ValidateAddFleet(SendFleedInstructionEvent const* event) {
+
+	auto popup = [](std::string const& title, std::string const& text) {
+		auto popupEvent = ShowMessagePopUpEvent(title, text);
+		AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
+	};
+	
+	if (event->GetOrigin() <= 0) {
+		popup("invalid input", "input in origin to low: " + std::to_string(event->GetOrigin()));
+		return false;
+	}
+	if (event->GetDestination() <= 0) {
+		popup("invalid input", "input in destination to low: " + std::to_string(event->GetDestination()));
+		return false;
+	}
+	if (event->GetShipCount() <= 0) {
+		popup("invalid input", "input in ship count to low: " + std::to_string(event->GetShipCount()));
+		return false;
+	}
+
+	return true;
+}
+
+void GameManager::AddFleet(SendFleedInstructionEvent const* event) {
+
+	if (!ValidateAddFleet(event)) { return; }
+
+	Print("valid fleet");
+}
+
+
+
+// game
 void GameManager::StartGame() {
 	m_currentRoundPlayers = m_players;
 
@@ -393,6 +429,12 @@ void GameManager::OnEvent(Event const& event) {
 	}
 	if (auto const* gameEvent = dynamic_cast<TriggerNextTurnEvent const*> (&event)) {
 		ValidateNextTurn();
+		return;
+	}
+
+	// Fleet
+	if (auto const* fleetEvent = dynamic_cast<SendFleedInstructionEvent const*> (&event)) {
+		AddFleet(fleetEvent);
 		return;
 	}
 }

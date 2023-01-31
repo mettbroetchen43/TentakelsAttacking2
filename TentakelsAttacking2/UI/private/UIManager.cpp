@@ -124,6 +124,7 @@ void UIManager::SetTargetFPS(SetTargetFPSEvent const* event) {
 
 void UIManager::UILoop() {
 	while(!WindowShouldClose()) {
+		m_appContext.constants.global.acceptInputTriggered = false;
 		CheckAndSetNewResolution();
 		CheckAndUpdate();
 		Render();

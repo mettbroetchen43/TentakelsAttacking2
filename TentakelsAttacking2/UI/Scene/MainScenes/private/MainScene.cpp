@@ -220,7 +220,7 @@ void MainScene::Initialize() {
 		3
 	);
 	m_origin->SetOnEnter([this]() {
-		this->SendShipInstruction();
+		this->SendFleetInstruction();
 		});
 	m_origin->SetOnValueChanced([this]() {
 			SetAcceptButon();
@@ -247,7 +247,7 @@ void MainScene::Initialize() {
 		3
 		);
 	m_destination->SetOnEnter([this]() {
-		this->SendShipInstruction();
+		this->SendFleetInstruction();
 	m_destination->SetOnValueChanced([this]() {
 		SetAcceptButon();
 		});
@@ -274,7 +274,7 @@ void MainScene::Initialize() {
 		4
 		);
 	m_shipCount->SetOnEnter([this]() {
-		this->SendShipInstruction();
+		this->SendFleetInstruction();
 		});
 	m_shipCount->SetOnValueChanced([this]() {
 		SetAcceptButon();
@@ -291,7 +291,7 @@ void MainScene::Initialize() {
 		SoundType::ACCEPTED
 		);
 	m_acceptBtn->SetOnClick([this]() {
-		this->SendShipInstruction();
+		this->SendFleetInstruction();
 		});
 	m_elements.push_back(m_acceptBtn);
 
@@ -383,7 +383,7 @@ bool MainScene::HasAnyInputLineFocus() {
 	if (m_shipCount->IsFocused()) { return true; }
 
 	return false;
-}
+} 
 
 void MainScene::SetAcceptButon() {
 
@@ -395,13 +395,13 @@ void MainScene::SetAcceptButon() {
 	m_acceptBtn->SetEnabled(valid);
 }
 
-void MainScene::SendShipInstruction() {
+void MainScene::SendFleetInstruction() {
 
 	// TODO: validate input -> implement validation in logic first
 
-	Print("< ship instruction event");
+	Print("< fleet instruction event");
 
-	auto event = SendShipInstructionEvent(
+	auto event = SendFleedInstructionEvent(
 		m_origin->GetValue(),
 		m_destination->GetValue(),
 		m_shipCount->GetValue()

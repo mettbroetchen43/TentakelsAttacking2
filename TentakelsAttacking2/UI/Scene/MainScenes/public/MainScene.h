@@ -94,7 +94,7 @@ private:
 	/**
 	 * sends the ship instruction event.
 	 */
-	void SendShipInstruction();
+	void SendFleetInstruction();
 	/**
 	 * resets the input lines
 	 */

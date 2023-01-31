@@ -143,6 +143,18 @@ private:
 	 */
 	void GenerateShowGalaxy();
 
+	// fleet
+	/**
+	 * validates the data from the UI.
+	 * generates Popups if needed.
+	 */
+	bool ValidateAddFleet(SendFleedInstructionEvent const* event);
+	/**
+	 * calls validation
+	 * add new fleet.
+	 */
+	void AddFleet(SendFleedInstructionEvent const* event);
+
 	// game
 	/**
 	 * initializes a new game after everythis is set up
