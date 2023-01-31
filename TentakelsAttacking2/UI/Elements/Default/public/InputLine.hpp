@@ -9,7 +9,7 @@
 #include "AppContext.h"
 #include "HTextProcessing.h"
 #include "HInput.h"
-#include <raylib.h>
+#include <CustomRaylib.h>
 #include <string>
 #include <functional>
 

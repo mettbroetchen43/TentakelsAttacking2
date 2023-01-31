@@ -248,6 +248,7 @@
     <ClInclude Include="UI\Scene\SupportScenes\public\SliderAndInputLine.h" />
     <ClInclude Include="UI\Scene\SupportScenes\public\TestScene.h" />
     <ClInclude Include="_public\AppContext.h" />
+    <ClInclude Include="_public\CustomRaylib.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Constants\private\ConfigIO.cpp" />
@@ -321,7 +322,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\Text\title.txt" />
-    <Text Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

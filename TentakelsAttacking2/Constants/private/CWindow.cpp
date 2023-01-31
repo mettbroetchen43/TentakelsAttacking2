@@ -5,7 +5,7 @@
 
 #include "CWindow.h"
 #include "HPrint.h"
-#include <raylib.h>
+#include <CustomRaylib.h>
 
 bool CWindow::IsPossibleResolution(Resolution toProove) {
 	int screen = GetCurrentMonitor();

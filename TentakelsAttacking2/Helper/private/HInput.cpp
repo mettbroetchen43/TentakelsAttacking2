@@ -4,7 +4,7 @@
 //
 
 #include "HInput.h"
-#include <raylib.h>
+#include <CustomRaylib.h>
 
 bool IsConfirmInputPressed() {
     return IsKeyPressed(KEY_SPACE)

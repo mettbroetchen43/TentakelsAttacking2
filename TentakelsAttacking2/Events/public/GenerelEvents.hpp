@@ -6,7 +6,7 @@
 #pragma once
 #include "MainEvent.hpp"
 #include <string>
-#include <raylib.h>
+#include <CustomRaylib.h>
 
 enum class GameEventType;
 class Galaxy;

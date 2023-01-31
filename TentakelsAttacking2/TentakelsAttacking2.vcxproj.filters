@@ -303,6 +303,12 @@
     <ClInclude Include="Helper\public\HResolution.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Helper\public\HErrorLog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="_public\CustomRaylib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -506,9 +512,11 @@
     <ClCompile Include="Constants\private\CWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Helper\private\HErrorLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Assets\title.txt" />
-    <Text Include="TODO.txt" />
+    <Text Include="Assets\Text\title.txt" />
   </ItemGroup>
 </Project>

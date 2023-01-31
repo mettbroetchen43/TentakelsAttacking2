@@ -5,7 +5,7 @@
 
 #pragma once
 #include <array>
-#include <raylib.h>
+#include <CustomRaylib.h>
 
 /**
  * contains all available colors of the game and validates it.
@@ -21,7 +21,7 @@ private:
 	ORANGE,
 	RED,
 	MAROON,
-	GREEN,
+	NECRO,
 	LIME,
 	DARKGREEN,
 	SKYBLUE,
