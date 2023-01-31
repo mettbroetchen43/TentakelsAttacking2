@@ -388,9 +388,22 @@ void MainScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& a
 
 	if (!HasAnyInputLineFocus()) {
 
-		m_destination->ExtendValue(1);
+		bool setFocus = false;
+		auto input = GetKeyPressed();
+		if (input != 0) {
 
-		Print("should set Focus");
+			if (48 <= input && input <= 57) {
+				setFocus = true;
+			}
+			if (320 <= input && input <= 329) {
+				setFocus = true;
+			}
+		}
+
+		if (setFocus) {
+			auto event = SelectFocusElementEvent(m_origin.get());
+			appContext.eventManager.InvokeEvent(event);
+		}
 	}
 
 
