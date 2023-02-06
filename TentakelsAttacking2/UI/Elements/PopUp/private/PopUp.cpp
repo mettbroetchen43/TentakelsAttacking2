@@ -58,8 +58,8 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 	float textHeight = GetElementTextHeight(m_size, 0.1f);
 	BreakText(
 		subTitle,
-		textHeight,
-		m_size.x * resolution.x,
+		textHeight * m_resolution.y,
+		m_size.x * resolution.x * 0.9f,
 		AppContext::GetInstance()
 	);
 

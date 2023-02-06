@@ -319,17 +319,30 @@ bool GameManager::ValidateAddFleet(SendFleedInstructionEvent const* event) {
 		auto popupEvent = ShowMessagePopUpEvent("Invalid Input", text);
 		AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
 	};
+	auto message = [](std::string& message, std::string const& first, std::string const& second) {
+		if (message.size() <= 0) { message = first; return; }
+
+		message += ", " + second;
+	};
 	
+	bool _return = false;
+	std::string messageText;
+
 	if (event->GetOrigin() <= 0) {
-		popup("input in origin to low: " + std::to_string(event->GetOrigin()));
-		return false;
+		message(messageText, "input in origin", "origin");
+		_return = true;
 	}
 	if (event->GetDestination() <= 0) {
-		popup("input in destination to low: " + std::to_string(event->GetDestination()));
-		return false;
+		message(messageText, "input in destination", "destination");
+		_return = true;
 	}
 	if (event->GetShipCount() <= 0) {
-		popup("input in ship count to low : " + std::to_string(event->GetShipCount()));
+		message(messageText, "input in ship count", "ship count");
+		_return = true;
+	}
+	if (_return) { 
+		messageText += " to low. range: 1 - " + std::to_string(m_mainGalaxy->GetPlanets().size());
+		popup(messageText);
 		return false;
 	}
 
