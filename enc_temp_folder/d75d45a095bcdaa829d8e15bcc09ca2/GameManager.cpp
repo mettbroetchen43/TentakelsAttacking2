@@ -374,7 +374,7 @@ bool GameManager::ValidateAddFleetFromPlanet(SendFleedInstructionEvent const* ev
 	}
 
 	if (currentPlanet->GetShipCount() < event->GetShipCount()) {
-		popup("not enough ships on planet " + std::to_string(event->GetOrigin()));
+		popup("not enough ships on the planet " + std::to_string(event->GetOrigin()));
 		return false;
 	}
 

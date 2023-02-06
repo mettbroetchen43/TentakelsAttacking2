@@ -150,7 +150,7 @@ private:
 	 * validates the data from the UI.
 	 * generates Popups if needed.
 	 */
-	bool ValidateAddFleet(SendFleedInstructionEvent const* event);
+	bool ValidateAddFleetFromPlanet(SendFleedInstructionEvent const* event);
 	/**
 	 * calls validation
 	 * add new fleet.
