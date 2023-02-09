@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "HRandom.h"
 #include "UIEvents.hpp"
+#include "HPrint.h"
 #include <stdexcept>
 
 // help Labmdas
@@ -170,6 +171,14 @@ bool Galaxy::AddFleetFromPlanet(SendFleedInstructionEvent const* event, std::sha
         popup("not enough ships on planet " + std::to_string(event->GetOrigin()));
         return false;
     }
+
+    // get destination
+    auto destination = GetOrGenerateDestination(
+        event->GetDestination(),
+        event->GetDestinationX(),
+        event->GetDestinationY(),
+        currentPlayer
+    );
     
     return true;
 }
@@ -182,6 +191,24 @@ bool Galaxy::AddFleetFromFleet(SendFleedInstructionEvent const* event, std::shar
 bool Galaxy::AddFleetFromTargetPoint(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer)
 {
     return false;
+}
+
+std::shared_ptr<SpaceObject> Galaxy::GetOrGenerateDestination(unsigned int ID,
+    unsigned int X, unsigned int Y, std::shared_ptr<Player> currentPlayer) {
+
+    for (auto& object : m_objects) {
+
+        if (object->GetID() == ID) { return object; }
+
+        auto pos = object->GetPos();
+        if (pos.x == X && pos.y == Y) {
+            if (object->GetPlayer() == currentPlayer) {
+                return object;
+            }
+        }
+    }
+
+    Print("TODO generate target point for destination", PrintType::DEBUG);
 }
 
 Galaxy::Galaxy(Vec2<int> size, size_t planetCount,
