@@ -16,10 +16,10 @@ static auto popup = [](std::string const& text) {
 	auto popupEvent = ShowMessagePopUpEvent("Invalid Input", text);
 	AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
 };
-static auto message = [](std::string& message, std::string const& first, std::string const& second) {
-	if (message.size() <= 0) { message = first; return; }
+static auto message = [](std::string& messageText, std::string const& first, std::string const& second) {
+	if (messageText.size() <= 0) { messageText = first; return; }
 
-	message += ", " + second;
+	messageText += ", " + second;
 };
 
 // player
@@ -329,29 +329,29 @@ void GameManager::AddFleet(SendFleedInstructionEvent const* event) {
 
 	if (!ValidateAddFleetInput(event)) { return; }
 
+	std::shared_ptr<Player> currentPlayer;
+	if (!GetCurrentPlayer(currentPlayer)) { popup("No current player selected."); return; }
+	if (!m_mainGalaxy->AddFleet(event, currentPlayer)) { return; }
+
 	Print("valid fleet");
 }
 
 bool GameManager::ValidateAddFleetInput(SendFleedInstructionEvent const* event) {
 
-	bool _return = false;
 	std::string messageText;
 
 	if (event->GetOrigin() <= 0) {
 		message(messageText, "input in origin", "origin");
-		_return = true;
 	}
 	if (event->GetDestination() <= 0) {
 		if ((event->GetDestinationX() <= 0) || (event->GetDestinationY() <= 0)) {
 			message(messageText, "input in destination", "destination");
-			_return = true;
 		}
 	}
 	if (event->GetShipCount() <= 0) {
 		message(messageText, "input in ship count", "ship count");
-		_return = true;
 	}
-	if (_return) { 
+	if (!messageText.empty()) { 
 		messageText += " to low.";
 		popup(messageText);
 		return false;

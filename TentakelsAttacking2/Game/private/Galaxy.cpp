@@ -154,21 +154,9 @@ bool Galaxy::IsValidNewPlanet(std::shared_ptr<Planet> newPlanet,
 // Fleet
 bool Galaxy::AddFleetFromPlanet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
 
-    std::string messageText;
-    bool _return;
-
-    // IDs in range?
+    // check origin id
     if (event->GetOrigin() > m_planets.size()) {
-        message(messageText, "input for planet in origin", "origin");
-        _return = true;
-    }
-    if (event->GetDestination() > m_planets.size()) {
-        message(messageText, "input for planet in destination", "destination");
-        _return = true;
-    }
-    if (_return) {
-        messageText += " to high.  range: 1 - " + std::to_string(m_planets.size());
-        popup(messageText);
+        popup("input for planet in origin to high");
         return false;
     }
 
@@ -183,7 +171,6 @@ bool Galaxy::AddFleetFromPlanet(SendFleedInstructionEvent const* event, std::sha
         return false;
     }
     
-
     return true;
 }
 
@@ -252,40 +239,47 @@ std::shared_ptr<SpaceObject> const Galaxy::GetSpaceObjectByID(unsigned int ID) c
 
 bool Galaxy::AddFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
 
-    std::string messageText;
-    bool _return = false;
-
     // valid ID?
     if(!IsValidSpaceObjectID(event->GetOrigin())){
-        message(messageText, "ID not existing : " + std::to_string(event->GetOrigin()), std::to_string(event->GetOrigin()));
-        _return = true;
+        popup("ID not existing as origin: " + std::to_string(event->GetOrigin()));
+        return false;
     }
     if(!IsValidSpaceObjectID(event->GetDestination())){
-        message(messageText, "ID not existing: " + std::to_string(event->GetOrigin()), std::to_string(event->GetOrigin()));
-        _return = true;
+
+        bool validCoordinates =
+            (event->GetDestinationX() > 0
+                && event->GetDestinationX() <= m_size.x)
+            && (event->GetDestinationY() > 0
+                && event->GetDestinationY() <= m_size.y);
+        bool coordinateInput =
+            event->GetDestinationX() > 0 && event->GetDestinationY() > 0;
+
+        if (!validCoordinates && coordinateInput) {
+            popup("destination coordinates outside of the map. X: "
+                + std::to_string(event->GetDestinationX())
+                + ", Y: "
+                + std::to_string(event->GetDestinationY())
+            );
+            return false;
+        }
+        else if (!coordinateInput) {
+            popup("ID not existing as destination: " + std::to_string(event->GetDestination()));
+            return false;
+        }
     }
-    if (_return) { popup(messageText); return false; }
 
-    auto const& object = GetSpaceObjectByID(event->GetOrigin());
+    auto const& origin = GetSpaceObjectByID(event->GetOrigin());
 
-    if (object->IsPlanet()) {
+    if (origin->IsPlanet()) {
         return AddFleetFromPlanet(event, currentPlayer);
     }
-    if (object->IsFleet()) {
+    if (origin->IsFleet()) {
         return AddFleetFromFleet(event, currentPlayer);
     }
-    if (object->IsTargetPoint()) {
+    if (origin->IsTargetPoint()) {
         return AddFleetFromTargetPoint(event, currentPlayer);
     }
 
     popup("can't recognize provided origin: " + std::to_string(event->GetOrigin()));
     return false;
-
-    /**
-     * origin vorhanden
-     * destination vorhanden
-     * player mapping onto space object player
-     * valid ship count
-     */
-    return true;
 }
