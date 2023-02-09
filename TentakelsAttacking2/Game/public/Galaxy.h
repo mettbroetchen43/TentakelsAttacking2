@@ -6,7 +6,9 @@
 #pragma once
 #include "Planet.h"
 #include "SpaceObject.h"
+#include "GenerelEvents.hpp"
 #include "Vec2.hpp"
+#include <vector>
 #include <vector>
 #include <memory>
 
@@ -30,6 +32,8 @@ private:
 	 * returns the next free ID for an Space object that is the nearest to 0.
 	 */
 	[[nodiscard]] unsigned int GetNextID() const;
+
+	// Planet
 	/**
 	 * coordinates the geration of all planets.
 	 */
@@ -49,6 +53,26 @@ private:
 	 * returns a bool.
 	 */
 	[[nodiscard]] bool IsValidNewPlanet(std::shared_ptr<Planet> newPlanet, AppContext const& appContext) const;
+
+	// Fleet
+	/**
+	 * validates the data from the UI if the instruction is for a planet.
+	 * generates Popups if needed.
+	 * add new fleet if valid.
+	 */
+	[[nodiscard]] bool AddFleetFromPlanet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	/**
+	 * validates the data from the UI if the instruction is for a fleet.
+	 * generates Popups if needed.
+	 * add new fleet if valid.
+	 */
+	[[nodiscard]] bool AddFleetFromFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	/**
+	 * validates the data from the UI if the instruction is for a target point.
+	 * generates Popups if needed.
+	 * add new fleet if valid.
+	 */
+	[[nodiscard]] bool AddFleetFromTargetPoint(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 
 public:
 	/**
@@ -72,6 +96,11 @@ public:
 	[[nodiscard]] bool IsValid() const;
 
 	/**
+	 * returns if the provided ID is exsiting in this galaxy.
+	 */
+	[[nodiscard]] bool IsValidSpaceObjectID(unsigned int ID) const;
+
+	/**
 	 * returns the size of the galaxy.
 	 */
 	[[nodiscard]] Vec2<int> GetSize() const;
@@ -83,4 +112,8 @@ public:
 	 * returns a specific planet by ID.
 	 */
 	[[nodiscard]] std::shared_ptr<Planet> const GetPlanetByID(unsigned int ID) const;
+
+	[[nodiscard]] std::shared_ptr<SpaceObject> const GetSpaceObjectByID(unsigned int ID) const;
+
+	[[nodiscard]] bool AddFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 };

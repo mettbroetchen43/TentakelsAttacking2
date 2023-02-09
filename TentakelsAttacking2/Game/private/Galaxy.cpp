@@ -10,6 +10,17 @@
 #include "UIEvents.hpp"
 #include <stdexcept>
 
+// help Labmdas
+static auto popup = [](std::string const& text) {
+    auto popupEvent = ShowMessagePopUpEvent("Invalid Input", text);
+    AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
+};
+static auto message = [](std::string& messageText, std::string const& first, std::string const& second) {
+    if (messageText.size() <= 0) { messageText = first; return; }
+
+    messageText += ", " + second;
+};
+
 unsigned int Galaxy::GetNextID() const {
 
     if (m_objects.empty()) { return 1; }
@@ -140,6 +151,52 @@ bool Galaxy::IsValidNewPlanet(std::shared_ptr<Planet> newPlanet,
     return validPlanet;
 }
 
+// Fleet
+bool Galaxy::AddFleetFromPlanet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
+
+    std::string messageText;
+    bool _return;
+
+    // IDs in range?
+    if (event->GetOrigin() > m_planets.size()) {
+        message(messageText, "input for planet in origin", "origin");
+        _return = true;
+    }
+    if (event->GetDestination() > m_planets.size()) {
+        message(messageText, "input for planet in destination", "destination");
+        _return = true;
+    }
+    if (_return) {
+        messageText += " to high.  range: 1 - " + std::to_string(m_planets.size());
+        popup(messageText);
+        return false;
+    }
+
+    // check origin
+    auto currentPlanet = GetPlanetByID(static_cast<unsigned int>(event->GetOrigin()));
+    if (currentPlanet->GetPlayer() != currentPlayer) {
+        popup("the choosen origin isn't your Planet.");
+        return false;
+    }
+    if (currentPlanet->GetShipCount() < event->GetShipCount()) {
+        popup("not enough ships on planet " + std::to_string(event->GetOrigin()));
+        return false;
+    }
+    
+
+    return true;
+}
+
+bool Galaxy::AddFleetFromFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer)
+{
+    return false;
+}
+
+bool Galaxy::AddFleetFromTargetPoint(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer)
+{
+    return false;
+}
+
 Galaxy::Galaxy(Vec2<int> size, size_t planetCount,
     std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer)
     : m_size(size) {
@@ -152,6 +209,17 @@ Galaxy::Galaxy(Galaxy const& old)
 
 bool Galaxy::IsValid() const {
     return m_validGalaxy;
+}
+
+bool Galaxy::IsValidSpaceObjectID(unsigned int ID) const {
+
+    for (auto const& object : m_objects) {
+        if (object->GetID() == ID) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 Vec2<int> Galaxy::GetSize() const {
@@ -169,4 +237,55 @@ std::shared_ptr<Planet> const Galaxy::GetPlanetByID(unsigned int ID) const {
     }
 
     throw std::runtime_error("no planet with this ID: " + std::to_string(ID));
+}
+
+std::shared_ptr<SpaceObject> const Galaxy::GetSpaceObjectByID(unsigned int ID) const {
+
+    for (auto const& object : m_objects) {
+        if (object->GetID() == ID) {
+            return object;
+        }
+    }
+
+    throw std::runtime_error("no space object with ID " + std::to_string(ID));
+}
+
+bool Galaxy::AddFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
+
+    std::string messageText;
+    bool _return = false;
+
+    // valid ID?
+    if(!IsValidSpaceObjectID(event->GetOrigin())){
+        message(messageText, "ID not existing : " + std::to_string(event->GetOrigin()), std::to_string(event->GetOrigin()));
+        _return = true;
+    }
+    if(!IsValidSpaceObjectID(event->GetDestination())){
+        message(messageText, "ID not existing: " + std::to_string(event->GetOrigin()), std::to_string(event->GetOrigin()));
+        _return = true;
+    }
+    if (_return) { popup(messageText); return false; }
+
+    auto const& object = GetSpaceObjectByID(event->GetOrigin());
+
+    if (object->IsPlanet()) {
+        return AddFleetFromPlanet(event, currentPlayer);
+    }
+    if (object->IsFleet()) {
+        return AddFleetFromFleet(event, currentPlayer);
+    }
+    if (object->IsTargetPoint()) {
+        return AddFleetFromTargetPoint(event, currentPlayer);
+    }
+
+    popup("can't recognize provided origin: " + std::to_string(event->GetOrigin()));
+    return false;
+
+    /**
+     * origin vorhanden
+     * destination vorhanden
+     * player mapping onto space object player
+     * valid ship count
+     */
+    return true;
 }

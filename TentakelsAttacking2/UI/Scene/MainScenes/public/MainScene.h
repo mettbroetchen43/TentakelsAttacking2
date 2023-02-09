@@ -41,6 +41,8 @@ private:
 
 	std::shared_ptr<InputLine<int>> m_origin; ///< provides the origin planet ID
 	std::shared_ptr<InputLine<int>> m_destination; ///< provides the destination planet ID
+	std::shared_ptr<InputLine<int>> m_destinationX; ///< provides the destination planet X
+	std::shared_ptr<InputLine<int>> m_destinationY; ///< provides the destination planet Y
 	std::shared_ptr<InputLine<int>> m_shipCount; ///< provides the ship count
 
 	std::shared_ptr<ClassicButton> m_acceptBtn; ///< sends the fleet event into the logic

@@ -147,15 +147,16 @@ private:
 
 	// fleet
 	/**
-	 * validates the data from the UI.
-	 * generates Popups if needed.
-	 */
-	bool ValidateAddFleetFromPlanet(SendFleedInstructionEvent const* event);
-	/**
 	 * calls validation
 	 * add new fleet.
 	 */
 	void AddFleet(SendFleedInstructionEvent const* event);
+
+	/**
+	 * validates the data from the UI.
+	 * generates Popups if needed.
+	 */
+	[[nodiscard]] bool ValidateAddFleetInput(SendFleedInstructionEvent const* event);
 
 	// game
 	/**

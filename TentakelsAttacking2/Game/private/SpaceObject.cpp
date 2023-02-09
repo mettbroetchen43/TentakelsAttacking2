@@ -33,6 +33,19 @@ size_t SpaceObject::GetShipCount() const {
 	return m_ships;
 }
 
+bool SpaceObject::IsPlanet() const {
+
+	return false;
+}
+bool SpaceObject::IsFleet() const {
+
+	return false;
+}
+bool SpaceObject::IsTargetPoint() const {
+
+	return false;
+}
+
 SpaceObject& SpaceObject::operator+=(size_t ships) {
 	m_ships += ships;
 	return *this;

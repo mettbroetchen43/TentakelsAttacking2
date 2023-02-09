@@ -68,6 +68,19 @@ public:
 	[[nodiscard]] size_t GetShipCount() const;
 
 	/**
+	 * returns if the current spaceobject is a planet.
+	 */
+	[[nodiscard]] virtual bool IsPlanet() const;
+	/**
+	 * returns if the current spaceobject is a planet.
+	 */
+	[[nodiscard]] virtual bool IsFleet() const;
+	/**
+	 * returns if the current spaceobject is a planet.
+	 */
+	[[nodiscard]] virtual bool IsTargetPoint() const;
+
+	/**
 	 * adds and returns the shipcount of an object and a number.
 	 */
 	friend size_t operator+ (SpaceObject const& object, size_t ships);

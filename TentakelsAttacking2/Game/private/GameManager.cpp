@@ -11,6 +11,17 @@
 #include <algorithm>
 #include <stdexcept>
 
+// help Labmdas
+static auto popup = [](std::string const& text) {
+	auto popupEvent = ShowMessagePopUpEvent("Invalid Input", text);
+	AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
+};
+static auto message = [](std::string& message, std::string const& first, std::string const& second) {
+	if (message.size() <= 0) { message = first; return; }
+
+	message += ", " + second;
+};
+
 // player
 bool GameManager::ValidAddPlayer() const {
 	return AppContext::GetInstance().constants.player.maxPlayerCount
@@ -314,18 +325,15 @@ void GameManager::GenerateShowGalaxy() {
 }
 
 // Fleet
-bool GameManager::ValidateAddFleetFromPlanet(SendFleedInstructionEvent const* event) {
+void GameManager::AddFleet(SendFleedInstructionEvent const* event) {
 
-	auto popup = [](std::string const& text) {
-		auto popupEvent = ShowMessagePopUpEvent("Invalid Input", text);
-		AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
-	};
-	auto message = [](std::string& message, std::string const& first, std::string const& second) {
-		if (message.size() <= 0) { message = first; return; }
+	if (!ValidateAddFleetInput(event)) { return; }
 
-		message += ", " + second;
-	};
-	
+	Print("valid fleet");
+}
+
+bool GameManager::ValidateAddFleetInput(SendFleedInstructionEvent const* event) {
+
 	bool _return = false;
 	std::string messageText;
 
@@ -334,58 +342,31 @@ bool GameManager::ValidateAddFleetFromPlanet(SendFleedInstructionEvent const* ev
 		_return = true;
 	}
 	if (event->GetDestination() <= 0) {
-		message(messageText, "input in destination", "destination");
-		_return = true;
+		if ((event->GetDestinationX() <= 0) || (event->GetDestinationY() <= 0)) {
+			message(messageText, "input in destination", "destination");
+			_return = true;
+		}
 	}
 	if (event->GetShipCount() <= 0) {
 		message(messageText, "input in ship count", "ship count");
 		_return = true;
 	}
 	if (_return) { 
-		messageText += " to low. range: 1 - " + std::to_string(m_mainGalaxy->GetPlanets().size());
+		messageText += " to low.";
 		popup(messageText);
 		return false;
 	}
 
-	auto planets = m_mainGalaxy->GetPlanets();
-	if (event->GetOrigin() > planets.size()) {
-		message(messageText, "input in origin", "origin");
-		_return = true;
-	}
-	if (event->GetDestination() > planets.size()) {
-		message(messageText, "input in destination", "destination");
-		_return = true;
-	}
-	if (_return){
-		messageText += " to high.  range: 1 - " + std::to_string(planets.size());
-		popup(messageText);
-		return false;
-	}
-	
-	auto currentPlanet = m_mainGalaxy->GetPlanetByID(event->GetOrigin());
-	std::shared_ptr<Player> currentPlayer;
-	bool valid = GetCurrentPlayer(currentPlayer);
-
-	if (not valid) { throw std::runtime_error("noi corrent player"); }
-
-	if (currentPlanet->GetPlayer() != currentPlayer) {
-		popup("the choosen origin isn't your Planet.");
-		return false;
-	}
-
-	if (currentPlanet->GetShipCount() < event->GetShipCount()) {
-		popup("not enough ships on planet " + std::to_string(event->GetOrigin()));
+	bool doubleDestination =
+		event->GetDestination() > 0
+		&& (event->GetDestinationX() > 0
+			|| event->GetDestinationY() > 0);
+	if (doubleDestination) {
+		popup("to many inputs for destination");
 		return false;
 	}
 
 	return true;
-}
-
-void GameManager::AddFleet(SendFleedInstructionEvent const* event) {
-
-	if (!ValidateAddFleetFromPlanet(event)) { return; }
-
-	Print("valid fleet");
 }
 
 // game

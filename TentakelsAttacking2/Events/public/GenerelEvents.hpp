@@ -7,6 +7,7 @@
 #include "MainEvent.hpp"
 #include <string>
 #include <CustomRaylib.h>
+#include <unordered_map>
 
 enum class GameEventType;
 class Galaxy;
@@ -286,17 +287,27 @@ class SendFleedInstructionEvent : public Event {
 private:
 	size_t m_origin;
 	size_t m_destination;
+	size_t m_destinamtionX;
+	size_t m_destinationY;
 	size_t m_shipCount;
 
 public:
-	SendFleedInstructionEvent(size_t origin, size_t destination, size_t shipCount)
-		: m_origin(origin), m_destination(destination), m_shipCount(shipCount) { }
+	SendFleedInstructionEvent(size_t origin, size_t destination, size_t destinationX,
+		size_t destinationY,  size_t shipCount)
+		: m_origin(origin), m_destination(destination), m_destinamtionX(destinationX),
+		m_destinationY(destinationY), m_shipCount(shipCount) { }
 
 	[[nodiscard]] size_t GetOrigin() const {
 		return m_origin;
 	}
 	[[nodiscard]] size_t GetDestination() const {
 		return m_destination;
+	}
+	[[nodiscard]] size_t GetDestinationX() const{
+		return m_destinamtionX;
+	}
+	[[nodiscard]] size_t GetDestinationY() const {
+		return m_destinationY;
 	}
 	[[nodiscard]] size_t GetShipCount() const {
 		return m_shipCount;

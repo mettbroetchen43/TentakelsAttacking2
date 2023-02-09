@@ -35,6 +35,11 @@ bool Planet::IsHomePlanet() const {
 	return m_isHomePlanet;
 }
 
+bool Planet::IsPlanet() const {
+
+	return true;
+}
+
 void Planet::SetIsDestroyed(bool isDestroyed) {
 	m_isDestroyed = isDestroyed;
 }
