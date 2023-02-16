@@ -11,6 +11,7 @@ class Slider;
 class Line;
 class ClassicButton;
 class UIGalaxy;
+class Galaxy;
 
 /**
  * provides a scene that can display the logic galaxy.
@@ -66,6 +67,11 @@ public:
 	 * returns if the scene is enabled.
 	 */
 	[[nodiscard]] bool IsEnabled() const;
+
+	/**
+	 * return the current ui galaxy.
+	 */
+	[[nodiscard]] Galaxy const* GetGalaxy() const;
 
 	/**
 	 * updates the scene.

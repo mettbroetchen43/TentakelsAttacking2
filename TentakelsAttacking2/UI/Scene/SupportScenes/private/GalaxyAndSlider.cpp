@@ -155,6 +155,10 @@ bool GalaxyScene::IsEnabled() const {
 	return m_isEnabled;
 }
 
+Galaxy const* GalaxyScene::GetGalaxy() const {
+	return m_galaxy->GetGalaxy();
+}
+
 void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	if (!IsActive()) { return; }
 

@@ -5,6 +5,7 @@
 
 #include "MainScene.h"
 #include "GalaxyAndSlider.h"
+#include "PlanetTable.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
 #include "GenerelEvents.hpp"
@@ -13,6 +14,7 @@
 #include "Text.h"
 #include "InputLine.hpp"
 #include "HPrint.h"
+#include <cassert>
 
 
 void MainScene::Initialize() {
@@ -346,7 +348,7 @@ void MainScene::Initialize() {
 		});
 	m_elements.push_back(m_resetBtn);
 }
-void MainScene::InitialzeGalaxy() {
+void MainScene::InitializeGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
 	if (m_galaxy) {
 		m_galaxy->SetActive(false, appContext);
@@ -362,12 +364,30 @@ void MainScene::InitialzeGalaxy() {
 		);
 	m_elements.push_back(m_galaxy);
 }
+void MainScene::InitializePlanetTable() {
+
+	AppContext& appContext = AppContext::GetInstance();
+	if (m_planetTable) {
+		m_planetTable->SetActive(false, appContext);
+		m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), m_planetTable), m_elements.end());
+		m_planetTable = nullptr;
+	}
+
+	m_planetTable = std::make_shared<PlanetTable>(
+		GetElementPosition(0.01f, 0.99f),
+		GetElementSize(0.85f, 0.85f),
+		Alignment::BOTTOM_LEFT,
+		m_resolution,
+		m_galaxy->GetGalaxy()
+		);
+	m_elements.push_back(m_planetTable);
+}
 
 void MainScene::NextTurn() {
 	AppContext const& appContext = AppContext::GetInstance();
 	Switch(MainSceneType::CLEAR);
 	SetPlayerText();
-	InitialzeGalaxy();
+	InitializeGalaxy();
 
 	auto event = ShowMessagePopUpEvent(
 		"start turn?",
@@ -382,7 +402,8 @@ void MainScene::NextRound() {
 	AppContext& appContext = AppContext::GetInstance();
 
 	SetPlayerText();
-	InitialzeGalaxy();
+	InitializeGalaxy();
+	InitializePlanetTable();
 
 	m_currentRound->SetText(std::to_string(appContext.constants.global.currentRound));
 	m_currentTargetRound->SetText(std::to_string(appContext.constants.global.currentTargetRound));
@@ -408,8 +429,14 @@ void MainScene::SetPlayerText() {
 void MainScene::Switch(MainSceneType sceneType) {
 	AppContext& appContext = AppContext::GetInstance();
 
+	assert(m_galaxy);
+	assert(m_planetTable);
+
+	m_galaxy->SetActive(false, appContext);
+	m_planetTable->SetActive(false, appContext);
+
 	m_galaxy->SetActive(sceneType == MainSceneType::GALAXY, appContext);
-	// m_planetTable->SetActive(sceneType == MainSceneType::PLANET_TABLE, appContext);
+	m_planetTable->SetActive(sceneType == MainSceneType::PLANET_TABLE, appContext);
 	// m_fleetTable->SetActive(sceneType == MainSceneType::FLEET_TABLE, appContext);
 }
 
@@ -469,7 +496,8 @@ MainScene::MainScene(Vector2 resolution)
 	appContext.eventManager.InvokeEvent(StartGameEvent());
 
 	Initialize();
-	InitialzeGalaxy();
+	InitializeGalaxy();
+	InitializePlanetTable();
 	SetPlayerText();
 	Switch(MainSceneType::GALAXY);
 	SetAcceptButon();
@@ -505,6 +533,7 @@ void MainScene::OnEvent(Event const& event) {
 	if (auto const* fleetEvent = dynamic_cast<ReturnFleetInstructionEvent const*>(&event)) {
 		if (fleetEvent->IsValidFleet()) {
 			ClearInputLines();
+			InitializePlanetTable();
 		}
 		return;
 	}

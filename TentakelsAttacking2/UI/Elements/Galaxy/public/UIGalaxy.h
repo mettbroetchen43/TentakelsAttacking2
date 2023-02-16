@@ -175,6 +175,11 @@ public:
 	[[nodiscard]] Rectangle GetCollider() const override;
 
 	/**
+	 * returns the current galaxy.
+	 */
+	[[nodiscard]] Galaxy const* GetGalaxy() const;
+
+	/**
 	 * recieves all events and calls the me,ber functions.
 	 */
 	void OnEvent(Event const& event) override;

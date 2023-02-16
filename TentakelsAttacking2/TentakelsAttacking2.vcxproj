@@ -247,6 +247,7 @@
     <ClInclude Include="UI\Scene\MainScenes\public\MainMenu.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\NewGamePlayer.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\Scenes.hpp" />
+    <ClInclude Include="UI\Scene\SupportScenes\public\PlanetTable.h" />
     <ClInclude Include="UI\Scene\SupportScenes\public\SliderAndInputLine.h" />
     <ClInclude Include="UI\Scene\SupportScenes\public\TestScene.h" />
     <ClInclude Include="_public\AppContext.h" />
@@ -321,6 +322,7 @@
     <ClCompile Include="UI\Scene\SupportScenes\private\SliderAndInputLine.cpp" />
     <ClCompile Include="UI\Scene\SupportScenes\private\CreditTable.cpp" />
     <ClCompile Include="UI\Scene\SupportScenes\private\GalaxyAndSlider.cpp" />
+    <ClCompile Include="UI\Scene\SupportScenes\private\PlanetTable.cpp" />
     <ClCompile Include="_private\Main.cpp" />
     <ClCompile Include="_private\AppContext.cpp" />
   </ItemGroup>

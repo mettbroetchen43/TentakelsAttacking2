@@ -6,19 +6,16 @@
 #pragma once
 # include "Scene.h"
 # include "Table.h"
-
-class DropDown;
+# include "Galaxy.h"
 
 /**
  * no doc here.
  * this contains the test scene that is only unsed to diplay new featurs temporary.
  */
-class TestScene : public Scene {
+class TestScene : public Scene , public EventListener {
 private:
-	std::vector<std::string> m_entries;
-	std::shared_ptr<DropDown> m_dropDown;
-
-	void Initialize(Vector2 resolution, AppContext& appContext);
+	std::shared_ptr<Galaxy> m_galaxy;
+	void Initialize(AppContext& appContext);
 
 public:
 	TestScene(Vector2 resolution);
@@ -27,5 +24,7 @@ public:
 	void TestLambda(unsigned int value);
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
+
+	void OnEvent(Event const& event) override;
 };
 

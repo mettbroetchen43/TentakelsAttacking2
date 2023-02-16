@@ -73,6 +73,7 @@ int Galaxy::GenerateHomePlanets(std::vector<std::shared_ptr<Player>> players) {
                 true,
                 currentPlanet
                 );
+            newPlanet->SetDescovered(true);
 
             if (IsValidNewPlanet(newPlanet, appContext)) {
                 m_objects.push_back(newPlanet);

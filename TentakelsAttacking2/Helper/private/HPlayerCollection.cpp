@@ -16,6 +16,13 @@ bool PlayerCollection::ContainsName(std::string const& name) const {
 			return true;
 		}
 	}
+
+	for (auto const& p : m_npcData) {
+		if (p.name == name) {
+			return true;
+		}
+	}
+
 	return false;
 }
 bool PlayerCollection::ContainsColor(Color color) const {
@@ -24,6 +31,13 @@ bool PlayerCollection::ContainsColor(Color color) const {
 			return true;
 		}
 	}
+
+	for (auto const& p : m_npcData) {
+		if (p.color == color) {
+			return true;
+		}
+	}
+
 	return false;
 }
 
@@ -84,6 +98,8 @@ PlayerData& PlayerCollection::GetPlayerByIDmut(unsigned int ID) {
 			return p;
 		}
 	}
+
+	// skip ncps here because it makes no sence to return them as a player
 
 	throw std::out_of_range("Accecing non existing ID");
 }
@@ -156,6 +172,16 @@ PlayerData PlayerCollection::GetPlayerByID(unsigned int ID) const {
 	}
 
 	throw std::out_of_range("Accecing non existing ID");
+}
+PlayerData PlayerCollection::GetPlayerOrNpcByID(unsigned int ID) const {
+
+	for (auto& p : m_npcData) {
+		if (p.ID == ID) {
+			return p;
+		}
+	}
+	
+	return GetPlayerByID(ID);
 }
 PlayerData PlayerCollection::GetPlayerByIDOrDefaultPlayer(unsigned int ID) const {
 
