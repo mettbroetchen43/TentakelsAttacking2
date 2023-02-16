@@ -11,7 +11,7 @@
 #include "Scenes.hpp"
 #include "AppContext.h"
 #include "HPrint.h"
-#include <raylib.h>
+#include <CustomRaylib.h>
 
 
 void SceneManager::InitializeNewScene(SceneType sceneType) {

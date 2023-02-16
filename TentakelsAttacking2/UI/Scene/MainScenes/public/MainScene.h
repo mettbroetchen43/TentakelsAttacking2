@@ -13,6 +13,8 @@
 class GalaxyScene;
 class ClassicButton;
 class Text;
+template<typename T>
+class InputLine;
 
 /**
  * provides the main scene.
@@ -36,6 +38,15 @@ private:
 	std::shared_ptr<Text> m_currentTargetRound;  ///< contains the current taregt round count
 	PlayerData m_currentPlayer; ///< contains the data of the current player
 	PlayerData m_nextPlayer; ///< contains the data of the next player
+
+	std::shared_ptr<InputLine<int>> m_origin; ///< provides the origin planet ID
+	std::shared_ptr<InputLine<int>> m_destination; ///< provides the destination planet ID
+	std::shared_ptr<InputLine<int>> m_destinationX; ///< provides the destination planet X
+	std::shared_ptr<InputLine<int>> m_destinationY; ///< provides the destination planet Y
+	std::shared_ptr<InputLine<int>> m_shipCount; ///< provides the ship count
+
+	std::shared_ptr<ClassicButton> m_acceptBtn; ///< sends the fleet event into the logic
+	std::shared_ptr<ClassicButton> m_resetBtn; ///< clears the input lines
 
 	/**
 	 * initializes all ui elements.
@@ -72,6 +83,25 @@ private:
 	 */
 	void Switch(MainSceneType sceneType);
 
+	/**
+	 * return if any input line in in focus.
+	 */
+	bool HasAnyInputLineFocus();
+
+	/**
+	 * sets the accept button active or inactive.
+	 */
+	void SetAcceptButon();
+
+	/**
+	 * sends the ship instruction event.
+	 */
+	void SendFleetInstruction();
+	/**
+	 * resets the input lines
+	 */
+	void ClearInputLines();
+
 public:
 	/**
 	 * ctor.
@@ -87,4 +117,10 @@ public:
 	 * receives all evenets and calls the member functions.
 	 */
 	void OnEvent(Event const& event) override;
+
+	/**
+	 * updates all elements in elements.
+	 * calls the CheckAndUpdate from the Scene.
+	 */
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 };

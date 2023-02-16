@@ -6,8 +6,7 @@
 #include "HTextProcessing.h"
 #include "AppContext.h"
 #include "Allignment.h"
-#include <raylib.h>
-//#include <string_view>
+#include <CustomRaylib.h>
 #include <cassert>
 
 [[nodiscard]] std::vector<std::string> GetSerializedText(

@@ -9,6 +9,18 @@
 #include "HPrint.h"
 #include <cassert>
 #include <algorithm>
+#include <stdexcept>
+
+// help Labmdas
+static auto popup = [](std::string const& text) {
+	auto popupEvent = ShowMessagePopUpEvent("Invalid Input", text);
+	AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
+};
+static auto message = [](std::string& messageText, std::string const& first, std::string const& second) {
+	if (messageText.size() <= 0) { messageText = first; return; }
+
+	messageText += ", " + second;
+};
 
 // player
 bool GameManager::ValidAddPlayer() const {
@@ -43,13 +55,13 @@ bool GameManager::IsExistingPlayerID(unsigned int ID) const {
 	return false;
 }
 
-bool GameManager::SetCurrentPlayer(std::shared_ptr<Player>& currentPlayer) const {
+bool GameManager::GetCurrentPlayer(std::shared_ptr<Player>& currentPlayer) const {
 	if (m_currentRoundPlayers.empty()) { return false; }
 
 	currentPlayer = m_currentRoundPlayers.back();
 	return true;
 }
-bool GameManager::SetNextPlayer(std::shared_ptr<Player>& nextPlayer) const {
+bool GameManager::GetNextPlayer(std::shared_ptr<Player>& nextPlayer) const {
 	if (m_currentRoundPlayers.size() < 2) { return false; }
 
 	nextPlayer = m_currentRoundPlayers.at(m_currentRoundPlayers.size() - 2);
@@ -158,6 +170,36 @@ void GameManager::ShuffleCurrentRoundPlayer() {
 	std::shuffle(m_currentRoundPlayers.begin(), m_currentRoundPlayers.end(), m_random);
 }
 
+void GameManager::SendCurrentPlayerID() {
+	unsigned int ID;
+	std::shared_ptr<Player> player;
+
+	if (GetCurrentPlayer(player)) {
+		ID = player->GetID();
+	}
+	else {
+		ID = 0;
+	}
+
+	auto event = UpdateCurrentPlayerIDEvent(ID);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+void GameManager::SendNextPlayerID() {
+	unsigned int ID;
+	std::shared_ptr<Player> player;
+
+	if (GetNextPlayer(player)) {
+		ID = player->GetID();
+	}
+	else {
+		ID = 0;
+	}
+
+	auto event = UpdateNextPlayerIDEvent(ID);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+
+// rounds
 void GameManager::NextRound(bool valid) {
 
 	if (!valid) { return; }
@@ -214,35 +256,6 @@ void GameManager::ValidateNextTurn() {
 	}
 }
 
-void GameManager::SendCurrentPlayerID() {
-	unsigned int ID;
-	std::shared_ptr<Player> player;
-
-	if (SetCurrentPlayer(player)) {
-		ID = player->GetID();
-	}
-	else {
-		ID = 0;
-	}
-
-	auto event = UpdateCurrentPlayerIDEvent(ID);
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
-}
-void GameManager::SendNextPlayerID() {
-	unsigned int ID;
-	std::shared_ptr<Player> player;
-
-	if (SetNextPlayer(player)) {
-		ID = player->GetID();
-	}
-	else {
-		ID = 0;
-	}
-
-	auto event = UpdateNextPlayerIDEvent(ID);
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
-}
-
 // events
 void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 	if (event->GetType() == GameEventType::GLOBAL) {
@@ -258,6 +271,7 @@ void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
 }
 
+// galaxy
 void GameManager::GenerateGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
 	Vec2<int> size = {
@@ -310,6 +324,54 @@ void GameManager::GenerateShowGalaxy() {
 	}
 }
 
+// Fleet
+void GameManager::AddFleet(SendFleedInstructionEvent const* event) {
+
+	if (!ValidateAddFleetInput(event)) { return; }
+
+	std::shared_ptr<Player> currentPlayer;
+	if (!GetCurrentPlayer(currentPlayer)) { popup("No current player selected."); return; }
+
+	bool isValidFleet = m_mainGalaxy->AddFleet(event, currentPlayer);
+
+	auto returnEvent = ReturnFleetInstructionEvent(isValidFleet);
+	AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
+}
+
+bool GameManager::ValidateAddFleetInput(SendFleedInstructionEvent const* event) {
+
+	std::string messageText;
+
+	if (event->GetOrigin() <= 0) {
+		message(messageText, "input in origin", "origin");
+	}
+	if (event->GetDestination() <= 0) {
+		if ((event->GetDestinationX() <= 0) || (event->GetDestinationY() <= 0)) {
+			message(messageText, "input in destination", "destination");
+		}
+	}
+	if (event->GetShipCount() <= 0) {
+		message(messageText, "input in ship count", "ship count");
+	}
+	if (!messageText.empty()) { 
+		messageText += " to low.";
+		popup(messageText);
+		return false;
+	}
+
+	bool doubleDestination =
+		event->GetDestination() > 0
+		&& (event->GetDestinationX() > 0
+			|| event->GetDestinationY() > 0);
+	if (doubleDestination) {
+		popup("to many inputs for destination");
+		return false;
+	}
+
+	return true;
+}
+
+// game
 void GameManager::StartGame() {
 	m_currentRoundPlayers = m_players;
 
@@ -393,6 +455,12 @@ void GameManager::OnEvent(Event const& event) {
 	}
 	if (auto const* gameEvent = dynamic_cast<TriggerNextTurnEvent const*> (&event)) {
 		ValidateNextTurn();
+		return;
+	}
+
+	// Fleet
+	if (auto const* fleetEvent = dynamic_cast<SendFleedInstructionEvent const*> (&event)) {
+		AddFleet(fleetEvent);
 		return;
 	}
 }

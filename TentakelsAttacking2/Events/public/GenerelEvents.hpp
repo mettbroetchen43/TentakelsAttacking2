@@ -6,7 +6,8 @@
 #pragma once
 #include "MainEvent.hpp"
 #include <string>
-#include <raylib.h>
+#include <CustomRaylib.h>
+#include <unordered_map>
 
 enum class GameEventType;
 class Galaxy;
@@ -275,5 +276,55 @@ public:
 
 	[[nodiscard]] Galaxy const *const GetGalaxy() const {
 		return m_galaxy;
+	}
+};
+
+
+/**
+ * send a ship instruction into the logic.
+ */
+class SendFleedInstructionEvent : public Event {
+private:
+	unsigned int m_origin;
+	unsigned int m_destination;
+	int m_destinamtionX;
+	int m_destinationY;
+	size_t m_shipCount;
+
+public:
+	SendFleedInstructionEvent(unsigned int origin, unsigned int destination, int destinationX,
+		int destinationY,  size_t shipCount)
+		: m_origin(origin), m_destination(destination), m_destinamtionX(destinationX),
+		m_destinationY(destinationY), m_shipCount(shipCount) { }
+
+	[[nodiscard]] unsigned int GetOrigin() const {
+		return m_origin;
+	}
+	[[nodiscard]] unsigned int GetDestination() const {
+		return m_destination;
+	}
+	[[nodiscard]] int GetDestinationX() const{
+		return m_destinamtionX;
+	}
+	[[nodiscard]] int GetDestinationY() const {
+		return m_destinationY;
+	}
+	[[nodiscard]] size_t GetShipCount() const {
+		return m_shipCount;
+	}
+};
+/**
+ * functions as the return of SendFleedInstructionEvent.
+ */
+class ReturnFleetInstructionEvent : public Event {
+private:
+	bool m_isValidFleet;
+
+public:
+	ReturnFleetInstructionEvent(bool validFeet)
+	: m_isValidFleet (validFeet) { }
+
+	[[nodiscard]] bool IsValidFleet() const {
+		return m_isValidFleet;
 	}
 };

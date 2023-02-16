@@ -24,7 +24,9 @@ private:
 	std::unordered_map<PlayerType, std::shared_ptr<Player>> m_npcs; ///< contains all npcs to seperaste them from the player
 	std::vector<std::shared_ptr<Player>> m_players; ///< contains all player -> this is the main player vector
 	std::vector<std::shared_ptr<Player>> m_currentRoundPlayers; ///< contains the remaining player of the current round
+	
 	std::unordered_map<GameEventType, bool> m_gameEvents; ///< contains whether the game Events are active or not
+	
 	std::shared_ptr<Galaxy> m_mainGalaxy = nullptr; ///< contains the global galaxy with all changes.
 	std::shared_ptr<Galaxy> m_startGalaxy = nullptr; ///< contains the data at round begin. every round it gets overwritten by the main galaxy
 	std::shared_ptr<Galaxy> m_currentGalaxy = nullptr; ///< is used to store the player data of one player. every turn it gets overwritten by the start Galaxy
@@ -49,12 +51,12 @@ private:
 	 * set the next current player.
 	 * returns a bool to prove if its valid.
 	 */
-	[[nodiscard]] bool SetCurrentPlayer(std::shared_ptr<Player>& currentPlayer) const;
+	[[nodiscard]] bool GetCurrentPlayer(std::shared_ptr<Player>& currentPlayer) const;
 	/**
 	 * set the next next player.
 	 * returns a bool to prove if its valid.
 	 */
-	[[nodiscard]] bool SetNextPlayer(std::shared_ptr<Player>& nextPlayer) const;
+	[[nodiscard]] bool GetNextPlayer(std::shared_ptr<Player>& nextPlayer) const;
 
 	/**
 	 * adds a new player.
@@ -142,6 +144,19 @@ private:
 	 * if not and no galaxy exsitst it only prints a log entry to the console.
 	 */
 	void GenerateShowGalaxy();
+
+	// fleet
+	/**
+	 * calls validation
+	 * add new fleet.
+	 */
+	void AddFleet(SendFleedInstructionEvent const* event);
+
+	/**
+	 * validates the data from the UI.
+	 * generates Popups if needed.
+	 */
+	[[nodiscard]] bool ValidateAddFleetInput(SendFleedInstructionEvent const* event);
 
 	// game
 	/**

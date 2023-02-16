@@ -165,12 +165,14 @@
     <ClInclude Include="Events\public\GenerelEvents.hpp" />
     <ClInclude Include="Events\public\UIEvents.hpp" />
     <ClInclude Include="Events\public\MainEvent.hpp" />
+    <ClInclude Include="Game\public\Fleet.h" />
     <ClInclude Include="Game\public\Galaxy.h" />
     <ClInclude Include="Game\public\GameManager.h" />
     <ClInclude Include="Game\public\Planet.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
     <ClInclude Include="Game\public\SpaceObject.h" />
     <ClInclude Include="Game\public\LogicUpdate.hpp" />
+    <ClInclude Include="Game\public\TargetPoint.h" />
     <ClInclude Include="Helper\public\GameEventTypes.hpp" />
     <ClInclude Include="Helper\public\HColors.h" />
     <ClInclude Include="Helper\public\HConcepts.hpp" />
@@ -248,6 +250,7 @@
     <ClInclude Include="UI\Scene\SupportScenes\public\SliderAndInputLine.h" />
     <ClInclude Include="UI\Scene\SupportScenes\public\TestScene.h" />
     <ClInclude Include="_public\AppContext.h" />
+    <ClInclude Include="_public\CustomRaylib.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Constants\private\ConfigIO.cpp" />
@@ -256,6 +259,8 @@
     <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="Game\private\Planet.cpp" />
     <ClCompile Include="Game\private\Galaxy.cpp" />
+    <ClCompile Include="Game\private\TargetPoint.cpp" />
+    <ClCompile Include="Game\private\Fleet.cpp" />
     <ClCompile Include="Helper\private\HErrorLog.cpp" />
     <ClCompile Include="Helper\private\HRandom.cpp" />
     <ClCompile Include="Game\private\Player.cpp" />
@@ -321,7 +326,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\Text\title.txt" />
-    <Text Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

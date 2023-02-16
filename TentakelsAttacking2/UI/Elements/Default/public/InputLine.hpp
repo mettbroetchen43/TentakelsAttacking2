@@ -9,7 +9,7 @@
 #include "AppContext.h"
 #include "HTextProcessing.h"
 #include "HInput.h"
-#include <raylib.h>
+#include <CustomRaylib.h>
 #include <string>
 #include <functional>
 
@@ -27,6 +27,7 @@ protected:
 	Texture* m_texture; ///< contauns the background texture
 	double m_backspacePressTime = 0.0; ///< contains the time since the last time backspace got pressed and still hold
 	std::function<void()> m_onEnter = []() {}; ///< contains the onEnter lambda gets called then enter is pressed
+	std::function<void()> m_onValueChanced = []() {}; ///< contains the lambda that gets calles when the value chances.
 
 	/**
 	 * checks wether the inputline is still full.
@@ -41,6 +42,8 @@ protected:
 
 			auto event = PlaySoundEvent(SoundType::TEXT);
 			AppContext::GetInstance().eventManager.InvokeEvent(event);
+
+			m_onValueChanced();
 		}
 
 		return validAdd;
@@ -55,6 +58,8 @@ protected:
 
 			auto event = PlaySoundEvent(SoundType::TEXT);
 			AppContext::GetInstance().eventManager.InvokeEvent(event);
+
+			m_onValueChanced();
 		}
 	}
 	/**
@@ -105,7 +110,7 @@ public:
 
 		if (!IsFocused()) { return; }
 
-		bool enter = IsOnlyEnterConfirmInputPressed();
+		bool enter = IsOnlyEnterConfirmInputReleased();
 		if (enter) {
 			m_onEnter();
 		}
@@ -246,6 +251,15 @@ public:
 	 */
 	void SetValue(T value) {
 		m_value = std::to_string(value);
+		m_onValueChanced();
+	}
+	/**
+	 * extens the current value.
+	 * adds the provided text an the end oif the current text.
+	 */
+	void ExtendValue(T value) {
+		m_value += std::to_string(value);
+		m_onValueChanced();
 	}
 	/**
 	 * gets deleted here because it is overloaded for each of the provided datatypes.
@@ -257,6 +271,7 @@ public:
 	 */
 	void Clear() {
 		m_value.clear();
+		m_onValueChanced();
 	}
 
 	/**
@@ -282,6 +297,12 @@ public:
 	 */
 	void SetOnEnter(std::function<void()> onEnter) {
 		m_onEnter = onEnter;
+	}
+	/**
+	 * sets the onValueChanced lambda that is called when the value of the inputline chanced.
+	 */
+	void SetOnValueChanced(std::function<void()> onValueChaned) {
+		m_onValueChanced = onValueChaned;
 	}
 
 	/**
@@ -424,4 +445,14 @@ template<>
 template<>
 inline void InputLine<std::string>::SetValue(std::string value) {
 	m_value = value;
+	m_onValueChanced();
+}
+/**
+ * sets the value for a string input line.
+ * need of this overload because std::to_string doesnt provides an overloas for an std::string.
+ */
+template<>
+inline void InputLine<std::string>::ExtendValue(std::string value) {
+	m_value += value;
+	m_onValueChanced();
 }

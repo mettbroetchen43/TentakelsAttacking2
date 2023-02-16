@@ -19,4 +19,6 @@ struct CGlobal final {
 	size_t maxRounds = 100; ///< defines the max of rounds the player can set (override by config)
 
 	size_t currentRound = 0; ///< contains the current round of the game
+
+	bool acceptInputTriggered = false;
 };

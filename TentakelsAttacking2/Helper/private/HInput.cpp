@@ -4,19 +4,32 @@
 //
 
 #include "HInput.h"
-#include <raylib.h>
+#include "AppContext.h"
+#include <CustomRaylib.h>
 
 bool IsConfirmInputPressed() {
-    return IsKeyPressed(KEY_SPACE)
+    bool triggered =
+        IsKeyPressed(KEY_SPACE)
         or IsKeyPressed(KEY_KP_ENTER)
         or IsKeyPressed(KEY_ENTER)
-        && !IsSkipInput();
+        && !IsSkipInput()
+        && !AppContext::GetInstance().constants.global.acceptInputTriggered;
+
+    if (triggered) { AppContext::GetInstance().constants.global.acceptInputTriggered = true; }
+
+    return triggered;
 }
 bool IsConfirmInputReleased() {
-    return IsKeyReleased(KEY_SPACE)
+    bool triggered =
+        IsKeyReleased(KEY_SPACE)
         or IsKeyReleased(KEY_KP_ENTER)
         or IsKeyReleased(KEY_ENTER)
-        && !IsSkipInput();
+        && !IsSkipInput()
+        && !AppContext::GetInstance().constants.global.acceptInputTriggered;
+
+    if (triggered) { AppContext::GetInstance().constants.global.acceptInputTriggered = true; }
+
+    return triggered;
 }
 bool IsConfirmInputDown() {
     return IsKeyDown(KEY_SPACE)
@@ -32,14 +45,26 @@ bool IsConfirmInputUp() {
 }
 
 bool IsOnlyEnterConfirmInputPressed() {
-    return IsKeyPressed(KEY_KP_ENTER)
+    bool triggered =
+        IsKeyPressed(KEY_KP_ENTER)
         or IsKeyPressed(KEY_ENTER)
-        && !IsSkipInput();
+        && !IsSkipInput()
+        && !AppContext::GetInstance().constants.global.acceptInputTriggered;
+
+    if (triggered) { AppContext::GetInstance().constants.global.acceptInputTriggered = true; }
+
+    return triggered;
 }
 bool IsOnlyEnterConfirmInputReleased() {
-    return IsKeyReleased(KEY_KP_ENTER)
+    bool triggered =
+        IsKeyReleased(KEY_KP_ENTER)
         or IsKeyReleased(KEY_ENTER)
-        && !IsSkipInput();
+        && !IsSkipInput()
+        && !AppContext::GetInstance().constants.global.acceptInputTriggered;
+
+    if (triggered) { AppContext::GetInstance().constants.global.acceptInputTriggered = true; }
+
+    return triggered;
 }
 bool IsOnlyEnterConfirmInputDown() {
     return IsKeyDown(KEY_KP_ENTER)

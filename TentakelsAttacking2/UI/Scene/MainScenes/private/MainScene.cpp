@@ -11,6 +11,8 @@
 #include "HPlayerCollection.h"
 #include "Title.h"
 #include "Text.h"
+#include "InputLine.hpp"
+#include "HPrint.h"
 
 
 void MainScene::Initialize() {
@@ -196,6 +198,153 @@ void MainScene::Initialize() {
 		);
 	// m_nextPlayerName->RenderRectangle(true);
 	m_elements.push_back(m_nextPlayerName);
+
+	// ship input
+	auto text = std::make_shared<Text>(
+		GetElementPosition(0.99f, 0.25f),
+		GetElementSize(0.2f, 0.05f),
+		Alignment::BOTTOM_RIGHT,
+		m_resolution,
+		Alignment::BOTTOM_RIGHT,
+		0.03f,
+		"origin:"
+	);
+	m_elements.push_back(text);
+
+	m_origin = std::make_shared<InputLine<int>>(
+		1000,
+		GetElementPosition(0.99f, 0.25f),
+		GetElementSize(0.08f, 0.04f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		3
+	);
+	m_origin->SetOnEnter([this]() {
+		this->SendFleetInstruction();
+		});
+	m_origin->SetOnValueChanced([this]() {
+			SetAcceptButon();
+		});
+	m_origin->SetPlaceholderText("ID");
+	m_elements.push_back(m_origin);
+
+	text = std::make_shared<Text>(
+		GetElementPosition(0.99f, 0.32f),
+		GetElementSize(0.2f, 0.05f),
+		Alignment::BOTTOM_RIGHT,
+		m_resolution,
+		Alignment::BOTTOM_RIGHT,
+		0.03f,
+		"destination:"
+		);
+	m_elements.push_back(text);
+
+	m_destination = std::make_shared<InputLine<int>>(
+		1001,
+		GetElementPosition(0.99f, 0.32f),
+		GetElementSize(0.08f, 0.04f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		3
+		);
+	m_destination->SetOnEnter([this]() {
+		this->SendFleetInstruction();
+		});
+	m_destination->SetOnValueChanced([this]() {
+		SetAcceptButon();
+		});
+	m_destination->SetPlaceholderText("ID");
+	m_elements.push_back(m_destination);
+
+	m_destinationX = std::make_shared<InputLine<int>>(
+		1002,
+		GetElementPosition(0.949f, 0.37f),
+		GetElementSize(0.039f, 0.04f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		3
+		);
+	m_destinationX->SetOnEnter([this]() {
+		this->SendFleetInstruction();
+		});
+	m_destinationX->SetOnValueChanced([this]() {
+		SetAcceptButon();
+		});
+	m_destinationX->SetPlaceholderText("X");
+	m_elements.push_back(m_destinationX);
+
+	m_destinationY = std::make_shared<InputLine<int>>(
+		1003,
+		GetElementPosition(0.99f, 0.37f),
+		GetElementSize(0.039f, 0.04f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		3
+		);
+	m_destinationY->SetOnEnter([this]() {
+		this->SendFleetInstruction();
+		});
+	m_destinationY->SetOnValueChanced([this]() {
+		SetAcceptButon();
+		});
+	m_destinationY->SetPlaceholderText("Y");
+	m_elements.push_back(m_destinationY);
+
+	text = std::make_shared<Text>(
+		GetElementPosition(0.99f, 0.47f),
+		GetElementSize(0.2f, 0.05f),
+		Alignment::BOTTOM_RIGHT,
+		m_resolution,
+		Alignment::BOTTOM_RIGHT,
+		0.03f,
+		"ship count:"
+		);
+	m_elements.push_back(text);
+
+	m_shipCount = std::make_shared<InputLine<int>>(
+		1004,
+		GetElementPosition(0.99f, 0.47f),
+		GetElementSize(0.08f, 0.04f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		4
+		);
+	m_shipCount->SetOnEnter([this]() {
+		this->SendFleetInstruction();
+		});
+	m_shipCount->SetOnValueChanced([this]() {
+		SetAcceptButon();
+		});
+	m_shipCount->SetPlaceholderText("Count");
+	m_elements.push_back(m_shipCount);
+
+	m_acceptBtn = std::make_shared<ClassicButton>(
+		1005,
+		GetElementPosition(0.99f, 0.54f),
+		GetElementSize(0.04f, 0.04f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		"+",
+		SoundType::ACCEPTED
+		);
+	m_acceptBtn->SetOnClick([this]() {
+		this->SendFleetInstruction();
+		});
+	m_elements.push_back(m_acceptBtn);
+
+	m_resetBtn = std::make_shared<ClassicButton>(
+		1006,
+		GetElementPosition(0.95f, 0.54f),
+		GetElementSize(0.04f, 0.04f),
+		Alignment::TOP_RIGHT,
+		m_resolution,
+		"X",
+		SoundType::ACCEPTED
+		);
+	m_resetBtn->SetOnClick([this]() {
+		this->ClearInputLines();
+		});
+	m_elements.push_back(m_resetBtn);
 }
 void MainScene::InitialzeGalaxy() {
 	AppContext& appContext = AppContext::GetInstance();
@@ -240,7 +389,7 @@ void MainScene::NextRound() {
 
 	auto event = ShowMessagePopUpEvent(
 		"start round",
-		"next round is starting \n just for debug to know"
+		"next round is starting\n just for debug to know"
 	);
 	appContext.eventManager.InvokeEvent(event);
 
@@ -264,6 +413,54 @@ void MainScene::Switch(MainSceneType sceneType) {
 	// m_fleetTable->SetActive(sceneType == MainSceneType::FLEET_TABLE, appContext);
 }
 
+bool MainScene::HasAnyInputLineFocus() {
+	
+	if (m_origin->IsFocused()) { return true; }
+	if (m_destination->IsFocused()) { return true; }
+	if (m_destinationX->IsFocused()) { return true; }
+	if (m_destinationY->IsFocused()) { return true; }
+	if (m_shipCount->IsFocused()) { return true; }
+
+	return false;
+} 
+
+void MainScene::SetAcceptButon() {
+
+	bool valid =
+		m_origin->HasValue()
+		&& (m_destination->HasValue()
+			or (m_destinationX->HasValue()
+			&& m_destinationY->HasValue()))
+		&& m_shipCount->HasValue();
+
+	m_acceptBtn->SetEnabled(valid);
+}
+
+void MainScene::SendFleetInstruction() {
+
+	// TODO: validate input -> implement validation in logic first
+
+	auto event = SendFleedInstructionEvent(
+		m_origin->GetValue(),
+		m_destination->GetValue(),
+		m_destinationX->GetValue(),
+		m_destinationY->GetValue(),
+		m_shipCount->GetValue()
+	);
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+void MainScene::ClearInputLines() {
+
+	m_origin->Clear();
+	m_destination->Clear();
+	m_destinationX->Clear();
+	m_destinationY->Clear();
+	m_shipCount->Clear();
+
+	auto event = SelectFocusElementEvent(m_origin.get());
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+
 MainScene::MainScene(Vector2 resolution)
 	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
 
@@ -275,6 +472,7 @@ MainScene::MainScene(Vector2 resolution)
 	InitialzeGalaxy();
 	SetPlayerText();
 	Switch(MainSceneType::GALAXY);
+	SetAcceptButon();
 }
 MainScene::~MainScene() {
 	AppContext::GetInstance().eventManager.RemoveListener(this);
@@ -302,4 +500,38 @@ void MainScene::OnEvent(Event const& event) {
 		NextRound();
 		return;
 	}
+
+	// Fleet Instruction
+	if (auto const* fleetEvent = dynamic_cast<ReturnFleetInstructionEvent const*>(&event)) {
+		if (fleetEvent->IsValidFleet()) {
+			ClearInputLines();
+		}
+		return;
+	}
+}
+
+void MainScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+	if (!HasAnyInputLineFocus()) {
+
+		bool setFocus = false;
+		auto input = GetKeyPressed();
+		if (input != 0) {
+
+			if (48 <= input && input <= 57) {
+				setFocus = true;
+			}
+			if (320 <= input && input <= 329) {
+				setFocus = true;
+			}
+		}
+
+		if (setFocus) {
+			auto event = SelectFocusElementEvent(m_origin.get());
+			appContext.eventManager.InvokeEvent(event);
+		}
+	}
+
+
+	Scene::CheckAndUpdate(mousePosition, appContext);
 }

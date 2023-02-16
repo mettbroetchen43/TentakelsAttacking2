@@ -43,7 +43,7 @@ protected:
 
 public:
 	/**
-	 * ctor.-
+	 * ctor.
 	 * only initialization.
 	 */
 	Scene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution);

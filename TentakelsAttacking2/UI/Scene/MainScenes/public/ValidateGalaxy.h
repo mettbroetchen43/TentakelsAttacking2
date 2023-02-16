@@ -17,7 +17,7 @@ class SendGalaxyPointerEvent;
  */
 class ValidateGalaxyScene : public Scene{
 private:
-	std::shared_ptr<GalaxyScene> m_galaxy; ///< contains the galaxy scene.
+	std::shared_ptr<GalaxyScene> m_galaxy; ///< contains the galaxy scene
 
 	/**
 	 * initializes all ui elements.

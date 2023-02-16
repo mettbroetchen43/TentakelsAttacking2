@@ -8,7 +8,7 @@
 #include "HSoundType.hpp"
 #include <string>
 #include <functional>
-#include <raylib.h>
+#include <CustomRaylib.h>
 
 class StringCell;
 class IntCell;
@@ -254,6 +254,7 @@ private:
 public:
 	ShowMessagePopUpEvent(std::string const& title, std::string const& subTile, std::function<void()> callback = []() {})
 		:PopUpEvent(title, subTile), m_callback(callback) { }
+
 	[[nodiscard]] std::function<void()> GetCallback() const {
 		return m_callback;
 	}

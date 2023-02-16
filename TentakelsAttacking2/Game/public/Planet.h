@@ -32,6 +32,11 @@ public:
 	[[nodiscard]] bool IsHomePlanet() const;
 
 	/**
+	 * returns if the current spaceobject is a planet.
+	 */
+	[[nodiscard]] bool IsPlanet() const override;
+
+	/**
 	 * sets if the planet is destroyed.
 	 */
 	void SetIsDestroyed(bool isDestroyed);
