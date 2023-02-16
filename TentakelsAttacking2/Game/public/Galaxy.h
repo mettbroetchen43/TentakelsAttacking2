@@ -76,7 +76,7 @@ private:
 	[[nodiscard]] bool AddFleetFromTargetPoint(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 
 	[[nodiscard]] std::shared_ptr<SpaceObject> GetOrGenerateDestination(unsigned int ID,
-		unsigned int X, unsigned int Y, std::shared_ptr<Player> currentPlayer);
+		int X, int Y, std::shared_ptr<Player> currentPlayer);
 
 public:
 	/**

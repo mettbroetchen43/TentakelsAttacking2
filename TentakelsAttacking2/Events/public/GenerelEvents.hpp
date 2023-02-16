@@ -285,31 +285,46 @@ public:
  */
 class SendFleedInstructionEvent : public Event {
 private:
-	size_t m_origin;
-	size_t m_destination;
-	size_t m_destinamtionX;
-	size_t m_destinationY;
+	unsigned int m_origin;
+	unsigned int m_destination;
+	int m_destinamtionX;
+	int m_destinationY;
 	size_t m_shipCount;
 
 public:
-	SendFleedInstructionEvent(size_t origin, size_t destination, size_t destinationX,
-		size_t destinationY,  size_t shipCount)
+	SendFleedInstructionEvent(unsigned int origin, unsigned int destination, int destinationX,
+		int destinationY,  size_t shipCount)
 		: m_origin(origin), m_destination(destination), m_destinamtionX(destinationX),
 		m_destinationY(destinationY), m_shipCount(shipCount) { }
 
-	[[nodiscard]] size_t GetOrigin() const {
+	[[nodiscard]] unsigned int GetOrigin() const {
 		return m_origin;
 	}
-	[[nodiscard]] size_t GetDestination() const {
+	[[nodiscard]] unsigned int GetDestination() const {
 		return m_destination;
 	}
-	[[nodiscard]] size_t GetDestinationX() const{
+	[[nodiscard]] int GetDestinationX() const{
 		return m_destinamtionX;
 	}
-	[[nodiscard]] size_t GetDestinationY() const {
+	[[nodiscard]] int GetDestinationY() const {
 		return m_destinationY;
 	}
 	[[nodiscard]] size_t GetShipCount() const {
 		return m_shipCount;
+	}
+};
+/**
+ * functions as the return of SendFleedInstructionEvent.
+ */
+class ReturnFleetInstructionEvent : public Event {
+private:
+	bool m_isValidFleet;
+
+public:
+	ReturnFleetInstructionEvent(bool validFeet)
+	: m_isValidFleet (validFeet) { }
+
+	[[nodiscard]] bool IsValidFleet() const {
+		return m_isValidFleet;
 	}
 };

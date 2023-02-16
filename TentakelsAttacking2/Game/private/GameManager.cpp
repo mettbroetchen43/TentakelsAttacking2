@@ -331,9 +331,11 @@ void GameManager::AddFleet(SendFleedInstructionEvent const* event) {
 
 	std::shared_ptr<Player> currentPlayer;
 	if (!GetCurrentPlayer(currentPlayer)) { popup("No current player selected."); return; }
-	if (!m_mainGalaxy->AddFleet(event, currentPlayer)) { return; }
 
-	Print("valid fleet");
+	bool isValidFleet = m_mainGalaxy->AddFleet(event, currentPlayer);
+
+	auto returnEvent = ReturnFleetInstructionEvent(isValidFleet);
+	AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
 }
 
 bool GameManager::ValidateAddFleetInput(SendFleedInstructionEvent const* event) {

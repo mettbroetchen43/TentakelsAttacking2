@@ -175,8 +175,8 @@ bool Galaxy::AddFleetFromPlanet(SendFleedInstructionEvent const* event, std::sha
     // get destination
     auto destination = GetOrGenerateDestination(
         event->GetDestination(),
-        event->GetDestinationX(),
-        event->GetDestinationY(),
+        static_cast<int>(event->GetDestinationX()),
+        static_cast<int>(event->GetDestinationY()),
         currentPlayer
     );
 
@@ -209,7 +209,7 @@ bool Galaxy::AddFleetFromTargetPoint(SendFleedInstructionEvent const* event, std
 }
 
 std::shared_ptr<SpaceObject> Galaxy::GetOrGenerateDestination(unsigned int ID,
-    unsigned int X, unsigned int Y, std::shared_ptr<Player> currentPlayer) {
+    int X, int Y, std::shared_ptr<Player> currentPlayer) {
 
     for (auto& object : m_objects) {
 
@@ -223,7 +223,7 @@ std::shared_ptr<SpaceObject> Galaxy::GetOrGenerateDestination(unsigned int ID,
         }
     }
 
-    Vec2<int> point = { static_cast<int>(X),static_cast<int>(Y) };
+    Vec2<int> point = { X,Y };
     auto targetPoint = std::make_shared<TargetPoint>(
         GetNextID(),
         point, 
@@ -320,6 +320,7 @@ bool Galaxy::AddFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Pl
         }
     }
 
+    // get origin and set new fleet
     auto const& origin = GetSpaceObjectByID(event->GetOrigin());
 
     if (origin->IsPlanet()) {

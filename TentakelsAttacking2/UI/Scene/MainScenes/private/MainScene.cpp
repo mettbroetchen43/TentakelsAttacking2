@@ -500,6 +500,14 @@ void MainScene::OnEvent(Event const& event) {
 		NextRound();
 		return;
 	}
+
+	// Fleet Instruction
+	if (auto const* fleetEvent = dynamic_cast<ReturnFleetInstructionEvent const*>(&event)) {
+		if (fleetEvent->IsValidFleet()) {
+			ClearInputLines();
+		}
+		return;
+	}
 }
 
 void MainScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
