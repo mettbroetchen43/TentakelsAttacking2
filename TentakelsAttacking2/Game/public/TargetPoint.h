@@ -1,0 +1,23 @@
+//
+// Purpur Tentakel
+// 16.02.2022
+//
+
+#pragma once
+#include "SpaceObject.h"
+
+class TargetPoint : public SpaceObject {
+private:
+
+public:
+
+	/**
+	 * ctor from SpaceObject.
+	 */
+	using SpaceObject::SpaceObject;
+
+	/**
+	 * returns if the current spaceobject is a planet.
+	 */
+	[[nodiscard]] bool IsTargetPoint() const override;
+};

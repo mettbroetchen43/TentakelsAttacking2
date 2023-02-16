@@ -309,6 +309,12 @@
     <ClInclude Include="_public\CustomRaylib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game\public\TargetPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\public\Fleet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -513,6 +519,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Helper\private\HErrorLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\private\TargetPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\private\Fleet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

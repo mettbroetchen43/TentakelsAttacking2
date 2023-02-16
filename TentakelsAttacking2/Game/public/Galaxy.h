@@ -5,7 +5,8 @@
 
 #pragma once
 #include "Planet.h"
-#include "SpaceObject.h"
+#include "TargetPoint.h"
+#include "Fleet.h"
 #include "GenerelEvents.hpp"
 #include "Vec2.hpp"
 #include <vector>
@@ -23,8 +24,8 @@ private:
 	bool m_validGalaxy = true; ///< specifies if the generation in valid and the galaxy is able to use
 	std::vector<std::shared_ptr<SpaceObject>> m_objects; ///< contains all space object for updating 
 	std::vector<std::shared_ptr<Planet>> m_planets; ///< contains all planets 
-	// m_fleets
-	// m_targetPoints
+	std::vector<std::shared_ptr<Fleet>> m_fleets; ///< contains all fleets
+	std::vector<std::shared_ptr<TargetPoint>> m_targetPoints; ///< contains all target points
 
 	Vec2<int> m_size; ///< contains the size of the galaxy
 

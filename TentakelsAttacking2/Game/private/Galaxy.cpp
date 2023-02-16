@@ -162,12 +162,12 @@ bool Galaxy::AddFleetFromPlanet(SendFleedInstructionEvent const* event, std::sha
     }
 
     // check origin
-    auto currentPlanet = GetPlanetByID(static_cast<unsigned int>(event->GetOrigin()));
-    if (currentPlanet->GetPlayer() != currentPlayer) {
+    auto originPlanet = GetPlanetByID(static_cast<unsigned int>(event->GetOrigin()));
+    if (originPlanet->GetPlayer() != currentPlayer) {
         popup("the choosen origin isn't your Planet.");
         return false;
     }
-    if (currentPlanet->GetShipCount() < event->GetShipCount()) {
+    if (originPlanet->GetShipCount() < event->GetShipCount()) {
         popup("not enough ships on planet " + std::to_string(event->GetOrigin()));
         return false;
     }
@@ -179,7 +179,22 @@ bool Galaxy::AddFleetFromPlanet(SendFleedInstructionEvent const* event, std::sha
         event->GetDestinationY(),
         currentPlayer
     );
-    
+
+    // create fleet
+    auto fleet = std::make_shared<Fleet>(
+        GetNextID(),
+        originPlanet->GetPos(),
+        event->GetShipCount(),
+        currentPlayer,
+        destination
+    );
+
+    m_objects.push_back(fleet);
+    m_fleets.push_back(fleet);
+
+    // remove fleet ships from origin planet
+    *originPlanet -= *fleet;
+
     return true;
 }
 
@@ -208,7 +223,17 @@ std::shared_ptr<SpaceObject> Galaxy::GetOrGenerateDestination(unsigned int ID,
         }
     }
 
-    Print("TODO generate target point for destination", PrintType::DEBUG);
+    Vec2<int> point = { static_cast<int>(X),static_cast<int>(Y) };
+    auto targetPoint = std::make_shared<TargetPoint>(
+        GetNextID(),
+        point, 
+        currentPlayer
+    );
+
+    m_objects.push_back(targetPoint);
+    m_targetPoints.push_back(targetPoint);
+
+    return targetPoint;
 }
 
 Galaxy::Galaxy(Vec2<int> size, size_t planetCount,

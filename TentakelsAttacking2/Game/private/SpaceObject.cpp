@@ -55,12 +55,12 @@ SpaceObject& SpaceObject::operator+=(SpaceObject const& object) {
 	return *this;
 }
 SpaceObject& SpaceObject::operator-=(size_t ships) {
-	assert(m_ships > ships);
+	assert(m_ships >= ships);
 	m_ships -= ships;
 	return *this;
 }
 SpaceObject& SpaceObject::operator-=(SpaceObject const& object) {
-	assert(m_ships > object.m_ships);
+	assert(m_ships >= object.m_ships);
 	m_ships -= object.m_ships;
 	return *this;
 }
@@ -81,15 +81,15 @@ size_t operator+(SpaceObject const& lhs, SpaceObject const& rhs) {
 }
 
 size_t operator-(SpaceObject const& object, size_t ships) {
-	assert(object.m_ships > ships);
+	assert(object.m_ships >= ships);
 	return object.m_ships - ships;
 }
 size_t operator-(size_t ships, SpaceObject const& object) {
-	assert(ships > object.m_ships);
+	assert(ships >= object.m_ships);
 	return ships - object.m_ships;
 }
 size_t operator-(SpaceObject const& lhs, SpaceObject const& rhs) {
-	assert(lhs.m_ships > rhs.m_ships);
+	assert(lhs.m_ships >= rhs.m_ships);
 	return lhs.m_ships - rhs.m_ships;
 }
 
