@@ -17,6 +17,9 @@
 class PlayerCollection final : public EventListener {
 private:
 	std::vector<PlayerData> m_playerData; ///< contains player data
+	std::vector<PlayerData> m_npcData = { ///< contains the player data for the npcs
+		{ 100, "neutral player", WHITE }
+	};
 	PlayerData m_defaultPlayer = { 0,"no player", WHITE }; ///< contains default player witch is return if no other player is found.
 
 	/**
@@ -90,6 +93,11 @@ public:
 	 * if the id is 0 the default player will be returned.
 	 */
 	[[nodiscard]] PlayerData GetPlayerByID(unsigned int ID) const;
+	/**
+	 * returns a player or npc by id.
+	 * if the id is 0 the default player will be returned.
+	 */
+	[[nodiscard]] PlayerData GetPlayerOrNpcByID(unsigned int ID) const;
 	/**
 	 * returns a player by id.
 	 * if no matching player was found, the default player gets returned.

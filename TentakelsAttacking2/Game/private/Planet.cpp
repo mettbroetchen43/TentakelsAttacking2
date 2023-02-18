@@ -40,9 +40,21 @@ bool Planet::IsPlanet() const {
 	return true;
 }
 
-void Planet::SetIsDestroyed(bool isDestroyed) {
+size_t Planet::GetProduction() const {
+	return m_production;
+}
+
+void Planet::SetDestroyed(bool isDestroyed) {
 	m_isDestroyed = isDestroyed;
 }
 bool Planet::IsDestroyed() const {
 	return m_isDestroyed;
+}
+
+void Planet::SetDescovered(bool isDescovered) {
+	m_isDescovered = isDescovered;
+}
+
+bool Planet::IsDescovered() const {
+	return m_isDescovered;
 }

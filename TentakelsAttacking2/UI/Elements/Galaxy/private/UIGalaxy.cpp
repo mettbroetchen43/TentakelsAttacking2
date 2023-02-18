@@ -415,6 +415,10 @@ Rectangle UIGalaxy::GetCollider() const {
 	return UIElement::GetCollider();
 }
 
+Galaxy const* UIGalaxy::GetGalaxy() const {
+	return m_currentGalaxy;
+}
+
 void UIGalaxy::OnEvent(Event const& event) {
 	
 	if (auto const* GalaxyEvent = dynamic_cast<SendGalaxyPointerEvent const*>(&event)) {

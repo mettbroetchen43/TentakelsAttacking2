@@ -11,6 +11,7 @@
 #include <memory>
 
 class GalaxyScene;
+class PlanetTable;
 class ClassicButton;
 class Text;
 template<typename T>
@@ -29,7 +30,7 @@ private:
 	};
 
 	std::shared_ptr<GalaxyScene> m_galaxy; ///< contains the current ui galaxy
-	// std::shared_ptr<GalaxyScene> m_planetTable; 
+	std::shared_ptr<PlanetTable> m_planetTable; ///< contains the current planet table
 	// std::shared_ptr<GalaxyScene> m_fleetTable;
 	std::shared_ptr<ClassicButton> m_nextBtn; ///< contains the next turn / round button
 	std::shared_ptr<Text> m_currentPlayerName; ///< contains the current player name
@@ -57,7 +58,12 @@ private:
 	 * removes old ui galaxy if one exists.
 	 * initialzes a new ui galaxy.
 	 */
-	void InitialzeGalaxy();
+	void InitializeGalaxy();
+	/**
+	 * removes old planet table if one exists.
+	 * initialzes a new planet table
+	 */
+	void InitializePlanetTable();
 
 	/**
 	 * swtitches the support scene to clear.
