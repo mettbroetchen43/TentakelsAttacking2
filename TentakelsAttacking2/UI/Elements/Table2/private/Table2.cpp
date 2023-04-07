@@ -35,8 +35,8 @@ void Table2::UpdateCellFocusID() {
 void Table2::UpdateCellPositionAndSize() {
 	if (m_isScollable) { Print("no imlementation for scrollable yet", PrintType::DEBUG); }
 	else {
-		float cellWidth = m_size.x / m_columnCount + 1;
-		float cellHeight = m_size.y / m_rowCount + 1;
+		float cellWidth = m_size.x / m_columnCount;
+		float cellHeight = m_size.y / m_rowCount;
 
 		for (int row = 0; row < m_cells.size(); ++row) {
 			for (int column = 0; column < m_cells.at(row).size(); ++column) {
@@ -53,8 +53,8 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 	: UIElement(pos, size, alignment, resolution), Focusable(focusID),
 	m_rowCount(rowCount), m_columnCount(columnCount), m_minCellSize(minCellSize) {
 
-	float cellWith = m_size.x / (m_columnCount + 1);
-	float cellHeight = m_size.y / (m_rowCount + 1);
+	float cellWith = m_size.x / m_columnCount;
+	float cellHeight = m_size.y / m_rowCount;
 
 	m_cells.clear();
 	for (int row = 0; row < m_rowCount; ++row) {
@@ -63,7 +63,7 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 		for (int column = 0; column < columnCount; ++column) {
 
 			auto cell = std::make_shared<AbstactTableCell2>(
-				Vector2(m_pos.x + cellWith * column, m_pos.y + cellHeight + row),
+				Vector2(m_pos.x + cellWith * column, m_pos.y + cellHeight * row),
 				Vector2(cellWith, cellHeight),
 				Alignment::TOP_LEFT,
 				m_resolution,
@@ -279,6 +279,13 @@ bool Table2::IsFixedFirstColumn() const {
 	return m_isFixedFirstColumn;
 }
 
+bool Table2::IsEnabled() const noexcept {
+	return true;
+}
+Rectangle Table2::GetCollider() const noexcept {
+	return m_collider;
+}
+
 void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	for (auto const& row : m_cells) {
 		for (auto const& cell : row) {
@@ -286,11 +293,21 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		}
 	}
 }
-
 void Table2::Render(AppContext const& appContext) {
+	BeginScissorMode(
+		static_cast<int>(m_collider.x),
+		static_cast<int>(m_collider.y),
+		static_cast<int>(m_collider.width),
+		static_cast<int>(m_collider.height)
+	);
+
 	for (auto const& row : m_cells) {
 		for (auto const& cell : row) {
 			cell->Render(appContext);
 		}
 	}
+
+	EndScissorMode();
+
+	DrawRectangleLinesEx(m_collider, 2.0f, WHITE);
 }

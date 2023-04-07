@@ -36,11 +36,11 @@ public:
 	/**
 	 * returns if the current elements is enabled.
 	 */
-	[[nodiscard]] bool IsEnabled() const noexcept;
+	[[nodiscard]] bool IsEnabled() const noexcept override;
 	/**
 	 * returns thr current collider.
 	 */
-	[[nodiscard]] Rectangle GetCollider() const;
+	[[nodiscard]] Rectangle GetCollider() const noexcept override;
 
 	/**
 	 * calls the CheckAndUpdate member function of UIElement.

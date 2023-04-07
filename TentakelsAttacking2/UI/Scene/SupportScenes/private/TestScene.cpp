@@ -7,10 +7,22 @@
 #include "ClassicButton.h"
 #include "SceneType.h"
 #include "AppContext.h"
-#include "PlanetTable.h"
+#include "Table2.h"
 #include <iostream>
 
 void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
+
+	auto table = std::make_shared<Table2>(
+		Vector2(0.5f, 0.5f),
+		Vector2(0.5f, 0.5f),
+		Alignment::MID_MID,
+		m_resolution,
+		1,
+		5,
+		6,
+		Vector2(0.2f, 0.1f)
+	);
+	m_elements.push_back(table);
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -33,9 +45,7 @@ TestScene::TestScene(Vector2 resolution)
 	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
 
 	AppContext& appContext = AppContext::GetInstance();
-
-	auto event = GetGalaxyPointerEvent();
-	appContext.eventManager.InvokeEvent(event);
+	Initialize(appContext);
 }
 
 void TestScene::SetActive(bool active, AppContext const& appContext) {

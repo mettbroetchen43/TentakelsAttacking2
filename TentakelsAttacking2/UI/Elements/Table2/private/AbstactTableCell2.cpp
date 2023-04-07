@@ -18,7 +18,7 @@ bool AbstactTableCell2::IsEditable() const noexcept {
 bool AbstactTableCell2::IsEnabled() const noexcept {
 	return true;
 }
-Rectangle AbstactTableCell2::GetCollider() const {
+Rectangle AbstactTableCell2::GetCollider() const noexcept{
 	return m_collider;
 }
 
@@ -28,7 +28,7 @@ void AbstactTableCell2::CheckAndUpdate(Vector2 const&, AppContext const&) {
 void AbstactTableCell2::Render(AppContext const&) {
 	DrawRectangleLinesEx(
 		m_collider,
-		3.0f,
+		1.0f,
 		WHITE
 	);
 }
