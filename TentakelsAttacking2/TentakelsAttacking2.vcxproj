@@ -291,6 +291,7 @@
     <ClCompile Include="UI\Elements\PopUp\private\DeletePlayerPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\SoundLevelPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\ValidatePopUp.cpp" />
+    <ClCompile Include="UI\Elements\Table2\private\AbstactTableCell2.cpp" />
     <ClCompile Include="UI\Elements\Table2\public\AbstactTableCell2.h" />
     <ClCompile Include="UI\Elements\Table\private\EmptyCell.cpp" />
     <ClCompile Include="UI\Elements\Table\private\AbstractTableCell.cpp" />

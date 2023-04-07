@@ -542,6 +542,9 @@
     <ClCompile Include="UI\Elements\Table2\public\AbstactTableCell2.h">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UI\Elements\Table2\private\AbstactTableCell2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\Text\title.txt" />

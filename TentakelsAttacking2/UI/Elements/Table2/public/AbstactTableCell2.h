@@ -5,6 +5,7 @@
 
 #include "UIElement.hpp"
 #include "Focusable.h"
+#pragma once
 
 class AbstactTableCell2 : public UIElement, public Focusable {
 private:
@@ -26,11 +27,20 @@ public:
 	/**
 	 * sets if the cell is editable.
 	 */
-	void SetIsEditable(bool IsEditable);
+	void SetEditable(bool IsEditable) noexcept;
 	/**
 	 * returns true if the cell is editable.
 	 */
-	[[nodiscard]] bool IsEditable() const;
+	[[nodiscard]] bool IsEditable() const noexcept;
+
+	/**
+	 * returns if the current elements is enabled.
+	 */
+	[[nodiscard]] bool IsEnabled() const noexcept;
+	/**
+	 * returns thr current collider.
+	 */
+	[[nodiscard]] Rectangle GetCollider() const;
 
 	/**
 	 * calls the CheckAndUpdate member function of UIElement.

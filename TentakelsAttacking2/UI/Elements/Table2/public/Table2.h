@@ -5,18 +5,17 @@
 
 #include "UIElement.hpp"
 #include "Focusable.h"
+#include "AbstactTableCell2.h"
+#include <memory>
 
 #pragma once
 
-struct Cell {
-
-};
-
 class Table2 final : public UIElement, public Focusable {
 private:
+	using cells_ty = std::vector<std::vector<std::shared_ptr<AbstactTableCell2>>>;
 	int m_rowCount; ///< contains the current mount of rown in the table
 	int m_columnCount; ///< contains the current mount of column in the table
-	std::vector<Cell> m_cells; ///< contains all cells the table is holding
+	cells_ty m_cells; ///< contains all cells the table is holding
 	Vector2 m_minCellSize; ///< contains the minimum relative size of one cell
 	bool m_isScollable = false; ///< contains if it is able to scroll the table
 	bool m_isFixedHeadline = false; ///< contains if the first row is fixed while scolling
@@ -24,13 +23,9 @@ private:
 	Vector2 m_scollOffset{ 0.0f,0.0f }; ///< contains the offset the cells have while scolling
 
 	/**
-	 * returns an index based on the provided row and column.
-	 */
-	[[nodiscard]] int GetIndex(int row, int column) const;
-	/**
 	 * returns true if the provided index is valid to access a cell.
 	 */
-	[[nodiscard]] bool IsValidIndex(int index) const;
+	[[nodiscard]] bool IsValidIndex(int row, int column) const;
 	/**
 	 * returns true if the provided row  is valid to access a cell.
 	 */
@@ -40,14 +35,22 @@ private:
 	 */
 	[[nodiscard]] bool IsValidColumn(int column) const;
 
+	/**
+	 * sets a new focus id in all cells.
+	 */
+	void UpdateCellFocusID();
+	/**
+	 * sets new size in all cells.
+	 */
+	void UpdateCellPositionAndSize();
 
 public:
 	/**
 	 * ctor.
 	 * initializes the table with empty cells.
 	 */
-	Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID, int rowCount, int columnCount, Vector2 minCellSize);
-
+	Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
+		int rowCount, int columnCount, Vector2 minCellSize);
 
 	/**
 	 * replaces the current Cell with a new one.
@@ -80,6 +83,44 @@ public:
 	[[nodiscard]] int GetColumnCount() const;
 
 	/**
+	 * adds a specific row.
+	 */
+	void AddSpecificRow(int row);
+	/**
+	 * adds the last row.
+	 * calls AddSpecificRow.
+	 */
+	void AddLastRow();
+	/**
+	 * adds a specific colunm.
+	 */
+	void AddSpecificColumn(int column);
+	/**
+	 * adds the last column.
+	 * calls AddSpecificColumn.
+	 */
+	void AddLastColumn();
+
+	/**
+	 * removes a specific row.
+	 */
+	void RemoveSpecificRow(int row);
+	/**
+	 * removes the last row.
+	 * calls RemoveSpecificRow.
+	 */
+	void RemoveLastRow();
+	/**
+	 * removes a specific colunm.
+	 */
+	void RemoveSpecificColumn(int column);
+	/**
+	 * removes the last column.
+	 * calls RemoveSpecificColumn.
+	 */
+	void RemoveLastColum();
+
+	/**
 	 * sets the new row and column count.
 	 * resizes the table.
 	 */
@@ -110,12 +151,12 @@ public:
 	/**
 	 * Set if all cells are editable.
 	 */
-	void SetAllEditable(bool IsEditable);
+	void SetAllEditable(bool IsEditable) noexcept;
 	/**
 	 * returns true if all cells are editable.
 	 * returns false if at least one cell is not editable.
 	 */
-	[[nodiscard]] bool IsAllEditable() const;
+	[[nodiscard]] bool IsAllEditable() const noexcept;
 
 	/**
 	 * sets if all cells in a specific row are editable.
@@ -160,7 +201,7 @@ public:
 	 * contains the logic of the table.
 	 * calls all cells to check and Update itself.
 	 */
-	void CheckAndUpdate(Vector2 const&, AppContext const&) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	/**
 	 * renders the table.
 	 * calls all cells to render itself.
