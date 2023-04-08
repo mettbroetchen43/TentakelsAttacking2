@@ -6,9 +6,9 @@
 #pragma once
 #include "MainEvent.hpp"
 #include "HSoundType.hpp"
+#include "CustomRaylib.h"
 #include <string>
 #include <functional>
-#include <CustomRaylib.h>
 
 class StringCell;
 class IntCell;

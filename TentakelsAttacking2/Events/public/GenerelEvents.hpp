@@ -5,8 +5,8 @@
 
 #pragma once
 #include "MainEvent.hpp"
+#include "CustomRaylib.h"
 #include <string>
-#include <CustomRaylib.h>
 #include <unordered_map>
 
 enum class GameEventType;
