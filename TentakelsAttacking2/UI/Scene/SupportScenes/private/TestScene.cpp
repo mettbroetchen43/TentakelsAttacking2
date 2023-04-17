@@ -28,6 +28,8 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 	table->SetColumnEditable(1, false);
 
 	table->SetScrollable(true);
+	table->SetFixedHeadline(true);
+	table->SetFixedFirstColumn(true);
 	table->ResizeTable();
 
 

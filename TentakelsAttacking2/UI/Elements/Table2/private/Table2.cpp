@@ -344,20 +344,165 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 
 }
 void Table2::Render(AppContext const& appContext) {
+
+	auto topLeftCell = m_cells.at(0).at(0)->GetCollider();
+	Vector2 TopLeftCellSize{
+		topLeftCell.width,
+		topLeftCell.height,
+	};
+
+	RenderTopLeft(appContext, TopLeftCellSize);
+	RenderHeadline(appContext, TopLeftCellSize);
+	RenderFirstColumn(appContext, TopLeftCellSize);
+	RenderOtherCells(appContext, TopLeftCellSize);
+	RenderOutline(appContext);
+
+	//DrawRectangleLinesEx(m_collider, 2.0f, PURPLE);
+}
+
+void Table2::RenderTopLeft(AppContext const& appContext, Vector2 TopLeftCellSize) {
+
+	Vector2 offset{
+		0.0f,
+		0.0f,
+	};
+	if (m_isScollable and not m_isFixedFirstColumn) {
+		offset.x = m_scollOffset.x;
+	}
+	if (m_isScollable and not m_isFixedHeadline) {
+		offset.y = m_scollOffset.y;
+	}
+
 	BeginScissorMode(
 		static_cast<int>(m_collider.x),
 		static_cast<int>(m_collider.y),
-		static_cast<int>(m_collider.width),
-		static_cast<int>(m_collider.height)
+		static_cast<int>(TopLeftCellSize.x + 1),
+		static_cast<int>(TopLeftCellSize.y + 1)
 	);
 
-	for (auto const& row : m_cells) {
-		for (auto const& cell : row) {
-			cell->Render(appContext, m_scollOffset);
+	m_cells.at(0).at(0)->Render(appContext, offset);
+
+	EndScissorMode();
+}
+void Table2::RenderHeadline(AppContext const& appContext, Vector2 TopLeftCellSize) {
+
+	Vector2 offset{
+		0.0f,
+		0.0f,
+	};
+	Vector2 sOffset{
+		0.0f,
+		0.0f,
+	};
+	if (m_isScollable) {
+		offset.x = m_scollOffset.x;
+		if (not m_isFixedFirstColumn) {
+			sOffset.x = TopLeftCellSize.x < m_scollOffset.x ? TopLeftCellSize.x : m_scollOffset.x;
+		}
+	}
+	if (m_isScollable and not m_isFixedHeadline) {
+		offset.y = m_scollOffset.y;
+		sOffset.y = TopLeftCellSize.y < m_scollOffset.y ? TopLeftCellSize.y : m_scollOffset.y;
+	}
+
+	BeginScissorMode(
+		static_cast<int>(m_collider.x + TopLeftCellSize.x - sOffset.x),
+		static_cast<int>(m_collider.y),
+		static_cast<int>(m_collider.width - TopLeftCellSize.x + sOffset.x),
+		static_cast<int>(TopLeftCellSize.y + 1)
+	);
+
+	auto row = m_cells.at(0);
+	for (int column = 1; column < row.size(); ++column) { // start at 1 because cell 0 is renderd in TopLeft
+		row.at(column)->Render(appContext, offset);
+	}
+
+	EndScissorMode();
+}
+void Table2::RenderFirstColumn(AppContext const& appContext, Vector2 TopLeftCellSize) {
+	Vector2 offset{
+		0.0f,
+		0.0f,
+	};
+	Vector2 sOffset{
+		0.0f,
+		0.0f,
+	};
+
+	if (m_isScollable and not m_isFixedFirstColumn) {
+		offset.x = m_scollOffset.x;
+		sOffset.x = TopLeftCellSize.x < m_scollOffset.x ? TopLeftCellSize.x : m_scollOffset.x;
+	}
+	if (m_isScollable) {
+		offset.y = m_scollOffset.y;
+		if (not m_isFixedHeadline) {
+			sOffset.y = TopLeftCellSize.y < m_scollOffset.y ? TopLeftCellSize.y : m_scollOffset.y;
 		}
 	}
 
-	DrawRectangleLinesEx(m_collider, 2.0f, WHITE);
+	BeginScissorMode(
+		static_cast<int>(m_collider.x),
+		static_cast<int>(m_collider.y + TopLeftCellSize.y - sOffset.y),
+		static_cast<int>(TopLeftCellSize.x + 1),
+		static_cast<int>(m_collider.height - TopLeftCellSize.y + sOffset.y)
+	);
+
+	for (int row = 1; row < m_cells.size(); ++row) { // start at 1 because cell 0 is renderd in TopLeft
+		m_cells.at(row).at(0)->Render(appContext, offset);
+	}
 
 	EndScissorMode();
+}
+void Table2::RenderOtherCells(AppContext const& appContext, Vector2 TopLeftCellSize) {
+	Vector2 offset{
+		0.0f,
+		0.0f,
+	};
+	Vector2 sOffset{
+		0.0f,
+		0.0f,
+	};
+	if (m_isScollable) {
+		offset.x = m_scollOffset.x;
+		if (not m_isFixedFirstColumn) {
+			sOffset.x = TopLeftCellSize.x < m_scollOffset.x ? TopLeftCellSize.x : m_scollOffset.x;
+		}
+
+		offset.y = m_scollOffset.y;
+		if (not m_isFixedHeadline) {
+			sOffset.y = TopLeftCellSize.y < m_scollOffset.y ? TopLeftCellSize.y : m_scollOffset.y;
+		}
+	}
+
+	BeginScissorMode(
+		static_cast<int>(m_collider.x + TopLeftCellSize.x - sOffset.x),
+		static_cast<int>(m_collider.y + TopLeftCellSize.y - sOffset.y),
+		static_cast<int>(m_collider.width - TopLeftCellSize.x + sOffset.x),
+		static_cast<int>(m_collider.height - TopLeftCellSize.y + sOffset.y)
+		);
+
+	for (int row = 1; row < m_cells.size(); ++row) { // start at 1 because cell 0 is renderd in TopLeft or headline
+		for (int column = 1; column < m_cells.at(row).size(); ++column) { // start at 1 because cell 0 is renderd in TopLeft or first column
+			m_cells.at(row).at(column)->Render(appContext, offset);
+		}
+	}
+
+	EndScissorMode();
+}
+
+void Table2::RenderOutline(AppContext const& appContext) const {
+	auto row = m_cells.at(m_cells.size() - 1);
+	auto lastCell = row.at(row.size() - 1);
+	auto lCcol = lastCell->GetCollider();
+	float bottom = lCcol.y + lCcol.height;
+	if (m_isScollable) { bottom -= m_scollOffset.y; }
+
+	Rectangle outline{ 
+		m_collider.x,
+		m_collider.y,
+		m_collider.width,
+		bottom - m_collider.y,
+	};
+
+	DrawRectangleLinesEx(outline, 2.0f, PURPLE);
 }

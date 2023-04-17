@@ -20,7 +20,7 @@ private:
 	bool m_isScollable = false; ///< contains if it is able to scroll the table
 	bool m_isFixedHeadline = false; ///< contains if the first row is fixed while scolling
 	bool m_isFixedFirstColumn = false; ///< contains if the first column is fixed while scolling
-	Vector2 m_scollOffset{ 0.0f, 0.0f };  // { 50.0f, 100.0f }; ///< contains the offset the cells have while scolling
+	Vector2 m_scollOffset{ 50.0f, 20.0f }; ///< contains the offset the cells have while scolling
 
 	/**
 	 * returns true if the provided index is valid to access a cell.
@@ -225,5 +225,30 @@ public:
 	 * calls all cells to render itself.
 	 */
 	void Render(AppContext const& appContext) override;
-};
 
+	/**
+	 * calls the top left cell to render.
+	 * sets the scissors mode for it.
+	 */
+	void RenderTopLeft(AppContext const& appContext, Vector2 TopLeftCellSize);
+	/**
+	 * calls the headline (without the top left corner) to render.
+	 * sets the scissors mode for it.
+	 */
+	void RenderHeadline(AppContext const& appContext, Vector2 TopLeftCellSize);
+	/**
+	 * calls the first column (without the top left corner) to render.
+	 * sets the scissors mode for it.
+	 */
+	void RenderFirstColumn(AppContext const& appContext, Vector2 TopLeftCellSize);
+	/**
+	 * calls all the other cells to render.
+	 * sets the scissors mode for it.
+	 */
+	void RenderOtherCells(AppContext const& appContext, Vector2 TopLeftCellSize);
+	/**
+	 * renders the outline of the table.
+	 * sets the scissors mode for it.
+	 */
+	void RenderOutline(AppContext const& appContext) const;
+};

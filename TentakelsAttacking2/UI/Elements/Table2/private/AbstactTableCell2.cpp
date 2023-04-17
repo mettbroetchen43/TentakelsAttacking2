@@ -35,7 +35,7 @@ void AbstactTableCell2::CheckAndUpdate(Vector2 const&, AppContext const&) {
 void AbstactTableCell2::Render(AppContext const&) { }
 void AbstactTableCell2::Render(AppContext const&, Vector2 offset) {
 
-	Rectangle temprary {
+	Rectangle temporary {
 		m_collider.x - offset.x,
 		m_collider.y -offset.y,
 		m_collider.width,
@@ -43,7 +43,7 @@ void AbstactTableCell2::Render(AppContext const&, Vector2 offset) {
 	};
 
 	DrawRectangleLinesEx(
-		temprary,
+		temporary,
 		1.0f,
 		WHITE
 	);
