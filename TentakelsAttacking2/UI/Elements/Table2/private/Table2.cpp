@@ -30,22 +30,41 @@ bool Table2::IsValidColumn(int column) const {
 void Table2::UpdateCellFocusID() {
 	for (int row = 0; row < m_cells.size(); ++row) {
 		for (int column = 0; column < m_cells.at(row).size(); ++column) {
-			m_cells.at(row).at(column)->SetFocusID(static_cast<unsigned int>(row * m_cells.size() + column));
+			m_cells.at(row).at(column)->SetFocusID(static_cast<unsigned int>(row * m_columnCount + column));
 		}
 	}
 }
 void Table2::UpdateCellPositionAndSize() {
-	if (m_isScollable) { Print("no imlementation for scrollable yet", PrintType::DEBUG); }
-	else {
-		float cellWidth = m_size.x / m_columnCount;
-		float cellHeight = m_size.y / m_rowCount;
 
-		for (int row = 0; row < m_cells.size(); ++row) {
-			for (int column = 0; column < m_cells.at(row).size(); ++column) {
-				auto& cell = m_cells.at(row).at(column);
-				cell->SetPosition({ m_pos.x + cellWidth * column, m_pos.y + cellHeight * row });
-				cell->SetSize({ cellHeight, cellWidth });
-			}
+	float cellWidth;
+	float cellHeight;
+
+	if (m_isScollable) {
+
+		Vector2 tableSize{
+			m_minCellSize.x * m_columnCount,
+			m_minCellSize.y * m_rowCount
+		};
+
+		auto cellSize = m_minCellSize;
+
+		if (tableSize.x < m_size.x) {
+			cellSize.x += (m_size.x - tableSize.x) / m_columnCount;
+		}
+
+		cellWidth = cellSize.x;
+		cellHeight = cellSize.y;
+	}
+	else {
+		cellWidth = m_size.x / m_columnCount;
+		cellHeight = m_size.y / m_rowCount;
+	}
+
+	for (int row = 0; row < m_cells.size(); ++row) {
+		for (int column = 0; column < m_cells.at(row).size(); ++column) {
+			auto& cell = m_cells.at(row).at(column);
+			cell->SetPosition({ m_pos.x + cellWidth * column, m_pos.y + cellHeight * row });
+			cell->SetSize({ cellWidth, cellHeight });
 		}
 	}
 }
@@ -70,7 +89,7 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 	: UIElement(pos, size, alignment, resolution), Focusable(focusID),
 	m_rowCount(rowCount), m_columnCount(columnCount), m_minCellSize(minCellSize) {
 
-	float cellWith = m_size.x / m_columnCount;
+	float cellWidth = m_size.x / m_columnCount;
 	float cellHeight = m_size.y / m_rowCount;
 
 	m_cells.clear();
@@ -80,8 +99,8 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 		for (int column = 0; column < columnCount; ++column) {
 
 			auto cell = std::make_shared<AbstactTableCell2>(
-				Vector2(m_pos.x + cellWith * column, m_pos.y + cellHeight * row),
-				Vector2(cellWith, cellHeight),
+				Vector2(m_pos.x + cellWidth * column, m_pos.y + cellHeight * row),
+				Vector2(cellWidth, cellHeight),
 				Alignment::TOP_LEFT,
 				m_resolution,
 				row * columnCount + column
@@ -334,11 +353,11 @@ void Table2::Render(AppContext const& appContext) {
 
 	for (auto const& row : m_cells) {
 		for (auto const& cell : row) {
-			cell->Render(appContext);
+			cell->Render(appContext, m_scollOffset);
 		}
 	}
 
-	EndScissorMode();
-
 	DrawRectangleLinesEx(m_collider, 2.0f, WHITE);
+
+	EndScissorMode();
 }

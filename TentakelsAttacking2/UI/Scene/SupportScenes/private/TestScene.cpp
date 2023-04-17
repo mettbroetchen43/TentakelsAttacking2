@@ -20,12 +20,16 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 		1, // focus ID
 		5, // row count
 		6, // column count
-		Vector2(0.2f, 0.1f) // min cell size
+		Vector2(0.15f, 0.08f) // min cell size
 	);
 	m_elements.push_back(table);
 
 	table->SetRowEditable(2, false);
 	table->SetColumnEditable(1, false);
+
+	table->SetScrollable(true);
+	table->ResizeTable();
+
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -71,4 +75,3 @@ void TestScene::OnEvent(Event const& event) {
 		Initialize(AppContext::GetInstance());
 	}
 }
-

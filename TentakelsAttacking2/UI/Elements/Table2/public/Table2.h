@@ -20,7 +20,7 @@ private:
 	bool m_isScollable = false; ///< contains if it is able to scroll the table
 	bool m_isFixedHeadline = false; ///< contains if the first row is fixed while scolling
 	bool m_isFixedFirstColumn = false; ///< contains if the first column is fixed while scolling
-	Vector2 m_scollOffset{ 0.0f,0.0f }; ///< contains the offset the cells have while scolling
+	Vector2 m_scollOffset{ 0.0f, 0.0f };  // { 50.0f, 100.0f }; ///< contains the offset the cells have while scolling
 
 	/**
 	 * returns true if the provided index is valid to access a cell.
@@ -76,7 +76,7 @@ public:
 	 * need to call the recalculation of the table.
 	 */
 	void SetRowCount(int newRowCount);
-	/** 
+	/**
 	 * returns the current row count.
 	 */
 	[[nodiscard]] int GetRowCount() const;
@@ -152,7 +152,7 @@ public:
 	 * sets if a specific cell is editable.
 	 */
 	void SetSingleEditable(int row, int column, bool isEditable);
-	/** 
+	/**
 	 * returns true if a specific cell is editable.
 	 */
 	[[nodiscard]] bool IsSingleEditable(int row, int column) const;
@@ -171,7 +171,7 @@ public:
 	 * sets if all cells in a specific row are editable.
 	 */
 	void SetRowEditable(int row, bool isEditable);
-	/** 
+	/**
 	 * returns true if all cells in a specific row are editable.
 	 * returns false if at least one cell in a specific row is not editable.
 	 */

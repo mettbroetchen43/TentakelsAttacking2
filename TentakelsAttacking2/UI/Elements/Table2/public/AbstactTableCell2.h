@@ -49,7 +49,12 @@ public:
 	 */
 	void CheckAndUpdate(Vector2 const&, AppContext const&) override;
 	/**
-	 * renders the cell.
+	 * nothing in this case.
+	 * use the overload.
 	 */
 	void Render(AppContext const& appContext) override;
+	/**
+	 * renders the cell.
+	 */
+	void Render(AppContext const& appContext, Vector2 offset);
 };

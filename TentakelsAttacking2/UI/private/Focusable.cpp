@@ -32,7 +32,5 @@ unsigned int Focusable::GetFocusID() const {
 }
 
 void Focusable::SetFocusID(unsigned int focusID) noexcept {
-	if (focusID <= 0) { Print("provided focus ID is lower or eqal to zero.", PrintType::ERROR); return; }
-
 	m_focusID = focusID;
 }

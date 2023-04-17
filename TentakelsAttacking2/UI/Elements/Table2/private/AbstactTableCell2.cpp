@@ -32,9 +32,18 @@ Rectangle AbstactTableCell2::GetCollider() const noexcept {
 void AbstactTableCell2::CheckAndUpdate(Vector2 const&, AppContext const&) {
 
 }
-void AbstactTableCell2::Render(AppContext const&) {
+void AbstactTableCell2::Render(AppContext const&) { }
+void AbstactTableCell2::Render(AppContext const&, Vector2 offset) {
+
+	Rectangle temprary {
+		m_collider.x - offset.x,
+		m_collider.y -offset.y,
+		m_collider.width,
+		m_collider.height
+	};
+
 	DrawRectangleLinesEx(
-		m_collider,
+		temprary,
 		1.0f,
 		WHITE
 	);
