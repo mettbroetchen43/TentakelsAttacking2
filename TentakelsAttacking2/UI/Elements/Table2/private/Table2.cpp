@@ -5,6 +5,8 @@
 
 #include "Table2.h"
 #include "HPrint.h"
+#include "HInput.h"
+#include "HFocusEvents.h"
 #include <stdexcept>
 
 
@@ -46,6 +48,21 @@ void Table2::UpdateCellPositionAndSize() {
 			}
 		}
 	}
+}
+
+void Table2::SetCellFocus() {
+	SetNestedFocus(true);
+
+	AddFocusLayer();
+	for (auto const& line : m_cells) {
+		for (auto const& cell : line) {
+			AddFocusElement(cell.get());
+		}
+	}
+}
+void Table2::RemoveCellFocus() {
+	DeleteFocusLayer();
+	SetNestedFocus(false);
 }
 
 Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
@@ -292,6 +309,20 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 			cell->CheckAndUpdate(mousePosition, appContext);
 		}
 	}
+
+	if (IsNestedFocus()) {
+		if (IsBackInputPressed()) {
+			RemoveCellFocus();
+		}
+	}
+
+	else if (IsFocused()) {
+		if (IsConfirmInputPressed()) {
+			SetCellFocus();
+		}
+	}
+
+
 }
 void Table2::Render(AppContext const& appContext) {
 	BeginScissorMode(

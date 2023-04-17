@@ -11,11 +11,12 @@ class AbstactTableCell2 : public UIElement, public Focusable {
 private:
 	bool m_isEditable = true; ///< contains if the cell is currently editable
 	float m_textSize; ///< contains the text size the text is renderd with
+	Vector2 m_textPosition; ///< contains the absolute text position 
 
 	/**
 	 * calculates a new text size from the collider.
 	 */
-	void CalculateTextSize(std::string const& value);
+	void CalculateTextSize();
 
 public:
 	/**

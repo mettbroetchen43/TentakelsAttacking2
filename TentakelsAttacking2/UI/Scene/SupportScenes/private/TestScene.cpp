@@ -13,16 +13,19 @@
 void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 
 	auto table = std::make_shared<Table2>(
-		Vector2(0.5f, 0.5f),
-		Vector2(0.5f, 0.5f),
+		Vector2(0.5f, 0.5f), // pos
+		Vector2(0.5f, 0.5f), // size
 		Alignment::MID_MID,
 		m_resolution,
-		1,
-		5,
-		6,
-		Vector2(0.2f, 0.1f)
+		1, // focus ID
+		5, // row count
+		6, // column count
+		Vector2(0.2f, 0.1f) // min cell size
 	);
 	m_elements.push_back(table);
+
+	table->SetRowEditable(2, false);
+	table->SetColumnEditable(1, false);
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(

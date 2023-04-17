@@ -44,6 +44,15 @@ private:
 	 */
 	void UpdateCellPositionAndSize();
 
+	/**
+	 * sets the cell focus and the nested focus.
+	 */
+	void SetCellFocus();
+	/**
+	 * removes the focus from the cells and the nested focus.
+	 */
+	void RemoveCellFocus();
+
 public:
 	/**
 	 * ctor.
