@@ -25,6 +25,7 @@ private:
 	bool m_setFixedFirstColumn = false; ///< contains if the first column will get wixed this frame
 	bool m_isFixedFirstColumn = false; ///< contains if the first column is fixed while scolling
 	float m_scroll_speed; ///< contains the speed the table ist scrolled with
+	Vector2 m_absoluteScollingOffset{ 0.0f,0.0f }; ///< contains the absolute scrolling offset 
 
 	/**
 	 * returns true if the provided index is valid to access a cell.

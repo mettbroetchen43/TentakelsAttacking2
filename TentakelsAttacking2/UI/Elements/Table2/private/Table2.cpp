@@ -67,6 +67,10 @@ void Table2::UpdateCellPositionAndSize() {
 			cell->SetSize({ cellWidth, cellHeight });
 		}
 	}
+
+	if (m_isScrollable) {
+		Scroll(m_absoluteScollingOffset);
+	}
 }
 
 void Table2::SetCellFocus() {
@@ -192,6 +196,8 @@ void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 
 	ClampScroollOffset(offset);
 	Scroll(offset);
+	m_absoluteScollingOffset.x += offset.x;
+	m_absoluteScollingOffset.y += offset.y;
 }
 void Table2::ClampScroollOffset(Vector2& offset) {
 	if (m_rowCount < 2) { Print("not enough rows in table for clamping", PrintType::EXPECTED_ERROR); return; }
