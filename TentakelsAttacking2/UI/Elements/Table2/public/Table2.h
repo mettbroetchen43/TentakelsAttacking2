@@ -17,6 +17,7 @@ private:
 	int m_columnCount; ///< contains the current mount of column in the table
 	cells_ty m_cells; ///< contains all cells the table is holding
 	Vector2 m_minCellSize; ///< contains the minimum relative size of one cell
+	Rectangle m_temporaryCollider; ///< contains the used collider
 
 	bool m_setScrollable = false; ///< contains if the table get set scrollable this frame
 	bool m_isScrollable = false; ///< contains if it is able to scroll the table

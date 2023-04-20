@@ -23,7 +23,7 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 		Alignment::MID_MID,
 		m_resolution,
 		1, // focus ID
-		5, // row count
+		15, // row count
 		6, // column count
 		Vector2(0.15f, 0.08f),// min cell size
 		0.025f // scroll speed

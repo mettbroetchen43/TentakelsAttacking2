@@ -181,7 +181,7 @@ void Table2::UpdateFirstRowPosition() {
 
 void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 	if (not m_isScrollable) { return; }
-	if (not CheckCollisionPointRec(mousePosition, m_collider)) { return; } // check if collider is maybe to big
+	if (not CheckCollisionPointRec(mousePosition, m_temporaryCollider)) { return; } // check if collider is maybe to big
 
 	float mouseWheel = GetMouseWheelMove();
 	if (mouseWheel == 0.0f) { return; }
@@ -271,15 +271,16 @@ void Table2::RenderOtherCells(AppContext const& appContext) {
 }
 void Table2::RenderOutline() const {
 
-	DrawRectangleLinesEx(m_collider, 2.0f, PURPLE);
+	DrawRectangleLinesEx(m_temporaryCollider, 2.0f, PURPLE);
 }
 
 
 Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
 	int rowCount, int columnCount, Vector2 minCellSize, float scrollSpeed)
 	: UIElement(pos, size, alignment, resolution), Focusable(focusID),
-	m_rowCount(rowCount), m_columnCount(columnCount), m_minCellSize(minCellSize), m_scroll_speed(scrollSpeed) {
+	m_rowCount(rowCount), m_columnCount(columnCount), m_minCellSize(minCellSize), m_scroll_speed(scrollSpeed), m_temporaryCollider{ 0.0f,0.0f,0.0f,0.0f } {
 
+	m_temporaryCollider = m_collider;
 	float cellWidth = m_size.x / m_columnCount;
 	float cellHeight = m_size.y / m_rowCount;
 
@@ -470,7 +471,7 @@ bool Table2::IsEnabled() const noexcept {
 	return true;
 }
 Rectangle Table2::GetCollider() const noexcept {
-	return m_collider;
+	return m_temporaryCollider;
 }
 
 void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
@@ -479,12 +480,6 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 	UpdateHeadlinePosition();
 	UpdateFirstRowPosition();
 	CheckAndUpdateScroll(mousePosition);
-
-	for (auto const& row : m_cells) {
-		for (auto const& cell : row) {
-			cell->CheckAndUpdate(mousePosition, appContext);
-		}
-	}
 
 	if (IsNestedFocus()) {
 		if (IsBackInputPressed()) {
@@ -497,6 +492,17 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 			SetCellFocus();
 		}
 	}
+
+	for (auto const& row : m_cells) {
+		for (auto const& cell : row) {
+			cell->CheckAndUpdate(mousePosition, appContext);
+		}
+	}
+
+	auto lastCell = m_cells.at(m_rowCount - 1).at(m_columnCount - 1)->GetCollider();
+	auto bottomCell = lastCell.y + lastCell.height;
+	auto bottomTable = m_collider.y + m_collider.height;
+	m_temporaryCollider.height = bottomTable < bottomCell ? m_collider.height : bottomCell - m_collider.y;
 }
 void Table2::Render(AppContext const& appContext) {
 
