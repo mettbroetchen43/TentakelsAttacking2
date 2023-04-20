@@ -17,8 +17,12 @@ private:
 	int m_columnCount; ///< contains the current mount of column in the table
 	cells_ty m_cells; ///< contains all cells the table is holding
 	Vector2 m_minCellSize; ///< contains the minimum relative size of one cell
-	bool m_isScollable = false; ///< contains if it is able to scroll the table
+
+	bool m_setScrollable = false; ///< contains if the table get set scrollable this frame
+	bool m_isScrollable = false; ///< contains if it is able to scroll the table
+	bool m_setFixedHeadline = false; ///< contains if the forst row will get fixed this frame
 	bool m_isFixedHeadline = false; ///< contains if the first row is fixed while scolling
+	bool m_setFixedFirstColumn = false; ///< contains if the first column will get wixed this frame
 	bool m_isFixedFirstColumn = false; ///< contains if the first column is fixed while scolling
 	float m_scroll_speed; ///< contains the speed the table ist scrolled with
 
@@ -52,6 +56,19 @@ private:
 	 * removes the focus from the cells and the nested focus.
 	 */
 	void RemoveCellFocus();
+
+	/**
+	 * resizes the table.
+	 */
+	void ResizeTable();
+	/**
+	 * updates the headline position to fix it or not.
+	 */
+	void UpdateHeadlinePosition();
+	/**
+	 * updates the first row position to fix it or not.
+	 */
+	void UpdateFirstRowPosition();
 
 	/** 
 	 * checks and scrolls if scrollable
@@ -167,16 +184,6 @@ public:
 	 * calls RemoveSpecificColumn.
 	 */
 	void RemoveLastColum();
-
-	/**
-	 * sets the new row and column count.
-	 * resizes the table.
-	 */
-	void ResizeTable(int newRowCount, int newColumnCount);
-	/**
-	 * resizes the table.
-	 */
-	void ResizeTable();
 
 	/**
 	 * Sets if the table is scollable.

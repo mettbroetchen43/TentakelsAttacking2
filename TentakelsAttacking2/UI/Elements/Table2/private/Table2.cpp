@@ -7,7 +7,6 @@
 #include "HPrint.h"
 #include "HInput.h"
 #include "HFocusEvents.h"
-#include <iostream>
 #include <stdexcept>
 
 
@@ -40,7 +39,7 @@ void Table2::UpdateCellPositionAndSize() {
 	float cellWidth;
 	float cellHeight;
 
-	if (m_isScollable) {
+	if (m_isScrollable) {
 
 		Vector2 tableSize{
 			m_minCellSize.x * m_columnCount,
@@ -85,9 +84,99 @@ void Table2::RemoveCellFocus() {
 	SetNestedFocus(false);
 }
 
+void Table2::ResizeTable() {
+	bool needResize =
+		m_rowCount != m_cells.size() + 1
+		and m_columnCount != m_cells.at(0).size() + 1
+		and m_setScrollable != m_isScrollable;
+	if (not needResize) { return; }
+
+	m_isScrollable = m_setScrollable;
+
+	// rows
+	if (m_cells.size() == m_rowCount) { /* nothing */ }
+	else if (m_cells.size() < m_rowCount) {
+		while (m_cells.size() < m_rowCount) {
+			AddLastRow();
+		}
+	}
+	else if (m_cells.size() > m_rowCount) {
+		while (m_cells.size() > m_rowCount) {
+			RemoveLastRow();
+		}
+	}
+
+	if (m_cells.size() == 0) { Print("no rows in table", PrintType::ERROR), throw std::out_of_range("no rows"); }
+
+	// columns
+	auto& row = m_cells.at(0);
+	if (row.size() == m_columnCount) { /* nothing */ }
+	else if (row.size() < m_columnCount) {
+		while (row.size() < m_columnCount) {
+			AddLastColumn();
+		}
+	}
+	else if (row.size() > m_columnCount) {
+		while (row.size() > m_columnCount) {
+			RemoveLastColum();
+		}
+	}
+
+	UpdateCellFocusID();
+	UpdateCellPositionAndSize();
+}
+void Table2::UpdateHeadlinePosition() {
+	if (m_setFixedHeadline == m_isFixedHeadline) { return; }
+	m_isFixedHeadline = m_setFixedHeadline;
+
+	if (m_isFixedHeadline) {
+		for (auto cell : m_cells.at(0)) {
+			auto col = cell->GetCollider();
+			col.y = m_collider.y;
+			cell->SetCollider(col);
+		}
+	}
+	else {
+		if (m_rowCount < 2) { Print("not able to move headline", PrintType::EXPECTED_ERROR); return; }
+		float height = m_cells.at(0).at(0)->GetCollider().height;
+		float pos = m_cells.at(1).at(0)->GetCollider().y;
+		for (auto cell : m_cells.at(0)) {
+			auto col = cell->GetCollider();
+			col.y = pos - height;
+			cell->SetCollider(col);
+		}
+	}
+
+}
+void Table2::UpdateFirstRowPosition() {
+	if (m_setFixedFirstColumn == m_isFixedFirstColumn) { return; }
+	m_isFixedFirstColumn = m_setFixedFirstColumn;
+
+	if (m_isFixedFirstColumn) {
+		for (int row = 0; row < m_cells.size(); ++row) {
+			auto cell = m_cells.at(row).at(0);
+			auto col = cell->GetCollider();
+			col.x = m_collider.x;
+			cell->SetCollider(col);
+		}
+	}
+	else {
+		if (m_columnCount < 2) { Print("not able to move first row", PrintType::EXPECTED_ERROR); return; }
+
+		float width = m_cells.at(0).at(0)->GetCollider().width;
+		float pos = m_cells.at(0).at(1)->GetCollider().x;
+		
+		for (int row = 0; row < m_cells.size(); ++row) {
+			auto cell = m_cells.at(row).at(0);
+			auto col = cell->GetCollider();
+			col.x = pos - width;
+			cell->SetCollider(col);
+		}
+	}
+}
 
 void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition) {
-	if (not m_isScollable) { return; }
+	if (not m_isScrollable) { return; }
 	if (not CheckCollisionPointRec(mousePosition, m_collider)) { return; } // check if collider is maybe to big
 
 	float mouseWheel = GetMouseWheelMove();
@@ -103,7 +192,6 @@ void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 
 	ClampScroollOffset(offset);
 	Scroll(offset);
-	Print("offset: x -> " + std::to_string(offset.x) + " | y -> " + std::to_string(offset.y), PrintType::DEBUG);
 }
 void Table2::ClampScroollOffset(Vector2& offset) {
 	if (m_rowCount < 2) { Print("not enough rows in table for clamping", PrintType::EXPECTED_ERROR); return; }
@@ -292,51 +380,11 @@ void Table2::RemoveLastColum() {
 	RemoveSpecificColumn(static_cast<int>(m_cells.at(0).size() - 1));
 }
 
-void Table2::ResizeTable(int newRowCount, int newColumnCount) {
-	SetRowCount(newRowCount);
-	SetColumnCount(newColumnCount);
-
-	ResizeTable();
-}
-void Table2::ResizeTable() {
-	// rows
-	if (m_cells.size() == m_rowCount) { /* nothing */ }
-	else if (m_cells.size() < m_rowCount) {
-		while (m_cells.size() < m_rowCount) {
-			AddLastRow();
-		}
-	}
-	else if (m_cells.size() > m_rowCount) {
-		while (m_cells.size() > m_rowCount) {
-			RemoveLastRow();
-		}
-	}
-
-	if (m_cells.size() == 0) { Print("no rows in table", PrintType::ERROR), throw std::out_of_range("no rows"); }
-
-	// columns
-	auto& row = m_cells.at(0);
-	if (row.size() == m_columnCount) { /* nothing */ }
-	else if (row.size() < m_columnCount) {
-		while (row.size() < m_columnCount) {
-			AddLastColumn();
-		}
-	}
-	else if (row.size() > m_columnCount) {
-		while (row.size() > m_columnCount) {
-			RemoveLastColum();
-		}
-	}
-
-	UpdateCellFocusID();
-	UpdateCellPositionAndSize();
-}
-
 void Table2::SetScrollable(bool isScollable) {
-	m_isScollable = isScollable;
+	m_setScrollable = isScollable;
 }
 bool Table2::IsScollable() const {
-	return m_isScollable;
+	return m_isScrollable;
 }
 
 void Table2::SetSingleEditable(int row, int column, bool isEditable) {
@@ -399,14 +447,14 @@ bool Table2::IsColumnEditable(int column) const {
 }
 
 void Table2::SetFixedHeadline(bool isFixedHeadline) {
-	m_isFixedHeadline = isFixedHeadline;
+	m_setFixedHeadline = isFixedHeadline;
 }
 bool Table2::IsFixedHeadline() const {
 	return m_isFixedHeadline;
 }
 
 void Table2::SetFixedFirstColumn(bool isFixedFirstColumn) {
-	m_isFixedFirstColumn = isFixedFirstColumn;
+	m_setFixedFirstColumn = isFixedFirstColumn;
 }
 bool Table2::IsFixedFirstColumn() const {
 	return m_isFixedFirstColumn;
@@ -420,13 +468,17 @@ Rectangle Table2::GetCollider() const noexcept {
 }
 
 void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+
+	ResizeTable();
+	UpdateHeadlinePosition();
+	UpdateFirstRowPosition();
+	CheckAndUpdateScroll(mousePosition);
+
 	for (auto const& row : m_cells) {
 		for (auto const& cell : row) {
 			cell->CheckAndUpdate(mousePosition, appContext);
 		}
 	}
-
-	CheckAndUpdateScroll(mousePosition);
 
 	if (IsNestedFocus()) {
 		if (IsBackInputPressed()) {
