@@ -20,7 +20,6 @@ private:
 	bool m_isScollable = false; ///< contains if it is able to scroll the table
 	bool m_isFixedHeadline = false; ///< contains if the first row is fixed while scolling
 	bool m_isFixedFirstColumn = false; ///< contains if the first column is fixed while scolling
-	Vector2 m_scollOffset{ 0.0f, 0.0f }; ///< contains the offset the cells have while scolling
 	float m_scroll_speed; ///< contains the speed the table ist scrolled with
 
 	/**
@@ -54,41 +53,44 @@ private:
 	 */
 	void RemoveCellFocus();
 
-	/**
-	 * clamps the scroll offset so that the table can not "leave" the collider.
-	 */
-	void ClampScroollOffset();
-
 	/** 
 	 * checks and scrolls if scrollable
 	 */
-	void CheckAndUpdateScroll(Vector2 const& mousePosition, AppContext const& appContext);
+	void CheckAndUpdateScroll(Vector2 const& mousePosition);
+	/**
+	 * clamps the scroll offset so that the table can not "leave" the collider.
+	 */
+	void ClampScroollOffset(Vector2& offset);
+	/**
+	 * moves the cell collider of the offset.
+	 */
+	void Scroll(Vector2 const& offset);
 
 	/**
 	 * calls the top left cell to render.
 	 * sets the scissors mode for it.
 	 */
-	void RenderTopLeft(AppContext const& appContext, Vector2 TopLeftCellSize);
+	void RenderTopLeft(AppContext const& appContext);
 	/**
 	 * calls the headline (without the top left corner) to render.
 	 * sets the scissors mode for it.
 	 */
-	void RenderHeadline(AppContext const& appContext, Vector2 TopLeftCellSize);
+	void RenderHeadline(AppContext const& appContext);
 	/**
 	 * calls the first column (without the top left corner) to render.
 	 * sets the scissors mode for it.
 	 */
-	void RenderFirstColumn(AppContext const& appContext, Vector2 TopLeftCellSize);
+	void RenderFirstColumn(AppContext const& appContext);
 	/**
 	 * calls all the other cells to render.
 	 * sets the scissors mode for it.
 	 */
-	void RenderOtherCells(AppContext const& appContext, Vector2 TopLeftCellSize);
+	void RenderOtherCells(AppContext const& appContext);
 	/**
 	 * renders the outline of the table.
 	 * sets the scissors mode for it.
 	 */
-	void RenderOutline(AppContext const& appContext) const;
+	void RenderOutline() const;
 
 public:
 	/**

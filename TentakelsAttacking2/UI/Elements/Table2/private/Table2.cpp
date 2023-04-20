@@ -85,182 +85,99 @@ void Table2::RemoveCellFocus() {
 	SetNestedFocus(false);
 }
 
-void Table2::ClampScroollOffset() {
-	if (m_cells.size() > 1 and m_cells.at(0).size() > 1) {
 
-		auto firstCell = m_cells.at(0).at(0)->GetCollider();
-		auto secondCell = m_cells.at(0).at(1)->GetCollider();
-
-		std::cout << firstCell.x + firstCell.width - secondCell.x << " | " << ((firstCell.x + firstCell.width) < secondCell.x) << "\n";
-
-		if (firstCell.x + firstCell.width < secondCell.x) {
-			m_scollOffset.x -= firstCell.x + firstCell.width - secondCell.x;
-		}
-
-	}
-}
-void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition, AppContext const& appContext) {
+void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 	if (not m_isScollable) { return; }
 	if (not CheckCollisionPointRec(mousePosition, m_collider)) { return; } // check if collider is maybe to big
 
 	float mouseWheel = GetMouseWheelMove();
 	if (mouseWheel == 0.0f) { return; }
 
+	Vector2 offset{ 0.0f,0.0f };
 	if (IsKeyDown(KEY_LEFT_SHIFT)) {
-		m_scollOffset.x += mouseWheel * m_scroll_speed;
+		offset.x = mouseWheel * m_scroll_speed * m_resolution.x;
 	}
 	else {
-		m_scollOffset.y += mouseWheel * m_scroll_speed;
+		offset.y = mouseWheel * m_scroll_speed * m_resolution.y;
 	}
 
-	ClampScroollOffset();
+	ClampScroollOffset(offset);
+	Scroll(offset);
+	Print("offset: x -> " + std::to_string(offset.x) + " | y -> " + std::to_string(offset.y), PrintType::DEBUG);
 }
+void Table2::ClampScroollOffset(Vector2& offset) {
+	if (m_rowCount < 2) { Print("not enough rows in table for clamping", PrintType::EXPECTED_ERROR); return; }
+	if (m_columnCount < 2) { Print("not enough columns in table for clamping", PrintType::EXPECTED_ERROR); return; }
 
-void Table2::RenderTopLeft(AppContext const& appContext, Vector2 TopLeftCellSize) {
+	// get cells
+	auto cellTopLeft = m_cells.at(0).at(0)->GetCollider();
+	auto cellSecondTopLeft = m_cells.at(1).at(1)->GetCollider();
+	auto cellBottomLeft = m_cells.at(m_rowCount - 1).at(m_columnCount - 1)->GetCollider();
 
-	Vector2 offset{
-		0.0f,
-		0.0f,
-	};
-	if (m_isScollable and not m_isFixedFirstColumn) {
-		offset.x = m_scollOffset.x;
-	}
-	if (m_isScollable and not m_isFixedHeadline) {
-		offset.y = m_scollOffset.y;
-	}
+	// clamp left x
+	float cell = cellSecondTopLeft.x + offset.x;
+	float table = m_collider.x + cellTopLeft.width;
+	if (cell > table) { offset.x -= cell - table; }
 
-	BeginScissorMode(
-		static_cast<int>(m_collider.x),
-		static_cast<int>(m_collider.y),
-		static_cast<int>(TopLeftCellSize.x + 1),
-		static_cast<int>(TopLeftCellSize.y + 1)
-	);
+	// clamp right x
+	cell = cellBottomLeft.x + cellBottomLeft.width + offset.x;
+	table = m_collider.x + m_collider.width;
+	if (cell < table) { offset.x += table - cell; }
 
-	m_cells.at(0).at(0)->Render(appContext, offset);
+	// clamp top y
+	cell = cellSecondTopLeft.y + offset.y;
+	table = m_collider.y + cellTopLeft.height;
+	if (cell > table) { offset.y -= cell - table; }
 
-	EndScissorMode();
+	// clamp bottom y
+	cell = cellBottomLeft.y + offset.y;
+	table = m_collider.y + cellTopLeft.height;
+	if (cell < table) { offset.y += table - cell; }
+
 }
-void Table2::RenderHeadline(AppContext const& appContext, Vector2 TopLeftCellSize) {
+void Table2::Scroll(Vector2 const& offset) {
+	for (int row = 0; row < m_cells.size(); ++row) {
+		for (int column = 0; column < m_cells.at(row).size(); ++column) {
+			Vector2 individualOffset{ offset };
+			if (row == 0 and m_isFixedHeadline) { individualOffset.y = 0.0f; }
+			if (column == 0 and m_isFixedFirstColumn) { individualOffset.x = 0.0f; }
 
-	Vector2 offset{
-		0.0f,
-		0.0f,
-	};
-	Vector2 sOffset{
-		0.0f,
-		0.0f,
-	};
-	if (m_isScollable) {
-		offset.x = m_scollOffset.x;
-		if (not m_isFixedFirstColumn) {
-			sOffset.x = TopLeftCellSize.x < m_scollOffset.x ? TopLeftCellSize.x : m_scollOffset.x;
+			auto cell = m_cells.at(row).at(column);
+			auto collider = cell->GetCollider();
+			collider.x += individualOffset.x;
+			collider.y += individualOffset.y;
+			cell->SetCollider(collider);
 		}
 	}
-	if (m_isScollable and not m_isFixedHeadline) {
-		offset.y = m_scollOffset.y;
-		sOffset.y = TopLeftCellSize.y < m_scollOffset.y ? TopLeftCellSize.y : m_scollOffset.y;
-	}
+}
 
-	BeginScissorMode(
-		static_cast<int>(m_collider.x + TopLeftCellSize.x - sOffset.x),
-		static_cast<int>(m_collider.y),
-		static_cast<int>(m_collider.width - TopLeftCellSize.x + sOffset.x),
-		static_cast<int>(TopLeftCellSize.y + 1)
-	);
+void Table2::RenderTopLeft(AppContext const& appContext) {
+	m_cells.at(0).at(0)->Render(appContext);
+}
+void Table2::RenderHeadline(AppContext const& appContext) {
 
 	auto row = m_cells.at(0);
 	for (int column = 1; column < row.size(); ++column) { // start at 1 because cell 0 is renderd in TopLeft
-		row.at(column)->Render(appContext, offset);
+		row.at(column)->Render(appContext);
 	}
-
-	EndScissorMode();
 }
-void Table2::RenderFirstColumn(AppContext const& appContext, Vector2 TopLeftCellSize) {
-	Vector2 offset{
-		0.0f,
-		0.0f,
-	};
-	Vector2 sOffset{
-		0.0f,
-		0.0f,
-	};
-
-	if (m_isScollable and not m_isFixedFirstColumn) {
-		offset.x = m_scollOffset.x;
-		sOffset.x = TopLeftCellSize.x < m_scollOffset.x ? TopLeftCellSize.x : m_scollOffset.x;
-	}
-	if (m_isScollable) {
-		offset.y = m_scollOffset.y;
-		if (not m_isFixedHeadline) {
-			sOffset.y = TopLeftCellSize.y < m_scollOffset.y ? TopLeftCellSize.y : m_scollOffset.y;
-		}
-	}
-
-	BeginScissorMode(
-		static_cast<int>(m_collider.x),
-		static_cast<int>(m_collider.y + TopLeftCellSize.y - sOffset.y),
-		static_cast<int>(TopLeftCellSize.x + 1),
-		static_cast<int>(m_collider.height - TopLeftCellSize.y + sOffset.y)
-	);
+void Table2::RenderFirstColumn(AppContext const& appContext) {
 
 	for (int row = 1; row < m_cells.size(); ++row) { // start at 1 because cell 0 is renderd in TopLeft
-		m_cells.at(row).at(0)->Render(appContext, offset);
+		m_cells.at(row).at(0)->Render(appContext);
 	}
-
-	EndScissorMode();
 }
-void Table2::RenderOtherCells(AppContext const& appContext, Vector2 TopLeftCellSize) {
-	Vector2 offset{
-		0.0f,
-		0.0f,
-	};
-	Vector2 sOffset{
-		0.0f,
-		0.0f,
-	};
-	if (m_isScollable) {
-		offset.x = m_scollOffset.x;
-		if (not m_isFixedFirstColumn) {
-			sOffset.x = TopLeftCellSize.x < m_scollOffset.x ? TopLeftCellSize.x : m_scollOffset.x;
-		}
-
-		offset.y = m_scollOffset.y;
-		if (not m_isFixedHeadline) {
-			sOffset.y = TopLeftCellSize.y < m_scollOffset.y ? TopLeftCellSize.y : m_scollOffset.y;
-		}
-	}
-
-	BeginScissorMode(
-		static_cast<int>(m_collider.x + TopLeftCellSize.x - sOffset.x),
-		static_cast<int>(m_collider.y + TopLeftCellSize.y - sOffset.y),
-		static_cast<int>(m_collider.width - TopLeftCellSize.x + sOffset.x),
-		static_cast<int>(m_collider.height - TopLeftCellSize.y + sOffset.y)
-	);
+void Table2::RenderOtherCells(AppContext const& appContext) {
 
 	for (int row = 1; row < m_cells.size(); ++row) { // start at 1 because cell 0 is renderd in TopLeft or headline
 		for (int column = 1; column < m_cells.at(row).size(); ++column) { // start at 1 because cell 0 is renderd in TopLeft or first column
-			m_cells.at(row).at(column)->Render(appContext, offset);
+			m_cells.at(row).at(column)->Render(appContext);
 		}
 	}
-
-	EndScissorMode();
 }
-void Table2::RenderOutline(AppContext const& appContext) const {
-	auto row = m_cells.at(m_cells.size() - 1);
-	auto collider = row.at(row.size() - 1)->GetCollider();
-	float bottom = collider.y + collider.height;
-	if (m_isScollable) { bottom -= m_scollOffset.y; }
-	bottom = bottom > m_collider.y + m_collider.height ? m_collider.y + m_collider.height : bottom;
+void Table2::RenderOutline() const {
 
-
-	Rectangle outline{
-		m_collider.x,
-		m_collider.y,
-		m_collider.width,
-		bottom - m_collider.y,
-	};
-
-	DrawRectangleLinesEx(outline, 2.0f, PURPLE);
+	DrawRectangleLinesEx(m_collider, 2.0f, PURPLE);
 }
 
 
@@ -509,7 +426,7 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		}
 	}
 
-	CheckAndUpdateScroll(mousePosition, appContext);
+	CheckAndUpdateScroll(mousePosition);
 
 	if (IsNestedFocus()) {
 		if (IsBackInputPressed()) {
@@ -525,17 +442,18 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 }
 void Table2::Render(AppContext const& appContext) {
 
-	auto topLeftCell = m_cells.at(0).at(0)->GetCollider();
-	Vector2 TopLeftCellSize{
-		topLeftCell.width,
-		topLeftCell.height,
-	};
+	BeginScissorMode(
+		static_cast<int>(m_collider.x),
+		static_cast<int>(m_collider.y),
+		static_cast<int>(m_collider.width),
+		static_cast<int>(m_collider.height)
+	);
 
-	RenderTopLeft(appContext, TopLeftCellSize);
-	RenderHeadline(appContext, TopLeftCellSize);
-	RenderFirstColumn(appContext, TopLeftCellSize);
-	RenderOtherCells(appContext, TopLeftCellSize);
-	RenderOutline(appContext);
+	RenderOtherCells(appContext);
+	RenderFirstColumn(appContext);
+	RenderHeadline(appContext);
+	RenderTopLeft(appContext);
+	RenderOutline();
 
-	//DrawRectangleLinesEx(m_collider, 2.0f, PURPLE);
+	EndScissorMode();
 }

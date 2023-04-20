@@ -21,7 +21,7 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 		5, // row count
 		6, // column count
 		Vector2(0.15f, 0.08f),// min cell size
-		15.0f // scroll speed
+		0.025f // scroll speed
 	);
 	m_elements.push_back(table);
 
