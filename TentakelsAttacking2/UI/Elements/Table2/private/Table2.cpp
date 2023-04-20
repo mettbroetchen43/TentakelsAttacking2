@@ -3,10 +3,11 @@
 // 03.04.2023
 //
 
+#include "HFocusEvents.h"
+#include "AppContext.h"
 #include "Table2.h"
 #include "HPrint.h"
 #include "HInput.h"
-#include "HFocusEvents.h"
 #include <stdexcept>
 
 
@@ -69,7 +70,7 @@ void Table2::UpdateCellPositionAndSize() {
 	}
 
 	if (m_isScrollable) {
-		Scroll(m_absoluteScollingOffset);
+		ScrollMove(m_absoluteScollingOffset);
 	}
 }
 
@@ -195,9 +196,14 @@ void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 	}
 
 	ClampScroollOffset(offset);
-	Scroll(offset);
+	ScrollMove(offset);
 	m_absoluteScollingOffset.x += offset.x;
 	m_absoluteScollingOffset.y += offset.y;
+	
+	if (IsNestedFocus()) {
+		auto event = RenderFocusEvent(false);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+	}
 }
 void Table2::ClampScroollOffset(Vector2& offset) {
 	if (m_rowCount < 2) { Print("not enough rows in table for clamping", PrintType::EXPECTED_ERROR); return; }
@@ -229,7 +235,51 @@ void Table2::ClampScroollOffset(Vector2& offset) {
 	if (cell < table) { offset.y += table - cell; }
 
 }
-void Table2::Scroll(Vector2 const& offset) {
+void Table2::ScrollFocused() {
+	if (not m_isScrollable) { return; }
+	if (not IsNestedFocus()) { return; }
+
+	std::shared_ptr<AbstactTableCell2> cell = nullptr;
+	for (int row = 0; row < m_cells.size(); ++row) {
+		for (int column = 0; column < m_cells.at(row).size(); ++column) {
+			auto cCell = m_cells.at(row).at(column);
+			if (cCell->IsFocused()) {
+				cell = cCell;
+				goto out;
+			}
+		}
+	}
+out:
+	if (not cell) { return; }
+
+	auto col = cell->GetCollider();
+	bool cellInCollider =
+		    m_collider.x < col.x  // left
+		and m_collider.x + m_collider.width > col.x + col.width  // right
+		and m_collider.y < col.y  // top
+		and m_collider.y + m_collider.height > col.y + col.height;  // bottom
+	if (cellInCollider) { return; }
+
+	Vector2 offset{ 0.0f,0.0f };
+	if (m_collider.x > col.x) {  // left
+		offset.x = m_collider.x - col.x;
+	}
+	else if ( m_collider.x + m_collider.width < col.x + col.width) { // right
+		offset.x = (m_collider.x + m_collider.width) - (col.x + col.width);
+	}
+
+	if (m_collider.y > col.y) {  // top
+		offset.y = m_collider.y - col.y;
+	}
+	else if (m_collider.y + m_collider.height < col.y + col.height) {  // bottom
+		offset.y = (m_collider.y + m_collider.height) - (col.y + col.height);
+	}
+
+	ScrollMove(offset);
+	m_absoluteScollingOffset.x += offset.x;
+	m_absoluteScollingOffset.y += offset.y;
+}
+void Table2::ScrollMove(Vector2 const& offset) {
 	for (int row = 0; row < m_cells.size(); ++row) {
 		for (int column = 0; column < m_cells.at(row).size(); ++column) {
 			Vector2 individualOffset{ offset };
@@ -273,7 +323,6 @@ void Table2::RenderOutline() const {
 
 	DrawRectangleLinesEx(m_temporaryCollider, 2.0f, PURPLE);
 }
-
 
 Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
 	int rowCount, int columnCount, Vector2 minCellSize, float scrollSpeed)
@@ -503,6 +552,10 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 	auto bottomCell = lastCell.y + lastCell.height;
 	auto bottomTable = m_collider.y + m_collider.height;
 	m_temporaryCollider.height = bottomTable < bottomCell ? m_collider.height : bottomCell - m_collider.y;
+
+	if (IsKeyPressed(KEY_TAB)) {
+		ScrollFocused();
+	}
 }
 void Table2::Render(AppContext const& appContext) {
 

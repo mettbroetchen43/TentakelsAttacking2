@@ -110,7 +110,7 @@ void DropDown::CheckAndSetElementsEnabled() {
 	}
 }
 
-void DropDown::Scroll(float wheel) {
+void DropDown::ScrollMove(float wheel) {
 
 	if (!m_isScolling) { return; }
 
@@ -259,7 +259,7 @@ void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		float wheel = GetMouseWheelMove();
 		if (wheel != 0.0f) {
 			CheckIfScolling();
-			Scroll(wheel);
+			ScrollMove(wheel);
 		}
 	}
 

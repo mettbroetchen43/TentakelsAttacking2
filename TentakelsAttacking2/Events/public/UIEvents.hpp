@@ -120,6 +120,21 @@ public:
 	}
 };
 /**
+ * use this to control if the focus system is currently render the focus.
+ * does not hesittate from FocusEvent.
+ */
+class RenderFocusEvent final: public Event {
+private:
+	bool m_render;
+public:
+	RenderFocusEvent(bool render)
+		: m_render(render) { }
+
+	[[nodiscard]] bool GetRender() const noexcept {
+		return m_render;
+	}
+};
+/**
  * use this to add an element to the focus.
  * is held back in the case of a popup.
  */

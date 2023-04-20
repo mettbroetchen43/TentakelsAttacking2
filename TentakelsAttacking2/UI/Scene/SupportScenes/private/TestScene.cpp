@@ -97,8 +97,6 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 	m_elements.push_back(toggleScrollable);
 }
 
-
-
 TestScene::TestScene(Vector2 resolution)
 	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
 

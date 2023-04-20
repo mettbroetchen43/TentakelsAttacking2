@@ -3,9 +3,9 @@
 // 03.04.2023
 //
 
+#include "AbstactTableCell2.h"
 #include "UIElement.hpp"
 #include "Focusable.h"
-#include "AbstactTableCell2.h"
 #include <memory>
 
 #pragma once
@@ -81,9 +81,13 @@ private:
 	 */
 	void ClampScroollOffset(Vector2& offset);
 	/**
+	 * moves a selected cell in the table collider.
+	 */
+	void ScrollFocused();
+	/**
 	 * moves the cell collider of the offset.
 	 */
-	void Scroll(Vector2 const& offset);
+	void ScrollMove(Vector2 const& offset);
 
 	/**
 	 * calls the top left cell to render.
