@@ -7,13 +7,12 @@
 # include "Scene.h"
 # include "Table2.h"
 
+enum class TableToggle;
+
 /**
  * no doc here.
  * this contains the test scene that is only unsed to diplay new featurs temporary.
  */
-
-enum class TableToggle;
-
 class TestScene : public Scene {
 private:
 	std::shared_ptr<Table2> m_table;

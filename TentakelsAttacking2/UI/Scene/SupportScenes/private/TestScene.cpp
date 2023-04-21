@@ -74,7 +74,7 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
-		"toggle first row",
+		"toggle first column",
 		SoundType::CLICKED_PRESS_STD
 	);
 	toggleFirstRowButton->SetOnClick([this, type = TableToggle::FIRST_COLUMN]() {

@@ -44,6 +44,16 @@ public:
 	[[nodiscard]] Rectangle GetCollider() const noexcept override;
 
 	/**
+	 * returns if the point in inside the cell collider.
+	 */
+	[[nodiscard]] bool IsColliding(Vector2 point) const;
+
+	/**
+	 * use this if the cell is clicked.
+	 * need to be implemented by every cell.
+	 */
+	virtual void Clicked(Vector2 const&, AppContext const&);
+	/**
 	 * calls the CheckAndUpdate member function of UIElement.
 	 * contains the logic of the cell.
 	 */

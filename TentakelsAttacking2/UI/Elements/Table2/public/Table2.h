@@ -71,6 +71,11 @@ private:
 	 * updates the first row position to fix it or not.
 	 */
 	void UpdateFirstRowPosition();
+	/**
+	 * checks if any cell is clicked and updates it if so.
+	 * returns after the top cell is clicked.
+	 */
+	void CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext const& appContext);
 
 	/** 
 	 * checks and scrolls if scrollable

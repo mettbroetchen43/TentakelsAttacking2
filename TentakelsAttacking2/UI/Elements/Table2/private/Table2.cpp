@@ -180,6 +180,43 @@ void Table2::UpdateFirstRowPosition() {
 	}
 }
 
+void Table2::CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext const& appContext) {
+	if (not CheckCollisionPointRec(mousePositon, m_temporaryCollider)) { return; }
+	if (not IsMouseButtonPressed(0)) { return; }
+
+	auto cell = m_cells.at(0).at(0);
+	if (cell->IsColliding(mousePositon)) {
+		goto clicked;
+	}
+
+	for (int row = 1; row < m_columnCount; ++row) {
+		cell = m_cells.at(row).at(0);
+		if (cell->IsColliding(mousePositon)) {
+			goto clicked;
+		}
+	}
+	
+	for (int column = 1; column < m_columnCount; ++column) {
+		cell = m_cells.at(0).at(column);
+		if (cell->IsColliding(mousePositon)) {
+			goto clicked;
+		}
+	}
+
+	for (int row = 1; row < m_rowCount; ++row) {
+		for (int column = 1; column < m_columnCount; ++column) {
+			cell = m_cells.at(row).at(column);
+			if (cell->IsColliding(mousePositon)) {
+				goto clicked;
+			}
+		}
+	}
+
+clicked:
+	cell->Clicked(mousePositon, appContext);
+	return;
+}
+
 void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 	if (not m_isScrollable) { return; }
 	if (not CheckCollisionPointRec(mousePosition, m_temporaryCollider)) { return; } // check if collider is maybe to big
@@ -547,6 +584,7 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 			cell->CheckAndUpdate(mousePosition, appContext);
 		}
 	}
+	CheckAndUpdateClickCell(mousePosition, appContext);
 
 	auto lastCell = m_cells.at(m_rowCount - 1).at(m_columnCount - 1)->GetCollider();
 	auto bottomCell = lastCell.y + lastCell.height;

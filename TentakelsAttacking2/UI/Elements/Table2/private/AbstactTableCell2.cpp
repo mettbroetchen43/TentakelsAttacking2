@@ -4,6 +4,7 @@
 //
 
 #include "AbstactTableCell2.h"
+#include "HPrint.h"
 
 void AbstactTableCell2::CalculateTextSize() {
 	m_textSize = m_collider.height / 3;
@@ -27,6 +28,17 @@ bool AbstactTableCell2::IsEnabled() const noexcept {
 }
 Rectangle AbstactTableCell2::GetCollider() const noexcept {
 	return m_collider;
+}
+
+bool AbstactTableCell2::IsColliding(Vector2 point) const {
+	return m_collider.x < point.x
+		and m_collider.x + m_collider.width > point.x
+		and m_collider.y < point.y
+		and m_collider.y + m_collider.height < point.y;
+}
+
+void AbstactTableCell2::Clicked(Vector2 const& mousePosition, AppContext const&) {
+	Print("clicked: " + std::to_string(mousePosition.x) + " | " + std::to_string(mousePosition.y), PrintType::DEBUG);
 }
 
 void AbstactTableCell2::CheckAndUpdate(Vector2 const&, AppContext const&) {
