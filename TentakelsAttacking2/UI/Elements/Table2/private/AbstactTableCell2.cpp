@@ -4,6 +4,7 @@
 //
 
 #include "AbstactTableCell2.h"
+#include "HInput.h"
 #include "HPrint.h"
 
 void AbstactTableCell2::CalculateTextSize() {
@@ -31,18 +32,23 @@ Rectangle AbstactTableCell2::GetCollider() const noexcept {
 }
 
 bool AbstactTableCell2::IsColliding(Vector2 point) const {
-	return m_collider.x < point.x
-		and m_collider.x + m_collider.width > point.x
-		and m_collider.y < point.y
-		and m_collider.y + m_collider.height < point.y;
+	return CheckCollisionPointRec(point, m_collider);
 }
 
 void AbstactTableCell2::Clicked(Vector2 const& mousePosition, AppContext const&) {
+	if (not IsEditable()) { return; }
+
 	Print("clicked: " + std::to_string(mousePosition.x) + " | " + std::to_string(mousePosition.y), PrintType::DEBUG);
 }
 
 void AbstactTableCell2::CheckAndUpdate(Vector2 const&, AppContext const&) {
+	if (not IsEditable()) { return; }
 
+	if (IsFocused()) {
+		if (IsConfirmInputPressed()) {
+			Print("ENTER", PrintType::DEBUG);
+		}
+	}
 }
 void AbstactTableCell2::Render(AppContext const&) {
 
