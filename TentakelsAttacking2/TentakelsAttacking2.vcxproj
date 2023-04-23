@@ -210,6 +210,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h" />
     <ClInclude Include="UI\Elements\Default\public\InputLine.hpp" />
+    <ClInclude Include="UI\Elements\Table2\public\TableCell2.hpp" />
     <ClInclude Include="UI\Elements\Table\public\AllCells.hpp" />
     <ClInclude Include="UI\Elements\Table\public\AbstractTableCell.h" />
     <ClInclude Include="UI\Elements\Table\public\TableCell.hpp" />

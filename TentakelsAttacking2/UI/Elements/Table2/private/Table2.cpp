@@ -6,6 +6,7 @@
 #include "HFocusEvents.h"
 #include "AppContext.h"
 #include "Table2.h"
+#include "TableCell2.hpp"
 #include "HPrint.h"
 #include "HInput.h"
 #include <stdexcept>
@@ -139,6 +140,7 @@ void Table2::UpdateHeadlinePosition() {
 			auto col = cell->GetCollider();
 			col.y = m_collider.y;
 			cell->SetCollider(col);
+			cell->CalculateTextSize();
 		}
 	}
 	else {
@@ -149,6 +151,7 @@ void Table2::UpdateHeadlinePosition() {
 			auto col = cell->GetCollider();
 			col.y = pos - height;
 			cell->SetCollider(col);
+			cell->CalculateTextSize();
 		}
 	}
 
@@ -163,6 +166,7 @@ void Table2::UpdateFirstRowPosition() {
 			auto col = cell->GetCollider();
 			col.x = m_collider.x;
 			cell->SetCollider(col);
+			cell->CalculateTextSize();
 		}
 	}
 	else {
@@ -176,6 +180,7 @@ void Table2::UpdateFirstRowPosition() {
 			auto col = cell->GetCollider();
 			col.x = pos - width;
 			cell->SetCollider(col);
+			cell->CalculateTextSize();
 		}
 	}
 }
@@ -328,6 +333,7 @@ void Table2::ScrollMove(Vector2 const& offset) {
 			collider.x += individualOffset.x;
 			collider.y += individualOffset.y;
 			cell->SetCollider(collider);
+			cell->CalculateTextSize();
 		}
 	}
 }
@@ -376,12 +382,13 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 		auto line = std::vector<std::shared_ptr<AbstactTableCell2>>();
 		for (int column = 0; column < columnCount; ++column) {
 
-			auto cell = std::make_shared<AbstactTableCell2>(
+			auto cell = std::make_shared<TableCell2<std::string>>(
 				Vector2(m_pos.x + cellWidth * column, m_pos.y + cellHeight * row),
 				Vector2(cellWidth, cellHeight),
 				Alignment::TOP_LEFT,
 				m_resolution,
-				row * columnCount + column
+				row * columnCount + column,
+				"Test | " + std::to_string(row +1) + " | " + std::to_string(column +1) + "\n"
 			);
 
 			line.push_back(cell);
@@ -417,12 +424,13 @@ void Table2::AddSpecificRow(int row) {
 
 	for (int column = 0; column < m_columnCount; ++column) {
 
-		auto cell = std::make_shared<AbstactTableCell2>(
+		auto cell = std::make_shared<TableCell2<std::string>>(
 			Vector2(0.0f, 0.0f),
 			Vector2(0.1f, 0.1f),
 			Alignment::TOP_LEFT,
 			m_resolution,
-			0
+			0,
+			" new row"
 		);
 		line.push_back(cell);
 	}
@@ -438,12 +446,13 @@ void Table2::AddSpecificColumn(int column) {
 	else if (!IsValidColumn(column)) { Print("column-index out of range", PrintType::ERROR), throw std::out_of_range("column index"); }
 
 	for (auto& row : m_cells) {
-		auto cell = std::make_shared<AbstactTableCell2>(
+		auto cell = std::make_shared<TableCell2<std::string>>(
 			Vector2(0.0f, 0.0f),
 			Vector2(0.1f, 0.1f),
 			Alignment::TOP_LEFT,
 			m_resolution,
-			0
+			0,
+			"new columnS"
 		);
 		row.insert(row.begin() + column, cell);
 	}

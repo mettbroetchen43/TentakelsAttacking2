@@ -8,15 +8,10 @@
 #pragma once
 
 class AbstactTableCell2 : public UIElement, public Focusable {
-private:
+protected:
 	bool m_isEditable = true; ///< contains if the cell is currently editable
 	float m_textSize; ///< contains the text size the text is renderd with
 	Vector2 m_textPosition; ///< contains the absolute text position 
-
-	/**
-	 * calculates a new text size from the collider.
-	 */
-	void CalculateTextSize();
 
 public:
 	/**
@@ -24,6 +19,12 @@ public:
 	 * initializes the table with empty cells.
 	 */
 	AbstactTableCell2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID);
+
+	/**
+	 * calculates the text size.
+	 * need to be implemented in ecery cell.
+	 */
+	virtual void CalculateTextSize() = 0;
 
 	/**
 	 * sets if the cell is editable.
@@ -57,9 +58,9 @@ public:
 	 * calls the CheckAndUpdate member function of UIElement.
 	 * contains the logic of the cell.
 	 */
-	void CheckAndUpdate(Vector2 const&, AppContext const&) override;
+	virtual void CheckAndUpdate(Vector2 const&, AppContext const&) override;
 	/**
 	 * renders the cell
 	 */
-	void Render(AppContext const& appContext) override;
+	virtual void Render(AppContext const& appContext) override;
 };
