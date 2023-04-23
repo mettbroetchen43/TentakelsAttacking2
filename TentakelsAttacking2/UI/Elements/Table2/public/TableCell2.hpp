@@ -71,17 +71,38 @@ public:
 		m_textSize = m_collider.height / 3;
 		m_textPosition = { m_collider.x + m_collider.width * 0.05f ,m_collider.y + m_textSize };
 	}
+	/**
+	 * returns the current value.
+	 */
+	T GetValue() const {
+		return m_value;
+	}
+	/**
+	 * returns the current value as string.
+	 */
+	std::string GetValueAsString() const override {
+		return "";
+	}
 };
 
+/**
+ * overload because std::string has no overload for string.
+ */
 template<>
 inline void TableCell2<std::string>::SetStringValue() {
 	m_stringValue = m_value;
 }
+/**
+ * overload because color has no string representation.
+ */
 template<>
 inline void TableCell2<Color>::SetStringValue() {
 	m_stringValue = "Color";
 }
 
+/**
+ * overload because color is rendered dirfferent.
+ */
 template<>
 inline void TableCell2<Color>::Render(AppContext const& appContext) {
 	AbstactTableCell2::Render(appContext);

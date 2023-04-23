@@ -136,7 +136,7 @@ public:
 	 * replaces the current Cell with a new one.
 	 */
 	template<typename T>
-	void SetCell(int row, int column, T input) {
+	void SetValue(int row, int column, T input) {
 		if (not IsValidIndex(row, column)) { Print("Index out of range", PrintType::ERROR), throw std::out_of_range("index"); }
 
 		auto oldCell = m_cells.at(row).at(column);
@@ -158,7 +158,15 @@ public:
 			AddFocusElement(cell.get());
 		}
 	}
+	/**
+	 * returns the current value of a cell.
+	 */
+	template <typename T>
+	T GetValue(int row, int column) const {
+		if (not IsValidIndex(row, column)) { Print("index out of range", PrintType::ERROR); throw std::out_of_range("index"); }
 
+		return dynamic_cast<TableCell2<T>*>(m_cells.at(row).at(column).get())->GetValue();
+	}
 	/**
 	 * sets a new row count.
 	 * need to call the recalculation of the table.

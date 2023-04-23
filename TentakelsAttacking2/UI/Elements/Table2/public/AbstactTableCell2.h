@@ -27,6 +27,11 @@ public:
 	virtual void CalculateTextSize() = 0;
 
 	/**
+	 * returns the current value as string.
+	 */
+	virtual std::string GetValueAsString() const = 0;
+
+	/**
 	 * sets if the cell is editable.
 	 */
 	void SetEditable(bool IsEditable) noexcept;

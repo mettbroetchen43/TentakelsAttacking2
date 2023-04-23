@@ -41,8 +41,13 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 	m_table->AddSpecificRow<std::string>(0, "new Row");
 	m_table->AddSpecificRow<bool>(0, true);
 	m_table->AddSpecificRow<size_t>(0, 500);
-	m_table->SetCell<std::string>(1, 1, "changed");
-	m_table->SetCell<std::string>(4, 4, "changed");
+	m_table->SetValue<std::string>(1, 1, "changed");
+	m_table->SetValue<std::string>(4, 4, "changed");
+
+	auto value = m_table->GetValue<std::string>(1, 1);
+	Print(value, PrintType::DEBUG);
+	auto value2 = m_table->GetValue<bool>(1, 2);
+	Print(std::to_string(value2), PrintType::DEBUG);
 
 
 
