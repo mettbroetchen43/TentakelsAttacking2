@@ -34,6 +34,14 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 	m_table->SetColumnEditable(1, false);
 
 	m_table->SetScrollable(true);
+	m_table->AddSpecificRow<Color>(0, RED);
+	m_table->AddSpecificRow<int>(0, 1000);
+	m_table->AddSpecificRow<float>(0, 200.0f);
+	m_table->AddSpecificRow<double>(0, 300.0);
+	m_table->AddSpecificRow<std::string>(0, "new Row");
+	m_table->AddSpecificRow<bool>(0, true);
+	m_table->AddSpecificRow<size_t>(0, 500);
+
 
 
 	// to get Back No testing

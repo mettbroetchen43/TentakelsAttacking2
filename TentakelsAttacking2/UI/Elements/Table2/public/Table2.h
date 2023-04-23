@@ -3,9 +3,12 @@
 // 03.04.2023
 //
 
-#include "AbstactTableCell2.h"
+// #include "AbstactTableCell2.h"
 #include "UIElement.hpp"
 #include "Focusable.h"
+#include "TableCell2.hpp"
+#include "HPrint.h"
+#include <stdexcept>
 #include <memory>
 
 #pragma once
@@ -161,21 +164,68 @@ public:
 	/**
 	 * adds a specific row.
 	 */
-	void AddSpecificRow(int row);
+	template <typename T>
+	void AddSpecificRow(int row, T defalutValue) {
+		if (row == m_cells.size()) { /* nothing */ }
+		else if (!IsValidRow(row)) { Print("invalid row index", PrintType::ERROR), throw std::out_of_range("row-index"); }
+
+		auto line = std::vector<std::shared_ptr<AbstactTableCell2>>();
+
+		for (int column = 0; column < m_columnCount; ++column) {
+
+			auto cell = std::make_shared<TableCell2<T>>(
+				Vector2(0.0f, 0.0f),
+				Vector2(0.1f, 0.1f),
+				Alignment::TOP_LEFT,
+				m_resolution,
+				0,
+				defalutValue
+			);
+			line.push_back(cell);
+		}
+
+		m_cells.insert(m_cells.begin() + row, line);
+		++m_rowCount;
+	}
 	/**
 	 * adds the last row.
 	 * calls AddSpecificRow.
 	 */
-	void AddLastRow();
+	template <typename T>
+	void AddLastRow(T defalutValue) {
+		AddSpecificRow<T>(static_cast<int>(m_cells.size()), defalutValue);
+	}
 	/**
 	 * adds a specific colunm.
 	 */
-	void AddSpecificColumn(int column);
+	template <typename T>
+	void AddSpecificColumn(int column, T defalutValue) {
+		if (m_cells.size() == 0) { Print("no rows available in the table", PrintType::ERROR), throw std::out_of_range("no rows"); }
+		else if (column == m_cells.at(0).size()) { /* nothing */ }
+		else if (!IsValidColumn(column)) { Print("column-index out of range", PrintType::ERROR), throw std::out_of_range("column index"); }
+
+		for (auto& row : m_cells) {
+			auto cell = std::make_shared<TableCell2<T>>(
+				Vector2(0.0f, 0.0f),
+				Vector2(0.1f, 0.1f),
+				Alignment::TOP_LEFT,
+				m_resolution,
+				0,
+				defalutValue
+			);
+			row.insert(row.begin() + column, cell);
+		}
+		++m_columnCount;
+	}
 	/**
 	 * adds the last column.
 	 * calls AddSpecificColumn.
 	 */
-	void AddLastColumn();
+	template <typename T>
+	void AddLastColumn(T defalutValue) {
+		if (m_cells.size() == 0) { Print("no rows in table", PrintType::ERROR), throw std::out_of_range("no rows"); }
+		AddSpecificColumn<T>(static_cast<int>(m_cells.at(0).size()), defalutValue);
+	}
 
 	/**
 	 * removes a specific row.

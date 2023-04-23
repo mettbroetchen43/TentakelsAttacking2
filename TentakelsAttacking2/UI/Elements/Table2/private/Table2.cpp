@@ -6,10 +6,7 @@
 #include "HFocusEvents.h"
 #include "AppContext.h"
 #include "Table2.h"
-#include "TableCell2.hpp"
-#include "HPrint.h"
 #include "HInput.h"
-#include <stdexcept>
 
 
 bool Table2::IsValidIndex(int row, int column) const {
@@ -67,6 +64,7 @@ void Table2::UpdateCellPositionAndSize() {
 			auto& cell = m_cells.at(row).at(column);
 			cell->SetPosition({ m_pos.x + cellWidth * column, m_pos.y + cellHeight * row });
 			cell->SetSize({ cellWidth, cellHeight });
+			cell->CalculateTextSize();
 		}
 	}
 
@@ -103,7 +101,7 @@ void Table2::ResizeTable() {
 	if (m_cells.size() == m_rowCount) { /* nothing */ }
 	else if (m_cells.size() < m_rowCount) {
 		while (m_cells.size() < m_rowCount) {
-			AddLastRow();
+			AddLastRow<std::string>("");
 		}
 	}
 	else if (m_cells.size() > m_rowCount) {
@@ -119,7 +117,7 @@ void Table2::ResizeTable() {
 	if (row.size() == m_columnCount) { /* nothing */ }
 	else if (row.size() < m_columnCount) {
 		while (row.size() < m_columnCount) {
-			AddLastColumn();
+			AddLastColumn<std::string>("");
 		}
 	}
 	else if (row.size() > m_columnCount) {
@@ -416,56 +414,12 @@ int Table2::GetColumnCount() const {
 	return m_columnCount;
 }
 
-void Table2::AddSpecificRow(int row) {
-	if (row == m_cells.size()) { /* nothing */ }
-	else if (!IsValidRow(row)) { Print("invalid row index", PrintType::ERROR), throw std::out_of_range("row-index"); }
-
-	auto line = std::vector<std::shared_ptr<AbstactTableCell2>>();
-
-	for (int column = 0; column < m_columnCount; ++column) {
-
-		auto cell = std::make_shared<TableCell2<std::string>>(
-			Vector2(0.0f, 0.0f),
-			Vector2(0.1f, 0.1f),
-			Alignment::TOP_LEFT,
-			m_resolution,
-			0,
-			" new row"
-		);
-		line.push_back(cell);
-	}
-
-	m_cells.insert(m_cells.begin() + row, line);
-}
-void Table2::AddLastRow() {
-	AddSpecificRow(static_cast<int>(m_cells.size()));
-}
-void Table2::AddSpecificColumn(int column) {
-	if (m_cells.size() == 0) { Print("no rows available in the table", PrintType::ERROR), throw std::out_of_range("no rows"); }
-	else if (column == m_cells.at(0).size()) { /* nothing */ }
-	else if (!IsValidColumn(column)) { Print("column-index out of range", PrintType::ERROR), throw std::out_of_range("column index"); }
-
-	for (auto& row : m_cells) {
-		auto cell = std::make_shared<TableCell2<std::string>>(
-			Vector2(0.0f, 0.0f),
-			Vector2(0.1f, 0.1f),
-			Alignment::TOP_LEFT,
-			m_resolution,
-			0,
-			"new columnS"
-		);
-		row.insert(row.begin() + column, cell);
-	}
-}
-void Table2::AddLastColumn() {
-	if (m_cells.size() == 0) { Print("no rows in table", PrintType::ERROR), throw std::out_of_range("no rows"); }
-	AddSpecificRow(static_cast<int>(m_cells.at(0).size()));
-}
 
 void Table2::RemoveSpecificRow(int row) {
 	if (!IsValidRow(row)) { Print("row out of range", PrintType::ERROR), throw std::out_of_range("row index"); }
 
 	m_cells.erase(m_cells.begin() + row);
+	--m_rowCount;
 }
 void Table2::RemoveLastRow() {
 	RemoveSpecificRow(static_cast<int>(m_cells.size() - 1));
@@ -476,6 +430,8 @@ void Table2::RemoveSpecificColumn(int column) {
 	for (auto& row : m_cells) {
 		row.erase(row.begin() + column);
 	}
+
+	--m_columnCount;
 }
 void Table2::RemoveLastColum() {
 	if (m_cells.size() == 0) { Print("no rows in table", PrintType::ERROR), throw std::out_of_range("no rows"); }

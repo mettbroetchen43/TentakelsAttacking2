@@ -5,6 +5,8 @@
 
 
 #include "AbstactTableCell2.h"
+#include "AppContext.h"
+#include "HPrint.h"
 #pragma once
 
 template <typename T>
@@ -16,7 +18,7 @@ private:
 	/**
 	 * Sets the value as string.
 	 */
-	inline void SetStringValue() {
+	void SetStringValue() {
 		m_stringValue = std::to_string(m_value);
 	}
 
@@ -34,7 +36,7 @@ public:
 	 * use this if the cell is clicked.
 	 * need to be implemented by every cell.
 	 */
-	inline void Clicked(Vector2 const& mousePosition, AppContext const& appContext) override {
+	void Clicked(Vector2 const& mousePosition, AppContext const& appContext) override {
 
 		if (not IsEditable()) { return; }
 		AbstactTableCell2::Clicked(mousePosition, appContext);
@@ -43,13 +45,13 @@ public:
 	 * calls the CheckAndUpdate member function of UIElement.
 	 * contains the logic of the cell.
 	 */
-	inline void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override {
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override {
 		AbstactTableCell2::CheckAndUpdate(mousePosition, appContext);
 	}
 	/**
 	 * renders the cell
 	 */
-	inline void Render(AppContext const& appContext) override {
+	void Render(AppContext const& appContext) override {
 		AbstactTableCell2::Render(appContext);
 
 		DrawTextEx(
@@ -65,20 +67,31 @@ public:
 	/**
 	 * calculates a new text size from the collider.
 	 */
-	inline void CalculateTextSize() override {
+	void CalculateTextSize() override {
 		m_textSize = m_collider.height / 3;
 		m_textPosition = { m_collider.x + m_collider.width * 0.05f ,m_collider.y + m_textSize };
 	}
 };
 
-
+template<>
 inline void TableCell2<std::string>::SetStringValue() {
 	m_stringValue = m_value;
 }
+template<>
 inline void TableCell2<Color>::SetStringValue() {
 	m_stringValue = "Color";
 }
+
+template<>
 inline void TableCell2<Color>::Render(AppContext const& appContext) {
 	AbstactTableCell2::Render(appContext);
 
+	int offset = static_cast<int>(m_collider.height / 10);
+	DrawRectangle(
+		static_cast<int>(m_collider.x + offset),
+		static_cast<int>(m_collider.y + offset),
+		static_cast<int>(m_collider.width - 2 * offset),
+		static_cast<int>(m_collider.height - 2 * offset),
+		m_value
+	);
 }
