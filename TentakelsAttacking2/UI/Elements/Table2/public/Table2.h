@@ -168,6 +168,14 @@ public:
 		return dynamic_cast<TableCell2<T>*>(m_cells.at(row).at(column).get())->GetValue();
 	}
 	/**
+	 * rerturn the current valeu of a cell as string.
+	 */
+	std::string GetValueAsString(int row, int column) const {
+		if (not IsValidIndex(row, column)) { Print("index out of range", PrintType::ERROR); throw std::out_of_range("index"); }
+
+		return m_cells.at(row).at(column)->GetValueAsString();
+	}
+	/**
 	 * sets a new row count.
 	 * need to call the recalculation of the table.
 	 */

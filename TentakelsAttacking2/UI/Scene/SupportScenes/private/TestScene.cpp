@@ -7,7 +7,7 @@
 #include "SceneType.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
-#include <iostream>
+#include "HPrint.h"
 
 enum class TableToggle {
 	HEADLINE,
@@ -48,6 +48,8 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 	Print(value, PrintType::DEBUG);
 	auto value2 = m_table->GetValue<bool>(1, 2);
 	Print(std::to_string(value2), PrintType::DEBUG);
+	auto value3 = m_table->GetValueAsString(6, 0);
+	Print(value3, PrintType::DEBUG);
 
 
 

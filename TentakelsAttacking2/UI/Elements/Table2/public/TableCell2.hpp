@@ -5,6 +5,7 @@
 
 
 #include "HPrint.h"
+#include "HColors.h"
 #include "AppContext.h"
 #include "AbstactTableCell2.h"
 #pragma once
@@ -81,7 +82,7 @@ public:
 	 * returns the current value as string.
 	 */
 	std::string GetValueAsString() const override {
-		return "";
+		return m_stringValue;
 	}
 };
 
@@ -97,7 +98,7 @@ inline void TableCell2<std::string>::SetStringValue() {
  */
 template<>
 inline void TableCell2<Color>::SetStringValue() {
-	m_stringValue = "Color";
+	m_stringValue = Colors::AsString(m_value);
 }
 
 /**
