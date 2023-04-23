@@ -3,8 +3,8 @@
 // 03.04.2023
 //
 
-#include "UIElement.hpp"
 #include "Focusable.h"
+#include "UIElement.hpp"
 #pragma once
 
 class AbstactTableCell2 : public UIElement, public Focusable {

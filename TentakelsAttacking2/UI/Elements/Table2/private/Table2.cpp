@@ -3,10 +3,9 @@
 // 03.04.2023
 //
 
-#include "HFocusEvents.h"
-#include "AppContext.h"
 #include "Table2.h"
 #include "HInput.h"
+#include "AppContext.h"
 
 
 bool Table2::IsValidIndex(int row, int column) const {

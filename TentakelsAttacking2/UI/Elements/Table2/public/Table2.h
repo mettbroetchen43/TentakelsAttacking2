@@ -3,13 +3,13 @@
 // 03.04.2023
 //
 
-// #include "AbstactTableCell2.h"
-#include "UIElement.hpp"
-#include "Focusable.h"
-#include "TableCell2.hpp"
 #include "HPrint.h"
-#include <stdexcept>
+#include "Focusable.h"
+#include "UIElement.hpp"
+#include "HFocusEvents.h"
+#include "TableCell2.hpp"
 #include <memory>
+#include <stdexcept>
 
 #pragma once
 
@@ -136,11 +136,28 @@ public:
 	 * replaces the current Cell with a new one.
 	 */
 	template<typename T>
-	void SetCell(int row, int column, T input);
-	/**
-	 * Replaces the specific cell with an empty cell.
-	 */
-	void ClearCell(int row, int column);
+	void SetCell(int row, int column, T input) {
+		if (not IsValidIndex(row, column)) { Print("Index out of range", PrintType::ERROR), throw std::out_of_range("index"); }
+
+		auto oldCell = m_cells.at(row).at(column);
+		if (IsNestedFocus()) {
+			DeleteFocusElement(oldCell.get());
+		}
+
+		auto cell = std::make_shared<TableCell2<T>>(
+			oldCell->GetPosition(),
+			oldCell->GetSize(),
+			oldCell->GetAlignment(),
+			m_resolution,
+			oldCell->GetFocusID(),
+			input
+		);
+		cell->SetEditable(oldCell->IsEditable());
+		m_cells.at(row).at(column) = cell;
+		if (IsNestedFocus()) {
+			AddFocusElement(cell.get());
+		}
+	}
 
 	/**
 	 * sets a new row count.
