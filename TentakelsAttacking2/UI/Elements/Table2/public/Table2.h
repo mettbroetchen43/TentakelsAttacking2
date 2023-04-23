@@ -162,15 +162,16 @@ public:
 	 * returns the current value of a cell.
 	 */
 	template <typename T>
-	T GetValue(int row, int column) const {
+	[[nodiscard]] T GetValue(int row, int column) const {
 		if (not IsValidIndex(row, column)) { Print("index out of range", PrintType::ERROR); throw std::out_of_range("index"); }
 
-		return dynamic_cast<TableCell2<T>*>(m_cells.at(row).at(column).get())->GetValue();
+		std::any value = m_cells.at(row).at(column)->GetValue();
+		return std::any_cast<T>(value);
 	}
 	/**
-	 * rerturn the current valeu of a cell as string.
+	 * rerturn the current valeu of a cell as string.s
 	 */
-	std::string GetValueAsString(int row, int column) const {
+	[[nodiscard]] std::string GetValueAsString(int row, int column) const {
 		if (not IsValidIndex(row, column)) { Print("index out of range", PrintType::ERROR); throw std::out_of_range("index"); }
 
 		return m_cells.at(row).at(column)->GetValueAsString();

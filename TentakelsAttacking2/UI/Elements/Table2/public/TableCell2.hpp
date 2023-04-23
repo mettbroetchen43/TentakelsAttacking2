@@ -75,13 +75,13 @@ public:
 	/**
 	 * returns the current value.
 	 */
-	T GetValue() const {
+	[[nodiscard]] std::any GetValue() const override {
 		return m_value;
 	}
 	/**
 	 * returns the current value as string.
 	 */
-	std::string GetValueAsString() const override {
+	[[nodiscard]] std::string GetValueAsString() const override {
 		return m_stringValue;
 	}
 };

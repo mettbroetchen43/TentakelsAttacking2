@@ -5,6 +5,7 @@
 
 #include "Focusable.h"
 #include "UIElement.hpp"
+#include <any>
 #pragma once
 
 class AbstactTableCell2 : public UIElement, public Focusable {
@@ -27,9 +28,13 @@ public:
 	virtual void CalculateTextSize() = 0;
 
 	/**
+	 * returns the current value.
+	 */
+	[[nodiscard]] virtual std::any GetValue() const = 0;
+	/**
 	 * returns the current value as string.
 	 */
-	virtual std::string GetValueAsString() const = 0;
+	[[nodiscard]] virtual std::string GetValueAsString() const = 0;
 
 	/**
 	 * sets if the cell is editable.
