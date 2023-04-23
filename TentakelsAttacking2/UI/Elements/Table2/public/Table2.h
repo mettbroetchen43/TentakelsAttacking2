@@ -20,6 +20,7 @@ private:
 	int m_columnCount; ///< contains the current mount of column in the table
 	cells_ty m_cells; ///< contains all cells the table is holding
 	Vector2 m_minCellSize; ///< contains the minimum relative size of one cell
+	std::array<std::vector<bool>, 2> m_editableRowsColumns; ///< contains the enabled rows and columns
 	Rectangle m_temporaryCollider; ///< contains the used collider
 
 	bool m_setScrollable = false; ///< contains if the table get set scrollable this frame
@@ -80,7 +81,7 @@ private:
 	 */
 	void CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext const& appContext);
 
-	/** 
+	/**
 	 * checks and scrolls if scrollable
 	 */
 	void CheckAndUpdateScroll(Vector2 const& mousePosition);
@@ -181,10 +182,14 @@ public:
 				0,
 				defalutValue
 			);
+			if (not m_editableRowsColumns.at(1).at(column)) {
+				cell->SetEditable(false);
+			}
 			line.push_back(cell);
 		}
 
 		m_cells.insert(m_cells.begin() + row, line);
+		m_editableRowsColumns.at(0).insert(m_editableRowsColumns.at(0).begin() + row, true);
 		++m_rowCount;
 	}
 	/**
@@ -204,7 +209,8 @@ public:
 		else if (column == m_cells.at(0).size()) { /* nothing */ }
 		else if (!IsValidColumn(column)) { Print("column-index out of range", PrintType::ERROR), throw std::out_of_range("column index"); }
 
-		for (auto& row : m_cells) {
+		for (int i = 0; i < m_rowCount; ++i) {
+			auto row = m_cells.at(i);
 			auto cell = std::make_shared<TableCell2<T>>(
 				Vector2(0.0f, 0.0f),
 				Vector2(0.1f, 0.1f),
@@ -213,8 +219,12 @@ public:
 				0,
 				defalutValue
 			);
+			if (not m_editableRowsColumns.at(0).at(i)) {
+				cell->SetEditable(false);
+			}
 			row.insert(row.begin() + column, cell);
 		}
+		m_editableRowsColumns.at(1).insert(m_editableRowsColumns.at(1).begin() + column, true);
 		++m_columnCount;
 	}
 	/**

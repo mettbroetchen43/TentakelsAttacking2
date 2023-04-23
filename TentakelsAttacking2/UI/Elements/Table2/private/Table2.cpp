@@ -172,7 +172,7 @@ void Table2::UpdateFirstRowPosition() {
 
 		float width = m_cells.at(0).at(0)->GetCollider().width;
 		float pos = m_cells.at(0).at(1)->GetCollider().x;
-		
+
 		for (int row = 0; row < m_cells.size(); ++row) {
 			auto cell = m_cells.at(row).at(0);
 			auto col = cell->GetCollider();
@@ -198,7 +198,7 @@ void Table2::CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext con
 			goto clicked;
 		}
 	}
-	
+
 	for (int column = 1; column < m_columnCount; ++column) {
 		cell = m_cells.at(0).at(column);
 		if (cell->IsColliding(mousePositon)) {
@@ -239,7 +239,7 @@ void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 	ScrollMove(offset);
 	m_absoluteScollingOffset.x += offset.x;
 	m_absoluteScollingOffset.y += offset.y;
-	
+
 	if (IsNestedFocus()) {
 		auto event = RenderFocusEvent(false);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
@@ -294,7 +294,7 @@ out:
 
 	auto col = cell->GetCollider();
 	bool cellInCollider =
-		    m_collider.x < col.x  // left
+		m_collider.x < col.x  // left
 		and m_collider.x + m_collider.width > col.x + col.width  // right
 		and m_collider.y < col.y  // top
 		and m_collider.y + m_collider.height > col.y + col.height;  // bottom
@@ -304,7 +304,7 @@ out:
 	if (m_collider.x > col.x) {  // left
 		offset.x = m_collider.x - col.x;
 	}
-	else if ( m_collider.x + m_collider.width < col.x + col.width) { // right
+	else if (m_collider.x + m_collider.width < col.x + col.width) { // right
 		offset.x = (m_collider.x + m_collider.width) - (col.x + col.width);
 	}
 
@@ -386,13 +386,18 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 				Alignment::TOP_LEFT,
 				m_resolution,
 				row * columnCount + column,
-				"Test | " + std::to_string(row +1) + " | " + std::to_string(column +1) + "\n"
+				"Test | " + std::to_string(row + 1) + " | " + std::to_string(column + 1) + "\n"
 			);
 
 			line.push_back(cell);
 		}
 		m_cells.push_back(line);
 	}
+
+	m_editableRowsColumns = {
+		std::vector<bool>(m_rowCount,true),
+		std::vector<bool>(m_columnCount,true)
+	};
 
 }
 
@@ -419,6 +424,7 @@ void Table2::RemoveSpecificRow(int row) {
 	if (!IsValidRow(row)) { Print("row out of range", PrintType::ERROR), throw std::out_of_range("row index"); }
 
 	m_cells.erase(m_cells.begin() + row);
+	m_editableRowsColumns.at(0).erase(m_editableRowsColumns.at(0).begin() + row);
 	--m_rowCount;
 }
 void Table2::RemoveLastRow() {
@@ -431,6 +437,7 @@ void Table2::RemoveSpecificColumn(int column) {
 		row.erase(row.begin() + column);
 	}
 
+	m_editableRowsColumns.at(1).erase(m_editableRowsColumns.at(1).begin() + column);
 	--m_columnCount;
 }
 void Table2::RemoveLastColum() {
@@ -455,10 +462,15 @@ bool Table2::IsSingleEditable(int row, int column) const {
 	return m_cells.at(row).at(column)->IsEditable();
 }
 
-void Table2::SetAllEditable(bool IsEditable) noexcept {
+void Table2::SetAllEditable(bool isEditable) noexcept {
 	for (auto& row : m_cells) {
 		for (auto& cell : row) {
-			cell->SetEditable(IsEditable);
+			cell->SetEditable(isEditable);
+		}
+	}
+	for (int i = 0; i < m_editableRowsColumns.size(); ++i) {
+		for (int j = 0; j < m_editableRowsColumns.at(i).size(); ++j) {
+			m_editableRowsColumns.at(i).at(j) = isEditable;
 		}
 	}
 }
@@ -478,14 +490,12 @@ void Table2::SetRowEditable(int row, bool isEditable) {
 	for (auto& cell : m_cells.at(row)) {
 		cell->SetEditable(isEditable);
 	}
+	m_editableRowsColumns.at(0).at(row) = isEditable;
 }
 bool Table2::IsRowEditable(int row) const {
 	if (!IsValidRow(row)) { Print("row out of range", PrintType::ERROR), throw std::out_of_range("row index"); }
 
-	for (auto& cell : m_cells.at(row)) {
-		if (!cell->IsEditable()) { return false; }
-	}
-	return true;
+	return m_editableRowsColumns.at(0).at(row);
 }
 
 void Table2::SetColumnEditable(int column, bool isEditable) {
@@ -494,14 +504,12 @@ void Table2::SetColumnEditable(int column, bool isEditable) {
 	for (auto& row : m_cells) {
 		row.at(column)->SetEditable(isEditable);
 	}
+	m_editableRowsColumns.at(1).at(column) = isEditable;
 }
 bool Table2::IsColumnEditable(int column) const {
 	if (!IsValidColumn(column)) { Print("column out of Range", PrintType::ERROR); throw std::out_of_range("column index"); }
 
-	for (auto& row : m_cells) {
-		if (row.at(column)->IsEditable()) { return false; }
-	}
-	return true;
+	return m_editableRowsColumns.at(1).at(column);
 }
 
 void Table2::SetFixedHeadline(bool isFixedHeadline) {
