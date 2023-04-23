@@ -189,7 +189,7 @@ void Table2::CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext con
 		goto clicked;
 	}
 
-	for (int row = 1; row < m_columnCount; ++row) {
+	for (int row = 1; row < m_rowCount; ++row) {
 		cell = m_cells.at(row).at(0);
 		if (cell->IsColliding(mousePositon)) {
 			goto clicked;

@@ -4,9 +4,9 @@
 //
 
 #include "TestScene.h"
-#include "ClassicButton.h"
 #include "SceneType.h"
 #include "AppContext.h"
+#include "ClassicButton.h"
 #include <iostream>
 
 enum class TableToggle {
@@ -34,8 +34,6 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 	m_table->SetColumnEditable(1, false);
 
 	m_table->SetScrollable(true);
-	//m_table->SetFixedHeadline(true);
-	//m_table->SetFixedFirstColumn(true);
 
 
 	// to get Back No testing
