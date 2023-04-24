@@ -8,6 +8,7 @@
 #include "UIElement.hpp"
 #include "HFocusEvents.h"
 #include "TableCell2.hpp"
+
 #include <memory>
 #include <stdexcept>
 

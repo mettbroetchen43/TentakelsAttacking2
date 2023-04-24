@@ -3,11 +3,11 @@
 // 01.10.2022
 //
 
+#include "HPrint.h"
 #include "TestScene.h"
 #include "SceneType.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
-#include "HPrint.h"
 
 enum class TableToggle {
 	HEADLINE,

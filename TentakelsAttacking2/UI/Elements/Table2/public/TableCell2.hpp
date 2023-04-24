@@ -3,13 +3,18 @@
 // 23.04.2023
 //
 
+/*
+	trim string value
+	adaptive sizes in not scrollable
+	check if sizes in scrollable are still working
+*/
 
 #include "HPrint.h"
-#include "HColors.h"
 #include "HInput.h"
+#include "HColors.h"
+#include "UIEvents.hpp"
 #include "AppContext.h"
 #include "AbstactTableCell2.h"
-#include "UIEvents.hpp"
 #pragma once
 
 template <typename T>
