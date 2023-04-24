@@ -6,21 +6,34 @@
 
 #include "HPrint.h"
 #include "HColors.h"
+#include "HInput.h"
 #include "AppContext.h"
 #include "AbstactTableCell2.h"
+#include "UIEvents.hpp"
 #pragma once
 
 template <typename T>
 class TableCell2 final : public AbstactTableCell2 {
 private:
-	T m_value;
-	std::string m_stringValue;
+	T m_value; ///< contains the value
+	std::string m_stringValue; ///< contains the value as string
+	std::function<void(TableCell2*, T, T)> m_updated = [](TableCell2*, T, T) {}; ///< conains a lambda that provides that the value has chanced
 
 	/**
 	 * Sets the value as string.
 	 */
 	void SetStringValue() {
 		m_stringValue = std::to_string(m_value);
+	}
+
+	/**
+	 * updates the cell value.
+	 */
+	void UpdateValue(T newValue) {
+		T oldValue = m_value;
+		m_value = newValue;
+		SetStringValue();
+		m_updated(this, oldValue, m_value);
 	}
 
 public:
@@ -37,17 +50,42 @@ public:
 	 * use this if the cell is clicked.
 	 * need to be implemented by every cell.
 	 */
-	void Clicked(Vector2 const& mousePosition, AppContext const& appContext) override {
+	void Clicked(Vector2 const&, AppContext const& appContext) override {
 
 		if (not IsEditable()) { return; }
-		AbstactTableCell2::Clicked(mousePosition, appContext);
+
+		auto event = ShowCellPopUpEvent<T>(
+			"Edit Entry",
+			m_value,
+			[this](T value) {this->UpdateValue(value); }
+		);
+		appContext.eventManager.InvokeEvent(event);
 	}
 	/**
 	 * calls the CheckAndUpdate member function of UIElement.
 	 * contains the logic of the cell.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override {
-		AbstactTableCell2::CheckAndUpdate(mousePosition, appContext);
+	void CheckAndUpdate(Vector2 const&, AppContext const& appContext) override {
+		if (not IsEditable()) { return; }
+
+		bool shouldEdit = false;
+
+		if (IsFocused()) {
+			if (IsConfirmInputPressed()) {
+				shouldEdit = true;
+			}
+		}
+
+		if (shouldEdit) {
+			auto event = ShowCellPopUpEvent<T>(
+				"Edit Entry",
+				m_value,
+				[this](T value) {this->UpdateValue(value); }
+			);
+			appContext.eventManager.InvokeEvent(event);
+		}
+
+
 	}
 	/**
 	 * renders the cell
