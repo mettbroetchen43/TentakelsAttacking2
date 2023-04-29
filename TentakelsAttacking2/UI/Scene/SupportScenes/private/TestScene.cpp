@@ -43,11 +43,7 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 	m_table->SetValue<std::string>(4, 4, "changed");
 
 	auto value = m_table->GetValue<std::string>(1, 1);
-	Print(value, PrintType::DEBUG);
 	auto value3 = m_table->GetValueAsString(6, 0);
-	Print(value3, PrintType::DEBUG);
-
-
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(

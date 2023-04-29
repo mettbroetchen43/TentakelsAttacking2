@@ -119,7 +119,7 @@ void UIManager::SetWindowPosition() {
 
 void UIManager::SetTargetFPS(SetTargetFPSEvent const* event) {
 	::SetTargetFPS(static_cast<int>(event->GetFPS()));
-	Print("FPS Set: " + std::to_string(event->GetFPS()));
+	Print("FPS Set: " + std::to_string(event->GetFPS()), PrintType::INFO);
 }
 
 void UIManager::UILoop() {
@@ -187,7 +187,7 @@ void UIManager::StartUI() {
 		m_sceneManager.SetResolution(m_resolution);
 	}
 
-	Print("\"UI\" started");
+	Print("\"UI\" started", PrintType::INFO);
 }
 
 void UIManager::StartUILoop() {
@@ -202,7 +202,7 @@ void UIManager::StartUILoop() {
 		SetWindowPosition();
 	}
 
-	Print("\"UI Loop\" started");
+	Print("\"UI Loop\" started", PrintType::INFO);
 
 	UILoop();
 }
