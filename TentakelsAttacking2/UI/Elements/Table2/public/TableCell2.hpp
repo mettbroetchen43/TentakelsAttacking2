@@ -8,8 +8,6 @@
 	adaptive sizes in not scrollable
 	check if sizes in scrollable are still working
 
-	scroll bar
-
 	change button trigger in Popup
 */
 
@@ -22,7 +20,7 @@
 #pragma once
 
 template <typename T>
-class TableCell2 final : public AbstactTableCell2 {
+class TableCell2 final : public AbstractTableCell2 {
 private:
 	T m_value; ///< contains the value
 	std::string m_stringValue; ///< contains the value as string
@@ -50,7 +48,7 @@ public:
 	 * ctor
 	 */
 	TableCell2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID, T value)
-		: AbstactTableCell2(pos, size, alignment, resolution, focusID), m_value(value) {
+		: AbstractTableCell2(pos, size, alignment, resolution, focusID), m_value(value) {
 		SetStringValue();
 		CalculateTextSize();
 	}
@@ -100,7 +98,7 @@ public:
 	 * renders the cell
 	 */
 	void Render(AppContext const& appContext) override {
-		AbstactTableCell2::Render(appContext);
+		AbstractTableCell2::Render(appContext);
 
 		DrawTextEx(
 			*appContext.assetManager.GetFont(),
@@ -153,7 +151,7 @@ inline void TableCell2<Color>::SetStringValue() {
  */
 template<>
 inline void TableCell2<Color>::Render(AppContext const& appContext) {
-	AbstactTableCell2::Render(appContext);
+	AbstractTableCell2::Render(appContext);
 
 	int offset = static_cast<int>(m_collider.height / 10);
 	DrawRectangle(

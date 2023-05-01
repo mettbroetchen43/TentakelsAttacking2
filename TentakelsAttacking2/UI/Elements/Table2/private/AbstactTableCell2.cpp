@@ -4,30 +4,30 @@
 //
 
 #include "HPrint.h"
-#include "AbstactTableCell2.h"
+#include "AbstractTableCell2.h"
 
 
-AbstactTableCell2::AbstactTableCell2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID)
+AbstractTableCell2::AbstractTableCell2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID)
 	: UIElement(pos, size, alignment, resolution), Focusable(focusID), m_textSize(0.0f), m_textPosition({ 0.0f,0.0f }){ }
 
-void AbstactTableCell2::SetEditable(bool IsEditable) noexcept {
+void AbstractTableCell2::SetEditable(bool IsEditable) noexcept {
 	m_isEditable = IsEditable;
 }
-bool AbstactTableCell2::IsEditable() const noexcept {
+bool AbstractTableCell2::IsEditable() const noexcept {
 	return m_isEditable;
 }
-bool AbstactTableCell2::IsEnabled() const noexcept {
+bool AbstractTableCell2::IsEnabled() const noexcept {
 	return m_isEditable;
 }
 
-Rectangle AbstactTableCell2::GetCollider() const noexcept {
+Rectangle AbstractTableCell2::GetCollider() const noexcept {
 	return m_collider;
 }
-bool AbstactTableCell2::IsColliding(Vector2 point) const {
+bool AbstractTableCell2::IsColliding(Vector2 point) const {
 	return CheckCollisionPointRec(point, m_collider);
 }
 
-void AbstactTableCell2::Render(AppContext const&) {
+void AbstractTableCell2::Render(AppContext const&) {
 
 	DrawRectangleRec(
 		m_collider,

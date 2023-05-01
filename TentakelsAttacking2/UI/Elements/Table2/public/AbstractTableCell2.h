@@ -8,7 +8,7 @@
 #include <any>
 #pragma once
 
-class AbstactTableCell2 : public UIElement, public Focusable {
+class AbstractTableCell2 : public UIElement, public Focusable {
 protected:
 	bool m_isEditable = true; ///< contains if the cell is currently editable
 	float m_textSize; ///< contains the text size the text is renderd with
@@ -19,7 +19,7 @@ public:
 	 * ctor.
 	 * initializes the table with empty cells.
 	 */
-	AbstactTableCell2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID);
+	AbstractTableCell2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID);
 
 	/**
 	 * calculates the text size.

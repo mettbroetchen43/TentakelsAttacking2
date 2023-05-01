@@ -299,7 +299,7 @@ void Table2::ScrollFocused() {
 	if (not m_isScrollable) { return; }
 	if (not IsNestedFocus()) { return; }
 
-	std::shared_ptr<AbstactTableCell2> cell = nullptr;
+	std::shared_ptr<AbstractTableCell2> cell = nullptr;
 	for (int row = 0; row < m_cells.size(); ++row) {
 		for (int column = 0; column < m_cells.at(row).size(); ++column) {
 			auto cCell = m_cells.at(row).at(column);
@@ -345,18 +345,15 @@ void Table2::ScollPercent(float percent, bool isHorisonzal) {
 	Vector2 offset{ 0.0f,0.0f };
 
 	if (isHorisonzal) {
-		size.x -= m_collider.width; // offset collider absolute size
-		size.x *= percent / 100;  // percent offset as absolute value
+		size.x -= m_collider.width;
+		size.x *= percent / 100;
 		offset.x = -(size.x + m_absoluteScollingOffset.x);
 	}
 	else {
 		size.y -= m_collider.height;
 		size.y *= percent / 100;
 		offset.y = -(size.y + m_absoluteScollingOffset.y);
-		Print(std::to_string(m_absoluteScollingOffset.y) + " | " + std::to_string(size.y), PrintType::DEBUG);
 	}
-
-	Print(std::to_string(offset.x) + " | " + std::to_string(offset.y), PrintType::DEBUG);
 
 	ClampScroollOffset(offset);
 	ScrollMove(offset);
@@ -443,7 +440,7 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 	m_cells.clear();
 	for (int row = 0; row < m_rowCount; ++row) {
 
-		auto line = std::vector<std::shared_ptr<AbstactTableCell2>>();
+		auto line = std::vector<std::shared_ptr<AbstractTableCell2>>();
 		for (int column = 0; column < columnCount; ++column) {
 
 			auto cell = std::make_shared<TableCell2<std::string>>(
