@@ -4,9 +4,13 @@
 //
 
 /*
-	trim string value
+	// trim string value
 	adaptive sizes in not scrollable
 	check if sizes in scrollable are still working
+
+	scroll bar
+
+	change button trigger in Popup
 */
 
 #include "HPrint.h"
@@ -14,7 +18,7 @@
 #include "HColors.h"
 #include "UIEvents.hpp"
 #include "AppContext.h"
-#include "AbstactTableCell2.h"
+#include "AbstractTableCell2.h"
 #pragma once
 
 template <typename T>
@@ -23,7 +27,7 @@ private:
 	T m_value; ///< contains the value
 	std::string m_stringValue; ///< contains the value as string
 	std::function<void(TableCell2*, T, T)> m_updated = [](TableCell2*, T, T) {}; ///< conains a lambda that provides that the value has chanced
-
+	
 	/**
 	 * Sets the value as string.
 	 */

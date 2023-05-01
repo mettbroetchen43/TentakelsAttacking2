@@ -14,6 +14,8 @@
 
 #pragma once
 
+class Slider;
+
 class Table2 final : public UIElement, public Focusable {
 private:
 	using cells_ty = std::vector<std::vector<std::shared_ptr<AbstactTableCell2>>>;
@@ -32,6 +34,12 @@ private:
 	bool m_isFixedFirstColumn = false; ///< contains if the first column is fixed while scolling
 	float m_scroll_speed; ///< contains the speed the table ist scrolled with
 	Vector2 m_absoluteScollingOffset{ 0.0f,0.0f }; ///< contains the absolute scrolling offset 
+
+	std::shared_ptr<Slider> m_horizontalSlider; ///< contains the horizontal slider
+	bool m_activeHorizontalSlider; ///< contains if the horizontal slider is needed
+	std::shared_ptr<Slider> m_verticalSlider; ///< contains the vertival slider
+	bool m_activeVerticalSlider; ///< contains if the vertical slider is needed
+
 
 	/**
 	 * returns true if the provided index is valid to access a cell.
@@ -54,6 +62,11 @@ private:
 	 * sets new size in all cells.
 	 */
 	void UpdateCellPositionAndSize();
+
+	/**
+	 * returns the calculated absolute size of all cells.
+	 */
+	[[nodiscard]] Vector2 GetAbsoluteSize() const;
 
 	/**
 	 * sets the cell focus and the nested focus.
@@ -95,9 +108,17 @@ private:
 	 */
 	void ScrollFocused();
 	/**
+	 * set offset to position in percent.
+	 */
+	void ScollPercent(float percent, bool isHorisonzal);
+	/**
 	 * moves the cell collider of the offset.
 	 */
 	void ScrollMove(Vector2 const& offset);
+	/**
+	 * sets the slider active or inactive and the total dimesion.
+	 */
+	void CalculateSlider();
 
 	/**
 	 * calls the top left cell to render.

@@ -542,7 +542,7 @@
     <ClCompile Include="UI\Elements\Table2\private\Table2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Elements\Table2\public\AbstactTableCell2.h">
+    <ClCompile Include="UI\Elements\Table2\public\AbstractTableCell2.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Table2\private\AbstactTableCell2.cpp">

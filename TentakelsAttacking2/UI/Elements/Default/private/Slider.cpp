@@ -238,3 +238,7 @@ void Slider::SetEnabled(bool isEnabled) {
 	m_isEnabled = isEnabled;
 	m_btn.SetEnabled(isEnabled);
 }
+
+bool Slider::IsColliding(Vector2 point) const {
+	return CheckCollisionPointRec(point, m_collider);
+}

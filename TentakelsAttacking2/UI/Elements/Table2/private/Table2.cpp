@@ -5,6 +5,7 @@
 
 #include "Table2.h"
 #include "HInput.h"
+#include "Slider.h"
 #include "AppContext.h"
 
 
@@ -127,6 +128,7 @@ void Table2::ResizeTable() {
 
 	UpdateCellFocusID();
 	UpdateCellPositionAndSize();
+	CalculateSlider();
 }
 void Table2::UpdateHeadlinePosition() {
 	if (m_setFixedHeadline == m_isFixedHeadline) { return; }
@@ -239,10 +241,29 @@ void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 	m_absoluteScollingOffset.x += offset.x;
 	m_absoluteScollingOffset.y += offset.y;
 
+	Vector2 size = GetAbsoluteSize();
+	m_horizontalSlider->SetButtonPosition((-m_absoluteScollingOffset.x / (size.x - m_collider.width)) * 100);
+	m_verticalSlider->SetButtonPosition((-m_absoluteScollingOffset.y / (size.y - m_collider.height)) * 100);
+
 	if (IsNestedFocus()) {
 		auto event = RenderFocusEvent(false);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
+}
+Vector2 Table2::GetAbsoluteSize() const {
+
+	Vector2 toReturn{ 0.0f,0.0f };
+
+	for (auto cell : m_cells.at(0)) {
+		toReturn.x += cell->GetCollider().width;
+	}
+
+	for (int i = 0; i < m_rowCount; ++i) {
+		auto cell = m_cells.at(0).at(i);
+		toReturn.y += cell->GetCollider().height;
+	}
+
+	return toReturn;
 }
 void Table2::ClampScroollOffset(Vector2& offset) {
 	if (m_rowCount < 2) { Print("not enough rows in table for clamping", PrintType::EXPECTED_ERROR); return; }
@@ -270,7 +291,7 @@ void Table2::ClampScroollOffset(Vector2& offset) {
 
 	// clamp bottom y
 	cell = cellBottomLeft.y + offset.y;
-	table = m_collider.y + cellTopLeft.height;
+	table = m_collider.y + m_collider.height;
 	if (cell < table) { offset.y += table - cell; }
 
 }
@@ -318,6 +339,35 @@ out:
 	m_absoluteScollingOffset.x += offset.x;
 	m_absoluteScollingOffset.y += offset.y;
 }
+void Table2::ScollPercent(float percent, bool isHorisonzal) {
+
+	auto size = GetAbsoluteSize();
+	Vector2 offset{ 0.0f,0.0f };
+
+	if (isHorisonzal) {
+		size.x -= m_collider.width; // offset collider absolute size
+		size.x *= percent / 100;  // percent offset as absolute value
+		offset.x = -(size.x + m_absoluteScollingOffset.x);
+	}
+	else {
+		size.y -= m_collider.height;
+		size.y *= percent / 100;
+		offset.y = -(size.y + m_absoluteScollingOffset.y);
+		Print(std::to_string(m_absoluteScollingOffset.y) + " | " + std::to_string(size.y), PrintType::DEBUG);
+	}
+
+	Print(std::to_string(offset.x) + " | " + std::to_string(offset.y), PrintType::DEBUG);
+
+	ClampScroollOffset(offset);
+	ScrollMove(offset);
+	m_absoluteScollingOffset.x += offset.x;
+	m_absoluteScollingOffset.y += offset.y;
+
+	if (IsNestedFocus()) {
+		auto event = RenderFocusEvent(false);
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+	}
+}
 void Table2::ScrollMove(Vector2 const& offset) {
 	for (int row = 0; row < m_cells.size(); ++row) {
 		for (int column = 0; column < m_cells.at(row).size(); ++column) {
@@ -333,6 +383,23 @@ void Table2::ScrollMove(Vector2 const& offset) {
 			cell->CalculateTextSize();
 		}
 	}
+}
+void Table2::CalculateSlider() {
+
+	float width{ 0.0f };
+	for (auto cell : m_cells.at(0)) {
+		width += cell->GetSize().x;
+	}
+	m_activeHorizontalSlider = width > m_size.x + m_columnCount * 0.001f;
+	m_horizontalSlider->SetAboluteDimension(width - m_size.y);
+
+	float height{ 0.0f };
+	for (int i = 0; i < m_rowCount; ++i) {
+		auto cell = m_cells.at(0).at(1);
+		height += cell->GetSize().y;
+	}
+	m_activeVerticalSlider = height > m_size.y + m_rowCount * 0.001f;
+	m_verticalSlider->SetAboluteDimension(height);
 }
 
 void Table2::RenderTopLeft(AppContext const& appContext) {
@@ -397,6 +464,30 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 		std::vector<bool>(m_rowCount,true),
 		std::vector<bool>(m_columnCount,true)
 	};
+
+	m_verticalSlider = std::make_shared<Slider>(
+		GetElementPosition(m_pos, m_size, 0.995f, 0.5f),
+		GetElementSize(m_size, 0.01f, 0.9f),
+		Alignment::MID_RIGHT,
+		m_resolution,
+		false,
+		20.0f
+	);
+	m_verticalSlider->SetOnSlide([this](float percent) {
+		this->ScollPercent(percent, false);
+		});
+	m_horizontalSlider = std::make_shared<Slider>(
+		GetElementPosition(m_pos, m_size, 0.5f, 0.99f),
+		GetElementSize(m_size, 0.9f, 0.02f),
+		Alignment::BOTTOM_MID,
+		m_resolution,
+		true,
+		20.0f
+	);
+	m_horizontalSlider->SetOnSlide([this](float percent) {
+		this->ScollPercent(percent, true);
+		});
+	CalculateSlider();
 
 }
 
@@ -551,12 +642,24 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		}
 	}
 
+	if (m_activeHorizontalSlider) {
+		m_horizontalSlider->CheckAndUpdate(mousePosition, appContext);
+	}
+	if (m_activeVerticalSlider) {
+		m_verticalSlider->CheckAndUpdate(mousePosition, appContext);
+	}
+
 	for (auto const& row : m_cells) {
 		for (auto const& cell : row) {
 			cell->CheckAndUpdate(mousePosition, appContext);
 		}
 	}
-	CheckAndUpdateClickCell(mousePosition, appContext);
+	bool sliderHover =
+		m_activeHorizontalSlider and m_horizontalSlider->IsColliding(mousePosition)
+		or m_activeVerticalSlider and m_verticalSlider->IsColliding(mousePosition);
+	if (not sliderHover) {
+		CheckAndUpdateClickCell(mousePosition, appContext);
+	}
 
 	auto lastCell = m_cells.at(m_rowCount - 1).at(m_columnCount - 1)->GetCollider();
 	auto bottomCell = lastCell.y + lastCell.height;
@@ -583,4 +686,11 @@ void Table2::Render(AppContext const& appContext) {
 	RenderOutline();
 
 	EndScissorMode();
+
+	if (m_activeHorizontalSlider) {
+		m_horizontalSlider->Render(appContext);
+	}
+	if (m_activeVerticalSlider) {
+		m_verticalSlider->Render(appContext);
+	}
 }
