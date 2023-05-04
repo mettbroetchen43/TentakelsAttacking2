@@ -7,7 +7,7 @@
 #include "Focusable.h"
 #include "UIElement.hpp"
 #include "HFocusEvents.h"
-#include "TableCell2.hpp"
+#include "TableCell.hpp"
 #include "Vec2.hpp"
 
 #include <memory>
@@ -214,7 +214,7 @@ public:
 			DeleteFocusElement(oldCell.get());
 		}
 
-		auto cell = std::make_shared<TableCell2<T>>(
+		auto cell = std::make_shared<TableCell<T>>(
 			oldCell->GetPosition(),
 			oldCell->GetSize(),
 			oldCell->GetAlignment(),
@@ -309,7 +309,7 @@ public:
 
 		for (int column = 0; column < m_columnCount; ++column) {
 
-			auto cell = std::make_shared<TableCell2<T>>(
+			auto cell = std::make_shared<TableCell<T>>(
 				Vector2(0.0f, 0.0f),
 				Vector2(0.1f, 0.1f),
 				Alignment::TOP_LEFT,
@@ -348,7 +348,7 @@ public:
 
 		for (int i = 0; i < m_rowCount; ++i) {
 			auto row = m_cells.at(i);
-			auto cell = std::make_shared<TableCell2<T>>(
+			auto cell = std::make_shared<TableCell<T>>(
 				Vector2(0.0f, 0.0f),
 				Vector2(0.1f, 0.1f),
 				Alignment::TOP_LEFT,

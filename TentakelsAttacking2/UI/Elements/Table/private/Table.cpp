@@ -499,7 +499,7 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 		auto line = std::vector<std::shared_ptr<AbstractTableCell2>>();
 		for (int column = 0; column < columnCount; ++column) {
 
-			auto cell = std::make_shared<TableCell2<std::string>>(
+			auto cell = std::make_shared<TableCell<std::string>>(
 				Vector2(m_pos.x + cellWidth * column, m_pos.y + cellHeight * row),
 				Vector2(cellWidth, cellHeight),
 				Alignment::TOP_LEFT,

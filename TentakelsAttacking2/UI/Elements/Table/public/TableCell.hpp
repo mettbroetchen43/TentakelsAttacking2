@@ -12,11 +12,11 @@
 #pragma once
 
 template <typename T>
-class TableCell2 final : public AbstractTableCell2 {
+class TableCell final : public AbstractTableCell2 {
 private:
 	T m_value; ///< contains the value
 	std::string m_stringValue; ///< contains the value as string
-	std::function<void(TableCell2*, T, T)> m_updated = [](TableCell2*, T, T) {}; ///< conains a lambda that provides that the value has chanced
+	std::function<void(TableCell*, T, T)> m_updated = [](TableCell*, T, T) {}; ///< conains a lambda that provides that the value has chanced
 	
 	/**
 	 * Sets the value as string.
@@ -39,7 +39,7 @@ public:
 	/**
 	 * ctor
 	 */
-	TableCell2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID, T value, std::function<void(TableCell2*, T, T)> updated)
+	TableCell(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID, T value, std::function<void(TableCell*, T, T)> updated)
 		: AbstractTableCell2(pos, size, alignment, resolution, focusID), m_value(value), m_updated(updated) {
 		SetStringValue();
 		CalculateTextSize();
@@ -128,14 +128,14 @@ public:
  * overload because std::string has no overload for string.
  */
 template<>
-inline void TableCell2<std::string>::SetStringValue() {
+inline void TableCell<std::string>::SetStringValue() {
 	m_stringValue = m_value;
 }
 /**
  * overload because color has no string representation.
  */
 template<>
-inline void TableCell2<Color>::SetStringValue() {
+inline void TableCell<Color>::SetStringValue() {
 	m_stringValue = Colors::AsString(m_value);
 }
 
@@ -143,7 +143,7 @@ inline void TableCell2<Color>::SetStringValue() {
  * overload because color is rendered dirfferent.
  */
 template<>
-inline void TableCell2<Color>::Render(AppContext const& appContext) {
+inline void TableCell<Color>::Render(AppContext const& appContext) {
 	AbstractTableCell2::Render(appContext);
 
 	int offset = static_cast<int>(m_collider.height / 10);

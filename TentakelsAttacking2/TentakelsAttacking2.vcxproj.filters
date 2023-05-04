@@ -306,7 +306,7 @@
     <ClInclude Include="UI\Elements\Table\public\Table2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Elements\Table\public\TableCell2.hpp">
+    <ClInclude Include="UI\Elements\Table\public\TableCell.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
