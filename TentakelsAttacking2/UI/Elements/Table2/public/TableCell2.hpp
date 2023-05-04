@@ -3,14 +3,6 @@
 // 23.04.2023
 //
 
-/*
-	// trim string value
-	adaptive sizes in not scrollable
-	check if sizes in scrollable are still working
-
-	change button trigger in Popup
-*/
-
 #include "HPrint.h"
 #include "HInput.h"
 #include "HColors.h"
@@ -47,8 +39,8 @@ public:
 	/**
 	 * ctor
 	 */
-	TableCell2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID, T value)
-		: AbstractTableCell2(pos, size, alignment, resolution, focusID), m_value(value) {
+	TableCell2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID, T value, std::function<void(TableCell2*, T, T)> updated)
+		: AbstractTableCell2(pos, size, alignment, resolution, focusID), m_value(value), m_updated(updated) {
 		SetStringValue();
 		CalculateTextSize();
 	}

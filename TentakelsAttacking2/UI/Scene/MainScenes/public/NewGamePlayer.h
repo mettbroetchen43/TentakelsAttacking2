@@ -6,11 +6,11 @@
 #pragma once
 #include "Scene.h"
 #include "InputLine.hpp"
-#include "AbstractTableCell.h"
+#include "AbstractTableCell2.h"
 #include "EventListener.hpp"
 
 class ColorPicker;
-class Table;
+class Table2;
 class Focusable;
 class ClassicButton;
 
@@ -21,7 +21,7 @@ class NewGamePlayerScene final : public Scene, public EventListener {
 private:
 	InputLine<std::string>* m_inputLine; ///< contains an input line where the player name where entered
 	ColorPicker* m_colorPicker; ///< contains the color picker where the player color gets choosen
-	Table* m_table; ///< contains the table where the current playere where displayed
+	Table2* m_table; ///< contains the table where the current playere where displayed
 	std::shared_ptr<ClassicButton> m_nextBTN; ///< contains the button, witch the calls the next scene
 	std::vector<Focusable*> m_nestedFocus; ///< contains focusable* that are abe to have an nested focus
 	std::vector<std::shared_ptr<ClassicButton>> m_playerButtons; ///< contains the remove player buttons
@@ -63,13 +63,13 @@ private:
 	 * updates a player name.
 	 * calls the update player.
 	 */
-	void UpdatePlayerName(AbstractTableCell const* cell,
+	void UpdatePlayerName(AbstractTableCell2 const* cell,
 		std::string oldValue, std::string newValue);
 	/**
 	 * updates a player color.
 	 * calls the update player.
 	 */
-	void UpdatePlayerColor(AbstractTableCell const* cell,
+	void UpdatePlayerColor(AbstractTableCell2 const* cell,
 		Color oldValue, Color newValue);
 	/**
 	 * delets an player via event.

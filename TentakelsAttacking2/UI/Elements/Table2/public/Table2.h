@@ -43,6 +43,12 @@ private:
 	bool m_isHoveredHighlighted = false; ///< contains if the hovered row and column gets highlighted
 	Vec2<int>m_currentHighlighted{ -1,-1 }; ///< contains the currently hightlithed row (x) and column (y) index
 
+	std::function<void(AbstractTableCell2 const*, std::string, std::string)> m_updatedStringCell = [](AbstractTableCell2 const*, std::string, std::string) {}; ///< string
+	std::function<void(AbstractTableCell2 const*, int, int)> m_updatedIntCell = [](AbstractTableCell2 const*, int, int) {}; ///< int
+	std::function<void(AbstractTableCell2 const*, float, float)> m_updatedFloatCell = [](AbstractTableCell2 const*, float, float) {}; ///< float
+	std::function<void(AbstractTableCell2 const*, double, double)> m_updatedDoubleCell = [](AbstractTableCell2 const*, double, double) {}; ///< double
+	std::function<void(AbstractTableCell2 const*, Color, Color)> m_updatedColorCell = [](AbstractTableCell2 const*, Color, Color) {}; ///< color
+
 	/**
 	 * returns true if the provided index is valid to access a cell.
 	 */
@@ -159,6 +165,35 @@ private:
 	 */
 	void RenderOutline() const;
 
+
+	/**
+ * calls the valid lambda for the provided datatype.
+ * update the cell that is provided by the pointer.
+ */
+	template<typename T>
+	void CellUpdated(AbstractTableCell2 const* cell, T oldValue, T newValue) {
+		if constexpr (std::is_same_v<T, std::string>) {
+			m_updatedStringCell(cell, oldValue, newValue);
+			return;
+		}
+		if constexpr (std::is_same_v<T, int>) {
+			m_updatedIntCell(cell, oldValue, newValue);
+			return;
+		}
+		if constexpr (std::is_same_v<T, float>) {
+			m_updatedFloatCell(cell, oldValue, newValue);
+			return;
+		}
+		if constexpr (std::is_same_v<T, double>) {
+			m_updatedDoubleCell(cell, oldValue, newValue);
+			return;
+		}
+		if constexpr (std::is_same_v<T, Color>) {
+			m_updatedColorCell(cell, oldValue, newValue);
+			return;
+		}
+	}
+
 public:
 	/**
 	 * ctor.
@@ -185,7 +220,9 @@ public:
 			oldCell->GetAlignment(),
 			m_resolution,
 			oldCell->GetFocusID(),
-			input
+			input,
+			[this](AbstractTableCell2 const* cell, T oldValue, T newValue)
+			{this->CellUpdated<T>(cell, oldValue, newValue); }
 		);
 		cell->SetEditable(oldCell->IsEditable());
 		m_cells.at(row).at(column) = cell;
@@ -222,6 +259,35 @@ public:
 	[[nodiscard]] int GetRowCount() const;
 
 	/**
+	 * sets the update cell lambdas for the correct datatype.
+	 */
+	template<typename T>
+	void SetUpdateSpecificCell(std::function<void(
+		AbstractTableCell2 const*, T, T)> updateCell) {
+		if constexpr (std::is_same_v<T, std::string>) {
+			m_updatedStringCell = updateCell;
+			return;
+		}
+		if constexpr (std::is_same_v<T, int>) {
+			m_updatedIntCell = updateCell;
+			return;
+		}
+		if constexpr (std::is_same_v<T, float>) {
+			m_updatedFloatCell = updateCell;
+			return;
+		}
+		if constexpr (std::is_same_v<T, double>) {
+			m_updatedDoubleCell = updateCell;
+			return;
+		}
+		if constexpr (std::is_same_v<T, Color>) {
+			m_updatedColorCell = updateCell;
+			return;
+		}
+	}
+
+
+	/**
 	 * sets a new column count.
 	 * need to call the recalculation of the table.
 	 */
@@ -249,7 +315,9 @@ public:
 				Alignment::TOP_LEFT,
 				m_resolution,
 				0,
-				defalutValue
+				defalutValue,
+				[this](AbstractTableCell2 const* cell, T oldValue, T newValue)
+				{this->CellUpdated<T>(cell, oldValue, newValue); }
 			);
 			if (not m_editableRowsColumns.at(1).at(column)) {
 				cell->SetEditable(false);
@@ -286,7 +354,9 @@ public:
 				Alignment::TOP_LEFT,
 				m_resolution,
 				0,
-				defalutValue
+				defalutValue,
+				[this](AbstractTableCell2 const* cell, T oldValue, T newValue)
+				{this->CellUpdated<T>(cell, oldValue, newValue); }
 			);
 			if (not m_editableRowsColumns.at(0).at(i)) {
 				cell->SetEditable(false);

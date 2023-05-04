@@ -10,7 +10,7 @@
 #include "ClassicButton.h"
 #include "GenerelEvents.hpp"
 #include "Line.h"
-#include "Table.h"
+#include "Table2.h"
 #include "UIManager.h"
 #include "HFocusEvents.h"
 #include <cassert>
@@ -130,27 +130,28 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		);
 	m_elements.push_back(currentPlayerCount);
 
-	auto table = std::make_shared<Table>(
-		5,
+	auto table = std::make_shared<Table2>(
 		GetElementPosition(0.9f, 0.35f),
 		GetElementSize(0.35f, 0.45f),
 		Alignment::TOP_RIGHT,
 		resolution,
-		appContext.constants.player.maxPlayerCount + 1,
-		3
+		5,
+		static_cast<int>(appContext.constants.player.maxPlayerCount + 1),
+		3,
+		Vector2(0.33f,0.1f),
+		0.1f
 		);
 	table->SetRowEditable(0, false);
 	table->SetColumnEditable(0, false);
-	table->SetHeadlines({ "ID", "Name", "Color" }, false);
-	table->ResizeCells();
+	table->SetHeadlineValues<std::string>({ "ID", "Name", "Color" });
 
 	table->SetUpdateSpecificCell<std::string>(
-		[this](AbstractTableCell const* cell, std::string oldValue, std::string newValue) {
+		[this](AbstractTableCell2 const* cell, std::string oldValue, std::string newValue) {
 			this->UpdatePlayerName(cell, oldValue, newValue);
 		}
 	);
 	table->SetUpdateSpecificCell<Color>(
-		[this](AbstractTableCell const* cell, Color oldValue, Color newValue) {
+		[this](AbstractTableCell2 const* cell, Color oldValue, Color newValue) {
 			UpdatePlayerColor(cell, oldValue, newValue);
 		}
 	);
@@ -252,9 +253,12 @@ void NewGamePlayerScene::UpdateSceneEntries(AppContext const& appContext) {
 
 	int index = 1;
 	for (auto& p : PlayerData) {
-		m_table->SetValue<int>(index, 0, p.ID, false);
-		m_table->SetValue<std::string>(index, 1, p.name, false);
-		m_table->SetValue<Color>(index, 2, p.color, false);
+		m_table->SetValue<int>(index, 0, p.ID);
+		m_table->SetValue<std::string>(index, 1, p.name);
+		m_table->SetValue<Color>(index, 2, p.color);
+
+		m_table->SetSingleEditable(index, 1, true);
+		m_table->SetSingleEditable(index, 2, true);
 
 		unsigned int _ID = p.ID;
 		m_playerButtons.at(index - 1)->SetEnabled(true);
@@ -264,14 +268,13 @@ void NewGamePlayerScene::UpdateSceneEntries(AppContext const& appContext) {
 
 		++index;
 	}
-	for (int row = index; row < m_table->GetRows(); ++row) {
-		for (int column = 0; column < m_table->GetColumns(); ++column) {
-			m_table->SetEmptyCell(row, column, false);
+	for (int row = index; row < m_table->GetRowCount(); ++row) {
+		for (int column = 0; column < m_table->GetColumnCount(); ++column) {
+			m_table->SetValue<std::string>(row, column,"");
+			m_table->SetSingleEditable(row, column, false);
 		}
 		m_playerButtons.at(row - 1)->SetEnabled(false);
 	}
-
-	m_table->ResizeCells();
 }
 
 void NewGamePlayerScene::AddPlayer() {
@@ -297,7 +300,7 @@ void NewGamePlayerScene::UpdatePlayer(unsigned int ID, std::string const& name,
 
 	UpdateSceneEntries(appContext);
 }
-void NewGamePlayerScene::UpdatePlayerName(AbstractTableCell const*,
+void NewGamePlayerScene::UpdatePlayerName(AbstractTableCell2 const*,
 	std::string oldValue, std::string newValue) {
 
 	AppContext& appContext = AppContext::GetInstance();
@@ -310,7 +313,7 @@ void NewGamePlayerScene::UpdatePlayerName(AbstractTableCell const*,
 		appContext
 	);
 }
-void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell const*,
+void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell2 const*,
 	Color oldValue, Color newValue){
 	AppContext& appContext = AppContext::GetInstance();
 	PlayerData playerData = appContext.playerCollection.GetPlayerByColor(oldValue);

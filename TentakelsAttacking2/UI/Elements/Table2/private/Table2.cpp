@@ -505,7 +505,9 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 				Alignment::TOP_LEFT,
 				m_resolution,
 				row * columnCount + column,
-				""
+				"",
+				[this](AbstractTableCell2 const* cell, std::string oldValue, std::string newValue)
+				{this->CellUpdated < std::string > (cell, oldValue, newValue); }
 			);
 
 			line.push_back(cell);
