@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/DropDown/public;UI/Elements/Galaxy/public;UI/Elements/Table/public;UI/Elements/Table2/public;UI/Elements/Galaxy/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/DropDown/public;UI/Elements/Galaxy/public;UI/Elements/Table/public;UI/Elements/Galaxy/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -97,7 +97,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/DropDown/public;UI/Elements/Galaxy/public;UI/Elements/Table/public;UI/Elements/Table2/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/DropDown/public;UI/Elements/Galaxy/public;UI/Elements/Table/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -117,7 +117,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/DropDown/public;UI/Elements/Galaxy/public;UI/Elements/Table/public;UI/Elements/Table2/public;UI/Elements/Galaxy/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/DropDown/public;UI/Elements/Galaxy/public;UI/Elements/Table/public;UI/Elements/Galaxy/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
@@ -137,7 +137,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/DropDown/public;UI/Elements/Galaxy/public;UI/Elements/Table/public;UI/Elements/Table2/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>_public;Constants/public;Game/public;Helper/public;Events/public;UI/public;UI/Scene/public;UI/Scene/MainScenes/public;UI/Scene/SupportScenes/public;UI/Elements/public;UI/Elements/Button/public;UI/Elements/ColorPicker/public;UI/Elements/Default/public;UI/Elements/DropDown/public;UI/Elements/Galaxy/public;UI/Elements/Table/public;UI/Elements/PopUp/public</AdditionalIncludeDirectories>
       <TreatWarningAsError>false</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -190,7 +190,7 @@
     <ClInclude Include="Helper\public\HPlayerData.hpp" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
     <ClInclude Include="Game\public\Player.h" />
-    <ClInclude Include="UI\Elements\Table2\public\Table2.h" />
+    <ClInclude Include="UI\Elements\Table\public\Table2.h" />
     <ClInclude Include="UI\Elements\Default\public\CheckBox.h" />
     <ClInclude Include="UI\Elements\Default\public\Line.h" />
     <ClInclude Include="UI\Elements\Default\public\Picture.h" />
@@ -210,12 +210,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h" />
     <ClInclude Include="UI\Elements\Default\public\InputLine.hpp" />
-    <ClInclude Include="UI\Elements\Table2\public\TableCell2.hpp" />
-    <ClInclude Include="UI\Elements\Table\public\AllCells.hpp" />
-    <ClInclude Include="UI\Elements\Table\public\AbstractTableCell.h" />
-    <ClInclude Include="UI\Elements\Table\public\TableCell.hpp" />
-    <ClInclude Include="UI\Elements\Table\public\EmptyCell.h" />
-    <ClInclude Include="UI\Elements\Table\public\Table.h" />
+    <ClInclude Include="UI\Elements\Table\public\TableCell2.hpp" />
     <ClInclude Include="UI\public\Allignment.h" />
     <ClInclude Include="UI\Elements\ColorPicker\public\ColorPicker.h" />
     <ClInclude Include="UI\Elements\ColorPicker\public\ColorPickerCell.h" />
@@ -275,7 +270,7 @@
     <ClCompile Include="Helper\private\HInput.cpp" />
     <ClCompile Include="Helper\private\HPrint.cpp" />
     <ClCompile Include="Helper\private\HVector2Operator.cpp" />
-    <ClCompile Include="UI\Elements\Table2\private\Table2.cpp" />
+    <ClCompile Include="UI\Elements\Table\private\Table2.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />
@@ -292,11 +287,8 @@
     <ClCompile Include="UI\Elements\PopUp\private\DeletePlayerPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\SoundLevelPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\ValidatePopUp.cpp" />
-    <ClCompile Include="UI\Elements\Table2\private\AbstactTableCell2.cpp" />
-    <ClCompile Include="UI\Elements\Table2\public\AbstractTableCell2.h" />
-    <ClCompile Include="UI\Elements\Table\private\EmptyCell.cpp" />
-    <ClCompile Include="UI\Elements\Table\private\AbstractTableCell.cpp" />
-    <ClCompile Include="UI\Elements\Table\private\Table.cpp" />
+    <ClCompile Include="UI\Elements\Table\private\AbstactTableCell2.cpp" />
+    <ClCompile Include="UI\Elements\Table\public\AbstractTableCell2.h" />
     <ClCompile Include="UI\private\Allignment.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPicker.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPickerCell.cpp" />
