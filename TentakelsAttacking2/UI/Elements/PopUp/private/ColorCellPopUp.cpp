@@ -7,7 +7,6 @@
 #include "AppContext.h"
 #include "HGeneral.h"
 #include "HFocusEvents.h"
-#include "Table.h"
 
 void ColorCellPopUp::Initialize(AppContext const& appContext,
 	Vector2 resolution, Color currentColor) {

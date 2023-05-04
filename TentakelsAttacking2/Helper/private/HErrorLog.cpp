@@ -20,7 +20,7 @@ void SetErrorLogFileName() {
 	filename << "tentakels_attacking_debug_" << now.time_since_epoch().count() << ".txt";
 
 	files.SetDebugLogFile(filename.str());
-	Print("debug file name set");
+	Print("debug file name set", PrintType::INFO);
 }
 
 /**
@@ -34,16 +34,16 @@ void GenerateFileStream() {
 
 	if (!std::filesystem::exists(files.debugLogDir())) {
 		std::filesystem::create_directories(files.debugLogDir());
-		Print("created debug directory");
+		Print("created debug directory", PrintType::INFO);
 	}
 	else if (!std::filesystem::is_directory(files.debugLogDir())) {
 		std::filesystem::remove(files.debugLogDir());
 		std::filesystem::create_directories(files.debugLogDir());
-		Print("removed debug file and added debug directory");
+		Print("removed debug file and added debug directory", PrintType::INFO);
 	}
 
 	files.debugLogStream.open(files.debugLogFile());
-	Print("opend debug log");
+	Print("opend debug log", PrintType::INFO);
 }
 
 void LogError(std::string const& error) {
@@ -54,7 +54,7 @@ void LogError(std::string const& error) {
 	}
 
 	files.debugLogStream << error;
-	Print("logged error");
+	Print("logged error", PrintType::INFO);
 }
 
 void CloseErrorStream() {
@@ -65,5 +65,5 @@ void CloseErrorStream() {
 	}
 
 	files.debugLogStream.close();
-	Print("closed debug log");
+	Print("closed debug log", PrintType::INFO);
 }

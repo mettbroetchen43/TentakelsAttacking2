@@ -6,9 +6,9 @@
 #pragma once
 #include "MainEvent.hpp"
 #include "HSoundType.hpp"
+#include "CustomRaylib.h"
 #include <string>
 #include <functional>
-#include <CustomRaylib.h>
 
 class StringCell;
 class IntCell;
@@ -117,6 +117,21 @@ public:
 
 	[[nodiscard]] Focusable* GetFocusable() const {
 		return m_focusable;
+	}
+};
+/**
+ * use this to control if the focus system is currently render the focus.
+ * does not hesittate from FocusEvent.
+ */
+class RenderFocusEvent final: public Event {
+private:
+	bool m_render;
+public:
+	RenderFocusEvent(bool render)
+		: m_render(render) { }
+
+	[[nodiscard]] bool GetRender() const noexcept {
+		return m_render;
 	}
 };
 /**

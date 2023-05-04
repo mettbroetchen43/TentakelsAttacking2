@@ -1,302 +1,157 @@
 //
 // Purpur Tentakel
-// 29.09.22
+// 23.04.2023
 //
 
-#pragma once
-#include "AbstractTableCell.h"
+#include "HPrint.h"
+#include "HInput.h"
+#include "HColors.h"
+#include "UIEvents.hpp"
 #include "AppContext.h"
-#include "HTextProcessing.h"
-#include <string>
-#include <iostream>
-#include <functional>
+#include "AbstractTableCell.h"
+#pragma once
 
-/**
- * provides a cell for the table call that can handle premitive datatypes.
- */
-template<typename T>
+template <typename T>
 class TableCell final : public AbstractTableCell {
-protected:
-	T m_value; ///< contains the current value
-
-	std::function<void()> m_resizeCells = []() {}; ///< contains the resize lambda -> gets called to trigger the table to resize the sells
+private:
+	T m_value; ///< contains the value
+	std::string m_stringValue; ///< contains the value as string
 	std::function<void(TableCell*, T, T)> m_updated = [](TableCell*, T, T) {}; ///< conains a lambda that provides that the value has chanced
-
-	Vector2 m_textPosition; ///< contains the value position
-	float m_textSize; ///< contains the text size
-	float m_textMargin; ///< contains the text margin on the left side
-	Vector2 m_minSize; ///< contains the min size the cell needs
-	Vector2 m_maxSize; ///< contains the max size the cell needs
-
+	
 	/**
-	 * returns whether the cell meets the requirements for the content to be updated.
+	 * Sets the value as string.
 	 */
-	[[nodiscard]] bool ShouldEdit(Vector2 const& mousePosition) const {
-		bool edit = false;
-
-		if (!m_editable) {
-			return edit;
-		}
-
-		if (IsFocused()) {
-			if (IsKeyPressed(KEY_ENTER)
-				or IsKeyPressed(KEY_SPACE)) {
-				edit = true;
-			}
-		}
-		if (CheckCollisionPointRec(mousePosition, m_collider)) {
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-				edit = true;
-			}
-		}
-
-		if (edit) {
-			auto event = PlaySoundEvent(SoundType::CLICKED_PRESS_STD);
-			AppContext::GetInstance().eventManager.InvokeEvent(event);
-		}
-
-		return edit;
-	}
-	/**
-	 * calctulates and returns the size the cell needs to display the value perfectly. 
-	 */
-	[[nodiscard]] Vector2 CalculateNeededSize(Vector2& textSize) const {
-		textSize.x += 2 * m_textMargin;
-		textSize.y += m_textSize;
-
-		Vector2 neededSize = {
-			(textSize.x / m_collider.width) * m_size.x,
-			(textSize.y / m_collider.height) * m_size.y
-		};
-
-		ClampNeededSize(neededSize);
-
-		return neededSize;
-	}
-	/**
-	 * claps the calculated needed size between min and max.
-	 */
-	void ClampNeededSize(Vector2& neededSize) const {
-		neededSize.x = neededSize.x < m_minSize.x ? m_minSize.x : neededSize.x;
-		neededSize.x = neededSize.x > m_maxSize.x ? m_maxSize.x : neededSize.x;
-
-		neededSize.y = neededSize.y < m_minSize.y ? m_minSize.y : neededSize.y;
-		neededSize.y = neededSize.y > m_maxSize.y ? m_maxSize.y : neededSize.y;
+	void SetStringValue() {
+		m_stringValue = std::to_string(m_value);
 	}
 
 	/**
-	 * update the value to the provided value and calls the cells to resize.
+	 * updates the cell value.
 	 */
-	void UpdateValue([[maybe_unused]] T value) {
+	void UpdateValue(T newValue) {
 		T oldValue = m_value;
-		m_value = value;
-		m_resizeCells();
+		m_value = newValue;
+		SetStringValue();
 		m_updated(this, oldValue, m_value);
 	}
 
 public:
 	/**
-	 * ctor.
-	 * sets sizes.
+	 * ctor
 	 */
-	TableCell(unsigned int ID, Vector2 pos, Vector2 size,
-		Alignment alignment, Vector2 resolution,
-		std::function<void()> resizeCells,
-		std::function<void(TableCell*, T, T)> updated)
-		: AbstractTableCell(ID, pos, size, alignment, resolution),
-			m_resizeCells(resizeCells), m_updated(updated){
-
-			m_minSize = {
-				m_size.x / 2,
-				m_size.y / 2
-			};
-			m_maxSize = {
-				m_size.x * 2,
-				m_size.y * 2
-			};
-
-			m_textSize = m_collider.height / 2;
-			m_textMargin = m_collider.width / 20;
-			m_textPosition = {
-				m_collider.x + m_textMargin,
-				m_collider.y + m_collider.height / 4
-			};
+	TableCell(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID, T value, std::function<void(TableCell*, T, T)> updated)
+		: AbstractTableCell(pos, size, alignment, resolution, focusID), m_value(value), m_updated(updated) {
+		SetStringValue();
+		CalculateTextSize();
 	}
 
 	/**
-	 * cell logic.
+	 * use this if the cell is clicked.
+	 * need to be implemented by every cell.
 	 */
-	virtual void CheckAndUpdate(Vector2 const& mousePosition,
-		AppContext const& appContext) override {
-		if (!m_editable) {
-			return;
-		}
+	void Clicked(Vector2 const&, AppContext const& appContext) override {
 
-		if (CheckCollisionPointRec(mousePosition, m_collider)) {
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-				auto event = SelectFocusElementEvent(this);
-				appContext.eventManager.InvokeEvent(event);
+		if (not IsEditable()) { return; }
+
+		auto event = ShowCellPopUpEvent<T>(
+			"Edit Entry",
+			m_value,
+			[this](T value) {this->UpdateValue(value); }
+		);
+		appContext.eventManager.InvokeEvent(event);
+	}
+	/**
+	 * calls the CheckAndUpdate member function of UIElement.
+	 * contains the logic of the cell.
+	 */
+	void CheckAndUpdate(Vector2 const&, AppContext const& appContext) override {
+		if (not IsEditable()) { return; }
+
+		bool shouldEdit = false;
+
+		if (IsFocused()) {
+			if (IsConfirmInputPressed()) {
+				shouldEdit = true;
 			}
 		}
 
-		if (ShouldEdit(mousePosition)) {
+		if (shouldEdit) {
 			auto event = ShowCellPopUpEvent<T>(
 				"Edit Entry",
 				m_value,
-				[this](T value) {this->UpdateValue(value);}
+				[this](T value) {this->UpdateValue(value); }
 			);
 			appContext.eventManager.InvokeEvent(event);
 		}
+
+
 	}
 	/**
-	 * renders the cell.
+	 * renders the cell
 	 */
 	void Render(AppContext const& appContext) override {
-		std::string printableValue = GetPritablePlaceholderTextInColider(
-			std::to_string(m_value).c_str(),
-			m_textSize,
-			m_collider,
-			appContext
-		);
+		AbstractTableCell::Render(appContext);
+
 		DrawTextEx(
-			*(appContext.assetManager.GetFont()),
-			printableValue.c_str(),
+			*appContext.assetManager.GetFont(),
+			m_stringValue.c_str(),
 			m_textPosition,
 			m_textSize,
 			0.0f,
 			WHITE
 		);
-
-		DrawRectangleLinesEx(
-			m_collider,
-			3.0f,
-			WHITE
-		);
 	}
+
 	/**
-	 * resizes the cell.
+	 * calculates a new text size from the collider.
 	 */
-	void Resize(Vector2 resolution, [[maybe_unused]] AppContext const& appContext) override {
-		
-		UIElement::Resize(resolution, appContext);
-
-		m_textSize = m_collider.height / 2;
-		m_textPosition = {
-		m_collider.x + m_collider.width / 20,
-		m_collider.y + m_collider.height / 4
-		};
+	void CalculateTextSize() override {
+		m_textSize = m_collider.height / 1.5f;
+		float margin = (m_collider.height - m_textSize) / 2;
+		m_textPosition = { m_collider.x + m_collider.width * 0.05f ,m_collider.y + margin };
 	}
-
 	/**
 	 * returns the current value.
 	 */
-	[[nodiscard]] T GetValue() const {
+	[[nodiscard]] std::any GetValue() const override {
 		return m_value;
-	};
-	void SetValue(T value, bool resize = false) {
-		m_value = value;
-		
-		if (resize) {
-			m_resizeCells();
-		}
-	};
-
-	/**
-	 * calctulates and returns the size the cell needs to display the value perfectly.
-	 */
-	[[nodiscard]] virtual Vector2 GetNeededSize() override {
-		Vector2 textSize = MeasureTextEx(
-			*(AppContext::GetInstance().assetManager.GetFont()),
-			std::to_string(m_value).c_str(),
-			m_textSize,
-			0.0f
-		);
-
-		return CalculateNeededSize(textSize);
 	}
-	
-	[[nodiscard]] Rectangle GetCollider() const override {
-		return UIElement::GetCollider();
+	/**
+	 * returns the current value as string.
+	 */
+	[[nodiscard]] std::string GetValueAsString() const override {
+		return m_stringValue;
 	}
 };
 
-
 /**
- * calctulates and returns the size the cell needs to display the value perfectly.
- * overloat is needed because std::to_string doesnt provide an overloat for std::string.
+ * overload because std::string has no overload for string.
  */
 template<>
-[[nodiscard]] inline Vector2 TableCell<std::string>::GetNeededSize() {
-	Vector2 textSize = MeasureTextEx(
-		*(AppContext::GetInstance().assetManager.GetFont()),
-		m_value.c_str(),
-		m_textSize,
-		0.0f
-	);
-
-	return CalculateNeededSize(textSize);
+inline void TableCell<std::string>::SetStringValue() {
+	m_stringValue = m_value;
 }
 /**
- * returns the size for a color cell.
- * overlaot is needed because its not possible to measue the size of an color.
+ * overload because color has no string representation.
  */
 template<>
-[[nodiscard]] inline Vector2 TableCell<Color>::GetNeededSize() {
-	Vector2 neededSize = { 0.05f, 0.1f };
-	return neededSize;
+inline void TableCell<Color>::SetStringValue() {
+	m_stringValue = Colors::AsString(m_value);
 }
 
 /**
- * renders the string cell.
- * overloat is needed because std::to_string doesnt provide an overloat for std::string.
+ * overload because color is rendered dirfferent.
  */
 template<>
-inline void TableCell<std::string>::Render(AppContext const& appContext) {
-	std::string printableValue = GetPritablePlaceholderTextInColider(
-		m_value.c_str(),
-		m_textSize,
-		m_collider,
-		appContext
-	);
-	DrawTextEx(
-		*(appContext.assetManager.GetFont()),
-		printableValue.c_str(),
-		m_textPosition,
-		m_textSize,
-		0.0f,
-		WHITE
-	);
+inline void TableCell<Color>::Render(AppContext const& appContext) {
+	AbstractTableCell::Render(appContext);
 
-	DrawRectangleLinesEx(
-		m_collider,
-		3.0f,
-		WHITE
-	);
-}
-
-/**
- * renders the color cell.
- * overloat is needed because std::to_string doesnt provide an overloat for a color.
- */
-template<>
-inline void TableCell<Color>::Render([[maybe_unused]]AppContext const& appContext) {
-	float spacing = 5.0f;
-	Rectangle toFill = {
-		 m_collider.x + spacing,
-		 m_collider.y + spacing,
-		 m_collider.width - 2 * spacing,
-		 m_collider.height - 2 * spacing
-	};
-	DrawRectanglePro(
-		toFill,
-		Vector2(0.0f, 0.0f),
-		0.0f,
+	int offset = static_cast<int>(m_collider.height / 10);
+	DrawRectangle(
+		static_cast<int>(m_collider.x + offset),
+		static_cast<int>(m_collider.y + offset),
+		static_cast<int>(m_collider.width - 2 * offset),
+		static_cast<int>(m_collider.height - 2 * offset),
 		m_value
-	);
-
-	DrawRectangleLinesEx(
-		m_collider,
-		3.0f,
-		WHITE
 	);
 }

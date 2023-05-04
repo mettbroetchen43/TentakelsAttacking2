@@ -431,6 +431,11 @@ void Focus::OnEvent(Event const& event) {
 		Clear();
 		return;
 	}
+
+	if (auto const focusEvent = dynamic_cast<RenderFocusEvent const*>(&event)) {
+		m_renderFocus = focusEvent->GetRender();
+		return;
+	}
 }
 
 void Focus::CheckAndUpdate() {

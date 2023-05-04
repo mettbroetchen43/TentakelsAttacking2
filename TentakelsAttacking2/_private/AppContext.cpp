@@ -70,7 +70,7 @@ void AppContext::ValidateConfig() {
 	ValidateLowerEqual<float>(constants.planet.globalSpacing, 1.0f, "Global Spacing");
 	ValidateGreaterEqual<float>(constants.planet.globalSpacing, 0.0f, "Global Spacing");
 
-	Print("Contig validated");
+	Print("Config validated", PrintType::INFO);
 }
 
 void AppContext::OnEvent(Event const& event) {
@@ -86,5 +86,5 @@ AppContext::AppContext() {
 	eventManager.AddListener(&playerCollection);
 	eventManager.AddListener(this);
 
-	Print("AppContext initialized");
+	Print("AppContext initialized", PrintType::INFO);
 }

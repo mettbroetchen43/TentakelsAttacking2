@@ -6,13 +6,10 @@
 
 // original Random by coder2k (https://gist.github.com/mgerhold/353e39da27ae9b22c614bc264c8a3d18)
 
-#include "AppContext.h"
-#include "UIManager.h"
-#include "Slider.h"
-#include "ClassicButton.h"
 #include "HPrint.h"
+#include "UIManager.h"
 #include "HErrorLog.h"
-#include <vector>
+#include "AppContext.h"
 #include <iostream>
 
 int main() {

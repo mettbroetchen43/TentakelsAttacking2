@@ -14,7 +14,7 @@ void Button::SetTextSizeAndPosition(AppContext const& appContext) {
 		m_textSize,
 		0.0f);
 	while (textSize.x + 20 > m_collider.width) {
-		if (m_textSize == 1) {
+		if (m_textSize <= 1) {
 			break;
 		}
 

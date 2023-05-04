@@ -21,4 +21,4 @@ enum class PrintType {
 /**
  * print to the console with a print type tag.
  */
-void Print(std::string const& message, PrintType printType = PrintType::INFO);
+void Print(std::string const& message, PrintType printType);

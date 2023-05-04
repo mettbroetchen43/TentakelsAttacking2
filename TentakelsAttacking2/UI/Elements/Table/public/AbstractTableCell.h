@@ -1,75 +1,86 @@
 //
 // Purpur Tentakel
-// 17.10.2022
+// 03.04.2023
 //
 
-#pragma once
-#include "UIElement.hpp"
 #include "Focusable.h"
+#include "UIElement.hpp"
+#include <any>
+#pragma once
 
-/**
- * provides a basic cell for the table class where all table cells will hesitate from.
- */
 class AbstractTableCell : public UIElement, public Focusable {
 protected:
-	bool m_editable = true; ///< contains if the cell is editable
-
-	/**
-	 * checks if the cell schould resize and calls so if it should.
-	 */
-	void CheckResizeCells(Vector2 resolution,
-		AppContext const& appContext, bool resize);
+	bool m_isEditable = true; ///< contains if the cell is currently editable
+	Color m_backgroundColor = BLACK; ///< contains the background of the cell
+	float m_textSize; ///< contains the text size the text is renderd with
+	Vector2 m_textPosition; ///< contains the absolute text position 
 
 public:
 	/**
 	 * ctor.
-	 * only initialisation.
+	 * initializes the table with empty cells.
 	 */
-	AbstractTableCell(unsigned int ID, Vector2 pos, Vector2 size,
-		Alignment alignment, Vector2 resolution);
-	/**
-	 * virtual dtor.
-	 */
-	virtual ~AbstractTableCell() = default;
+	AbstractTableCell(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID);
 
 	/**
-	 * returns the size the cell would need to display the value perfectly.
+	 * calculates the text size.
+	 * need to be implemented in ecery cell.
 	 */
-	[[nodiscard]] virtual Vector2 GetNeededSize() = 0 ;
+	virtual void CalculateTextSize() = 0;
 
 	/**
-	 * sets if the sell is editable.
+	 * returns the current value.
 	 */
-	void SetEditable(bool editable);
+	[[nodiscard]] virtual std::any GetValue() const = 0;
 	/**
-	 * returns if the cell is editable.
+	 * returns the current value as string.
 	 */
-	[[nodiscard]] bool IsEnabled() const override;
+	[[nodiscard]] virtual std::string GetValueAsString() const = 0;
 
 	/**
-	 * returns the current collider.
+	 * sets the backgroundcolor.
 	 */
-	[[nodiscard]] Rectangle GetCollider() const;
+	void SetBackgoundColor(Color color);
+	/**
+	 * returns the current backgroundcolor.
+	 */
+	[[nodiscard]] Color GetBackgoundColor() const;
 
 	/**
-	 * sets a new pos.x ans resizes cell.
+	 * sets if the cell is editable.
 	 */
-	void SetPosX(float posX, Vector2 resolution,
-		AppContext const& appContext, bool resize = true);
+	void SetEditable(bool IsEditable) noexcept;
 	/**
-	 * sets a new pos.y ans resizes cell.
+	 * returns true if the cell is editable.
 	 */
-	void SetPosY(float posY, Vector2 resolution,
-		AppContext const& appContext, bool resize = true);
+	[[nodiscard]] bool IsEditable() const noexcept;
 
 	/**
-	 * sets a new size.x ans resizes cell.
+	 * returns if the current elements is enabled.
 	 */
-	void SetSizeX(float sizeX, Vector2 resolution,
-		AppContext const& appContext, bool resize = true);
+	[[nodiscard]] bool IsEnabled() const noexcept override;
 	/**
-	 * sets a new size.y ans resizes cell.
+	 * returns thr current collider.
 	 */
-	void SetSizeY(float sizeY, Vector2 resolution,
-		AppContext const& appContext, bool resize = true);
+	[[nodiscard]] Rectangle GetCollider() const noexcept override;
+
+	/**
+	 * returns if the point in inside the cell collider.
+	 */
+	[[nodiscard]] bool IsColliding(Vector2 point) const;
+
+	/**
+	 * use this if the cell is clicked.
+	 * need to be implemented by every cell.
+	 */
+	virtual void Clicked(Vector2 const&, AppContext const&) = 0;
+	/**
+	 * calls the CheckAndUpdate member function of UIElement.
+	 * contains the logic of the cell.
+	 */
+	virtual void CheckAndUpdate(Vector2 const&, AppContext const&) override = 0;
+	/**
+	 * renders the cell
+	 */
+	virtual void Render(AppContext const& appContext) override;
 };

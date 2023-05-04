@@ -1,31 +1,48 @@
 //
 // Purpur Tentakel
-// 01.10.2022
+// 03.04.2023
 //
 
-#pragma once
-#include "UIElement.hpp"
+#include "HPrint.h"
 #include "Focusable.h"
-#include "AllCells.hpp"
-#include "HGeneral.h"
-#include "AppContext.h"
-#include <memory>
-#include <vector>
+#include "UIElement.hpp"
+#include "HFocusEvents.h"
+#include "TableCell.hpp"
+#include "Vec2.hpp"
 
-/**
- * provides a table with different cell types.
- */
+#include <memory>
+#include <stdexcept>
+
+#pragma once
+
+class Slider;
+
 class Table final : public UIElement, public Focusable {
 private:
-	bool m_isPopUp; ///< contains if the table was generated inside a popup
+	using cells_ty = std::vector<std::vector<std::shared_ptr<AbstractTableCell>>>;
+	int m_rowCount; ///< contains the current mount of rown in the table
+	int m_columnCount; ///< contains the current mount of column in the table
+	cells_ty m_cells; ///< contains all cells the table is holding
+	Vector2 m_minCellSize; ///< contains the minimum relative size of one cell
+	std::array<std::vector<bool>, 2> m_editableRowsColumns; ///< contains the enabled rows and columns
 
-	std::vector<std::unique_ptr<AbstractTableCell>> m_cells; ///< contains all cells -> no cells are filled with empty cells
-	size_t m_rows; ///< contains the amount of rows
-	size_t m_columns; ///< contains the amount if columns
-	/**
-	 * contains the update llambdas for updating the cell values.
-	 * needs the cell*, old value, new value.
-	 */
+	bool m_setScrollable = false; ///< contains if the table get set scrollable this frame
+	bool m_isScrollable = false; ///< contains if it is able to scroll the table
+	bool m_setFixedHeadline = false; ///< contains if the forst row will get fixed this frame
+	bool m_isFixedHeadline = false; ///< contains if the first row is fixed while scolling
+	bool m_setFixedFirstColumn = false; ///< contains if the first column will get wixed this frame
+	bool m_isFixedFirstColumn = false; ///< contains if the first column is fixed while scolling
+	float m_scroll_speed; ///< contains the speed the table ist scrolled with
+	Vector2 m_absoluteScollingOffset{ 0.0f,0.0f }; ///< contains the absolute scrolling offset 
+
+	std::shared_ptr<Slider> m_horizontalSlider; ///< contains the horizontal slider
+	bool m_activeHorizontalSlider; ///< contains if the horizontal slider is needed
+	std::shared_ptr<Slider> m_verticalSlider; ///< contains the vertival slider
+	bool m_activeVerticalSlider; ///< contains if the vertical slider is needed
+
+	bool m_isHoveredHighlighted = false; ///< contains if the hovered row and column gets highlighted
+	Vec2<int>m_currentHighlighted{ -1,-1 }; ///< contains the currently hightlithed row (x) and column (y) index
+
 	std::function<void(AbstractTableCell const*, std::string, std::string)> m_updatedStringCell = [](AbstractTableCell const*, std::string, std::string) {}; ///< string
 	std::function<void(AbstractTableCell const*, int, int)> m_updatedIntCell = [](AbstractTableCell const*, int, int) {}; ///< int
 	std::function<void(AbstractTableCell const*, float, float)> m_updatedFloatCell = [](AbstractTableCell const*, float, float) {}; ///< float
@@ -33,9 +50,126 @@ private:
 	std::function<void(AbstractTableCell const*, Color, Color)> m_updatedColorCell = [](AbstractTableCell const*, Color, Color) {}; ///< color
 
 	/**
-	 * calls the valid lambda for the provided datatype.
-	 * update the cell that is provided by the pointer.
+	 * returns true if the provided index is valid to access a cell.
 	 */
+	[[nodiscard]] bool IsValidIndex(int row, int column) const;
+	/**
+	 * returns true if the provided row  is valid to access a cell.
+	 */
+	[[nodiscard]] bool IsValidRow(int row) const;
+	/**
+	 * returns true if the provided column is valid to access a cell.
+	 */
+	[[nodiscard]] bool IsValidColumn(int column) const;
+
+	/**
+	 * sets a new focus id in all cells.
+	 */
+	void UpdateCellFocusID();
+	/**
+	 * sets new size in all cells.
+	 */
+	void UpdateCellPositionAndSize();
+
+	/**
+	 * returns the calculated absolute size of all cells.
+	 */
+	[[nodiscard]] Vector2 GetAbsoluteSize() const;
+
+	/**
+	 * sets the cell focus and the nested focus.
+	 */
+	void SetCellFocus();
+	/**
+	 * removes the focus from the cells and the nested focus.
+	 */
+	void RemoveCellFocus();
+
+	/**
+	 * resizes the table.
+	 */
+	void ResizeTable();
+	/**
+	 * updates the headline position to fix it or not.
+	 */
+	void UpdateHeadlinePosition();
+	/**
+	 * updates the first row position to fix it or not.
+	 */
+	void UpdateFirstRowPosition();
+	/**
+	 * checks if any cell is clicked and updates it if so.
+	 * returns after the top cell is clicked.
+	 */
+	void CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext const& appContext);
+
+	/**
+	 * checks and scrolls if scrollable
+	 */
+	void CheckAndUpdateScroll(Vector2 const& mousePosition);
+	/**
+	 * clamps the scroll offset so that the table can not "leave" the collider.
+	 */
+	void ClampScroollOffset(Vector2& offset);
+	/**
+	 * moves a selected cell in the table collider.
+	 */
+	void ScrollFocused();
+	/**
+	 * set offset to position in percent.
+	 */
+	void ScollPercent(float percent, bool isHorisonzal);
+	/**
+	 * moves the cell collider of the offset.
+	 */
+	void ScrollMove(Vector2 const& offset);
+	/**
+	 * sets the slider active or inactive and the total dimesion.
+	 */
+	void CalculateSlider();
+
+	/**
+	 * calculates the current hovered row and column.
+	 */
+	void CalculateHoverHighlighted(Vector2 mousePosition);
+	/**
+	 * sets the background color of the highlighted cells.
+	 * resets the backgroundcolor if the bool is set.
+	 * sets a new one if the bool is not set.
+	 */
+	void SetHighlightBeackground(bool reset);
+
+	/**
+	 * calls the top left cell to render.
+	 * sets the scissors mode for it.
+	 */
+	void RenderTopLeft(AppContext const& appContext);
+	/**
+	 * calls the headline (without the top left corner) to render.
+	 * sets the scissors mode for it.
+	 */
+	void RenderHeadline(AppContext const& appContext);
+	/**
+	 * calls the first column (without the top left corner) to render.
+	 * sets the scissors mode for it.
+	 */
+	void RenderFirstColumn(AppContext const& appContext);
+	/**
+	 * calls all the other cells to render.
+	 * sets the scissors mode for it.
+	 */
+	void RenderOtherCells(AppContext const& appContext);
+	/**
+	 * renders the outline of the table.
+	 * sets the scissors mode for it.
+	 */
+	void RenderOutline() const;
+
+
+	/**
+ * calls the valid lambda for the provided datatype.
+ * update the cell that is provided by the pointer.
+ */
 	template<typename T>
 	void CellUpdated(AbstractTableCell const* cell, T oldValue, T newValue) {
 		if constexpr (std::is_same_v<T, std::string>) {
@@ -60,95 +194,69 @@ private:
 		}
 	}
 
-	/**
-	 * returns the initial position of a cell.
-	 */
-	[[nodiscard]] Vector2 GetElementPosition(size_t row, size_t column) const;
-	/**
-	 * returns the initial size of a cell.
-	 */	
-	[[nodiscard]] Vector2 GetElementSize() const;
-	/**
-	 * checks if row and column are valid for this table.
-	 * throws an exception if not.
-	 */
-	void CheckValidRowColumn(size_t row, size_t column) const;
-
-	/**
-	 * ealry return if not nested focus.
-	 * adds the provided focusable.
-	 */
-	void SetElementFocus(Focusable* toFocus) const;
-	/**
-	 * selects the provided focusable.
-	 */
-	void SelectElementFocus(Focusable* toFocus) const;
-	/**
-	 * ealry return if not nested focus.
-	 * deletes the provided focusable.
-	 */
-	void DeleteElementFocus(Focusable* toFocus) const;
-	/**
-	 * ealry return if nested focus.
-	 * adds focus layer.
-	 */
-	void SetFocusLayer();
-	/**
-	 * ealry return if not nested focus.
-	 * deletes focus layer.
-	 */
-	void DeleteFocusLayer();
-
-	/**
-	 * collects and returns all cell column width.
-	 */
-	[[nodiscard]] std::vector<float> GetColumnWidths();
-	/**
-	 * calculates the diviation so that the table is 1.0f in width.
-	 * distrebutes the diviation to all columns.
-	 */
-	void DistributeDeviationToColumns(std::vector<float>& neededWidths);
-	/**
-	 * calculates and returs the new cell position out of the new column witdhs
-	 */
-	[[nodiscard]] std::vector<float> GetNewColumnPosition(std::vector<float> const& newColumnWidths) const;
-
-	/**
-	 * sets a non empty cell with no value.
-	 * the cell that is at that index gets overwritten.
-	 */
-	template<typename T>
-	void SetCell(size_t row, size_t column) {
-		const size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
-		const bool isEditable = m_cells.at(index)->IsEnabled();
-		DeleteElementFocus(m_cells.at(index).get());
-
-		m_cells.at(index) = std::make_unique<TableCell<T>>(
-			static_cast<unsigned int>(index),
-			GetElementPosition(row, column),
-			GetElementSize(),
-			Alignment::DEFAULT,
-			m_resolution,
-			[this]() {this->ResizeCells();},
-			[this](AbstractTableCell const* cell, T oldValue, T newValue)
-			{this->CellUpdated<T>(cell, oldValue, newValue);}
-			);
-
-		m_cells.at(index)->SetEditable(isEditable);
-		SetElementFocus(m_cells.at(index).get());
-	}
-
 public:
 	/**
 	 * ctor.
 	 * initializes the table with empty cells.
 	 */
-	Table(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		size_t rows, size_t columns, bool isPopUp = false);
+	Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
+		int rowCount, int columnCount, Vector2 minCellSize, float scrollSpeed);
+
 	/**
-	 * deletes a focus layer.
+	 * replaces the current Cell with a new one.
 	 */
-	~Table();
+	template<typename T>
+	void SetValue(int row, int column, T input) {
+		if (not IsValidIndex(row, column)) { Print("Index out of range", PrintType::ERROR), throw std::out_of_range("index"); }
+
+		auto oldCell = m_cells.at(row).at(column);
+		if (IsNestedFocus()) {
+			DeleteFocusElement(oldCell.get());
+		}
+
+		auto cell = std::make_shared<TableCell<T>>(
+			oldCell->GetPosition(),
+			oldCell->GetSize(),
+			oldCell->GetAlignment(),
+			m_resolution,
+			oldCell->GetFocusID(),
+			input,
+			[this](AbstractTableCell const* cell, T oldValue, T newValue)
+			{this->CellUpdated<T>(cell, oldValue, newValue); }
+		);
+		cell->SetEditable(oldCell->IsEditable());
+		m_cells.at(row).at(column) = cell;
+		if (IsNestedFocus()) {
+			AddFocusElement(cell.get());
+		}
+	}
+	/**
+	 * returns the current value of a cell.
+	 */
+	template <typename T>
+	[[nodiscard]] T GetValue(int row, int column) const {
+		if (not IsValidIndex(row, column)) { Print("index out of range", PrintType::ERROR); throw std::out_of_range("index"); }
+
+		std::any value = m_cells.at(row).at(column)->GetValue();
+		return std::any_cast<T>(value);
+	}
+	/**
+	 * rerturn the current valeu of a cell as string.s
+	 */
+	[[nodiscard]] std::string GetValueAsString(int row, int column) const {
+		if (not IsValidIndex(row, column)) { Print("index out of range", PrintType::ERROR); throw std::out_of_range("index"); }
+
+		return m_cells.at(row).at(column)->GetValueAsString();
+	}
+	/**
+	 * sets a new row count.
+	 * need to call the recalculation of the table.
+	 */
+	void SetRowCount(int newRowCount);
+	/**
+	 * returns the current row count.
+	 */
+	[[nodiscard]] int GetRowCount() const;
 
 	/**
 	 * sets the update cell lambdas for the correct datatype.
@@ -178,95 +286,220 @@ public:
 		}
 	}
 
+
 	/**
-	 * table logic.
-	 * calls cells to update.
+	 * sets a new column count.
+	 * need to call the recalculation of the table.
+	 */
+	void SetColumnCount(int newColumnCount);
+	/**
+	 * returns the current column count.
+	 */
+	[[nodiscard]] int GetColumnCount() const;
+
+	/**
+	 * adds a specific row.
+	 */
+	template <typename T>
+	void AddSpecificRow(int row, T defalutValue) {
+		if (row == m_cells.size()) { /* nothing */ }
+		else if (!IsValidRow(row)) { Print("invalid row index", PrintType::ERROR), throw std::out_of_range("row-index"); }
+
+		auto line = std::vector<std::shared_ptr<AbstractTableCell>>();
+
+		for (int column = 0; column < m_columnCount; ++column) {
+
+			auto cell = std::make_shared<TableCell<T>>(
+				Vector2(0.0f, 0.0f),
+				Vector2(0.1f, 0.1f),
+				Alignment::TOP_LEFT,
+				m_resolution,
+				0,
+				defalutValue,
+				[this](AbstractTableCell const* cell, T oldValue, T newValue)
+				{this->CellUpdated<T>(cell, oldValue, newValue); }
+			);
+			if (not m_editableRowsColumns.at(1).at(column)) {
+				cell->SetEditable(false);
+			}
+			line.push_back(cell);
+		}
+
+		m_cells.insert(m_cells.begin() + row, line);
+		m_editableRowsColumns.at(0).insert(m_editableRowsColumns.at(0).begin() + row, true);
+		++m_rowCount;
+	}
+	/**
+	 * adds the last row.
+	 * calls AddSpecificRow.
+	 */
+	template <typename T>
+	void AddLastRow(T defalutValue) {
+		AddSpecificRow<T>(static_cast<int>(m_cells.size()), defalutValue);
+	}
+	/**
+	 * adds a specific colunm.
+	 */
+	template <typename T>
+	void AddSpecificColumn(int column, T defalutValue) {
+		if (m_cells.size() == 0) { Print("no rows available in the table", PrintType::ERROR), throw std::out_of_range("no rows"); }
+		else if (column == m_cells.at(0).size()) { /* nothing */ }
+		else if (!IsValidColumn(column)) { Print("column-index out of range", PrintType::ERROR), throw std::out_of_range("column index"); }
+
+		for (int i = 0; i < m_rowCount; ++i) {
+			auto row = m_cells.at(i);
+			auto cell = std::make_shared<TableCell<T>>(
+				Vector2(0.0f, 0.0f),
+				Vector2(0.1f, 0.1f),
+				Alignment::TOP_LEFT,
+				m_resolution,
+				0,
+				defalutValue,
+				[this](AbstractTableCell const* cell, T oldValue, T newValue)
+				{this->CellUpdated<T>(cell, oldValue, newValue); }
+			);
+			if (not m_editableRowsColumns.at(0).at(i)) {
+				cell->SetEditable(false);
+			}
+			row.insert(row.begin() + column, cell);
+		}
+		m_editableRowsColumns.at(1).insert(m_editableRowsColumns.at(1).begin() + column, true);
+		++m_columnCount;
+	}
+	/**
+	 * adds the last column.
+	 * calls AddSpecificColumn.
+	 */
+	template <typename T>
+	void AddLastColumn(T defalutValue) {
+		if (m_cells.size() == 0) { Print("no rows in table", PrintType::ERROR), throw std::out_of_range("no rows"); }
+		AddSpecificColumn<T>(static_cast<int>(m_cells.at(0).size()), defalutValue);
+	}
+
+	/**
+	 * removes a specific row.
+	 */
+	void RemoveSpecificRow(int row);
+	/**
+	 * removes the last row.
+	 * calls RemoveSpecificRow.
+	 */
+	void RemoveLastRow();
+	/**
+	 * removes a specific colunm.
+	 */
+	void RemoveSpecificColumn(int column);
+	/**
+	 * removes the last column.
+	 * calls RemoveSpecificColumn.
+	 */
+	void RemoveLastColum();
+
+	/**
+	 * sets if the hovered row and column gets highlighted.
+	 */
+	void SetHighlightHover(bool isHoveredHighlighted);
+	/**
+	 * returns if the hovered row and column gets currently highlighted.
+	 */
+	[[nodiscard]] bool IsHighlighedHover() const;
+
+	/**
+	 * Sets if the table is scollable.
+	 */
+	void SetScrollable(bool isScollable);
+	/**
+	 * returns true if the table is currently scollable.
+	 */
+	[[nodiscard]] bool IsScollable() const;
+
+	/**
+	 * sets if a specific cell is editable.
+	 */
+	void SetSingleEditable(int row, int column, bool isEditable);
+	/**
+	 * returns true if a specific cell is editable.
+	 */
+	[[nodiscard]] bool IsSingleEditable(int row, int column) const;
+
+	/**
+	 * Set if all cells are editable.
+	 */
+	void SetAllEditable(bool IsEditable) noexcept;
+	/**
+	 * returns true if all cells are editable.
+	 * returns false if at least one cell is not editable.
+	 */
+	[[nodiscard]] bool IsAllEditable() const noexcept;
+
+	/**
+	 * sets if all cells in a specific row are editable.
+	 */
+	void SetRowEditable(int row, bool isEditable);
+	/**
+	 * returns true if all cells in a specific row are editable.
+	 * returns false if at least one cell in a specific row is not editable.
+	 */
+	[[nodiscard]] bool IsRowEditable(int row) const;
+
+	/**
+	 * sets if all cells in a specific column are editable.
+	 */
+	void SetColumnEditable(int column, bool isEditable);
+	/**
+	 * returns true if all cells in a specific column are editable.
+	 * returns false if at least one cell in a specific column is not editable.
+	 */
+	[[nodiscard]] bool IsColumnEditable(int column) const;
+
+	/**
+	 * sets if the first row is fixed while scolling.
+	 */
+	void SetFixedHeadline(bool isFixedHeadline);
+	/**
+	 * returns true if the first row is fixed while scolling.
+	 */
+	[[nodiscard]] bool IsFixedHeadline() const;
+
+	/**
+	 * sets if the first column is fixed while scolling.
+	 */
+	void SetFixedFirstColumn(bool isFixedFirstColumn);
+	/**
+	 * returns true if the first column is fixed while scolling.
+	 */
+	[[nodiscard]] bool IsFixedFirstColumn() const;
+	/**
+	 * sets the headline values.
+	 */
+	template<typename T>
+	void SetHeadlineValues(std::vector<T> values) {
+		for (int i = 0; i < m_columnCount; ++i) {
+			if (i >= values.size()) {
+				break;
+			}
+			SetValue<T>(0, i, values.at(i));
+		}
+	}
+
+	/**
+	 * returns if the current elements is enabled.
+	 */
+	[[nodiscard]] bool IsEnabled() const noexcept override;
+	/**
+	 * returns thr current collider.
+	 */
+	[[nodiscard]] Rectangle GetCollider() const noexcept override;
+
+	/**
+	 * calls the CheckAndUpdate member function of UIElement.
+	 * contains the logic of the table.
+	 * calls all cells to check and Update itself.
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	/**
-	 * render the table.
-	 * calls cells to render.
+	 * renders the table.
+	 * calls all cells to render itself.
 	 */
 	void Render(AppContext const& appContext) override;
-	/**
-	 * rezises the table.
-	 * calls cells to sezise.
-	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
-
-	/**
-	 * sets for all cells if the cells are editable.
-	 */
-	void SetAllCellsEditable(bool editable);
-	/**
-	 * sets for a row if the cells are editable.
-	 */
-	void SetRowEditable(size_t row, bool editable);
-	/**
-	 * sets for a column if the cells are editable.
-	 */
-	void SetColumnEditable(size_t column, bool editable);
-	/**
-	 * sets for a single cell if the cell is editable.
-	 */
-	void SetSingleCellEditable(size_t row, size_t column, bool editable);
-	/**
-	 * returns if the table is editable.
-	 */
-	[[nodiscard]] bool IsEnabled() const override;
-	/**
-	 * returns the current collider.
-	 */
-	[[nodiscard]] Rectangle GetCollider() const override;
-
-	/**
-	 * returns the current resolution.
-	 */
-	[[nodiscard]] Vector2 GetResolution() const;
-
-	/**
-	 * returns the row count of the table.
-	 */
-	[[nodiscard]] size_t GetRows() const;
-	/**
-	 * returns the column count of the table.
-	 */
-	[[nodiscard]] size_t GetColumns() const;
-
-	/**
-	 * sets an empty cell.
-	 * overrides the current cell at that position.
-	 */
-	void SetEmptyCell(size_t row, size_t column, bool resizeCells = true);
-	/**
-	 * sets a value into a specific cell.
-	 * if the cell type does not match the value type, a new cell is generated to match the value type.
-	 */
-	template<typename ValueType>
-	void SetValue(size_t row, size_t column, ValueType value,
-		bool resizeCells = true) {
-		CheckValidRowColumn(row, column);
-		size_t index = GetIndexFromRowAndColumn(row, column, m_columns);
-		auto cell = dynamic_cast<TableCell<ValueType>*>(m_cells.at(index).get());
-		if (!cell) {
-			SetCell<ValueType>(row, column);
-			cell = dynamic_cast<TableCell<ValueType>*>(m_cells.at(index).get());
-		}
-
-		cell->SetValue(value);
-
-		if (resizeCells) {
-			ResizeCells();
-		}
-	}
-	/**
-	 * sets strings in the first row as headlines.
-	 * sets thees cells to non editable.
-	 */
-	void SetHeadlines(std::vector<std::string> const& headlines,
-		bool resizeCells = true);
-	/**
-	 * calculates the new column witdh and sets the new cell positions and witdh.
-	 */
-	void ResizeCells();
 };

@@ -15,6 +15,7 @@ global_lines: int = 0
 lines_with_entry: int = 0
 code_lines: int = 0
 comment_lines: int = 0
+blank_lines:int = 0
 
 global_characters: int = 0
 code_characters: int = 0
@@ -42,6 +43,7 @@ def print_result() -> None:
     print("lines_with_entry:   " + str(lines_with_entry))
     print("code_lines:         " + str(code_lines))
     print("comment_lines:      " + str(comment_lines))
+    print("blank_lines:        " + str(blank_lines))
     print("-----")
     print("global_characters:  " + str(global_characters))
     print("code_characters:    " + str(code_characters))
@@ -109,11 +111,13 @@ def count_line(line: str) -> None:
     global lines_with_entry
     global code_lines
     global comment_lines
+    global blank_lines
 
     global_lines += 1
     line = line.strip()
 
     if len(line) == 0:
+        blank_lines += 1
         return
 
     lines_with_entry += 1

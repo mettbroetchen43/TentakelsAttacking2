@@ -3,9 +3,9 @@
 // 24.10.2022
 //
 
-#include "HInput.h"
 #include "AppContext.h"
-#include <CustomRaylib.h>
+#include "CustomRaylib.h"
+#include "HInput.h"
 
 bool IsConfirmInputPressed() {
     bool triggered =

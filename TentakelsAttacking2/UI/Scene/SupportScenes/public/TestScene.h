@@ -6,15 +6,16 @@
 #pragma once
 # include "Scene.h"
 # include "Table.h"
-# include "Galaxy.h"
+
+enum class TableToggle;
 
 /**
  * no doc here.
  * this contains the test scene that is only unsed to diplay new featurs temporary.
  */
-class TestScene : public Scene , public EventListener {
+class TestScene : public Scene {
 private:
-	std::shared_ptr<Galaxy> m_galaxy;
+	std::shared_ptr<Table> m_table;
 	void Initialize(AppContext& appContext);
 
 public:
@@ -25,6 +26,6 @@ public:
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	void Render(AppContext const& appContext) override;
 
-	void OnEvent(Event const& event) override;
+	void ToggleTable(TableToggle headline);
 };
 

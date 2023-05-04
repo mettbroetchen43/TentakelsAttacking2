@@ -190,6 +190,7 @@
     <ClInclude Include="Helper\public\HPlayerData.hpp" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
     <ClInclude Include="Game\public\Player.h" />
+    <ClInclude Include="UI\Elements\Table\public\Table.h" />
     <ClInclude Include="UI\Elements\Default\public\CheckBox.h" />
     <ClInclude Include="UI\Elements\Default\public\Line.h" />
     <ClInclude Include="UI\Elements\Default\public\Picture.h" />
@@ -209,11 +210,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h" />
     <ClInclude Include="UI\Elements\Default\public\InputLine.hpp" />
-    <ClInclude Include="UI\Elements\Table\public\AllCells.hpp" />
-    <ClInclude Include="UI\Elements\Table\public\AbstractTableCell.h" />
     <ClInclude Include="UI\Elements\Table\public\TableCell.hpp" />
-    <ClInclude Include="UI\Elements\Table\public\EmptyCell.h" />
-    <ClInclude Include="UI\Elements\Table\public\Table.h" />
     <ClInclude Include="UI\public\Allignment.h" />
     <ClInclude Include="UI\Elements\ColorPicker\public\ColorPicker.h" />
     <ClInclude Include="UI\Elements\ColorPicker\public\ColorPickerCell.h" />
@@ -273,6 +270,7 @@
     <ClCompile Include="Helper\private\HInput.cpp" />
     <ClCompile Include="Helper\private\HPrint.cpp" />
     <ClCompile Include="Helper\private\HVector2Operator.cpp" />
+    <ClCompile Include="UI\Elements\Table\private\Table.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />
@@ -289,9 +287,8 @@
     <ClCompile Include="UI\Elements\PopUp\private\DeletePlayerPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\SoundLevelPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\ValidatePopUp.cpp" />
-    <ClCompile Include="UI\Elements\Table\private\EmptyCell.cpp" />
-    <ClCompile Include="UI\Elements\Table\private\AbstractTableCell.cpp" />
-    <ClCompile Include="UI\Elements\Table\private\Table.cpp" />
+    <ClCompile Include="UI\Elements\Table\private\AbstactTableCell.cpp" />
+    <ClCompile Include="UI\Elements\Table\public\AbstractTableCell.h" />
     <ClCompile Include="UI\private\Allignment.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPicker.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPickerCell.cpp" />

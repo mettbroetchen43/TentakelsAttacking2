@@ -4,8 +4,9 @@
 //
 
 #pragma once
+#include "CustomRaylib.h"
+#include <string>
 #include <array>
-#include <CustomRaylib.h>
 
 /**
  * contains all available colors of the game and validates it.
@@ -42,4 +43,12 @@ public:
 	 * returns all colors.
 	 */
 	[[nodiscard]] ColorArray GetColors() const;
+	/**
+	 * returns a string for a color.
+	 */
+	[[nodiscard]] static std::string AsString(Color color);
+	/**
+	 * returns if the colors are the same.
+	 */
+	[[nodiscard]] static bool AreSame(Color lhs, Color rhs);
 };

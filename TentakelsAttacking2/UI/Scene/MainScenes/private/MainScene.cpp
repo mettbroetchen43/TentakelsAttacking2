@@ -374,8 +374,8 @@ void MainScene::InitializePlanetTable() {
 	}
 
 	m_planetTable = std::make_shared<PlanetTable>(
-		GetElementPosition(0.01f, 0.99f),
-		GetElementSize(0.85f, 0.85f),
+		GetElementPosition(0.01f, 0.95f),
+		GetElementSize(0.85f, 0.78f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
 		m_galaxy->GetGalaxy()

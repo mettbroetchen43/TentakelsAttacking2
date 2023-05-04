@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#include <CustomRaylib.h>
+#include "CustomRaylib.h"
 
 /**
  * provides the focusable inplementation for every ui element that should be focusable.
@@ -55,6 +55,11 @@ public:
 	 * returns the unique (per layer) id.
 	 */
 	[[nodiscard]] unsigned int GetFocusID() const;
+	/**
+	 * sets a new focus ID. 
+	 * be careful with this member funkction. it may break the app if the focus ID is doubbelig after that.
+	 */
+	void SetFocusID(unsigned int focusID) noexcept;
 	/**
 	 * returns thr current collider.
 	 */

@@ -40,7 +40,7 @@ void LoadConfig() {
 
 	file.open(constants.files.configFile());
 	if (!file.is_open()) {
-		Print("cant open config");
+		Print("cant open config", PrintType::INFO);
 		return;
 	}
 
@@ -175,7 +175,7 @@ void LoadConfig() {
 	constants.window.startingModeFullScreen = false;
 #endif // _DEBUG
 
-	Print("config loaded");
+	Print("config loaded", PrintType::INFO);
 }
 void SaveConfig() {
 	auto& constants = AppContext::GetInstance().constants;
@@ -184,11 +184,11 @@ void SaveConfig() {
 	if (!std::filesystem::exists(constants.files.savesDir)) {
 		Print("saves dir does not exists", PrintType::EXPECTED_ERROR);
 		std::filesystem::create_directory(constants.files.savesDir);
-		Print("saves dir generated");
+		Print("saves dir generated", PrintType::INFO);
 	}
 
 	if (!std::filesystem::exists(constants.files.configFile())) {
-		Print("config generated");
+		Print("config generated", PrintType::INFO);
 	}
 
 	file.open(constants.files.configFile());
@@ -251,5 +251,5 @@ void SaveConfig() {
 	file << toSave;
 	file.close();
 
-	Print("config saved");
+	Print("config saved", PrintType::INFO);
 }

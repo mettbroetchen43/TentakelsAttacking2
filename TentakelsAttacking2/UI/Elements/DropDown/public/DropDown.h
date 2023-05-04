@@ -70,7 +70,7 @@ private:
 	 * scrolls the entries an sets new focused entry if nececary.
 	 * the movment value gets multipleyed ba the wheel value.
 	 */
-	void Scroll(float wheel);
+	void ScrollMove(float wheel);
 	/**
 	 * clampes the first and last value into the drop down collider.
 	 */

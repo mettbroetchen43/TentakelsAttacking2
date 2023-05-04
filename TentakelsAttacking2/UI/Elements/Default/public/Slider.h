@@ -115,4 +115,8 @@ public:
 	 * sets the slider enabled.
 	 */
 	void SetEnabled(bool isEnabled);
+	/**
+	 * returns if the provided point is colliding with the slider.
+	 */
+	[[nodiscard]] bool IsColliding(Vector2 point) const;
 };
