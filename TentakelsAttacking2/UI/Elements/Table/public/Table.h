@@ -17,7 +17,7 @@
 
 class Slider;
 
-class Table2 final : public UIElement, public Focusable {
+class Table final : public UIElement, public Focusable {
 private:
 	using cells_ty = std::vector<std::vector<std::shared_ptr<AbstractTableCell>>>;
 	int m_rowCount; ///< contains the current mount of rown in the table
@@ -199,7 +199,7 @@ public:
 	 * ctor.
 	 * initializes the table with empty cells.
 	 */
-	Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
+	Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
 		int rowCount, int columnCount, Vector2 minCellSize, float scrollSpeed);
 
 	/**

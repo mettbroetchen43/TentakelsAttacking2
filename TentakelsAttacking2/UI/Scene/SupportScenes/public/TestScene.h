@@ -5,7 +5,7 @@
 
 #pragma once
 # include "Scene.h"
-# include "Table2.h"
+# include "Table.h"
 
 enum class TableToggle;
 
@@ -15,7 +15,7 @@ enum class TableToggle;
  */
 class TestScene : public Scene {
 private:
-	std::shared_ptr<Table2> m_table;
+	std::shared_ptr<Table> m_table;
 	void Initialize(AppContext& appContext);
 
 public:

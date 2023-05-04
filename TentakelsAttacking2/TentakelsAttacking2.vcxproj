@@ -190,7 +190,7 @@
     <ClInclude Include="Helper\public\HPlayerData.hpp" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
     <ClInclude Include="Game\public\Player.h" />
-    <ClInclude Include="UI\Elements\Table\public\Table2.h" />
+    <ClInclude Include="UI\Elements\Table\public\Table.h" />
     <ClInclude Include="UI\Elements\Default\public\CheckBox.h" />
     <ClInclude Include="UI\Elements\Default\public\Line.h" />
     <ClInclude Include="UI\Elements\Default\public\Picture.h" />

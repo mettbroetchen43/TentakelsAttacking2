@@ -10,7 +10,7 @@
 #include "ClassicButton.h"
 #include "GenerelEvents.hpp"
 #include "Line.h"
-#include "Table2.h"
+#include "Table.h"
 #include "UIManager.h"
 #include "HFocusEvents.h"
 #include <cassert>
@@ -130,7 +130,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		);
 	m_elements.push_back(currentPlayerCount);
 
-	auto table = std::make_shared<Table2>(
+	auto table = std::make_shared<Table>(
 		GetElementPosition(0.9f, 0.35f),
 		GetElementSize(0.35f, 0.45f),
 		Alignment::TOP_RIGHT,

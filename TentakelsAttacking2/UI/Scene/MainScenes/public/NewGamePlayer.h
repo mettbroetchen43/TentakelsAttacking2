@@ -10,7 +10,7 @@
 #include "EventListener.hpp"
 
 class ColorPicker;
-class Table2;
+class Table;
 class Focusable;
 class ClassicButton;
 
@@ -21,7 +21,7 @@ class NewGamePlayerScene final : public Scene, public EventListener {
 private:
 	InputLine<std::string>* m_inputLine; ///< contains an input line where the player name where entered
 	ColorPicker* m_colorPicker; ///< contains the color picker where the player color gets choosen
-	Table2* m_table; ///< contains the table where the current playere where displayed
+	Table* m_table; ///< contains the table where the current playere where displayed
 	std::shared_ptr<ClassicButton> m_nextBTN; ///< contains the button, witch the calls the next scene
 	std::vector<Focusable*> m_nestedFocus; ///< contains focusable* that are abe to have an nested focus
 	std::vector<std::shared_ptr<ClassicButton>> m_playerButtons; ///< contains the remove player buttons

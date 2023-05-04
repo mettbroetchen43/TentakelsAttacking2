@@ -13,7 +13,7 @@ PlanetTable::PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2
 
 	auto planets = m_galaxy->GetPlanets();
 
-	m_table = std::make_shared<Table2>(
+	m_table = std::make_shared<Table>(
 		GetElementPosition(0.0f, 0.0f),
 		GetElementSize(1.0f, 1.0f),
 		Alignment::TOP_LEFT,

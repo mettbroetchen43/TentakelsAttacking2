@@ -17,7 +17,7 @@ enum class TableToggle {
 
 void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 
-	m_table = std::make_shared<Table2>(
+	m_table = std::make_shared<Table>(
 		Vector2(0.5f, 0.05f), // pos
 		Vector2(0.95f, 0.75f), // size
 		Alignment::TOP_MID,

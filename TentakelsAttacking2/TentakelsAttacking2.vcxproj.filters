@@ -303,7 +303,7 @@
     <ClInclude Include="UI\Scene\SupportScenes\public\PlanetTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Elements\Table\public\Table2.h">
+    <ClInclude Include="UI\Elements\Table\public\Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\Table\public\TableCell.hpp">

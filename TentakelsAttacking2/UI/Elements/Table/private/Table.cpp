@@ -3,37 +3,37 @@
 // 03.04.2023
 //
 
-#include "Table2.h"
+#include "Table.h"
 #include "HInput.h"
 #include "Slider.h"
 #include "AppContext.h"
 
 
-bool Table2::IsValidIndex(int row, int column) const {
+bool Table::IsValidIndex(int row, int column) const {
 	return
 		IsValidRow(row)
 		&& IsValidColumn(column);
 }
-bool Table2::IsValidRow(int row) const {
+bool Table::IsValidRow(int row) const {
 	return
 		row < m_cells.size()
 		&& row >= 0;
 }
-bool Table2::IsValidColumn(int column) const {
+bool Table::IsValidColumn(int column) const {
 	if (m_cells.size() < 1) { return false; }
 	return
 		column < m_cells.at(0).size()
 		&& column >= 0;
 }
 
-void Table2::UpdateCellFocusID() {
+void Table::UpdateCellFocusID() {
 	for (int row = 0; row < m_cells.size(); ++row) {
 		for (int column = 0; column < m_cells.at(row).size(); ++column) {
 			m_cells.at(row).at(column)->SetFocusID(static_cast<unsigned int>(row * m_columnCount + column));
 		}
 	}
 }
-void Table2::UpdateCellPositionAndSize() {
+void Table::UpdateCellPositionAndSize() {
 
 	float cellWidth;
 	float cellHeight;
@@ -73,7 +73,7 @@ void Table2::UpdateCellPositionAndSize() {
 	}
 }
 
-void Table2::SetCellFocus() {
+void Table::SetCellFocus() {
 	SetNestedFocus(true);
 
 	AddFocusLayer();
@@ -83,12 +83,12 @@ void Table2::SetCellFocus() {
 		}
 	}
 }
-void Table2::RemoveCellFocus() {
+void Table::RemoveCellFocus() {
 	DeleteFocusLayer();
 	SetNestedFocus(false);
 }
 
-void Table2::ResizeTable() {
+void Table::ResizeTable() {
 	bool needResize =
 		m_rowCount != m_cells.size() + 1
 		and m_columnCount != m_cells.at(0).size() + 1
@@ -130,7 +130,7 @@ void Table2::ResizeTable() {
 	UpdateCellPositionAndSize();
 	CalculateSlider();
 }
-void Table2::UpdateHeadlinePosition() {
+void Table::UpdateHeadlinePosition() {
 	if (m_setFixedHeadline == m_isFixedHeadline) { return; }
 	m_isFixedHeadline = m_setFixedHeadline;
 
@@ -155,7 +155,7 @@ void Table2::UpdateHeadlinePosition() {
 	}
 
 }
-void Table2::UpdateFirstRowPosition() {
+void Table::UpdateFirstRowPosition() {
 	if (m_setFixedFirstColumn == m_isFixedFirstColumn) { return; }
 	m_isFixedFirstColumn = m_setFixedFirstColumn;
 
@@ -184,7 +184,7 @@ void Table2::UpdateFirstRowPosition() {
 	}
 }
 
-void Table2::CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext const& appContext) {
+void Table::CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext const& appContext) {
 	if (not CheckCollisionPointRec(mousePositon, m_collider)) { return; }
 	if (not IsMouseButtonPressed(0)) { return; }
 
@@ -221,7 +221,7 @@ clicked:
 	return;
 }
 
-void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition) {
+void Table::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 	if (not m_isScrollable) { return; }
 	if (not CheckCollisionPointRec(mousePosition, m_collider)) { return; } // check if collider is maybe to big
 
@@ -250,7 +250,7 @@ void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
-Vector2 Table2::GetAbsoluteSize() const {
+Vector2 Table::GetAbsoluteSize() const {
 
 	Vector2 toReturn{ 0.0f,0.0f };
 
@@ -264,7 +264,7 @@ Vector2 Table2::GetAbsoluteSize() const {
 
 	return toReturn;
 }
-void Table2::ClampScroollOffset(Vector2& offset) {
+void Table::ClampScroollOffset(Vector2& offset) {
 	if (m_rowCount < 2) { Print("not enough rows in table for clamping", PrintType::EXPECTED_ERROR); return; }
 	if (m_columnCount < 2) { Print("not enough columns in table for clamping", PrintType::EXPECTED_ERROR); return; }
 
@@ -295,7 +295,7 @@ void Table2::ClampScroollOffset(Vector2& offset) {
 	if (cell < table) { offset.y += table - cell; }
 
 }
-void Table2::ScrollFocused() {
+void Table::ScrollFocused() {
 	if (not m_isScrollable) { return; }
 	if (not IsNestedFocus()) { return; }
 
@@ -339,7 +339,7 @@ out:
 	m_absoluteScollingOffset.x += offset.x;
 	m_absoluteScollingOffset.y += offset.y;
 }
-void Table2::ScollPercent(float percent, bool isHorisonzal) {
+void Table::ScollPercent(float percent, bool isHorisonzal) {
 
 	auto size = GetAbsoluteSize();
 	Vector2 offset{ 0.0f,0.0f };
@@ -365,7 +365,7 @@ void Table2::ScollPercent(float percent, bool isHorisonzal) {
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
-void Table2::ScrollMove(Vector2 const& offset) {
+void Table::ScrollMove(Vector2 const& offset) {
 	for (int row = 0; row < m_cells.size(); ++row) {
 		for (int column = 0; column < m_cells.at(row).size(); ++column) {
 			Vector2 individualOffset{ offset };
@@ -381,7 +381,7 @@ void Table2::ScrollMove(Vector2 const& offset) {
 		}
 	}
 }
-void Table2::CalculateSlider() {
+void Table::CalculateSlider() {
 
 	float width{ 0.0f };
 	for (auto cell : m_cells.at(0)) {
@@ -399,7 +399,7 @@ void Table2::CalculateSlider() {
 	m_verticalSlider->SetAboluteDimension(height);
 }
 
-void Table2::CalculateHoverHighlighted(Vector2 mousePosition) {
+void Table::CalculateHoverHighlighted(Vector2 mousePosition) {
 	Vec2<int> newPosition{ -1,-1 };
 	if (not m_isHoveredHighlighted) { goto found; }
 	if (not CheckCollisionPointRec(mousePosition, m_collider)) { goto found; }
@@ -430,7 +430,7 @@ found:
 	m_currentHighlighted = newPosition;
 	SetHighlightBeackground(false);
 }
-void Table2::SetHighlightBeackground(bool reset) {
+void Table::SetHighlightBeackground(bool reset) {
 	Color newColor = reset ? BLACK : HOVERGREY;
 
 	if (m_currentHighlighted.x >= 0) {
@@ -447,23 +447,23 @@ void Table2::SetHighlightBeackground(bool reset) {
 	}
 }
 
-void Table2::RenderTopLeft(AppContext const& appContext) {
+void Table::RenderTopLeft(AppContext const& appContext) {
 	m_cells.at(0).at(0)->Render(appContext);
 }
-void Table2::RenderHeadline(AppContext const& appContext) {
+void Table::RenderHeadline(AppContext const& appContext) {
 
 	auto row = m_cells.at(0);
 	for (int column = 1; column < row.size(); ++column) { // start at 1 because cell 0 is renderd in TopLeft
 		row.at(column)->Render(appContext);
 	}
 }
-void Table2::RenderFirstColumn(AppContext const& appContext) {
+void Table::RenderFirstColumn(AppContext const& appContext) {
 
 	for (int row = 1; row < m_cells.size(); ++row) { // start at 1 because cell 0 is renderd in TopLeft
 		m_cells.at(row).at(0)->Render(appContext);
 	}
 }
-void Table2::RenderOtherCells(AppContext const& appContext) {
+void Table::RenderOtherCells(AppContext const& appContext) {
 
 	for (int row = 1; row < m_cells.size(); ++row) { // start at 1 because cell 0 is renderd in TopLeft or headline
 		for (int column = 1; column < m_cells.at(row).size(); ++column) { // start at 1 because cell 0 is renderd in TopLeft or first column
@@ -471,7 +471,7 @@ void Table2::RenderOtherCells(AppContext const& appContext) {
 		}
 	}
 }
-void Table2::RenderOutline() const {
+void Table::RenderOutline() const {
 
 	DrawRectangleLinesEx(
 		m_collider,
@@ -480,7 +480,7 @@ void Table2::RenderOutline() const {
 	);
 }
 
-Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
+Table::Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
 	int rowCount, int columnCount, Vector2 minCellSize, float scrollSpeed)
 	: UIElement(pos, size, alignment, resolution), Focusable(focusID),
 	m_rowCount(rowCount), m_columnCount(columnCount), m_minCellSize(minCellSize), m_scroll_speed(scrollSpeed) {
@@ -546,36 +546,36 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 
 }
 
-void Table2::SetRowCount(int newRowCount) {
+void Table::SetRowCount(int newRowCount) {
 	if (newRowCount <= 0) { Print("tryed to set a row count inside of a table that is lower than or equal to 0.", PrintType::ERROR); return; }
 
 	m_rowCount = newRowCount;
 }
-int Table2::GetRowCount() const {
+int Table::GetRowCount() const {
 	return m_rowCount;
 }
 
-void Table2::SetColumnCount(int newColumnCount) {
+void Table::SetColumnCount(int newColumnCount) {
 	if (newColumnCount <= 0) { Print("tryed to set a column count inside of a table that is lower than or equal to 0.", PrintType::ERROR); return; }
 
 	m_columnCount = newColumnCount;
 }
-int Table2::GetColumnCount() const {
+int Table::GetColumnCount() const {
 	return m_columnCount;
 }
 
 
-void Table2::RemoveSpecificRow(int row) {
+void Table::RemoveSpecificRow(int row) {
 	if (!IsValidRow(row)) { Print("row out of range", PrintType::ERROR), throw std::out_of_range("row index"); }
 
 	m_cells.erase(m_cells.begin() + row);
 	m_editableRowsColumns.at(0).erase(m_editableRowsColumns.at(0).begin() + row);
 	--m_rowCount;
 }
-void Table2::RemoveLastRow() {
+void Table::RemoveLastRow() {
 	RemoveSpecificRow(static_cast<int>(m_cells.size() - 1));
 }
-void Table2::RemoveSpecificColumn(int column) {
+void Table::RemoveSpecificColumn(int column) {
 	if (!IsValidColumn(column)) { Print("column index out of range", PrintType::ERROR), throw std::out_of_range("column index"); }
 
 	for (auto& row : m_cells) {
@@ -585,36 +585,36 @@ void Table2::RemoveSpecificColumn(int column) {
 	m_editableRowsColumns.at(1).erase(m_editableRowsColumns.at(1).begin() + column);
 	--m_columnCount;
 }
-void Table2::RemoveLastColum() {
+void Table::RemoveLastColum() {
 	if (m_cells.size() == 0) { Print("no rows in table", PrintType::ERROR), throw std::out_of_range("no rows"); }
 	RemoveSpecificColumn(static_cast<int>(m_cells.at(0).size() - 1));
 }
 
-void Table2::SetHighlightHover(bool isHoveredHighlighted) {
+void Table::SetHighlightHover(bool isHoveredHighlighted) {
 	m_isHoveredHighlighted = isHoveredHighlighted;
 }
-bool Table2::IsHighlighedHover() const {
+bool Table::IsHighlighedHover() const {
 	return m_isHoveredHighlighted;
 }
 
-void Table2::SetScrollable(bool isScollable) {
+void Table::SetScrollable(bool isScollable) {
 	m_setScrollable = isScollable;
 }
-bool Table2::IsScollable() const {
+bool Table::IsScollable() const {
 	return m_isScrollable;
 }
 
-void Table2::SetSingleEditable(int row, int column, bool isEditable) {
+void Table::SetSingleEditable(int row, int column, bool isEditable) {
 	if (!IsValidIndex(row, column)) { Print("row or column index out auf range", PrintType::ERROR); throw std::out_of_range("invalid index"); }
 
 	m_cells.at(row).at(column)->SetEditable(isEditable);
 }
-bool Table2::IsSingleEditable(int row, int column) const {
+bool Table::IsSingleEditable(int row, int column) const {
 	if (!IsValidIndex(row, column)) { Print("row or column index out auf range", PrintType::ERROR); throw std::out_of_range("invalid index"); }
 	return m_cells.at(row).at(column)->IsEditable();
 }
 
-void Table2::SetAllEditable(bool isEditable) noexcept {
+void Table::SetAllEditable(bool isEditable) noexcept {
 	for (auto& row : m_cells) {
 		for (auto& cell : row) {
 			cell->SetEditable(isEditable);
@@ -626,7 +626,7 @@ void Table2::SetAllEditable(bool isEditable) noexcept {
 		}
 	}
 }
-bool Table2::IsAllEditable() const noexcept {
+bool Table::IsAllEditable() const noexcept {
 	for (auto& row : m_cells) {
 		for (auto& cell : row) {
 			if (!cell->IsEditable()) { return false; }
@@ -636,7 +636,7 @@ bool Table2::IsAllEditable() const noexcept {
 	return true;
 }
 
-void Table2::SetRowEditable(int row, bool isEditable) {
+void Table::SetRowEditable(int row, bool isEditable) {
 	if (!IsValidRow(row)) { Print("row out of range", PrintType::ERROR), throw std::out_of_range("row index"); }
 
 	for (auto& cell : m_cells.at(row)) {
@@ -644,13 +644,13 @@ void Table2::SetRowEditable(int row, bool isEditable) {
 	}
 	m_editableRowsColumns.at(0).at(row) = isEditable;
 }
-bool Table2::IsRowEditable(int row) const {
+bool Table::IsRowEditable(int row) const {
 	if (!IsValidRow(row)) { Print("row out of range", PrintType::ERROR), throw std::out_of_range("row index"); }
 
 	return m_editableRowsColumns.at(0).at(row);
 }
 
-void Table2::SetColumnEditable(int column, bool isEditable) {
+void Table::SetColumnEditable(int column, bool isEditable) {
 	if (!IsValidColumn(column)) { Print("column out of Range", PrintType::ERROR); throw std::out_of_range("column index"); }
 
 	for (auto& row : m_cells) {
@@ -658,34 +658,34 @@ void Table2::SetColumnEditable(int column, bool isEditable) {
 	}
 	m_editableRowsColumns.at(1).at(column) = isEditable;
 }
-bool Table2::IsColumnEditable(int column) const {
+bool Table::IsColumnEditable(int column) const {
 	if (!IsValidColumn(column)) { Print("column out of Range", PrintType::ERROR); throw std::out_of_range("column index"); }
 
 	return m_editableRowsColumns.at(1).at(column);
 }
 
-void Table2::SetFixedHeadline(bool isFixedHeadline) {
+void Table::SetFixedHeadline(bool isFixedHeadline) {
 	m_setFixedHeadline = isFixedHeadline;
 }
-bool Table2::IsFixedHeadline() const {
+bool Table::IsFixedHeadline() const {
 	return m_isFixedHeadline;
 }
 
-void Table2::SetFixedFirstColumn(bool isFixedFirstColumn) {
+void Table::SetFixedFirstColumn(bool isFixedFirstColumn) {
 	m_setFixedFirstColumn = isFixedFirstColumn;
 }
-bool Table2::IsFixedFirstColumn() const {
+bool Table::IsFixedFirstColumn() const {
 	return m_isFixedFirstColumn;
 }
 
-bool Table2::IsEnabled() const noexcept {
+bool Table::IsEnabled() const noexcept {
 	return true;
 }
-Rectangle Table2::GetCollider() const noexcept {
+Rectangle Table::GetCollider() const noexcept {
 	return m_collider;
 }
 
-void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void Table::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 
 	ResizeTable();
 	UpdateHeadlinePosition();
@@ -729,7 +729,7 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 
 	CalculateHoverHighlighted(mousePosition);
 }
-void Table2::Render(AppContext const& appContext) {
+void Table::Render(AppContext const& appContext) {
 
 	BeginScissorMode(
 		static_cast<int>(m_collider.x),
