@@ -299,7 +299,7 @@ void Table2::ScrollFocused() {
 	if (not m_isScrollable) { return; }
 	if (not IsNestedFocus()) { return; }
 
-	std::shared_ptr<AbstractTableCell2> cell = nullptr;
+	std::shared_ptr<AbstractTableCell> cell = nullptr;
 	for (int row = 0; row < m_cells.size(); ++row) {
 		for (int column = 0; column < m_cells.at(row).size(); ++column) {
 			auto cCell = m_cells.at(row).at(column);
@@ -496,7 +496,7 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 	m_cells.clear();
 	for (int row = 0; row < m_rowCount; ++row) {
 
-		auto line = std::vector<std::shared_ptr<AbstractTableCell2>>();
+		auto line = std::vector<std::shared_ptr<AbstractTableCell>>();
 		for (int column = 0; column < columnCount; ++column) {
 
 			auto cell = std::make_shared<TableCell<std::string>>(
@@ -506,7 +506,7 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 				m_resolution,
 				row * columnCount + column,
 				"",
-				[this](AbstractTableCell2 const* cell, std::string oldValue, std::string newValue)
+				[this](AbstractTableCell const* cell, std::string oldValue, std::string newValue)
 				{this->CellUpdated < std::string > (cell, oldValue, newValue); }
 			);
 

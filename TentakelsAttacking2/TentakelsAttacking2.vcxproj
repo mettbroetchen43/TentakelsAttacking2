@@ -288,7 +288,7 @@
     <ClCompile Include="UI\Elements\PopUp\private\SoundLevelPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\ValidatePopUp.cpp" />
     <ClCompile Include="UI\Elements\Table\private\AbstactTableCell.cpp" />
-    <ClCompile Include="UI\Elements\Table\public\AbstractTableCell2.h" />
+    <ClCompile Include="UI\Elements\Table\public\AbstractTableCell.h" />
     <ClCompile Include="UI\private\Allignment.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPicker.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPickerCell.cpp" />

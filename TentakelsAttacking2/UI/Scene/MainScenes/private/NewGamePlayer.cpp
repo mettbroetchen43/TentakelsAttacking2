@@ -146,12 +146,12 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 	table->SetHeadlineValues<std::string>({ "ID", "Name", "Color" });
 
 	table->SetUpdateSpecificCell<std::string>(
-		[this](AbstractTableCell2 const* cell, std::string oldValue, std::string newValue) {
+		[this](AbstractTableCell const* cell, std::string oldValue, std::string newValue) {
 			this->UpdatePlayerName(cell, oldValue, newValue);
 		}
 	);
 	table->SetUpdateSpecificCell<Color>(
-		[this](AbstractTableCell2 const* cell, Color oldValue, Color newValue) {
+		[this](AbstractTableCell const* cell, Color oldValue, Color newValue) {
 			UpdatePlayerColor(cell, oldValue, newValue);
 		}
 	);
@@ -300,7 +300,7 @@ void NewGamePlayerScene::UpdatePlayer(unsigned int ID, std::string const& name,
 
 	UpdateSceneEntries(appContext);
 }
-void NewGamePlayerScene::UpdatePlayerName(AbstractTableCell2 const*,
+void NewGamePlayerScene::UpdatePlayerName(AbstractTableCell const*,
 	std::string oldValue, std::string newValue) {
 
 	AppContext& appContext = AppContext::GetInstance();
@@ -313,7 +313,7 @@ void NewGamePlayerScene::UpdatePlayerName(AbstractTableCell2 const*,
 		appContext
 	);
 }
-void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell2 const*,
+void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell const*,
 	Color oldValue, Color newValue){
 	AppContext& appContext = AppContext::GetInstance();
 	PlayerData playerData = appContext.playerCollection.GetPlayerByColor(oldValue);

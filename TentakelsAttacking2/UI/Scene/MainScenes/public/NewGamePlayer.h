@@ -6,7 +6,7 @@
 #pragma once
 #include "Scene.h"
 #include "InputLine.hpp"
-#include "AbstractTableCell2.h"
+#include "AbstractTableCell.h"
 #include "EventListener.hpp"
 
 class ColorPicker;
@@ -63,13 +63,13 @@ private:
 	 * updates a player name.
 	 * calls the update player.
 	 */
-	void UpdatePlayerName(AbstractTableCell2 const* cell,
+	void UpdatePlayerName(AbstractTableCell const* cell,
 		std::string oldValue, std::string newValue);
 	/**
 	 * updates a player color.
 	 * calls the update player.
 	 */
-	void UpdatePlayerColor(AbstractTableCell2 const* cell,
+	void UpdatePlayerColor(AbstractTableCell const* cell,
 		Color oldValue, Color newValue);
 	/**
 	 * delets an player via event.

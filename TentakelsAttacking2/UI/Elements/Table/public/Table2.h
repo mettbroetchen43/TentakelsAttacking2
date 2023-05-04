@@ -19,7 +19,7 @@ class Slider;
 
 class Table2 final : public UIElement, public Focusable {
 private:
-	using cells_ty = std::vector<std::vector<std::shared_ptr<AbstractTableCell2>>>;
+	using cells_ty = std::vector<std::vector<std::shared_ptr<AbstractTableCell>>>;
 	int m_rowCount; ///< contains the current mount of rown in the table
 	int m_columnCount; ///< contains the current mount of column in the table
 	cells_ty m_cells; ///< contains all cells the table is holding
@@ -43,11 +43,11 @@ private:
 	bool m_isHoveredHighlighted = false; ///< contains if the hovered row and column gets highlighted
 	Vec2<int>m_currentHighlighted{ -1,-1 }; ///< contains the currently hightlithed row (x) and column (y) index
 
-	std::function<void(AbstractTableCell2 const*, std::string, std::string)> m_updatedStringCell = [](AbstractTableCell2 const*, std::string, std::string) {}; ///< string
-	std::function<void(AbstractTableCell2 const*, int, int)> m_updatedIntCell = [](AbstractTableCell2 const*, int, int) {}; ///< int
-	std::function<void(AbstractTableCell2 const*, float, float)> m_updatedFloatCell = [](AbstractTableCell2 const*, float, float) {}; ///< float
-	std::function<void(AbstractTableCell2 const*, double, double)> m_updatedDoubleCell = [](AbstractTableCell2 const*, double, double) {}; ///< double
-	std::function<void(AbstractTableCell2 const*, Color, Color)> m_updatedColorCell = [](AbstractTableCell2 const*, Color, Color) {}; ///< color
+	std::function<void(AbstractTableCell const*, std::string, std::string)> m_updatedStringCell = [](AbstractTableCell const*, std::string, std::string) {}; ///< string
+	std::function<void(AbstractTableCell const*, int, int)> m_updatedIntCell = [](AbstractTableCell const*, int, int) {}; ///< int
+	std::function<void(AbstractTableCell const*, float, float)> m_updatedFloatCell = [](AbstractTableCell const*, float, float) {}; ///< float
+	std::function<void(AbstractTableCell const*, double, double)> m_updatedDoubleCell = [](AbstractTableCell const*, double, double) {}; ///< double
+	std::function<void(AbstractTableCell const*, Color, Color)> m_updatedColorCell = [](AbstractTableCell const*, Color, Color) {}; ///< color
 
 	/**
 	 * returns true if the provided index is valid to access a cell.
@@ -171,7 +171,7 @@ private:
  * update the cell that is provided by the pointer.
  */
 	template<typename T>
-	void CellUpdated(AbstractTableCell2 const* cell, T oldValue, T newValue) {
+	void CellUpdated(AbstractTableCell const* cell, T oldValue, T newValue) {
 		if constexpr (std::is_same_v<T, std::string>) {
 			m_updatedStringCell(cell, oldValue, newValue);
 			return;
@@ -221,7 +221,7 @@ public:
 			m_resolution,
 			oldCell->GetFocusID(),
 			input,
-			[this](AbstractTableCell2 const* cell, T oldValue, T newValue)
+			[this](AbstractTableCell const* cell, T oldValue, T newValue)
 			{this->CellUpdated<T>(cell, oldValue, newValue); }
 		);
 		cell->SetEditable(oldCell->IsEditable());
@@ -263,7 +263,7 @@ public:
 	 */
 	template<typename T>
 	void SetUpdateSpecificCell(std::function<void(
-		AbstractTableCell2 const*, T, T)> updateCell) {
+		AbstractTableCell const*, T, T)> updateCell) {
 		if constexpr (std::is_same_v<T, std::string>) {
 			m_updatedStringCell = updateCell;
 			return;
@@ -305,7 +305,7 @@ public:
 		if (row == m_cells.size()) { /* nothing */ }
 		else if (!IsValidRow(row)) { Print("invalid row index", PrintType::ERROR), throw std::out_of_range("row-index"); }
 
-		auto line = std::vector<std::shared_ptr<AbstractTableCell2>>();
+		auto line = std::vector<std::shared_ptr<AbstractTableCell>>();
 
 		for (int column = 0; column < m_columnCount; ++column) {
 
@@ -316,7 +316,7 @@ public:
 				m_resolution,
 				0,
 				defalutValue,
-				[this](AbstractTableCell2 const* cell, T oldValue, T newValue)
+				[this](AbstractTableCell const* cell, T oldValue, T newValue)
 				{this->CellUpdated<T>(cell, oldValue, newValue); }
 			);
 			if (not m_editableRowsColumns.at(1).at(column)) {
@@ -355,7 +355,7 @@ public:
 				m_resolution,
 				0,
 				defalutValue,
-				[this](AbstractTableCell2 const* cell, T oldValue, T newValue)
+				[this](AbstractTableCell const* cell, T oldValue, T newValue)
 				{this->CellUpdated<T>(cell, oldValue, newValue); }
 			);
 			if (not m_editableRowsColumns.at(0).at(i)) {

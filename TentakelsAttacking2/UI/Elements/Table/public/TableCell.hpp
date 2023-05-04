@@ -8,11 +8,11 @@
 #include "HColors.h"
 #include "UIEvents.hpp"
 #include "AppContext.h"
-#include "AbstractTableCell2.h"
+#include "AbstractTableCell.h"
 #pragma once
 
 template <typename T>
-class TableCell final : public AbstractTableCell2 {
+class TableCell final : public AbstractTableCell {
 private:
 	T m_value; ///< contains the value
 	std::string m_stringValue; ///< contains the value as string
@@ -40,7 +40,7 @@ public:
 	 * ctor
 	 */
 	TableCell(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID, T value, std::function<void(TableCell*, T, T)> updated)
-		: AbstractTableCell2(pos, size, alignment, resolution, focusID), m_value(value), m_updated(updated) {
+		: AbstractTableCell(pos, size, alignment, resolution, focusID), m_value(value), m_updated(updated) {
 		SetStringValue();
 		CalculateTextSize();
 	}
@@ -90,7 +90,7 @@ public:
 	 * renders the cell
 	 */
 	void Render(AppContext const& appContext) override {
-		AbstractTableCell2::Render(appContext);
+		AbstractTableCell::Render(appContext);
 
 		DrawTextEx(
 			*appContext.assetManager.GetFont(),
@@ -144,7 +144,7 @@ inline void TableCell<Color>::SetStringValue() {
  */
 template<>
 inline void TableCell<Color>::Render(AppContext const& appContext) {
-	AbstractTableCell2::Render(appContext);
+	AbstractTableCell::Render(appContext);
 
 	int offset = static_cast<int>(m_collider.height / 10);
 	DrawRectangle(
