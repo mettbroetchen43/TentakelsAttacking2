@@ -185,7 +185,7 @@ void Table2::UpdateFirstRowPosition() {
 }
 
 void Table2::CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext const& appContext) {
-	if (not CheckCollisionPointRec(mousePositon, m_temporaryCollider)) { return; }
+	if (not CheckCollisionPointRec(mousePositon, m_collider)) { return; }
 	if (not IsMouseButtonPressed(0)) { return; }
 
 	auto cell = m_cells.at(0).at(0);
@@ -223,7 +223,7 @@ clicked:
 
 void Table2::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 	if (not m_isScrollable) { return; }
-	if (not CheckCollisionPointRec(mousePosition, m_temporaryCollider)) { return; } // check if collider is maybe to big
+	if (not CheckCollisionPointRec(mousePosition, m_collider)) { return; } // check if collider is maybe to big
 
 	float mouseWheel = GetMouseWheelMove();
 	if (mouseWheel == 0.0f) { return; }
@@ -257,9 +257,8 @@ Vector2 Table2::GetAbsoluteSize() const {
 	for (auto cell : m_cells.at(0)) {
 		toReturn.x += cell->GetCollider().width;
 	}
-
 	for (int i = 0; i < m_rowCount; ++i) {
-		auto cell = m_cells.at(0).at(i);
+		auto cell = m_cells.at(i).at(0);
 		toReturn.y += cell->GetCollider().height;
 	}
 
@@ -290,7 +289,8 @@ void Table2::ClampScroollOffset(Vector2& offset) {
 	if (cell > table) { offset.y -= cell - table; }
 
 	// clamp bottom y
-	cell = cellBottomLeft.y + offset.y;
+	cell = cellBottomLeft.y + cellBottomLeft.height + offset.y;
+	if (m_activeHorizontalSlider) { cell += cellBottomLeft.height; }
 	table = m_collider.y + m_collider.height;
 	if (cell < table) { offset.y += table - cell; }
 
@@ -340,9 +340,9 @@ out:
 	m_absoluteScollingOffset.y += offset.y;
 }
 void Table2::ScollPercent(float percent, bool isHorisonzal) {
-
+		
 	auto size = GetAbsoluteSize();
-	Vector2 offset{ 0.0f,0.0f };
+ 	Vector2 offset{ 0.0f,0.0f };
 
 	if (isHorisonzal) {
 		size.x -= m_collider.width;
@@ -388,7 +388,7 @@ void Table2::CalculateSlider() {
 		width += cell->GetSize().x;
 	}
 	m_activeHorizontalSlider = width > m_size.x + m_columnCount * 0.001f;
-	m_horizontalSlider->SetAboluteDimension(width - m_size.y);
+	m_horizontalSlider->SetAboluteDimension(width);
 
 	float height{ 0.0f };
 	for (int i = 0; i < m_rowCount; ++i) {
@@ -425,15 +425,23 @@ void Table2::RenderOtherCells(AppContext const& appContext) {
 }
 void Table2::RenderOutline() const {
 
-	DrawRectangleLinesEx(m_temporaryCollider, 2.0f, PURPLE);
+	DrawRectangleLinesEx(
+		m_collider,
+		2.0f,
+		WHITE
+	);
 }
 
 Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
 	int rowCount, int columnCount, Vector2 minCellSize, float scrollSpeed)
 	: UIElement(pos, size, alignment, resolution), Focusable(focusID),
-	m_rowCount(rowCount), m_columnCount(columnCount), m_minCellSize(minCellSize), m_scroll_speed(scrollSpeed), m_temporaryCollider{ 0.0f,0.0f,0.0f,0.0f } {
+	m_rowCount(rowCount), m_columnCount(columnCount), m_minCellSize(minCellSize), m_scroll_speed(scrollSpeed) {
 
-	m_temporaryCollider = m_collider;
+
+	m_minCellSize = {
+		m_minCellSize.x * m_size.x,
+		m_minCellSize.y * m_size.y
+	};
 	float cellWidth = m_size.x / m_columnCount;
 	float cellHeight = m_size.y / m_rowCount;
 
@@ -449,7 +457,7 @@ Table2::Table2(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 				Alignment::TOP_LEFT,
 				m_resolution,
 				row * columnCount + column,
-				"Test | " + std::to_string(row + 1) + " | " + std::to_string(column + 1) + "\n"
+				""
 			);
 
 			line.push_back(cell);
@@ -617,7 +625,7 @@ bool Table2::IsEnabled() const noexcept {
 	return true;
 }
 Rectangle Table2::GetCollider() const noexcept {
-	return m_temporaryCollider;
+	return m_collider;
 }
 
 void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
@@ -657,11 +665,6 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 	if (not sliderHover) {
 		CheckAndUpdateClickCell(mousePosition, appContext);
 	}
-
-	auto lastCell = m_cells.at(m_rowCount - 1).at(m_columnCount - 1)->GetCollider();
-	auto bottomCell = lastCell.y + lastCell.height;
-	auto bottomTable = m_collider.y + m_collider.height;
-	m_temporaryCollider.height = bottomTable < bottomCell ? m_collider.height : bottomCell - m_collider.y;
 
 	if (IsKeyPressed(KEY_TAB)) {
 		ScrollFocused();

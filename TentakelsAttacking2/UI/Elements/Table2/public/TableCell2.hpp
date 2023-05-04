@@ -114,8 +114,9 @@ public:
 	 * calculates a new text size from the collider.
 	 */
 	void CalculateTextSize() override {
-		m_textSize = m_collider.height / 3;
-		m_textPosition = { m_collider.x + m_collider.width * 0.05f ,m_collider.y + m_textSize };
+		m_textSize = m_collider.height / 1.5f;
+		float margin = (m_collider.height - m_textSize) / 2;
+		m_textPosition = { m_collider.x + m_collider.width * 0.05f ,m_collider.y + margin };
 	}
 	/**
 	 * returns the current value.

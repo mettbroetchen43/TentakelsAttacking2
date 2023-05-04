@@ -24,7 +24,6 @@ private:
 	cells_ty m_cells; ///< contains all cells the table is holding
 	Vector2 m_minCellSize; ///< contains the minimum relative size of one cell
 	std::array<std::vector<bool>, 2> m_editableRowsColumns; ///< contains the enabled rows and columns
-	Rectangle m_temporaryCollider; ///< contains the used collider
 
 	bool m_setScrollable = false; ///< contains if the table get set scrollable this frame
 	bool m_isScrollable = false; ///< contains if it is able to scroll the table
@@ -377,6 +376,18 @@ public:
 	 * returns true if the first column is fixed while scolling.
 	 */
 	[[nodiscard]] bool IsFixedFirstColumn() const;
+	/**
+	 * sets the headline values.
+	 */
+	template<typename T>
+	void SetHeadlineValues(std::vector<T> values) {
+		for (int i = 0; i < m_columnCount; ++i) {
+			if (i >= values.size()) {
+				break;
+			}
+			SetValue<T>(0, i, values.at(i));
+		}
+	}
 
 	/**
 	 * returns if the current elements is enabled.
