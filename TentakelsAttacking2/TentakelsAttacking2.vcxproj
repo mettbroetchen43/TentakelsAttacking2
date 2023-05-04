@@ -270,7 +270,7 @@
     <ClCompile Include="Helper\private\HInput.cpp" />
     <ClCompile Include="Helper\private\HPrint.cpp" />
     <ClCompile Include="Helper\private\HVector2Operator.cpp" />
-    <ClCompile Include="UI\Elements\Table\private\Table2.cpp" />
+    <ClCompile Include="UI\Elements\Table\private\Table.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Title.cpp" />
@@ -287,7 +287,7 @@
     <ClCompile Include="UI\Elements\PopUp\private\DeletePlayerPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\SoundLevelPopUp.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\ValidatePopUp.cpp" />
-    <ClCompile Include="UI\Elements\Table\private\AbstactTableCell2.cpp" />
+    <ClCompile Include="UI\Elements\Table\private\AbstactTableCell.cpp" />
     <ClCompile Include="UI\Elements\Table\public\AbstractTableCell2.h" />
     <ClCompile Include="UI\private\Allignment.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPicker.cpp" />

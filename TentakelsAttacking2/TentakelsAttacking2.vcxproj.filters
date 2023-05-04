@@ -515,13 +515,13 @@
     <ClCompile Include="UI\Scene\SupportScenes\private\PlanetTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Elements\Table\private\Table2.cpp">
+    <ClCompile Include="UI\Elements\Table\private\Table.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Table\public\AbstractTableCell2.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Elements\Table\private\AbstactTableCell2.cpp">
+    <ClCompile Include="UI\Elements\Table\private\AbstactTableCell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
