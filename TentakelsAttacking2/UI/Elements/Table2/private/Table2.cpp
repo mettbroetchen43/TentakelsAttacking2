@@ -340,9 +340,9 @@ out:
 	m_absoluteScollingOffset.y += offset.y;
 }
 void Table2::ScollPercent(float percent, bool isHorisonzal) {
-		
+
 	auto size = GetAbsoluteSize();
- 	Vector2 offset{ 0.0f,0.0f };
+	Vector2 offset{ 0.0f,0.0f };
 
 	if (isHorisonzal) {
 		size.x -= m_collider.width;
@@ -397,6 +397,54 @@ void Table2::CalculateSlider() {
 	}
 	m_activeVerticalSlider = height > m_size.y + m_rowCount * 0.001f;
 	m_verticalSlider->SetAboluteDimension(height);
+}
+
+void Table2::CalculateHoverHighlighted(Vector2 mousePosition) {
+	Vec2<int> newPosition{ -1,-1 };
+	if (not m_isHoveredHighlighted) { goto found; }
+	if (not CheckCollisionPointRec(mousePosition, m_collider)) { goto found; }
+
+	if (m_cells.at(0).at(0)->IsColliding(mousePosition)) { newPosition = { 0, 0 }; goto found; }
+
+	for (int column = 1; column < m_columnCount; ++column) {
+		auto cell = m_cells.at(0).at(column);
+		if (cell->IsColliding(mousePosition)) { newPosition = { 0, column }; goto found; }
+	}
+
+	for (int row = 1; row < m_rowCount; ++row) {
+		auto cell = m_cells.at(row).at(0);
+		if (cell->IsColliding(mousePosition)) { newPosition = { row, 0 }; goto found; }
+	}
+
+	for (int row = 1; row < m_rowCount; ++row){
+		for (int column = 1; column < m_columnCount; ++column) {
+			auto cell = m_cells.at(row).at(column);
+			if (cell->IsColliding(mousePosition)) { newPosition = { row, column }; goto found; }
+		}
+	}
+
+found:
+	if (m_currentHighlighted == newPosition) { return; }
+
+	SetHighlightBeackground(true);
+	m_currentHighlighted = newPosition;
+	SetHighlightBeackground(false);
+}
+void Table2::SetHighlightBeackground(bool reset) {
+	Color newColor = reset ? BLACK : HOVERGREY;
+
+	if (m_currentHighlighted.x >= 0) {
+		for (auto cell : m_cells.at(m_currentHighlighted.x)) {
+			cell->SetBackgoundColor(newColor);
+		}
+	}
+
+	if (m_currentHighlighted.y >= 0) {
+		for (int i = 0; i < m_rowCount; ++i) {
+			auto cell = m_cells.at(i).at(m_currentHighlighted.y);
+			cell->SetBackgoundColor(newColor);
+		}
+	}
 }
 
 void Table2::RenderTopLeft(AppContext const& appContext) {
@@ -540,6 +588,13 @@ void Table2::RemoveLastColum() {
 	RemoveSpecificColumn(static_cast<int>(m_cells.at(0).size() - 1));
 }
 
+void Table2::SetHighlightHover(bool isHoveredHighlighted) {
+	m_isHoveredHighlighted = isHoveredHighlighted;
+}
+bool Table2::IsHighlighedHover() const {
+	return m_isHoveredHighlighted;
+}
+
 void Table2::SetScrollable(bool isScollable) {
 	m_setScrollable = isScollable;
 }
@@ -669,6 +724,8 @@ void Table2::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 	if (IsKeyPressed(KEY_TAB)) {
 		ScrollFocused();
 	}
+
+	CalculateHoverHighlighted(mousePosition);
 }
 void Table2::Render(AppContext const& appContext) {
 
@@ -694,3 +751,4 @@ void Table2::Render(AppContext const& appContext) {
 		m_verticalSlider->Render(appContext);
 	}
 }
+

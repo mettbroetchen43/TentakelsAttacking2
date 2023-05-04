@@ -56,6 +56,12 @@ struct Vec2 final {
 		return x == other.x && y == other.y;
 	}
 	/**
+	 * check if the Vec are not equal.
+	 */
+	bool operator!= (const Vec2<T>& other) const {
+		return x != other.x or y != other.y;
+	}
+	/**
 	 * adds to Vecs and returns a new one.
 	 */
 	Vec2<T> operator+ (const Vec2<T>& other) const {

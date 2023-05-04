@@ -27,6 +27,7 @@ PlanetTable::PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2
 	m_table->SetAllEditable(false);
 	m_table->SetFixedHeadline(true);
 	m_table->SetScrollable(true);
+	m_table->SetHighlightHover(true);
 	m_table->SetHeadlineValues<std::string>({ "ID", "Player", "Producton", "Ship Count" });
 	m_elements.push_back(m_table);
 

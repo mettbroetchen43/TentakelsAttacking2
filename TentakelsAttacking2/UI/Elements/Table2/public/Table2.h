@@ -8,6 +8,7 @@
 #include "UIElement.hpp"
 #include "HFocusEvents.h"
 #include "TableCell2.hpp"
+#include "Vec2.hpp"
 
 #include <memory>
 #include <stdexcept>
@@ -39,6 +40,8 @@ private:
 	std::shared_ptr<Slider> m_verticalSlider; ///< contains the vertival slider
 	bool m_activeVerticalSlider; ///< contains if the vertical slider is needed
 
+	bool m_isHoveredHighlighted = false; ///< contains if the hovered row and column gets highlighted
+	Vec2<int>m_currentHighlighted{ -1,-1 }; ///< contains the currently hightlithed row (x) and column (y) index
 
 	/**
 	 * returns true if the provided index is valid to access a cell.
@@ -118,6 +121,17 @@ private:
 	 * sets the slider active or inactive and the total dimesion.
 	 */
 	void CalculateSlider();
+
+	/**
+	 * calculates the current hovered row and column.
+	 */
+	void CalculateHoverHighlighted(Vector2 mousePosition);
+	/**
+	 * sets the background color of the highlighted cells.
+	 * resets the backgroundcolor if the bool is set.
+	 * sets a new one if the bool is not set.
+	 */
+	void SetHighlightBeackground(bool reset);
 
 	/**
 	 * calls the top left cell to render.
@@ -310,6 +324,15 @@ public:
 	 * calls RemoveSpecificColumn.
 	 */
 	void RemoveLastColum();
+
+	/**
+	 * sets if the hovered row and column gets highlighted.
+	 */
+	void SetHighlightHover(bool isHoveredHighlighted);
+	/**
+	 * returns if the hovered row and column gets currently highlighted.
+	 */
+	[[nodiscard]] bool IsHighlighedHover() const;
 
 	/**
 	 * Sets if the table is scollable.

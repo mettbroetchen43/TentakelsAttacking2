@@ -32,6 +32,7 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 
 	m_table->SetRowEditable(2, false);
 	m_table->SetColumnEditable(1, false);
+	m_table->SetHighlightHover(true);
 
 	m_table->SetScrollable(true);
 	m_table->AddSpecificRow<Color>(0, RED);

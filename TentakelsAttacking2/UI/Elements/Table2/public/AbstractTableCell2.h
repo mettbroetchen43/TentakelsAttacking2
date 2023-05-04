@@ -11,6 +11,7 @@
 class AbstractTableCell2 : public UIElement, public Focusable {
 protected:
 	bool m_isEditable = true; ///< contains if the cell is currently editable
+	Color m_backgroundColor = BLACK; ///< contains the background of the cell
 	float m_textSize; ///< contains the text size the text is renderd with
 	Vector2 m_textPosition; ///< contains the absolute text position 
 
@@ -35,6 +36,15 @@ public:
 	 * returns the current value as string.
 	 */
 	[[nodiscard]] virtual std::string GetValueAsString() const = 0;
+
+	/**
+	 * sets the backgroundcolor.
+	 */
+	void SetBackgoundColor(Color color);
+	/**
+	 * returns the current backgroundcolor.
+	 */
+	[[nodiscard]] Color GetBackgoundColor() const;
 
 	/**
 	 * sets if the cell is editable.
