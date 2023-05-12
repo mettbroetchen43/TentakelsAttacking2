@@ -190,6 +190,7 @@
     <ClInclude Include="Helper\public\HPlayerData.hpp" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
     <ClInclude Include="Game\public\Player.h" />
+    <ClInclude Include="UI\Elements\Default\public\Hover.h" />
     <ClInclude Include="UI\Elements\Table\public\Table.h" />
     <ClInclude Include="UI\Elements\Default\public\CheckBox.h" />
     <ClInclude Include="UI\Elements\Default\public\Line.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="Helper\private\HInput.cpp" />
     <ClCompile Include="Helper\private\HPrint.cpp" />
     <ClCompile Include="Helper\private\HVector2Operator.cpp" />
+    <ClCompile Include="UI\Elements\Default\private\Hover.cpp" />
     <ClCompile Include="UI\Elements\Table\private\Table.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
