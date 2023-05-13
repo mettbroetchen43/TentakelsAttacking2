@@ -41,7 +41,7 @@ Hover::Hover(float height, std::string text, Vector2 hoverOffset, Vector2 resolu
 
 	CalculateDefault(appContext);
 
-	m_hoverTexture = appContext.assetManager.GetTexture(AssetType::GREY_50);
+	m_hoverTexture = appContext.assetManager.GetTexture(AssetType::GREY);
 	m_hoverTextureRec = {
 		0.0f,
 		0.0f,
@@ -64,12 +64,9 @@ void Hover::SetRenderHover(Vector2 mousePosition, AppContext const& appContext) 
 	};
 	SetCollider(newCollider);
 	CalculateDefault(appContext);
-	m_render = true;
 }
 
 void Hover::Render(AppContext const& appContext) {
-	if (not m_render) { return; }
-
 	DrawTexturePro(
 		*m_hoverTexture,
 		m_hoverTextureRec,
@@ -92,7 +89,6 @@ void Hover::Render(AppContext const& appContext) {
 		0.0f,
 		WHITE
 	);
-	m_render = false;
 }
 void Hover::Resize(Vector2 resolution, AppContext const& appContext) {
 	UIElement::Resize(resolution, appContext);

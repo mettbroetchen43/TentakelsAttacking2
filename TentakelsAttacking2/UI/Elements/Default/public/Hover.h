@@ -15,8 +15,6 @@ private:
 	Vector2 m_hoverOffset; ///< contans the offset between mouse and recangle in decimal
 	Vector2 m_absoluteHoverOffset; ///< contains the offset between mouse and rectangle in px
 
-	bool m_render = false; ///< contains if the hover gets renderd next time Render is called
-
 	float m_textHeight; ///< contains text size in px
 	Vector2 m_textPosition; ///< contains the text position in px
 

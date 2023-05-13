@@ -19,7 +19,6 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 		Vector2(0.01f, 0.01f),
 		m_resolution
 	);
-	m_elements.push_back(m_hover);
 	
 
 	// to get Back No testing
@@ -56,12 +55,16 @@ void TestScene::TestLambda([[maybe_unused]] unsigned int value) {
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 	CheckHover(mousePosition, appContext);
+	m_hover->CheckAndUpdate(mousePosition, appContext);
 }
 
 void TestScene::Render(AppContext const& appContext) {
 	Scene::Render(appContext);
 	RenderRectangle(appContext);
-
+	if (m_isHover) {
+		m_isHover = false;
+		m_hover->Render(appContext);
+	}
 }
 
 void TestScene::RenderRectangle(AppContext const& appContext) {
@@ -75,6 +78,7 @@ void TestScene::RenderRectangle(AppContext const& appContext) {
 void TestScene::CheckHover(Vector2 const& mousePosition, AppContext const& appContext) {
 	if (CheckCollisionPointRec(mousePosition, m_toRender)) {
 		m_hover->SetRenderHover(mousePosition, appContext);
+		m_isHover = true;
 	}
 }
 
