@@ -16,6 +16,7 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 	m_hover = std::make_shared<Hover>(
 		0.05f,
 		"Test text next line",
+		WHITE,
 		Vector2(0.01f, 0.01f),
 		m_resolution
 	);
@@ -67,7 +68,7 @@ void TestScene::Render(AppContext const& appContext) {
 	}
 }
 
-void TestScene::RenderRectangle(AppContext const& appContext) {
+void TestScene::RenderRectangle(AppContext const&) {
 	DrawRectangleLinesEx(
 		m_toRender,
 		3.0f,

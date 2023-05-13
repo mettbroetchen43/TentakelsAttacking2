@@ -33,8 +33,8 @@ void Hover::CalculateDefault(AppContext const& appContext) {
 	};
 }
 
-Hover::Hover(float height, std::string text, Vector2 hoverOffset, Vector2 resolution)
-	: UIElement(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), Alignment::BOTTOM_LEFT, resolution),
+Hover::Hover(float height, std::string text, Color color, Vector2 hoverOffset, Vector2 resolution)
+	: UIElement(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), Alignment::BOTTOM_LEFT, resolution), m_color(color),
 	m_hoverOffset(hoverOffset), m_text(text), m_textHeight(height * resolution.y) {
 
 	AppContext& appContext = AppContext::GetInstance();
@@ -87,7 +87,7 @@ void Hover::Render(AppContext const& appContext) {
 		m_textPosition,
 		m_textHeight,
 		0.0f,
-		WHITE
+		m_color
 	);
 }
 void Hover::Resize(Vector2 resolution, AppContext const& appContext) {
