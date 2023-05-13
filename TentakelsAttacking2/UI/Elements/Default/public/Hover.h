@@ -9,16 +9,16 @@
 
 class Hover final : public UIElement {
 private:
-	std::string m_text;
-	Rectangle m_hoverTextureRec;
-	Texture* m_hoverTexture;
-	Vector2 m_hoverOffset;
-	Vector2 m_absoluteHoverOffset;
+	std::string m_text; ///< contains the Hover text
+	Rectangle m_hoverTextureRec; ///< contains the size of the texute
+	Texture* m_hoverTexture; ///< contains the hover background
+	Vector2 m_hoverOffset; ///< contans the offset between mouse and recangle in decimal
+	Vector2 m_absoluteHoverOffset; ///< contains the offset between mouse and rectangle in px
 
-	bool m_render = false;
+	bool m_render = false; ///< contains if the hover gets renderd next time Render is called
 
-	float m_textHeight;
-	Vector2 m_textPosition;
+	float m_textHeight; ///< contains text size in px
+	Vector2 m_textPosition; ///< contains the text position in px
 
 	/**
 	 * calculates textHeight, textPosition, colliderLength.

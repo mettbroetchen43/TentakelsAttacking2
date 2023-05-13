@@ -7,7 +7,10 @@
 #include "AppContext.h"
 
 void Hover::CalculateDefault(AppContext const& appContext) {
-	m_textHeight = m_collider.height / 2;
+	Vector2 textOffset {
+		m_resolution.x * 0.01f,
+		m_resolution.y * 0.01f,
+	};
 
 	Vector2 measure = MeasureTextEx(
 		*appContext.assetManager.GetFont(),
@@ -19,18 +22,20 @@ void Hover::CalculateDefault(AppContext const& appContext) {
 	Rectangle newCollider = {
 		m_collider.x,
 		m_collider.y,
-		measure.x + m_textHeight,
-		m_collider.height
+		measure.x + textOffset.x,
+		measure.y + textOffset.y
 	};
+	SetCollider(newCollider);
 
 	m_textPosition = {
-		m_collider.x + m_textHeight / 2,
-		m_collider.y + m_textHeight / 2 * 3
+		m_collider.x + textOffset.x / 2,
+		m_collider.y + textOffset.y / 2
 	};
 }
 
 Hover::Hover(float height, std::string text, Vector2 hoverOffset, Vector2 resolution)
-	: UIElement(Vector2(0.0f, 0.0f), Vector2(0.0f, height), Alignment::BOTTOM_LEFT, resolution), m_hoverOffset(hoverOffset), m_text(text) {
+	: UIElement(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), Alignment::BOTTOM_LEFT, resolution),
+	m_hoverOffset(hoverOffset), m_text(text), m_textHeight(height * resolution.y) {
 
 	AppContext& appContext = AppContext::GetInstance();
 

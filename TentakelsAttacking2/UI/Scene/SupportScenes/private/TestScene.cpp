@@ -14,8 +14,8 @@
 void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 
 	m_hover = std::make_shared<Hover>(
-		0.1f,
-		"Test text",
+		0.05f,
+		"Test text next line",
 		Vector2(0.01f, 0.01f),
 		m_resolution
 	);
