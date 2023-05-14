@@ -6,6 +6,7 @@
 #pragma once
 #include "UIElement.hpp"
 #include "Focusable.h"
+#include "Hover.h"
 
 class ColorPicker;
 
@@ -17,6 +18,7 @@ private:
 	bool m_enabled = true; ///< contains if the cell is enabled
 	Color m_color; ///< contains the color of the cell
 	ColorPicker* m_colorPicker; ///< contans a pointer to the colorpicker it belongs to
+	Hover m_hover; ///< contans the hover element
 
 	/**
 	 * calls the colorpicker to set the cell color as current color.

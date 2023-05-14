@@ -372,20 +372,10 @@ void UIGalaxy::Render(AppContext const& appContext) {
 		PURPLE
 	);*/
 
-	std::shared_ptr<UIPlanet> renderWithHover = nullptr;
-
 	for (auto& p : m_uiPlanets) {
 		if (IsPlanetInCollider(p)) {
-			if (p->IsHover()) {
-				renderWithHover = p;
-				continue;
-			}
 			p->Render(appContext);
 		}
-	}
-
-	if (renderWithHover) {
-		renderWithHover->Render(appContext);
 	}
 }
 void UIGalaxy::Resize(Vector2 resolution, AppContext const& appContext) {

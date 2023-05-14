@@ -233,6 +233,7 @@ void ColorPicker::Render(AppContext const& appContext) {
 		PURPLE
 	);
 
+
 	for (auto& c : m_cells) {
 		c->Render(appContext);
 	}

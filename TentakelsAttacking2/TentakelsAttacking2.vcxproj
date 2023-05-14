@@ -190,6 +190,7 @@
     <ClInclude Include="Helper\public\HPlayerData.hpp" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
     <ClInclude Include="Game\public\Player.h" />
+    <ClInclude Include="UI\Elements\Default\public\Hover.h" />
     <ClInclude Include="UI\Elements\Table\public\Table.h" />
     <ClInclude Include="UI\Elements\Default\public\CheckBox.h" />
     <ClInclude Include="UI\Elements\Default\public\Line.h" />
@@ -215,6 +216,7 @@
     <ClInclude Include="UI\Elements\ColorPicker\public\ColorPicker.h" />
     <ClInclude Include="UI\Elements\ColorPicker\public\ColorPickerCell.h" />
     <ClInclude Include="Helper\public\HGeneral.h" />
+    <ClInclude Include="UI\public\HoverRender.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\Credits.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\MainScene.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\NewGameParameter.h" />
@@ -270,6 +272,7 @@
     <ClCompile Include="Helper\private\HInput.cpp" />
     <ClCompile Include="Helper\private\HPrint.cpp" />
     <ClCompile Include="Helper\private\HVector2Operator.cpp" />
+    <ClCompile Include="UI\Elements\Default\private\Hover.cpp" />
     <ClCompile Include="UI\Elements\Table\private\Table.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp" />
@@ -292,6 +295,7 @@
     <ClCompile Include="UI\private\Allignment.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPicker.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPickerCell.cpp" />
+    <ClCompile Include="UI\private\HoverRender.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\NewGameParameter.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\Settings.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\Credits.cpp" />

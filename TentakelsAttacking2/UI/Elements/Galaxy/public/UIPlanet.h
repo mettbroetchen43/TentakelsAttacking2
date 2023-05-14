@@ -8,6 +8,7 @@
 #include "Focusable.h"
 #include "Text.h"
 #include "HPlayerData.hpp"
+#include "Hover.h"
 #include <functional>
 #include <memory>
 
@@ -18,20 +19,15 @@
 class UIPlanet final : public UIElement, public Focusable {
 private:
 	unsigned int m_ID; ///< contains the unique planet ID with is also the planet "name"
-	std::string m_stringID; ///< contains the id as string so it dont gets castet every tick.
+	std::string m_stringID; ///< contains the ID as string
 	bool m_isEnabled = true; ///< contains if the element is enabled
 	Vector2 m_coliderPos; ///< the position of the colider
 	PlayerData m_currentPlayer; ///< contains the current player data that own the planet
-	Color m_color; ///< contains the current color -> ma match the player color
+	Color m_color; ///< contains the current color -> match the player color
 	std::function<void(UIPlanet*)> m_onClick = [](UIPlanet*) {}; ///< contains on click that gets called when the planet is clicked
-	std::unique_ptr<Text> m_hoverText; ///< contains the hover text
+	Hover m_hover; ///< contains the hover element
 	bool m_renderHover = false; ///< contains if the hover text should be rendered
 
-	Rectangle m_hoverTextureRec;
-	Texture* m_hoverTexture;
-
-	void SetHoverTextPosition(Vector2 mousePosition);
-	void SetHoverTextDimension();
 
 public:
 	/**

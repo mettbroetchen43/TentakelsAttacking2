@@ -8,74 +8,17 @@
 #include "AppContext.h"
 #include "HPrint.h"
 
-void UIPlanet::SetHoverTextPosition(Vector2 mousePosition) {
-
-	Rectangle currentCollider = m_hoverText->GetCollider();
-	
-	currentCollider.x = mousePosition.x + 2.0f;
-	currentCollider.y = mousePosition.y - currentCollider.height - 2.0f;
-
-	m_hoverText->SetCollider(currentCollider);
-}
-
-void UIPlanet::SetHoverTextDimension() {
-
-	AppContext& appContext = AppContext::GetInstance();
-	float newOffset = 5.0f;
-
-	Vector2 dimension = MeasureTextEx(
-		*(appContext.assetManager.GetFont()),
-		m_currentPlayer.name.c_str(),
-		m_hoverText->GetRelativeTextHeight(),
-		0.0f
-	);
-
-	Rectangle currentCollider = m_hoverText->GetCollider();
-	float offsetX = currentCollider.width - dimension.x;
-	if (offsetX < 0) { offsetX = 0; }
-	float offsetY = currentCollider.height - dimension.y;
-	if (offsetY < 0) { offsetY = 0; }
-
-	currentCollider.width = dimension.x + newOffset;
-	currentCollider.height = dimension.y + newOffset;
-	currentCollider.x = currentCollider.x + offsetX - newOffset / 2;
-	currentCollider.y = currentCollider.y - offsetY + newOffset / 2;
-
-	m_hoverText->SetCollider(currentCollider);
-}
-
 UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution,
 	Vector2 coliderPos)
 	:Focusable(focusID), UIElement(pos, { 0.01f,0.02f }, Alignment::MID_MID, resolution)
-	, m_ID(ID), m_currentPlayer(player), m_coliderPos(coliderPos) {
-
-	m_hoverTexture = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
-	m_hoverTextureRec = {
-		0.0f,
-		0.0f,
-		static_cast<float>(m_hoverTexture->width),
-		static_cast<float>(m_hoverTexture->height)
-	};
-
-	m_color = m_currentPlayer.color;
-	m_stringID = std::to_string(m_ID);
-
-	m_hoverText = std::make_unique<Text>(
-		GetElementPosition(m_pos, m_size, 0.0f, 0.0f),
-		GetElementSize(m_size, 0.0f, 0.0f),
-		Alignment::BOTTOM_LEFT,
-		resolution,
-		Alignment::MID_MID,
+	, m_ID(ID), m_currentPlayer(player), m_coliderPos(coliderPos), m_color(player.color), m_stringID(std::to_string(ID)),
+	m_hover(
 		0.03f,
-		player.name
-		);
-	m_hoverText->RenderRectangle(true);
-	SetHoverTextDimension();
-
-	auto currentCollider = m_hoverText->GetCollider();
-	currentCollider.y -= currentCollider.height;
-	m_hoverText->SetCollider(currentCollider);
-}
+		player.name,
+		player.color,
+		Vector2(0.01f,0.01f),
+		resolution)
+{ }
 
 void UIPlanet::UpdatePosition(Rectangle newColider) {
 	m_collider.x = newColider.x + newColider.width * m_coliderPos.x;
@@ -126,8 +69,8 @@ void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		m_renderHover = false;
 	}
 
-	if (m_renderHover) {
-		SetHoverTextPosition(mousePosition);
+	if (m_renderHover && m_currentPlayer.ID != 0) {
+		m_hover.SetRenderHover(mousePosition, appContext);
 	}
 
 	if (IsFocused() && IsConfirmInputPressed()) {
@@ -141,22 +84,8 @@ void UIPlanet::Render(AppContext const& appContext) {
 		{ m_collider.x, m_collider.y },
 		m_collider.height,
 		0.0f,
-		m_currentPlayer.color
+		m_color
 	);
-
-	if (m_renderHover && m_currentPlayer.ID != 0) {
-
-		DrawTexturePro(
-			*m_hoverTexture,
-			m_hoverTextureRec,
-			m_hoverText->GetCollider(),
-			{ 0.0f,0.0f },
-			0.0f,
-			WHITE
-		);
-
-		m_hoverText->Render(appContext);
-	}
 
 	/*DrawRectangleLinesEx(
 		m_colider,
@@ -166,7 +95,7 @@ void UIPlanet::Render(AppContext const& appContext) {
 }
 void UIPlanet::Resize(Vector2 resolution, AppContext const& appContext) {
 
-	m_hoverText->Resize(resolution, appContext);
+	m_hover.Resize(resolution, appContext);
 	UIElement::Resize(resolution, appContext);
 }
 

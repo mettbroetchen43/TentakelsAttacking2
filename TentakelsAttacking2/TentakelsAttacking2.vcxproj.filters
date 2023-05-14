@@ -309,6 +309,12 @@
     <ClInclude Include="UI\Elements\Table\public\TableCell.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Elements\Default\public\Hover.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\public\HoverRender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -522,6 +528,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Table\private\AbstactTableCell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\Default\private\Hover.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\private\HoverRender.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
