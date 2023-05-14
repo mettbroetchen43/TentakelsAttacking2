@@ -69,6 +69,7 @@ void UIManager::Render() {
 	ClearBackground(BLACK);
 	m_sceneManager.Render(m_appContext);
 	m_focus.Render();
+	m_hover.Render();
 
 #ifdef _DEBUG
 	int fps = GetFPS();

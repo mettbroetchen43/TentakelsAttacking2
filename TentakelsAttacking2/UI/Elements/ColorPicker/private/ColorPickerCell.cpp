@@ -52,10 +52,6 @@ Rectangle ColorPickerCell::GetCollider() const {
 	return UIElement::GetCollider();
 }
 
-bool ColorPickerCell::IsHover() const {
-	return m_renderHover;
-}
-
 void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 
@@ -66,13 +62,13 @@ void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
 		return;
 	}
 
-	m_renderHover = CheckCollisionPointRec(mousePosition, m_collider);
-	if (m_renderHover) {
+	bool renderHover = CheckCollisionPointRec(mousePosition, m_collider);
+	if (renderHover) {
 		m_hover.SetRenderHover(mousePosition, appContext);
 	}
 
 	bool mouseClick =
-		m_renderHover
+		renderHover
 		&& IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
 	if (mouseClick) {
 		m_colorPicker->SetCellFocuses(appContext);
@@ -105,8 +101,4 @@ void ColorPickerCell::Render([[maybe_unused]] AppContext const& appContext) {
 		3.0f,
 		color
 	);
-}
-
-void ColorPickerCell::RenderHover(AppContext const& appContext) {
-	m_hover.Render(appContext);
 }

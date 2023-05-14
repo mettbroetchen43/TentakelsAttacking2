@@ -17,6 +17,7 @@ class DoubleCell;
 class ColorCell;
 class Focusable;
 class PopUp;
+class Hover;
 enum class SceneType;
 enum class Resolution;
 
@@ -101,6 +102,20 @@ public:
 
 	[[nodiscard]] bool GetMute() const {
 		return m_mute;
+	}
+};
+
+/**
+ * use this to add the Hover to the Render Queue of this frame
+ */
+class RenderHoverEvent final : public Event {
+private:
+	Hover* m_hover;
+public:
+	RenderHoverEvent(Hover* hover) : m_hover(hover) { }
+
+	[[nodiscard]] Hover* GetHover() const {
+		return m_hover;
 	}
 };
 

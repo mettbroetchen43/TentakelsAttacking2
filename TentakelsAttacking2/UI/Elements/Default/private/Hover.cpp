@@ -5,6 +5,7 @@
 
 #include "Hover.h"
 #include "AppContext.h"
+#include "UIEvents.hpp"
 
 void Hover::CalculateDefault(AppContext const& appContext) {
 	Vector2 textOffset {
@@ -64,6 +65,9 @@ void Hover::SetRenderHover(Vector2 mousePosition, AppContext const& appContext) 
 	};
 	SetCollider(newCollider);
 	CalculateDefault(appContext);
+
+	auto event = RenderHoverEvent(this);
+	appContext.eventManager.InvokeEvent(event);
 }
 
 void Hover::Render(AppContext const& appContext) {

@@ -8,6 +8,7 @@
 #include "EventListener.hpp"	
 #include "AppContext.h"
 #include "SceneManager.h"
+#include "HoverRender.h"
 #include "GameManager.h"
 #include "Focus.h"
 #include <vector>
@@ -25,6 +26,7 @@ private:
 	Focus m_focus; ///< contains the focus system.
 	SceneManager m_sceneManager; ///< contains the scene manager.
 	GameManager m_gameManager; ///< contains the game logic
+	HoverRender m_hover;
 	Vector2 m_resolution; ///< contains the current resolution of the window
 	bool m_closeWindow = false; ///< contains if the game will quit at the end of the tick
 	Resolution m_nextResolution; ///< contains the reolution of the next frame

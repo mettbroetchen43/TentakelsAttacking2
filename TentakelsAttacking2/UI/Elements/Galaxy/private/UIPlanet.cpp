@@ -69,7 +69,7 @@ void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		m_renderHover = false;
 	}
 
-	if (m_renderHover) {
+	if (m_renderHover && m_currentPlayer.ID != 0) {
 		m_hover.SetRenderHover(mousePosition, appContext);
 	}
 
@@ -86,10 +86,6 @@ void UIPlanet::Render(AppContext const& appContext) {
 		0.0f,
 		m_color
 	);
-
-	if (m_renderHover && m_currentPlayer.ID != 0) {
-		m_hover.Render(appContext);
-	}
 
 	/*DrawRectangleLinesEx(
 		m_colider,
