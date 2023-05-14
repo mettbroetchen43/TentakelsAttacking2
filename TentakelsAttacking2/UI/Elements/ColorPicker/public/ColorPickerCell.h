@@ -6,6 +6,7 @@
 #pragma once
 #include "UIElement.hpp"
 #include "Focusable.h"
+#include "Hover.h"
 
 class ColorPicker;
 
@@ -17,6 +18,8 @@ private:
 	bool m_enabled = true; ///< contains if the cell is enabled
 	Color m_color; ///< contains the color of the cell
 	ColorPicker* m_colorPicker; ///< contans a pointer to the colorpicker it belongs to
+	Hover m_hover; ///< contans the hover element
+	bool m_renderHover{ false }; ///< returns if the hover gets renderd this frame
 
 	/**
 	 * calls the colorpicker to set the cell color as current color.
@@ -54,6 +57,11 @@ public:
 	[[nodiscard]] Rectangle GetCollider() const override;
 
 	/**
+	 * returns if the cell is hovered in the last update.
+	 */
+	[[nodiscard]] bool IsHover() const;
+
+	/**
 	 * logic of the cell.
 	 * triggers the color picker to update specific memebr functions
 	 */
@@ -62,4 +70,9 @@ public:
 	 * renders the cell.
 	 */
 	void Render(AppContext const& appContext) override;
+
+	/**
+	 * renders the hover element
+	 */
+	void RenderHover(AppContext const& appContext);
 };

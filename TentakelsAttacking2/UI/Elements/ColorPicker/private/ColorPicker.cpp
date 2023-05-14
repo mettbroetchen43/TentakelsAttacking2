@@ -233,8 +233,13 @@ void ColorPicker::Render(AppContext const& appContext) {
 		PURPLE
 	);
 
+
+	ColorPickerCell* hoverCell = nullptr;
 	for (auto& c : m_cells) {
 		c->Render(appContext);
+		if (c->IsHover()) {
+			hoverCell = c.get();
+		}
 	}
 
 	if (m_currentColorCell) {
@@ -243,6 +248,10 @@ void ColorPicker::Render(AppContext const& appContext) {
 			3.0f,
 			WHITE
 		);
+	}
+
+	if (hoverCell) {
+		hoverCell->RenderHover(appContext);
 	}
 }
 void ColorPicker::Resize(Vector2 resolution, AppContext const& appContext) {
