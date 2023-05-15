@@ -391,7 +391,7 @@ void MainScene::NextTurn() {
 
 	auto event = ShowMessagePopUpEvent(
 		"start turn?",
-		"next plyer: " + m_currentPlayer.name + "\naccept to start your trun",
+		"next plyer: " + m_currentPlayer.name + "\naccept to start your turn",
 		[this]() {
 			this->Switch(MainSceneType::GALAXY);
 		}
