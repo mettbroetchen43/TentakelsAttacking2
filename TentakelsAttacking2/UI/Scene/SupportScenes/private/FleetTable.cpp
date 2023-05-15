@@ -9,7 +9,7 @@
 #include "Text.h"
 #include "Galaxy.h"
 
-void FleetTable::Initialisation() {
+void FleetTable::Initialization() {
 	auto fleets = m_galaxy->GetFleets();
 
 	m_table = std::make_shared<Table>(
@@ -83,7 +83,7 @@ void FleetTable::Initialisation() {
 FleetTable::FleetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy const* galaxy)
 	: Scene(pos, size, alignment, resolution), m_galaxy(galaxy) {
 
-	Initialisation();
+	Initialization();
 }
 
 void FleetTable::SetActive(bool active, AppContext const& appContext) {

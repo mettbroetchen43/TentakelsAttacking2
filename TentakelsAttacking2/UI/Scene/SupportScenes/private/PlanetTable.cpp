@@ -7,7 +7,7 @@
 #include "Player.h"
 #include "HFocusEvents.h"
 
-void PlanetTable::Initialisation() {
+void PlanetTable::Initialization() {
 	auto planets = m_galaxy->GetPlanets();
 
 	m_table = std::make_shared<Table>(
@@ -80,7 +80,7 @@ PlanetTable::PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2
 	Galaxy const* galaxy)
 	: Scene(pos, size, alignment, resolution), m_galaxy(galaxy) {
 	
-	Initialisation();
+	Initialization();
 }
 
 void PlanetTable::SetActive(bool active, AppContext const& appContext) {
