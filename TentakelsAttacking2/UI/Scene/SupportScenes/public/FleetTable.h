@@ -1,14 +1,15 @@
 //
 // Purpur Tentakel
-// 16.02.2022
+// 15.05.2023
 //
 
-#pragma once
 #include "Scene.h"
-#include "Galaxy.h"
-#include "Table.h"
+#pragma once
 
-class PlanetTable final : public Scene {
+class Galaxy;
+class Table;
+
+class FleetTable final : public Scene {
 private:
 	Galaxy const* m_galaxy; ///< contains the current galaxy  of the logic
 	std::shared_ptr<Table> m_table; ///< contains the table within the planet infos
@@ -22,9 +23,7 @@ public:
 	/**
 	 * ctor and calls to initialize
 	 */
-	PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		Galaxy const* galaxy);
-
+	FleetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy const* galaxy);
 	/**
 	 * sets if the scene is currently active.
 	 * calls set focus active.

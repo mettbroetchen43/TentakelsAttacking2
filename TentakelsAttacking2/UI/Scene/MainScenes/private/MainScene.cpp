@@ -6,6 +6,7 @@
 #include "MainScene.h"
 #include "GalaxyAndSlider.h"
 #include "PlanetTable.h"
+#include "FleetTable.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
 #include "GenerelEvents.hpp"
@@ -382,6 +383,24 @@ void MainScene::InitializePlanetTable() {
 		);
 	m_elements.push_back(m_planetTable);
 }
+void MainScene::InitializeFleetTable() {
+	 
+	AppContext& appContext = AppContext::GetInstance();
+	if (m_fleetTable) {
+		m_fleetTable->SetActive(false, appContext);
+		m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), m_fleetTable), m_elements.end());
+		m_fleetTable = nullptr;
+	}
+
+	m_fleetTable = std::make_shared<FleetTable>(
+		GetElementPosition(0.01f, 0.95f),
+		GetElementSize(0.85f, 0.78f),
+		Alignment::BOTTOM_LEFT,
+		m_resolution,
+		m_galaxy->GetGalaxy()
+	);
+	m_elements.push_back(m_fleetTable);
+}
 
 void MainScene::NextTurn() {
 	AppContext const& appContext = AppContext::GetInstance();
@@ -404,6 +423,7 @@ void MainScene::NextRound() {
 	SetPlayerText();
 	InitializeGalaxy();
 	InitializePlanetTable();
+	InitializeFleetTable();
 
 	m_currentRound->SetText(std::to_string(appContext.constants.global.currentRound));
 	m_currentTargetRound->SetText(std::to_string(appContext.constants.global.currentTargetRound));
@@ -434,10 +454,11 @@ void MainScene::Switch(MainSceneType sceneType) {
 
 	m_galaxy->SetActive(false, appContext);
 	m_planetTable->SetActive(false, appContext);
+	m_fleetTable->SetActive(false, appContext);
 
 	m_galaxy->SetActive(sceneType == MainSceneType::GALAXY, appContext);
 	m_planetTable->SetActive(sceneType == MainSceneType::PLANET_TABLE, appContext);
-	// m_fleetTable->SetActive(sceneType == MainSceneType::FLEET_TABLE, appContext);
+	m_fleetTable->SetActive(sceneType == MainSceneType::FLEET_TABLE, appContext);
 }
 
 bool MainScene::HasAnyInputLineFocus() {
@@ -498,6 +519,7 @@ MainScene::MainScene(Vector2 resolution)
 	Initialize();
 	InitializeGalaxy();
 	InitializePlanetTable();
+	InitializeFleetTable();
 	SetPlayerText();
 	Switch(MainSceneType::GALAXY);
 	SetAcceptButon();
@@ -534,6 +556,7 @@ void MainScene::OnEvent(Event const& event) {
 		if (fleetEvent->IsValidFleet()) {
 			ClearInputLines();
 			InitializePlanetTable();
+			InitializeFleetTable();
 		}
 		return;
 	}

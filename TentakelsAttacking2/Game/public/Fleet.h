@@ -26,4 +26,9 @@ public:
 	 * returns if the current spaceobject is a planet.
 	 */
 	[[nodiscard]] bool IsFleet() const override;
+
+	/**
+	 * returns the target of the fleet.
+	 */
+	[[nodiscard]] SpaceObject const* GetTarget() const;
 };
