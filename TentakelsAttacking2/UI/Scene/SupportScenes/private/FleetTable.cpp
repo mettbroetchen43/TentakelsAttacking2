@@ -30,8 +30,6 @@ void FleetTable::Initialization() {
 	m_table->SetHeadlineValues<std::string>({ "ID", "Position", "Ship Count", "Destination" });
 	m_elements.push_back(m_table);
 
-	AppContext& appContext = AppContext::GetInstance();
-
 	for (int i = 0; i < fleets.size(); ++i) {
 		auto fleet = fleets.at(i);
 		
@@ -54,7 +52,7 @@ void FleetTable::Initialization() {
 		m_table->SetValue<int>(
 			i + 1,
 			2,
-			fleet->GetShipCount()
+			static_cast<int>(fleet->GetShipCount())
 		);
 
 		// destination
