@@ -269,6 +269,10 @@ std::vector<std::shared_ptr<Planet>> const Galaxy::GetPlanets() const {
     return m_planets;
 }
 
+std::vector<std::shared_ptr<Fleet>> const Galaxy::GetFleets() const {
+    return m_fleets;
+}
+
 std::shared_ptr<Planet> const Galaxy::GetPlanetByID(unsigned int ID) const {
     for (auto const& planet : m_planets) {
         if (planet->GetID() == ID) {

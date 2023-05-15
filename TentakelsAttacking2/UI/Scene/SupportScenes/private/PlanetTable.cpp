@@ -7,10 +7,7 @@
 #include "Player.h"
 #include "HFocusEvents.h"
 
-PlanetTable::PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	Galaxy const* galaxy)
-	: Scene(pos, size, alignment, resolution), m_galaxy(galaxy) {
-
+void PlanetTable::Initialisation() {
 	auto planets = m_galaxy->GetPlanets();
 
 	m_table = std::make_shared<Table>(
@@ -21,7 +18,7 @@ PlanetTable::PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2
 		100,
 		static_cast<int>(planets.size() + 1),
 		4,
-		Vector2(0.25f,0.05f),
+		Vector2(0.25f, 0.05f),
 		0.2f
 	);
 	m_table->SetAllEditable(false);
@@ -58,7 +55,7 @@ PlanetTable::PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2
 			i + 1,
 			1,
 			entry
-			);
+		);
 
 		if (planet->IsDestroyed()) { continue; }
 		// if (!planet->IsDescovered()) { continue; }
@@ -77,6 +74,13 @@ PlanetTable::PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2
 			static_cast<int>(planet->GetShipCount())
 		);
 	}
+}
+
+PlanetTable::PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	Galaxy const* galaxy)
+	: Scene(pos, size, alignment, resolution), m_galaxy(galaxy) {
+	
+	Initialisation();
 }
 
 void PlanetTable::SetActive(bool active, AppContext const& appContext) {

@@ -16,3 +16,7 @@ Fleet::Fleet(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Pl
 bool Fleet::IsFleet() const {
     return true;
 }
+
+SpaceObject const* Fleet::GetTarget() const {
+    return m_target.get();
+}

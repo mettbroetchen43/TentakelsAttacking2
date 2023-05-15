@@ -10,7 +10,6 @@
 #include "GenerelEvents.hpp"
 #include "Vec2.hpp"
 #include <vector>
-#include <vector>
 #include <memory>
 
 struct AppContext;
@@ -112,6 +111,10 @@ public:
 	 * returns the planets of the galaxy.
 	 */
 	[[nodiscard]] std::vector<std::shared_ptr<Planet>> const GetPlanets() const;
+	/**
+	 * returns the fleets of the galaxy.
+	 */
+	[[nodiscard]] std::vector<std::shared_ptr<Fleet>> const GetFleets() const;
 	/**
 	 * returns a specific planet by ID.
 	 */

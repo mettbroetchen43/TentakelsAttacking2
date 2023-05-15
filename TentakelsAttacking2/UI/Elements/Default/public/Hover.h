@@ -37,7 +37,8 @@ public:
 	void SetRenderHover(Vector2 mousePosition, AppContext const& appContext);
 
 	/**
-	 * nothing
+	 * renders the hover.
+	 * gets called from HoverRender
 	 */
 	void Render(AppContext const& appContext) override;
 
