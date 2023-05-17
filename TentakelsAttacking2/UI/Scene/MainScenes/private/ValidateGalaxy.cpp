@@ -62,8 +62,8 @@ void ValidateGalaxyScene::Initialize() {
 		"Next",
 		SoundType::ACCEPTED
 		);
-	nextBtn->SetOnClick([]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(SwitchSceneEvent(SceneType::MAIN));
+	nextBtn->SetOnClick([this]() {
+			this->StartGame();
 		});
 	m_elements.push_back(nextBtn);
 }
@@ -119,6 +119,12 @@ void ValidateGalaxyScene::NewGalaxy() {
 	appContext.eventManager.InvokeEvent(event);
 
 	InitializeGalaxy();
+}
+
+void ValidateGalaxyScene::StartGame() const {
+	AppContext& appContext = AppContext::GetInstance();
+	appContext.eventManager.InvokeEvent(StartGameEvent());
+	appContext.eventManager.InvokeEvent(SwitchSceneEvent(SceneType::MAIN));
 }
 
 ValidateGalaxyScene::ValidateGalaxyScene(Vector2 resolution)

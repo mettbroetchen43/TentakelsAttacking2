@@ -79,6 +79,10 @@ public:
  * use this to remove all player in locig.
  */
 class ResetPlayerEvent final : public Event { };
+/**
+ * use this to load the current player data.
+ */
+class LoadCurrentPlayerEvent final : public Event { };
 
 /**
  * "callbackevent" from AddPlayerEvent.

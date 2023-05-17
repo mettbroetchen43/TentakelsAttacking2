@@ -518,7 +518,7 @@ MainScene::MainScene(Vector2 resolution)
 
 	AppContext& appContext = AppContext::GetInstance();
 	appContext.eventManager.AddListener(this);
-	appContext.eventManager.InvokeEvent(StartGameEvent());
+	appContext.eventManager.InvokeEvent(LoadCurrentPlayerEvent());
 
 	Initialize();
 	InitializeGalaxy();

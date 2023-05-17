@@ -422,6 +422,11 @@ void GameManager::OnEvent(Event const& event) {
 		CheckPlayerCount();
 		return;
 	}
+	if (auto const* playerEvent = dynamic_cast<LoadCurrentPlayerEvent const*>(&event)) {
+		SendCurrentPlayerID();
+		SendNextPlayerID();
+		return;
+	}
 
 	// Events
 	if (auto const* GameEvent = dynamic_cast<UpdateCheckGameEvent const*>(&event)) {

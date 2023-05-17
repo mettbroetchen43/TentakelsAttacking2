@@ -211,6 +211,5 @@ void MainMenu::OnEvent(Event const& event) {
 		else {
 			m_continueBtn->SetEnabled(true);
 		}
-		std::cout << "Galaxy Event \n";
 	}
 }
