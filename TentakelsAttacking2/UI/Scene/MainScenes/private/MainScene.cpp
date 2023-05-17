@@ -43,6 +43,10 @@ void MainScene::Initialize() {
 		"settings",
 		SoundType::CLICKED_RELEASE_STD
 		);
+	settingsBtn->SetOnClick([]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(
+			SwitchSceneEvent(SceneType::SETTINGS));
+		});
 	m_elements.push_back(settingsBtn);
 
 

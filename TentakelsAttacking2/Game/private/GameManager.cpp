@@ -287,6 +287,8 @@ void GameManager::GenerateGalaxy() {
 
 	if (galaxy->IsValid()) {
 		m_mainGalaxy = galaxy;
+		m_currentGalaxy = m_mainGalaxy;
+		m_startGalaxy = m_mainGalaxy;
 		auto event = GalaxyGeneratedUIEvent();
 		appContext.eventManager.InvokeEvent(event);
 	}
@@ -311,11 +313,11 @@ void GameManager::GenerateShowGalaxy() {
 
 	if (galaxy->IsValid()) {
 		m_showGalaxy = galaxy;
-		auto event = SendGalaxyPointerEvent(m_showGalaxy.get());
+		auto event = SendGalaxyPointerEvent(m_showGalaxy.get(), true);
 		appContext.eventManager.InvokeEvent(event);
 	}
 	else if (m_showGalaxy) {
-		auto event = SendGalaxyPointerEvent(m_showGalaxy.get());
+		auto event = SendGalaxyPointerEvent(m_showGalaxy.get(), true);
 		appContext.eventManager.InvokeEvent(event);
 		Print("Could not geneared ShowGalaxy -> Use old Galaxy", PrintType::EXPECTED_ERROR);
 	}
@@ -438,8 +440,8 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* galaxyEvent = dynamic_cast<GetGalaxyPointerEvent const*>(&event)) {
-		assert(m_mainGalaxy);
-		auto retunEvent = SendGalaxyPointerEvent(m_mainGalaxy.get());
+		// assert(m_mainGalaxy);
+		auto retunEvent = SendGalaxyPointerEvent(m_currentGalaxy.get(), false);
 		AppContext::GetInstance().eventManager.InvokeEvent(retunEvent);
 		return;
 	}

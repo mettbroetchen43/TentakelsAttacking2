@@ -20,7 +20,7 @@ private:
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize();
+	void Initialize(SceneType continueScene);
 
 	/**
 	 * returs the strings out of the raw resolution data.
@@ -36,5 +36,5 @@ public:
 	 * ctor.
 	 * only initialization.
 	 */
-	SettingsScene(Vector2 resolution);
+	SettingsScene(Vector2 resolution, SceneType continueScene);
 };
