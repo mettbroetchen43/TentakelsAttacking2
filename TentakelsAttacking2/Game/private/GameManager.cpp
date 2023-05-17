@@ -212,10 +212,12 @@ void GameManager::NextRound(bool valid) {
 	AppContext& appContext = AppContext::GetInstance();
 	// events and so on first
 
-	CopyGalaxies(CopyGalaxyType::COPY_ALL);
-	m_currentRoundPlayers = m_players;
 
+	m_currentRoundPlayers = m_players;
 	ShuffleCurrentRoundPlayer();
+
+	CopyGalaxies(CopyGalaxyType::COPY_ALL);
+
 	SendCurrentPlayerID();
 	SendNextPlayerID();
 
@@ -264,7 +266,7 @@ void GameManager::FilterCurrentGalaxy() {
 	std::shared_ptr<Player> currentPlayer{ nullptr };
 	bool valid = GetCurrentPlayer(currentPlayer);
 	if (not valid) { return; }
-	m_currentGalaxy->FilterByPlayer(currentPlayer);
+	m_currentGalaxy->FilterByPlayer(currentPlayer->GetID());
 }
 
 // events

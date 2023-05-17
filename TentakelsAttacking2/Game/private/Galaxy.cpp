@@ -363,12 +363,12 @@ bool Galaxy::AddFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Pl
     return false;
 }
 
-void Galaxy::FilterByPlayer(std::shared_ptr<Player> currentPlayer) {
+void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
     auto newEnd = std::remove_if(m_fleets.begin(), m_fleets.end(),
-        [currentPlayer](std::shared_ptr<Fleet> fleet) { return fleet->GetPlayer() != currentPlayer; });
+        [currentPlayerID](std::shared_ptr<Fleet> fleet) { return fleet->GetPlayer()->GetID() != currentPlayerID; });
     m_fleets.erase(newEnd, m_fleets.end());
 
     auto newEnd2 = std::remove_if(m_objects.begin(), m_objects.end(),
-        [currentPlayer](std::shared_ptr<SpaceObject> object) { return object->IsFleet() and object->GetPlayer() != currentPlayer; });
+        [currentPlayerID](std::shared_ptr<SpaceObject> object) { return object->IsFleet() and object->GetPlayer()->GetID() != currentPlayerID; });
     m_objects.erase(newEnd2, m_objects.end());
 }

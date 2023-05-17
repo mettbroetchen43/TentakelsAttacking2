@@ -90,8 +90,6 @@ public:
 	 */
 	Galaxy(Galaxy const&);
 
-	Galaxy Clone();
-
 	/**
 	 * return if the galaxy is valid.
 	 * if its not valid I really to not use this galaxy.
@@ -132,5 +130,5 @@ public:
 	/**
 	 * filters the galaxy for relevant data for the provided player.
 	 */
-	void FilterByPlayer(std::shared_ptr<Player> currentPlayer);
+	void FilterByPlayer(unsigned int currentPlayerID);
 };
