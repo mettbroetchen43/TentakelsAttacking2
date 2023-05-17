@@ -11,6 +11,11 @@
 #include <algorithm>
 #include <stdexcept>
 
+enum class CopyGalaxyType {
+	COPY_ALL,
+	COPY_START,
+};
+
 // help Labmdas
 static auto popup = [](std::string const& text) {
 	auto popupEvent = ShowMessagePopUpEvent("Invalid Input", text);
@@ -207,8 +212,7 @@ void GameManager::NextRound(bool valid) {
 	AppContext& appContext = AppContext::GetInstance();
 	// events and so on first
 
-	m_startGalaxy = m_mainGalaxy;
-	m_currentGalaxy = m_startGalaxy;
+	CopyGalaxies(CopyGalaxyType::COPY_ALL);
 	m_currentRoundPlayers = m_players;
 
 	ShuffleCurrentRoundPlayer();
@@ -225,7 +229,7 @@ void GameManager::NextTurn(bool valid) {
 
 	m_currentRoundPlayers.pop_back();
 
-	m_currentGalaxy = m_startGalaxy; // TODO: filter for relevant data for current player
+	CopyGalaxies(CopyGalaxyType::COPY_START);
 
 	SendCurrentPlayerID();
 	SendNextPlayerID();
@@ -254,6 +258,13 @@ void GameManager::ValidateNextTurn() {
 		);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
+}
+
+void GameManager::FilterCurrentGalaxy() {
+	std::shared_ptr<Player> currentPlayer{ nullptr };
+	bool valid = GetCurrentPlayer(currentPlayer);
+	if (not valid) { return; }
+	m_currentGalaxy->FilterByPlayer(currentPlayer);
 }
 
 // events
@@ -287,8 +298,7 @@ void GameManager::GenerateGalaxy() {
 
 	if (galaxy->IsValid()) {
 		m_mainGalaxy = galaxy;
-		m_currentGalaxy = m_mainGalaxy;
-		m_startGalaxy = m_mainGalaxy;
+		CopyGalaxies(CopyGalaxyType::COPY_ALL);
 		auto event = GalaxyGeneratedUIEvent();
 		appContext.eventManager.InvokeEvent(event);
 	}
@@ -326,6 +336,14 @@ void GameManager::GenerateShowGalaxy() {
 	}
 }
 
+void GameManager::CopyGalaxies(CopyGalaxyType copyType) {
+	if (copyType == CopyGalaxyType::COPY_ALL) {
+		m_startGalaxy = std::make_shared<Galaxy>(*m_mainGalaxy);
+	}
+	m_currentGalaxy = std::make_shared<Galaxy>(*m_startGalaxy);
+	FilterCurrentGalaxy();
+}
+
 // Fleet
 void GameManager::AddFleet(SendFleedInstructionEvent const* event) {
 
@@ -335,6 +353,8 @@ void GameManager::AddFleet(SendFleedInstructionEvent const* event) {
 	if (!GetCurrentPlayer(currentPlayer)) { popup("No current player selected."); return; }
 
 	bool isValidFleet = m_mainGalaxy->AddFleet(event, currentPlayer);
+	bool validCurrentFleet = m_currentGalaxy->AddFleet(event, currentPlayer);
+	if (not validCurrentFleet) { Print("Not able to add Fleet to current Galaxy", PrintType::ERROR); }
 
 	auto returnEvent = ReturnFleetInstructionEvent(isValidFleet);
 	AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
