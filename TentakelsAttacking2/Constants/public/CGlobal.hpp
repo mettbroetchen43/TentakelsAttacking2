@@ -10,7 +10,7 @@
  * contains the global constants
  */
 struct CGlobal final {
-	static inline const std::string version = "v0.0.3"; ///< current version string
+	static inline const std::string version = "v0.0.4"; ///< current version string
 	static inline const std::string copyRight = "(c) Purpur Tentakel"; ///< copy right string
 	
 
