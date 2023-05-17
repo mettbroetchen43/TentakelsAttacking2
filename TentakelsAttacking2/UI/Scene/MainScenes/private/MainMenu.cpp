@@ -11,7 +11,6 @@
 #include "Title.h"
 #include "Text.h"
 #include <memory>
-#include <iostream>
 
 void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 	float btnPosX = 0.23f;
