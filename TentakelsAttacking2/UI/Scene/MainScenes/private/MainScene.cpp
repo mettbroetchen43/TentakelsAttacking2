@@ -411,6 +411,8 @@ void MainScene::NextTurn() {
 	Switch(MainSceneType::CLEAR);
 	SetPlayerText();
 	InitializeGalaxy();
+	InitializePlanetTable();
+	InitializeFleetTable();
 
 	auto event = ShowMessagePopUpEvent(
 		"start turn?",

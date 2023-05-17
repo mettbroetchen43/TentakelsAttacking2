@@ -16,7 +16,7 @@ enum class CopyGalaxyType {
 	COPY_START,
 };
 
-// help Labmdas
+// help Lambdas
 static auto popup = [](std::string const& text) {
 	auto popupEvent = ShowMessagePopUpEvent("Invalid Input", text);
 	AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
