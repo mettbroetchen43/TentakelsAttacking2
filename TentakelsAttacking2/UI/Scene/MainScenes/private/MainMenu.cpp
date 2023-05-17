@@ -13,10 +13,11 @@
 #include <memory>
 
 void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
-	float btnPosX = 0.25f;
-	float btnPosY = 0.3f;
+	float btnPosX = 0.23f;
+	float btnPosY = 0.115f;
 	float btnSizX = 0.2f;
 	float btnSizY = 0.1f;
+	float btnOffset = 0.13f;
 	int focusID;
 
 	auto newGameBtn = std::make_shared<ClassicButton>(
@@ -30,12 +31,52 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		);
 	newGameBtn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::NEW_GAME_PLAYER)
-			);
+			SwitchSceneEvent(SceneType::NEW_GAME_PLAYER));
 		});
 	m_elements.push_back(newGameBtn);
 
-	btnPosY += 0.15f;
+	btnPosY += btnOffset;
+	++focusID;
+
+	m_continueBtn = std::make_shared<ClassicButton>(
+		focusID,
+		GetElementPosition(btnPosX, btnPosY),
+		GetElementSize(btnSizX, btnSizY),
+		Alignment::MID_RIGHT,
+		resolution,
+		"continue",
+		SoundType::ACCEPTED
+	);
+	m_continueBtn->SetOnClick([]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(
+			SwitchSceneEvent(SceneType::MAIN));
+		});
+	m_elements.push_back(m_continueBtn);
+
+	appContext.eventManager.InvokeEvent(GetGalaxyPointerEvent());
+
+	btnPosY += btnOffset;
+	++focusID;
+
+	auto saveGameBtn = std::make_shared<ClassicButton>(
+		focusID,
+		GetElementPosition(btnPosX, btnPosY),
+		GetElementSize(btnSizX, btnSizY),
+		Alignment::MID_RIGHT,
+		resolution,
+		"Save Game",
+		SoundType::ACCEPTED
+	);
+	saveGameBtn->SetOnClick([]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(
+			SwitchSceneEvent(SceneType::TEST)
+		);
+		}
+	);
+	saveGameBtn->SetEnabled(false);// TODO: need to implement save system
+	m_elements.push_back(saveGameBtn);
+
+	btnPosY += btnOffset;
 	++focusID;
 
 	auto loadGameBtn = std::make_shared<ClassicButton>(
@@ -53,10 +94,10 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 			);
 		}
 	);
-	// loadGameBtn->SetEnabled(false);
+	loadGameBtn->SetEnabled(false); // TODO: need to implement load system
 	m_elements.push_back(loadGameBtn);
 
-	btnPosY += 0.15f;
+	btnPosY += btnOffset;
 	++focusID;
 
 	auto settingsBtn = std::make_shared<ClassicButton>(
@@ -76,7 +117,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 	);
 	m_elements.push_back(settingsBtn);
 
-	btnPosY += 0.15f;
+	btnPosY += btnOffset;
 	++focusID;
 
 	auto creditsBtn = std::make_shared<ClassicButton>(
@@ -96,7 +137,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 	);
 	m_elements.push_back(creditsBtn);
 
-	btnPosY += 0.15f;
+	btnPosY += btnOffset;
 	++focusID;
 
 	auto quitBtn = std::make_shared<ClassicButton>(
@@ -150,5 +191,24 @@ MainMenu::MainMenu(Vector2 resolution)
 	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
 
 	AppContext& appContext = AppContext::GetInstance();
+	appContext.eventManager.AddListener(this);
+
 	Initialize(resolution, appContext);
+}
+
+MainMenu::~MainMenu() {
+	AppContext::GetInstance().eventManager.RemoveListener(this);
+}
+
+void MainMenu::OnEvent(Event const& event) {
+	if (auto const* galaxyEvent = dynamic_cast<SendGalaxyPointerEvent const*>(&event)) {
+		if (galaxyEvent->IsShowGalaxy()) { return; }
+
+		if (galaxyEvent->GetGalaxy() == nullptr) {
+			m_continueBtn->SetEnabled(false);
+		}
+		else {
+			m_continueBtn->SetEnabled(true);
+		}
+	}
 }

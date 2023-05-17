@@ -14,6 +14,8 @@
 #include <random>
 #include <memory>
 
+enum class CopyGalaxyType;
+
 /**
  * manage the hole game.
  * that contains players, npcs, game events, galaxy, event communivation with the ui.
@@ -121,6 +123,10 @@ private:
 	 * PopUp automactily calls the provided function
 	 */
 	void ValidateNextTurn();
+	/**
+	 * filters the current galaxy for relevant only data for current player.
+	 */
+	void FilterCurrentGalaxy();
 
 	// events
 	/**
@@ -144,6 +150,10 @@ private:
 	 * if not and no galaxy exsitst it only prints a log entry to the console.
 	 */
 	void GenerateShowGalaxy();
+	/**
+	 * copies all galaxies.
+	 */
+	void CopyGalaxies(CopyGalaxyType copyType);
 
 	// fleet
 	/**

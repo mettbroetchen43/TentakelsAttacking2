@@ -79,6 +79,10 @@ public:
  * use this to remove all player in locig.
  */
 class ResetPlayerEvent final : public Event { };
+/**
+ * use this to load the current player data.
+ */
+class LoadCurrentPlayerEvent final : public Event { };
 
 /**
  * "callbackevent" from AddPlayerEvent.
@@ -268,14 +272,18 @@ class GetShowGalaxyPointerEvent final : public Event { };
  */
 class SendGalaxyPointerEvent final : public Event {
 private:
-	Galaxy const *const m_galaxy;
+	Galaxy const* const m_galaxy{ nullptr };
+	bool m_isShowGalaxy{ false };
 
 public:
-	SendGalaxyPointerEvent(Galaxy const *const galaxy)
-		: m_galaxy(galaxy) { }
+	SendGalaxyPointerEvent(Galaxy const *const galaxy, bool isShowGalaxy)
+		: m_galaxy(galaxy), m_isShowGalaxy(isShowGalaxy) { }
 
 	[[nodiscard]] Galaxy const *const GetGalaxy() const {
 		return m_galaxy;
+	}
+	[[nodiscard]] bool IsShowGalaxy() const {
+		return m_isShowGalaxy;
 	}
 };
 

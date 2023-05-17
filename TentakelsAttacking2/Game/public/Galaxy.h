@@ -119,8 +119,16 @@ public:
 	 * returns a specific planet by ID.
 	 */
 	[[nodiscard]] std::shared_ptr<Planet> const GetPlanetByID(unsigned int ID) const;
-
+	/**
+	 * returns a SpaceObject with the provided ID.
+	 */
 	[[nodiscard]] std::shared_ptr<SpaceObject> const GetSpaceObjectByID(unsigned int ID) const;
-
+	/**
+	 * adds a new fleet to the galaxy for the provided player.
+	 */
 	[[nodiscard]] bool AddFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	/**
+	 * filters the galaxy for relevant data for the provided player.
+	 */
+	void FilterByPlayer(unsigned int currentPlayerID);
 };

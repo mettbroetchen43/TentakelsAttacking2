@@ -16,7 +16,7 @@
 #include "AppContext.h"
 #include "UIEvents.hpp"
 
-void SettingsScene::Initialize() {
+void SettingsScene::Initialize(SceneType continueScene) {
 
 	AppContext& appContext = AppContext::GetInstance();
 
@@ -233,13 +233,33 @@ void SettingsScene::Initialize() {
 	});
 	m_elements.push_back(fullscreenToggleBtn);
 
-	auto backBtn = std::make_shared<ClassicButton>(
+	auto continueBtn = std::make_shared<ClassicButton>(
 		1000,
-		GetElementPosition(0.1f, 0.95f),
+		GetElementPosition(0.45f, 0.95f),
+		GetElementSize(0.15f, 0.1f),
+		Alignment::BOTTOM_RIGHT,
+		m_resolution,
+		"continue",
+		SoundType::ACCEPTED
+	);
+	if (continueScene == SceneType::NONE) { continueBtn->SetEnabled(false); }
+
+	continueBtn->SetOnClick([continueScene]() {
+		if (continueScene == SceneType::NONE) { return; }
+		AppContext::GetInstance().eventManager.InvokeEvent(
+			SwitchSceneEvent(continueScene)
+		);
+		}
+	);
+	m_elements.push_back(continueBtn);
+
+	auto backBtn = std::make_shared<ClassicButton>(
+		1001,
+		GetElementPosition(0.05f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
-		"Back",
+		"main menue",
 		SoundType::CLICKED_RELEASE_STD
 		);
 	backBtn->SetOnClick([]() {
@@ -270,8 +290,8 @@ int SettingsScene::GetIndexFromResolution(Resolution resolution) const {
 	throw std::runtime_error("resolution not exsisting");
 }
 
-SettingsScene::SettingsScene(Vector2 resolution)
+SettingsScene::SettingsScene(Vector2 resolution, SceneType continueScene)
 	:Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
 	m_rawResolutionEntries = AppContext::GetInstance().constants.window.GetAllResolutionsAsString();
-	Initialize();
+	Initialize(continueScene);
 }

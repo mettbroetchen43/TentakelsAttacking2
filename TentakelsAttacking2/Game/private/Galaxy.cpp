@@ -244,8 +244,29 @@ Galaxy::Galaxy(Vec2<int> size, size_t planetCount,
     InitialzePlanets(planetCount, players, neutralPlayer);
 }
 Galaxy::Galaxy(Galaxy const& old)
-    : m_validGalaxy(old.m_validGalaxy), m_objects(old.m_objects),
-    m_planets(old.m_planets), m_size(old.m_size) { }
+    : m_validGalaxy(old.m_validGalaxy), m_size(old.m_size) {
+    
+    for (auto o : old.m_objects) {
+        if (o->IsFleet()) {
+            auto object = std::make_shared<Fleet>(*std::static_pointer_cast<Fleet>(o));
+            m_objects.push_back(object);
+            m_fleets.push_back(object);
+        }
+        else if (o->IsPlanet()){
+            auto object = std::make_shared<Planet>(*std::static_pointer_cast<Planet>(o));
+            m_objects.push_back(object);
+            m_planets.push_back(object);
+        }
+        else if (o->IsTargetPoint()) {
+            auto object = std::make_shared<TargetPoint>(*std::static_pointer_cast<TargetPoint>(o));
+            m_objects.push_back(object);
+            m_targetPoints.push_back(object);
+        }
+        else {
+            throw std::invalid_argument("invalid Space Object");
+        }
+    }
+}
 
 bool Galaxy::IsValid() const {
     return m_validGalaxy;
@@ -340,4 +361,14 @@ bool Galaxy::AddFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Pl
 
     popup("can't recognize provided origin: " + std::to_string(event->GetOrigin()));
     return false;
+}
+
+void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
+    auto newEnd = std::remove_if(m_fleets.begin(), m_fleets.end(),
+        [currentPlayerID](std::shared_ptr<Fleet> fleet) { return fleet->GetPlayer()->GetID() != currentPlayerID; });
+    m_fleets.erase(newEnd, m_fleets.end());
+
+    auto newEnd2 = std::remove_if(m_objects.begin(), m_objects.end(),
+        [currentPlayerID](std::shared_ptr<SpaceObject> object) { return object->IsFleet() and object->GetPlayer()->GetID() != currentPlayerID; });
+    m_objects.erase(newEnd2, m_objects.end());
 }

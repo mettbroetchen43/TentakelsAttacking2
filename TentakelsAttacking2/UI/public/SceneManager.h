@@ -42,6 +42,10 @@ private:
 	 * override current scene type.
 	 */
 	void SwitchScene(AppContext const& appContext);
+	/**
+	 * returns the continue scene type to be able to return to the previous loaded scene.
+	 */
+	[[nodiscard]] SceneType GetContinueSceneType() const;
 
 public:
 	/**

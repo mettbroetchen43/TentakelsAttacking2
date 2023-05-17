@@ -43,6 +43,10 @@ void MainScene::Initialize() {
 		"settings",
 		SoundType::CLICKED_RELEASE_STD
 		);
+	settingsBtn->SetOnClick([]() {
+		AppContext::GetInstance().eventManager.InvokeEvent(
+			SwitchSceneEvent(SceneType::SETTINGS));
+		});
 	m_elements.push_back(settingsBtn);
 
 
@@ -407,6 +411,8 @@ void MainScene::NextTurn() {
 	Switch(MainSceneType::CLEAR);
 	SetPlayerText();
 	InitializeGalaxy();
+	InitializePlanetTable();
+	InitializeFleetTable();
 
 	auto event = ShowMessagePopUpEvent(
 		"start turn?",
@@ -514,7 +520,7 @@ MainScene::MainScene(Vector2 resolution)
 
 	AppContext& appContext = AppContext::GetInstance();
 	appContext.eventManager.AddListener(this);
-	appContext.eventManager.InvokeEvent(StartGameEvent());
+	appContext.eventManager.InvokeEvent(LoadCurrentPlayerEvent());
 
 	Initialize();
 	InitializeGalaxy();

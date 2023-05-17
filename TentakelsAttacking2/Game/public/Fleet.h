@@ -20,7 +20,8 @@ public:
 	 * ctor.
 	 * only initialisation.
 	 */
-	Fleet(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Player> player, std::shared_ptr<SpaceObject> target);
+	Fleet(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Player> player,
+		std::shared_ptr<SpaceObject> target);
 
 	/**
 	 * returns if the current spaceobject is a planet.
