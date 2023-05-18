@@ -89,7 +89,7 @@ void UIManager::Render() {
 }
 
 void UIManager::SetWindowSize(bool fullscreen) {
-	std::array<int,2> values;
+	std::pair<int, int> values{ };
 	if (fullscreen) {
 		values = m_appContext.constants.window.GetIntFromResolution(Resolution::SCREEN);
 	}
@@ -97,9 +97,9 @@ void UIManager::SetWindowSize(bool fullscreen) {
 		values = m_appContext.constants.window.GetIntFromResolution(m_nextResolution);
 	}
 
-	m_resolution = { static_cast<float>(values[0]), static_cast<float>(values[1]) };
+	m_resolution = { static_cast<float>(values.first), static_cast<float>(values.second) };
 
-	::SetWindowSize(values[0], values[1]);
+	::SetWindowSize(values.first, values.second);
 }
 
 void UIManager::SetWindowPosition() {

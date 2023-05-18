@@ -14,8 +14,8 @@ bool CWindow::IsPossibleResolution(Resolution toProve) {
 
 	auto const value{ GetIntFromResolution(toProve) };
 
-	if (width < value[0]) { return false; }
-	if (height < value[1]) { return false; }
+	if (width < value.first) { return false; }
+	if (height < value.second) { return false; }
 	return true;
 }
 
@@ -80,7 +80,7 @@ std::string CWindow::GetStringFromResolution(Resolution resolution) {
 
 	case Resolution::SCREEN: {
 		auto const value{ GetIntFromResolution(resolution) };
-		return "Screen (" + std::to_string(value[0]) + " x " + std::to_string(value[1]) + ")";
+		return "Screen (" + std::to_string(value.first) + " x " + std::to_string(value.second) + ")";
 	}
 	case Resolution::LAST:
 	default:
@@ -89,7 +89,7 @@ std::string CWindow::GetStringFromResolution(Resolution resolution) {
 	}
 }
 
-std::array<int, 2> CWindow::GetIntFromResolution(Resolution resolution) {
+std::pair<int, int> CWindow::GetIntFromResolution(Resolution resolution) {
 
 	switch (resolution) {
 
@@ -137,7 +137,7 @@ std::array<int, 2> CWindow::GetIntFromResolution(Resolution resolution) {
 	case Resolution::SCREEN: {
 		int const screen{ GetCurrentMonitor() };
 		int const height{ GetMonitorHeight(screen) };
-		int const width{ GetMonitorWidth(screen)};
+		int const width{ GetMonitorWidth(screen) };
 
 		return { width,height };
 	}
