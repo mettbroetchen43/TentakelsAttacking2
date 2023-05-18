@@ -126,7 +126,7 @@ float GetElementTextHeight(Vector2 const& relativeSize, float absoluteHeight) {
 
 std::string GetPritableTextInColider(std::string const& text,
 	float fontSize, Rectangle colider, AppContext const& appContext) {
-	auto constants = appContext.constants.textProcecing;
+	auto constants = appContext.constants.textProcessing;
 	Vector2 textSize = MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
 		(text + constants.cursor).c_str(),
@@ -156,7 +156,7 @@ std::string GetPritableTextInColider(std::string const& text,
 }
 std::string GetPritablePlaceholderTextInColider(std::string const& text,
 	float fontSize, Rectangle colider, AppContext const& appContext) {
-	auto constants = appContext.constants.textProcecing;
+	auto constants = appContext.constants.textProcessing;
 	Vector2 textSize = MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
 		text.c_str(),

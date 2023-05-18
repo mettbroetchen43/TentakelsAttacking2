@@ -146,7 +146,7 @@ public:
 	 */
 	void Render(AppContext const& appContext) override {
 
-		auto constants = appContext.constants.textProcecing;
+		auto constants = appContext.constants.textProcessing;
 		// Update here to make shure its after call of HasValueChanced();
 		m_oldValue = m_value;
 
