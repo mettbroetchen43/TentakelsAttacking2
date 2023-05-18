@@ -154,8 +154,8 @@ void LoadConfig() {
 	size_tEntries = {
 		// Planet
 		&constants.planet.maxShips,
-		&constants.planet.statringHumanShipsMultiplicator,
-		&constants.planet.statringGlobalShipsMultiplicator,
+		&constants.planet.startingHumanShipsMultiplicator,
+		&constants.planet.startingGlobalShipsMultiplicator,
 		&constants.planet.homeworldProduction,
 		&constants.planet.minProduction,
 		&constants.planet.maxProduction,
@@ -240,8 +240,8 @@ void SaveConfig() {
 
 	headline("Planet", toSave);
 	entry(std::to_string(constants.planet.maxShips), "Max Ships", toSave);
-	entry(std::to_string(constants.planet.statringHumanShipsMultiplicator), "Starting Ships Multiplicator for Humans", toSave);
-	entry(std::to_string(constants.planet.statringGlobalShipsMultiplicator), "Starting Ships Multiplicator for Global", toSave);
+	entry(std::to_string(constants.planet.startingHumanShipsMultiplicator), "Starting Ships Multiplicator for Humans", toSave);
+	entry(std::to_string(constants.planet.startingGlobalShipsMultiplicator), "Starting Ships Multiplicator for Global", toSave);
 	entry(std::to_string(constants.planet.homeworldProduction), "HomeWorld Production", toSave);
 	entry(std::to_string(constants.planet.minProduction), "Min Production", toSave);
 	entry(std::to_string(constants.planet.maxProduction), "Max Production", toSave);

@@ -18,7 +18,7 @@ Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player
 
 	if (m_isHomePlanet) {
 		m_production = appContext.constants.planet.homeworldProduction;
-		m_ships = m_production * appContext.constants.planet.statringHumanShipsMultiplicator;
+		m_ships = m_production * appContext.constants.planet.startingHumanShipsMultiplicator;
 	}
 	else {
 		Random& random = Random::GetInstance();
@@ -27,7 +27,7 @@ Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player
 			appContext.constants.planet.minProduction
 		));
 		m_production = r + appContext.constants.planet.minProduction;
-		m_ships = m_production * appContext.constants.planet.statringGlobalShipsMultiplicator;
+		m_ships = m_production * appContext.constants.planet.startingGlobalShipsMultiplicator;
 	}
 }
 
