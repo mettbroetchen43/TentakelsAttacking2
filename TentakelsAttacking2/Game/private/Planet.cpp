@@ -10,10 +10,10 @@
 
 Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
 	bool isHomePlanet, int planetNumber)
-	: SpaceObject(ID, position, player), m_isHomePlanet(isHomePlanet),
-	m_planetNumber(planetNumber) {
+	: SpaceObject{ ID, position, player }, m_isHomePlanet{ isHomePlanet },
+	m_planetNumber{ planetNumber } {
 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 	m_maxShips = appContext.constants.planet.maxShips;
 
 	if (m_isHomePlanet) {
@@ -21,11 +21,11 @@ Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player
 		m_ships = m_production * appContext.constants.planet.startingHumanShipsMultiplicator;
 	}
 	else {
-		Random& random = Random::GetInstance();
-		size_t r = static_cast<size_t>(random.random(
+		Random& random{ Random::GetInstance() };
+		size_t const r{ static_cast<size_t>(random.random(
 			appContext.constants.planet.maxProduction -
 			appContext.constants.planet.minProduction
-		));
+		)) };
 		m_production = r + appContext.constants.planet.minProduction;
 		m_ships = m_production * appContext.constants.planet.startingGlobalShipsMultiplicator;
 	}
@@ -36,7 +36,6 @@ bool Planet::IsHomePlanet() const {
 }
 
 bool Planet::IsPlanet() const {
-
 	return true;
 }
 
