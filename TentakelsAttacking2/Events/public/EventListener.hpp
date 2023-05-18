@@ -7,7 +7,7 @@
 #include "MainEvent.hpp"
 
 /**
- * pure virtual class that should be implemenmted by every class that schould can receive events.
+ * pure virtual class that should be implemented by every class that should can receive events.
  */
 class EventListener {
 	friend class EventManager; ///< defines the event manager as friend so it can call OnEvent

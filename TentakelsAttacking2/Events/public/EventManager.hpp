@@ -23,11 +23,11 @@ public:
 	}
 
 	/**
-	 * revomes a listener so events gets no longer provided to this listener.
+	 * remove's a listener so events gets no longer provided to this listener.
 	 */
-	void RemoveListener(EventListener* eventlistener) {
+	void RemoveListener(EventListener* eventListener) {
 		m_listeners.erase(std::remove(
-			m_listeners.begin(), m_listeners.end(), eventlistener),
+			m_listeners.begin(), m_listeners.end(), eventListener),
 			m_listeners.end());
 	}
 
@@ -41,5 +41,5 @@ public:
 	}
 
 private:
-	std::vector<EventListener*> m_listeners; ///< contains all active listeners
+	std::vector<EventListener*> m_listeners{ }; ///< contains all active listeners
 };
