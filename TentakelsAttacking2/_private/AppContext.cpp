@@ -11,7 +11,7 @@
 
 
 AppContext& AppContext::GetInstance() {
-	static AppContext appContext;
+	static AppContext appContext { };
 	return appContext;
 }
 
@@ -24,7 +24,7 @@ void AppContext::LoadConfig() {
 		SetMasterVolume(constants.sound.masterVolume / 100);
 	}
 	
-	auto event = SetTargetFPSEvent(constants.window.FPS);
+	auto event{ SetTargetFPSEvent(constants.window.FPS) };
 	eventManager.InvokeEvent(event);
 
 }
