@@ -106,8 +106,8 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		resolution,
-		static_cast<int>(appContext.constants.world.minDiemnsionX),
-		static_cast<int>(appContext.constants.world.maxDiemnsionX),
+		static_cast<int>(appContext.constants.world.minDimensionX),
+		static_cast<int>(appContext.constants.world.maxDimensionX),
 		static_cast<int>(appContext.constants.world.currentDimensionX)
 		);
 	galaxyWidth->SetActive(true, appContext);
@@ -133,8 +133,8 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		resolution,
-		static_cast<int>(appContext.constants.world.minDiemnsionY),
-		static_cast<int>(appContext.constants.world.maxDiemnsionY),
+		static_cast<int>(appContext.constants.world.minDimensionY),
+		static_cast<int>(appContext.constants.world.maxDimensionY),
 		static_cast<int>(appContext.constants.world.currentDimensionY)
 		);
 	galaxyHeight->SetActive(true, appContext);

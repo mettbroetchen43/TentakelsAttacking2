@@ -129,10 +129,10 @@ void LoadConfig() {
 
 	std::vector<int*> intEntries{
 		// World
-		&constants.world.minDiemnsionX,
-		&constants.world.maxDiemnsionX,
-		&constants.world.minDiemnsionY,
-		&constants.world.maxDiemnsionY,
+		&constants.world.minDimensionX,
+		&constants.world.maxDimensionX,
+		&constants.world.minDimensionY,
+		&constants.world.maxDimensionY,
 
 		&constants.world.showDimensionX,
 		&constants.world.showDimensionY
@@ -226,10 +226,10 @@ void SaveConfig() {
 	entry(std::to_string(constants.world.maxPlanetCount), "Max Planet Count", toSave);
 	entry(std::to_string(constants.world.showPlanetCount), "Show Galaxy Planet Count", toSave);
 
-	entry(std::to_string(constants.world.minDiemnsionX), "Min Dimension X", toSave);
-	entry(std::to_string(constants.world.maxDiemnsionX), "Max Dimension X", toSave);
-	entry(std::to_string(constants.world.minDiemnsionY), "Min Dimension Y", toSave);
-	entry(std::to_string(constants.world.maxDiemnsionY), "Max Dimension Y", toSave);
+	entry(std::to_string(constants.world.minDimensionX), "Min Dimension X", toSave);
+	entry(std::to_string(constants.world.maxDimensionX), "Max Dimension X", toSave);
+	entry(std::to_string(constants.world.minDimensionY), "Min Dimension Y", toSave);
+	entry(std::to_string(constants.world.maxDimensionY), "Max Dimension Y", toSave);
 
 	entry(std::to_string(constants.world.showDimensionX), "Show Galaxy Dinmension X", toSave);
 	entry(std::to_string(constants.world.showDimensionY), "Show Galaxy Sinamension Y", toSave);

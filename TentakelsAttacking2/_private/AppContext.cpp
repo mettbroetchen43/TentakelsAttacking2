@@ -49,15 +49,15 @@ void AppContext::ValidateConfig() {
 	ValidateMinCurrentMax<size_t>(constants.world.minPlanetCount, constants.world.currentPlanetCount,
 		constants.world.maxPlanetCount);
 
-	ValidateMinMax<int>(constants.world.minDiemnsionX, constants.world.maxDiemnsionX,
+	ValidateMinMax<int>(constants.world.minDimensionX, constants.world.maxDimensionX,
 		"Min World Width", "Max World Width");
-	ValidateMinCurrentMax<int>(constants.world.minDiemnsionX, constants.world.currentDimensionX,
-		constants.world.maxDiemnsionX);
+	ValidateMinCurrentMax<int>(constants.world.minDimensionX, constants.world.currentDimensionX,
+		constants.world.maxDimensionX);
 
-	ValidateMinMax<int>(constants.world.minDiemnsionY, constants.world.maxDiemnsionY,
+	ValidateMinMax<int>(constants.world.minDimensionY, constants.world.maxDimensionY,
 		"Min World Height", "Max World Height");
-	ValidateMinCurrentMax<int>(constants.world.minDiemnsionY, constants.world.currentDimensionY,
-		constants.world.maxDiemnsionY);
+	ValidateMinCurrentMax<int>(constants.world.minDimensionY, constants.world.currentDimensionY,
+		constants.world.maxDimensionY);
 
 	// Sound
 	ValidateLowerEqual<float>(constants.sound.masterVolume, 100.0f, "Master Volume");
