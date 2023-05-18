@@ -37,7 +37,7 @@ private:
 	/**
 	 * coordinates the geration of all planets.
 	 */
-	void InitialzePlanets(size_t planetCount, std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer);
+	void InitializePlanets(size_t planetCount, std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer);
 	/**
 	 * geretes one home planet for every player.
 	 * returns the planet count for generating the other planets. 
