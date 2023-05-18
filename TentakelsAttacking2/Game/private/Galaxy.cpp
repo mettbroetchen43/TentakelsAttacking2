@@ -154,7 +154,7 @@ bool Galaxy::IsValidNewPlanet(std::shared_ptr<Planet> newPlanet,
 }
 
 // Fleet
-bool Galaxy::AddFleetFromPlanet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
+bool Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
 
     // check origin id
     if (event->GetOrigin() > m_planets.size()) {
@@ -199,12 +199,12 @@ bool Galaxy::AddFleetFromPlanet(SendFleedInstructionEvent const* event, std::sha
     return true;
 }
 
-bool Galaxy::AddFleetFromFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer)
+bool Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer)
 {
     return false;
 }
 
-bool Galaxy::AddFleetFromTargetPoint(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer)
+bool Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer)
 {
     return false;
 }
@@ -315,7 +315,7 @@ std::shared_ptr<SpaceObject> const Galaxy::GetSpaceObjectByID(unsigned int ID) c
     throw std::runtime_error("no space object with ID " + std::to_string(ID));
 }
 
-bool Galaxy::AddFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
+bool Galaxy::AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
 
     // valid ID?
     if(!IsValidSpaceObjectID(event->GetOrigin())){

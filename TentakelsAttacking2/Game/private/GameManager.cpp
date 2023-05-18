@@ -347,7 +347,7 @@ void GameManager::CopyGalaxies(CopyGalaxyType copyType) {
 }
 
 // Fleet
-void GameManager::AddFleet(SendFleedInstructionEvent const* event) {
+void GameManager::AddFleet(SendFleetInstructionEvent const* event) {
 
 	if (!ValidateAddFleetInput(event)) { return; }
 
@@ -362,7 +362,7 @@ void GameManager::AddFleet(SendFleedInstructionEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
 }
 
-bool GameManager::ValidateAddFleetInput(SendFleedInstructionEvent const* event) {
+bool GameManager::ValidateAddFleetInput(SendFleetInstructionEvent const* event) {
 
 	std::string messageText;
 
@@ -488,7 +488,7 @@ void GameManager::OnEvent(Event const& event) {
 	}
 
 	// Fleet
-	if (auto const* fleetEvent = dynamic_cast<SendFleedInstructionEvent const*> (&event)) {
+	if (auto const* fleetEvent = dynamic_cast<SendFleetInstructionEvent const*> (&event)) {
 		AddFleet(fleetEvent);
 		return;
 	}

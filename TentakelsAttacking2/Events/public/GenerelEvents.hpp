@@ -17,12 +17,12 @@ class Galaxy;
  */
 class PlayerEvent : public Event {
 private:
-	std::string m_name;
-	Color m_color;
+	std::string m_name{ };
+	Color m_color{ };
 
 public:
 	PlayerEvent(std::string const& name, Color color)
-		: m_name(name), m_color(color){ }
+		: m_name{ name }, m_color{ color } { }
 
 	[[nodiscard]] std::string GetName() const {
 		return m_name;
@@ -36,11 +36,11 @@ public:
  */
 class PlayerWithIDEvent : public PlayerEvent {
 private:
-	unsigned int m_ID;
+	unsigned int m_ID{ };
 
 public:
 	PlayerWithIDEvent(unsigned int ID, std::string const& name, Color color)
-		: PlayerEvent(name, color), m_ID(ID) { }
+		: PlayerEvent{ name, color }, m_ID{ ID } { }
 
 	[[nodiscard]] unsigned int GetID() const {
 		return m_ID;
@@ -48,35 +48,35 @@ public:
 };
 
 /**
- * use this to add a player in the locig.
+ * use this to add a player in the logic.
  */
 class AddPlayerEvent final : public PlayerEvent {
 public:
 	using PlayerEvent::PlayerEvent;
 };
 /**
- * use this to edit a player in the locig.
+ * use this to edit a player in the lockige.
  */
 class EditPlayerEvent final : public PlayerWithIDEvent {
 public:
 	using PlayerWithIDEvent::PlayerWithIDEvent;
 };
 /**
- * use this to delete a player by id in the locig.
+ * use this to delete a player by id in the logic.
  */
 class DeletePlayerEvent final : public Event {
 private:
-	unsigned int m_ID;
+	unsigned int m_ID{ };
 public:
 	DeletePlayerEvent(unsigned int ID)
-		:m_ID(ID) { }
+		:m_ID{ ID } { }
 
 	[[nodiscard]] unsigned int GetID() const {
 		return m_ID;
 	}
 };
 /**
- * use this to remove all player in locig.
+ * use this to remove all player in logic.
  */
 class ResetPlayerEvent final : public Event { };
 /**
@@ -85,7 +85,7 @@ class ResetPlayerEvent final : public Event { };
 class LoadCurrentPlayerEvent final : public Event { };
 
 /**
- * "callbackevent" from AddPlayerEvent.
+ * "callback event" from AddPlayerEvent.
  * use this so add a player in PlayerCollection
  */
 class AddPlayerUIEvent final : public PlayerWithIDEvent {
@@ -93,7 +93,7 @@ public:
 	using PlayerWithIDEvent::PlayerWithIDEvent;
 };
 /**
- * "callbackevent" from EditPlayerEvent.
+ * "callback event" from EditPlayerEvent.
  * use this to edit a player in PlayerCollection
  */
 class EditPlayerUIEvent final : public PlayerWithIDEvent {
@@ -101,22 +101,22 @@ public:
 	using PlayerWithIDEvent::PlayerWithIDEvent;
 };
 /**
- * "callbackevent" from DeletePlayerEvent.
+ * "callback event" from DeletePlayerEvent.
  * use this to delete a player in PlayerCollection
  */
 class DeletePlayerUIEvent final : public Event {
 private:
-	unsigned int m_ID;
+	unsigned int m_ID{ };
 public:
 	DeletePlayerUIEvent(unsigned int ID)
-		:m_ID(ID) { }
+		:m_ID{ ID } { }
 
 	[[nodiscard]] unsigned int GetID() const {
 		return m_ID;
 	}
 };
 /**
- * "callbackevent" from ResetPlayerEvent.
+ * "callback event" from ResetPlayerEvent.
  * use this remove all player from PlayerCollection
  */
 class ResetPlayerUIEvent final : public Event { };
@@ -126,11 +126,11 @@ class ResetPlayerUIEvent final : public Event { };
  */
 class PlayerIDEvent : public Event {
 private:
-	unsigned int m_ID;
+	unsigned int m_ID{ };
 
 public:
 	PlayerIDEvent(unsigned int ID)
-		:m_ID(ID) { }
+		:m_ID{ ID } { }
 	[[nodiscard]] unsigned int GetID() const {
 		return m_ID;
 	}
@@ -153,7 +153,7 @@ public:
 /**
  * use this to trigger the logic to evaluate the next turn or round if no player remaining.
  */
-class TriggerNextTurnEvent final : public Event  { };
+class TriggerNextTurnEvent final : public Event { };
 /**
  * use this to trigger the ui to show the next turn.
  */
@@ -174,11 +174,11 @@ class ValidatePlayerCountEvent final : public Event { };
  */
 class ValidatePlayerCountResultEvent final : public Event {
 private:
-	bool m_validPlayerCount;
+	bool m_validPlayerCount{ };
 
 public:
 	ValidatePlayerCountResultEvent(bool validPlayerCount)
-		: m_validPlayerCount(validPlayerCount) { }
+		: m_validPlayerCount{ validPlayerCount } { }
 
 	[[nodiscard]] bool GetValid() const {
 		return m_validPlayerCount;
@@ -196,12 +196,12 @@ class StartGameEvent final : public Event { };
  */
 class UpdateCheckGameEvent final : public Event {
 private:
-	GameEventType m_type;
-	bool m_isChecked;
+	GameEventType m_type{ };
+	bool m_isChecked{ };
 
 public:
 	UpdateCheckGameEvent(GameEventType type, bool isChecked)
-		: m_type(type), m_isChecked(isChecked) {}
+		: m_type{ type }, m_isChecked{ isChecked } { }
 
 	[[nodiscard]] GameEventType GetType() const {
 		return m_type;
@@ -216,11 +216,11 @@ public:
 class UpdateCheckGameEventsUI final : public Event {
 private:
 	using Map = std::unordered_map<GameEventType, bool>const*;
-	Map m_types;
+	Map m_types{ };
 
 public:
 	UpdateCheckGameEventsUI(Map types)
-		: m_types(types) { }
+		: m_types{ types } { }
 
 	[[nodiscard]] Map GetTypes() const {
 		return m_types;
@@ -233,15 +233,15 @@ public:
 class InitialCheckGameEventDataEvent final : public Event { };
 
 /**
- * use this to trigger the constants to update the target last round. 
+ * use this to trigger the constants to update the target last round.
  */
 class SetCurrentLastRoundEvent final : public Event {
 private:
-	int m_lastRound;
+	int m_lastRound{ };
 
 public:
 	SetCurrentLastRoundEvent(int lastRound)
-		:m_lastRound(lastRound) { }
+		:m_lastRound{ lastRound } { }
 
 	[[nodiscard]] int GetLastRound() const {
 		return m_lastRound;
@@ -276,10 +276,10 @@ private:
 	bool m_isShowGalaxy{ false };
 
 public:
-	SendGalaxyPointerEvent(Galaxy const *const galaxy, bool isShowGalaxy)
-		: m_galaxy(galaxy), m_isShowGalaxy(isShowGalaxy) { }
+	SendGalaxyPointerEvent(Galaxy const* const galaxy, bool isShowGalaxy)
+		: m_galaxy{ galaxy }, m_isShowGalaxy{ isShowGalaxy } { }
 
-	[[nodiscard]] Galaxy const *const GetGalaxy() const {
+	[[nodiscard]] Galaxy const* const GetGalaxy() const {
 		return m_galaxy;
 	}
 	[[nodiscard]] bool IsShowGalaxy() const {
@@ -291,19 +291,19 @@ public:
 /**
  * send a ship instruction into the logic.
  */
-class SendFleedInstructionEvent : public Event {
+class SendFleetInstructionEvent final : public Event {
 private:
-	unsigned int m_origin;
-	unsigned int m_destination;
-	int m_destinamtionX;
-	int m_destinationY;
-	size_t m_shipCount;
+	unsigned int m_origin{ };
+	unsigned int m_destination{ };
+	int m_destinationX{ };
+	int m_destinationY{ };
+	size_t m_shipCount{ };
 
 public:
-	SendFleedInstructionEvent(unsigned int origin, unsigned int destination, int destinationX,
-		int destinationY,  size_t shipCount)
-		: m_origin(origin), m_destination(destination), m_destinamtionX(destinationX),
-		m_destinationY(destinationY), m_shipCount(shipCount) { }
+	SendFleetInstructionEvent(unsigned int origin, unsigned int destination, int destinationX,
+		int destinationY, size_t shipCount)
+		: m_origin{ origin }, m_destination{ destination }, m_destinationX{ destinationX },
+		m_destinationY{ destinationY }, m_shipCount{ shipCount } { }
 
 	[[nodiscard]] unsigned int GetOrigin() const {
 		return m_origin;
@@ -311,8 +311,8 @@ public:
 	[[nodiscard]] unsigned int GetDestination() const {
 		return m_destination;
 	}
-	[[nodiscard]] int GetDestinationX() const{
-		return m_destinamtionX;
+	[[nodiscard]] int GetDestinationX() const {
+		return m_destinationX;
 	}
 	[[nodiscard]] int GetDestinationY() const {
 		return m_destinationY;
@@ -322,15 +322,15 @@ public:
 	}
 };
 /**
- * functions as the return of SendFleedInstructionEvent.
+ * functions as the return of SendFleetInstructionEvent.
  */
-class ReturnFleetInstructionEvent : public Event {
+class ReturnFleetInstructionEvent final : public Event {
 private:
-	bool m_isValidFleet;
+	bool m_isValidFleet{ };
 
 public:
 	ReturnFleetInstructionEvent(bool validFeet)
-	: m_isValidFleet (validFeet) { }
+		: m_isValidFleet{ validFeet } { }
 
 	[[nodiscard]] bool IsValidFleet() const {
 		return m_isValidFleet;

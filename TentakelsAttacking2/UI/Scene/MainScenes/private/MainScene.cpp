@@ -494,7 +494,7 @@ void MainScene::SendFleetInstruction() {
 
 	// TODO: validate input -> implement validation in logic first
 
-	auto event = SendFleedInstructionEvent(
+	auto event = SendFleetInstructionEvent(
 		m_origin->GetValue(),
 		m_destination->GetValue(),
 		m_destinationX->GetValue(),

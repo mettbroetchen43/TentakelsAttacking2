@@ -60,19 +60,19 @@ private:
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] bool AddFleetFromPlanet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleetFromPlanet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a fleet.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] bool AddFleetFromFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleetFromFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a target point.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] bool AddFleetFromTargetPoint(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 
 	[[nodiscard]] std::shared_ptr<SpaceObject> GetOrGenerateDestination(unsigned int ID,
 		int X, int Y, std::shared_ptr<Player> currentPlayer);
@@ -126,7 +126,7 @@ public:
 	/**
 	 * adds a new fleet to the galaxy for the provided player.
 	 */
-	[[nodiscard]] bool AddFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 	/**
 	 * filters the galaxy for relevant data for the provided player.
 	 */
