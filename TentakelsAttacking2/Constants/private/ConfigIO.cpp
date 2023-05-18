@@ -14,13 +14,13 @@
 #include <charconv>
 #include <iomanip>
 
-static constexpr char token = '/';
+static constexpr char token{ '/' };
 
 template<typename T>
 std::optional<T> ParseNumber(std::string& input) {
 	StripString(input);
-	T value{};
-	auto const result = std::from_chars(input.data(), input.data() + input.length(), value);
+	T value{ };
+	auto const result{ std::from_chars(input.data(), input.data() + input.length(), value) };
 	if (result.ec != std::errc() or result.ptr != input.data() + input.length()) {
 		Print("not able to load config -> \"" + input + "\"", PrintType::ERROR);
 		return {};
@@ -30,7 +30,7 @@ std::optional<T> ParseNumber(std::string& input) {
 
 void LoadConfig() {
 	auto& constants = AppContext::GetInstance().constants;
-	std::ifstream file;
+	std::ifstream file{ };
 
 	if (!std::filesystem::exists(constants.files.configFile())) {
 		Print("config does not exists", PrintType::EXPECTED_ERROR);
@@ -49,7 +49,7 @@ void LoadConfig() {
 			if (input.empty()) { continue; }
 			if (input[0] == token) { continue; }
 
-			size_t index = input.find_first_of(token);
+			size_t const index{ input.find_first_of(token) };
 			input = input.substr(0, index);
 			return true;
 		}
@@ -59,7 +59,7 @@ void LoadConfig() {
 	auto addBools = [](std::vector<bool*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
-				auto value = ParseNumber<int>(input);
+				auto value{ ParseNumber<int>(input) };
 				if (value.has_value()) {
 					*e = static_cast<bool>(value.value());
 				}
@@ -69,7 +69,7 @@ void LoadConfig() {
 	auto addSize_t = [](std::vector<size_t*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
-				auto value = ParseNumber<std::size_t>(input);
+				auto value{ ParseNumber<std::size_t>(input) };
 				if (value.has_value()) {
 					*e = value.value();
 				}
@@ -79,7 +79,7 @@ void LoadConfig() {
 	auto addInt = [](std::vector<int*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
-				auto value = ParseNumber<int>(input);
+				auto value{ ParseNumber<int>(input) };
 				if (value.has_value()) {
 					*e = value.value();
 				}
@@ -89,17 +89,17 @@ void LoadConfig() {
 	auto addFloat = [](std::vector<float*> entries, std::ifstream& file, std::string& input, auto nextEntry) {
 		for (auto e : entries) {
 			if (nextEntry(file, input)) {
-				auto value = ParseNumber<float>(input);
+				auto value{ ParseNumber<float>(input) };
 				if (value.has_value()) {
 					*e = value.value();
 				}
 			}
 		}
 	};
-	std::string input;
-	size_t temporary;
+	std::string input{ };
+	size_t temporary{ };
 	std::vector<size_t*> size_tEntries = {
-		// Globals
+		// Global
 		&constants.global.minRounds,
 		&constants.global.currentTargetRound,
 		&constants.global.maxRounds,
@@ -127,7 +127,7 @@ void LoadConfig() {
 	};
 	addSize_t(size_tEntries, file, input, nextEntry);
 
-	std::vector<int*> intEntries {
+	std::vector<int*> intEntries{
 		// World
 		&constants.world.minDiemnsionX,
 		&constants.world.maxDiemnsionX,
@@ -145,11 +145,11 @@ void LoadConfig() {
 	};
 	addBools(boolEntries, file, input, nextEntry);
 
-	std::vector<float*> floatEltries = {
+	std::vector<float*> floatEntries = {
 		// Sound
 		&constants.sound.masterVolume
 	};
-	addFloat(floatEltries, file, input, nextEntry);
+	addFloat(floatEntries, file, input, nextEntry);
 
 	size_tEntries = {
 		// Planet
@@ -162,12 +162,12 @@ void LoadConfig() {
 	};
 	addSize_t(size_tEntries, file, input, nextEntry);
 
-	floatEltries = {
+	floatEntries = {
 		// Planet
 		&constants.planet.homeworldSpacing,
 		&constants.planet.globalSpacing,
 	};
-	addFloat(floatEltries, file, input, nextEntry);
+	addFloat(floatEntries, file, input, nextEntry);
 
 	file.close();
 
@@ -178,8 +178,8 @@ void LoadConfig() {
 	Print("config loaded", PrintType::INFO);
 }
 void SaveConfig() {
-	auto& constants = AppContext::GetInstance().constants;
-	std::ofstream file;
+	auto& constants{ AppContext::GetInstance().constants };
+	std::ofstream file{ };
 
 	if (!std::filesystem::exists(constants.files.savesDir)) {
 		Print("saves dir does not exists", PrintType::EXPECTED_ERROR);
@@ -193,7 +193,7 @@ void SaveConfig() {
 
 	file.open(constants.files.configFile());
 
-	std::string toSave = "//\n// Purpur Tentakel\n// Tentakels Attacking\n// Config\n//\n\n// Min Count >= 0\n";
+	std::string toSave{ "//\n// Purpur Tentakel\n// Tentakels Attacking\n// Config\n//\n\n// Min Count >= 0\n" };
 
 
 	auto headline = [](std::string const& headline, std::string& toSave) {
@@ -203,8 +203,8 @@ void SaveConfig() {
 		toSave += entry + ' ' + token + ' ' + message + "\n";
 	};
 
-	headline("Globals", toSave);
-	
+	headline("Global", toSave);
+
 
 	entry(std::to_string(constants.global.minRounds), "Min Game Rounds", toSave);
 	entry(std::to_string(constants.global.currentTargetRound), "Current Target Game Round", toSave);
