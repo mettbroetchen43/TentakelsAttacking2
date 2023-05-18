@@ -185,7 +185,7 @@
     <ClInclude Include="Helper\public\HVector2Operator.h" />
     <ClInclude Include="Helper\public\LayeredVector.hpp" />
     <ClInclude Include="Helper\public\HRandom.h" />
-    <ClInclude Include="Constants\public\CTextProcecing.hpp" />
+    <ClInclude Include="Constants\public\CTextProcessing.hpp" />
     <ClInclude Include="Helper\public\HTextProcessing.h" />
     <ClInclude Include="Helper\public\HPlayerData.hpp" />
     <ClInclude Include="Helper\public\Vec2.hpp" />

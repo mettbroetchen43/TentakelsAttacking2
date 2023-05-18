@@ -159,7 +159,7 @@
     <ClInclude Include="UI\Elements\Default\public\Line.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Constants\public\CTextProcecing.hpp">
+    <ClInclude Include="Constants\public\CTextProcessing.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\public\PopUpManager.h">

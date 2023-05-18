@@ -5,7 +5,7 @@
 
 #pragma once
 #include "CGlobal.hpp"
-#include "CTextProcecing.hpp"
+#include "CTextProcessing.hpp"
 #include "CPlayer.hpp"
 #include "CWorld.hpp"
 #include "CFiles.hpp"
@@ -18,7 +18,7 @@
  */
 struct Constants final {
 	CGlobal global{ }; ///< contains the global constants
-	CTextProcecing textProcessing{ }; ///< contains the text processing constants
+	CTextProcessing textProcessing{ }; ///< contains the text processing constants
 	CPlayer player{ }; ///< contains the player constants
 	CWorld world{ }; ///< contains the world constants
 	CFiles files{ }; ///< contains the file constants
