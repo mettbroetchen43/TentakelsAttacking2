@@ -17,12 +17,12 @@
  * contains all constants.
  */
 struct Constants final {
-	CGlobal global; ///< contains the golbal constats
-	CTextProcecing textProcecing; ///< contains the text procecing constants
-	CPlayer player; ///< contains the player constants
-	CWorld world; ///< contains the world constants
-	CFiles files; ///< contains the file constants
-	CSound sound; ///< contains the sound constants
-	CPlanet planet; ///< contains the planet constants
-	CWindow window; ///< contains the window constants
+	CGlobal global{ }; ///< contains the global constants
+	CTextProcecing textProcessing{ }; ///< contains the text processing constants
+	CPlayer player{ }; ///< contains the player constants
+	CWorld world{ }; ///< contains the world constants
+	CFiles files{ }; ///< contains the file constants
+	CSound sound{ }; ///< contains the sound constants
+	CPlanet planet{ }; ///< contains the planet constants
+	CWindow window{ }; ///< contains the window constants
 };
