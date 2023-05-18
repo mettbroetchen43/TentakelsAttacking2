@@ -7,27 +7,26 @@
 #include "HPrint.h"
 #include <CustomRaylib.h>
 
-bool CWindow::IsPossibleResolution(Resolution toProove) {
-	int screen = GetCurrentMonitor();
-	int height = GetMonitorHeight(screen);
-	int width = GetMonitorWidth(screen);
+bool CWindow::IsPossibleResolution(Resolution toProve) {
+	int const screen{ GetCurrentMonitor() };
+	int const height{ GetMonitorHeight(screen) };
+	int const width{ GetMonitorWidth(screen) };
 
-	auto value = GetIntFromResolution(toProove);
+	auto const value{ GetIntFromResolution(toProve) };
 
 	if (width < value[0]) { return false; }
 	if (height < value[1]) { return false; }
 	return true;
 }
 
-std::vector<std::pair<Resolution,std::string>> CWindow::GetAllResolutionsAsString() {
-	std::vector<std::pair<Resolution,std::string>> toReturn;
+std::vector<std::pair<Resolution, std::string>> CWindow::GetAllResolutionsAsString() {
+	std::vector<std::pair<Resolution, std::string>> toReturn;
 
 	for (int i = 0; i != static_cast<int>(Resolution::LAST); ++i) {
 
-		Resolution entry = static_cast<Resolution>(i);
+		Resolution const entry{ static_cast<Resolution>(i) };
 
 		if (!IsPossibleResolution(entry)) { continue; }
-
 		toReturn.emplace_back(entry, GetStringFromResolution(entry));
 	}
 
@@ -37,114 +36,114 @@ std::vector<std::pair<Resolution,std::string>> CWindow::GetAllResolutionsAsStrin
 std::string CWindow::GetStringFromResolution(Resolution resolution) {
 
 	switch (resolution) {
-	
+
 		// 16:9
-		case Resolution::UHD2:
-			return "UHD2 16:9 (7600 x 4320)";
-		case Resolution::_5K:
-			return "5K 16:9 (5120 x 2160)";
-		case Resolution::UHD1:
-			return "UHD1 16:9 (3840 x 2162)";
-		case Resolution::WQHD:
-			return "WQHD 16:9 (2560 x 1440)";
-		case Resolution::FULL_HD:
-			return "Full HD 16:9 (1920 x 1080)";
-		case Resolution::HD:
-			return "HD 16:9 (1280 x 720)";
+	case Resolution::UHD2:
+		return "UHD2 16:9 (7600 x 4320)";
+	case Resolution::_5K:
+		return "5K 16:9 (5120 x 2160)";
+	case Resolution::UHD1:
+		return "UHD1 16:9 (3840 x 2162)";
+	case Resolution::WQHD:
+		return "WQHD 16:9 (2560 x 1440)";
+	case Resolution::FULL_HD:
+		return "Full HD 16:9 (1920 x 1080)";
+	case Resolution::HD:
+		return "HD 16:9 (1280 x 720)";
 
 		// 21:9
-		case Resolution::_5K_ULTRAWIDE:
-			return "5K Ultrawide 21:9 (5120 x 2160)";
-		case Resolution::UWQHD:
-			return "UWQHD 21:9 (3440 x 1440)";
-		case Resolution::UWHD:
-			return "UWHD 21:9 (2560 X 1080)";
+	case Resolution::_5K_ULTRAWIDE:
+		return "5K Ultrawide 21:9 (5120 x 2160)";
+	case Resolution::UWQHD:
+		return "UWQHD 21:9 (3440 x 1440)";
+	case Resolution::UWHD:
+		return "UWHD 21:9 (2560 X 1080)";
 
 		// 4:3
-		case Resolution::QXGA:
-			return "QXGA 4:3 (2048 x 1536)";
-		case Resolution::UXGA:
-			return "UXGA 4:3 (1600 x 1200)";
-		case Resolution::SXGA_Plus:
-			return "SXGA Plus 4:3 (1400 x 1050)";
-		case Resolution::XGA_plus:
-			return "XGA Plus 4:3 (1152 x 864)";
-		case Resolution::XGA:
-			return "XGA 4:3 (1024 x 768)";
-		case Resolution::SVGA:
-			return "SVGA 4:3 (800 x 600)";
-		case Resolution::PAL:
-			return "PAL 4:3 (768 x 576)";
-		case Resolution::VGA:
-			return "VGA 4:3 (640 x 480)";
+	case Resolution::QXGA:
+		return "QXGA 4:3 (2048 x 1536)";
+	case Resolution::UXGA:
+		return "UXGA 4:3 (1600 x 1200)";
+	case Resolution::SXGA_Plus:
+		return "SXGA Plus 4:3 (1400 x 1050)";
+	case Resolution::XGA_plus:
+		return "XGA Plus 4:3 (1152 x 864)";
+	case Resolution::XGA:
+		return "XGA 4:3 (1024 x 768)";
+	case Resolution::SVGA:
+		return "SVGA 4:3 (800 x 600)";
+	case Resolution::PAL:
+		return "PAL 4:3 (768 x 576)";
+	case Resolution::VGA:
+		return "VGA 4:3 (640 x 480)";
 
 
-		case Resolution::SCREEN: {
-			auto value = GetIntFromResolution(resolution);
-			return "Screen (" + std::to_string(value[0]) + " x " + std::to_string(value[1]) + ")";
-		}
-		case Resolution::LAST:
-		default:
-			Print("invalud resoltion selected: " + static_cast<int>(resolution), PrintType::ERROR);
-			return "invalid Resoluion";
+	case Resolution::SCREEN: {
+		auto const value{ GetIntFromResolution(resolution) };
+		return "Screen (" + std::to_string(value[0]) + " x " + std::to_string(value[1]) + ")";
+	}
+	case Resolution::LAST:
+	default:
+		Print("invalid resolution selected: " + static_cast<int>(resolution), PrintType::ERROR);
+		return "invalid resolution";
 	}
 }
 
 std::array<int, 2> CWindow::GetIntFromResolution(Resolution resolution) {
 
 	switch (resolution) {
-	
+
 		// 16:9
-		case Resolution::UHD2:
-			return { 7600, 4320 };
-		case Resolution::_5K:
-			return { 5120, 2160 };
-		case Resolution::UHD1:
-			return  { 3840, 2162 };
-		case Resolution::WQHD:
-			return { 2560, 1440 };
-		case Resolution::FULL_HD:
-			return { 1920, 1080 };
-		case Resolution::HD:
-			return { 1280, 720 };
+	case Resolution::UHD2:
+		return { 7600, 4320 };
+	case Resolution::_5K:
+		return { 5120, 2160 };
+	case Resolution::UHD1:
+		return  { 3840, 2162 };
+	case Resolution::WQHD:
+		return { 2560, 1440 };
+	case Resolution::FULL_HD:
+		return { 1920, 1080 };
+	case Resolution::HD:
+		return { 1280, 720 };
 
 		// 21:9
-		case Resolution::_5K_ULTRAWIDE:
-			return { 5120, 2460 };
-		case Resolution::UWQHD:
-			return { 3440, 1440 };
-		case Resolution::UWHD:
-			return { 2560, 1080 };
+	case Resolution::_5K_ULTRAWIDE:
+		return { 5120, 2460 };
+	case Resolution::UWQHD:
+		return { 3440, 1440 };
+	case Resolution::UWHD:
+		return { 2560, 1080 };
 
 		// 4:3
-		case Resolution::QXGA:
-			return { 2048, 1536 };
-		case Resolution::UXGA:
-			return { 1600, 1200 };
-		case Resolution::SXGA_Plus:
-			return { 1400, 1050 };
-		case Resolution::XGA_plus:
-			return { 1152, 864 };
-		case Resolution::XGA:
-			return { 1024, 768 };
-		case Resolution::SVGA:
-			return { 800, 600 };
-		case Resolution::PAL:
-			return { 768, 576 };
-		case Resolution::VGA:
-			return { 640, 480 };
+	case Resolution::QXGA:
+		return { 2048, 1536 };
+	case Resolution::UXGA:
+		return { 1600, 1200 };
+	case Resolution::SXGA_Plus:
+		return { 1400, 1050 };
+	case Resolution::XGA_plus:
+		return { 1152, 864 };
+	case Resolution::XGA:
+		return { 1024, 768 };
+	case Resolution::SVGA:
+		return { 800, 600 };
+	case Resolution::PAL:
+		return { 768, 576 };
+	case Resolution::VGA:
+		return { 640, 480 };
 
 
-		case Resolution::SCREEN: {
-			int screen = GetCurrentMonitor();
-			int height = GetMonitorHeight(screen);
-			int width = GetMonitorWidth(screen);
+	case Resolution::SCREEN: {
+		int const screen{ GetCurrentMonitor() };
+		int const height{ GetMonitorHeight(screen) };
+		int const width{ GetMonitorWidth(screen)};
 
-			return { width,height };
-		}
-		case Resolution::LAST:
-		default:
-			Print("invalud resoltion selected: " + static_cast<int>(resolution), PrintType::ERROR);
-			return { 100,100 };
+		return { width,height };
+	}
+	case Resolution::LAST:
+	default:
+		Print("invalid resolution selected: " + static_cast<int>(resolution), PrintType::ERROR);
+		return { 100,100 };
 	}
 }
