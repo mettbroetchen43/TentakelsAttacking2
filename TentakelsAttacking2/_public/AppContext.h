@@ -15,24 +15,24 @@
 #include "HConcepts.hpp"
 #include <string>
 
-/** 
+/**
  * contains all global variables of the game.
  * contains all assets and colors.
- * contains the event managment.
+ * contains the event management.
  * is a singleton.
  */
 struct AppContext final : public EventListener {
 public:
-	SoundManager soundManager; ///< loads and manage all sounds
-	AssetManager assetManager; ///< loads and manage all assets
-	EventManager eventManager; ///< manage the EventListener and invokes events
-	PlayerCollection playerCollection; ///< contains non logic infos about player
-	Colors colors; ///< contains all colors and check valid color
-	Constants constants; ///< contains all constants of the game
-	
+	SoundManager soundManager{ }; ///< loads and manage all sounds
+	AssetManager assetManager{ }; ///< loads and manage all assets
+	EventManager eventManager{ }; ///< manage the EventListener and invokes events
+	PlayerCollection playerCollection{ }; ///< contains non logic info's about player
+	Colors colors{ }; ///< contains all colors and check valid color
+	Constants constants{ }; ///< contains all constants of the game
+
 
 	/**
-	 * creates a Sigleton.
+	 * creates a Singleton.
 	 * returns an instance.
 	 */
 	[[nodiscard]] static AppContext& GetInstance();
@@ -45,9 +45,9 @@ public:
 	void LoadConfig();
 	/**
 	 * saves the config.
-	 * is also used to generate a config if no confix exists.
+	 * is also used to generate a config if no config exists.
 	 */
-	void SaveConfig(); 
+	void SaveConfig();
 
 	/**
 	 * validate all constants in constants that can be loaded by the config.
@@ -66,7 +66,7 @@ public:
 	}
 	/**
 	 * allows only arithmetic types.
-	 * validate if lhs is smaler than rhs.
+	 * validate if lhs is smaller than rhs.
 	 * if not: rhs is set to lhs +1.
 	 * generates a popup if rhs gets set.
 	 */
@@ -97,7 +97,7 @@ public:
 		value = max;
 		auto event = ShowMessagePopUpEvent("Invalid Config",
 			valueMessage + " > " + std::to_string(max) +
-				"\nset " + valueMessage + " to " + std::to_string(value)
+			"\nset " + valueMessage + " to " + std::to_string(value)
 		);
 		eventManager.InvokeEvent(event);
 	}
@@ -116,21 +116,21 @@ public:
 		value = min;
 		auto event = ShowMessagePopUpEvent("Invalid Config",
 			valueMessage + " < " + std::to_string(min) +
-				"\nset " + valueMessage + " to " + std::to_string(value)
+			"\nset " + valueMessage + " to " + std::to_string(value)
 		);
 		eventManager.InvokeEvent(event);
 	}
 
 	/**
-	 * receves the events vom the manager.
-	 * checks if the exprcted event is depoyed if so it calls a member function.
+	 * receives the events vom the manager.
+	 * checks if the expected event is deployed if so it calls a member function.
 	 */
 	void OnEvent(Event const& event) override;
 
 private:
 	/**
 	 * private Constructor so that the member function GetInstance()
-	 * is the only place were an instace can be created.
+	 * is the only place were an instance can be created.
 	 */
 	AppContext();
 };
