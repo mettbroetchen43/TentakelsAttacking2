@@ -80,11 +80,11 @@ void DropDown::ToggleFoldedOut() {
 
 	AppContext const& appContext{ AppContext::GetInstance() };
 
-	m_isFouldout = !m_isFouldout;
+	m_isFoldouts = !m_isFoldouts;
 
 	appContext.eventManager.InvokeEvent(PlaySoundEvent(SoundType::CLICKED_PRESS_STD));
 
-	if (m_isFouldout) {
+	if (m_isFoldouts) {
 		m_arrowTexture = appContext.assetManager.GetTexture(AssetType::ARROW_DOWN);
 		AddFocusLayer();
 		for (auto const& e : m_dropDownElements) {
@@ -112,7 +112,7 @@ void DropDown::CheckAndSetElementsEnabled() {
 
 void DropDown::ScrollMove(float wheel) {
 
-	if (!m_isScolling) { return; }
+	if (!m_isScrolling) { return; }
 
 	for (auto const& e : m_dropDownElements) {
 		Vector2 pos{ e->GetPosition() };
@@ -152,10 +152,10 @@ void DropDown::CheckIfScrolling() {
 
 	for (auto const& e : m_dropDownElements) {
 		sum += e->GetCollider().height;
-		if (m_dropDownCollider.height < sum) { m_isScolling = true; return; }
+		if (m_dropDownCollider.height < sum) { m_isScrolling = true; return; }
 	}
 
-	m_isScolling = sum > m_dropDownCollider.height;
+	m_isScrolling = sum > m_dropDownCollider.height;
 }
 
 void DropDown::UpdateCollider() {
@@ -221,7 +221,7 @@ bool DropDown::SetCurrentElementByID(unsigned int ID) {
 	for (auto const& e : m_dropDownElements) {
 		if (e->GetID() == ID) {
 			SetCurrentElement(e);
-			if (m_isFouldout) {
+			if (m_isFoldouts) {
 				ToggleFoldedOut();
 			}
 			return true;
@@ -247,17 +247,17 @@ void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		}
 	}
 	if (IsFocused()) {
-		if (IsConfirmInputPressed() && !IsNestedFocus() && !m_isFouldout) {
+		if (IsConfirmInputPressed() && !IsNestedFocus() && !m_isFoldouts) {
 			ToggleFoldedOut();
 			first = true;
 		}
-		if (IsBackInputPressed() && m_isFouldout) {
+		if (IsBackInputPressed() && m_isFoldouts) {
 			ToggleFoldedOut();
 			first = true;
 		}
 	}
 
-	if (m_isFouldout) {
+	if (m_isFoldouts) {
 		float const wheel{ GetMouseWheelMove() };
 		if (wheel != 0.0f) {
 			CheckIfScrolling();
@@ -265,7 +265,7 @@ void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		}
 	}
 
-	if (m_isFouldout && !first) {
+	if (m_isFoldouts && !first) {
 		for (auto const& e : m_dropDownElements) {
 			e->CheckAndUpdate(mousePosition, appContext);
 		}
@@ -300,7 +300,7 @@ void DropDown::Render(AppContext const& appContext) {
 		WHITE
 	);
 
-	if (m_isFouldout) {
+	if (m_isFoldouts) {
 
 		BeginScissorMode(
 			static_cast<int>(m_dropDownCollider.x),
