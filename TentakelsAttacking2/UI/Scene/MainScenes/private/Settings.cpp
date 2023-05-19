@@ -18,11 +18,11 @@
 
 void SettingsScene::Initialize(SceneType continueScene) {
 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 
-	float elementY = 0.3f;
-	float sliderOffset = 0.04f;
-	float elementOffset = 0.15f;
+	float       elementY{ 0.3f };
+	float const sliderOffset{ 0.04f };
+	float const elementOffset{ 0.15f };
 
 	// title
 	m_elements.push_back(std::make_shared<Title>(
@@ -287,11 +287,11 @@ int SettingsScene::GetIndexFromResolution(Resolution resolution) const {
 			return i;
 		}
 	}
-	throw std::runtime_error("resolution not exsisting");
+	throw std::runtime_error("resolution not existing");
 }
 
 SettingsScene::SettingsScene(Vector2 resolution, SceneType continueScene)
-	:Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
+	:Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
 	m_rawResolutionEntries = AppContext::GetInstance().constants.window.GetAllResolutionsAsString();
 	Initialize(continueScene);
 }
