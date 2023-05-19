@@ -11,17 +11,17 @@ class ClassicButton;
 class Line;
 
 /**
- * privides the credits scene.
+ * provides the credits scene.
  */
 class CreditsScene final : public Scene {
 private:
 	std::shared_ptr<Title> m_title; ///< contains the title
 	std::shared_ptr<Line> m_titleLine; ///< contains the line below title
 	std::shared_ptr<ClassicButton> m_finishBTN;  ///< contains the button that gets displayed at the end of the credits
-	std::shared_ptr<ClassicButton> m_speedBTN; ///< contains the button that can toggel the credit speed
-	float m_speed = 0.07f; ///< contains the base credit speed -> speedlevel 1
-	int m_maxSpeedLevel = 3; ///< contains the maximum speed level.
-	int m_speedLevel = 1; ///< cuntains the current speed level.
+	std::shared_ptr<ClassicButton> m_speedBTN; ///< contains the button that can toggle the credit speed
+	float m_speed{ 0.07f }; ///< contains the base credit speed -> speed level 1
+	int m_maxSpeedLevel{ 3 }; ///< contains the maximum speed level.
+	int m_speedLevel{ 1 }; ///< contains the current speed level.
 	std::vector<std::shared_ptr<UIElement>> m_movingElements; ///< contains the elements that are moving during the credits
 
 	/**
@@ -36,8 +36,8 @@ private:
 	void AddMovingElement(std::shared_ptr<UIElement> element);
 
 	/**
-	 * increces the speed level by one.
-	 * resets to 1 once the max speedlevel gets crossed.
+	 * increases the speed level by one.
+	 * resets to 1 once the max speed level gets crossed.
 	 */
 	void ToggleSpeedLevel();
 	/**
