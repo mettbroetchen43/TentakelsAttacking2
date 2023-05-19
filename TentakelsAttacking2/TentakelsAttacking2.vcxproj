@@ -293,7 +293,7 @@
     <ClCompile Include="UI\Elements\PopUp\private\ValidatePopUp.cpp" />
     <ClCompile Include="UI\Elements\Table\private\AbstactTableCell.cpp" />
     <ClCompile Include="UI\Elements\Table\public\AbstractTableCell.h" />
-    <ClCompile Include="UI\private\Allignment.cpp" />
+    <ClCompile Include="UI\private\Alignment.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPicker.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPickerCell.cpp" />
     <ClCompile Include="UI\private\HoverRender.cpp" />

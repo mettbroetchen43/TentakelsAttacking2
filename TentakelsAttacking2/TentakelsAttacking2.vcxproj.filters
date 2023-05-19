@@ -386,7 +386,7 @@
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\private\Allignment.cpp">
+    <ClCompile Include="UI\private\Alignment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Scene\MainScenes\private\MainMenu.cpp">
