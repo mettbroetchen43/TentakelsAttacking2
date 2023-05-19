@@ -31,7 +31,7 @@ void DeletePlayerPopUp::Initialize(AppContext const& appContext,
 }
 
 void DeletePlayerPopUp::SetValue() {
-	unsigned int ID = m_inputLine->GetValue();
+	unsigned int const ID{ static_cast<unsigned int const>(m_inputLine->GetValue()) };
 
 	m_onClick(ID);
 
@@ -39,11 +39,11 @@ void DeletePlayerPopUp::SetValue() {
 }
 
 DeletePlayerPopUp::DeletePlayerPopUp(Vector2 pos, Vector2 size,
-	Alignment alignemnt, Vector2 resolution,
-	std::string const& title, AssetType inpuTexture,
+	Alignment alignment, Vector2 resolution,
+	std::string const& title, AssetType inputTexture,
 	std::function<void(unsigned int)> onClick)
-	: CellPopUp(pos, size, alignemnt, resolution,
-		title, inpuTexture), m_onClick(onClick) {
+	: CellPopUp{ pos, size, alignment, resolution,
+		title, inputTexture }, m_onClick{ onClick } {
 	Initialize(AppContext::GetInstance(), resolution);
 
 	if (IsKeyReleased(KEY_ENTER)
