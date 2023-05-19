@@ -7,15 +7,15 @@
 #include "CustomRaylib.h"
 
 /**
- * provides the focusable inplementation for every ui element that should be focusable.
+ * provides the focusable implementation for every ui element that should be focusable.
  */
 class Focusable {
 private:
 	unsigned int m_focusID; ///< contains the unique (per layer) id
-	bool m_isFocus = false; ///< contains if this focusable is currntly in focus
+	bool m_isFocus{ false }; ///< contains if this focusable is currently in focus
 
 protected:
-	bool m_isNestedFocus = false; ///< contains if there is a nested focus
+	bool m_isNestedFocus{ false }; ///< contains if there is a nested focus
 
 public:
 	/**
@@ -57,7 +57,7 @@ public:
 	[[nodiscard]] unsigned int GetFocusID() const;
 	/**
 	 * sets a new focus ID. 
-	 * be careful with this member funkction. it may break the app if the focus ID is doubbelig after that.
+	 * be careful with this member function. it may break the app if the focus ID is doubling after that.
 	 */
 	void SetFocusID(unsigned int focusID) noexcept;
 	/**
