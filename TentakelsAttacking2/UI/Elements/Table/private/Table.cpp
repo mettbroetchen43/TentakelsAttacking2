@@ -435,14 +435,14 @@ void Table::SetHighlightBeackground(bool reset) {
 
 	if (m_currentHighlighted.x >= 0) {
 		for (auto cell : m_cells.at(m_currentHighlighted.x)) {
-			cell->SetBackgoundColor(newColor);
+			cell->SetBackgroundColor(newColor);
 		}
 	}
 
 	if (m_currentHighlighted.y >= 0) {
 		for (int i = 0; i < m_rowCount; ++i) {
 			auto cell = m_cells.at(i).at(m_currentHighlighted.y);
-			cell->SetBackgoundColor(newColor);
+			cell->SetBackgroundColor(newColor);
 		}
 	}
 }

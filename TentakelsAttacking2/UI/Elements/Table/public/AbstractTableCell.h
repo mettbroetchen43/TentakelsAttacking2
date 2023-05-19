@@ -40,11 +40,11 @@ public:
 	/**
 	 * sets the backgroundcolor.
 	 */
-	void SetBackgoundColor(Color color);
+	void SetBackgroundColor(Color color);
 	/**
 	 * returns the current backgroundcolor.
 	 */
-	[[nodiscard]] Color GetBackgoundColor() const;
+	[[nodiscard]] Color GetBackgroundColor() const;
 
 	/**
 	 * sets if the cell is editable.
