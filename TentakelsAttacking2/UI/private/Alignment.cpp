@@ -3,7 +3,7 @@
 // 18.09.2022
 //
 
-#include "Allignment.h"
+#include "Alignment.h"
 
 Rectangle GetAlignedCollider(Vector2& pos, Vector2 size, Alignment alignment, Vector2 resolution) {
 	switch (alignment) {
