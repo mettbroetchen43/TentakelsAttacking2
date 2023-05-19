@@ -117,7 +117,7 @@ void DropDown::ScrollMove(float wheel) {
 	for (auto const& e : m_dropDownElements) {
 		Vector2 pos{ e->GetPosition() };
 		pos.y += 0.025f * wheel;
-		e->SetPositionUnalligned(pos);
+		e->SetPositionUnaligned(pos);
 	}
 	CheckAndSetElementsEnabled();
 	ClampScrolling();
