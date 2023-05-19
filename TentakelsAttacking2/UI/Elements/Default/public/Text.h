@@ -8,21 +8,21 @@
 #include <string>
 
 /**
- * displayes a text in a collider that can be allignet. 
+ * displays a text in a collider that can be aligned. 
  */
 class Text final : public UIElement {
 private:
 	using render_ty = std::vector<std::pair<std::string const, Vector2>>;
 	std::string m_text; ///< contains the raw string that was set to the text
-	render_ty m_toRender;///< contains the modified string that gets renderd and the position of each line
-	std::string m_URL = ""; ///< contains an URL that can be opend by klick
-	float m_textHeight; ///< contains the absolute textheight in px
+	render_ty m_toRender;///< contains the modified string that gets rendered and the position of each line
+	std::string m_URL{ "" }; ///< contains an URL that can be opened by klick
+	float m_textHeight; ///< contains the absolute text height in px
 	float m_textSize; ///< contains the relativ text size
-	Alignment m_textAlignment; ///< contains the text alignemnt
-	Color m_color = WHITE; ///< contains the color the text will be rendered in
+	Alignment m_textAlignment; ///< contains the text alignment
+	Color m_color{ WHITE }; ///< contains the color the text will be rendered in
 
-	bool m_lineBreaks = false; ///< contains if the text is automaticly breaks in multiple lines
-	bool m_renderRectangle = false; ///< contains if the collider will be rendered
+	bool m_lineBreaks{ false }; ///< contains if the text is automatically breaks in multiple lines
+	bool m_renderRectangle{ false }; ///< contains if the collider will be rendered
 
 	/**
 	 * generates a printable version if the raw string.
@@ -30,8 +30,8 @@ private:
 	 */
 	void CreateToRender();
 	/**
-	 * calls a helper function that replayes some whatespace with \n.
-	 * returns directly if the linebreak is deactivated.
+	 * calls a helper function that replaces some whitespace with \n.
+	 * returns directly if the line break is deactivated.
 	 */
 	std::vector<std::string> BreakLines(std::string toBreak) const;
 
@@ -58,7 +58,7 @@ public:
 
 	/**
 	 * text logic.
-	 * in perticular if it gets pressed.
+	 * in particular if it gets pressed.
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	/**
@@ -86,7 +86,7 @@ public:
 	void SetCollider(Rectangle colider) override;
 
 	/**
-	 * returns the current relative text hight.
+	 * returns the current relative text height.
 	 */
 	[[nodiscard]] float GetRelativeTextHeight();
 
@@ -124,11 +124,11 @@ public:
 
 	/**
 	 * sets if the line Beaks are generated.
-	 * cenerates a new render string.
+	 * creates a new render string.
 	 */
 	void LineBreaks(bool lineBreaks);
 	/**
-	 * sets if the collider gets renderd.
+	 * sets if the collider gets rendered.
 	 */
 	void RenderRectangle(bool renderRectangle);
 };
