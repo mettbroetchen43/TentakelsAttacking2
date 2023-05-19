@@ -11,10 +11,9 @@
 #include "Text.h"
 #include "CheckBox.h"
 #include "HFocusEvents.h"
-#include <iostream>
 
 void SoundLevelPopUp::Initialize(Vector2 resolution) {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext = AppContext::GetInstance();
 	
 	m_slider = std::make_shared<Slider>(
 		GetElementPosition(m_pos, m_size, 0.5f, 0.65f),
@@ -79,7 +78,7 @@ void SoundLevelPopUp::Initialize(Vector2 resolution) {
 SoundLevelPopUp::SoundLevelPopUp(Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution, std::string const& title,
 	std::string& subTitle)
-	:PopUp(pos, size, alignment, resolution, title, subTitle, AssetType::QUESTION_MARK) {
+	:PopUp{ pos, size, alignment, resolution, title, subTitle, AssetType::QUESTION_MARK } {
 
 	Initialize(resolution);
 }
