@@ -88,13 +88,13 @@ void Scene::SetActive(bool active, AppContext const& appContext) {
 }
 
 void Scene::SetPosition(Vector2 pos) {
-	Vector2 dif = {
+	Vector2 const dif{
 		m_pos.x - pos.x,
 		m_pos.y - pos.y
 	};
 
 	for (auto e : m_elements) {
-		Vector2 ePos = e->GetPosition();
+		Vector2 ePos{ e->GetPosition() };
 		ePos = {
 			ePos.x - dif.x,
 			ePos.y - dif.y
@@ -102,7 +102,7 @@ void Scene::SetPosition(Vector2 pos) {
 		e->SetPosition(ePos);
 	}
 	for (auto e : m_elementsOutUpdates) {
-		Vector2 ePos = e->GetPosition();
+		Vector2 ePos{ e->GetPosition() };
 		ePos = {
 			ePos.x - dif.x,
 			ePos.y - dif.y
@@ -113,13 +113,13 @@ void Scene::SetPosition(Vector2 pos) {
 	UIElement::SetPosition(pos);
 }
 void Scene::SetSize(Vector2 size) {
-	Vector2 dif = {
+	Vector2 const dif{
 	m_size.x - size.x,
 	m_size.y - size.y
 	};
 
 	for (auto e : m_elements) {
-		Vector2 eSize = e->GetSize();
+		Vector2 eSize{ e->GetSize() };
 		eSize = {
 			eSize.x - dif.x,
 			eSize.y - dif.y
@@ -127,7 +127,7 @@ void Scene::SetSize(Vector2 size) {
 		e->SetSize(eSize);
 	}
 	for (auto e : m_elementsOutUpdates) {
-		Vector2 eSize = e->GetSize();
+		Vector2 eSize{ e->GetSize() };
 		eSize = {
 			eSize.x - dif.x,
 			eSize.y - dif.y
