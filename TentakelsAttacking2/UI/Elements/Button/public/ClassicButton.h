@@ -8,7 +8,7 @@
 #include "Focusable.h"
 
 /**
- * standard button  that calls fontcion if it gets relesed and is down.
+ * standard button that calls function if it gets released and is down.
  */
 class ClassicButton final : public Button, public Focusable {
 private:
@@ -31,13 +31,13 @@ public:
 	[[nodiscard]] bool IsEnabled() const override;
 
 	/**
-	 * calculates the logic of the button and colla the other functions.
+	 * calculates the logic of the button and calls the other functions.
 	 * calls CheckAndUpdate in button.
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	
 	/**
-	 * return current colider of the button.
+	 * return current collider of the button.
 	 */
 	[[nodiscard]] Rectangle GetCollider() const override;
 };
