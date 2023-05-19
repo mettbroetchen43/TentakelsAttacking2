@@ -10,7 +10,6 @@
 #include "HInput.h"
 #include "HTextProcessing.h"
 #include "AppContext.h"
-#include <iostream>
 #include <string>
 
 void PopUp::Initialize(std::string const& title, std::string& subTitle,
@@ -80,13 +79,13 @@ void PopUp::LateUpdate() {
 	}
 }
 
-Rectangle PopUp::GetColiderWithMaxValues(Texture2D* texture, float maxWidth, float maxHeight) const {
+Rectangle PopUp::GetColliderWithMaxValues(Texture2D* texture, float maxWidth, float maxHeight) const {
 
 	if (maxWidth > texture->width and maxHeight > texture->height) {
 		return { 0.0f, 0.0f, static_cast<float>(texture->width), static_cast<float>(texture->height) };
 	}
 
-	float ratio = static_cast<float>(texture->width) / static_cast<float>(texture->height);
+	float const ratio{ static_cast<float>(texture->width) / static_cast<float>(texture->height) };
 	Rectangle rectangle(0.0f, 0.0f, 0.0f, 0.0f);
 	if (texture->width > maxWidth) {
 		rectangle.width = maxWidth;
@@ -103,7 +102,7 @@ Rectangle PopUp::GetColiderWithMaxValues(Texture2D* texture, float maxWidth, flo
 
 PopUp::PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, std::string& subTitle, AssetType infoTexture)
-	: UIElement(pos, size, alignment, resolution) {
+	: UIElement{ pos, size, alignment, resolution } {
 	
 	Initialize(title, subTitle, infoTexture, resolution);
 
@@ -116,7 +115,7 @@ void PopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
-	for (auto& e : m_elements) {
+	for (auto const& e : m_elements) {
 		e->CheckAndUpdate(mousePosition, appContext);
 	}
 
@@ -125,7 +124,7 @@ void PopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 	}
 }
 void PopUp::Render(AppContext const& appContext) {
-	for (auto& e : m_elements) {
+	for (auto const& e : m_elements) {
 		e->Render(appContext);
 	}
 
@@ -136,7 +135,7 @@ void PopUp::Render(AppContext const& appContext) {
 	);
 }
 void PopUp::Resize(Vector2 resolution, AppContext const& appContext) {
-	for (auto& e : m_elements) {
+	for (auto const& e : m_elements) {
 		e->Resize(resolution, appContext);
 	}
 }

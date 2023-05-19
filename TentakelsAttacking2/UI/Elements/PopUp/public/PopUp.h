@@ -32,7 +32,7 @@ protected:
 	/**
 	 * calculates the colider of the picture so thats its in correct shape.
 	 */
-	Rectangle GetColiderWithMaxValues(Texture2D* texture, float maxWidth, float maxHeight) const;
+	Rectangle GetColliderWithMaxValues(Texture2D* texture, float maxWidth, float maxHeight) const;
 
 public:
 	/**
