@@ -36,16 +36,16 @@ void CreditTableScene::Initialize(std::string const& headline,
 	m_elements.push_back(headlineLine);
 
 	// elements
-	float textHeight = 0.07f;
+	float const textHeight{ 0.07f };
 
 	for (size_t i = 0; i < entries.size(); ++i) {
-		auto e = entries.at(i);
+		auto e{ entries.at(i) };
 		if (e.size() == 0) { continue; }
 		if (containsLink && e.size() % 2 != 0) { throw std::out_of_range("not able to bevide by 2 with link"); }
 		if (e.size() > 4) { throw std::out_of_range("too many Entries with link"); }
 		if (!containsLink && e.size() > 2) { throw std::out_of_range("too many Entries without link"); }
 
-		size_t position = 0;
+		size_t position{ 0 };
 		if (e.size() == 2 && !containsLink or e.size() == 4 && containsLink) {
 			auto entry = std::make_shared<Text>(
 				GetElementPosition(0.49f, 0.2f + textHeight * i),
@@ -108,6 +108,6 @@ void CreditTableScene::Initialize(std::string const& headline,
 CreditTableScene::CreditTableScene(Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution, std::string const& headline, creditEntries const& entries,
 	bool containsLink)
-	: Scene(pos, size, alignment, resolution) {
+	: Scene{ pos, size, alignment, resolution } {
 	Initialize(headline, entries, containsLink);
 }
