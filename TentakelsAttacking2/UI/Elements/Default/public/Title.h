@@ -14,7 +14,7 @@
  */
 class Title final : public UIElement {
 private:
-	std::array<std::string, 10> m_postFixes = { ///< contains the moving part if the animation
+	std::array<std::string, 10> const m_postFixes{ ///< contains the moving part if the animation
 	"  /-\\-",
 	"  \\--/",
 	"  -/--/",
@@ -28,17 +28,17 @@ private:
 	};
 	std::vector<std::string>* m_title; ///< contains the title of the game split in lines
 	float m_fontSize; ///< contains the absolute font size in px
-	size_t m_charCount = 0; ///< cxontains the current count of chars of the title that is drown so far
-	size_t m_maxCharCount; ///< contains the total ammount of chars in the title
+	size_t m_charCount{ 0 }; ///< contains the current count of chars of the title that is drown so far
+	size_t m_maxCharCount; ///< contains the total amount of chars in the title
 	bool m_titleFinish; ///< contains if the animation is finished
-	bool m_lastFinishedTitle = false; ///< contains if the animation was finished last tick
+	bool m_lastFinishedTitle{ false }; ///< contains if the animation was finished last tick
 
 	/**
 	 * enders the static title line by line.
 	 */
 	void RenderTitle(AppContext const& appContext);
 	/**
-	 * renders the title sequenz.
+	 * renders the title sequent.
 	 * every tick gets renders one character more.
 	 * adds a random postFix to the string.
 	 */
@@ -49,7 +49,7 @@ private:
 	 */
 	void MeasureTitleLength();
 	/**
-	 * claculates the collider out of the title length and position.
+	 * calculates the collider out of the title length and position.
 	 */
 	void SetCollider(AppContext const& appContext, Vector2 const& resolution);
 
