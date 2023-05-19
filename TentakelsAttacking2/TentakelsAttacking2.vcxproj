@@ -207,7 +207,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\DeletePlayerPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\SoundLevelPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\ValidatePopUp.h" />
-    <ClInclude Include="UI\Elements\PopUp\public\PrimitiveCellPopUp.hpp" />
+    <ClInclude Include="UI\Elements\PopUp\public\PrivativeCellPopUp.hpp" />
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h" />
     <ClInclude Include="UI\Elements\Default\public\InputLine.hpp" />

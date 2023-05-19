@@ -132,7 +132,7 @@
     <ClInclude Include="UI\Scene\SupportScenes\public\TestScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Elements\PopUp\public\PrimitiveCellPopUp.hpp">
+    <ClInclude Include="UI\Elements\PopUp\public\PrivativeCellPopUp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\PopUp\public\CellPopUp.h">
