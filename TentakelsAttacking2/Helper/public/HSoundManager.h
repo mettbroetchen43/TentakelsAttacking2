@@ -17,8 +17,8 @@
  */
 class SoundManager final : public EventListener {
 private:
-	std::unordered_map<SoundType, Sound> m_sounds; ///< contains all sounds
-	std::array<std::string, 5> m_files = {
+	std::unordered_map<SoundType, Sound> m_sounds{ }; ///< contains all sounds
+	std::array<std::string, 5> m_files{
 		"clicked_accepted_std.mp3",
 		"clicked_press_std.mp3",
 		"clicked_release_std.mp3",
@@ -26,7 +26,7 @@ private:
 		"hovered_std.mp3",
 	};
 
-	std::vector<Sound> m_textSounds; ///< contains the text sounds
+	std::vector<Sound> m_textSounds{ }; ///< contains the text sounds
 
 	/**
 	 * loads all sounds.
@@ -41,17 +41,17 @@ private:
 	void PlaySound(SoundType soundType) const;
 	/**
 	 * plays random text sounds.
-	 * makes shure no sound is played twice.
+	 * makes sure no sound is played twice.
 	 */
 	void PlayTextSound() const;
 
 	/**
-	 * mutes the soundleven in the constants and calls the SetMasterSoundLevel member function.
+	 * mutes the sound level in the constants and calls the SetMasterSoundLevel member function.
 	 */
 	void MuteMasterSoundLevel(bool mute) const;
 	/**
-	 * sets the master sound lebel in the constants and sets it in raylib.
-	 * if the master sound is muted in the constats the raylib level is set to 0.
+	 * sets the master sound level in the constants and sets it in raylib.
+	 * if the master sound is muted in the constants the raylib level is set to 0.
 	 */
 	void SetMasterSoundLevel(float level) const;
 
@@ -64,13 +64,13 @@ public:
 	/**
 	 * ctor.
 	 * initialize the sound device.
-	 * loas all sounds.
+	 * loads all sounds.
 	 */
 	SoundManager();
 	/**
 	 * dtor.
 	 * unload all sounds.
-	 * cloas the sound device.
+	 * loads the sound device.
 	 */
 	~SoundManager();
 };
