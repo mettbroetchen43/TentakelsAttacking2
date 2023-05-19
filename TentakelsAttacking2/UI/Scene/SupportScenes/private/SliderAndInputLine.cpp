@@ -88,14 +88,14 @@ void SliderAndInputLine::ValidateCurrentValue() {
 	m_inputLine->SetValue(m_currentValue);
 }
 void SliderAndInputLine::SetSliderValue() const {
-	float percent = static_cast<float>(m_currentValue - m_minValue) / (m_maxValue - m_minValue) * 100;
+	float const percent{ static_cast<float>(m_currentValue - m_minValue) / (m_maxValue - m_minValue) * 100 };
 	m_slider->SetButtonPosition(percent);
 }
 
 SliderAndInputLine::SliderAndInputLine(unsigned int focusID, Vector2 pos, 
 	Vector2 size, Alignment alignment, Vector2 resolution,
 	int minValue, int maxValue, int initialValue)
-	: Scene(pos, size, alignment, resolution), m_minValue(minValue), m_maxValue(maxValue) {
+	: Scene{ pos, size, alignment, resolution }, m_minValue{ minValue }, m_maxValue{ maxValue } {
 	
 	m_currentValue = initialValue;
 	Initialize(focusID, resolution);
@@ -145,7 +145,7 @@ void SliderAndInputLine::SetValue(int value) {
 }
 
 void SliderAndInputLine::RandomValue() {
-	Random& random = Random::GetInstance();
+	Random& random{ Random::GetInstance() };
 	m_currentValue = static_cast<int>(random.random(m_maxValue - m_minValue) + m_minValue);
 	m_inputLine->SetValue(m_currentValue);
 	SetSliderValue();
