@@ -20,7 +20,7 @@ void HoverRender::Render() {
 	if (m_elements.size() == 0) { return; }
 
 	AppContext& appContext = AppContext::GetInstance();
-	for (auto hover : m_elements) {
+	for (auto const& hover : m_elements) {
 		hover->Render(appContext);
 	}
 	m_elements.clear();
