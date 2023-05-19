@@ -61,7 +61,7 @@ void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
 		m_size,
 		m_resolution.y
 	);
-	m_currentElementText = GetPritableTextInColider(
+	m_currentElementText = GetPrintableTextInCollider(
 		m_currentElementText,
 		m_fontSize,
 		m_collider,

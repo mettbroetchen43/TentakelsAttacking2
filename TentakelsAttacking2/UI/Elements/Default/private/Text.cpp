@@ -11,7 +11,7 @@
 
 void Text::CreateToRender() {
 	std::vector<std::string> splitedText = BreakLines(m_text);
-	std::vector<float> horizontalOffset = GetHorisontalAlignedOffset(splitedText, m_collider, m_textSize, m_textAlignment);
+	std::vector<float> horizontalOffset = GetHorizontalAlignedOffset(splitedText, m_collider, m_textSize, m_textAlignment);
 	std::vector<float> verticalOffset = GetVerticalAlignedOffset(splitedText, m_textSize, m_collider, m_textAlignment);
 
 	assert(splitedText.size() == horizontalOffset.size());

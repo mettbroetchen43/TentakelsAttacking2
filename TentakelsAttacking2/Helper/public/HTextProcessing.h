@@ -31,13 +31,13 @@ void BreakText(std::string& toBreak, float fontSize, float length,
  * modifies the string so it fits into a colider.
  * adds indigators(dots) if the string is modified.
  */
-[[nodiscard]] std::string GetPritableTextInColider(std::string const& text,
+[[nodiscard]] std::string GetPrintableTextInCollider(std::string const& text,
 	float fontSize, Rectangle colider, AppContext const& appContext);
 /**
  * modifies the string so it fits into a colider.
  * adds indigators(dots) if the string is modified.
  */
-[[nodiscard]] std::string GetPritablePlaceholderTextInColider(std::string const& text,
+[[nodiscard]] std::string GetPrintablePlaceholderTextInCollider(std::string const& text,
 	float fontSize, Rectangle colider, AppContext const& appContext);
 
 /**
@@ -58,10 +58,10 @@ void StripString(std::string& toStrip);
 /**
  * modifyes a string so it gets horisontal aligned.
  */
-[[nodiscard]] std::string GetHorisontalAlignedText(std::string const& text,
+[[nodiscard]] std::string GetHorizontalAlignedText(std::string const& text,
 	Rectangle colider, float fontSize, Alignment alignment);
 /**
  * returns the horisintal offset per line in a vector.
  */
-[[nodiscard]] std::vector<float> GetHorisontalAlignedOffset(std::vector<std::string> text,
+[[nodiscard]] std::vector<float> GetHorizontalAlignedOffset(std::vector<std::string> text,
 	Rectangle colider, float fontSize, Alignment alignment);

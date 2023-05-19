@@ -180,7 +180,7 @@ public:
 		std::string printableInput;
 
 		if (m_value.size() > 0) {
-			printableInput = GetPritableTextInColider(
+			printableInput = GetPrintableTextInCollider(
 				m_value,
 				fontSize,
 				m_collider,
@@ -196,7 +196,7 @@ public:
 			);
 		}
 		else {
-			std::string printablePlaceholder = GetPritablePlaceholderTextInColider(
+			std::string printablePlaceholder = GetPrintablePlaceholderTextInCollider(
 				m_placeholderText,
 				fontSize,
 				m_collider,

@@ -12,7 +12,7 @@ void DropDownElement::CreateToRender() {
     m_toRender = m_text;
     StripString(m_toRender);
     m_fontSize = GetElementTextHeight(m_size, m_resolution.y);
-    m_toRender = GetPritableTextInColider(m_toRender, m_fontSize, m_collider, AppContext::GetInstance());
+    m_toRender = GetPrintableTextInCollider(m_toRender, m_fontSize, m_collider, AppContext::GetInstance());
 
     m_textPosition = {
         m_collider.x + 5.0f,
