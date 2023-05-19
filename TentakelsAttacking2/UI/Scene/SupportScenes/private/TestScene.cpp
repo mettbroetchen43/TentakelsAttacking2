@@ -40,9 +40,9 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 }
 
 TestScene::TestScene(Vector2 resolution)
-	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
+	: Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution } {
 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 	Initialize(appContext);
 }
 
@@ -50,8 +50,7 @@ void TestScene::SetActive(bool active, AppContext const& appContext) {
 	Scene::SetActive(active, appContext);
 }
 
-void TestScene::TestLambda([[maybe_unused]] unsigned int value) {
-}
+void TestScene::TestLambda([[maybe_unused]] unsigned int value) { }
 
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
@@ -82,4 +81,3 @@ void TestScene::CheckHover(Vector2 const& mousePosition, AppContext const& appCo
 		m_isHover = true;
 	}
 }
-
