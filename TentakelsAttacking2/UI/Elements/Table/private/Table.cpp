@@ -388,7 +388,7 @@ void Table::CalculateSlider() {
 		width += cell->GetSize().x;
 	}
 	m_activeHorizontalSlider = width > m_size.x + m_columnCount * 0.001f;
-	m_horizontalSlider->SetAboluteDimension(width);
+	m_horizontalSlider->SetAbsoluteDimension(width);
 
 	float height{ 0.0f };
 	for (int i = 0; i < m_rowCount; ++i) {
@@ -396,7 +396,7 @@ void Table::CalculateSlider() {
 		height += cell->GetSize().y;
 	}
 	m_activeVerticalSlider = height > m_size.y + m_rowCount * 0.001f;
-	m_verticalSlider->SetAboluteDimension(height);
+	m_verticalSlider->SetAbsoluteDimension(height);
 }
 
 void Table::CalculateHoverHighlighted(Vector2 mousePosition) {

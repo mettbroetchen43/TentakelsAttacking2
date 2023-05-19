@@ -231,7 +231,7 @@ bool Slider::IsScrolling() const {
 	return m_isScroll;
 }
 
-void Slider::SetAboluteDimension(float absolutDimension) {
+void Slider::SetAbsoluteDimension(float absolutDimension) {
 	m_absoluteDimension = absolutDimension;
 	CalculateInitialButton();
 }

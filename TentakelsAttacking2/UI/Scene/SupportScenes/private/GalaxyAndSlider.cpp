@@ -107,8 +107,8 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 
 void GalaxyScene::Zoom(float scaleFactor, Vector2 referenceScale) {
 
-	m_verticalSlider->SetAboluteDimension(scaleFactor);
-	m_horisontalSlider->SetAboluteDimension(scaleFactor);
+	m_verticalSlider->SetAbsoluteDimension(scaleFactor);
+	m_horisontalSlider->SetAbsoluteDimension(scaleFactor);
 
 	m_scaleLineX->SetSize(
 		Vector2(referenceScale.x / m_resolution.x, 0.0f)

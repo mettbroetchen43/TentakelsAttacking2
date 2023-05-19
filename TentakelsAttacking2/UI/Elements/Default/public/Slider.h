@@ -7,24 +7,24 @@
 #include "SliderButton.h"
 
 /**
- * provides a slider that returns values between 0 and 100 if its getting slided.
+ * provides a slider that returns values between 0 and 100 if its getting slide.
  */
 class Slider final : public UIElement {
 private:
-	bool m_isEnabled = true; ///< contains if the slider is enabled
-	bool m_isHorizontal; ///< contains if the slider is horisontal or vertical
-	bool m_isPressed = false; ///< contais if the button slider is currently pressed
-	bool m_isScroll = false; ///< contains if the slider if currently scrolling
-	float m_absoluteDimension = 1.0f; ////< contains the ration between the slider and button size
-	float m_btnOffset = 0.0f; ///< contains the offset between the mouse and the button center
+	bool m_isEnabled{ true }; ///< contains if the slider is enabled
+	bool m_isHorizontal; ///< contains if the slider is horizontal or vertical
+	bool m_isPressed{ false }; ///< contains if the button slider is currently pressed
+	bool m_isScroll{ false }; ///< contains if the slider if currently scrolling
+	float m_absoluteDimension{ 1.0f }; ////< contains the ration between the slider and button size
+	float m_btnOffset{ 0.0f }; ///< contains the offset between the mouse and the button center
 	Texture2D* m_texture; ///< contains a pointer if the slider texture
 	Rectangle m_textureRec; ///< contains the absolute size of the texture
 
 	SliderButton m_btn; ///< contains the button of the slider
-	std::function<void(float)> m_onSlide =[](float) {}; ///< contains the onSlider lambda it gets called if the button gets moved
+	std::function<void(float)> m_onSlide{ [](float) {} }; ///< contains the onSlider lambda it gets called if the button gets moved
 
 	/**
-	 * calculats the initial position an size of the button.
+	 * calculates the initial position an size of the button.
 	 */
 	void CalculateInitialButton();
 
@@ -74,7 +74,7 @@ public:
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	/**
-	 * rendres the slider.
+	 * renders the slider.
 	 * calls the button to render.
 	 */
 	void Render(AppContext const& appContext) override;
@@ -85,7 +85,7 @@ public:
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
  
 	/**
-	 * sets the onSlide lambda that gets called when the slider gets slided.
+	 * sets the onSlide lambda that gets called when the slider gets slide.
 	 */
 	void SetOnSlide(std::function<void(float)> onSlide);
 	/**
@@ -105,7 +105,7 @@ public:
 	/**
 	 * sets a new ratio between the slider and button size.
 	 */
-	void SetAboluteDimension(float absolutDimension);
+	void SetAbsoluteDimension(float absolutDimension);
 	/**
 	 * returns the ratio between the slider and button size.
 	 */
