@@ -50,10 +50,10 @@ bool Planet::IsDestroyed() const {
 	return m_isDestroyed;
 }
 
-void Planet::SetDescovered(bool isDescovered) {
-	m_isDescovered = isDescovered;
+void Planet::SetDiscovered(bool isDescovered) {
+	m_isDiscovered = isDescovered;
 }
 
-bool Planet::IsDescovered() const {
-	return m_isDescovered;
+bool Planet::IsDiscovered() const {
+	return m_isDiscovered;
 }

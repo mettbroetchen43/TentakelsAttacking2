@@ -45,7 +45,7 @@ void PlanetTable::Initialization() {
 		if (planet->IsDestroyed()) {
 			entry = "DESTROYED";
 		}
-		else if (!planet->IsDescovered()) {
+		else if (!planet->IsDiscovered()) {
 			entry = "not descovered";
 		}
 		else {
