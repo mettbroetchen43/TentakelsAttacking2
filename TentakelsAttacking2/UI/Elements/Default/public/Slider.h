@@ -44,7 +44,7 @@ private:
 	/**
 	 * slides the button if the slider collider around the button is pressed.
 	 */
-	void MoveButtonIfColiderIsPressed(Vector2 const& mousePosition);
+	void MoveButtonIfColliderIsPressed(Vector2 const& mousePosition);
 	/**
 	 * slides the button if the mouse wheel is turned.
 	 */
