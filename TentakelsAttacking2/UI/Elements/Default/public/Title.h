@@ -51,7 +51,7 @@ private:
 	/**
 	 * claculates the collider out of the title length and position.
 	 */
-	void SetColider(AppContext const& appContext, Vector2 const& resolution);
+	void SetCollider(AppContext const& appContext, Vector2 const& resolution);
 
 	/**
 	 * sets the title finished.

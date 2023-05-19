@@ -21,9 +21,9 @@ void Title::RenderTitle(AppContext const& appContext) {
 	}
 }
 void Title::RenderTitleSequens(AppContext const& appContext) {
-	size_t localCharCount = 0;
-	std::string dummyText;
-	int i = 0;
+	size_t localCharCount{ 0 };
+	std::string dummyText{ };
+	int i{ 0 };
 	for (;i < m_title->size();++i) {
 		dummyText = m_title->at(i);
 		if (localCharCount + dummyText.size() > m_charCount) {
@@ -45,14 +45,14 @@ void Title::RenderTitleSequens(AppContext const& appContext) {
 	}
 
 	Random& random = Random::GetInstance();
-	float prefixPosition = m_collider.x +
+	float const prefixPosition{ m_collider.x +
 		(dummyText.size() *
 			MeasureTextEx(
 				*(appContext.assetManager.GetFont()),
 				"a",
 				m_fontSize,
 				0.0f).x
-			);
+			) };
 
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
@@ -65,7 +65,7 @@ void Title::RenderTitleSequens(AppContext const& appContext) {
 
 	if (dummyText.size() > 0) {
 		if (dummyText.at(dummyText.size() - 1) != ' ') {
-			auto event = PlaySoundEvent(SoundType::TEXT);
+			PlaySoundEvent event{ SoundType::TEXT };
 			appContext.eventManager.InvokeEvent(event);
 		}
 	}
@@ -81,10 +81,10 @@ void Title::MeasureTitleLength() {
 		m_maxCharCount += s.size();
 	}
 }
-void Title::SetColider(AppContext const& appContext, Vector2 const& resolution) {
+void Title::SetCollider(AppContext const& appContext, Vector2 const& resolution) {
 	m_fontSize = resolution.y * m_size.y / m_title->size();
 
-	std::string title = "";
+	std::string title{ "" };
 	for (auto const& line : *m_title) {
 		title += line + '\n';
 	}
@@ -96,7 +96,7 @@ void Title::SetColider(AppContext const& appContext, Vector2 const& resolution) 
 		m_fontSize,
 		0.0f
 	);
-	float size = textSize.x / resolution.x;
+	float size{ textSize.x / resolution.x };
 
 	while (m_size.x < size) {
 		--m_fontSize;
@@ -114,33 +114,34 @@ void Title::SetColider(AppContext const& appContext, Vector2 const& resolution) 
 
 void Title::TitleFinish(AppContext const& appContext) {
 	m_titleFinish = true;
-	auto event = PlaySoundEvent(SoundType::ACCEPTED);
+	PlaySoundEvent event{ SoundType::ACCEPTED };
 	appContext.eventManager.InvokeEvent(event);
 }
 
 Title::Title(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, bool drawTitle,
 	AppContext& appContext)
-	: UIElement(pos, size, alignment, resolution), m_titleFinish(!drawTitle) {
+	: UIElement{ pos, size, alignment, resolution }, m_titleFinish{ !drawTitle } {
 
 	m_title = appContext.assetManager.GetTitle();
 	MeasureTitleLength();
-	SetColider(appContext, resolution);
+	SetCollider(appContext, resolution);
 }
 
 void Title::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
-	bool skipTitle =
+	bool const skipTitle{
 		IsBackInputPressed()
-		and !m_titleFinish;
+		and !m_titleFinish 
+	};
 	if (skipTitle) {
 		TitleFinish(appContext);
 		return;
 	}
 }
 void Title::Render(AppContext const& appContext) {
-	// Update here to make shure the value ist correct
+	// Update here to make sure the value ist correct
 	m_lastFinishedTitle = m_titleFinish;
 
 	if (!m_titleFinish) {
@@ -152,7 +153,7 @@ void Title::Render(AppContext const& appContext) {
 }
 void Title::Resize(Vector2 resolution,AppContext const& appContext) {
 
-	SetColider(appContext, resolution);
+	SetCollider(appContext, resolution);
 	UIElement::Resize(resolution, appContext);
 }
 
@@ -160,5 +161,7 @@ bool Title::HasFinishedTitle() const {
 	return m_titleFinish;
 }
 bool Title::IsTitleFinished() const {
-	return m_lastFinishedTitle != m_titleFinish;
+	return {
+		m_lastFinishedTitle != m_titleFinish 
+	};
 }
