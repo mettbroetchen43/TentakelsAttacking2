@@ -8,11 +8,12 @@
 
 void Button::SetTextSizeAndPosition(AppContext const& appContext) {
 	m_textSize = m_collider.height / 2;
-	Vector2 textSize = MeasureTextEx(
+	Vector2 textSize{ MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_text.c_str(),
 		m_textSize,
-		0.0f);
+		0.0f) 
+	};
 	while (textSize.x + 20 > m_collider.width) {
 		if (m_textSize <= 1) {
 			break;
@@ -31,7 +32,9 @@ void Button::SetTextSizeAndPosition(AppContext const& appContext) {
 }
 
 bool Button::IsSameState(State state) const {
-	return m_state == state;
+	return {
+		m_state == state 
+	};
 }
 
 void Button::UpdateCollider() {
@@ -42,7 +45,7 @@ void Button::UpdateCollider() {
 
 Button::Button(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& text, SoundType releaseSound)
-	: UIElement(pos, size, alignment, resolution), m_text(text), m_sound(releaseSound) {
+	: UIElement{ pos, size, alignment, resolution }, m_text{ text }, m_sound{ releaseSound } {
 	
 	m_texture = AppContext::GetInstance().assetManager.GetTexture(AssetType::BUTTON_DEFAULT);
 	m_textureRec = {
@@ -56,17 +59,17 @@ Button::Button(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 }
 
 Button::Button()
-	: UIElement(Vector2(0.0f,0.0f), Vector2(0.0f,0.0f), Alignment::TOP_LEFT, Vector2(0.0f,0.0f)),
-	m_sound(SoundType::CLICKED_RELEASE_STD), m_textPosition({ 0.0f,0.0f }),
-	m_texture(nullptr), m_textureRec({0.0f,0.0f,0.0f,0.0f}) {}
+	: UIElement{ {0.0f,0.0f}, {0.0f,0.0f}, Alignment::TOP_LEFT, {0.0f,0.0f} },
+	m_sound{ SoundType::CLICKED_RELEASE_STD }, m_textPosition{ 0.0f,0.0f },
+	m_texture{ nullptr }, m_textureRec{ 0.0f,0.0f,0.0f,0.0f } {}
 
 void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
-	bool const hover = CheckCollisionPointRec(mousePosition, m_collider);
+	bool const hover{ CheckCollisionPointRec(mousePosition, m_collider )};
 	if (m_state == State::DISABLED) {
 		if (hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-			auto event = PlaySoundEvent(SoundType::CLICKED_DISABLED_STD);
+			auto const event{ PlaySoundEvent(SoundType::CLICKED_DISABLED_STD )};
 			appContext.eventManager.InvokeEvent(event);
 		}
 		return;
@@ -83,7 +86,7 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		}
 
 		if (IsSameState(State::HOVER)) {
-			auto event = PlaySoundEvent(SoundType::HOVER_STD);
+			auto const event{ PlaySoundEvent(SoundType::HOVER_STD) };
 			appContext.eventManager.InvokeEvent(event);
 		}
 		m_state = State::ENABLED;
@@ -98,7 +101,7 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		}
 
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
-			auto event = PlaySoundEvent(m_sound);
+			auto const event{ PlaySoundEvent(m_sound) };
 			appContext.eventManager.InvokeEvent(event);
 			m_state = hover ? State::HOVER : State::ENABLED;
 			m_isPressed = false;
@@ -110,14 +113,14 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			m_isPressed = true;
 			m_state = State::PRESSED;
-			auto event = PlaySoundEvent(SoundType::CLICKED_PRESS_STD);
+			auto const event{ PlaySoundEvent(SoundType::CLICKED_PRESS_STD) };
 			appContext.eventManager.InvokeEvent(event);
 			m_onPress();
 			return;
 		}
 		if (!IsSameState(State::HOVER)) {
 			m_state = State::HOVER;
-			auto event = PlaySoundEvent(SoundType::HOVER_STD);
+			auto const event{ PlaySoundEvent(SoundType::HOVER_STD) };
 			appContext.eventManager.InvokeEvent(event);
 			return;
 		}
