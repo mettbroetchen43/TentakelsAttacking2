@@ -27,7 +27,7 @@ private:
 	/**
 	 * initialases the cells. 
 	 */
-	void Initialise(Vector2 resolution);
+	void Initialize(Vector2 resolution);
 	/**
 	 * disables the cells if the colors are already used.
 	 */
@@ -42,7 +42,7 @@ private:
 	 * returns if its valid.
 	 * calls a valid color via event.
 	 */
-	void CheckforValidColor(AppContext const& appContext);
+	void CheckForValidColor(AppContext const& appContext);
 
 public:
 	/**
