@@ -11,23 +11,23 @@
 class Focusable;
 
 /**
- * provides a focus system that can heandle focusable*.
+ * provides a focus system that can handle focusable*.
  */
 class Focus final : public EventListener {
 private:
-	Focusable* m_currentFocus = nullptr; ///< contains the current focus
-	LayeredVector<Focusable> m_focus; ///< contains all focusable elements in layern
-	std::vector<Focusable*> m_lastFocus; ///< stores the corrent focus of the underlaying layers
-	bool m_renderFocus = false; ///< contains if the focus gets renderd
+	Focusable* m_currentFocus{ nullptr }; ///< contains the current focus
+	LayeredVector<Focusable> m_focus; ///< contains all focusable elements in layer
+	std::vector<Focusable*> m_lastFocus; ///< stores the correct focus of the underlaying layers
+	bool m_renderFocus{ false }; ///< contains if the focus gets rendered
 
-	size_t m_PopUpLayerCounter = 0; ///< contains the mount of popups that are in the focus layers
+	size_t m_PopUpLayerCounter{ 0 }; ///< contains the mount of popups that are in the focus layers
 	LayeredVector<Focusable> m_addElementRequest; ///< contains the elements to add if a popup ist currently active
 	LayeredVector<Focusable> m_removeElementRequest;  ///< contains the elements to remove if a popup ist currently active
 	LayeredVector<Focusable> m_toSelectRequest;  ///< contains the elements to select if a popup ist currently active
-	std::vector<bool> m_toAddOrDelete; ///< contains if the layer schould be added or delete if a popup is currently active
+	std::vector<bool> m_toAddOrDelete; ///< contains if the layer should be added or delete if a popup is currently active
 
 	/**
-	 * returns if the current layer has any anabled elements.
+	 * returns if the current layer has any enabled elements.
 	 */
 	[[nodiscard]] bool HasAnyEnabledElements() const;
 
@@ -37,11 +37,11 @@ private:
 	 */
 	void UnfocusAllAtTopLayer();
 	/**
-	 * calculates and returns the focus element with the smales id.
+	 * calculates and returns the focus element with the smallest id.
 	 */
 	[[nodiscard]] Focusable* GetFirstFocus();
 	/**
-	 * calculates and returns the focus element with the heighest id.
+	 * calculates and returns the focus element with the highest id.
 	 */
 	[[nodiscard]] Focusable* GetLastFocus();
 	/**
@@ -61,7 +61,7 @@ private:
 	 */
 	void SetNextFocus();
 	/**
-	 * sets the previos focus.
+	 * sets the previous focus.
 	 */
 	void SetPreviousFocus();
 	/**
@@ -132,7 +132,7 @@ private:
 	 */
 	void AddNormalElement(Focusable* focusable);
 	/**
-	 * adds the provided focus element allways to the vector.
+	 * adds the provided focus element always to the vector.
 	 */
 	void AddPopUpElement(Focusable* focusable);
 	/**
@@ -146,7 +146,7 @@ private:
 	 */
 	void DeleteNormalElement(Focusable* focusable);
 	/**
-	 * delets the provided focus element allways from the vector.
+	 * deletes the provided focus element always from the vector.
 	 */
 	void DeletePopUpElement(Focusable* focusable);
 
@@ -156,8 +156,8 @@ private:
 	void SetLayerAfterPopUp();
 
 	/**
-	 * check if the provided ID is allready existing in the current layer.
-	 * thows an exeption if so.
+	 * check if the provided ID is already existing in the current layer.
+	 * throw's an exception if so.
 	 */
 	void CheckNewID(unsigned int newID);
 
@@ -169,7 +169,7 @@ public:
 	Focus();
 
 	/**
-	 * receives all the events and calls the memebr functions.
+	 * receives all the events and calls the member functions.
 	 */
 	void OnEvent(Event const& event) override;
 
