@@ -12,8 +12,8 @@
  */
 class Player final {
 private:
-	unsigned int m_ID; ///< contains the unique player id
-	PlayerType m_playerType; ///< contains the player type like HUMAN
+	unsigned int m_ID{ }; ///< contains the unique player id
+	PlayerType m_playerType{ }; ///< contains the player type like HUMAN
 public:
 	/**
 	 * ctor.
