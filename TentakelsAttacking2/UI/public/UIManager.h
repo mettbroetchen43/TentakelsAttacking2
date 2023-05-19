@@ -17,7 +17,7 @@
 class Scene;
 
 /**
- * mamages the complete UI.
+ * manages the complete UI.
  * contains the logic and calls it to update.
  */
 class UIManager final : public EventListener {
@@ -28,29 +28,29 @@ private:
 	GameManager m_gameManager; ///< contains the game logic
 	HoverRender m_hover;
 	Vector2 m_resolution; ///< contains the current resolution of the window
-	bool m_closeWindow = false; ///< contains if the game will quit at the end of the tick
-	Resolution m_nextResolution; ///< contains the reolution of the next frame
+	bool m_closeWindow{ false }; ///< contains if the game will quit at the end of the tick
+	Resolution m_nextResolution; ///< contains the resolution of the next frame
 
 	/**
-	 * Toggles between fullscreen and window mode.
+	 * Toggles between full screen and window mode.
 	 */
 	void ToggleFullScreen(bool first = false);
 
 	/**
-	 * converts and updates the reosultion in Window mode.
+	 * converts and updates the resolution in Window mode.
 	 */
 	void CheckAndSetNewResolution();
 
 	/**
 	 * checks the quit input.
-	 * checks the fullscreen toggle.
-	 * calls the focus and uimanager to update.
+	 * checks the full screen toggle.
+	 * calls the focus and UImanager to update.
 	 */
 	void CheckAndUpdate();
 	/**
 	 * start drawing.
 	 * draws the background black.
-	 * calls the uimanager to render.
+	 * calls the UImanager to render.
 	 * calls the focus to render.
 	 * draws the FPS in debug build.
 	 * ends drawing.
@@ -62,7 +62,7 @@ private:
 	 */
 	void SetWindowSize(bool fullscreen);
 	/**
-	 * sets the pintow position if in window mode.
+	 * sets the pint ow position if in window mode.
 	 */
 	void SetWindowPosition();
 	/**
@@ -70,7 +70,7 @@ private:
 	 */
 	void SetTargetFPS(SetTargetFPSEvent const* event);
 	/**
-	 * main loop of the programm.
+	 * main loop of the program.
 	 * loops while not should close.
 	 * calls check resolution.
 	 * calls generell update.
@@ -81,7 +81,7 @@ private:
 public:
 	/**
 	 * ctor.
-	 * sets ecit key in raylib to none.
+	 * sets edit key in raylib to none.
 	 * resize window.
 	 * add event listener.
 	 */
