@@ -12,18 +12,18 @@
 
 void SoundManager::LoadSounds() {
 	for (int i = 0; i < m_files.size(); ++i) {
-		auto const filename = "Assets/Sounds/" + m_files[i];
+		auto const filename{ "Assets/Sounds/" + m_files[i] };
 
 		if (!std::filesystem::exists(filename)) {
 			Print("Sound does not exists -> " + filename, PrintType::ERROR);
 			return;
 		}
 
-		Sound sound = LoadSound(filename.c_str());
+		Sound const sound{ LoadSound(filename.c_str()) };
 		m_sounds[static_cast<SoundType>(i)] = sound;
 	}
 
-	std::string files = "Assets/Sounds/TextSounds";
+	std::string const files{ "Assets/Sounds/TextSounds" };
 
 	if (!std::filesystem::exists(files)) {
 		Print("Textsounds does not exists -> " + files, PrintType::ERROR);
@@ -31,7 +31,7 @@ void SoundManager::LoadSounds() {
 	}
 
 	for (auto const& entry : std::filesystem::directory_iterator(files)) {
-		Sound sound = LoadSound(entry.path().string().c_str());
+		Sound const sound{ LoadSound(entry.path().string().c_str()) };
 		m_textSounds.push_back(sound);
 	}
 }
@@ -45,11 +45,11 @@ void SoundManager::PlaySound(SoundType soundType) const {
 	::PlaySoundMulti(m_sounds.at(soundType));
 }
 void SoundManager::PlayTextSound() const {
-	Random& random = Random::GetInstance();
+	Random& random{ Random::GetInstance() };
 
-	static unsigned long long lastIndex = 0;
+	static unsigned long long lastIndex{ 0 };
 
-	unsigned long long nextIndex;
+	unsigned long long nextIndex{ };
 	do {
 		nextIndex = random.random(m_textSounds.size());
 	} while (lastIndex == nextIndex);
@@ -58,15 +58,15 @@ void SoundManager::PlayTextSound() const {
 	lastIndex = nextIndex;
 }
 void SoundManager::MuteMasterSoundLevel(bool mute) const {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 	appContext.constants.sound.muteVolume = mute;
 	SetMasterSoundLevel(appContext.constants.sound.masterVolume);
 }
 void SoundManager::SetMasterSoundLevel(float level) const {
-	AppContext& appCpntext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 
-	appCpntext.constants.sound.masterVolume = level;
-	if (appCpntext.constants.sound.muteVolume) {
+	appContext.constants.sound.masterVolume = level;
+	if (appContext.constants.sound.muteVolume) {
 		SetMasterVolume(0.0f);
 		return;
 	}
@@ -80,7 +80,7 @@ SoundManager::SoundManager() {
 	LoadSounds();
 }
 SoundManager::~SoundManager() {
-	for (auto& [_, sound] : m_sounds) {
+	for (auto const& [_, sound] : m_sounds) {
 		UnloadSound(sound);
 	}
 	CloseAudioDevice();
