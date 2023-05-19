@@ -76,7 +76,7 @@ public:
 		auto focusEvent = NewFocusPopUpLayerEvent();
 		m_appContext->eventManager.InvokeEvent(focusEvent);
 
-		m_popUps.push_back(std::make_unique<PrivitiveCellPopUp<T>>(
+		m_popUps.push_back(std::make_unique<PrivativeCellPopUp<T>>(
 			Vector2(0.5f, 0.5f),
 			Vector2(0.7f, 0.7f),
 			Alignment::MID_MID,
