@@ -8,7 +8,7 @@
 #include "HPrint.h"
 
 PopUpManager::PopUpManager(Vector2 resolution)
-	: m_appContext(&(AppContext::GetInstance())), m_resolution(resolution) {
+	: m_appContext{ &(AppContext::GetInstance()) }, m_resolution{ resolution } {
 	m_appContext->eventManager.AddListener(this);
 	Print("PopUpManager", PrintType::INITIALIZE);
 }
@@ -116,7 +116,7 @@ void PopUpManager::NewValidatePopUp(ShowValidatePopUp const* event) {
 	);
 }
 void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
-	auto focusEvent = NewFocusPopUpLayerEvent();
+	NewFocusPopUpLayerEvent focusEvent;
 	m_appContext->eventManager.InvokeEvent(focusEvent);
 
 	m_popUps.push_back(std::make_unique<ColorCellPopUp>(
@@ -132,7 +132,7 @@ void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
 	);
 }
 void PopUpManager::NewSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event) {
-	auto focusEvent = NewFocusPopUpLayerEvent();
+	NewFocusPopUpLayerEvent focusEvent;
 	m_appContext->eventManager.InvokeEvent(focusEvent);
 
 	m_popUps.push_back(std::make_unique<SoundLevelPopUp>(
@@ -172,7 +172,7 @@ void PopUpManager::CheckForDeleteRemainingPopUps() {
 			return;
 		}
 
-		bool found = false;
+		bool found{ false };
 		for (auto& p : m_toDelete) {
 			if (p == m_popUps.back().get()) {
 				found = true;
