@@ -26,7 +26,7 @@ private:
 	void Initialize(Vector2 resolution); 
 
 	/**
-	 * sets the value of the slider by ther id.
+	 * sets the value of the slider by there id.
 	 */
 	void SetValue(int value, int ID) const;
 	/**
@@ -42,12 +42,12 @@ private:
 public:
 	/**
 	 * ctor.
-	 * adds an event listner.
+	 * adds an event listener.
 	 */
 	NewGameParameterScene(Vector2 resolution);
 	/**
 	 * dtor.
-	 * removes an event listner.
+	 * removes an event listener.
 	 */
 	~NewGameParameterScene() override;
 
