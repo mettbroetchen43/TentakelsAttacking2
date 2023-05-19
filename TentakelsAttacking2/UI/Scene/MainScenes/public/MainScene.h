@@ -104,7 +104,7 @@ private:
 	/**
 	 * sets the accept button active or inactive.
 	 */
-	void SetAcceptButon();
+	void SetAcceptButton();
 
 	/**
 	 * sends the ship instruction event.

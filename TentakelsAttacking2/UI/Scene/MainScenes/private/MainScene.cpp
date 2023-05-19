@@ -20,7 +20,7 @@
 
 void MainScene::Initialize() {
 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 
 	// Title
 	auto title = std::make_shared<Title>(
@@ -230,7 +230,7 @@ void MainScene::Initialize() {
 		this->SendFleetInstruction();
 		});
 	m_origin->SetOnValueChanced([this]() {
-			SetAcceptButon();
+			SetAcceptButton();
 		});
 	m_origin->SetPlaceholderText("ID");
 	m_elements.push_back(m_origin);
@@ -258,7 +258,7 @@ void MainScene::Initialize() {
 		this->SendFleetInstruction();
 		});
 	m_destination->SetOnValueChanced([this]() {
-		SetAcceptButon();
+		SetAcceptButton();
 		});
 	m_destination->SetPlaceholderText("ID");
 	m_elements.push_back(m_destination);
@@ -275,7 +275,7 @@ void MainScene::Initialize() {
 		this->SendFleetInstruction();
 		});
 	m_destinationX->SetOnValueChanced([this]() {
-		SetAcceptButon();
+		SetAcceptButton();
 		});
 	m_destinationX->SetPlaceholderText("X");
 	m_elements.push_back(m_destinationX);
@@ -292,7 +292,7 @@ void MainScene::Initialize() {
 		this->SendFleetInstruction();
 		});
 	m_destinationY->SetOnValueChanced([this]() {
-		SetAcceptButon();
+		SetAcceptButton();
 		});
 	m_destinationY->SetPlaceholderText("Y");
 	m_elements.push_back(m_destinationY);
@@ -320,7 +320,7 @@ void MainScene::Initialize() {
 		this->SendFleetInstruction();
 		});
 	m_shipCount->SetOnValueChanced([this]() {
-		SetAcceptButon();
+		SetAcceptButton();
 		});
 	m_shipCount->SetPlaceholderText("Count");
 	m_elements.push_back(m_shipCount);
@@ -354,7 +354,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(m_resetBtn);
 }
 void MainScene::InitializeGalaxy() {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 	if (m_galaxy) {
 		m_galaxy->SetActive(false, appContext);
 		m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), m_galaxy), m_elements.end());
@@ -371,7 +371,7 @@ void MainScene::InitializeGalaxy() {
 }
 void MainScene::InitializePlanetTable() {
 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext = AppContext::GetInstance();
 	if (m_planetTable) {
 		m_planetTable->SetActive(false, appContext);
 		m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), m_planetTable), m_elements.end());
@@ -389,7 +389,7 @@ void MainScene::InitializePlanetTable() {
 }
 void MainScene::InitializeFleetTable() {
 	 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 	if (m_fleetTable) {
 		m_fleetTable->SetActive(false, appContext);
 		m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), m_fleetTable), m_elements.end());
@@ -407,24 +407,24 @@ void MainScene::InitializeFleetTable() {
 }
 
 void MainScene::NextTurn() {
-	AppContext const& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 	Switch(MainSceneType::CLEAR);
 	SetPlayerText();
 	InitializeGalaxy();
 	InitializePlanetTable();
 	InitializeFleetTable();
 
-	auto event = ShowMessagePopUpEvent(
+	ShowMessagePopUpEvent event{
 		"start turn?",
 		"next plyer: " + m_currentPlayer.name + "\naccept to start your turn",
 		[this]() {
 			this->Switch(MainSceneType::GALAXY);
 		}
-	);
+	};
 	appContext.eventManager.InvokeEvent(event);
 }
 void MainScene::NextRound() {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 
 	SetPlayerText();
 	InitializeGalaxy();
@@ -434,10 +434,10 @@ void MainScene::NextRound() {
 	m_currentRound->SetText(std::to_string(appContext.constants.global.currentRound));
 	m_currentTargetRound->SetText(std::to_string(appContext.constants.global.currentTargetRound));
 
-	auto event = ShowMessagePopUpEvent(
+	ShowMessagePopUpEvent event{
 		"start round",
 		"next round is starting\n just for debug to know"
-	);
+	};
 	appContext.eventManager.InvokeEvent(event);
 
 	Switch(MainSceneType::GALAXY);
@@ -453,39 +453,40 @@ void MainScene::SetPlayerText() {
 }
 
 void MainScene::Switch(MainSceneType sceneType) {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 
 	assert(m_galaxy);
 	assert(m_planetTable);
 
-	m_galaxy->SetActive(false, appContext);
+	m_galaxy     ->SetActive(false, appContext);
 	m_planetTable->SetActive(false, appContext);
-	m_fleetTable->SetActive(false, appContext);
+	m_fleetTable ->SetActive(false, appContext);
 
-	m_galaxy->SetActive(sceneType == MainSceneType::GALAXY, appContext);
+	m_galaxy     ->SetActive(sceneType == MainSceneType::GALAXY,       appContext);
 	m_planetTable->SetActive(sceneType == MainSceneType::PLANET_TABLE, appContext);
-	m_fleetTable->SetActive(sceneType == MainSceneType::FLEET_TABLE, appContext);
+	m_fleetTable ->SetActive(sceneType == MainSceneType::FLEET_TABLE,  appContext);
 }
 
 bool MainScene::HasAnyInputLineFocus() {
 	
-	if (m_origin->IsFocused()) { return true; }
-	if (m_destination->IsFocused()) { return true; }
+	if (m_origin      ->IsFocused()) { return true; }
+	if (m_destination ->IsFocused()) { return true; }
 	if (m_destinationX->IsFocused()) { return true; }
 	if (m_destinationY->IsFocused()) { return true; }
-	if (m_shipCount->IsFocused()) { return true; }
+	if (m_shipCount   ->IsFocused()) { return true; }
 
 	return false;
 } 
 
-void MainScene::SetAcceptButon() {
+void MainScene::SetAcceptButton() {
 
-	bool valid =
-		m_origin->HasValue()
-		&& (m_destination->HasValue()
-			or (m_destinationX->HasValue()
-			&& m_destinationY->HasValue()))
-		&& m_shipCount->HasValue();
+	bool const valid{
+			m_origin->HasValue()
+		and (m_destination->HasValue()
+		or  (m_destinationX->HasValue()
+		and m_destinationY->HasValue()))
+		and m_shipCount->HasValue() 
+	};
 
 	m_acceptBtn->SetEnabled(valid);
 }
@@ -494,13 +495,13 @@ void MainScene::SendFleetInstruction() {
 
 	// TODO: validate input -> implement validation in logic first
 
-	auto event = SendFleetInstructionEvent(
-		m_origin->GetValue(),
-		m_destination->GetValue(),
-		m_destinationX->GetValue(),
-		m_destinationY->GetValue(),
-		m_shipCount->GetValue()
-	);
+	SendFleetInstructionEvent event{
+		static_cast<unsigned int>(m_origin->GetValue()),
+		static_cast<unsigned int>(m_destination->GetValue()),
+ 		                          m_destinationX->GetValue(),
+		                          m_destinationY->GetValue(),
+		static_cast<size_t>(      m_shipCount->GetValue())
+	};
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 void MainScene::ClearInputLines() {
@@ -511,16 +512,16 @@ void MainScene::ClearInputLines() {
 	m_destinationY->Clear();
 	m_shipCount->Clear();
 
-	auto event = SelectFocusElementEvent(m_origin.get());
+	SelectFocusElementEvent event{ m_origin.get() };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
 MainScene::MainScene(Vector2 resolution)
-	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
+	: Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 	appContext.eventManager.AddListener(this);
-	appContext.eventManager.InvokeEvent(LoadCurrentPlayerEvent());
+	appContext.eventManager.InvokeEvent(LoadCurrentPlayerEvent{ });
 
 	Initialize();
 	InitializeGalaxy();
@@ -528,14 +529,14 @@ MainScene::MainScene(Vector2 resolution)
 	InitializeFleetTable();
 	SetPlayerText();
 	Switch(MainSceneType::GALAXY);
-	SetAcceptButon();
+	SetAcceptButton();
 }
 MainScene::~MainScene() {
 	AppContext::GetInstance().eventManager.RemoveListener(this);
 }
 
 void MainScene::OnEvent(Event const& event) {
-	AppContext const& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 	
 	// player
 	if (auto const* playerEvent = dynamic_cast<UpdateCurrentPlayerIDEvent const*>(&event)) {
@@ -572,8 +573,8 @@ void MainScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& a
 
 	if (!HasAnyInputLineFocus()) {
 
-		bool setFocus = false;
-		auto input = GetKeyPressed();
+		bool setFocus{ false };
+		auto const input{ GetKeyPressed() };
 		if (input != 0) {
 
 			if (48 <= input && input <= 57) {
@@ -585,7 +586,7 @@ void MainScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& a
 		}
 
 		if (setFocus) {
-			auto event = SelectFocusElementEvent(m_origin.get());
+			SelectFocusElementEvent const event{ m_origin.get() };
 			appContext.eventManager.InvokeEvent(event);
 		}
 	}
