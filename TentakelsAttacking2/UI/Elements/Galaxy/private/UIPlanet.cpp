@@ -11,7 +11,7 @@
 UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution,
 	Vector2 colliderPos)
 	:Focusable{ focusID }, UIElement{ pos, { 0.01f,0.02f }, Alignment::MID_MID, resolution }
-	, m_ID{ ID }, m_currentPlayer{ player }, m_coliderPos{ colliderPos }, m_color{ player.color }, m_stringID{ std::to_string(ID) },
+	, m_ID{ ID }, m_currentPlayer{ player }, m_colliderPos{ colliderPos }, m_color{ player.color }, m_stringID{ std::to_string(ID) },
 	m_hover{
 		0.03f,
 		player.name,
@@ -21,8 +21,8 @@ UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vec
 { }
 
 void UIPlanet::UpdatePosition(Rectangle newCollider) {
-	m_collider.x = newCollider.x + newCollider.width * m_coliderPos.x;
-	m_collider.y = newCollider.y + newCollider.height * m_coliderPos.y;
+	m_collider.x = newCollider.x + newCollider.width * m_colliderPos.x;
+	m_collider.y = newCollider.y + newCollider.height * m_colliderPos.y;
 }
 
 void UIPlanet::SetOnClick(std::function<void(UIPlanet*)> onClick) {
