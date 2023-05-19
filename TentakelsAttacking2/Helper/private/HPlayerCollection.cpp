@@ -104,7 +104,7 @@ PlayerData& PlayerCollection::GetPlayerByIDmut(unsigned int ID) {
 	throw std::out_of_range("Accessing non existing ID");
 }
 void PlayerCollection::SortPlayers() {
-	std::sort(m_playerData.begin(), m_playerData.end(), StortPlayerByID_ASC);
+	std::sort(m_playerData.begin(), m_playerData.end(), SortPlayerByID_ASC);
 }
 
 void PlayerCollection::AddPlayer(unsigned int ID,
