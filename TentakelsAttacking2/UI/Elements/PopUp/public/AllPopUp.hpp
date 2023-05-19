@@ -4,9 +4,6 @@
 //
 
 #pragma once
-/**
- * just bundles all popup includes
- */
 
 // Main
 #include "PopUp.h"

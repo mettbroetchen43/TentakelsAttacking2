@@ -8,14 +8,14 @@
 #include "ClassicButton.h"
 
 /**
- * provides the casic cell popup for editing the table.
+ * provides the basic cell popup for editing the table.
  */
 class CellPopUp : public PopUp {
 protected:
-	bool m_shouldClose = false; ///< centains if the popup should close an the end of the tick
+	bool m_shouldClose{ false }; ///< contains if the popup should close an the end of the tick
 
 	/**
-	 * initializes all ui emelents.
+	 * initializes all ui elements.
 	 */
 	virtual void Initialize(AppContext const& appContext, Vector2 resolution);
 	[[nodiscard]] std::shared_ptr<ClassicButton> InitializeAcceptButton(
@@ -26,7 +26,7 @@ protected:
 	 */
 	void SetShouldClose();
 	/**
-	 * virtual function to make shure every cell popup can set a value to the table.
+	 * virtual function to make sure every cell popup can set a value to the table.
 	 */
 	virtual void SetValue() = 0;
 
@@ -48,7 +48,7 @@ public:
 
 	/**
 	 * cell popup logic.
-	 * gets extended by chiled classes.
+	 * gets extended by child classes.
 	 */
 	virtual void CheckAndUpdate(Vector2 const& mousePosition,
 		AppContext const& appContext) override;
