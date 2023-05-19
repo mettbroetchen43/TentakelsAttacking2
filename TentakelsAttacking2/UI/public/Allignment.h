@@ -38,16 +38,16 @@ enum class TextAlignment {
 Rectangle GetAlignedCollider(Vector2& pos, Vector2 size,
 	Alignment allignment, Vector2 resolution);
 /**
- * recalulatres the provided position witch the provided collider and allignment.
+ * recalculates the provided position witch the provided collider and alignment.
  */
 [[nodiscard]] Vector2 GetAlignedPosition(Alignment allignment, Vector2 position, Vector2 size);
 /**
- * recalulatres the provided position witch the provided collider and allignment.
+ * recalculates the provided position witch the provided collider and alignment.
  */
 [[nodiscard]] Vector2 GetAlignedPositionReversed(Alignment allignment, Vector2 position, Vector2 size);
 
 /**
- * converts the over all alignment into horisontal text alignment.
+ * converts the over all alignment into horizontal text alignment.
  */
 [[nodiscard]] TextAlignment GetHorizontalTextAlignment(Alignment alignment);
 /**
