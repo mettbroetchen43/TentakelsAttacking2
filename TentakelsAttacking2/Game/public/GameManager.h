@@ -18,21 +18,21 @@ enum class CopyGalaxyType;
 
 /**
  * manage the hole game.
- * that contains players, npcs, game events, galaxy, event communivation with the ui.
+ * that contains players, npc's, game events, galaxy, event communication with the ui.
  */
 class GameManager final : public EventListener {
 private:
-	std::default_random_engine m_random = std::default_random_engine(); ///< contains a random engine to shuffle the player each round
-	std::unordered_map<PlayerType, std::shared_ptr<Player>> m_npcs; ///< contains all npcs to seperaste them from the player
-	std::vector<std::shared_ptr<Player>> m_players; ///< contains all player -> this is the main player vector
-	std::vector<std::shared_ptr<Player>> m_currentRoundPlayers; ///< contains the remaining player of the current round
+	std::default_random_engine m_random{ std::default_random_engine() }; ///< contains a random engine to shuffle the player each round
+	std::unordered_map<PlayerType, std::shared_ptr<Player>> m_npcs{ }; ///< contains all npcs to seperaste them from the player
+	std::vector<std::shared_ptr<Player>> m_players{ }; ///< contains all player -> this is the main player vector
+	std::vector<std::shared_ptr<Player>> m_currentRoundPlayers{ }; ///< contains the remaining player of the current round
 	
-	std::unordered_map<GameEventType, bool> m_gameEvents; ///< contains whether the game Events are active or not
+	std::unordered_map<GameEventType, bool> m_gameEvents{ }; ///< contains whether the game Events are active or not
 	
-	std::shared_ptr<Galaxy> m_mainGalaxy = nullptr; ///< contains the global galaxy with all changes.
-	std::shared_ptr<Galaxy> m_startGalaxy = nullptr; ///< contains the data at round begin. every round it gets overwritten by the main galaxy
-	std::shared_ptr<Galaxy> m_currentGalaxy = nullptr; ///< is used to store the player data of one player. every turn it gets overwritten by the start Galaxy
-	std::shared_ptr<Galaxy> m_showGalaxy = nullptr; ///< is a hardcoded galaxy that is used to garaty, that it generation is valid.
+	std::shared_ptr<Galaxy> m_mainGalaxy { nullptr }; ///< contains the global galaxy with all changes.
+	std::shared_ptr<Galaxy> m_startGalaxy{ nullptr }; ///< contains the data at round begin. every round it gets overwritten by the main galaxy
+	std::shared_ptr<Galaxy> m_currentGalaxy{ nullptr }; ///< is used to store the player data of one player. every turn it gets overwritten by the start Galaxy
+	std::shared_ptr<Galaxy> m_showGalaxy{ nullptr }; ///< is a hardcoded galaxy that is used to garaty, that it generation is valid.
 
 	// player
 	/**
@@ -45,7 +45,7 @@ private:
 	 */
 	[[nodiscard]] unsigned int GetNextPlayerID() const;
 	/**
-	 * returns if the curent ID is already existing.
+	 * returns if the current ID is already existing.
 	 */
 	[[nodiscard]] bool IsExistingPlayerID(unsigned int ID) const;
 
@@ -83,7 +83,7 @@ private:
 	 */
 	void DeletePlayer(DeletePlayerEvent const* event);
 	/**
-	 * delets all player.
+	 * deletes all player.
 	 * calls the ui via event to delete it too.
 	 */
 	void ResetPlayer();
@@ -103,7 +103,7 @@ private:
 	 */
 	void SendCurrentPlayerID();
 	/** send the next player ID via an event
-	 *  will send 0 if no next player exsits
+	 *  will send 0 if no next player exists
 	 */
 	void SendNextPlayerID();
 
@@ -113,14 +113,14 @@ private:
 	 */
 	void NextRound(bool valid);
 	/** 
-	 * next turn triggers the next player and changes the inforamtion that are send to ui 
+	 * next turn triggers the next player and changes the information that are send to ui 
 	 * so that only the current Player is displayed
 	 */
 	void NextTurn(bool valid);
 	/**
 	 * gets called from TriggerNextTurnEvent
-	 * calls an Popup if the to validate if the currnt turn should really be over
-	 * PopUp automactily calls the provided function
+	 * calls an Popup if the to validate if the current turn should really be over
+	 * PopUp automatically calls the provided function
 	 */
 	void ValidateNextTurn();
 	/**
@@ -138,16 +138,16 @@ private:
 	// galaxy
 	/**
 	 * generates a new galaxy.
-	 * if the new galaxy is valid the old galaxy gets overrite and informs the ui via event. 
-	 * if not the old galaxy will be keep and generates an faliure popup.
+	 * if the new galaxy is valid the old galaxy gets override and informs the ui via event. 
+	 * if not the old galaxy will be keep and generates an failure popup.
 	 */
 	void GenerateGalaxy();
 	/**
 	 * generates a new show galaxy.
-	 * if the new galaxy is valid the old galaxy gets overrite and sends a galaxy* via event to the ui.
-	 * if not and an old galaxy exists, the old galaxy will be keep and will be providet via event to the ui.
+	 * if the new galaxy is valid the old galaxy gets override and sends a galaxy* via event to the ui.
+	 * if not and an old galaxy exists, the old galaxy will be keep and will be provided via event to the ui.
 	 * also prints a log entry to the console.
-	 * if not and no galaxy exsitst it only prints a log entry to the console.
+	 * if not and no galaxy exists it only prints a log entry to the console.
 	 */
 	void GenerateShowGalaxy();
 	/**
@@ -170,7 +170,7 @@ private:
 
 	// game
 	/**
-	 * initializes a new game after everythis is set up
+	 * initializes a new game after every this is set up
 	 */
 	void StartGame();
 
@@ -189,7 +189,7 @@ public:
 	void Update();
 
 	/**
-	 * receives the incomming events and calls the correct functions.
+	 * receives the incoming events and calls the correct functions.
 	 */
 	void OnEvent(Event const& event) override;
 };
