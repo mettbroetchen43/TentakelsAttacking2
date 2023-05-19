@@ -7,16 +7,17 @@
 
 // Colors
 bool operator==(Color lhs, Color rhs) {
-	bool sameColor =
+	return {
 		lhs.a == rhs.a
 		&& lhs.b == rhs.b
 		&& lhs.g == rhs.g
-		&& lhs.r == rhs.r;
-
-	return sameColor;
+		&& lhs.r == rhs.r
+	};
 }
 bool operator!=(Color lhs, Color rhs) {
-	return not (lhs == rhs);
+	return {
+		not (lhs == rhs)
+	};
 }
 
 // Position
@@ -27,7 +28,7 @@ Vector2 GetElementPosition(Vector2 const& pos, Vector2 const& size,
 		pos.y + y * size.y
 	};
 }
-Vector2 GetElementPositionRversed(Vector2 const& posP, Vector2 const& sizeP,
+Vector2 GetElementPositionReversed(Vector2 const& posP, Vector2 const& sizeP,
 	Vector2 const& posC) {
 	return {
 		(posC.x - posP.x) / sizeP.x,

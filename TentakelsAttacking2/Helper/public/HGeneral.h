@@ -26,7 +26,7 @@ Vector2 GetElementPosition(Vector2 const& pos, Vector2 const& size,
 /**
  * returns the global element position.
  */
-Vector2 GetElementPositionRversed(Vector2 const& posP, Vector2 const& sizeP,
+Vector2 GetElementPositionReversed(Vector2 const& posP, Vector2 const& sizeP,
 	Vector2 const& posC);
 /**
  * returns the relative element size acording to the parent size.
