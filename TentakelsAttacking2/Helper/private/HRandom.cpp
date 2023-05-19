@@ -8,7 +8,7 @@
 #include <chrono>
 
 Random& Random::GetInstance() {
-	static Random random;
+	static Random random{ };
 	return random;
 }
 
