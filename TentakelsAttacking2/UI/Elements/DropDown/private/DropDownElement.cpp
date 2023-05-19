@@ -24,19 +24,19 @@ void DropDownElement::UpdateCollider() {
     UIElement::UpdateCollider();
     CreateToRender();
 }
-void DropDownElement::UpdateColiderReverse() {
-    UIElement::UpdateColiderReverse();
+void DropDownElement::UpdateColliderReverse() {
+    UIElement::UpdateColliderReverse();
     CreateToRender();
 }
 
 DropDownElement::DropDownElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
     unsigned int focusID, unsigned int ID, std::string const& text,
-    std::function<Rectangle(Rectangle)> getTemoraryCollider)
-    : UIElement(pos, size, alignment, resolution), Focusable(focusID), m_ID(ID), m_text(text),
-    m_getTemoraryCollider(getTemoraryCollider) {
+    std::function<Rectangle(Rectangle)> getTemporaryCollider)
+    : UIElement{ pos, size, alignment, resolution }, Focusable{ focusID }, m_ID{ ID }, m_text{ text },
+    m_getTemoraryCollider{ getTemporaryCollider } {
 
 
-    AppContext& appContext = AppContext::GetInstance();
+    AppContext& appContext{ AppContext::GetInstance() };
     m_grey50 = appContext.assetManager.GetTexture(AssetType::GREY_50);
     m_textureRecGrey50 = {
         0.0f,
@@ -59,9 +59,9 @@ void DropDownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext co
 
     UIElement::CheckAndUpdate(mousePosition, appContext);
 
-    Rectangle themporaryCollider = m_getTemoraryCollider(m_collider);
+    Rectangle const temporaryCollider{ m_getTemoraryCollider(m_collider) };
 
-    m_hover = CheckCollisionPointRec(mousePosition, themporaryCollider);
+    m_hover = CheckCollisionPointRec(mousePosition, temporaryCollider);
 
     if (m_hover && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) { m_onClick(m_ID); }
     if (IsFocused() && IsConfirmInputPressed()) { m_onClick(m_ID); }

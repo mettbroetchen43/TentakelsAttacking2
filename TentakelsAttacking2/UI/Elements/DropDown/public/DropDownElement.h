@@ -38,7 +38,7 @@ private:
 	 * calls UpdateReverseCollider of the UIElement.
 	 * Updates the text.
 	 */
-	void UpdateColiderReverse() override;
+	void UpdateColliderReverse() override;
 
 public:
 	/**

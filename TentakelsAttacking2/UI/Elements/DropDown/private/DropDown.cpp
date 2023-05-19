@@ -206,7 +206,7 @@ DropDown::DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resol
 	};
 
 	m_collider.width -= m_arrowCollider.width;
-	UpdateColiderReverse();
+	UpdateColliderReverse();
 
 	Initialize(elements, startElementFocusID);
 }

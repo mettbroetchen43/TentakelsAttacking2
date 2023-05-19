@@ -53,7 +53,7 @@ protected:
 	/**
 	 * calculates the relative position and size out of the absolute position and size and the current resolution.
 	 */
-	virtual void UpdateColiderReverse() {
+	virtual void UpdateColliderReverse() {
 		m_pos = {
 			m_collider.x / m_resolution.x,
 			m_collider.y / m_resolution.y
@@ -223,7 +223,7 @@ public:
 	 */
 	virtual void SetCollider(Rectangle colider) {
 		m_collider = colider;
-		UpdateColiderReverse();
+		UpdateColliderReverse();
 	}
 	/**
 	 * returns the current absolute position and size.
