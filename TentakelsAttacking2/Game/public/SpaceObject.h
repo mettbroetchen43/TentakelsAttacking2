@@ -18,10 +18,10 @@ class Player;
 class SpaceObject /*: public LogicUpdate */ {
 protected:
 	using vec2pos = Vec2<int>; ///< the position type
-	unsigned int m_ID; ///< contains the unique id
-	size_t m_ships = 0; ///< contains the current ampunt of ships
-	vec2pos m_position; ///< contains the absolute position within the galaxy
-	std::shared_ptr<Player> m_player; ///< contains a pointer to a player who owns the object
+	unsigned int m_ID{ }; ///< contains the unique id
+	size_t m_ships{ 0 }; ///< contains the current amount of ships
+	vec2pos m_position{ 0, 0 }; ///< contains the absolute position within the galaxy
+	std::shared_ptr<Player> m_player{ }; ///< contains a pointer to a player who owns the object
 
 public:
 	/**
@@ -68,111 +68,111 @@ public:
 	[[nodiscard]] size_t GetShipCount() const;
 
 	/**
-	 * returns if the current spaceobject is a planet.
+	 * returns if the current space object is a planet.
 	 */
 	[[nodiscard]] virtual bool IsPlanet() const;
 	/**
-	 * returns if the current spaceobject is a planet.
+	 * returns if the current space object is a planet.
 	 */
 	[[nodiscard]] virtual bool IsFleet() const;
 	/**
-	 * returns if the current spaceobject is a planet.
+	 * returns if the current space object is a planet.
 	 */
 	[[nodiscard]] virtual bool IsTargetPoint() const;
 
 	/**
-	 * adds and returns the shipcount of an object and a number.
+	 * adds and returns the ship count of an object and a number.
 	 */
 	friend size_t operator+ (SpaceObject const& object, size_t ships);
 	/**
-	 * adds and returns the shipcount of an object and a number.
+	 * adds and returns the ship count of an object and a number.
 	 */
 	friend size_t operator+ (size_t ships, SpaceObject const& object);
 	/**
-	 * adds and returns two shipcounts.
+	 * adds and returns two ship counts.
 	 */
 	friend size_t operator+ (SpaceObject const& lhs, SpaceObject const& rhs);
 
 	/**
-	 * substracts and returns the shipcount of an object and a number.
+	 * substracts and returns the ship count of an object and a number.
 	 */
 	friend size_t operator- (SpaceObject const& object, size_t ships);
 	/**
-	 * substracts and returns the shipcount of an object and a number.
+	 * substracts and returns the ship count of an object and a number.
 	 */
 	friend size_t operator- (size_t ships, SpaceObject const& object);
 	/**
-	 * substracts and returns two shipcounts.
+	 * substracts and returns two ship counts.
 	 */
 	friend size_t operator- (SpaceObject const& lhs, SpaceObject const& rhs);
 
 	/**
-	 * compares if the shipcount is smaller than the number. 
+	 * compares if the ship count is smaller than the number. 
 	 */
 	friend bool operator< (SpaceObject const& object, size_t ships);
 	/**
-	 * compares if the number is smaller than the shipcount.
+	 * compares if the number is smaller than the ship count.
 	 */
 	friend bool operator< (size_t ships, SpaceObject const& object);
 	/**
-	 * compares if the number is lhs shipcount smaller than the rhs shipcount.
+	 * compares if the number is lhs ship count smaller than the rhs ship count.
 	 */
 	friend bool operator< (SpaceObject const& lhs, SpaceObject const& rhs);
 
 	/**
-	 * compares if the shipcount is smaller than or eqal to the number.
+	 * compares if the ship count is smaller than or equal to the number.
 	 */
 	friend bool operator<= (SpaceObject const& object, size_t ships);
 	/**
-	 * compares if the number is smaller than or qual to the shipcount.
+	 * compares if the number is smaller than or equal to the ship count.
 	 */
 	friend bool operator<= (size_t ships, SpaceObject const& object);
 	/**
-	 * compares if the number is lhs shipcount smaller than or qual to the rhs shipcount.
+	 * compares if the number is lhs ship count smaller than or equal to the rhs ship count.
 	 */
 	friend bool operator<= (SpaceObject const& lhs, SpaceObject const& rhs);
 
 	/**
-	 * compares if the shipcount is greater than the number.
+	 * compares if the ship count is greater than the number.
 	 */
 	friend bool operator> (SpaceObject const& object, size_t ships);
 	/**
-	 * compares if the number is greater than the shipcount.
+	 * compares if the number is greater than the ship count.
 	 */
 	friend bool operator> (size_t ships, SpaceObject const& object);
 	/**
-	 * compares if the number is lhs shipcount greater than the rhs shipcount.
+	 * compares if the number is lhs ship count greater than the rhs ship count.
 	 */
 	friend bool operator> (SpaceObject const& lhs, SpaceObject const& rhs);
 
 	/**
-	 * compares if the shipcount is greater than or eqal to the number.
+	 * compares if the ship count is greater than or equal to the number.
 	 */
 	friend bool operator>= (SpaceObject const& object, size_t ships);
 	/**
-	 * compares if the number is greater than or qual to the shipcount.
+	 * compares if the number is greater than or equal to the ship count.
 	 */
 	friend bool operator>= (size_t ships, SpaceObject const& object);
 	/**
-	 * compares if the number is lhs shipcount freater than or qual to the rhs shipcount.
+	 * compares if the number is lhs ship count greater than or equal to the rhs ship count.
 	 */
 	friend bool operator>= (SpaceObject const& lhs, SpaceObject const& rhs);
 
 	/**
-	 * add an ammount of ships to the shipcount.
+	 * add an amount of ships to the ship count.
 	 */
 	SpaceObject& operator+=(size_t ships);
 	/**
-	 * add an other shipcount to the shipcount.
+	 * add an other ship count to the ship count.
 	 */
 	SpaceObject& operator+=(SpaceObject const& object);
 
 	/**
-	 * substract an ammount of ships to the shipcount.
+	 * substract an amount of ships to the ship count.
 	 */
 	SpaceObject& operator-=(size_t ships);
 	/**
-	 * substract an other shipcount to the shipcount.
+	 * substract an other ship count to the ship count.
 	 */
 	SpaceObject& operator-=(SpaceObject const& object);
 
@@ -182,7 +182,7 @@ public:
 	[[nodiscard]] bool operator== (SpaceObject const& other) const;
 };
 
-// doc strings at the frends function
+// doc strings at the friends function
 [[nodiscard]] size_t operator+ (SpaceObject const& object, size_t ships);
 [[nodiscard]] size_t operator+ (size_t ships, SpaceObject& object);
 [[nodiscard]] size_t operator+ (SpaceObject const& lhs, SpaceObject const& rhs);
