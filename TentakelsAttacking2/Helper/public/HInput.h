@@ -40,19 +40,19 @@
 [[nodiscard]] bool IsOnlyEnterConfirmInputUp();
 
 /**
- * returns if encape or num enter is pressed.
+ * returns if escape or num enter is pressed.
  */
 [[nodiscard]] bool IsBackInputPressed();
 /**
- * returns if encape or num enter is released.
+ * returns if escape or num enter is released.
  */
 [[nodiscard]] bool IsBackInputReleased();
 /**
- * returns if encape or num enter is down.
+ * returns if escape or num enter is down.
  */
 [[nodiscard]] bool IsBackInputDown();
 /**
- * returns if encape or num enter is up.
+ * returns if escape or num enter is up.
  */
 [[nodiscard]] bool IsBackInputUp();
 
@@ -70,4 +70,3 @@
  * returns if alt and F4 is pressed.
  */
 [[nodiscard]] bool IsQuitInput();
-
