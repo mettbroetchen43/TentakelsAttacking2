@@ -57,7 +57,7 @@ void LogoScene::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
 	bool const nextScene{
 			IsBackInputPressed()
-		or (m_time + SCENE_LENGTH) < GetTime() 
+		or (m_time + m_sceneLength) < GetTime() 
 	};
 	if (nextScene) {
 		SwitchSceneEvent event{ m_nextScene };
