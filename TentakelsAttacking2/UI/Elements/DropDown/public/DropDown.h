@@ -78,7 +78,7 @@ private:
 	/**
 	 * Checks if scolling should be enabled.
 	 */
-	void CheckIfScolling();
+	void CheckIfScrolling();
 
 	/**
 	 * calles UpdateCollider from UIElement.
