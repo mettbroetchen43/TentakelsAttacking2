@@ -50,27 +50,27 @@ void Intro::Initialize( ) {
 	m_elements.push_back(skipText);
 
 
-	std::function<void()> gameStart = []() {
+	m_btn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(SwitchSceneEvent(SceneType::MAIN_MENU));
-	};
-	m_btn->SetOnClick(gameStart);
+	});
 }
 
 Intro::Intro(Vector2 resolution)
-	:Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
+	:Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution } {
 	Initialize();
 }
 
 void Intro::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	m_title->CheckAndUpdate(mousePosition, appContext);
 
-	bool skipBtn =
-		IsBackInputPressed()
+	bool const skipBtn{
+			IsBackInputPressed()
 		and m_title->HasFinishedTitle()
-		and m_btn->IsMoving();
+		and m_btn->IsMoving() 
+	};
 	if (skipBtn) {
 		m_btn->StopMoving();
-		m_btn->SetPosition(Vector2(0.5f, 0.5f));
+		m_btn->SetPosition({ 0.5f, 0.5f });
 		return;
 	}
 
@@ -97,6 +97,6 @@ void Intro::Resize(Vector2 resolution, AppContext const& appContext) {
 
 void Intro::SetActive(bool active, AppContext const& appContext) {
 	Scene::SetActive(active, appContext);
-	auto event = SelectFocusElementEvent(m_btn.get());
+	SelectFocusElementEvent const event{ m_btn.get() };
 	appContext.eventManager.InvokeEvent(event);
 }
