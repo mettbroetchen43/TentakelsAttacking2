@@ -110,7 +110,7 @@ private:
 	/**
 	 * clamps the scroll offset so that the table can not "leave" the collider.
 	 */
-	void ClampScroollOffset(Vector2& offset);
+	void ClampScrollOffset(Vector2& offset);
 	/**
 	 * moves a selected cell in the table collider.
 	 */
@@ -118,7 +118,7 @@ private:
 	/**
 	 * set offset to position in percent.
 	 */
-	void ScollPercent(float percent, bool isHorisonzal);
+	void ScrollPercent(float percent, bool isHorisonzal);
 	/**
 	 * moves the cell collider of the offset.
 	 */
@@ -137,7 +137,7 @@ private:
 	 * resets the backgroundcolor if the bool is set.
 	 * sets a new one if the bool is not set.
 	 */
-	void SetHighlightBeackground(bool reset);
+	void SetHighlightBackground(bool reset);
 
 	/**
 	 * calls the top left cell to render.
@@ -402,7 +402,7 @@ public:
 	/**
 	 * returns if the hovered row and column gets currently highlighted.
 	 */
-	[[nodiscard]] bool IsHighlighedHover() const;
+	[[nodiscard]] bool IsHighlightedHover() const;
 
 	/**
 	 * Sets if the table is scollable.
@@ -411,7 +411,7 @@ public:
 	/**
 	 * returns true if the table is currently scollable.
 	 */
-	[[nodiscard]] bool IsScollable() const;
+	[[nodiscard]] bool IsScrollable() const;
 
 	/**
 	 * sets if a specific cell is editable.
