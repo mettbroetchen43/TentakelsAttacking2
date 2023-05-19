@@ -6,7 +6,7 @@
 #pragma once
 
 /**
- * privides the sound types for the sound manager.
+ * provides the sound types for the sound manager.
  * the first types are casted while loading.
  * you really need to keep them in order.
  */
