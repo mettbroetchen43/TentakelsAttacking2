@@ -256,7 +256,7 @@ public:
 	virtual void MoveToPositionLinear(Vector2 position, float relativeSpeed) {
 		m_moveType = MoveType::POINT_LINEAR;
 		m_startingPosition = m_pos;
-		m_targetPosition = GetAllignedPosition(m_alignment, position, m_size);
+		m_targetPosition = GetAlignedPosition(m_alignment, position, m_size);
 		m_relativeSpeed = { relativeSpeed, relativeSpeed };
 	}
 	/**
@@ -266,7 +266,7 @@ public:
 	virtual void MoveToPositionAsymptotic(Vector2 position, float relativeSpeed) {
 		m_moveType = MoveType::POINT_ASYNPTOTIC;
 		m_startingPosition = m_pos;
-		m_targetPosition = GetAllignedPosition(m_alignment, position, m_size);
+		m_targetPosition = GetAlignedPosition(m_alignment, position, m_size);
 		m_relativeSpeed = { relativeSpeed, relativeSpeed };
 	}
 	/**

@@ -183,11 +183,11 @@ void Scene::MoveToPositionLinear(Vector2 position, float relativeSpeed) {
 	UIElement::MoveToPositionLinear(position, relativeSpeed);
 
 	for (auto e : m_elements) {
-		auto pos = GetAllignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
+		auto pos = GetAlignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
 		e->MoveToPositionLinear({position.x + pos.x - m_pos.x, position.y + pos.y - m_pos.y }, relativeSpeed);
 	}
 	for (auto e : m_elementsOutUpdates) {
-		auto pos = GetAllignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
+		auto pos = GetAlignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
 		e->MoveToPositionLinear({ position.x + pos.x - m_pos.x, position.y + pos.y - m_pos.y }, relativeSpeed);
 	}
 }
@@ -196,11 +196,11 @@ void Scene::MoveToPositionAsymptotic(Vector2 position, float relativeSpeed) {
 	UIElement::MoveToPositionAsymptotic(position, relativeSpeed);
 
 	for (auto e : m_elements) {
-		auto pos = GetAllignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
+		auto pos = GetAlignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
 		e->MoveToPositionAsymptotic({ position.x + pos.x - m_pos.x, position.y + pos.y - m_pos.y }, relativeSpeed);
 	}
 	for (auto e : m_elementsOutUpdates) {
-		auto pos = GetAllignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
+		auto pos = GetAlignedPositionReversed(e->GetAlignment(), e->GetPosition(), e->GetSize());
 		e->MoveToPositionAsymptotic({ position.x + pos.x - m_pos.x, position.y + pos.y - m_pos.y }, relativeSpeed);
 	}
 }

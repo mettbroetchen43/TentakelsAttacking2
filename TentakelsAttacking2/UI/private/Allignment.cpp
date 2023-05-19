@@ -5,8 +5,8 @@
 
 #include "Allignment.h"
 
-Rectangle GetAlignedCollider(Vector2& pos, Vector2 size, Alignment allignment, Vector2 resolution) {
-	switch (allignment) {
+Rectangle GetAlignedCollider(Vector2& pos, Vector2 size, Alignment alignment, Vector2 resolution) {
+	switch (alignment) {
 		case Alignment::TOP_LEFT:
 		case Alignment::DEFAULT:
 		default:
@@ -46,104 +46,103 @@ Rectangle GetAlignedCollider(Vector2& pos, Vector2 size, Alignment allignment, V
 			pos.y -= size.y;
 			break;
 	}
-	Rectangle toReturn = {
+	return {
 		resolution.x * pos.x,
 		resolution.y * pos.y,
 		resolution.x * size.x,
 		resolution.y * size.y
 	};
-	return toReturn;
 }
-Vector2 GetAllignedPosition(Alignment allignment, Vector2 position, Vector2 size) {
-	switch (allignment) {
-	case Alignment::TOP_LEFT:
-	case Alignment::DEFAULT:
-	default:
-		// no adjustment of x necessary
-		// no adjustment of y necessary
-		break;
-	case Alignment::TOP_MID:
-		position.x -= size.x / 2;
-		// no adjustment of y necessary
-		break;
-	case Alignment::TOP_RIGHT:
-		position.x -= size.x;
-		// no adjustment of y necessary
-		break;
-	case Alignment::MID_LEFT:
-		// no adjustment of x necessary
-		position.y -= size.y / 2;
-		break;
-	case Alignment::MID_MID:
-		position.x -= size.x / 2;
-		position.y -= size.y / 2;
-		break;
-	case Alignment::MID_RIGHT:
-		position.x -= size.x;
-		position.y -= size.y / 2;
-		break;
-	case Alignment::BOTTOM_LEFT:
-		// no adjustment of x necessary
-		position.y -= size.y;
-		break;
-	case Alignment::BOTTOM_MID:
-		position.x -= size.x / 2;
-		position.y -= size.y;
-		break;
-	case Alignment::BOTTOM_RIGHT:
-		position.x -= size.x;
-		position.y -= size.y;
-		break;
+Vector2 GetAlignedPosition(Alignment alignment, Vector2 position, Vector2 size) {
+	switch (alignment) {
+		case Alignment::TOP_LEFT:
+		case Alignment::DEFAULT:
+		default:
+			// no adjustment of x necessary
+			// no adjustment of y necessary
+			break;
+		case Alignment::TOP_MID:
+			position.x -= size.x / 2;
+			// no adjustment of y necessary
+			break;
+		case Alignment::TOP_RIGHT:
+			position.x -= size.x;
+			// no adjustment of y necessary
+			break;
+		case Alignment::MID_LEFT:
+			// no adjustment of x necessary
+			position.y -= size.y / 2;
+			break;
+		case Alignment::MID_MID:
+			position.x -= size.x / 2;
+			position.y -= size.y / 2;
+			break;
+		case Alignment::MID_RIGHT:
+			position.x -= size.x;
+			position.y -= size.y / 2;
+			break;
+		case Alignment::BOTTOM_LEFT:
+			// no adjustment of x necessary
+			position.y -= size.y;
+			break;
+		case Alignment::BOTTOM_MID:
+			position.x -= size.x / 2;
+			position.y -= size.y;
+			break;
+		case Alignment::BOTTOM_RIGHT:
+			position.x -= size.x;
+			position.y -= size.y;
+			break;
 	}
 
 	return position;
 }
-Vector2 GetAllignedPositionReversed(Alignment allignment, Vector2 position, Vector2 size) {
-	switch (allignment) {
-	case Alignment::TOP_LEFT:
-	case Alignment::DEFAULT:
-	default:
-		// no adjustment of x necessary
-		// no adjustment of y necessary
-		break;
-	case Alignment::TOP_MID:
-		position.x += size.x / 2;
-		// no adjustment of y necessary
-		break;
-	case Alignment::TOP_RIGHT:
-		position.x += size.x;
-		// no adjustment of y necessary
-		break;
-	case Alignment::MID_LEFT:
-		// no adjustment of x necessary
-		position.y += size.y / 2;
-		break;
-	case Alignment::MID_MID:
-		position.x += size.x / 2;
-		position.y += size.y / 2;
-		break;
-	case Alignment::MID_RIGHT:
-		position.x += size.x;
-		position.y += size.y / 2;
-		break;
-	case Alignment::BOTTOM_LEFT:
-		// no adjustment of x necessary
-		position.y += size.y;
-		break;
-	case Alignment::BOTTOM_MID:
-		position.x += size.x / 2;
-		position.y += size.y;
-		break;
-	case Alignment::BOTTOM_RIGHT:
-		position.x += size.x;
-		position.y += size.y;
-		break;
+Vector2 GetAlignedPositionReversed(Alignment alignment, Vector2 position, Vector2 size) {
+	switch (alignment) {
+		case Alignment::TOP_LEFT:
+		case Alignment::DEFAULT:
+		default:
+			// no adjustment of x necessary
+			// no adjustment of y necessary
+			break;
+		case Alignment::TOP_MID:
+			position.x += size.x / 2;
+			// no adjustment of y necessary
+			break;
+		case Alignment::TOP_RIGHT:
+			position.x += size.x;
+			// no adjustment of y necessary
+			break;
+		case Alignment::MID_LEFT:
+			// no adjustment of x necessary
+			position.y += size.y / 2;
+			break;
+		case Alignment::MID_MID:
+			position.x += size.x / 2;
+			position.y += size.y / 2;
+			break;
+		case Alignment::MID_RIGHT:
+			position.x += size.x;
+			position.y += size.y / 2;
+			break;
+		case Alignment::BOTTOM_LEFT:
+			// no adjustment of x necessary
+			position.y += size.y;
+			break;
+		case Alignment::BOTTOM_MID:
+			position.x += size.x / 2;
+			position.y += size.y;
+			break;
+		case Alignment::BOTTOM_RIGHT:
+			position.x += size.x;
+			position.y += size.y;
+			break;
 	}
 
 	return position;
 }
 
-TextAlignment GetHorisontalTextAlignment(Alignment alignment) {
+TextAlignment GetHorizontalTextAlignment(Alignment alignment) {
 	switch(alignment) {
 		case Alignment::TOP_LEFT:
 		case Alignment::MID_LEFT:

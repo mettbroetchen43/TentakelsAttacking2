@@ -280,7 +280,7 @@ std::string GetHorizontalAlignedText(std::string const& text,
 	Rectangle collider, float fontSize,
 	Alignment alignment) {
 
-	TextAlignment const textAlignment{ GetHorisontalTextAlignment(alignment) };
+	TextAlignment const textAlignment{ GetHorizontalTextAlignment(alignment) };
 
 	if (textAlignment == TextAlignment::LEFT) {
 		return text;
@@ -331,7 +331,7 @@ std::string GetHorizontalAlignedText(std::string const& text,
 std::vector<float> GetHorizontalAlignedOffset(std::vector<std::string> text, Rectangle collider,
 	float fontSize, Alignment alignment) {
 	AppContext const& appContext{ AppContext::GetInstance() };
-	TextAlignment const textAlignment{ GetHorisontalTextAlignment(alignment) };
+	TextAlignment const textAlignment{ GetHorizontalTextAlignment(alignment) };
 
 	std::vector<float> toReturn{ };
 
