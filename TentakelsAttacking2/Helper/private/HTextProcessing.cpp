@@ -4,7 +4,7 @@
 //
 
 #include "AppContext.h"
-#include "Allignment.h"
+#include "Alignment.h"
 #include "CustomRaylib.h"
 #include "HTextProcessing.h"
 #include <cassert>

@@ -4,7 +4,7 @@
 //
 
 #include "Slider.h"
-#include "Allignment.h"
+#include "Alignment.h"
 #include "AppContext.h"
 
 void Slider::CalculateInitialButton() {

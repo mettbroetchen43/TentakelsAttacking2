@@ -212,7 +212,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h" />
     <ClInclude Include="UI\Elements\Default\public\InputLine.hpp" />
     <ClInclude Include="UI\Elements\Table\public\TableCell.hpp" />
-    <ClInclude Include="UI\public\Allignment.h" />
+    <ClInclude Include="UI\public\Alignment.h" />
     <ClInclude Include="UI\Elements\ColorPicker\public\ColorPicker.h" />
     <ClInclude Include="UI\Elements\ColorPicker\public\ColorPickerCell.h" />
     <ClInclude Include="Helper\public\HGeneral.h" />

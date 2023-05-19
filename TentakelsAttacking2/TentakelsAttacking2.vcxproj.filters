@@ -114,7 +114,7 @@
     <ClInclude Include="UI\Elements\Default\public\Picture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\public\Allignment.h">
+    <ClInclude Include="UI\public\Alignment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Scene\MainScenes\public\MainMenu.h">
