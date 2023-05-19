@@ -11,7 +11,7 @@
 
 namespace {
 	// Need for PopUp ctor
-	std::string subTitle = "";
+	std::string subTitle{ "" };
 }
 
 void CellPopUp::Initialize([[maybe_unused]] AppContext const& appContext,
@@ -82,7 +82,7 @@ void CellPopUp::Close(AppContext const& appContext) {
 
 CellPopUp::CellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, AssetType infoTexture)
-	: PopUp(pos, size, alignment, resolution, title, subTitle, infoTexture) {
+	: PopUp{ pos, size, alignment, resolution, title, subTitle, infoTexture } {
 	
 	Initialize(AppContext::GetInstance(), resolution);
 }
@@ -95,7 +95,7 @@ void CellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
 	CheckEnter();
 
 	if (IsBackInputPressed()) {
-		auto event = PlaySoundEvent(SoundType::CLICKED_RELEASE_STD);
+		PlaySoundEvent event{ SoundType::CLICKED_RELEASE_STD };
 		appContext.eventManager.InvokeEvent(event);
 		SetShouldClose();
 	}
