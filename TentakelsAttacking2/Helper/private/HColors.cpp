@@ -7,7 +7,7 @@
 #include "UIEvents.hpp"
 #include "HGeneral.h"
 
-bool Colors::CheckValidColor(Color& color) {
+bool Colors::CheckValidColor(Color const& color) const {
 	return std::find(m_colors.begin(), m_colors.end(), color)
 		== m_colors.end();
 }

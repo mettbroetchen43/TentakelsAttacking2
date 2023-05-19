@@ -37,7 +37,7 @@ public:
 	/**
 	 * check if the provided color is valid.
 	 */
-	[[nodiscard]] bool CheckValidColor(Color& color);
+	[[nodiscard]] bool CheckValidColor(Color const& color) const;
 
 	/**
 	 * returns all colors.
