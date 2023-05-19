@@ -12,8 +12,8 @@
  */
 class ColorCellPopUp final : public CellPopUp {
 private:
-	std::shared_ptr<ColorPicker> m_colorPicker; ///< contains a pointer of a color picker for coosing a new color.
-	std::function<void(Color)> m_onClick = [](Color) {}; ///< contains the onClick lambda that gets called when the new color is accepted
+	std::shared_ptr<ColorPicker> m_colorPicker; ///< contains a pointer of a color picker for choosing a new color.
+	std::function<void(Color)> m_onClick{ [](Color) {} }; ///< contains the onClick lambda that gets called when the new color is accepted
 	 
 	/**
 	 * initialize all ui elements.
@@ -22,7 +22,7 @@ private:
 		Vector2 resolution, Color currentColor);
 	/**
 	 * gets the new color from the color picker and calls the onClick.
-	 * set should close afterwords.
+	 * set should close afterword's.
 	 */
 	void SetValue() override;
 
