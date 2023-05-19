@@ -16,14 +16,14 @@ void ColorPickerCell::SetColor() const {
 
 ColorPickerCell::ColorPickerCell(unsigned int ID, Vector2 pos, Vector2 size, 
 	Alignment alignment, Vector2 resolution, Color color, ColorPicker* colorPicker)
-	: Focusable(ID), UIElement(pos, size, alignment, resolution),
-	m_color(color), m_colorPicker(colorPicker),
-	m_hover(
+	: Focusable{ ID }, UIElement{ pos, size, alignment, resolution },
+	m_color{ color }, m_colorPicker{ colorPicker },
+	m_hover{
 		0.05f,
 		AppContext::GetInstance().colors.AsString(color),
 		WHITE,
 		{0.01f,0.01f},
-		resolution)
+		resolution }
 		{
 
 	if (IsBlankCell()) {
@@ -62,23 +62,25 @@ void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
 		return;
 	}
 
-	bool renderHover = CheckCollisionPointRec(mousePosition, m_collider);
+	bool const renderHover{ CheckCollisionPointRec(mousePosition, m_collider) };
 	if (renderHover) {
 		m_hover.SetRenderHover(mousePosition, appContext);
 	}
 
-	bool mouseClick =
+	bool const mouseClick{
 		renderHover
-		&& IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+		&& IsMouseButtonPressed(MOUSE_BUTTON_LEFT) 
+	};
 	if (mouseClick) {
 		m_colorPicker->SetCellFocuses(appContext);
 
 		SelectFocusElement(this, m_colorPicker->IsPopUp());
 	}
 
-	bool enterClick =
+	bool const enterClick{
 		IsFocused()
-		&& IsConfirmInputPressed();
+		&& IsConfirmInputPressed() 
+	};
 	if (mouseClick or enterClick) {
 		m_colorPicker->SetColor(m_color);
 	}
@@ -95,10 +97,9 @@ void ColorPickerCell::Render([[maybe_unused]] AppContext const& appContext) {
 		m_color
 	);
 
-	Color color = m_color != PURPLE ? PURPLE : DARKPURPLE;
 	DrawRectangleLinesEx(
 		m_collider,
 		3.0f,
-		color
+		m_color != PURPLE ? PURPLE : DARKPURPLE
 	);
 }
