@@ -39,11 +39,11 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 	));
 
 	// Text and Check Box
-	float firstRow = 0.25f;
-	float row = 0.035f;
-	float cbX = 0.51f;
-	float textX = 0.49f;
-	std::array<std::string, 7> text = {
+	float const firstRow{ 0.25f };
+	float const row     { 0.035f };
+	float const cbX     { 0.51f };
+	float const textX   { 0.49f };
+	std::array<std::string, 7> const text{
 		"Global",
 		"Pirates",
 		"Revolts",
@@ -82,21 +82,21 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 	}
 }
 
-void GameEventSettings::SetChecked(unsigned int ID, bool isCecked) {
-	auto event = UpdateCheckGameEvent(
+void GameEventSettings::SetChecked(unsigned int ID, bool isChecked) {
+	UpdateCheckGameEvent const event{
 		static_cast<GameEventType>(ID),
-		isCecked
-	);
+		isChecked
+	};
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
 void GameEventSettings::UpdateElements(UpdateCheckGameEventsUI const* event) {
 
-	auto types = event->GetTypes();
+	auto const types{ event->GetTypes() };
 
 	for (auto const& [type, b] : *types) {
 		for (auto checkBox : m_checkBoxes) {
-			auto cbType = static_cast<GameEventType>(checkBox->GetID());
+			auto const cbType{ static_cast<GameEventType>(checkBox->GetID()) };
 			if (cbType == type) {
 				checkBox->SetChecked(b);
 				continue;
@@ -107,20 +107,20 @@ void GameEventSettings::UpdateElements(UpdateCheckGameEventsUI const* event) {
 	SetGlobalCheckbox();
 }
 void GameEventSettings::SetGlobalCheckbox(){
-	std::shared_ptr<CheckBox> gloablCheckbox = nullptr;
-	bool check = true;
-	bool value = false;
+	std::shared_ptr<CheckBox> globalCheckbox{ nullptr };
+	bool check{ true };
+	bool value{ false };
 
 	for (size_t i = 0; i < m_checkBoxes.size(); ++i) {
-		auto cbTypei = static_cast<GameEventType>(m_checkBoxes.at(i)->GetID());
-		if (cbTypei == GameEventType::GLOBAL) {
-			gloablCheckbox = m_checkBoxes.at(i);
+		auto const cbTypeI{ static_cast<GameEventType>(m_checkBoxes.at(i)->GetID()) };
+		if (cbTypeI == GameEventType::GLOBAL) {
+			globalCheckbox = m_checkBoxes.at(i);
 			continue;
 		}
 		value = m_checkBoxes.at(i)->IsChecked();
 		for (size_t j = i; j < m_checkBoxes.size(); ++j) {
-			auto cbTypej = static_cast<GameEventType>(m_checkBoxes.at(i)->GetID());
-			if (cbTypej == GameEventType::GLOBAL) {
+			auto cbTypeJ{ static_cast<GameEventType>(m_checkBoxes.at(i)->GetID()) };
+			if (cbTypeJ == GameEventType::GLOBAL) {
 				continue;
 			}
 			if (m_checkBoxes.at(i)->IsChecked()
@@ -133,22 +133,22 @@ void GameEventSettings::SetGlobalCheckbox(){
 
 found:
 	if (check) {
-		gloablCheckbox->SetChecked(value);
+		globalCheckbox->SetChecked(value);
 	}
 	else {
-		gloablCheckbox->SetChecked(false);
+		globalCheckbox->SetChecked(false);
 	}
 }
 
 GameEventSettings::GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution)
-	: Scene(pos, size, alignment, resolution) {
+	: Scene{ pos, size, alignment, resolution } {
 	AppContext& appContext = AppContext::GetInstance();
 	appContext.eventManager.AddListener(this);
 
 	Initialize(resolution, focusID);
 
-	auto event = InitialCheckGameEventDataEvent();
+	InitialCheckGameEventDataEvent const event;
 	appContext.eventManager.InvokeEvent(event);
 }
 GameEventSettings::~GameEventSettings() {
@@ -164,18 +164,18 @@ void GameEventSettings::OnEvent(Event const& event) {
 }
 
 void GameEventSettings::SetRandom() {
-	Random& random = Random::GetInstance();
-	AppContext& appContext = AppContext::GetInstance();
+	Random& random{ Random::GetInstance() };
+	AppContext const& appContext{ AppContext::GetInstance() };
 
 	for (auto& c : m_checkBoxes) {
 		if (c->GetID() == 0) { continue; } ///< id 0 is the gloabl check box
 
 		bool r = random.random(2) == 1;
 		if (c->IsChecked() != r) {
-			auto event = UpdateCheckGameEvent(
+			UpdateCheckGameEvent const event{
 				static_cast<GameEventType>(c->GetID()),
 				r
-			);
+			};
 			appContext.eventManager.InvokeEvent(event);
 		}
 	}
