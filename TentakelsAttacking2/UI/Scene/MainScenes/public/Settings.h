@@ -9,7 +9,7 @@
 class SliderAndInputLine;
 
 /**
- * privides a scenes, where the global settings can be set.
+ * provides a scenes, where the global settings can be set.
  */
 class SettingsScene final : public Scene {
 private:
@@ -23,11 +23,11 @@ private:
 	void Initialize(SceneType continueScene);
 
 	/**
-	 * returs the strings out of the raw resolution data.
+	 * returns the strings out of the raw resolution data.
 	 */
 	std::vector<std::string> GetStringsFromResolutionEntries() const;
 	/**
-	 * returns index from resoluton enum.
+	 * returns index from resolution enum.
 	 */
 	int GetIndexFromResolution(Resolution resolution) const;
 
