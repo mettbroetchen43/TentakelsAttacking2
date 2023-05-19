@@ -9,7 +9,7 @@
 #include <memory>
 
 void MessagePopUp::Initialize(Vector2 resolution) {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 
 	auto btn = std::make_shared<ClassicButton>(
 		1,
@@ -25,7 +25,7 @@ void MessagePopUp::Initialize(Vector2 resolution) {
 		this->m_callback();
 		AppContext::GetInstance().eventManager.InvokeEvent(ClosePopUpEvent(this));
 		});
-	auto event = NewFocusPopUpElementEvent(btn.get());
+	NewFocusPopUpElementEvent event{ btn.get() };
 	appContext.eventManager.InvokeEvent(event);
 
 	m_elements.push_back(btn);
@@ -33,7 +33,7 @@ void MessagePopUp::Initialize(Vector2 resolution) {
 
 MessagePopUp::MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, std::string& subTitle, AssetType infoTexture, std::function<void()> callback)
-	: PopUp(pos, size, alignment, resolution, title, subTitle, infoTexture), m_callback(callback) {
+	: PopUp{ pos, size, alignment, resolution, title, subTitle, infoTexture }, m_callback{ callback } {
 
 	Initialize(resolution);
 }
