@@ -15,32 +15,32 @@ class Galaxy;
 class UIPlanet;
 
 /**
- * the representaition of the logic galaxy.
+ * the representation of the logic galaxy.
  * can be shown as a show galaxy without interaction.
  */
 class UIGalaxy final : public UIElement, public EventListener, public Focusable {
 private:
-	enum class Direction { ///< contains the possible direktions that man on the arrow keys
+	enum class Direction { ///< contains the possible directions that man on the arrow keys
 		UP,
 		DOWN,
 		LEFT,
 		RIGHT,
 	};
-	bool m_isEnabled = true; ///< contains if the galaxy is enabled
-	bool m_isScaling = true; ///< contains if the galaxy schould be able to scale itself
-	bool m_isScrollingByMouse = false; ///< contains if its currently scolling by mouse wheel
-	bool m_isShowGalaxy = false; ///< contains if the galaxy is only for show off
-	float m_scaleFactor = 1.0f; ///< contains the scale factor of the calaxy
-	Vector2 m_lastMousePosition = { 0.0f,0.0f }; ///< contains the position of the mouse from last tick while the galaxy is moved by mouse
+	bool m_isEnabled{ true }; ///< contains if the galaxy is enabled
+	bool m_isScaling{ true }; ///< contains if the galaxy should be able to scale itself
+	bool m_isScrollingByMouse{ false }; ///< contains if its currently scrolling by mouse wheel
+	bool m_isShowGalaxy{ false }; ///< contains if the galaxy is only for show off
+	float m_scaleFactor{ 1.0f }; ///< contains the scale factor of the galaxy
+	Vector2 m_lastMousePosition{ 0.0f,0.0f }; ///< contains the position of the mouse from last tick while the galaxy is moved by mouse
 	Rectangle m_absoluteSize; ///< contains the absolute size of the collider in px
-	Galaxy const* m_currentGalaxy = nullptr; ///< contains a pointer of the current logic galaxy
-	std::vector<std::shared_ptr<UIPlanet>> m_uiPlanets; ///< contans the UI planets that are generated from the logic galaxy
-	std::function<void(float, Vector2)> m_onZoom = [](float, Vector2) {}; ///< contains onZoom -> gets called if the galaxy gets zoomed
-	std::function<void(float, bool)> m_onSlide = [](float, bool) {}; ///< contains onSlide -> gets called if the galaxy gets slided
-	std::function<void(unsigned int)> m_onPlanetClick = [](unsigned int) {}; ///< contains onPlanetClick -> gets called if a planet gets clicked
+	Galaxy const* m_currentGalaxy{ nullptr }; ///< contains a pointer of the current logic galaxy
+	std::vector<std::shared_ptr<UIPlanet>> m_uiPlanets; ///< contains the UI planets that are generated from the logic galaxy
+	std::function<void(float, Vector2)> m_onZoom{ [](float, Vector2) {} }; ///< contains onZoom -> gets called if the galaxy gets zoomed
+	std::function<void(float, bool)> m_onSlide{ [](float, bool) {} }; ///< contains onSlide -> gets called if the galaxy gets slided
+	std::function<void(unsigned int)> m_onPlanetClick{ [](unsigned int) {} }; ///< contains onPlanetClick -> gets called if a planet gets clicked
 
 	/**
-	 * initialises all elements of the galaxy.
+	 * initializes all elements of the galaxy.
 	 */
 	void Initialize(Galaxy const* const galaxy);
 	/**
@@ -57,7 +57,7 @@ private:
 	 */
 	[[nodiscard]] bool IsPlanetInCollider(std::shared_ptr<UIPlanet> planet) const;
 	/**
-	 * updates all button positions with the absolite size.
+	 * updates all button positions with the absolute size.
 	 */
 	void UpdatePlanetPosition();
 	/**
@@ -66,7 +66,7 @@ private:
 	void SelectPlanet(UIPlanet* planet);
 
 	/**
-	 * clapts the absolute position and size so it gets never smaller that the collider.
+	 * claps the absolute position and size so it gets never smaller that the collider.
 	 */
 	void ClampsPositionAndSize();
 	/**
@@ -74,11 +74,11 @@ private:
 	 */
 	void PrepForOnSlide();
 	/**
-	 * moves the galaxy in the privided direction.
+	 * moves the galaxy in the provided direction.
 	 */
 	void MoveByKey(Direction direction, float speed);
 	/**
-	 * chacks if the mouse has moved sice last tick.
+	 * checks if the mouse has moved since last tick.
 	 * moved the galaxy in the same was.
 	 */
 	void MoveByMouse(Vector2 mousePosition);
@@ -111,18 +111,18 @@ public:
 	[[nodiscard]] bool IsScaling() const;
 
 	/**
-	 * returns the current scalefactor of  the galaxy.
+	 * returns the current scale factor of  the galaxy.
 	 */
 	[[nodiscard]] float GetScaleFactor() const;
 	/**
-	 * zooms the glalaxy in or out.
-	 * the factor fecines how fast it is zooming.
-	 * the galaxy is always zooming from the point if the mouseposition if its insode the collider.
+	 * zooms the galaxy in or out.
+	 * the factor defines how fast it is zooming.
+	 * the galaxy is always zooming from the point if the mouse position if its inside the collider.
 	 */
 	void Zoom(bool zoomIn, int factor = 2);
 	/**
 	 * slides the galaxy to a certain position.
-	 * neets zu be specified if its horizontal or vertical.
+	 * needs zu be specified if its horizontal or vertical.
 	 */
 	void Slide(float position, bool isHorizontal);
 
@@ -134,7 +134,7 @@ public:
 	void SetOnZoom(std::function<void(float, Vector2)> onZoom);
 	/**
 	 * sets the onSlide lambda.
-	 * gets called if the galaxy slides or gets slided.
+	 * gets called if the galaxy slides or gets slide.
 	 * contains the position in percent and a bool is horizontal.
 	 */
 	void SetOnSlide(std::function<void(float, bool)> onSlide);
@@ -180,7 +180,7 @@ public:
 	[[nodiscard]] Galaxy const* GetGalaxy() const;
 
 	/**
-	 * recieves all events and calls the me,ber functions.
+	 * receives all events and calls the me,ber functions.
 	 */
 	void OnEvent(Event const& event) override;
 };
