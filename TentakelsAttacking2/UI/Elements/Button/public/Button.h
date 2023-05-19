@@ -9,7 +9,7 @@
 #include <functional>
 
 /**
- * base buton class
+ * base button class
  * 
  */
 class Button : public UIElement {
@@ -20,20 +20,20 @@ protected:
 		PRESSED,
 		DISABLED,
 	};
-	bool m_isPressed = false; ///< contans if the button is currently pressed
-	Texture2D* m_texture; ///< contains a ponter of the btn texture
-	Rectangle m_textureRec; ///< defines a rectangle on the texture that will be renderd
-	State m_state = State::ENABLED; ///< contains the current button state
-	int m_buttonParts = 4; ///< defines in how many parts the texture gets split
+	bool m_isPressed{ false }; ///< contains if the button is currently pressed
+	Texture2D* m_texture{ }; ///< contains a pointer of the btn texture
+	Rectangle m_textureRec{ }; ///< defines a rectangle on the texture that will be rendered
+	State m_state{ State::ENABLED }; ///< contains the current button state
+	int m_buttonParts{ 4 }; ///< defines in how many parts the texture gets split
 
-	float m_textSize = 24.0f; ///< defines the textheight in px
-	std::string m_text; ///< contains the text on the button
-	Vector2 m_textPosition; ///< contains the position of the text
+	float m_textSize{ 24.0f }; ///< defines the text height in px
+	std::string m_text{ }; ///< contains the text on the button
+	Vector2 m_textPosition{ }; ///< contains the position of the text
 
-	SoundType m_sound; ///< contains the release sound of the button
+	SoundType m_sound{ }; ///< contains the release sound of the button
 
-	std::function<void()> m_onClick = []() {}; ///< contains a lambda that gets called if the button is down
-	std::function<void()> m_onPress = []() {}; ///< contains a lambda that gets called if the button is released
+	std::function<void()> m_onClick{ []() {} }; ///< contains a lambda that gets called if the button is down
+	std::function<void()> m_onPress{ []() {} }; ///< contains a lambda that gets called if the button is released
 
 	/**
 	 * calculates the text size and position.
@@ -68,7 +68,7 @@ public:
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	/**
-	 * rendres the button.
+	 * renders the button.
 	 */
 	void Render(AppContext const& appContext) override;
 	/**
@@ -96,7 +96,7 @@ public:
 	[[nodiscard]] std::string GetText() const;
 
 	/**
-	 * sets wether the button is enabled or not.
+	 * sets weather the button is enabled or not.
 	 */
 	void SetEnabled(bool enabled);
 	/**
@@ -105,7 +105,7 @@ public:
 	[[nodiscard]] bool IsEnabled() const;
 
 	/**
-	 * sets a new colider.
+	 * sets a new collider.
 	 * calls the UIElement and resets text position.
 	 */
 	void SetCollider(Rectangle collider) override;
