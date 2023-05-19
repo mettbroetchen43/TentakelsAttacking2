@@ -10,7 +10,7 @@
 #include "Galaxy.h"
 
 void FleetTable::Initialization() {
-	auto fleets = m_galaxy->GetFleets();
+	auto const fleets{ m_galaxy->GetFleets() };
 
 	m_table = std::make_shared<Table>(
 		GetElementPosition(0.0f, 0.0f),
@@ -31,7 +31,7 @@ void FleetTable::Initialization() {
 	m_elements.push_back(m_table);
 
 	for (int i = 0; i < fleets.size(); ++i) {
-		auto fleet = fleets.at(i);
+		auto const fleet { fleets.at(i) };
 		
 		// fleet ID
 		m_table->SetValue<int>(
@@ -41,7 +41,8 @@ void FleetTable::Initialization() {
 		);
 
 		// position
-		std::string pos = "x: " + std::to_string(fleet->GetPos().x) + " | y: " + std::to_string(fleet->GetPos().y);
+		std::string const pos{ "x: " + std::to_string(fleet->GetPos().x)
+			+ " | y: " + std::to_string(fleet->GetPos().y) };
 		m_table->SetValue<std::string>(
 			i + 1,
 			1,
@@ -56,8 +57,8 @@ void FleetTable::Initialization() {
 		);
 
 		// destination
-		auto destination = fleet->GetTarget();
-		std::string dest{ };
+		auto const destination{ fleet->GetTarget() };
+		std::string dest;
 		if (destination->IsPlanet()) {
 			dest = "Planet " + std::to_string(destination->GetID());
 		}
@@ -79,7 +80,7 @@ void FleetTable::Initialization() {
 }
 
 FleetTable::FleetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy const* galaxy)
-	: Scene(pos, size, alignment, resolution), m_galaxy(galaxy) {
+	: Scene{ pos, size, alignment, resolution }, m_galaxy{ galaxy } {
 
 	Initialization();
 }
