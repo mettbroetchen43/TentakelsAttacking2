@@ -33,7 +33,7 @@ DropDownElement::DropDownElement(Vector2 pos, Vector2 size, Alignment alignment,
     unsigned int focusID, unsigned int ID, std::string const& text,
     std::function<Rectangle(Rectangle)> getTemporaryCollider)
     : UIElement{ pos, size, alignment, resolution }, Focusable{ focusID }, m_ID{ ID }, m_text{ text },
-    m_getTemoraryCollider{ getTemporaryCollider } {
+    m_getTemporaryCollider{ getTemporaryCollider } {
 
 
     AppContext& appContext{ AppContext::GetInstance() };
@@ -59,7 +59,7 @@ void DropDownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext co
 
     UIElement::CheckAndUpdate(mousePosition, appContext);
 
-    Rectangle const temporaryCollider{ m_getTemoraryCollider(m_collider) };
+    Rectangle const temporaryCollider{ m_getTemporaryCollider(m_collider) };
 
     m_hover = CheckCollisionPointRec(mousePosition, temporaryCollider);
 
@@ -70,7 +70,7 @@ void DropDownElement::Render(AppContext const& appContext) {
 
     DrawTexturePro(
         *m_grey,
-        m_texturerecGrey,
+        m_textureRecGrey,
         m_collider,
         { 0.0f,0.0f },
         0.0f,
