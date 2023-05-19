@@ -193,10 +193,10 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 
 void NewGamePlayerScene::InitializePlayerButtons(AppContext& appContext) {
 
-	size_t maxPlayerCount = appContext.constants.player.maxPlayerCount;
-	size_t currentPlayerCount = appContext.playerCollection.GetPlayerCount();
-	float rowHeight = 0.45f / (maxPlayerCount + 1);
-	float initialY = 0.35f + rowHeight;
+	size_t const maxPlayerCount{ appContext.constants.player.maxPlayerCount };
+	size_t const currentPlayerCount{ appContext.playerCollection.GetPlayerCount() };
+	float const rowHeight{ 0.45f / (maxPlayerCount + 1) };
+	float const initialY{ 0.35f + rowHeight };
 
 	for (int i = 0; i < maxPlayerCount; ++i) {
 		auto button = std::make_shared<ClassicButton>(
@@ -242,25 +242,25 @@ void NewGamePlayerScene::UpdateSceneEntries(AppContext const& appContext) {
 	m_inputLine->Clear();
 	if (m_colorPicker->IsNestedFocus()) {
 		m_colorPicker->SetNestedFocus(false);
-		auto focusEvent = DeleteFocusLayerEvent();
+		DeleteFocusLayerEvent const focusEvent;
 		appContext.eventManager.InvokeEvent(focusEvent);
 	}
 
-	auto event = SelectFocusElementEvent(m_inputLine);
+	SelectFocusElementEvent const event{ m_inputLine };
 	appContext.eventManager.InvokeEvent(event);
 
-	auto PlayerData = appContext.playerCollection.GetPlayerData();
+	auto const PlayerData{ appContext.playerCollection.GetPlayerData() };
 
-	int index = 1;
+	int index{ 1 };
 	for (auto& p : PlayerData) {
-		m_table->SetValue<int>(index, 0, p.ID);
+		m_table->SetValue<int>        (index, 0, p.ID);
 		m_table->SetValue<std::string>(index, 1, p.name);
-		m_table->SetValue<Color>(index, 2, p.color);
+		m_table->SetValue<Color>      (index, 2, p.color);
 
 		m_table->SetSingleEditable(index, 1, true);
 		m_table->SetSingleEditable(index, 2, true);
 
-		unsigned int _ID = p.ID;
+		unsigned int _ID{ p.ID };
 		m_playerButtons.at(index - 1)->SetEnabled(true);
 		m_playerButtons.at(index - 1)->SetOnClick([this, _ID]() {
 			this->DeletePlayer(_ID);
@@ -271,19 +271,19 @@ void NewGamePlayerScene::UpdateSceneEntries(AppContext const& appContext) {
 	for (int row = index; row < m_table->GetRowCount(); ++row) {
 		for (int column = 0; column < m_table->GetColumnCount(); ++column) {
 			m_table->SetValue<std::string>(row, column,"");
-			m_table->SetSingleEditable(row, column, false);
+			m_table->SetSingleEditable    (row, column, false);
 		}
 		m_playerButtons.at(row - 1)->SetEnabled(false);
 	}
 }
 
 void NewGamePlayerScene::AddPlayer() {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext = AppContext::GetInstance();
 
-	auto event = AddPlayerEvent(
+	AddPlayerEvent const event{
 		m_inputLine->GetValue(),
 		m_colorPicker->GetColor()
-	);
+	};
 	appContext.eventManager.InvokeEvent(event);
 
 	UpdateSceneEntries(appContext);
@@ -291,11 +291,11 @@ void NewGamePlayerScene::AddPlayer() {
 void NewGamePlayerScene::UpdatePlayer(unsigned int ID, std::string const& name,
 	Color color, AppContext const& appContext) {
 
-	auto event = EditPlayerEvent(
+	EditPlayerEvent const event{
 		ID,
 		name,
 		color
-	);
+	};
 	appContext.eventManager.InvokeEvent(event);
 
 	UpdateSceneEntries(appContext);
@@ -303,8 +303,8 @@ void NewGamePlayerScene::UpdatePlayer(unsigned int ID, std::string const& name,
 void NewGamePlayerScene::UpdatePlayerName(AbstractTableCell const*,
 	std::string oldValue, std::string newValue) {
 
-	AppContext& appContext = AppContext::GetInstance();
-	PlayerData playerData = appContext.playerCollection.GetPlayerByName(oldValue);
+	AppContext const& appContext{ AppContext::GetInstance() };
+	PlayerData const playerData{ appContext.playerCollection.GetPlayerByName(oldValue) };
 
 	UpdatePlayer(
 		playerData.ID,
@@ -315,8 +315,8 @@ void NewGamePlayerScene::UpdatePlayerName(AbstractTableCell const*,
 }
 void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell const*,
 	Color oldValue, Color newValue){
-	AppContext& appContext = AppContext::GetInstance();
-	PlayerData playerData = appContext.playerCollection.GetPlayerByColor(oldValue);
+	AppContext const& appContext{ AppContext::GetInstance() };
+	PlayerData const playerData{ appContext.playerCollection.GetPlayerByColor(oldValue) };
 
 	UpdatePlayer(
 		playerData.ID,
@@ -326,38 +326,39 @@ void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell const*,
 	);
 }
 void NewGamePlayerScene::DeletePlayer(unsigned int ID) {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 
-	auto event = DeletePlayerEvent(ID);
+	DeletePlayerEvent const event{ ID };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 
 	UpdateSceneEntries(appContext);
 }
 void NewGamePlayerScene::CheckPlayerCount() const {
-	auto event = ValidatePlayerCountEvent();
+	ValidatePlayerCountEvent const event;
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
 void NewGamePlayerScene::NextScene(bool valid) {
 	if (!valid) { return; }
 
-	auto event = SwitchSceneEvent(SceneType::NEW_GAME_PARAMETER);
+	SwitchSceneEvent const event{ SceneType::NEW_GAME_PARAMETER };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 void NewGamePlayerScene::Reset() {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 
-	auto event = ResetPlayerEvent();
+	ResetPlayerEvent const event;
 	appContext.eventManager.InvokeEvent(event);
 
 	UpdateSceneEntries(appContext);
 }
 
 void NewGamePlayerScene::SetNextButton(AppContext const& appContext) {
-	size_t playerCount = appContext.playerCollection.GetPlayerData().size();
-	bool validPlayerCount =
-		playerCount >= appContext.constants.player.minPlayerCount
-		&& playerCount <= appContext.constants.player.maxPlayerCount;
+	size_t const playerCount{ appContext.playerCollection.GetPlayerData().size() };
+	bool const validPlayerCount{
+			playerCount >= appContext.constants.player.minPlayerCount
+		and playerCount <= appContext.constants.player.maxPlayerCount 
+	};
 
 	if (validPlayerCount != m_nextBTN->IsEnabled()) {
 		m_nextBTN->SetEnabled(validPlayerCount);
@@ -365,9 +366,9 @@ void NewGamePlayerScene::SetNextButton(AppContext const& appContext) {
 }
 
 NewGamePlayerScene::NewGamePlayerScene(Vector2 resolution)
-	: Scene(Vector2(0.0f,0.0f), Vector2(1.0f,1.0f), Alignment::DEFAULT, resolution) {
+	: Scene{ {0.0f,0.0f}, {1.0f,1.0f}, Alignment::DEFAULT, resolution } {
 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 	Initialize(resolution, appContext);
 	UpdateSceneEntries(appContext);
 	appContext.eventManager.AddListener(this);
