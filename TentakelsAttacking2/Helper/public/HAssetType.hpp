@@ -6,7 +6,7 @@
 #pragma once
 
 /**
- * provides all esset types in the game to stor ethe assets in the AssetMagager.
+ * provides all esset types in the game to store the assets in the AssetManager.
  */
 enum class AssetType {
 	BUTTON_DEFAULT,
