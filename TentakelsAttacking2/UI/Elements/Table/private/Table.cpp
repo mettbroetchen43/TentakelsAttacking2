@@ -72,7 +72,7 @@ void Table::UpdateCellPositionAndSize() {
 	}
 
 	if (m_isScrollable) {
-		ScrollMove(m_absoluteScollingOffset);
+		ScrollMove(m_absoluteScrollingOffset);
 	}
 }
 
@@ -242,12 +242,12 @@ void Table::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 
 	ClampScrollOffset(offset);
 	ScrollMove(offset);
-	m_absoluteScollingOffset.x += offset.x;
-	m_absoluteScollingOffset.y += offset.y;
+	m_absoluteScrollingOffset.x += offset.x;
+	m_absoluteScrollingOffset.y += offset.y;
 
 	Vector2 const size{ GetAbsoluteSize() };
-	m_horizontalSlider->SetButtonPosition((-m_absoluteScollingOffset.x / (size.x - m_collider.width)) * 100);
-	m_verticalSlider->SetButtonPosition((-m_absoluteScollingOffset.y / (size.y - m_collider.height)) * 100);
+	m_horizontalSlider->SetButtonPosition((-m_absoluteScrollingOffset.x / (size.x - m_collider.width)) * 100);
+	m_verticalSlider->SetButtonPosition((-m_absoluteScrollingOffset.y / (size.y - m_collider.height)) * 100);
 
 	if (IsNestedFocus()) {
 		RenderFocusEvent event{ false };
@@ -341,8 +341,8 @@ out:
 	}
 
 	ScrollMove(offset);
-	m_absoluteScollingOffset.x += offset.x;
-	m_absoluteScollingOffset.y += offset.y;
+	m_absoluteScrollingOffset.x += offset.x;
+	m_absoluteScrollingOffset.y += offset.y;
 }
 void Table::ScrollPercent(float percent, bool isHorizontal) {
 
@@ -352,18 +352,18 @@ void Table::ScrollPercent(float percent, bool isHorizontal) {
 	if (isHorizontal) {
 		size.x -= m_collider.width;
 		size.x *= percent / 100;
-		offset.x = -(size.x + m_absoluteScollingOffset.x);
+		offset.x = -(size.x + m_absoluteScrollingOffset.x);
 	}
 	else {
 		size.y -= m_collider.height;
 		size.y *= percent / 100;
-		offset.y = -(size.y + m_absoluteScollingOffset.y);
+		offset.y = -(size.y + m_absoluteScrollingOffset.y);
 	}
 
 	ClampScrollOffset(offset);
 	ScrollMove(offset);
-	m_absoluteScollingOffset.x += offset.x;
-	m_absoluteScollingOffset.y += offset.y;
+	m_absoluteScrollingOffset.x += offset.x;
+	m_absoluteScrollingOffset.y += offset.y;
 
 	if (IsNestedFocus()) {
 		RenderFocusEvent event{ false };

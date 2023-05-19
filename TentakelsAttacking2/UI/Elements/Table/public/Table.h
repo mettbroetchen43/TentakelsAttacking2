@@ -20,34 +20,34 @@ class Slider;
 class Table final : public UIElement, public Focusable {
 private:
 	using cells_ty = std::vector<std::vector<std::shared_ptr<AbstractTableCell>>>;
-	int m_rowCount; ///< contains the current mount of rown in the table
+	int m_rowCount; ///< contains the current mount of rows in the table
 	int m_columnCount; ///< contains the current mount of column in the table
 	cells_ty m_cells; ///< contains all cells the table is holding
 	Vector2 m_minCellSize; ///< contains the minimum relative size of one cell
 	std::array<std::vector<bool>, 2> m_editableRowsColumns; ///< contains the enabled rows and columns
 
-	bool m_setScrollable = false; ///< contains if the table get set scrollable this frame
-	bool m_isScrollable = false; ///< contains if it is able to scroll the table
-	bool m_setFixedHeadline = false; ///< contains if the forst row will get fixed this frame
-	bool m_isFixedHeadline = false; ///< contains if the first row is fixed while scolling
-	bool m_setFixedFirstColumn = false; ///< contains if the first column will get wixed this frame
-	bool m_isFixedFirstColumn = false; ///< contains if the first column is fixed while scolling
+	bool m_setScrollable{ false }; ///< contains if the table get set scrollable this frame
+	bool m_isScrollable{ false }; ///< contains if it is able to scroll the table
+	bool m_setFixedHeadline{ false }; ///< contains if the first row will get fixed this frame
+	bool m_isFixedHeadline{ false }; ///< contains if the first row is fixed while scrolling
+	bool m_setFixedFirstColumn{ false }; ///< contains if the first column will get fixed this frame
+	bool m_isFixedFirstColumn{ false }; ///< contains if the first column is fixed while scrolling
 	float m_scroll_speed; ///< contains the speed the table ist scrolled with
-	Vector2 m_absoluteScollingOffset{ 0.0f,0.0f }; ///< contains the absolute scrolling offset 
+	Vector2 m_absoluteScrollingOffset{ 0.0f,0.0f }; ///< contains the absolute scrolling offset 
 
 	std::shared_ptr<Slider> m_horizontalSlider; ///< contains the horizontal slider
 	bool m_activeHorizontalSlider; ///< contains if the horizontal slider is needed
-	std::shared_ptr<Slider> m_verticalSlider; ///< contains the vertival slider
+	std::shared_ptr<Slider> m_verticalSlider; ///< contains the vertical slider
 	bool m_activeVerticalSlider; ///< contains if the vertical slider is needed
 
-	bool m_isHoveredHighlighted = false; ///< contains if the hovered row and column gets highlighted
+	bool m_isHoveredHighlighted{ false }; ///< contains if the hovered row and column gets highlighted
 	Vec2<int>m_currentHighlighted{ -1,-1 }; ///< contains the currently hightlithed row (x) and column (y) index
 
-	std::function<void(AbstractTableCell const*, std::string, std::string)> m_updatedStringCell = [](AbstractTableCell const*, std::string, std::string) {}; ///< string
-	std::function<void(AbstractTableCell const*, int, int)> m_updatedIntCell = [](AbstractTableCell const*, int, int) {}; ///< int
-	std::function<void(AbstractTableCell const*, float, float)> m_updatedFloatCell = [](AbstractTableCell const*, float, float) {}; ///< float
-	std::function<void(AbstractTableCell const*, double, double)> m_updatedDoubleCell = [](AbstractTableCell const*, double, double) {}; ///< double
-	std::function<void(AbstractTableCell const*, Color, Color)> m_updatedColorCell = [](AbstractTableCell const*, Color, Color) {}; ///< color
+	std::function<void(AbstractTableCell const*, std::string, std::string)> m_updatedStringCell{ [](AbstractTableCell const*, std::string, std::string) {} }; ///< string
+	std::function<void(AbstractTableCell const*, int, int)> m_updatedIntCell{ [](AbstractTableCell const*, int, int) {} }; ///< int
+	std::function<void(AbstractTableCell const*, float, float)> m_updatedFloatCell{ [](AbstractTableCell const*, float, float) {} }; ///< float
+	std::function<void(AbstractTableCell const*, double, double)> m_updatedDoubleCell{ [](AbstractTableCell const*, double, double) {} }; ///< double
+	std::function<void(AbstractTableCell const*, Color, Color)> m_updatedColorCell{ [](AbstractTableCell const*, Color, Color) {} }; ///< color
 
 	/**
 	 * returns true if the provided index is valid to access a cell.
@@ -124,7 +124,7 @@ private:
 	 */
 	void ScrollMove(Vector2 const& offset);
 	/**
-	 * sets the slider active or inactive and the total dimesion.
+	 * sets the slider active or inactive and the total dimension.
 	 */
 	void CalculateSlider();
 
@@ -134,7 +134,7 @@ private:
 	void CalculateHoverHighlighted(Vector2 mousePosition);
 	/**
 	 * sets the background color of the highlighted cells.
-	 * resets the backgroundcolor if the bool is set.
+	 * resets the background color if the bool is set.
 	 * sets a new one if the bool is not set.
 	 */
 	void SetHighlightBackground(bool reset);
@@ -209,7 +209,7 @@ public:
 	void SetValue(int row, int column, T input) {
 		if (not IsValidIndex(row, column)) { Print("Index out of range", PrintType::ERROR), throw std::out_of_range("index"); }
 
-		auto oldCell = m_cells.at(row).at(column);
+		auto const oldCell{ m_cells.at(row).at(column) };
 		if (IsNestedFocus()) {
 			DeleteFocusElement(oldCell.get());
 		}
@@ -237,11 +237,11 @@ public:
 	[[nodiscard]] T GetValue(int row, int column) const {
 		if (not IsValidIndex(row, column)) { Print("index out of range", PrintType::ERROR); throw std::out_of_range("index"); }
 
-		std::any value = m_cells.at(row).at(column)->GetValue();
+		std::any const value{ m_cells.at(row).at(column)->GetValue() };
 		return std::any_cast<T>(value);
 	}
 	/**
-	 * rerturn the current valeu of a cell as string.s
+	 * return the current value of a cell as string.
 	 */
 	[[nodiscard]] std::string GetValueAsString(int row, int column) const {
 		if (not IsValidIndex(row, column)) { Print("index out of range", PrintType::ERROR); throw std::out_of_range("index"); }
@@ -301,11 +301,11 @@ public:
 	 * adds a specific row.
 	 */
 	template <typename T>
-	void AddSpecificRow(int row, T defalutValue) {
+	void AddSpecificRow(int row, T defaultValue) {
 		if (row == m_cells.size()) { /* nothing */ }
 		else if (!IsValidRow(row)) { Print("invalid row index", PrintType::ERROR), throw std::out_of_range("row-index"); }
 
-		auto line = std::vector<std::shared_ptr<AbstractTableCell>>();
+		auto line{ std::vector<std::shared_ptr<AbstractTableCell>>() };
 
 		for (int column = 0; column < m_columnCount; ++column) {
 
@@ -315,7 +315,7 @@ public:
 				Alignment::TOP_LEFT,
 				m_resolution,
 				0,
-				defalutValue,
+				defaultValue,
 				[this](AbstractTableCell const* cell, T oldValue, T newValue)
 				{this->CellUpdated<T>(cell, oldValue, newValue); }
 			);
@@ -338,7 +338,7 @@ public:
 		AddSpecificRow<T>(static_cast<int>(m_cells.size()), defalutValue);
 	}
 	/**
-	 * adds a specific colunm.
+	 * adds a specific column.
 	 */
 	template <typename T>
 	void AddSpecificColumn(int column, T defalutValue) {
@@ -371,9 +371,9 @@ public:
 	 * calls AddSpecificColumn.
 	 */
 	template <typename T>
-	void AddLastColumn(T defalutValue) {
+	void AddLastColumn(T defaultValue) {
 		if (m_cells.size() == 0) { Print("no rows in table", PrintType::ERROR), throw std::out_of_range("no rows"); }
-		AddSpecificColumn<T>(static_cast<int>(m_cells.at(0).size()), defalutValue);
+		AddSpecificColumn<T>(static_cast<int>(m_cells.at(0).size()), defaultValue);
 	}
 
 	/**
@@ -386,7 +386,7 @@ public:
 	 */
 	void RemoveLastRow();
 	/**
-	 * removes a specific colunm.
+	 * removes a specific column.
 	 */
 	void RemoveSpecificColumn(int column);
 	/**
@@ -405,11 +405,11 @@ public:
 	[[nodiscard]] bool IsHighlightedHover() const;
 
 	/**
-	 * Sets if the table is scollable.
+	 * Sets if the table is scrollable.
 	 */
 	void SetScrollable(bool isScollable);
 	/**
-	 * returns true if the table is currently scollable.
+	 * returns true if the table is currently scrollable.
 	 */
 	[[nodiscard]] bool IsScrollable() const;
 
@@ -453,20 +453,20 @@ public:
 	[[nodiscard]] bool IsColumnEditable(int column) const;
 
 	/**
-	 * sets if the first row is fixed while scolling.
+	 * sets if the first row is fixed while scrolling.
 	 */
 	void SetFixedHeadline(bool isFixedHeadline);
 	/**
-	 * returns true if the first row is fixed while scolling.
+	 * returns true if the first row is fixed while scrolling.
 	 */
 	[[nodiscard]] bool IsFixedHeadline() const;
 
 	/**
-	 * sets if the first column is fixed while scolling.
+	 * sets if the first column is fixed while scrolling.
 	 */
 	void SetFixedFirstColumn(bool isFixedFirstColumn);
 	/**
-	 * returns true if the first column is fixed while scolling.
+	 * returns true if the first column is fixed while scrolling.
 	 */
 	[[nodiscard]] bool IsFixedFirstColumn() const;
 	/**
