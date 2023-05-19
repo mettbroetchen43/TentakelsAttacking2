@@ -9,20 +9,20 @@
 #include "HPrint.h"
 
 UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution,
-	Vector2 coliderPos)
-	:Focusable(focusID), UIElement(pos, { 0.01f,0.02f }, Alignment::MID_MID, resolution)
-	, m_ID(ID), m_currentPlayer(player), m_coliderPos(coliderPos), m_color(player.color), m_stringID(std::to_string(ID)),
-	m_hover(
+	Vector2 colliderPos)
+	:Focusable{ focusID }, UIElement{ pos, { 0.01f,0.02f }, Alignment::MID_MID, resolution }
+	, m_ID{ ID }, m_currentPlayer{ player }, m_coliderPos{ colliderPos }, m_color{ player.color }, m_stringID{ std::to_string(ID) },
+	m_hover{
 		0.03f,
 		player.name,
 		player.color,
 		Vector2(0.01f,0.01f),
-		resolution)
+		resolution }
 { }
 
-void UIPlanet::UpdatePosition(Rectangle newColider) {
-	m_collider.x = newColider.x + newColider.width * m_coliderPos.x;
-	m_collider.y = newColider.y + newColider.height * m_coliderPos.y;
+void UIPlanet::UpdatePosition(Rectangle newCollider) {
+	m_collider.x = newCollider.x + newCollider.width * m_coliderPos.x;
+	m_collider.y = newCollider.y + newCollider.height * m_coliderPos.y;
 }
 
 void UIPlanet::SetOnClick(std::function<void(UIPlanet*)> onClick) {
@@ -86,12 +86,6 @@ void UIPlanet::Render(AppContext const& appContext) {
 		0.0f,
 		m_color
 	);
-
-	/*DrawRectangleLinesEx(
-		m_colider,
-		3.0f,
-		WHITE
-	);*/
 }
 void UIPlanet::Resize(Vector2 resolution, AppContext const& appContext) {
 
@@ -105,8 +99,6 @@ bool UIPlanet::IsEnabled() const {
 void UIPlanet::SetEnabled(bool isEnabled) {
 	m_isEnabled = isEnabled;
 }
-
-
 
 Rectangle UIPlanet::GetCollider() const {
 	return UIElement::GetCollider();
