@@ -69,7 +69,7 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 	bool const hover{ CheckCollisionPointRec(mousePosition, m_collider )};
 	if (m_state == State::DISABLED) {
 		if (hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-			auto const event{ PlaySoundEvent(SoundType::CLICKED_DISABLED_STD )};
+			PlaySoundEvent const event{ SoundType::CLICKED_DISABLED_STD };
 			appContext.eventManager.InvokeEvent(event);
 		}
 		return;
@@ -86,7 +86,7 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		}
 
 		if (IsSameState(State::HOVER)) {
-			auto const event{ PlaySoundEvent(SoundType::HOVER_STD) };
+			PlaySoundEvent const event{ SoundType::HOVER_STD };
 			appContext.eventManager.InvokeEvent(event);
 		}
 		m_state = State::ENABLED;
@@ -101,7 +101,7 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		}
 
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
-			auto const event{ PlaySoundEvent(m_sound) };
+			PlaySoundEvent const event{ m_sound };
 			appContext.eventManager.InvokeEvent(event);
 			m_state = hover ? State::HOVER : State::ENABLED;
 			m_isPressed = false;
@@ -113,14 +113,14 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			m_isPressed = true;
 			m_state = State::PRESSED;
-			auto const event{ PlaySoundEvent(SoundType::CLICKED_PRESS_STD) };
+			PlaySoundEvent const event{ SoundType::CLICKED_PRESS_STD };
 			appContext.eventManager.InvokeEvent(event);
 			m_onPress();
 			return;
 		}
 		if (!IsSameState(State::HOVER)) {
 			m_state = State::HOVER;
-			auto const event{ PlaySoundEvent(SoundType::HOVER_STD) };
+			PlaySoundEvent const event{ SoundType::HOVER_STD };
 			appContext.eventManager.InvokeEvent(event);
 			return;
 		}
