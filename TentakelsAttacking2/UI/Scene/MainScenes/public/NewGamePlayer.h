@@ -20,8 +20,8 @@ class ClassicButton;
 class NewGamePlayerScene final : public Scene, public EventListener {
 private:
 	InputLine<std::string>* m_inputLine; ///< contains an input line where the player name where entered
-	ColorPicker* m_colorPicker; ///< contains the color picker where the player color gets choosen
-	Table* m_table; ///< contains the table where the current playere where displayed
+	ColorPicker* m_colorPicker; ///< contains the color picker where the player color gets choose
+	Table* m_table; ///< contains the table where the current player where displayed
 	std::shared_ptr<ClassicButton> m_nextBTN; ///< contains the button, witch the calls the next scene
 	std::vector<Focusable*> m_nestedFocus; ///< contains focusable* that are abe to have an nested focus
 	std::vector<std::shared_ptr<ClassicButton>> m_playerButtons; ///< contains the remove player buttons
@@ -72,7 +72,7 @@ private:
 	void UpdatePlayerColor(AbstractTableCell const* cell,
 		Color oldValue, Color newValue);
 	/**
-	 * delets an player via event.
+	 * deletes an player via event.
 	 */
 	void DeletePlayer(unsigned int ID);
 	/**
@@ -122,7 +122,7 @@ public:
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
 
 	/**
-	 * receives all events and calles the member functions.
+	 * receives all events and calls the member functions.
 	 */
 	void OnEvent(Event const& event) override;
 };
