@@ -12,7 +12,7 @@
 100 / Max Game Rounds
 
 // Window
-5 / contains the current solution as an enum
+17 / contains the current solution as an enum
 0 / Starting Full Screen (0 = window)
 60 / Target FPS
 
@@ -28,8 +28,8 @@
 300 / Max Dimension X
 20 / Min Dimension Y
 160 / Max Dimension Y
-200 / Show Galaxy Dinmension X
-150 / Show Galaxy Sinamension Y
+200 / Show Galaxy Dimension X
+150 / Show Galaxy Dimension Y
 
 // Sound
 0 / Volume Mute (1 = mute)

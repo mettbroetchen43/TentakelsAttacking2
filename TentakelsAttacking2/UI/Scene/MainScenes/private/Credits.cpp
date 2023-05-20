@@ -137,6 +137,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	};
 	// tester
 	creditEntries testerVec = {
+		{"Kiki3578"},
 		{"TODO"},
 	};
 	// special thanks
