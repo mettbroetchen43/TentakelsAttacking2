@@ -12,26 +12,26 @@
 #include <cmath>
 
 
-void ColorPicker::Initialise(Vector2 resolution) {
-	AppContext& appContext = AppContext::GetInstance();
+void ColorPicker::Initialize(Vector2 resolution) {
+	AppContext const& appContext{ AppContext::GetInstance() };
 
-	auto colors = appContext.colors.GetColors();
+	auto const colors{ appContext.colors.GetColors() };
 
-	double countX_D = std::ceil(std::sqrt(colors.size()));
+	double const countX_D{ std::ceil(std::sqrt(colors.size())) };
 	m_countX = static_cast<size_t>(countX_D);
 	m_countY = static_cast<size_t>(std::ceil(colors.size() / countX_D));
 
 	for (int row = 0; row < m_countY; ++row) {
 		for (int column = 0; column < m_countX; ++column) {
 
-			size_t index = GetIndexFromRowAndColumn(row, column, m_countX);
+			size_t const index{ GetIndexFromRowAndColumn(row, column, m_countX) };
 			// start					offset
-			float posX = (1.0f / (2 * m_countX)) + (1.0f / m_countX * column);
-			float posY = (1.0f / (2 * m_countY)) + (1.0f / m_countY * row);
-			float sizeX = (0.8f / m_countX);
-			float sizeY = (0.7f / m_countY);
+			float const posX{ (1.0f / (2 * m_countX)) + (1.0f / m_countX * column) };
+			float const posY{ (1.0f / (2 * m_countY)) + (1.0f / m_countY * row) };
+			float const sizeX{ 0.8f / m_countX };
+			float const sizeY{ 0.7f / m_countY };
 
-			Color color = colors.size() > index ? colors.at(index) : BLANK;
+			Color const color{ colors.size() > index ? colors.at(index) : BLANK };
 
 			m_cells.push_back(std::make_unique<ColorPickerCell>(
 				static_cast<unsigned int>(index + 1),
@@ -49,7 +49,7 @@ void ColorPicker::SetUsedColors(AppContext const& appContext) {
 	auto const& players = appContext.playerCollection.GetPlayerData();
 
 	for (auto& c : m_cells) {
-		bool sameColor = false;
+		bool sameColor{ false };
 		for (auto& p : players) {
 			if (c->GetColor() == p.color) {
 				sameColor = true;
@@ -65,30 +65,29 @@ void ColorPicker::SetColorFromFocus() {
 		return;
 	}
 
-	for (auto& c : m_cells) {
+	for (auto const& c : m_cells) {
 		if (c->IsFocused()) {
 			m_currentColorCell = c.get();
 			return;
 		}
 	}
 }
-void ColorPicker::CheckforValidColor(AppContext const& appContext) {
+void ColorPicker::CheckForValidColor(AppContext const& appContext) {
 	if (m_currentColorCell) {
 		if (m_currentColorCell->IsEnabled()) {
 			return;
 		}
 	}
 	
-	Color color = appContext.playerCollection.GetPossibleColor();
-	SetColor(color);
+	SetColor(appContext.playerCollection.GetPossibleColor());
 }
 
 ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution, bool isPopUp)
-	: Focusable(ID), UIElement(pos, size, alignment, resolution), m_isPopUp(isPopUp) {
+	: Focusable{ ID }, UIElement{ pos, size, alignment, resolution }, m_isPopUp{ isPopUp } {
 
 	m_backGround = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
-	Initialise(resolution);
+	Initialize(resolution);
 }
 ColorPicker::~ColorPicker() {
 	if (!m_isNestedFocus) {
@@ -105,11 +104,13 @@ Color ColorPicker::GetColor() const {
 	return BLANK;
 }
 bool ColorPicker::HasColorChanced() const {
-	return m_currentColorCell->GetColor() !=
-		m_previousColorCell->GetColor();
+	return {
+		    m_currentColorCell->GetColor()
+		!=  m_previousColorCell->GetColor()
+	};
 }
 bool ColorPicker::SetInitialColor(Color color) {
-	bool set = SetColor(color);
+	bool const set{ SetColor(color) };
 	m_previousColorCell = m_currentColorCell;
 	return set;
 }
@@ -123,7 +124,7 @@ bool ColorPicker::SetColor(Color color) {
 
 			m_currentColorCell = c.get();
 			if (m_isNestedFocus) {
-				auto event = SelectFocusElementEvent(c.get());
+				SelectFocusElementEvent const event { c.get() };
 				AppContext::GetInstance().eventManager.InvokeEvent(event);
 			}
 			return true;
@@ -144,7 +145,7 @@ void ColorPicker::SetCellFocuses([[maybe_unused]] AppContext const& appContext) 
 
 	AddFocusLayer(m_isPopUp);
 
-	for (auto& c : m_cells) {
+	for (auto const& c : m_cells) {
 		AddFocusElement(c.get(), m_isPopUp);
 	}
 
@@ -201,16 +202,16 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 		}
 	}
 
-	for (auto& c : m_cells) {
+	for (auto const& c : m_cells) {
 		c->CheckAndUpdate(mousePosition, appContext);
 	}
 
 	SetUsedColors(appContext);
 	SetColorFromFocus();
-	CheckforValidColor(appContext);
+	CheckForValidColor(appContext);
 }
 void ColorPicker::Render(AppContext const& appContext) {
-	// update here to make shure all CheckAndUpdate() is done
+	// update here to make sure all CheckAndUpdate() is done
 	m_previousColorCell = m_currentColorCell;
 
 	DrawTexturePro(
@@ -234,7 +235,7 @@ void ColorPicker::Render(AppContext const& appContext) {
 	);
 
 
-	for (auto& c : m_cells) {
+	for (auto const& c : m_cells) {
 		c->Render(appContext);
 	}
 
@@ -250,7 +251,7 @@ void ColorPicker::Resize(Vector2 resolution, AppContext const& appContext) {
 
 	UIElement::Resize(resolution, appContext);
 
-	for (auto& c : m_cells) {
+	for (auto const& c : m_cells) {
 		c->Resize(resolution, appContext);
 	}
 }

@@ -15,12 +15,12 @@
 struct AppContext;
 
 /**
- * contains objects witch include planetx, fleets, target points
+ * contains objects witch include planet, fleets, target points
  * generates itself.
  */
-class Galaxy {
+class Galaxy final {
 private:
-	bool m_validGalaxy = true; ///< specifies if the generation in valid and the galaxy is able to use
+	bool m_validGalaxy{ true }; ///< specifies if the generation in valid and the galaxy is able to use
 	std::vector<std::shared_ptr<SpaceObject>> m_objects; ///< contains all space object for updating 
 	std::vector<std::shared_ptr<Planet>> m_planets; ///< contains all planets 
 	std::vector<std::shared_ptr<Fleet>> m_fleets; ///< contains all fleets
@@ -35,16 +35,16 @@ private:
 
 	// Planet
 	/**
-	 * coordinates the geration of all planets.
+	 * coordinates the generation of all planets.
 	 */
-	void InitialzePlanets(size_t planetCount, std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer);
+	void InitializePlanets(size_t planetCount, std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer);
 	/**
-	 * geretes one home planet for every player.
-	 * returns the planet count for generating the other planets. 
+	 * generation one home planet for every player.
+	 * returns the planet count for generating the other planets.
 	 */
 	[[nodiscard]] int GenerateHomePlanets(std::vector<std::shared_ptr<Player>> players);
 	/**
-	 * geretes all other planet until the planet count is reached.
+	 * generation all other planet until the planet count is reached.
 	 */
 	void GenerateOtherPlanets(size_t PlanetCount, int currentPlanet, std::shared_ptr<Player> player);
 	/**
@@ -60,19 +60,19 @@ private:
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] bool AddFleetFromPlanet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleetFromPlanet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a fleet.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] bool AddFleetFromFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleetFromFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a target point.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] bool AddFleetFromTargetPoint(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 
 	[[nodiscard]] std::shared_ptr<SpaceObject> GetOrGenerateDestination(unsigned int ID,
 		int X, int Y, std::shared_ptr<Player> currentPlayer);
@@ -80,8 +80,8 @@ private:
 public:
 	/**
 	 * generates all planets.
-	 * IsValid should be called after construction becautse there is no garanty,
-	 * that the	generation is valid. 
+	 * IsValid should be called after construction because there is no guaranty,
+	 * that the	generation is valid.
 	 */
 	Galaxy(Vec2<int> size, size_t planetCount, std::vector<std::shared_ptr<Player>> players,
 		std::shared_ptr<Player> neutralPlayer);
@@ -99,7 +99,7 @@ public:
 	[[nodiscard]] bool IsValid() const;
 
 	/**
-	 * returns if the provided ID is exsiting in this galaxy.
+	 * returns if the provided ID is existing in this galaxy.
 	 */
 	[[nodiscard]] bool IsValidSpaceObjectID(unsigned int ID) const;
 
@@ -126,7 +126,7 @@ public:
 	/**
 	 * adds a new fleet to the galaxy for the provided player.
 	 */
-	[[nodiscard]] bool AddFleet(SendFleedInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 	/**
 	 * filters the galaxy for relevant data for the provided player.
 	 */

@@ -4,10 +4,6 @@
 //
 
 #pragma once
-
-/**
- * bundels all main scenes.
- */
 #include "TestScene.h"
 #include "Intro.h"
 #include "Logos.h"

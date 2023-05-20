@@ -37,7 +37,7 @@ private:
 	std::shared_ptr<Text> m_currentPlayerName; ///< contains the current player name
 	std::shared_ptr<Text> m_nextPlayerName; ///< contains the next player name
 	std::shared_ptr<Text> m_currentRound;  ///< contains the current round count
-	std::shared_ptr<Text> m_currentTargetRound;  ///< contains the current taregt round count
+	std::shared_ptr<Text> m_currentTargetRound;  ///< contains the current target round count
 	PlayerData m_currentPlayer; ///< contains the data of the current player
 	PlayerData m_nextPlayer; ///< contains the data of the next player
 
@@ -57,30 +57,30 @@ private:
 	void Initialize();
 	/**
 	 * removes old ui galaxy if one exists.
-	 * initialzes a new ui galaxy.
+	 * initializes a new ui galaxy.
 	 */
 	void InitializeGalaxy();
 	/**
 	 * removes old planet table if one exists.
-	 * initialzes a new planet table.
+	 * initializes a new planet table.
 	 */
 	void InitializePlanetTable();
 
 	/**
 	 * removes old fleet table if one exists.
-	 * initialzes a new fleet table.
+	 * initializes a new fleet table.
 	 */
 	void InitializeFleetTable();
 
 	/**
-	 * swtitches the support scene to clear.
+	 * stitches the support scene to clear.
 	 * updates player text and initializes a new galaxy.
 	 * generates an popup.
 	 */
 	void NextTurn();
 	/**
-	 * updates player text and rouns.
-	 * initialzes a new galaxy.
+	 * updates player text and rounds.
+	 * initializes a new galaxy.
 	 * generates an popup.
 	 */
 	void NextRound();
@@ -104,7 +104,7 @@ private:
 	/**
 	 * sets the accept button active or inactive.
 	 */
-	void SetAcceptButon();
+	void SetAcceptButton();
 
 	/**
 	 * sends the ship instruction event.
@@ -127,7 +127,7 @@ public:
 	~MainScene();
 
 	/**
-	 * receives all evenets and calls the member functions.
+	 * receives all events and calls the member functions.
 	 */
 	void OnEvent(Event const& event) override;
 

@@ -47,12 +47,12 @@ void ValidatePopUp::Initialize() {
 }
 
 void ValidatePopUp::Close() {
-	m_schouldClose = true;
+	m_shouldClose = true;
 }
 
 ValidatePopUp::ValidatePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, std::string& subTitle, AssetType infoTexture, std::function<void(bool)> callback)
-	: PopUp(pos, size, alignment, resolution, title, subTitle, infoTexture), m_callback(callback) {
+	: PopUp{ pos, size, alignment, resolution, title, subTitle, infoTexture }, m_callback{ callback } {
 
 	Initialize();
 

@@ -114,7 +114,7 @@
     <ClInclude Include="UI\Elements\Default\public\Picture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\public\Allignment.h">
+    <ClInclude Include="UI\public\Alignment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Scene\MainScenes\public\MainMenu.h">
@@ -132,7 +132,7 @@
     <ClInclude Include="UI\Scene\SupportScenes\public\TestScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Elements\PopUp\public\PrimitiveCellPopUp.hpp">
+    <ClInclude Include="UI\Elements\PopUp\public\PrivativeCellPopUp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\PopUp\public\CellPopUp.h">
@@ -159,7 +159,7 @@
     <ClInclude Include="UI\Elements\Default\public\Line.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Constants\public\CTextProcecing.hpp">
+    <ClInclude Include="Constants\public\CTextProcessing.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\public\PopUpManager.h">
@@ -386,7 +386,7 @@
     <ClCompile Include="UI\Elements\Default\private\Picture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\private\Allignment.cpp">
+    <ClCompile Include="UI\private\Alignment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Scene\MainScenes\private\MainMenu.cpp">

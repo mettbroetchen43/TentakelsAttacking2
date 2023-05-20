@@ -8,8 +8,8 @@
 #include <iostream>
 
 void Print(std::string const& message, PrintType printType) {
-	std::string toPrint = "[";
-	bool logError = false;
+	std::string toPrint{ '[' };
+	bool logError{ false };
 	switch (printType) {
 		default:
 		case PrintType::INFO:

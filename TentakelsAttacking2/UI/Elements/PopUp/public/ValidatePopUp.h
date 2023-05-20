@@ -12,7 +12,7 @@
  */
 class ValidatePopUp : public PopUp {
 private:
-	std::function<void(bool)> m_callback = [](bool) {}; ///< contains a lambda that provides an bool
+	std::function<void(bool)> m_callback{ [](bool) {} }; ///< contains a lambda that provides an bool
 
 	/**
 	 * initializes all ui elements.

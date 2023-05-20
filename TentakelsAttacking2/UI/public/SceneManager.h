@@ -23,12 +23,12 @@ class UIManager;
  */
 class SceneManager final : public EventListener {
 private:
-	bool m_first = true; ///< contains if the first scene gets loaded
+	bool m_first{ true }; ///< contains if the first scene gets loaded
 	UIManager* m_uiManager; ///< contains a pointer of the UIManager
 	PopUpManager m_popUpManager; ///< contains the PopUpManager
 
-	SceneType m_currentSceneType = SceneType::NONE; ///< contains the current / loaded SceneType
-	SceneType m_nextSceneType = SceneType::NONE; ///< contains the SceneType of the next tick
+	SceneType m_currentSceneType{ SceneType::NONE }; ///< contains the current / loaded SceneType
+	SceneType m_nextSceneType{ SceneType::NONE }; ///< contains the SceneType of the next tick
 	std::shared_ptr<Scene> m_currentScene; ///< contains the current Scene
 
 	/**
@@ -36,9 +36,9 @@ private:
 	 */
 	void InitializeNewScene(SceneType sceneType);
 	/**
-	 * retuns if the current scenetype is the next scene type.
+	 * retunes if the current scene type is the next scene type.
 	 * clears current focus.
-	 * calls initialze szene.
+	 * calls initialize scene.
 	 * override current scene type.
 	 */
 	void SwitchScene(AppContext const& appContext);
@@ -62,12 +62,12 @@ public:
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
 	/**
 	 * calls current scene to render.
-	 * calls the popupmanager to render the popups.
+	 * calls the popup manager to render the popups.
 	 */
 	void Render(AppContext const& appContext);
 	/**
 	 * calls current scene to resize.
-	 * calls the popupmanager to resize the popups.
+	 * calls the popup manager to resize the popups.
 	 */
 	void Resize(Vector2 resolution, AppContext const& appContext);
 
@@ -79,4 +79,3 @@ public:
 	void OnEvent(Event const& event);
 
 };
-

@@ -17,42 +17,42 @@
 class PlayerCollection final : public EventListener {
 private:
 	std::vector<PlayerData> m_playerData; ///< contains player data
-	std::vector<PlayerData> m_npcData = { ///< contains the player data for the npcs
+	std::vector<PlayerData> m_npcData{ ///< contains the player data for the npcs
 		{ 100, "neutral player", WHITE }
 	};
-	PlayerData m_defaultPlayer = { 0,"no player", WHITE }; ///< contains default player witch is return if no other player is found.
+	PlayerData m_defaultPlayer{ 0,"no player", WHITE }; ///< contains default player witch is return if no other player is found.
 
 	/**
-	 * checks if name already exsists
+	 * checks if name already exists
 	 */
 	[[nodiscard]] bool ContainsName(std::string const& name) const;
 	/**
-	 * checks if color already exsists
+	 * checks if color already exists
 	 */
 	[[nodiscard]] bool ContainsColor(Color color) const;
 
 	/**
 	 * checks if color is valid.
-	 * if not: valid color is deplayed and an popup is generated.
+	 * if not: valid color is deployed and an popup is generated.
 	 */
 	void CheckValidColor(Color& color);
 	/**
-	 * checks if color is stoll free.
+	 * checks if color is still free.
 	 * if no: color free is deployed and an popup is generated.
 	 */
 	void CheckRemainingColor(Color& color);
 	/**
 	 * checks if name is still free and not empty.
-	 * if not: a default name in deplayed and an popup is generated.
+	 * if not: a default name in deployed and an popup is generated.
 	 */
 	void CheckRemainingName(std::string& name);
 
 	/**
-	 * returns the player by id muable.
+	 * returns the player by id mutable.
 	 */
 	[[nodiscard]] PlayerData& GetPlayerByIDmut(unsigned int ID);
 	/**
-	 * sorty the player by is ASC.
+	 * sorts the player by is ASC.
 	 */
 	void SortPlayers();
 
@@ -74,7 +74,7 @@ private:
 	void DeletePlayer(unsigned int ID);
 	/**
 	 * should only be called by event.
-	 * clears all player exept the default player.
+	 * clears all player except the default player.
 	 */
 	void ResetPlayer();
 
@@ -84,7 +84,7 @@ public:
 	 */
 	[[nodiscard]] Color GetPossibleColor() const;
 	/**
-	 * returns a vector with all players exept the default player.
+	 * returns a vector with all players except the default player.
 	 */
 	[[nodiscard]] std::vector<PlayerData> GetPlayerData() const;
 
@@ -124,7 +124,7 @@ public:
 	[[nodiscard]] size_t GetPlayerCount() const;
 
 	/**
-	 * received all events an alls the function whithin this object.
+	 * received all events an calls the function within this object.
 	 */
 	void OnEvent(Event const& event) override;
 };

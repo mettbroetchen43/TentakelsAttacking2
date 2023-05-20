@@ -10,19 +10,18 @@
 #include "UIManager.h"
 #include "HErrorLog.h"
 #include "AppContext.h"
-#include <iostream>
 
 int main() {
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(100, 100, "");
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 #ifdef _DEBUG
 	Print("Debug", PrintType::BUILD);
 #else
 	Print("Release", PrintType::BUILD);
 #endif // _DEBUG
 
-	Print(appContext.constants.global.version , PrintType::BUILD);
+	Print(appContext.constants.global.version, PrintType::BUILD);
 
 	UIManager uiManager;
 

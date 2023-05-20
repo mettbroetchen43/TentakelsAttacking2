@@ -16,10 +16,10 @@
 
 void DropDown::Initialize(std::vector<std::string> const& elements, unsigned int startFocusID) {
 
-	float x = m_pos.x + m_size.x * 0.01f;
-	float y = m_pos.y + m_size.y;
-	float width = m_size.x * 0.98f;
-	float height = m_size.y * 2 / 3;
+	float const x{ m_pos.x + m_size.x * 0.01f };
+	float       y{ m_pos.y + m_size.y };
+	float const width{ m_size.x * 0.98f };
+	float const height{ m_size.y * 2 / 3 };
 
 	for (size_t i = 0; i < elements.size(); ++i) {
 		auto entry = std::make_shared<DropDownElement>(
@@ -61,7 +61,7 @@ void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
 		m_size,
 		m_resolution.y
 	);
-	m_currentElementText = GetPritableTextInColider(
+	m_currentElementText = GetPrintableTextInCollider(
 		m_currentElementText,
 		m_fontSize,
 		m_collider,
@@ -78,16 +78,16 @@ void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
 
 void DropDown::ToggleFoldedOut() {
 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 
-	m_isFouldout = !m_isFouldout;
+	m_isFoldouts = !m_isFoldouts;
 
 	appContext.eventManager.InvokeEvent(PlaySoundEvent(SoundType::CLICKED_PRESS_STD));
 
-	if (m_isFouldout) {
+	if (m_isFoldouts) {
 		m_arrowTexture = appContext.assetManager.GetTexture(AssetType::ARROW_DOWN);
 		AddFocusLayer();
-		for (auto e : m_dropDownElements) {
+		for (auto const& e : m_dropDownElements) {
 			AddFocusElement(e.get());
 		}
 		CheckAndSetElementsEnabled();
@@ -104,30 +104,30 @@ Rectangle DropDown::GetTemporaryCollider(Rectangle collider) const {
 }
 
 void DropDown::CheckAndSetElementsEnabled() {
-	for (auto e : m_dropDownElements) {
-		bool overlap = CheckCollisionRecs(m_dropDownCollider, e->GetCollider());
+	for (auto const& e : m_dropDownElements) {
+		bool const overlap{ CheckCollisionRecs(m_dropDownCollider, e->GetCollider()) };
 		e->SetEnabled(overlap);
 	}
 }
 
 void DropDown::ScrollMove(float wheel) {
 
-	if (!m_isScolling) { return; }
+	if (!m_isScrolling) { return; }
 
-	for (auto e : m_dropDownElements) {
-		Vector2 pos = e->GetPosition();
+	for (auto const& e : m_dropDownElements) {
+		Vector2 pos{ e->GetPosition() };
 		pos.y += 0.025f * wheel;
-		e->SetPositionUnalligned(pos);
+		e->SetPositionUnaligned(pos);
 	}
 	CheckAndSetElementsEnabled();
 	ClampScrolling();
 }
 void DropDown::ClampScrolling() {
 
-	float offset = 0.0f;
-	auto element = m_dropDownElements.front();
-	float dropDownValue = m_dropDownCollider.y;
-	float elementValue = element->GetCollider().y;
+	float offset{ 0.0f };
+	auto element{ m_dropDownElements.front() };
+	float dropDownValue{ m_dropDownCollider.y };
+	float elementValue{ element->GetCollider().y };
 	if (dropDownValue < elementValue) {
 		offset = dropDownValue - elementValue;
 	}
@@ -141,21 +141,21 @@ void DropDown::ClampScrolling() {
 
 	if (offset == 0.0f) { return; }
 
-	for (auto e : m_dropDownElements) {
+	for (auto const& e : m_dropDownElements) {
 		Rectangle col = e->GetCollider();
 		col.y += offset;
 		e->SetCollider(col);
 	}
 }
-void DropDown::CheckIfScolling() {
-	float sum = 0;
+void DropDown::CheckIfScrolling() {
+	float sum{ 0 };
 
-	for (auto e : m_dropDownElements) {
+	for (auto const& e : m_dropDownElements) {
 		sum += e->GetCollider().height;
-		if (m_dropDownCollider.height < sum) { m_isScolling = true; return; }
+		if (m_dropDownCollider.height < sum) { m_isScrolling = true; return; }
 	}
 
-	m_isScolling = sum > m_dropDownCollider.height;
+	m_isScrolling = sum > m_dropDownCollider.height;
 }
 
 void DropDown::UpdateCollider() {
@@ -180,7 +180,7 @@ void DropDown::UpdateCollider() {
 
 DropDown::DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, float dropDownHeight,
 	unsigned int focusID, unsigned int startElementFocusID, std::vector<std::string> const& elements)
-	: UIElement(pos, size, alignment, resolution), Focusable(focusID), m_dropDownHeight(dropDownHeight) {
+	: UIElement{ pos, size, alignment, resolution }, Focusable{ focusID }, m_dropDownHeight{ dropDownHeight } {
 
 
 
@@ -206,7 +206,7 @@ DropDown::DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resol
 	};
 
 	m_collider.width -= m_arrowCollider.width;
-	UpdateColiderReverse();
+	UpdateColliderReverse();
 
 	Initialize(elements, startElementFocusID);
 }
@@ -218,10 +218,10 @@ std::shared_ptr<DropDownElement> DropDown::GetCurrentElement() const {
 
 bool DropDown::SetCurrentElementByID(unsigned int ID) {
 
-	for (auto e : m_dropDownElements) {
+	for (auto const& e : m_dropDownElements) {
 		if (e->GetID() == ID) {
 			SetCurrentElement(e);
-			if (m_isFouldout) {
+			if (m_isFoldouts) {
 				ToggleFoldedOut();
 			}
 			return true;
@@ -234,10 +234,12 @@ void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
-	bool hover = (CheckCollisionPointRec(mousePosition, m_collider)
-		|| CheckCollisionPointRec(mousePosition, m_arrowCollider));
+	bool const hover{
+		   CheckCollisionPointRec(mousePosition, m_collider)
+		or CheckCollisionPointRec(mousePosition, m_arrowCollider) 
+	};
 
-	bool first = false;
+	bool first{ false };
 	if (hover) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			ToggleFoldedOut();
@@ -245,26 +247,26 @@ void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		}
 	}
 	if (IsFocused()) {
-		if (IsConfirmInputPressed() && !IsNestedFocus() && !m_isFouldout) {
+		if (IsConfirmInputPressed() && !IsNestedFocus() && !m_isFoldouts) {
 			ToggleFoldedOut();
 			first = true;
 		}
-		if (IsBackInputPressed() && m_isFouldout) {
+		if (IsBackInputPressed() && m_isFoldouts) {
 			ToggleFoldedOut();
 			first = true;
 		}
 	}
 
-	if (m_isFouldout) {
-		float wheel = GetMouseWheelMove();
+	if (m_isFoldouts) {
+		float const wheel{ GetMouseWheelMove() };
 		if (wheel != 0.0f) {
-			CheckIfScolling();
+			CheckIfScrolling();
 			ScrollMove(wheel);
 		}
 	}
 
-	if (m_isFouldout && !first) {
-		for (auto e : m_dropDownElements) {
+	if (m_isFoldouts && !first) {
+		for (auto const& e : m_dropDownElements) {
 			e->CheckAndUpdate(mousePosition, appContext);
 		}
 	}
@@ -298,7 +300,7 @@ void DropDown::Render(AppContext const& appContext) {
 		WHITE
 	);
 
-	if (m_isFouldout) {
+	if (m_isFoldouts) {
 
 		BeginScissorMode(
 			static_cast<int>(m_dropDownCollider.x),
@@ -307,7 +309,7 @@ void DropDown::Render(AppContext const& appContext) {
 			static_cast<int>(m_dropDownCollider.height + 2.0f)
 		);
 
-		for (auto e : m_dropDownElements) {
+		for (auto const& e : m_dropDownElements) {
 			e->Render(appContext);
 		}
 
@@ -319,7 +321,7 @@ void DropDown::Resize(Vector2 resolution, AppContext const& appContext) {
 	UIElement::Resize(resolution, appContext);
 
 
-	for (auto element : m_dropDownElements) {
+	for (auto const& element : m_dropDownElements) {
 		element->Resize(resolution, appContext);
 	}
 }

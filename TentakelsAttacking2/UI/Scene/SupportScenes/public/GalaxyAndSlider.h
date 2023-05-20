@@ -19,10 +19,10 @@ class Galaxy;
 class GalaxyScene final : public Scene {
 private:
 	bool m_isEnabled = true; ///< contains id it is enabled
-	std::shared_ptr<Line> m_scaleLineX; ///< contains the line that diplayes the scale in X direction
-	std::shared_ptr<Line> m_scaleLineY; ///< contains the line that diplayes the scale in Y direction
+	std::shared_ptr<Line> m_scaleLineX; ///< contains the line that displays the scale in X direction
+	std::shared_ptr<Line> m_scaleLineY; ///< contains the line that displays the scale in Y direction
 	std::shared_ptr<Slider> m_verticalSlider; ///< contains the slider that slides in Y direction
-	std::shared_ptr<Slider> m_horisontalSlider; //< contains the slider that slides in X direction
+	std::shared_ptr<Slider> m_horizontalSlider; //< contains the slider that slides in X direction
 	std::shared_ptr<ClassicButton> m_zoomInBtn; ///< contains the button to zoom in
 	std::shared_ptr<ClassicButton> m_zoomOutBtn; ///< contains the button to zoom out
 	std::shared_ptr<UIGalaxy> m_galaxy; ///< contains the ui galaxy

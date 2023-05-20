@@ -49,17 +49,18 @@ void LogoScene::Initialize() {
 }
 
 LogoScene::LogoScene(Vector2 resolution)
-	:Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution),
-	m_time(GetTime()) {
+	:Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution },
+	m_time{ GetTime() } {
 	Initialize();
 }
 void LogoScene::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext const& appContext) {
-	bool nextScene =
-		IsBackInputPressed()
-		or (m_time + SCENE_LENGTH) < GetTime();
+	bool const nextScene{
+			IsBackInputPressed()
+		or (m_time + m_sceneLength) < GetTime() 
+	};
 	if (nextScene) {
-		auto event = SwitchSceneEvent(m_nextScene);
+		SwitchSceneEvent event{ m_nextScene };
 		appContext.eventManager.InvokeEvent(event);
 	}
 

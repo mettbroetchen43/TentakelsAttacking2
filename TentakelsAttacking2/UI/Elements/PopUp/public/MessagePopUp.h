@@ -13,7 +13,7 @@
  */
 class MessagePopUp final : public PopUp {
 private:
-	std::function<void()> m_callback = []() {}; ///< contains the callback lambda that gets called when the popup is closed
+	std::function<void()> m_callback{ []() {} }; ///< contains the callback lambda that gets called when the popup is closed
 
 	/**
 	 * initializes all ui elements.
@@ -23,7 +23,7 @@ private:
 public:
 	/**
 	 * ctor
-	 * only initialaziation.
+	 * only initialization.
 	 */
 	MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		std::string const& title, std::string& subTitle, AssetType infoTexture, std::function<void()> callback);

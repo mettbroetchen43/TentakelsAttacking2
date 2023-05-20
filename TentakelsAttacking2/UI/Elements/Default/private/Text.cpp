@@ -10,17 +10,17 @@
 #include <cassert>
 
 void Text::CreateToRender() {
-	std::vector<std::string> splitedText = BreakLines(m_text);
-	std::vector<float> horizontalOffset = GetHorisontalAlignedOffset(splitedText, m_collider, m_textSize, m_textAlignment);
-	std::vector<float> verticalOffset = GetVerticalAlignedOffset(splitedText, m_textSize, m_collider, m_textAlignment);
+	std::vector<std::string> const spitedText{ BreakLines(m_text) };
+	std::vector<float> const horizontalOffset{ GetHorizontalAlignedOffset(spitedText, m_collider, m_textSize, m_textAlignment) };
+	std::vector<float> const verticalOffset{ GetVerticalAlignedOffset(spitedText, m_textSize, m_collider, m_textAlignment) };
 
-	assert(splitedText.size() == horizontalOffset.size());
-	assert(splitedText.size() == verticalOffset.size());
+	assert(spitedText.size() == horizontalOffset.size());
+	assert(spitedText.size() == verticalOffset.size());
 
 	m_toRender.clear();
-	for (int i = 0; i < splitedText.size(); ++i) {
-		std::pair<std::string, Vector2> a =
-			{ splitedText[i],{horizontalOffset[i] + m_collider.x, verticalOffset[i] + m_collider.y} };
+	for (int i = 0; i < spitedText.size(); ++i) {
+		std::pair<std::string, Vector2> const a =
+			{ spitedText[i],{horizontalOffset[i] + m_collider.x, verticalOffset[i] + m_collider.y} };
 		m_toRender.emplace_back(a);
 	}
 }
@@ -29,7 +29,7 @@ std::vector<std::string> Text::BreakLines(std::string toBreak) const {
 		return { toBreak };
 	}
 
-	std::vector<std::string> toReturn = BreakTextInVector(toBreak, m_textSize, m_collider.width);
+	std::vector<std::string> const toReturn{ BreakTextInVector(toBreak, m_textSize, m_collider.width) };
 
 	return toReturn;
 }
@@ -49,8 +49,8 @@ void Text::UpdateCollider() {
 Text::Text(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	Alignment textAlignment, float textHeight,
 	std::string text)
-	: UIElement(pos, size, alignment, resolution), m_textSize(textHeight * resolution.y),
-	m_text(text), m_textHeight(textHeight), m_textAlignment(textAlignment) {
+	: UIElement{ pos, size, alignment, resolution }, m_textSize{ textHeight * resolution.y },
+	m_text{ text }, m_textHeight{ textHeight }, m_textAlignment{ textAlignment } {
 
 	CreateToRender();
 }
@@ -66,7 +66,7 @@ void Text::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCon
 	}
 }
 void Text::Render(AppContext const& appContext) {
-	for (auto [text, position] : m_toRender) {
+	for (auto const&[text, position] : m_toRender) {
 		DrawTextEx(
 			*(appContext.assetManager.GetFont()),
 			text.c_str(),
@@ -86,33 +86,27 @@ void Text::Render(AppContext const& appContext) {
 	}
 }
 void Text::Resize(Vector2 resolution, AppContext const& appContext) {
-	
 	UIElement::Resize(resolution, appContext);
 	m_textSize = m_textHeight * resolution.y;
 	CreateToRender();
 }
 
 void Text::SetPosition(Vector2 pos) {
-
 	UIElement::SetPosition(pos);
-
 	CreateToRender();
 }
 
 void Text::SetSize(Vector2 size) {
-
 	UIElement::SetSize(size);
 	CreateToRender();
 }
 
 void Text::SetCollider(Rectangle collider) {
-
 	UIElement::SetCollider(collider);
 	CreateToRender();
 }
 
 float Text::GetRelativeTextHeight() {
-
 	return m_textSize;
 }
 

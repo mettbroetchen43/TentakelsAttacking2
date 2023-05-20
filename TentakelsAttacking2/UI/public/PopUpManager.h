@@ -17,7 +17,7 @@
 class PopUpManager final : public EventListener {
 private:
 	std::vector<std::unique_ptr<PopUp>> m_popUps; ///< contains all popups
-	std::vector<PopUp*> m_toDelete; ///< contains the popups that shold be deleted but not able to do so yet
+	std::vector<PopUp*> m_toDelete; ///< contains the popups that should be deleted but not able to do so yet
 	AppContext* m_appContext; ///< contains an AppContext pointer
 	Vector2 m_resolution; ///< contains the current resolution
 
@@ -59,7 +59,7 @@ public:
 	void NewValidatePopUp(ShowValidatePopUp const* event);
 	/**
 	 * adds a new focus layer.
-	 * generates a new color cell (for colorpicker class) popup.
+	 * generates a new color cell (for color picker class) popup.
 	 */
 	void NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event);
 	/**
@@ -69,14 +69,14 @@ public:
 	void NewSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event);
 	/**
 	 * adds a new focus layer.
-	 * generates a new premetive type cell (for table class) popup.
+	 * generates a new primitive type cell (for table class) popup.
 	 */
 	template<typename T, typename eventType>
 	void NewTableCellPopUp(eventType const* event) {
-		auto focusEvent = NewFocusPopUpLayerEvent();
+		NewFocusPopUpLayerEvent const focusEvent;
 		m_appContext->eventManager.InvokeEvent(focusEvent);
 
-		m_popUps.push_back(std::make_unique<PrivitiveCellPopUp<T>>(
+		m_popUps.push_back(std::make_unique<PrivativeCellPopUp<T>>(
 			Vector2(0.5f, 0.5f),
 			Vector2(0.7f, 0.7f),
 			Alignment::MID_MID,
@@ -90,7 +90,7 @@ public:
 	}
 
 	/**
-	 * returns if no popups are availeble.
+	 * returns if no popups are available.
 	 * if the last popup is the provided popup, the popup gets deleted.
 	 * else adds the popup into toDelete.
 	 */
@@ -103,7 +103,7 @@ public:
 	void CheckForDeleteRemainingPopUps();
 
 	/**
-	 * cheks if any popup is active.
+	 * checks if any popup is active.
 	 * calls the last popup to update.
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);

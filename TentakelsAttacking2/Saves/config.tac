@@ -6,7 +6,7 @@
 
 // Min Count >= 0
 
-// Globals
+// Global
 20 / Min Game Rounds
 50 / Current Target Game Round
 100 / Max Game Rounds

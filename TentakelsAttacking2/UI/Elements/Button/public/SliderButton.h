@@ -7,7 +7,7 @@
 #include "Button.h"
 
 /**
- * is used by the sliderclass as button to slide.
+ * is used by the slider lass as button to slide.
  */
 class SliderButton final : public Button {
 public:
@@ -16,7 +16,7 @@ public:
 
 	/**
 	 * logic of the slider button.
-	 * calls ChackAndUpdate from button.
+	 * calls CheckAndUpdate from button.
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 

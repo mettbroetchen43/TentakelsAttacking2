@@ -13,20 +13,20 @@
 #include <memory>
 
 /**
- * provieds a Ui representaition if the logic Planet.
+ * provides a Ui representation if the logic Planet.
  * gets implemented by the UIGalaxy.
  */
 class UIPlanet final : public UIElement, public Focusable {
 private:
 	unsigned int m_ID; ///< contains the unique planet ID with is also the planet "name"
 	std::string m_stringID; ///< contains the ID as string
-	bool m_isEnabled = true; ///< contains if the element is enabled
-	Vector2 m_coliderPos; ///< the position of the colider
+	bool m_isEnabled{ true }; ///< contains if the element is enabled
+	Vector2 m_colliderPos; ///< the position of the collider
 	PlayerData m_currentPlayer; ///< contains the current player data that own the planet
 	Color m_color; ///< contains the current color -> match the player color
-	std::function<void(UIPlanet*)> m_onClick = [](UIPlanet*) {}; ///< contains on click that gets called when the planet is clicked
+	std::function<void(UIPlanet*)> m_onClick{ [](UIPlanet*) {} }; ///< contains on click that gets called when the planet is clicked
 	Hover m_hover; ///< contains the hover element
-	bool m_renderHover = false; ///< contains if the hover text should be rendered
+	bool m_renderHover{ false }; ///< contains if the hover text should be rendered
 
 
 public:
@@ -38,7 +38,7 @@ public:
 		Vector2 coliderPos);
 
 	/**
-	 * Updates the position with the colider position.
+	 * Updates the position with the collider position.
 	 */
 	void UpdatePosition(Rectangle newColider);
 
@@ -57,7 +57,7 @@ public:
 	 */
 	[[nodiscard]] PlayerData GetPlayer() const;
 	/**
-	 * sets the current color if it schould not match the playercolor.
+	 * sets the current color if it should not match the player color.
 	 */
 	void SetColor(Color color);
 	/**

@@ -59,26 +59,26 @@ void SceneManager::InitializeNewScene(SceneType sceneType) {
 	}
 }
 
-void SceneManager::SwitchScene(AppContext const& appCpntext) {
+void SceneManager::SwitchScene(AppContext const& appContext) {
 
 	if (m_currentSceneType == m_nextSceneType) {
 		return;
 	}
 
 	if (!m_first) {
-		auto event1 = ClearFocusEvent();
-		appCpntext.eventManager.InvokeEvent(event1);
+		ClearFocusEvent event;
+		appContext.eventManager.InvokeEvent(event);
 	}
 	else {
 		m_first = true;
 	}
 
-	auto event2 = NewFocusLayerEvent();
-	appCpntext.eventManager.InvokeEvent(event2);
+	NewFocusLayerEvent event;
+	appContext.eventManager.InvokeEvent(event);
 
 	InitializeNewScene(m_nextSceneType);
 
-	m_currentScene->SetActive(true, appCpntext);
+	m_currentScene->SetActive(true, appContext);
 	m_currentSceneType = m_nextSceneType;
 
 	Print("Scene switched to " + GetStringBySceneType(m_currentSceneType), PrintType::INFO);
@@ -95,7 +95,7 @@ SceneType SceneManager::GetContinueSceneType() const {
 }
 
 SceneManager::SceneManager(UIManager* uiManager)
-	: m_uiManager(uiManager), m_popUpManager(uiManager->GetResolution()) {
+	: m_uiManager{ uiManager }, m_popUpManager{ uiManager->GetResolution() } {
 	AppContext::GetInstance().eventManager.AddListener(this);
 	Print("SceneManager", PrintType::INITIALIZE);
 }

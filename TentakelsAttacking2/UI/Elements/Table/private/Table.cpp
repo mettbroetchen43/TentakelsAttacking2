@@ -10,20 +10,23 @@
 
 
 bool Table::IsValidIndex(int row, int column) const {
-	return
-		IsValidRow(row)
-		&& IsValidColumn(column);
+	return{
+			IsValidRow(row)
+		and IsValidColumn(column) 
+	};
 }
 bool Table::IsValidRow(int row) const {
-	return
-		row < m_cells.size()
-		&& row >= 0;
+	return{
+			row < m_cells.size()
+		and row >= 0
+	};
 }
 bool Table::IsValidColumn(int column) const {
 	if (m_cells.size() < 1) { return false; }
-	return
-		column < m_cells.at(0).size()
-		&& column >= 0;
+	return{
+			column < m_cells.at(0).size()
+		and column >= 0
+	};
 }
 
 void Table::UpdateCellFocusID() {
@@ -40,7 +43,7 @@ void Table::UpdateCellPositionAndSize() {
 
 	if (m_isScrollable) {
 
-		Vector2 tableSize{
+		Vector2 const tableSize{
 			m_minCellSize.x * m_columnCount,
 			m_minCellSize.y * m_rowCount
 		};
@@ -61,7 +64,7 @@ void Table::UpdateCellPositionAndSize() {
 
 	for (int row = 0; row < m_cells.size(); ++row) {
 		for (int column = 0; column < m_cells.at(row).size(); ++column) {
-			auto& cell = m_cells.at(row).at(column);
+			auto const& cell = m_cells.at(row).at(column);
 			cell->SetPosition({ m_pos.x + cellWidth * column, m_pos.y + cellHeight * row });
 			cell->SetSize({ cellWidth, cellHeight });
 			cell->CalculateTextSize();
@@ -69,7 +72,7 @@ void Table::UpdateCellPositionAndSize() {
 	}
 
 	if (m_isScrollable) {
-		ScrollMove(m_absoluteScollingOffset);
+		ScrollMove(m_absoluteScrollingOffset);
 	}
 }
 
@@ -89,10 +92,11 @@ void Table::RemoveCellFocus() {
 }
 
 void Table::ResizeTable() {
-	bool needResize =
-		m_rowCount != m_cells.size() + 1
+	bool const needResize{
+			m_rowCount != m_cells.size() + 1
 		and m_columnCount != m_cells.at(0).size() + 1
-		and m_setScrollable != m_isScrollable;
+		and m_setScrollable != m_isScrollable 
+	};
 	if (not needResize) { return; }
 
 	m_isScrollable = m_setScrollable;
@@ -113,7 +117,7 @@ void Table::ResizeTable() {
 	if (m_cells.size() == 0) { Print("no rows in table", PrintType::ERROR), throw std::out_of_range("no rows"); }
 
 	// columns
-	auto& row = m_cells.at(0);
+	auto const& row = m_cells.at(0);
 	if (row.size() == m_columnCount) { /* nothing */ }
 	else if (row.size() < m_columnCount) {
 		while (row.size() < m_columnCount) {
@@ -135,7 +139,7 @@ void Table::UpdateHeadlinePosition() {
 	m_isFixedHeadline = m_setFixedHeadline;
 
 	if (m_isFixedHeadline) {
-		for (auto cell : m_cells.at(0)) {
+		for (auto const& cell : m_cells.at(0)) {
 			auto col = cell->GetCollider();
 			col.y = m_collider.y;
 			cell->SetCollider(col);
@@ -146,7 +150,7 @@ void Table::UpdateHeadlinePosition() {
 		if (m_rowCount < 2) { Print("not able to move headline", PrintType::EXPECTED_ERROR); return; }
 		float height = m_cells.at(0).at(0)->GetCollider().height;
 		float pos = m_cells.at(1).at(0)->GetCollider().y;
-		for (auto cell : m_cells.at(0)) {
+		for (auto const& cell : m_cells.at(0)) {
 			auto col = cell->GetCollider();
 			col.y = pos - height;
 			cell->SetCollider(col);
@@ -161,8 +165,8 @@ void Table::UpdateFirstRowPosition() {
 
 	if (m_isFixedFirstColumn) {
 		for (int row = 0; row < m_cells.size(); ++row) {
-			auto cell = m_cells.at(row).at(0);
-			auto col = cell->GetCollider();
+			auto const cell{ m_cells.at(row).at(0) };
+			auto col{ cell->GetCollider() };
 			col.x = m_collider.x;
 			cell->SetCollider(col);
 			cell->CalculateTextSize();
@@ -171,12 +175,12 @@ void Table::UpdateFirstRowPosition() {
 	else {
 		if (m_columnCount < 2) { Print("not able to move first row", PrintType::EXPECTED_ERROR); return; }
 
-		float width = m_cells.at(0).at(0)->GetCollider().width;
-		float pos = m_cells.at(0).at(1)->GetCollider().x;
+		float const width{ m_cells.at(0).at(0)->GetCollider().width };
+		float const pos{ m_cells.at(0).at(1)->GetCollider().x };
 
 		for (int row = 0; row < m_cells.size(); ++row) {
-			auto cell = m_cells.at(row).at(0);
-			auto col = cell->GetCollider();
+			auto const cell{ m_cells.at(row).at(0) };
+			auto col{ cell->GetCollider() };
 			col.x = pos - width;
 			cell->SetCollider(col);
 			cell->CalculateTextSize();
@@ -188,7 +192,7 @@ void Table::CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext cons
 	if (not CheckCollisionPointRec(mousePositon, m_collider)) { return; }
 	if (not IsMouseButtonPressed(0)) { return; }
 
-	auto cell = m_cells.at(0).at(0);
+	auto cell{ m_cells.at(0).at(0) };
 	if (cell->IsColliding(mousePositon)) {
 		goto clicked;
 	}
@@ -225,7 +229,7 @@ void Table::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 	if (not m_isScrollable) { return; }
 	if (not CheckCollisionPointRec(mousePosition, m_collider)) { return; } // check if collider is maybe to big
 
-	float mouseWheel = GetMouseWheelMove();
+	float const mouseWheel{ GetMouseWheelMove() };
 	if (mouseWheel == 0.0f) { return; }
 
 	Vector2 offset{ 0.0f,0.0f };
@@ -236,17 +240,17 @@ void Table::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 		offset.y = mouseWheel * m_scroll_speed * m_resolution.y;
 	}
 
-	ClampScroollOffset(offset);
+	ClampScrollOffset(offset);
 	ScrollMove(offset);
-	m_absoluteScollingOffset.x += offset.x;
-	m_absoluteScollingOffset.y += offset.y;
+	m_absoluteScrollingOffset.x += offset.x;
+	m_absoluteScrollingOffset.y += offset.y;
 
-	Vector2 size = GetAbsoluteSize();
-	m_horizontalSlider->SetButtonPosition((-m_absoluteScollingOffset.x / (size.x - m_collider.width)) * 100);
-	m_verticalSlider->SetButtonPosition((-m_absoluteScollingOffset.y / (size.y - m_collider.height)) * 100);
+	Vector2 const size{ GetAbsoluteSize() };
+	m_horizontalSlider->SetButtonPosition((-m_absoluteScrollingOffset.x / (size.x - m_collider.width)) * 100);
+	m_verticalSlider->SetButtonPosition((-m_absoluteScrollingOffset.y / (size.y - m_collider.height)) * 100);
 
 	if (IsNestedFocus()) {
-		auto event = RenderFocusEvent(false);
+		RenderFocusEvent event{ false };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
@@ -254,28 +258,28 @@ Vector2 Table::GetAbsoluteSize() const {
 
 	Vector2 toReturn{ 0.0f,0.0f };
 
-	for (auto cell : m_cells.at(0)) {
+	for (auto const cell : m_cells.at(0)) {
 		toReturn.x += cell->GetCollider().width;
 	}
 	for (int i = 0; i < m_rowCount; ++i) {
-		auto cell = m_cells.at(i).at(0);
+		auto const cell = m_cells.at(i).at(0);
 		toReturn.y += cell->GetCollider().height;
 	}
 
 	return toReturn;
 }
-void Table::ClampScroollOffset(Vector2& offset) {
+void Table::ClampScrollOffset(Vector2& offset) {
 	if (m_rowCount < 2) { Print("not enough rows in table for clamping", PrintType::EXPECTED_ERROR); return; }
 	if (m_columnCount < 2) { Print("not enough columns in table for clamping", PrintType::EXPECTED_ERROR); return; }
 
 	// get cells
-	auto cellTopLeft = m_cells.at(0).at(0)->GetCollider();
-	auto cellSecondTopLeft = m_cells.at(1).at(1)->GetCollider();
-	auto cellBottomLeft = m_cells.at(m_rowCount - 1).at(m_columnCount - 1)->GetCollider();
+	auto const cellTopLeft{ m_cells.at(0).at(0)->GetCollider() };
+	auto const cellSecondTopLeft{ m_cells.at(1).at(1)->GetCollider() };
+	auto const cellBottomLeft{ m_cells.at(m_rowCount - 1).at(m_columnCount - 1)->GetCollider() };
 
 	// clamp left x
-	float cell = cellSecondTopLeft.x + offset.x;
-	float table = m_collider.x + cellTopLeft.width;
+	float cell{ cellSecondTopLeft.x + offset.x };
+	float table{ m_collider.x + cellTopLeft.width };
 	if (cell > table) { offset.x -= cell - table; }
 
 	// clamp right x
@@ -299,10 +303,10 @@ void Table::ScrollFocused() {
 	if (not m_isScrollable) { return; }
 	if (not IsNestedFocus()) { return; }
 
-	std::shared_ptr<AbstractTableCell> cell = nullptr;
+	std::shared_ptr<AbstractTableCell> cell{ nullptr };
 	for (int row = 0; row < m_cells.size(); ++row) {
 		for (int column = 0; column < m_cells.at(row).size(); ++column) {
-			auto cCell = m_cells.at(row).at(column);
+			auto const cCell = m_cells.at(row).at(column);
 			if (cCell->IsFocused()) {
 				cell = cCell;
 				goto out;
@@ -312,12 +316,13 @@ void Table::ScrollFocused() {
 out:
 	if (not cell) { return; }
 
-	auto col = cell->GetCollider();
-	bool cellInCollider =
-		m_collider.x < col.x  // left
+	auto col{ cell->GetCollider() };
+	bool const cellInCollider{
+			m_collider.x < col.x  // left
 		and m_collider.x + m_collider.width > col.x + col.width  // right
 		and m_collider.y < col.y  // top
-		and m_collider.y + m_collider.height > col.y + col.height;  // bottom
+		and m_collider.y + m_collider.height > col.y + col.height // bottom
+	};
 	if (cellInCollider) { return; }
 
 	Vector2 offset{ 0.0f,0.0f };
@@ -336,32 +341,32 @@ out:
 	}
 
 	ScrollMove(offset);
-	m_absoluteScollingOffset.x += offset.x;
-	m_absoluteScollingOffset.y += offset.y;
+	m_absoluteScrollingOffset.x += offset.x;
+	m_absoluteScrollingOffset.y += offset.y;
 }
-void Table::ScollPercent(float percent, bool isHorisonzal) {
+void Table::ScrollPercent(float percent, bool isHorizontal) {
 
-	auto size = GetAbsoluteSize();
+	auto size{ GetAbsoluteSize() };
 	Vector2 offset{ 0.0f,0.0f };
 
-	if (isHorisonzal) {
+	if (isHorizontal) {
 		size.x -= m_collider.width;
 		size.x *= percent / 100;
-		offset.x = -(size.x + m_absoluteScollingOffset.x);
+		offset.x = -(size.x + m_absoluteScrollingOffset.x);
 	}
 	else {
 		size.y -= m_collider.height;
 		size.y *= percent / 100;
-		offset.y = -(size.y + m_absoluteScollingOffset.y);
+		offset.y = -(size.y + m_absoluteScrollingOffset.y);
 	}
 
-	ClampScroollOffset(offset);
+	ClampScrollOffset(offset);
 	ScrollMove(offset);
-	m_absoluteScollingOffset.x += offset.x;
-	m_absoluteScollingOffset.y += offset.y;
+	m_absoluteScrollingOffset.x += offset.x;
+	m_absoluteScrollingOffset.y += offset.y;
 
 	if (IsNestedFocus()) {
-		auto event = RenderFocusEvent(false);
+		RenderFocusEvent event{ false };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
@@ -372,8 +377,8 @@ void Table::ScrollMove(Vector2 const& offset) {
 			if (row == 0 and m_isFixedHeadline) { individualOffset.y = 0.0f; }
 			if (column == 0 and m_isFixedFirstColumn) { individualOffset.x = 0.0f; }
 
-			auto cell = m_cells.at(row).at(column);
-			auto collider = cell->GetCollider();
+			auto const cell{ m_cells.at(row).at(column) };
+			auto collider{ cell->GetCollider() };
 			collider.x += individualOffset.x;
 			collider.y += individualOffset.y;
 			cell->SetCollider(collider);
@@ -384,19 +389,19 @@ void Table::ScrollMove(Vector2 const& offset) {
 void Table::CalculateSlider() {
 
 	float width{ 0.0f };
-	for (auto cell : m_cells.at(0)) {
+	for (auto const& cell : m_cells.at(0)) {
 		width += cell->GetSize().x;
 	}
 	m_activeHorizontalSlider = width > m_size.x + m_columnCount * 0.001f;
-	m_horizontalSlider->SetAboluteDimension(width);
+	m_horizontalSlider->SetAbsoluteDimension(width);
 
 	float height{ 0.0f };
 	for (int i = 0; i < m_rowCount; ++i) {
-		auto cell = m_cells.at(0).at(1);
+		auto const& cell = m_cells.at(0).at(1);
 		height += cell->GetSize().y;
 	}
 	m_activeVerticalSlider = height > m_size.y + m_rowCount * 0.001f;
-	m_verticalSlider->SetAboluteDimension(height);
+	m_verticalSlider->SetAbsoluteDimension(height);
 }
 
 void Table::CalculateHoverHighlighted(Vector2 mousePosition) {
@@ -407,18 +412,18 @@ void Table::CalculateHoverHighlighted(Vector2 mousePosition) {
 	if (m_cells.at(0).at(0)->IsColliding(mousePosition)) { newPosition = { 0, 0 }; goto found; }
 
 	for (int column = 1; column < m_columnCount; ++column) {
-		auto cell = m_cells.at(0).at(column);
+		auto const& cell = m_cells.at(0).at(column);
 		if (cell->IsColliding(mousePosition)) { newPosition = { 0, column }; goto found; }
 	}
 
 	for (int row = 1; row < m_rowCount; ++row) {
-		auto cell = m_cells.at(row).at(0);
+		auto const& cell = m_cells.at(row).at(0);
 		if (cell->IsColliding(mousePosition)) { newPosition = { row, 0 }; goto found; }
 	}
 
 	for (int row = 1; row < m_rowCount; ++row){
 		for (int column = 1; column < m_columnCount; ++column) {
-			auto cell = m_cells.at(row).at(column);
+			auto const& cell = m_cells.at(row).at(column);
 			if (cell->IsColliding(mousePosition)) { newPosition = { row, column }; goto found; }
 		}
 	}
@@ -426,23 +431,23 @@ void Table::CalculateHoverHighlighted(Vector2 mousePosition) {
 found:
 	if (m_currentHighlighted == newPosition) { return; }
 
-	SetHighlightBeackground(true);
+	SetHighlightBackground(true);
 	m_currentHighlighted = newPosition;
-	SetHighlightBeackground(false);
+	SetHighlightBackground(false);
 }
-void Table::SetHighlightBeackground(bool reset) {
-	Color newColor = reset ? BLACK : HOVERGREY;
+void Table::SetHighlightBackground(bool reset) {
+	Color const newColor{ reset ? BLACK : HOVERGREY };
 
 	if (m_currentHighlighted.x >= 0) {
-		for (auto cell : m_cells.at(m_currentHighlighted.x)) {
-			cell->SetBackgoundColor(newColor);
+		for (auto const& cell : m_cells.at(m_currentHighlighted.x)) {
+			cell->SetBackgroundColor(newColor);
 		}
 	}
 
 	if (m_currentHighlighted.y >= 0) {
 		for (int i = 0; i < m_rowCount; ++i) {
-			auto cell = m_cells.at(i).at(m_currentHighlighted.y);
-			cell->SetBackgoundColor(newColor);
+			auto const& cell = m_cells.at(i).at(m_currentHighlighted.y);
+			cell->SetBackgroundColor(newColor);
 		}
 	}
 }
@@ -452,20 +457,20 @@ void Table::RenderTopLeft(AppContext const& appContext) {
 }
 void Table::RenderHeadline(AppContext const& appContext) {
 
-	auto row = m_cells.at(0);
-	for (int column = 1; column < row.size(); ++column) { // start at 1 because cell 0 is renderd in TopLeft
+	auto const row{ m_cells.at(0) };
+	for (int column = 1; column < row.size(); ++column) { // start at 1 because cell 0 is rendered in TopLeft
 		row.at(column)->Render(appContext);
 	}
 }
 void Table::RenderFirstColumn(AppContext const& appContext) {
 
-	for (int row = 1; row < m_cells.size(); ++row) { // start at 1 because cell 0 is renderd in TopLeft
+	for (int row = 1; row < m_cells.size(); ++row) { // start at 1 because cell 0 is rendered in TopLeft
 		m_cells.at(row).at(0)->Render(appContext);
 	}
 }
 void Table::RenderOtherCells(AppContext const& appContext) {
 
-	for (int row = 1; row < m_cells.size(); ++row) { // start at 1 because cell 0 is renderd in TopLeft or headline
+	for (int row = 1; row < m_cells.size(); ++row) { // start at 1 because cell 0 is rendered in TopLeft or headline
 		for (int column = 1; column < m_cells.at(row).size(); ++column) { // start at 1 because cell 0 is renderd in TopLeft or first column
 			m_cells.at(row).at(column)->Render(appContext);
 		}
@@ -482,21 +487,21 @@ void Table::RenderOutline() const {
 
 Table::Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
 	int rowCount, int columnCount, Vector2 minCellSize, float scrollSpeed)
-	: UIElement(pos, size, alignment, resolution), Focusable(focusID),
-	m_rowCount(rowCount), m_columnCount(columnCount), m_minCellSize(minCellSize), m_scroll_speed(scrollSpeed) {
+	: UIElement{ pos, size, alignment, resolution }, Focusable{ focusID },
+	m_rowCount{ rowCount }, m_columnCount{ columnCount }, m_minCellSize{ minCellSize }, m_scroll_speed{ scrollSpeed } {
 
 
 	m_minCellSize = {
 		m_minCellSize.x * m_size.x,
 		m_minCellSize.y * m_size.y
 	};
-	float cellWidth = m_size.x / m_columnCount;
-	float cellHeight = m_size.y / m_rowCount;
+	float const cellWidth{ m_size.x / m_columnCount };
+	float const cellHeight{ m_size.y / m_rowCount };
 
 	m_cells.clear();
 	for (int row = 0; row < m_rowCount; ++row) {
 
-		auto line = std::vector<std::shared_ptr<AbstractTableCell>>();
+		auto line{ std::vector<std::shared_ptr<AbstractTableCell>>() };
 		for (int column = 0; column < columnCount; ++column) {
 
 			auto cell = std::make_shared<TableCell<std::string>>(
@@ -529,7 +534,7 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		20.0f
 	);
 	m_verticalSlider->SetOnSlide([this](float percent) {
-		this->ScollPercent(percent, false);
+		this->ScrollPercent(percent, false);
 		});
 	m_horizontalSlider = std::make_shared<Slider>(
 		GetElementPosition(m_pos, m_size, 0.5f, 0.99f),
@@ -540,14 +545,14 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		20.0f
 	);
 	m_horizontalSlider->SetOnSlide([this](float percent) {
-		this->ScollPercent(percent, true);
+		this->ScrollPercent(percent, true);
 		});
 	CalculateSlider();
 
 }
 
 void Table::SetRowCount(int newRowCount) {
-	if (newRowCount <= 0) { Print("tryed to set a row count inside of a table that is lower than or equal to 0.", PrintType::ERROR); return; }
+	if (newRowCount <= 0) { Print("tried to set a row count inside of a table that is lower than or equal to 0.", PrintType::ERROR); return; }
 
 	m_rowCount = newRowCount;
 }
@@ -556,7 +561,7 @@ int Table::GetRowCount() const {
 }
 
 void Table::SetColumnCount(int newColumnCount) {
-	if (newColumnCount <= 0) { Print("tryed to set a column count inside of a table that is lower than or equal to 0.", PrintType::ERROR); return; }
+	if (newColumnCount <= 0) { Print("tried to set a column count inside of a table that is lower than or equal to 0.", PrintType::ERROR); return; }
 
 	m_columnCount = newColumnCount;
 }
@@ -593,14 +598,14 @@ void Table::RemoveLastColum() {
 void Table::SetHighlightHover(bool isHoveredHighlighted) {
 	m_isHoveredHighlighted = isHoveredHighlighted;
 }
-bool Table::IsHighlighedHover() const {
+bool Table::IsHighlightedHover() const {
 	return m_isHoveredHighlighted;
 }
 
-void Table::SetScrollable(bool isScollable) {
-	m_setScrollable = isScollable;
+void Table::SetScrollable(bool isScrollable) {
+	m_setScrollable = isScrollable;
 }
-bool Table::IsScollable() const {
+bool Table::IsScrollable() const {
 	return m_isScrollable;
 }
 
@@ -716,9 +721,12 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 			cell->CheckAndUpdate(mousePosition, appContext);
 		}
 	}
-	bool sliderHover =
-		m_activeHorizontalSlider and m_horizontalSlider->IsColliding(mousePosition)
-		or m_activeVerticalSlider and m_verticalSlider->IsColliding(mousePosition);
+	bool const sliderHover{
+			(m_activeHorizontalSlider
+		and  m_horizontalSlider->IsColliding(mousePosition))
+		or  (m_activeVerticalSlider
+		and  m_verticalSlider->IsColliding(mousePosition))
+	};
 	if (not sliderHover) {
 		CheckAndUpdateClickCell(mousePosition, appContext);
 	}
@@ -753,4 +761,3 @@ void Table::Render(AppContext const& appContext) {
 		m_verticalSlider->Render(appContext);
 	}
 }
-

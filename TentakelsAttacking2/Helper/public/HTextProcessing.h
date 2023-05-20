@@ -12,7 +12,7 @@ struct AppContext;
 enum class Alignment;
 
 /**
- * replace a space thru an \n so that the text will break while dispaying.
+ * replace a space thru an \n so that the text will break while displaying.
  */
 void BreakText(std::string& toBreak, float fontSize, float length,
 	AppContext const& appContext);
@@ -28,16 +28,16 @@ void BreakText(std::string& toBreak, float fontSize, float length,
 [[nodiscard]] float GetElementTextHeight(Vector2 const& relativeSize, float absoluteHeight);
 
 /**
- * modifies the string so it fits into a colider.
- * adds indigators(dots) if the string is modified.
+ * modifies the string so it fits into a collider.
+ * adds indicators(dots) if the string is modified.
  */
-[[nodiscard]] std::string GetPritableTextInColider(std::string const& text,
+[[nodiscard]] std::string GetPrintableTextInCollider(std::string const& text,
 	float fontSize, Rectangle colider, AppContext const& appContext);
 /**
- * modifies the string so it fits into a colider.
- * adds indigators(dots) if the string is modified.
+ * modifies the string so it fits into a collider.
+ * adds indicators(dots) if the string is modified.
  */
-[[nodiscard]] std::string GetPritablePlaceholderTextInColider(std::string const& text,
+[[nodiscard]] std::string GetPrintablePlaceholderTextInCollider(std::string const& text,
 	float fontSize, Rectangle colider, AppContext const& appContext);
 
 /**
@@ -46,7 +46,7 @@ void BreakText(std::string& toBreak, float fontSize, float length,
 void StripString(std::string& toStrip);
 
 /**
- * modifyes a string so it gets vertical aligned.
+ * modifies a string so it gets vertical aligned.
  */
 [[nodiscard]] Vector2 GetVerticalAlignedTextPosition(std::string const& text,
 	float fontSize, Rectangle colider, Alignment alignment);
@@ -56,12 +56,12 @@ void StripString(std::string& toStrip);
 [[nodiscard]] std::vector<float> GetVerticalAlignedOffset(std::vector<std::string> text,
 	float fontSize, Rectangle colider, Alignment alignment);
 /**
- * modifyes a string so it gets horisontal aligned.
+ * modifies a string so it gets horizontal aligned.
  */
-[[nodiscard]] std::string GetHorisontalAlignedText(std::string const& text,
+[[nodiscard]] std::string GetHorizontalAlignedText(std::string const& text,
 	Rectangle colider, float fontSize, Alignment alignment);
 /**
- * returns the horisintal offset per line in a vector.
+ * returns the horizontal offset per line in a vector.
  */
-[[nodiscard]] std::vector<float> GetHorisontalAlignedOffset(std::vector<std::string> text,
+[[nodiscard]] std::vector<float> GetHorizontalAlignedOffset(std::vector<std::string> text,
 	Rectangle colider, float fontSize, Alignment alignment);

@@ -13,17 +13,17 @@
  */
 class DeletePlayerPopUp final : public CellPopUp {
 private:
-	std::shared_ptr<InputLine<int>> m_inputLine; ///< contains an inputline for user input
-	std::function<void(unsigned int)> m_onClick; ///< contauns a lambda that gets called when the player cets deleted
+	std::shared_ptr<InputLine<int>> m_inputLine; ///< contains an input line for user input
+	std::function<void(unsigned int)> m_onClick; ///< contains a lambda that gets called when the player cets deleted
 
 	/**
-	 * initialises all ui elements.
+	 * initializes all ui elements.
 	 */
 	void Initialize(AppContext const& appContext,
 		Vector2 resolution) override;
 	/**
-	 * gets the id from the inputline and calles onClick.
-	 * sets should close afterwords.
+	 * gets the id from the input line and calls onClick.
+	 * sets should close afterword's.
 	 */
 	void SetValue() override;
 

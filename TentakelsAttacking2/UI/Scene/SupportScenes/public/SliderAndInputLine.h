@@ -19,10 +19,10 @@ private:
 	std::shared_ptr<Slider> m_slider; ///< contains a the slider
 	std::shared_ptr<InputLine<int>> m_inputLine; ///< contains a the input line
 	std::shared_ptr<ClassicButton> m_btn; ///< contains a the button
-	std::function<void(int)> m_onSave = [](int) {}; ///< contains the llambda that gets called on save -> provides the current value
+	std::function<void(int)> m_onSave{ [](int) {} }; ///< contains the llambda that gets called on save -> provides the current value
 
-	bool m_isEnabled = true; ///< contains if the scene is enabled
-	bool m_slided = false; ///< contains if the scene is currently sliding -> locks the button if the value in the input line chanched because of the slider
+	bool m_isEnabled{ true }; ///< contains if the scene is enabled
+	bool m_slided{ false }; ///< contains if the scene is currently sliding -> locks the button if the value in the input line chanced because of the slider
 	int m_minValue; ///< contains the provided min value that should can be set.
 	int m_maxValue; ///< contains the provided max value that should can be set.
 	int m_currentValue; ///< contains the current value
@@ -52,7 +52,7 @@ private:
 	/**
 	 * clamps the current value between min and max value.
 	 * sets the current value in the input line.
-	 * no need to net it nomewere else beacuse it gets not set here, just validated.
+	 * no need to net it somewhere else because it gets not set here, just validated.
 	 */
 	void ValidateCurrentValue();
 	/**
@@ -92,8 +92,8 @@ public:
 	void SetValue(int value);
 
 	/**
-	 * randomaizes a value between min and max value.
-	 * updates slider and inputline.
+	 * randomizes a value between min and max value.
+	 * updates slider and input line.
 	 * saves the value.
 	 */
 	void RandomValue();

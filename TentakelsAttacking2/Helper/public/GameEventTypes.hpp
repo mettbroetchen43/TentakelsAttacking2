@@ -20,7 +20,7 @@ enum class GameEventType {
 };
 
 using EventTypeArray = std::array<GameEventType, 6>; ///< type of the settable events
-constexpr EventTypeArray settableGameEventTypes = { ///< contains the settabel events
+constexpr EventTypeArray settableGameEventTypes{ ///< contains the settable events
 	GameEventType::PIRATES,
 	GameEventType::REVOLTS,
 	GameEventType::RENEGADE_SHIPS,

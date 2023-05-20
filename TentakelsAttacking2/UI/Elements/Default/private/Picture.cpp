@@ -10,11 +10,11 @@
 
 Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	AssetType assetType, bool scaleToFit)
-	: UIElement(pos, size, alignment, resolution), m_isScaleToFit(scaleToFit) {
+	: UIElement{ pos, size, alignment, resolution }, m_isScaleToFit{ scaleToFit } {
 	m_texture = AppContext::GetInstance().assetManager.GetTexture(assetType);
 
 	if (m_isScaleToFit) {
-		float tempSize = m_size.x;
+		float const tempSize{ m_size.x };
 		m_size.x =
 			static_cast<float>(m_texture->width) / m_texture->height
 			* resolution.y / resolution.x
@@ -24,7 +24,7 @@ Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolut
 	}
 }
 
-void Picture::Render([[maybe_unused]] AppContext const& appContext) {
+void Picture::Render(AppContext const&) {
 	DrawTexturePro(
 		*m_texture,
 		Rectangle(

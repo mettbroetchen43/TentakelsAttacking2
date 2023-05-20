@@ -14,7 +14,7 @@
  */
 class Line final : public UIElement {
 private:
-	float m_thick; ///< contains the thicknes of the line
+	float m_thick; ///< contains the thickness of the line
 
 public:
 	/**

@@ -7,9 +7,9 @@
 #include <cassert>
 
 SpaceObject::SpaceObject(unsigned int ID, vec2pos position, std::shared_ptr<Player> player)
-	: m_ID(ID), m_position(position), m_player(player) {}
+	: SpaceObject{ ID, position, 0, player } {}
 SpaceObject::SpaceObject(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Player> player)
-	: m_ID(ID), m_position(position), m_player(player), m_ships(ships) {}
+	: m_ID{ID}, m_position{position}, m_player{player}, m_ships{ships} {}
 
 unsigned int SpaceObject::GetID() const {
 	return m_ID;
@@ -34,15 +34,12 @@ size_t SpaceObject::GetShipCount() const {
 }
 
 bool SpaceObject::IsPlanet() const {
-
 	return false;
 }
 bool SpaceObject::IsFleet() const {
-
 	return false;
 }
 bool SpaceObject::IsTargetPoint() const {
-
 	return false;
 }
 

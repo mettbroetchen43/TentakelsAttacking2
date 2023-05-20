@@ -72,10 +72,10 @@ void ValidateGalaxyScene::InitializePlayerLegend() {
 
 	auto const players = appContext.playerCollection.GetPlayerData();
 
-	float width = 0.15f;
-	float height = 0.03f;
-	float X = 0.97f;
-	float Y = 0.5f - (height * players.size() / 2);
+	float const width { 0.15f };
+	float const height{ 0.03f };
+	float const X     { 0.97f };
+	float       Y     { 0.5f - (height * players.size() / 2) };
 
 	for (auto const& player : players) {
 		auto text = std::make_shared<Text>(
@@ -96,7 +96,7 @@ void ValidateGalaxyScene::InitializePlayerLegend() {
 
 }
 void ValidateGalaxyScene::InitializeGalaxy() {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 
 	m_galaxy = std::make_shared<GalaxyScene>(
 		GetElementPosition(0.05f, 0.465f),
@@ -109,26 +109,26 @@ void ValidateGalaxyScene::InitializeGalaxy() {
 }
 
 void ValidateGalaxyScene::NewGalaxy() {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 
 	m_galaxy->SetActive(false, appContext);
 	m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), m_galaxy), m_elements.end());
 	m_galaxy = nullptr;
 
-	auto event = GenerateGalaxyEvent();
+	GenerateGalaxyEvent const event;
 	appContext.eventManager.InvokeEvent(event);
 
 	InitializeGalaxy();
 }
 
 void ValidateGalaxyScene::StartGame() const {
-	AppContext& appContext = AppContext::GetInstance();
-	appContext.eventManager.InvokeEvent(StartGameEvent());
-	appContext.eventManager.InvokeEvent(SwitchSceneEvent(SceneType::MAIN));
+	AppContext const& appContext{ AppContext::GetInstance() };
+	appContext.eventManager.InvokeEvent(StartGameEvent{ });
+	appContext.eventManager.InvokeEvent(SwitchSceneEvent{ SceneType::MAIN });
 }
 
 ValidateGalaxyScene::ValidateGalaxyScene(Vector2 resolution)
-	: Scene({0.0f,0.0f}, {1.0f,1.0f}, Alignment::DEFAULT, resolution) {
+	: Scene{ {0.0f,0.0f}, {1.0f,1.0f}, Alignment::DEFAULT, resolution } {
 
 	Initialize();
 	InitializeGalaxy();

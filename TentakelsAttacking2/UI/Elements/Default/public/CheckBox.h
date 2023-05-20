@@ -9,13 +9,13 @@
 #include <functional>
 
 /**
- * used to represend a chekable bool.
+ * used to represent a checkable bool.
  */
 class CheckBox final : public UIElement, public Focusable {
 private:
-	bool m_isEnabled = true; ///< contains if the checkbox is enabled
-	bool m_isChecked = false; ///< contains if the ckeckbox id checked
-	bool m_isHovered = false; ///< contains hover over the checkbox
+	bool m_isEnabled{ true }; ///< contains if the checkbox is enabled
+	bool m_isChecked{ false }; ///< contains if the checkbox id checked
+	bool m_isHovered{ false }; ///< contains hover over the checkbox
 
 	unsigned int m_ID; ///< contains the checkbox id -> used to return in onCheck
 
@@ -25,17 +25,17 @@ private:
 	Texture* m_greyTexture; ///< contains the disabled texture
 	Rectangle m_greyTextureRec; ///< contains the dimensions of the texture
 
-	std::function<void(unsigned int, bool)> m_onCheck = [](unsigned int, bool) {}; ///< contains the lambda onCheck -> gets called when the state chances
+	std::function<void(unsigned int, bool)> m_onCheck{ [](unsigned int, bool) {} }; ///< contains the lambda onCheck -> gets called when the state chances
 
 	/**
-	 * playes the sound and toggles the check state.
+	 * plays the sound and toggles the check state.
 	 */
 	void Check(AppContext const& appContext);
 
 public:
 	/**
 	 * ctor.
-	 * recalculates the colider.
+	 * recalculates the collider.
 	 * handles the textures.
 	 */
 	CheckBox(unsigned int focusID, Vector2 pos, float height,
@@ -55,7 +55,7 @@ public:
 	 */
 	void SetChecked(bool isChecked);
 	/**
-	 * retunrs if the checkbox is checked.
+	 * returns if the checkbox is checked.
 	 */
 	[[nodiscard]] bool IsChecked() const;
 
@@ -83,7 +83,7 @@ public:
 	void Render(AppContext const& appContext) override;
 	/**
 	 * resizes the checkbox and calls the ui-element to resize.
-	 * updates horisontal size.
+	 * updates horizontal size.
 	 */
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
 };

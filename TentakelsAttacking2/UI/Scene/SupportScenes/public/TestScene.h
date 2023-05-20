@@ -10,13 +10,14 @@
 
 /**
  * no doc here.
- * this contains the test scene that is only unsed to diplay new featurs temporary.
+ * this contains the test scene that is only unused to display new features temporary.
  */
 class TestScene : public Scene {
 private:
 	std::shared_ptr<Hover> m_hover;
 	Rectangle m_toRender{ 255.0,100.0,500.0,300.0 };
 	bool m_isHover{ false };
+
 	void Initialize(AppContext& appContext);
 
 public:
@@ -30,4 +31,3 @@ public:
 	void RenderRectangle(AppContext const& appContext);
 	void CheckHover(Vector2 const& mousePosition, AppContext const& appContext);
 };
-

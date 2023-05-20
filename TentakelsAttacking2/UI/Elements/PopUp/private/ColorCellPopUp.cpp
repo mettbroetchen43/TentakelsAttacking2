@@ -42,8 +42,8 @@ void ColorCellPopUp::SetValue() {
 ColorCellPopUp::ColorCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	std::string const& title, AssetType infoTexture, Color currentColor,
 	std::function<void(Color)> onClick)
-	: CellPopUp(pos, size, alignment, resolution, title, infoTexture),
-	m_onClick(onClick) {
+	: CellPopUp{ pos, size, alignment, resolution, title, infoTexture },
+	m_onClick{ onClick } {
 
 	Initialize(AppContext::GetInstance(), resolution, currentColor);
 }

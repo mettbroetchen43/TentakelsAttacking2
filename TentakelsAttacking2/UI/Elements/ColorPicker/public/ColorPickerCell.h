@@ -11,17 +11,17 @@
 class ColorPicker;
 
 /**
- * provides the coll for the colorpicker.
+ * provides the cell for the color picker.
  */
 class ColorPickerCell final : public UIElement, public Focusable {
 private:
-	bool m_enabled = true; ///< contains if the cell is enabled
+	bool m_enabled{ true }; ///< contains if the cell is enabled
 	Color m_color; ///< contains the color of the cell
-	ColorPicker* m_colorPicker; ///< contans a pointer to the colorpicker it belongs to
-	Hover m_hover; ///< contans the hover element
+	ColorPicker* m_colorPicker; ///< contains a pointer to the color picker it belongs to
+	Hover m_hover; ///< contains the hover element
 
 	/**
-	 * calls the colorpicker to set the cell color as current color.
+	 * calls the color picker to set the cell color as current color.
 	 */
 	void SetColor() const;
 
@@ -51,13 +51,13 @@ public:
 	 */
 	[[nodiscard]] bool IsEnabled() const override;
 	/**
-	 * returns thet current collider.
+	 * returns the current collider.
 	 */
 	[[nodiscard]] Rectangle GetCollider() const override;
 
 	/**
 	 * logic of the cell.
-	 * triggers the color picker to update specific memebr functions
+	 * triggers the color picker to update specific member functions
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
 	/**

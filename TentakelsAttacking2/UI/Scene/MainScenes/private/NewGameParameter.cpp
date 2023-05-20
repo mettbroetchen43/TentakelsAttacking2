@@ -13,10 +13,9 @@
 #include "SceneType.h"
 #include "GameEventSettings.h"
 #include "SliderAndInputLine.h"
-#include <iostream>
 
 void NewGameParameterScene::Initialize(Vector2 resolution) {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 
 	// title
 	m_elements.push_back(std::make_shared<Title>(
@@ -106,8 +105,8 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		resolution,
-		static_cast<int>(appContext.constants.world.minDiemnsionX),
-		static_cast<int>(appContext.constants.world.maxDiemnsionX),
+		static_cast<int>(appContext.constants.world.minDimensionX),
+		static_cast<int>(appContext.constants.world.maxDimensionX),
 		static_cast<int>(appContext.constants.world.currentDimensionX)
 		);
 	galaxyWidth->SetActive(true, appContext);
@@ -133,8 +132,8 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		resolution,
-		static_cast<int>(appContext.constants.world.minDiemnsionY),
-		static_cast<int>(appContext.constants.world.maxDiemnsionY),
+		static_cast<int>(appContext.constants.world.minDimensionY),
+		static_cast<int>(appContext.constants.world.maxDimensionY),
 		static_cast<int>(appContext.constants.world.currentDimensionY)
 		);
 	galaxyHeight->SetActive(true, appContext);
@@ -243,12 +242,12 @@ void NewGameParameterScene::SetRandom() const {
 }
 
 void NewGameParameterScene::NextScene() const {
-	auto event = SwitchSceneEvent(SceneType::VALIDATE_GALAXY);
+	SwitchSceneEvent event{ SceneType::VALIDATE_GALAXY };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
 NewGameParameterScene::NewGameParameterScene(Vector2 resolution)
-	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
+	: Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
 	Initialize(resolution);
 	AppContext::GetInstance().eventManager.AddListener(this);
 }

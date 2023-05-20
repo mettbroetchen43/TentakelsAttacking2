@@ -43,7 +43,7 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 		});
 	m_verticalSlider->SetScrolling(true);
 
-	m_horisontalSlider = std::make_shared<Slider>(
+	m_horizontalSlider = std::make_shared<Slider>(
 		GetElementPosition(0.5175f, 1.0f),
 		GetElementSize(0.5f, 0.05f),
 		Alignment::BOTTOM_MID,
@@ -51,10 +51,10 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 		true,
 		m_galaxy->GetScaleFactor()
 		);
-	m_horisontalSlider->SetOnSlide([this](float position) {
+	m_horizontalSlider->SetOnSlide([this](float position) {
 		this->m_galaxy->Slide(position, true);
 		});
-	m_horisontalSlider->SetScrolling(true);
+	m_horizontalSlider->SetScrolling(true);
 
 	// btn
 	m_zoomInBtn = std::make_shared<ClassicButton>(
@@ -107,14 +107,14 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 
 void GalaxyScene::Zoom(float scaleFactor, Vector2 referenceScale) {
 
-	m_verticalSlider->SetAboluteDimension(scaleFactor);
-	m_horisontalSlider->SetAboluteDimension(scaleFactor);
+	m_verticalSlider->SetAbsoluteDimension(scaleFactor);
+	m_horizontalSlider->SetAbsoluteDimension(scaleFactor);
 
 	m_scaleLineX->SetSize(
 		Vector2(referenceScale.x / m_resolution.x, 0.0f)
 	);
 
-	Vector2 size = m_scaleLineY->GetSize();
+	Vector2 const size{ m_scaleLineY->GetSize() };
 	m_scaleLineY->SetSize(
 		Vector2(0.0f, referenceScale.y / m_resolution.y)
 	);
@@ -122,9 +122,9 @@ void GalaxyScene::Zoom(float scaleFactor, Vector2 referenceScale) {
 		GetElementPosition(0.036f, 0.93f)
 	);
 }
-void GalaxyScene::Slide(float position, bool isHorisontal) {
-	if (isHorisontal) {
-		m_horisontalSlider->SetButtonPosition(position);
+void GalaxyScene::Slide(float position, bool isHorizontal) {
+	if (isHorizontal) {
+		m_horizontalSlider->SetButtonPosition(position);
 	}
 	else {
 		m_verticalSlider->SetButtonPosition(position);
@@ -133,7 +133,7 @@ void GalaxyScene::Slide(float position, bool isHorisontal) {
 
 GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution, bool isShowGalaxy)
-	: Scene(pos, size, alignment, resolution) {
+	: Scene{ pos, size, alignment, resolution } {
 
 	Initialize(resolution, isShowGalaxy);
 }
@@ -170,7 +170,7 @@ void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const&
 	}
 
 	if (m_galaxy->GetScaleFactor() > 1.0f) {
-		m_horisontalSlider->CheckAndUpdate(mousePosition, appContext);
+		m_horizontalSlider->CheckAndUpdate(mousePosition, appContext);
 		m_verticalSlider->CheckAndUpdate(mousePosition, appContext);
 	}
 }
@@ -180,7 +180,7 @@ void GalaxyScene::Render(AppContext const& appContext) {
 	Scene::Render(appContext);
 
 	if (m_galaxy->GetScaleFactor() > 1.0f) {
-		m_horisontalSlider->Render(appContext);
+		m_horizontalSlider->Render(appContext);
 		m_verticalSlider->Render(appContext);
 	}
 
@@ -196,7 +196,7 @@ void GalaxyScene::Resize(Vector2 resolution, AppContext const& appContext) {
 	Scene::Resize(resolution, appContext);
 
 	m_verticalSlider->Resize(resolution, appContext);
-	m_horisontalSlider->Resize(resolution, appContext);
+	m_horizontalSlider->Resize(resolution, appContext);
 	m_zoomInBtn->Resize(resolution, appContext);
 	m_zoomOutBtn->Resize(resolution, appContext);
 	m_scaleLineX->Resize(resolution, appContext);

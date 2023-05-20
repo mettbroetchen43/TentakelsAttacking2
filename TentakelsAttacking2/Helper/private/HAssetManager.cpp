@@ -14,7 +14,7 @@ void AssetManager::LoadTitle() {
 	m_title.clear();
 	std::string line;
 
-	std::string const filename = "Assets/Text/title.txt";
+	std::string const filename{ "Assets/Text/title.txt" };
 	if (!std::filesystem::exists(filename)) {
 		Print("title does not exists -> " + filename, PrintType::ERROR);
 		return;
@@ -34,7 +34,7 @@ void AssetManager::LoadTitle() {
 	newFile.close();
 }
 void AssetManager::LoadFont() {
-	std::string const filename = "Assets/Fonts/default_font.ttf";
+	std::string const filename{ "Assets/Fonts/default_font.ttf" };
 
 	if (!std::filesystem::exists(filename)) {
 		Print("font does not exists -> " + filename, PrintType::ERROR);
@@ -47,14 +47,14 @@ void AssetManager::LoadFont() {
 
 void AssetManager::LoadFiles() {
 	for (int i = 0; i < m_files.size(); ++i) {
-		auto const filename = "Assets/Pictures/" + m_files.at(i);
+		auto const filename{ "Assets/Pictures/" + m_files.at(i) };
 
 		if (!std::filesystem::exists(filename)) {
 			Print("Asset does not exists -> " + filename, PrintType::ERROR);
 			continue;
 		}
 
-		Texture2D texture = LoadTexture(filename.c_str());
+		Texture2D const texture{ LoadTexture(filename.c_str()) };
 		m_assets[static_cast<AssetType>(i)] = texture;
 	}
 }
@@ -65,7 +65,7 @@ AssetManager::AssetManager() {
 	LoadFont();
 }
 AssetManager::~AssetManager() {
-	for (auto [type, asset] : m_assets) {
+	for (auto const &[type, asset] : m_assets) {
 		UnloadTexture(asset);
 	}
 	UnloadFont(m_font);

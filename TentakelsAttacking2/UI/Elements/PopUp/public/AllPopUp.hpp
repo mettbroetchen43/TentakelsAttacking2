@@ -4,9 +4,6 @@
 //
 
 #pragma once
-/**
- * just bundles all popup includes
- */
 
 // Main
 #include "PopUp.h"
@@ -22,7 +19,7 @@
 
 // TableCell PopUps
 #include "CellPopUp.h"
-#include "PrimitiveCellPopUp.hpp"
+#include "PrivativeCellPopUp.hpp"
 #include "ColorCellPopUp.h"
 
 // Sound

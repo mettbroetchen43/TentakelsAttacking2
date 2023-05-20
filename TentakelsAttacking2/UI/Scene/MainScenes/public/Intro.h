@@ -21,10 +21,10 @@ class Title;
  */
 class Intro final : public Scene {
 private:
-	std::shared_ptr<Title> m_title = nullptr; ///< contains the title
-	std::shared_ptr<ClassicButton> m_btn = nullptr; ///< contains the next button.
-	bool m_btnMovmendFinish = false; ///< contains if the button has finished moving
-	SceneType m_nextScene = SceneType::MAIN_MENU; ///< contains the next Scene Type that will be loaded
+	std::shared_ptr<Title> m_title{ nullptr }; ///< contains the title
+	std::shared_ptr<ClassicButton> m_btn{ nullptr }; ///< contains the next button.
+	bool m_btnMovementFinish{ false }; ///< contains if the button has finished moving
+	SceneType m_nextScene{ SceneType::MAIN_MENU }; ///< contains the next Scene Type that will be loaded
 	
 	/**
 	 * initializes all ui elements.
@@ -40,7 +40,7 @@ public:
 	Intro(Vector2 resolution);
 
 	/**
-	 * calls tite to animate, then enables and moves the button.
+	 * calls title to animate, then enables and moves the button.
 	 * checks for skip input.
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);

@@ -22,11 +22,11 @@ enum class SceneType;
 enum class Resolution;
 
 /**
- * use this to close the program at the end of one cyclus.
+ * use this to close the program at the end of one cycles.
  */
 class CloseWindowEvent final : public Event { };
 /**
- * use this to set the target fps in the constatns an the raylib.
+ * use this to set the target fps in the constants an the raylib.
  */
 class SetTargetFPSEvent final : public Event {
 private:
@@ -34,18 +34,18 @@ private:
 
 public:
 	SetTargetFPSEvent(size_t fps)
-		:m_fps(fps) { }
+		:m_fps{ fps } { }
 
 	[[nodiscard]] size_t GetFPS() const {
 		return m_fps;
 	}
 };
 /**
- * use this to trigger the appcontext to toggle fullscreen.
+ * use this to trigger the appContext to toggle full screen.
  */
 class ToggleFullscreenEvent final : public Event { };
 /**
- * use this for setting a new resolutionan the AppContext.
+ * use this for setting a new resolution the AppContext.
  */
 class SetNewResolutionEvent final : public Event {
 private:
@@ -53,7 +53,7 @@ private:
 
 public:
 	SetNewResolutionEvent(Resolution resolution )
-		: m_resolution(resolution ){ }
+		: m_resolution{ resolution } { }
 
 	[[nodiscard]] Resolution GetResolution ( ) const {
 		return m_resolution;
@@ -64,15 +64,17 @@ public:
  * use this to play any sound inside the sound manager.
  */
 class PlaySoundEvent final : public Event {
+private:
+	SoundType m_soundType;
+
 public:
 	PlaySoundEvent(SoundType soundType)
-		:m_soundType(soundType) {}
+		:m_soundType{ soundType } {}
 	[[nodiscard]] SoundType GetSoundType() const {
 		return m_soundType;
 	}
 
-private:
-	SoundType m_soundType;
+
 };
 /**
  * use this to set the master volume in the constants and the raylib.
@@ -83,7 +85,7 @@ private:
 
 public:
 	SetMasterVolumeEvent(float level)
-		: m_level(level) {};
+		: m_level{ level } {};
 
 	[[nodiscard]] float GetLevel() const {
 		return m_level;
@@ -98,7 +100,7 @@ private:
 
 public:
 	MuteMasterVolumeEvent(bool mute)
-		: m_mute(mute){ }
+		: m_mute{ mute } { }
 
 	[[nodiscard]] bool GetMute() const {
 		return m_mute;
@@ -112,7 +114,8 @@ class RenderHoverEvent final : public Event {
 private:
 	Hover* m_hover;
 public:
-	RenderHoverEvent(Hover* hover) : m_hover(hover) { }
+	RenderHoverEvent(Hover* hover)
+		: m_hover{ hover } { }
 
 	[[nodiscard]] Hover* GetHover() const {
 		return m_hover;
@@ -128,7 +131,7 @@ protected:
 
 public:
 	FocusEvent(Focusable* focusable)
-		: m_focusable(focusable) { }
+		: m_focusable{ focusable } { }
 
 	[[nodiscard]] Focusable* GetFocusable() const {
 		return m_focusable;
@@ -136,14 +139,14 @@ public:
 };
 /**
  * use this to control if the focus system is currently render the focus.
- * does not hesittate from FocusEvent.
+ * does not hesitate from FocusEvent.
  */
 class RenderFocusEvent final: public Event {
 private:
 	bool m_render;
 public:
 	RenderFocusEvent(bool render)
-		: m_render(render) { }
+		: m_render{ render } { }
 
 	[[nodiscard]] bool GetRender() const noexcept {
 		return m_render;
@@ -159,7 +162,7 @@ public:
 };
 /**
  * use this to add an element to the focus.
- * this is alway executed and blocks other elements until the popup is closed.
+ * this is always executed and blocks other elements until the popup is closed.
  */
 class NewFocusPopUpElementEvent final : public FocusEvent {
 public:
@@ -175,7 +178,7 @@ public:
 };
 /**
  * use this to delete an element to the focus.
- * this is alway executed and blocks other elements until the popup is closed.
+ * this is always executed and blocks other elements until the popup is closed.
  */
 class DeleteFocusPopUpElementEvent final : public FocusEvent {
 public:
@@ -191,7 +194,7 @@ public:
 };
 /**
  * use this to select an element to the focus.
- * this is alway executed and blocks other elements until the popup is closed.
+ * this is always executed and blocks other elements until the popup is closed.
  */
 class SelectFocusPopUpElementEvent final : public FocusEvent {
 public:
@@ -203,7 +206,7 @@ public:
 class SelectNextFocusElementEvent final: public Event { };
 /**
  * use this to add an layer to the focus.
- * this is alway executed and blocks other elements until the popup is closed.
+ * this is always executed and blocks other elements until the popup is closed.
  */
 class NewFocusPopUpLayerEvent final :public Event { };
 /**
@@ -213,7 +216,7 @@ class NewFocusPopUpLayerEvent final :public Event { };
 class NewFocusLayerEvent final :public Event { };
 /**
  * use this to delete an layer of the focus.
- * this is alway executed and blocks other elements until the popup is closed.
+ * this is always executed and blocks other elements until the popup is closed.
  */
 class DeleteFocusPopUpLayerEvent final : public Event { };
 /**
@@ -223,20 +226,21 @@ class DeleteFocusPopUpLayerEvent final : public Event { };
 class DeleteFocusLayerEvent final : public Event { };
 /**
  * use this to delete all layer of the focus.
- * this is alway executed.
+ * this is always executed.
  */
 class ClearFocusEvent final : public Event { };
 
 /**
  * use this to switch the scene at the end of a turn.
- * unloads the old scene and loands a new one
+ * unloads the old scene and loads a new one
  */
 class SwitchSceneEvent final :public Event {
 private:
 	SceneType m_sceneType;
 public:
 	SwitchSceneEvent(SceneType sceneType)
-		:m_sceneType(sceneType) { }
+		:m_sceneType{ sceneType } { }
+
 	[[nodiscard]] SceneType GetSceneType() const {
 		return m_sceneType;
 	}
@@ -250,13 +254,14 @@ private:
 
 public:
 	ClosePopUpEvent(PopUp* popUp)
-		:m_popUp(popUp) {}
+		:m_popUp{ popUp } { }
+
 	PopUp* GetPop() const {
 		return m_popUp;
 	}
 };
 /**
- * genereal popup evenbt to provide title and subtitle
+ * general popup event to provide title and subtitle
  */
 class PopUpEvent : public Event {
 private:
@@ -265,7 +270,7 @@ private:
 
 public:
 	PopUpEvent(std::string const& title, std::string const& subTile)
-		:m_title(title), m_subTitle(subTile) {}
+		:m_title{ title }, m_subTitle{ subTile } {}
 
 	[[nodiscard]] std::string const& GetTitle() const {
 		return m_title;
@@ -280,10 +285,11 @@ public:
  */
 class ShowMessagePopUpEvent final : public PopUpEvent {
 private:
-	std::function<void()> m_callback = []() {};
+	std::function<void()> m_callback;
 public:
-	ShowMessagePopUpEvent(std::string const& title, std::string const& subTile, std::function<void()> callback = []() {})
-		:PopUpEvent(title, subTile), m_callback(callback) { }
+	ShowMessagePopUpEvent(std::string const& title, std::string const& subTile,
+		std::function<void()> callback = []() {})
+		:PopUpEvent{ title, subTile }, m_callback{ callback } { }
 
 	[[nodiscard]] std::function<void()> GetCallback() const {
 		return m_callback;
@@ -296,14 +302,14 @@ public:
 template <typename T>
 class ShowCellPopUpEvent final : public PopUpEvent {
 private:
-	T m_currentValue;
-	std::function<void(T)> m_onClick = [](T) {};
+	T m_currentValue{ };
+	std::function<void(T)> m_onClick;
 
 public:
 	ShowCellPopUpEvent(std::string const& title,
 		T currentValue, std::function<void(T)> onClick)
-		: PopUpEvent(title, ""), m_currentValue(currentValue),
-		m_onClick(onClick) { }
+		: PopUpEvent{ title, "" }, m_currentValue{ currentValue },
+		m_onClick{ onClick } { }
 
 	[[nodiscard]] T GetCurrentValue() const {
 		return m_currentValue;
@@ -318,19 +324,19 @@ public:
  * this will "freeze" the ui until the popup is closed.
  */
 class ShowDeletePlayerPopUpEvent final : public PopUpEvent {
-	std::function<void(unsigned int)> m_onClick = [](unsigned int) {};
+	std::function<void(unsigned int)> m_onClick;
 
 public:
 	ShowDeletePlayerPopUpEvent(std::string const& title,
 		std::string const& subTitle, std::function<void(unsigned int)> onClick)
-		: PopUpEvent(title, subTitle), m_onClick(onClick) { }
+		: PopUpEvent{ title, subTitle }, m_onClick{ onClick } { }
 
 	[[nodiscard]] std::function<void(unsigned int)> GetOnClick() const {
 		return m_onClick;
 	}
 };
 /**
- * use this to validate a current Situaltion.
+ * use this to validate a current situation.
  * will call a callback function that returns a bool
  * this will "freeze" the ui until the popup is closed.
  */
@@ -340,7 +346,7 @@ private:
 
 public:
 	ShowValidatePopUp(std::string const& title, std::string const& subTile, std::function<void(bool)> callback)
-		:PopUpEvent(title, subTile), m_callback(callback) { }
+		:PopUpEvent{ title, subTile }, m_callback{ callback } { }
 
 	[[nodiscard]] std::function<void(bool)> GetCallback() const {
 		return m_callback;

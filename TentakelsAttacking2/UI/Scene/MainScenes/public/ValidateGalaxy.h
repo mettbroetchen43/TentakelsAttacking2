@@ -52,4 +52,3 @@ public:
 	 */
 	ValidateGalaxyScene(Vector2 resolution);
 };
-

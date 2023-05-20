@@ -14,7 +14,7 @@
 #include "AppContext.h"
 
 void CreditsScene::Initialize(Vector2 resolution) {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 
 	// not moving btn
 	m_speedBTN = std::make_shared<ClassicButton>(
@@ -91,8 +91,8 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		);
 	// Added to Element when moving is true
 
-	float Y = 1.1f;
-	float height = 0.5f;
+	float Y{ 1.1f };
+	float height{ 0.5f };
 
 	auto setHeight = [&Y, &height](float newHeight, float spacing) {
 		Y += height + spacing;
@@ -130,8 +130,8 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		{"raylib", "", "www.raylib.com", "https://www.raylib.com"},
 		{"random lib", "", "www.github.com/mgerhold", "https://www.github.com/mgerhold"},
 	};
-	// inperation
-	creditEntries inspreationVec = {
+	// inspiration
+	creditEntries inspirationVec = {
 		{"my Dad"},
 		{"coder2k"},
 	};
@@ -140,7 +140,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		{"TODO"},
 	};
 	// special thanks
-	creditEntries specialThancsVec = {
+	creditEntries specialThanksVec = {
 		{"coder2k"},
 		{"r00tifant"},
 		{"Clemens"},
@@ -178,7 +178,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		Alignment::TOP_MID,
 		resolution,
 		"Inspiration",
-		inspreationVec
+		inspirationVec
 		);
 	inspirationTable->SetActive(true, appContext);
 	AddMovingElement(inspirationTable);
@@ -196,16 +196,16 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	AddMovingElement(testersTable);
 
 	setHeight(0.5f, 0.3f);
-	auto spacialThanksTable = std::make_shared<CreditTableScene>(
+	auto spatialThanksTable = std::make_shared<CreditTableScene>(
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		resolution,
 		"Special Thanks",
-		specialThancsVec
+		specialThanksVec
 		);
-	spacialThanksTable->SetActive(true, appContext);
-	AddMovingElement(spacialThanksTable);
+	spatialThanksTable->SetActive(true, appContext);
+	AddMovingElement(spatialThanksTable);
 
 	setHeight(0.5f, 0.3f);
 	auto contactTable = std::make_shared<CreditTableScene>(
@@ -254,7 +254,7 @@ void CreditsScene::ToggleSpeedLevel() {
 		m_speedLevel = 1;
 	}
 
-	std::string text = m_speedBTN->GetText();
+	std::string text{ m_speedBTN->GetText() };
 	text = text.substr(0, text.size() - 4);
 	text += " " + std::to_string(m_speedLevel) + "/" + std::to_string(m_maxSpeedLevel);
 	m_speedBTN->SetText(text);
@@ -265,9 +265,9 @@ void CreditsScene::ToggleSpeedLevel() {
 
 }
 void CreditsScene::CheckCreditsFinished() {
-	float shoudY = (m_resolution.y * 0.75f) - (m_finishBTN->GetCollider().height / 2);
-	float btnY = m_finishBTN->GetCollider().y;
-	if (btnY <= shoudY) {
+	float const shouldY{ (m_resolution.y * 0.75f) - (m_finishBTN->GetCollider().height / 2) };
+	float const btnY{ m_finishBTN->GetCollider().y };
+	if (btnY <= shouldY) {
 		for (auto& e : m_movingElements) {
 			e->StopMoving();
 		}
@@ -275,7 +275,7 @@ void CreditsScene::CheckCreditsFinished() {
 }
 
 CreditsScene::CreditsScene(Vector2 resolution)
-	:Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
+	:Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
 	Initialize(resolution);
 }
 

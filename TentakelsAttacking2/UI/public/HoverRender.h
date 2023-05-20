@@ -11,7 +11,7 @@ class Hover;
 
 class HoverRender final : public EventListener {
 private:
-	std::vector<Hover*> m_elements;
+	std::vector<Hover*> m_elements; ///< contains all hover that gets renders this frame
 
 public:
 	/**
@@ -30,7 +30,7 @@ public:
 	void Render();
 
 	/**
-	 * heandles the events
+	 * handles the events
 	 */
 	void OnEvent(Event const& event) override;
 };

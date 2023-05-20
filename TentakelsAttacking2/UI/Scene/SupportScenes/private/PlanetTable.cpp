@@ -8,7 +8,7 @@
 #include "HFocusEvents.h"
 
 void PlanetTable::Initialization() {
-	auto planets = m_galaxy->GetPlanets();
+	auto const planets{ m_galaxy->GetPlanets() };
 
 	m_table = std::make_shared<Table>(
 		GetElementPosition(0.0f, 0.0f),
@@ -25,10 +25,10 @@ void PlanetTable::Initialization() {
 	m_table->SetFixedHeadline(true);
 	m_table->SetScrollable(true);
 	m_table->SetHighlightHover(true);
-	m_table->SetHeadlineValues<std::string>({ "ID", "Player", "Producton", "Ship Count" });
+	m_table->SetHeadlineValues<std::string>({ "ID", "Player", "Production", "Ship Count" });
 	m_elements.push_back(m_table);
 
-	AppContext const& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 
 	for (int i = 0; i < planets.size(); ++i) {
 		auto planet = planets.at(i);
@@ -45,8 +45,8 @@ void PlanetTable::Initialization() {
 		if (planet->IsDestroyed()) {
 			entry = "DESTROYED";
 		}
-		else if (!planet->IsDescovered()) {
-			entry = "not descovered";
+		else if (!planet->IsDiscovered()) {
+			entry = "not discovered";
 		}
 		else {
 			entry = appContext.playerCollection.GetPlayerOrNpcByID(planet->GetPlayer()->GetID()).name;
@@ -58,7 +58,7 @@ void PlanetTable::Initialization() {
 		);
 
 		if (planet->IsDestroyed()) { continue; }
-		// if (!planet->IsDescovered()) { continue; }
+		// if (!planet->IsDiscovered()) { continue; }
 
 		// production
 		m_table->SetValue<int>(
@@ -78,7 +78,7 @@ void PlanetTable::Initialization() {
 
 PlanetTable::PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	Galaxy const* galaxy)
-	: Scene(pos, size, alignment, resolution), m_galaxy(galaxy) {
+	: Scene{ pos, size, alignment, resolution }, m_galaxy{ galaxy } {
 	
 	Initialization();
 }

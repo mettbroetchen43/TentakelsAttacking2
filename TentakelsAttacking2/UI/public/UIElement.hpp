@@ -7,7 +7,7 @@
 #include "HSoundType.hpp"
 #include "HAssetType.hpp"
 #include "UIEvents.hpp"
-#include "Allignment.h"
+#include "Alignment.h"
 #include "HVector2Operator.h"
 #include "CustomRaylib.h"
 #include <cmath>
@@ -21,20 +21,20 @@ struct AppContext;
  */
 class UIElement {
 protected:
-	enum class MoveType { ///< contains the posible movment types of the element
+	enum class MoveType { ///< contains the possible movement types of the element
 		POINT_LINEAR,
 		SPEED_LINEAR,
 		POINT_ASYNPTOTIC,
 		NONE,
 	};
-	MoveType m_moveType = MoveType::NONE; ///< contains the current movment type.
-	Vector2 m_pos, m_size; ///< contains the realtive position (top left) and size on the screen
+	MoveType m_moveType{ MoveType::NONE }; ///< contains the current movement type.
+	Vector2 m_pos, m_size; ///< contains the relative position (top left) and size on the screen
 	Vector2 m_resolution; ///< contains the current resolution of the window
 	
-	Vector2 m_targetPosition = { 0.0f,0.0f }; ///< contains the target position the element is moving to
-	Vector2 m_startingPosition = { 0.0f,0.0f }; ///< contains the atsrting position the element is moving from
-	Vector2 m_relativeSpeed = { 0.0f, 0.0f }; ///< contains the speed the element is moving with
-	float m_targetDiff = 1.0f; ///< contains the difference between the target position and the current position of the last tick
+	Vector2 m_targetPosition{ 0.0f,0.0f }; ///< contains the target position the element is moving to
+	Vector2 m_startingPosition{ 0.0f,0.0f }; ///< contains the atsrting position the element is moving from
+	Vector2 m_relativeSpeed{ 0.0f, 0.0f }; ///< contains the speed the element is moving with
+	float m_targetDiff{ 1.0f }; ///< contains the difference between the target position and the current position of the last tick
 	
 	Rectangle m_collider;  ///< contains the absolute position (top left) and size on the screen
 	Alignment m_alignment; ///< contains the alignment of the element
@@ -53,7 +53,7 @@ protected:
 	/**
 	 * calculates the relative position and size out of the absolute position and size and the current resolution.
 	 */
-	virtual void UpdateColiderReverse() {
+	virtual void UpdateColliderReverse() {
 		m_pos = {
 			m_collider.x / m_resolution.x,
 			m_collider.y / m_resolution.y
@@ -70,8 +70,8 @@ protected:
 	void MovePointLinear() {
 		if (m_moveType != MoveType::POINT_LINEAR) { return; }
 
-		float time = GetFrameTime();
-		Vector2 diff = {
+		float const time{ GetFrameTime() };
+		Vector2 const diff{
 			(m_targetPosition.x - m_startingPosition.x) * m_relativeSpeed.x * time,
 			(m_targetPosition.y - m_startingPosition.y) * m_relativeSpeed.y * time
 		};
@@ -80,25 +80,25 @@ protected:
 	/**
 	 * moves the element to the set position in a asymptotic way.
 	 */
-	void MovePointAsynptotic() {
+	void MovePointAsymptotic() {
 
 		if (m_moveType != MoveType::POINT_ASYNPTOTIC) { return; }
 
-		float time = GetFrameTime();
-		Vector2 diff = {
+		float const time{ GetFrameTime() };
+		Vector2 const diff{
 			(m_targetPosition.x - m_pos.x) * m_relativeSpeed.x * time,
 			(m_targetPosition.y - m_pos.y) * m_relativeSpeed.y * time
 		};
 		Move(diff);
 	}
 	/**
-	 * moves the element at a certain speed in a linea way.
+	 * moves the element at a certain speed in a linear way.
 	 */
 	void MoveSpeedLinear() {
 		if (m_moveType != MoveType::SPEED_LINEAR) { return; }
 
-		float time = GetFrameTime();
-		Vector2 diff = {
+		float const time{ GetFrameTime() };
+		Vector2 const diff{
 			m_relativeSpeed.x * time,
 			m_relativeSpeed.y * time
 		};
@@ -118,20 +118,24 @@ protected:
 	}
 	/**
 	 * checks if the element has arrived at the target point.
-	 * if so it calps the current position and stops the movement.
+	 * if so it claps the current position and stops the movement.
 	 */
 	void CheckStopMoving() {
 		if (m_moveType == MoveType::SPEED_LINEAR 
 			or m_moveType == MoveType::NONE) { return; }
 
-		Vector2 diffVec = m_targetPosition - m_pos;
-		float diff = LenVec2(diffVec);
+		Vector2 const diffVec{ m_targetPosition - m_pos };
+		float const diff{ LenVec2(diffVec) };
 
-		bool stopMoving = diffVec.x < 0.001f && diffVec.x > -0.001f
-			&& diffVec.y < 0.001f && diffVec.y > -0.001f;
+		bool const stopMoving{
+				diffVec.x < 0.001f
+			and diffVec.x > -0.001f
+			and diffVec.y < 0.001f
+			and diffVec.y > -0.001f 
+		};
 
 		if (diff > m_targetDiff
-			|| stopMoving) {
+			or stopMoving) {
 			m_pos = m_targetPosition;
 			UpdateCollider();
 			StopMoving();
@@ -147,7 +151,7 @@ public:
 	 * calls the aligned collider.
 	 */
 	UIElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
-		: m_pos(pos), m_size(size), m_alignment(alignment), m_resolution(resolution) {
+		: m_pos{ pos }, m_size{ size }, m_alignment{ alignment }, m_resolution{ resolution } {
 		
 		m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
 	}
@@ -170,7 +174,7 @@ public:
 	}
 	/**
 	 * sets a new relative position.
-	 * calls to update and allign the collider.
+	 * calls to update and align the collider.
 	 */
 	virtual void SetPosition(Vector2 pos) {
 		m_pos = pos;
@@ -180,7 +184,7 @@ public:
 	 * sets a new relative position.
 	 * calls to update the collider.
 	 */
-	virtual void SetPositionUnalligned(Vector2 pos) {
+	virtual void SetPositionUnaligned(Vector2 pos) {
 		m_pos = pos;
 		UpdateCollider();
 	}
@@ -219,11 +223,11 @@ public:
 	}
 	/**
 	 * sets a new absolute position and size.
-	 * calles to update the relative position and size.
+	 * calls to update the relative position and size.
 	 */
-	virtual void SetCollider(Rectangle colider) {
-		m_collider = colider;
-		UpdateColiderReverse();
+	virtual void SetCollider(Rectangle collider) {
+		m_collider = collider;
+		UpdateColliderReverse();
 	}
 	/**
 	 * returns the current absolute position and size.
@@ -234,7 +238,7 @@ public:
 
 	/**
 	 * moves the element at a certain speed in a certain direction until it gets stoppt by StopMoving().
-	 * result is a linear movment in one direction.
+	 * result is a linear movement in one direction.
 	 * the angle is clockwise.
 	 */
 	virtual void MoveBySpeed(float relativeSpeed, float angle) {
@@ -242,35 +246,35 @@ public:
 		m_targetPosition = { 0.0f,0.0f };
 		m_startingPosition = { 0.0f,0.0f };
 
-		float tau = std::numbers::pi_v<float> * 2.0f;
+		float const tau{ std::numbers::pi_v<float> *2.0f };
 
-		float speedX = std::sin(angle * tau / 360.0f) * relativeSpeed;
-		float speedY = -(std::cos(angle * tau / 360.0f) * relativeSpeed);
+		float const speedX{ std::sin(angle * tau / 360.0f) * relativeSpeed };
+		float const speedY{ -(std::cos(angle * tau / 360.0f) * relativeSpeed) };
 
 		m_relativeSpeed = { speedX, speedY };
 	}
 	/**
 	 * moves the element to the provided position at the provided speed.
-	 * result ia a linear movment in one direction.
+	 * result ia a linear movement in one direction.
 	 */
 	virtual void MoveToPositionLinear(Vector2 position, float relativeSpeed) {
 		m_moveType = MoveType::POINT_LINEAR;
 		m_startingPosition = m_pos;
-		m_targetPosition = GetAllignedPosition(m_alignment, position, m_size);
+		m_targetPosition = GetAlignedPosition(m_alignment, position, m_size);
 		m_relativeSpeed = { relativeSpeed, relativeSpeed };
 	}
 	/**
 	 * moves the element to the provided position at the provided speed.
-	 * result is an asymptotic movment in one direction.
+	 * result is an asymptotic movement in one direction.
 	 */
 	virtual void MoveToPositionAsymptotic(Vector2 position, float relativeSpeed) {
 		m_moveType = MoveType::POINT_ASYNPTOTIC;
 		m_startingPosition = m_pos;
-		m_targetPosition = GetAllignedPosition(m_alignment, position, m_size);
+		m_targetPosition = GetAlignedPosition(m_alignment, position, m_size);
 		m_relativeSpeed = { relativeSpeed, relativeSpeed };
 	}
 	/**
-	 * stops all kinds off movments immideatly.
+	 * stops all kinds off movements immediately.
 	 * resets all moving related values.
 	 */
 	virtual void StopMoving() {
@@ -282,7 +286,7 @@ public:
 	}
 
 	/**
-	 * checks if there is a current movment.
+	 * checks if there is a current movement.
 	 * moves the element if so.
 	 */
 	virtual void CheckAndUpdate(Vector2 const&, AppContext const&) {
@@ -294,7 +298,7 @@ public:
 				MovePointLinear();
 				break;
 			case MoveType::POINT_ASYNPTOTIC:
-				MovePointAsynptotic();
+				MovePointAsymptotic();
 				break;
 			case MoveType::SPEED_LINEAR:
 				MoveSpeedLinear();
@@ -309,7 +313,7 @@ public:
 	virtual void Render(AppContext const& appContext) = 0;
 	/**
 	 * sets new resolution.
-	 * cals update collider.
+	 * calls update collider.
 	 */
 	virtual void Resize(Vector2 resolution, AppContext const&) {
 		m_resolution = resolution;

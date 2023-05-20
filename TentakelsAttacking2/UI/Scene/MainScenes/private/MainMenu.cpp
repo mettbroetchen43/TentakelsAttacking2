@@ -13,12 +13,12 @@
 #include <memory>
 
 void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
-	float btnPosX = 0.23f;
-	float btnPosY = 0.115f;
-	float btnSizX = 0.2f;
-	float btnSizY = 0.1f;
-	float btnOffset = 0.13f;
-	int focusID;
+	float const btnPosX{ 0.23f };
+	float       btnPosY{ 0.115f };
+	float const btnSizX{ 0.2f };
+	float const btnSizY{ 0.1f };
+	float const btnOffset{ 0.13f };
+	int         focusID{ 1 };
 
 	auto newGameBtn = std::make_shared<ClassicButton>(
 		focusID,
@@ -53,7 +53,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		});
 	m_elements.push_back(m_continueBtn);
 
-	appContext.eventManager.InvokeEvent(GetGalaxyPointerEvent());
+	appContext.eventManager.InvokeEvent(GetGalaxyPointerEvent{ });
 
 	btnPosY += btnOffset;
 	++focusID;
@@ -73,7 +73,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 		);
 		}
 	);
-	saveGameBtn->SetEnabled(false);// TODO: need to implement save system
+	saveGameBtn->SetEnabled(false);
 	m_elements.push_back(saveGameBtn);
 
 	btnPosY += btnOffset;
@@ -94,7 +94,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 			);
 		}
 	);
-	loadGameBtn->SetEnabled(false); // TODO: need to implement load system
+	loadGameBtn->SetEnabled(false);
 	m_elements.push_back(loadGameBtn);
 
 	btnPosY += btnOffset;
@@ -188,9 +188,9 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 }
 
 MainMenu::MainMenu(Vector2 resolution)
-	: Scene(Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f), Alignment::DEFAULT, resolution) {
+	: Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution } {
 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 	appContext.eventManager.AddListener(this);
 
 	Initialize(resolution, appContext);

@@ -17,7 +17,7 @@ public:
 	using SpaceObject::SpaceObject;
 
 	/**
-	 * returns if the current spaceobject is a planet.
+	 * returns if the current space object is a planet.
 	 */
 	[[nodiscard]] bool IsTargetPoint() const override;
 };

@@ -7,9 +7,9 @@
 
 Line::Line(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	float thick)
-	: UIElement(pos, size, alignment, resolution), m_thick(thick) { }
+	: UIElement{ pos, size, alignment, resolution }, m_thick{ thick } { }
 
-void Line::Render([[maybe_unused]] AppContext const& appContext) {
+void Line::Render(AppContext const&) {
 	DrawLineEx(
 		Vector2(
 			m_collider.x,

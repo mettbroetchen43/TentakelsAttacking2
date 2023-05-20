@@ -7,10 +7,14 @@
 #include <cmath>
 
 Vector2 operator+(Vector2 const& lhs, Vector2 const& rhs) {
-    return { lhs.x + rhs.x, lhs.y + rhs.y };
+    return {
+        lhs.x + rhs.x, lhs.y + rhs.y
+    };
 }
 Vector2 operator-(Vector2 const& lhs, Vector2 const& rhs) {
-    return { lhs.x - rhs.x, lhs.y - rhs.y };
+    return {
+        lhs.x - rhs.x, lhs.y - rhs.y
+    };
 }
 
 float LenVec2(Vector2 const& value) {

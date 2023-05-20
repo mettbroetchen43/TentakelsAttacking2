@@ -10,15 +10,15 @@
 
 struct AppContext;
 enum class SceneType;
-#define SCENE_LENGTH 5.0 ///< defines the scene lengst in seconds
 
 /**
  * provides the logo scene
  */
 class LogoScene final : public Scene {
 private:
-	SceneType m_nextScene = SceneType::INTRO; ///< contains the type of the next scene that gets called after this one
-	double m_time; ///< vontains the programm time at the initialuízation of this scene
+	inline static float  const m_sceneLength{ 5.0f }; ///< defines the scene length in seconds
+	SceneType m_nextScene{ SceneType::INTRO }; ///< contains the type of the next scene that gets called after this one
+	double m_time; ///< contains the program time at the initialization of this scene
 
 	/**
 	 * initializes all ui elements.

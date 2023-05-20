@@ -10,11 +10,11 @@
 
 void CheckBox::Check(AppContext const& appContext) {
 	if (m_isChecked) {
-		auto event = PlaySoundEvent(SoundType::CLICKED_RELEASE_STD);
+		PlaySoundEvent const event{ SoundType::CLICKED_RELEASE_STD };
 		appContext.eventManager.InvokeEvent(event);
 	}
 	else {
-		auto event = PlaySoundEvent(SoundType::CLICKED_PRESS_STD);
+		PlaySoundEvent const event{ SoundType::CLICKED_PRESS_STD };
 		appContext.eventManager.InvokeEvent(event);
 	}
 
@@ -26,14 +26,14 @@ void CheckBox::Check(AppContext const& appContext) {
 
 CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height,
 	Alignment alignment, Vector2 resolution, unsigned int checkBoxID)
-	: UIElement(pos, { 0.0f, height }, alignment, resolution), Focusable(focusID),
-	m_ID(checkBoxID) {
+	: UIElement{ pos, { 0.0f, height }, alignment, resolution }, Focusable{ focusID },
+	m_ID{ checkBoxID } {
 
 	m_size.x = resolution.y / resolution.x * m_size.y;
 	UpdateCollider();
 
-	AppContext& appCpntext = AppContext::GetInstance();
-	m_texture = appCpntext.assetManager.GetTexture(AssetType::CHECK);
+	AppContext& appContext{ AppContext::GetInstance() };
+	m_texture = appContext.assetManager.GetTexture(AssetType::CHECK);
 	m_textureRec = {
 		0.0f,
 		0.0f,
@@ -41,7 +41,7 @@ CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height,
 		static_cast<float>(m_texture->height)
 	};
 
-	m_greyTexture = appCpntext.assetManager.GetTexture(AssetType::GREY_50);
+	m_greyTexture = appContext.assetManager.GetTexture(AssetType::GREY_50);
 	m_greyTextureRec = {
 		0.0f,
 		0.0f,
@@ -80,7 +80,7 @@ void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
-	bool check = false;
+	bool check{ false };
 
 	if (IsFocused()) {
 		if (IsConfirmInputPressed()) {
@@ -88,7 +88,7 @@ void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
 				check = true;
 			}
 			else {
-				auto event = PlaySoundEvent(SoundType::CLICKED_DISABLED_STD);
+				PlaySoundEvent const event{ SoundType::CLICKED_DISABLED_STD };
 				appContext.eventManager.InvokeEvent(event);
 			}
 		}
@@ -102,7 +102,7 @@ void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
 				check = true;
 			}
 			else {
-				auto event = PlaySoundEvent(SoundType::CLICKED_DISABLED_STD);
+				PlaySoundEvent const event{ SoundType::CLICKED_DISABLED_STD };
 				appContext.eventManager.InvokeEvent(event);
 			}
 		}

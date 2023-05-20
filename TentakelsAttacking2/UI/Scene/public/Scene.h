@@ -10,14 +10,11 @@
 
 class UIManager;
 
-/**
- * provides the basic scene where every other is iinheritating from.
- */
 class Scene: public UIElement {
 protected:
 	std::vector<std::shared_ptr<UIElement>> m_elements; ///< contains all ui elements of this scene with update
 	std::vector<std::shared_ptr<UIElement>> m_elementsOutUpdates; ///< contains all ui elements of this scene without update
-	bool m_active = false; ///< contains if the scene is currently active
+	bool m_active{ false }; ///< contains if the scene is currently active
 
 	/**
 	 * sets all elements in elements and elements out update active or inactive.
@@ -36,7 +33,7 @@ protected:
 	Vector2 GetElementSize(float x, float y);
 	/**
 	 * returns the focusable instance from the id.
-	 * returns a nullpur if no instance with that id exists
+	 * returns a nullptr if no instance with that id exists
 	 */
 	Focusable* GetFocusableByFocusID(unsigned int ID) const;
 
@@ -83,7 +80,7 @@ public:
  	 */
 	virtual void Render(AppContext const& appContext) override;
 	/**
-	 * sesizes all elements in elements and elements out update.
+	 * resizes all elements in elements and elements out update.
 	 */
 	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
 
@@ -97,13 +94,13 @@ public:
 	/**
 	 * moves the scene and all elements to the provided position.
 	 * result is a linear movement.
-	 * stops movment when the position is reached.
+	 * stops movement when the position is reached.
 	 */
 	void MoveToPositionLinear(Vector2 position, float relativeSpeed) override;
 	/**
 	 * moves the scene and all elements to the provided position.
 	 * result is a asymptotic movement.
-	 * stops movment when the position is reached.
+	 * stops movement when the position is reached.
 	 */
 	void MoveToPositionAsymptotic(Vector2 position, float relativeSpeed) override;
 	/**

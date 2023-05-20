@@ -8,10 +8,10 @@
 #include "HInput.h"
 
 ClassicButton::ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size,
-	Alignment allignment, Vector2 resolution, std::string const& text,
+	Alignment alignment, Vector2 resolution, std::string const& text,
 	SoundType releaseSound)
-	: Focusable(focusID), Button(pos, size, allignment, resolution, text,
-		releaseSound) { }
+	: Focusable{ focusID },
+	Button{ pos, size, alignment, resolution, text, releaseSound } { }
 
 [[nodiscard]] bool ClassicButton::IsEnabled() const{
 	return m_state != State::DISABLED;
@@ -23,14 +23,15 @@ void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition,
 	if (IsFocused()) {
 		if (m_state == State::DISABLED) {
 			if (IsConfirmInputPressed()) {
-				auto event = PlaySoundEvent(SoundType::CLICKED_DISABLED_STD);
+				PlaySoundEvent const event{ SoundType::CLICKED_DISABLED_STD };
 				appContext.eventManager.InvokeEvent(event);
 				return;
 			}
 
-			bool disabledAction =
-				IsConfirmInputDown()
-				or IsConfirmInputReleased();
+			bool const disabledAction{
+				   IsConfirmInputDown()
+				or IsConfirmInputReleased() 
+			};
 			if (disabledAction) {
 				return;
 			}
@@ -40,7 +41,7 @@ void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition,
 			if (m_state != State::PRESSED) {
 				m_state = State::PRESSED;
 				m_isPressed = true;
-				auto event = PlaySoundEvent(SoundType::CLICKED_PRESS_STD);
+				PlaySoundEvent const event{ SoundType::CLICKED_PRESS_STD };
 				appContext.eventManager.InvokeEvent(event);
 				return;
 			}
@@ -53,12 +54,12 @@ void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition,
 		}
 
 		if (IsConfirmInputReleased()) {
-			bool hover = CheckCollisionPointRec(mousePosition, m_collider);
+			bool const hover{ CheckCollisionPointRec(mousePosition, m_collider) };
 			if (!hover or !IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
 				m_state = hover ? State::HOVER : State::ENABLED;
 				m_isPressed = false;
 
-				auto event = PlaySoundEvent(m_sound);
+				PlaySoundEvent const event{ m_sound };
 				appContext.eventManager.InvokeEvent(event);
 				m_onClick();
 				return;

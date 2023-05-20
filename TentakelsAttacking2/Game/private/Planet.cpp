@@ -10,24 +10,24 @@
 
 Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
 	bool isHomePlanet, int planetNumber)
-	: SpaceObject(ID, position, player), m_isHomePlanet(isHomePlanet),
-	m_planetNumber(planetNumber) {
+	: SpaceObject{ ID, position, player }, m_isHomePlanet{ isHomePlanet },
+	m_planetNumber{ planetNumber } {
 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const & appContext{ AppContext::GetInstance() };
 	m_maxShips = appContext.constants.planet.maxShips;
 
 	if (m_isHomePlanet) {
 		m_production = appContext.constants.planet.homeworldProduction;
-		m_ships = m_production * appContext.constants.planet.statringHumanShipsMultiplicator;
+		m_ships = m_production * appContext.constants.planet.startingHumanShipsMultiplicator;
 	}
 	else {
-		Random& random = Random::GetInstance();
-		size_t r = static_cast<size_t>(random.random(
+		Random& random{ Random::GetInstance() };
+		size_t const r{ static_cast<size_t>(random.random(
 			appContext.constants.planet.maxProduction -
 			appContext.constants.planet.minProduction
-		));
+		)) };
 		m_production = r + appContext.constants.planet.minProduction;
-		m_ships = m_production * appContext.constants.planet.statringGlobalShipsMultiplicator;
+		m_ships = m_production * appContext.constants.planet.startingGlobalShipsMultiplicator;
 	}
 }
 
@@ -36,7 +36,6 @@ bool Planet::IsHomePlanet() const {
 }
 
 bool Planet::IsPlanet() const {
-
 	return true;
 }
 
@@ -51,10 +50,10 @@ bool Planet::IsDestroyed() const {
 	return m_isDestroyed;
 }
 
-void Planet::SetDescovered(bool isDescovered) {
-	m_isDescovered = isDescovered;
+void Planet::SetDiscovered(bool isDiscovered) {
+	m_isDiscovered = isDiscovered;
 }
 
-bool Planet::IsDescovered() const {
-	return m_isDescovered;
+bool Planet::IsDiscovered() const {
+	return m_isDiscovered;
 }

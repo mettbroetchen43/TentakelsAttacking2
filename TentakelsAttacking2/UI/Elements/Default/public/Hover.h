@@ -11,9 +11,9 @@ class Hover final : public UIElement {
 private:
 	std::string m_text; ///< contains the Hover text
 	Color m_color; ///< contains the render text color
-	Rectangle m_hoverTextureRec; ///< contains the size of the texute
+	Rectangle m_hoverTextureRec; ///< contains the size of the texture
 	Texture* m_hoverTexture; ///< contains the hover background
-	Vector2 m_hoverOffset; ///< contans the offset between mouse and recangle in decimal
+	Vector2 m_hoverOffset; ///< contains the offset between mouse and rectangle in decimal
 	Vector2 m_absoluteHoverOffset; ///< contains the offset between mouse and rectangle in px
 
 	float m_textHeight; ///< contains text size in px
@@ -32,7 +32,7 @@ public:
 
 	/**
 	 * sets the position to the mouse position.
-	 * reders the hover.
+	 * renders the hover.
 	 */
 	void SetRenderHover(Vector2 mousePosition, AppContext const& appContext);
 
@@ -43,7 +43,7 @@ public:
 	void Render(AppContext const& appContext) override;
 
 	/**
-	 * rezises the argument
+	 * resizes the argument
 	 */
 	void Resize(Vector2 resolution, AppContext const& appContext) override;
 

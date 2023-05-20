@@ -18,7 +18,7 @@
 class AssetManager final {
 private:
 	using FileArray = std::array<std::string, 11>; ///< the datatype for the files
-	FileArray m_files = { ///< contains all asset file strings
+	FileArray m_files{ ///< contains all asset file strings
 		"btn_f_default.png",
 		"grey.png",
 		"grey_50.png",
@@ -60,11 +60,11 @@ public:
 	~AssetManager();
 
 	/**
-	 * returns a texture* acordung to the AssetType.
+	 * returns a texture* according to the AssetType.
 	 */
 	[[nodiscard]] Texture* GetTexture(AssetType assetType);
 	/**
-	 * returns a texture* acordung to the AssetType const.
+	 * returns a texture* according to the AssetType const.
 	 */
 	[[nodiscard]] Texture const* GetTexture(AssetType assetType) const;
 	/**

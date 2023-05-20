@@ -185,7 +185,7 @@
     <ClInclude Include="Helper\public\HVector2Operator.h" />
     <ClInclude Include="Helper\public\LayeredVector.hpp" />
     <ClInclude Include="Helper\public\HRandom.h" />
-    <ClInclude Include="Constants\public\CTextProcecing.hpp" />
+    <ClInclude Include="Constants\public\CTextProcessing.hpp" />
     <ClInclude Include="Helper\public\HTextProcessing.h" />
     <ClInclude Include="Helper\public\HPlayerData.hpp" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
@@ -207,12 +207,12 @@
     <ClInclude Include="UI\Elements\PopUp\public\DeletePlayerPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\SoundLevelPopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\ValidatePopUp.h" />
-    <ClInclude Include="UI\Elements\PopUp\public\PrimitiveCellPopUp.hpp" />
+    <ClInclude Include="UI\Elements\PopUp\public\PrivativeCellPopUp.hpp" />
     <ClInclude Include="UI\Elements\PopUp\public\MessagePopUp.h" />
     <ClInclude Include="UI\Elements\PopUp\public\PopUp.h" />
     <ClInclude Include="UI\Elements\Default\public\InputLine.hpp" />
     <ClInclude Include="UI\Elements\Table\public\TableCell.hpp" />
-    <ClInclude Include="UI\public\Allignment.h" />
+    <ClInclude Include="UI\public\Alignment.h" />
     <ClInclude Include="UI\Elements\ColorPicker\public\ColorPicker.h" />
     <ClInclude Include="UI\Elements\ColorPicker\public\ColorPickerCell.h" />
     <ClInclude Include="Helper\public\HGeneral.h" />
@@ -293,7 +293,7 @@
     <ClCompile Include="UI\Elements\PopUp\private\ValidatePopUp.cpp" />
     <ClCompile Include="UI\Elements\Table\private\AbstactTableCell.cpp" />
     <ClCompile Include="UI\Elements\Table\public\AbstractTableCell.h" />
-    <ClCompile Include="UI\private\Allignment.cpp" />
+    <ClCompile Include="UI\private\Alignment.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPicker.cpp" />
     <ClCompile Include="UI\Elements\ColorPicker\private\ColorPickerCell.cpp" />
     <ClCompile Include="UI\private\HoverRender.cpp" />

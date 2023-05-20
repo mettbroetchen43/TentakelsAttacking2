@@ -12,11 +12,11 @@
 #include "HFocusEvents.h"
 
 void UIGalaxy::Initialize(Galaxy const* const galaxy) {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext const& appContext{ AppContext::GetInstance() };
 
 	m_currentGalaxy = galaxy;
 
-	for (auto& p  : galaxy->GetPlanets()) {
+	for (auto const& p  : galaxy->GetPlanets()) {
 		auto planet = std::make_shared<UIPlanet>(
 			p->GetID(),
 			p->GetID(),
@@ -44,11 +44,11 @@ void UIGalaxy::Initialize(Galaxy const* const galaxy) {
 	m_onZoom(1.0f, GetCurrentScaleReference());
 }
 Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext const& appContext) const {
-	Vector2 newPos = {
+	Vector2 const newPos{
 		(m_collider.x + m_resolution.x * 0.05f) / m_resolution.x,
 		(m_collider.y + m_resolution.y * 0.05f) / m_resolution.y,
 	};
-	Vector2 newSize = {
+	Vector2 const newSize{
 		(m_collider.width - m_resolution.x * 0.1f) / m_resolution.x,
 		(m_collider.height - m_resolution.y * 0.1f) / m_resolution.y,
 	};
@@ -67,11 +67,11 @@ Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext const& appContext)
 
 }
 Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext const& appContext) const {
-	Vector2 newPos = {
+	Vector2 const newPos{
 		m_resolution.x * 0.045f / m_collider.width,
 		m_resolution.y * 0.045f / m_collider.height,
 	};
-	Vector2 newSize = {
+	Vector2 const newSize{
 		(m_collider.width - m_resolution.x * 0.1f) / m_collider.width,
 		(m_collider.height - m_resolution.y * 0.1f) / m_collider.height,
 	};
@@ -91,17 +91,17 @@ Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext const& appContext)
 }
 
 bool UIGalaxy::IsPlanetInCollider(std::shared_ptr<UIPlanet> planet) const {
-	Rectangle planetColider = planet->GetCollider();
+	Rectangle const planetCollider{ planet->GetCollider() };
 
-	if (planetColider.x < m_collider.x) { return false; }
-	if (planetColider.y < m_collider.y) { return false; }
-	if (planetColider.x + planetColider.width > m_collider.x + m_collider.width) { return false; }
-	if (planetColider.y + planetColider.height > m_collider.y + m_collider.height) { return false; }
+	if (planetCollider.x < m_collider.x) { return false; }
+	if (planetCollider.y < m_collider.y) { return false; }
+	if (planetCollider.x + planetCollider.width > m_collider.x + m_collider.width) { return false; }
+	if (planetCollider.y + planetCollider.height > m_collider.y + m_collider.height) { return false; }
 
 	return true;
 }
 void UIGalaxy::UpdatePlanetPosition() {
-	for (auto& p : m_uiPlanets) {
+	for (auto const& p : m_uiPlanets) {
 		p->UpdatePosition(m_absoluteSize);
 	}
 }
@@ -127,44 +127,44 @@ void UIGalaxy::ClampsPositionAndSize() {
 		: m_collider.y + m_collider.height - m_absoluteSize.height;
 }
 void UIGalaxy::PrepForOnSlide() {
-	float differenz = m_absoluteSize.width - m_collider.width;
-	float offset = m_collider.x - m_absoluteSize.x;
-	float percent = offset / differenz * 100;
+	float deferens{ m_absoluteSize.width - m_collider.width };
+	float offset{ m_collider.x - m_absoluteSize.x };
+	float percent{ offset / deferens * 100 };
 	m_onSlide(percent, true);
 
-	differenz = m_absoluteSize.height - m_collider.height;
+	deferens = m_absoluteSize.height - m_collider.height;
 	offset = m_collider.y - m_absoluteSize.y;
-	percent = offset / differenz * 100;
+	percent = offset / deferens * 100;
 	m_onSlide(percent, false);
 }
 void UIGalaxy::MoveByKey(Direction direction, float speed) {
-	float differenz;
+	float deferens;
 	float offset;
 	float percent;
 
 	switch (direction) {
 		case Direction::UP:
-			differenz = m_absoluteSize.height - m_collider.height;
+			deferens = m_absoluteSize.height - m_collider.height;
 			offset = m_collider.y - m_absoluteSize.y;
-			percent = offset / differenz * 100 + speed;
+			percent = offset / deferens * 100 + speed;
 			Slide(percent, false);
 			break;
 		case Direction::DOWN:
-			differenz = m_absoluteSize.height - m_collider.height;
+			deferens = m_absoluteSize.height - m_collider.height;
 			offset = m_collider.y - m_absoluteSize.y;
-			percent = offset / differenz * 100 - speed;
+			percent = offset / deferens * 100 - speed;
 			Slide(percent, false);
 			break;
 		case Direction::LEFT:
-			differenz = m_absoluteSize.width - m_collider.width;
+			deferens = m_absoluteSize.width - m_collider.width;
 			offset = m_collider.x - m_absoluteSize.x;
-			percent = offset / differenz * 100 + speed;
+			percent = offset / deferens * 100 + speed;
 			Slide(percent, true);
 			break;
 		case Direction::RIGHT:
-			differenz = m_absoluteSize.width - m_collider.width;
+			deferens = m_absoluteSize.width - m_collider.width;
 			offset = m_collider.x - m_absoluteSize.x;
-			percent = offset / differenz * 100 - speed;
+			percent = offset / deferens * 100 - speed;
 			Slide(percent, true);
 			break;
 	}
@@ -197,20 +197,20 @@ Vector2 UIGalaxy::GetCurrentScaleReference() const {
 
 UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,
 	Vector2 resolution, bool isShowGalaxy)
-	:Focusable(ID), UIElement(pos, size, alignment, resolution),
+	:Focusable{ ID }, UIElement{ pos, size, alignment, resolution },
 	m_isShowGalaxy(isShowGalaxy) {
 	m_absoluteSize = m_collider;
 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 
 	appContext.eventManager.AddListener(this);
 
 	if (isShowGalaxy) {
-		auto event = GetShowGalaxyPointerEvent();
+		GetShowGalaxyPointerEvent event;
 		appContext.eventManager.InvokeEvent(event);
 	}
 	else {
-		auto event = GetGalaxyPointerEvent();
+		GetGalaxyPointerEvent event;
 		appContext.eventManager.InvokeEvent(event);
 	}
 
@@ -239,27 +239,27 @@ void UIGalaxy::Zoom(bool zoomIn, int factor) {
 	if (m_scaleFactor < 1.0f) { m_scaleFactor = 1.0f; }
 	if (m_scaleFactor > 7.5f) { m_scaleFactor = 7.5f; }
 
-	Rectangle newSize = {
+	Rectangle newSize{
 		m_absoluteSize.x,
 		m_absoluteSize.y,
 		m_collider.width * m_scaleFactor,
 		m_collider.height * m_scaleFactor,
 	};
 
-	Vector2 differenz = {
+	Vector2 const deferens{
 		newSize.width - m_absoluteSize.width,
 		newSize.height - m_absoluteSize.height,
 	};
 
-	Vector2 mouseFacor = { 0.5f,0.5f };
-	Vector2 mousePosition = GetMousePosition();
+	Vector2 mouseFactor{ 0.5f,0.5f };
+	Vector2 const mousePosition{ GetMousePosition() };
 	if (CheckCollisionPointRec(mousePosition, m_collider)) {
-		mouseFacor.x = (mousePosition.x - m_collider.x) / m_collider.width;
-		mouseFacor.y = (mousePosition.y - m_collider.y) / m_collider.height;
+		mouseFactor.x = (mousePosition.x - m_collider.x) / m_collider.width;
+		mouseFactor.y = (mousePosition.y - m_collider.y) / m_collider.height;
 	}
 
-	newSize.x -= differenz.x * mouseFacor.x;
-	newSize.y -= differenz.y * mouseFacor.y;
+	newSize.x -= deferens.x * mouseFactor.x;
+	newSize.y -= deferens.y * mouseFactor.y;
 
 	m_absoluteSize = newSize;
 
@@ -271,13 +271,13 @@ void UIGalaxy::Zoom(bool zoomIn, int factor) {
 }
 void UIGalaxy::Slide(float position, bool isHorizontal) {
 	if (isHorizontal) {
-		float differenz = m_absoluteSize.width - m_collider.width;
-		float offset = differenz / 100 * position;
+		float const deferens{ m_absoluteSize.width - m_collider.width };
+		float const offset{ deferens / 100 * position };
 		m_absoluteSize.x = m_collider.x - offset;
 	}
 	else {
-		float differenz = m_absoluteSize.height - m_collider.height;
-		float offset = differenz / 100 * position;
+		float const deferens{ m_absoluteSize.height - m_collider.height };
+		float const offset{ deferens / 100 * position };
 		m_absoluteSize.y = m_collider.y - offset;
 	}
 	ClampsPositionAndSize();
@@ -301,7 +301,7 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 
 	if (m_isScaling) {
 		if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
-			float mouseWheel = GetMouseWheelMove();
+			float const mouseWheel{ GetMouseWheelMove() };
 			if (mouseWheel != 0.0f) {
 				Zoom(mouseWheel > 0.0f, 5);
 			}
@@ -327,7 +327,7 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 	}
 
 	if (m_isEnabled) {
-		for (auto& p : m_uiPlanets) {
+		for (auto const& p : m_uiPlanets) {
 
 			if (IsPlanetInCollider(p) != p->IsEnabled()) {
 				p->SetEnabled(IsPlanetInCollider(p));
@@ -345,7 +345,7 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 			if (IsConfirmInputPressed()) {
 				m_isNestedFocus = true;
 				AddFocusLayer();
-				for (auto& p : m_uiPlanets) {
+				for (auto const& p : m_uiPlanets) {
 					AddFocusElement(p.get());
 				}
 			}
@@ -353,7 +353,7 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 
 		if (IsNestedFocus()) {
 			if (IsBackInputPressed()
-				|| !CheckCollisionPointRec(mousePosition, m_collider)) {
+				or !CheckCollisionPointRec(mousePosition, m_collider)) {
 				DeleteFocusLayer();
 				m_isNestedFocus = false;
 			}
@@ -361,18 +361,7 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 	}
 }
 void UIGalaxy::Render(AppContext const& appContext) {
-	/*DrawRectangleLinesEx(
-		m_collider,
-		2.0f,
-		WHITE
-	);
-	DrawRectangleLinesEx(
-		m_absoluteSize,
-		3.0f,
-		PURPLE
-	);*/
-
-	for (auto& p : m_uiPlanets) {
+	for (auto const& p : m_uiPlanets) {
 		if (IsPlanetInCollider(p)) {
 			p->Render(appContext);
 		}
@@ -389,7 +378,7 @@ void UIGalaxy::Resize(Vector2 resolution, AppContext const& appContext) {
 
 	UIElement::Resize(resolution, appContext);
 
-	for (auto& p : m_uiPlanets) {
+	for (auto const& p : m_uiPlanets) {
 		p->Resize(resolution, appContext);
 		p->UpdatePosition(m_absoluteSize);
 	}

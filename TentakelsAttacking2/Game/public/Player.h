@@ -36,4 +36,3 @@ public:
 	 */
 	friend bool operator== (Player const& lhs, Player const& rhs);
 };
-

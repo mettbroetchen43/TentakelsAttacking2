@@ -16,7 +16,7 @@ class TableCell final : public AbstractTableCell {
 private:
 	T m_value; ///< contains the value
 	std::string m_stringValue; ///< contains the value as string
-	std::function<void(TableCell*, T, T)> m_updated = [](TableCell*, T, T) {}; ///< conains a lambda that provides that the value has chanced
+	std::function<void(TableCell*, T, T)> m_updated{ [](TableCell*, T, T) {} }; ///< conains a lambda that provides that the value has chanced
 	
 	/**
 	 * Sets the value as string.
@@ -29,7 +29,7 @@ private:
 	 * updates the cell value.
 	 */
 	void UpdateValue(T newValue) {
-		T oldValue = m_value;
+		T const oldValue{ m_value };
 		m_value = newValue;
 		SetStringValue();
 		m_updated(this, oldValue, m_value);
@@ -40,7 +40,7 @@ public:
 	 * ctor
 	 */
 	TableCell(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID, T value, std::function<void(TableCell*, T, T)> updated)
-		: AbstractTableCell(pos, size, alignment, resolution, focusID), m_value(value), m_updated(updated) {
+		: AbstractTableCell{ pos, size, alignment, resolution, focusID }, m_value{ value }, m_updated{ updated } {
 		SetStringValue();
 		CalculateTextSize();
 	}
@@ -53,11 +53,11 @@ public:
 
 		if (not IsEditable()) { return; }
 
-		auto event = ShowCellPopUpEvent<T>(
+		ShowCellPopUpEvent<T> event{
 			"Edit Entry",
 			m_value,
 			[this](T value) {this->UpdateValue(value); }
-		);
+		};
 		appContext.eventManager.InvokeEvent(event);
 	}
 	/**
@@ -67,7 +67,7 @@ public:
 	void CheckAndUpdate(Vector2 const&, AppContext const& appContext) override {
 		if (not IsEditable()) { return; }
 
-		bool shouldEdit = false;
+		bool shouldEdit{ false };
 
 		if (IsFocused()) {
 			if (IsConfirmInputPressed()) {
@@ -76,11 +76,11 @@ public:
 		}
 
 		if (shouldEdit) {
-			auto event = ShowCellPopUpEvent<T>(
+			ShowCellPopUpEvent<T> event{
 				"Edit Entry",
 				m_value,
 				[this](T value) {this->UpdateValue(value); }
-			);
+			};
 			appContext.eventManager.InvokeEvent(event);
 		}
 
@@ -107,7 +107,7 @@ public:
 	 */
 	void CalculateTextSize() override {
 		m_textSize = m_collider.height / 1.5f;
-		float margin = (m_collider.height - m_textSize) / 2;
+		float const margin{ (m_collider.height - m_textSize) / 2 };
 		m_textPosition = { m_collider.x + m_collider.width * 0.05f ,m_collider.y + margin };
 	}
 	/**
@@ -140,13 +140,13 @@ inline void TableCell<Color>::SetStringValue() {
 }
 
 /**
- * overload because color is rendered dirfferent.
+ * overload because color is rendered different.
  */
 template<>
 inline void TableCell<Color>::Render(AppContext const& appContext) {
 	AbstractTableCell::Render(appContext);
 
-	int offset = static_cast<int>(m_collider.height / 10);
+	int const offset{ static_cast<int>(m_collider.height / 10) };
 	DrawRectangle(
 		static_cast<int>(m_collider.x + offset),
 		static_cast<int>(m_collider.y + offset),

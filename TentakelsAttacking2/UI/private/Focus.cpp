@@ -10,10 +10,9 @@
 #include "HPrint.h"
 #include <stdexcept>
 #include <functional>
-#include <iostream>
 
 bool Focus::HasAnyEnabledElements() const {
-	for (auto e : m_focus) {
+	for (auto const& e : m_focus) {
 		if (e->IsEnabled()) {
 			return true;
 		}
@@ -22,15 +21,15 @@ bool Focus::HasAnyEnabledElements() const {
 }
 
 void Focus::UnfocusAllAtTopLayer() {
-	for (auto focus : m_focus) {
+	for (auto& focus : m_focus) {
 		focus->SetFocus(false);
 	}
 
 	m_currentFocus = nullptr;
 }
 Focusable* Focus::GetFirstFocus() {
-	Focusable* firstFocus = nullptr;
-	bool hasAnyEnabledElements = HasAnyEnabledElements();
+	Focusable* firstFocus{ nullptr };
+	bool const hasAnyEnabledElements{ HasAnyEnabledElements() };
 
 	for (auto focus : m_focus) {
 		if (hasAnyEnabledElements
@@ -49,8 +48,8 @@ Focusable* Focus::GetFirstFocus() {
 	return firstFocus;
 }
 Focusable* Focus::GetLastFocus() {
-	Focusable* lastFocus = nullptr;
-	bool hasAnyEnabledElements = HasAnyEnabledElements();
+	Focusable* lastFocus{ nullptr };
+	bool const hasAnyEnabledElements{ HasAnyEnabledElements() };
 
 	for (auto focus : m_focus) {
 		if (hasAnyEnabledElements
@@ -69,9 +68,9 @@ Focusable* Focus::GetLastFocus() {
 	return lastFocus;
 }
 Focusable* Focus::GetNextFocus() {
-	unsigned int currentID = m_currentFocus ? m_currentFocus->GetFocusID() : 0;
-	Focusable* nextFocus = nullptr;
-	bool hasAnyEnabledElements = HasAnyEnabledElements();
+	unsigned int const currentID{ m_currentFocus ? m_currentFocus->GetFocusID() : 0 };
+	Focusable* nextFocus{ nullptr };
+	bool const hasAnyEnabledElements{ HasAnyEnabledElements() };
 
 	for (auto focus : m_focus) {
 		if (!focus) {
@@ -95,10 +94,10 @@ Focusable* Focus::GetNextFocus() {
 	return nextFocus;
 }
 Focusable* Focus::GetPreviousFocus() {
-	unsigned int currentID = m_currentFocus ? m_currentFocus->GetFocusID() 
-		: static_cast<unsigned int>(m_focus.size());
-	Focusable* previousFocus = nullptr;
-	bool hasAnyEnabledElements = HasAnyEnabledElements();
+	unsigned int const currentID{ m_currentFocus ? m_currentFocus->GetFocusID()
+		: static_cast<unsigned int>(m_focus.size()) };
+	Focusable* previousFocus{ nullptr };
+	bool const hasAnyEnabledElements{ HasAnyEnabledElements() };
 
 	for (auto focus : m_focus) {
 		if (hasAnyEnabledElements
@@ -127,7 +126,7 @@ void Focus::SetInitialFocus() {
 void Focus::SetNextFocus() {
 	m_currentFocus->SetFocus(false);
 
-	Focusable* nextFocus = GetNextFocus();
+	Focusable* nextFocus{ GetNextFocus() };
 	if (!nextFocus) {
 		nextFocus = GetFirstFocus();
 	}
@@ -138,7 +137,7 @@ void Focus::SetNextFocus() {
 void Focus::SetPreviousFocus() {
 	m_currentFocus->SetFocus(false);
 
-	Focusable* previousFocus = GetPreviousFocus();
+	Focusable* previousFocus{ GetPreviousFocus() };
 	if (!previousFocus) {
 		previousFocus = GetLastFocus();
 	}
@@ -257,10 +256,6 @@ void Focus::AddPopUpElement(Focusable* focusable) {
 	AddElement(focusable);
 }
 void Focus::DeleteElement(Focusable* focusable, bool setNextFocus) {
-	/*if (focusable) {
-		focusable->SetFocus(false);
-	}*/
-
 	m_focus.RemoveElement(focusable);
 
 	if (!setNextFocus) {
@@ -360,7 +355,7 @@ void Focus::CheckNewID(unsigned int newID) {
 
 Focus::Focus() {
 	AddLayer();
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext& appContext{ AppContext::GetInstance() };
 	appContext.eventManager.AddListener(this);
 
 	Print("Focus", PrintType::INITIALIZE);
@@ -456,8 +451,8 @@ void Focus::Render() {
 	if (!m_currentFocus) { return; }
 	if (!m_renderFocus) { return; }
 
-	Rectangle const& f_colider = m_currentFocus->GetCollider();
-	 float offset = 5.0;
+	Rectangle const& f_colider{ m_currentFocus->GetCollider() };
+	float const offset{ 5.0 };
 	DrawRectangleLinesEx(
 		Rectangle(
 			static_cast<int>(f_colider.x) - offset,

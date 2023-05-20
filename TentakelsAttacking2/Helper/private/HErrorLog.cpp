@@ -13,10 +13,10 @@
  * sets the name if the current error log file based on the chrono timestamp.
  */
 void SetErrorLogFileName() {
-	auto& files = AppContext::GetInstance().constants.files;
+	auto& files{ AppContext::GetInstance().constants.files };
 
-	auto const now = std::chrono::system_clock::now();
-	std::stringstream filename;
+	auto const now{ std::chrono::system_clock::now() };
+	std::stringstream filename{ };
 	filename << "tentakels_attacking_debug_" << now.time_since_epoch().count() << ".txt";
 
 	files.SetDebugLogFile(filename.str());
@@ -28,7 +28,7 @@ void SetErrorLogFileName() {
  * creates the dirs and file if needed.
  */
 void GenerateFileStream() {
-	auto& files = AppContext::GetInstance().constants.files;
+	auto& files{ AppContext::GetInstance().constants.files };
 
 	SetErrorLogFileName();
 
@@ -43,11 +43,11 @@ void GenerateFileStream() {
 	}
 
 	files.debugLogStream.open(files.debugLogFile());
-	Print("opend debug log", PrintType::INFO);
+	Print("opened debug log", PrintType::INFO);
 }
 
 void LogError(std::string const& error) {
-	auto& files = AppContext::GetInstance().constants.files;
+	auto& files{ AppContext::GetInstance().constants.files };
 
 	if (!files.debugLogStream.is_open()) {
 		GenerateFileStream();
@@ -58,7 +58,7 @@ void LogError(std::string const& error) {
 }
 
 void CloseErrorStream() {
-	auto& files = AppContext::GetInstance().constants.files;
+	auto& files{ AppContext::GetInstance().constants.files };
 
 	if (!files.debugLogStream.is_open()) {
 		return;

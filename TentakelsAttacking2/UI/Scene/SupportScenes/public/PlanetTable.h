@@ -11,7 +11,7 @@
 class PlanetTable final : public Scene {
 private:
 	Galaxy const* m_galaxy; ///< contains the current galaxy  of the logic
-	std::shared_ptr<Table> m_table; ///< contains the table within the planet infos
+	std::shared_ptr<Table> m_table; ///< contains the table within the planet info's
 
 	/**
 	 * initializes the table from the current galaxy.
