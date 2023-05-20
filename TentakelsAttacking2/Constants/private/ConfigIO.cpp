@@ -19,7 +19,7 @@ static constexpr char token{ '/' };
 template<typename T>
 std::optional<T> ParseNumber(std::string& input) {
 	StripString(input);
-	T value{ };
+	T value;
 	auto const result{ std::from_chars(input.data(), input.data() + input.length(), value) };
 	if (result.ec != std::errc() or result.ptr != input.data() + input.length()) {
 		Print("not able to load config -> \"" + input + "\"", PrintType::ERROR);
@@ -30,7 +30,7 @@ std::optional<T> ParseNumber(std::string& input) {
 
 void LoadConfig() {
 	auto& constants = AppContext::GetInstance().constants;
-	std::ifstream file{ };
+	std::ifstream file;
 
 	if (!std::filesystem::exists(constants.files.configFile())) {
 		Print("config does not exists", PrintType::EXPECTED_ERROR);
@@ -96,8 +96,8 @@ void LoadConfig() {
 			}
 		}
 	};
-	std::string input{ };
-	size_t temporary{ };
+	std::string input;
+	size_t temporary;
 	std::vector<size_t*> size_tEntries = {
 		// Global
 		&constants.global.minRounds,
@@ -178,7 +178,7 @@ void LoadConfig() {
 	Print("config loaded", PrintType::INFO);
 }
 void SaveConfig() {
-	auto& constants{ AppContext::GetInstance().constants };
+	auto const& constants{ AppContext::GetInstance().constants };
 	std::ofstream file{ };
 
 	if (!std::filesystem::exists(constants.files.savesDir)) {
@@ -231,8 +231,8 @@ void SaveConfig() {
 	entry(std::to_string(constants.world.minDimensionY), "Min Dimension Y", toSave);
 	entry(std::to_string(constants.world.maxDimensionY), "Max Dimension Y", toSave);
 
-	entry(std::to_string(constants.world.showDimensionX), "Show Galaxy Dinmension X", toSave);
-	entry(std::to_string(constants.world.showDimensionY), "Show Galaxy Sinamension Y", toSave);
+	entry(std::to_string(constants.world.showDimensionX), "Show Galaxy Dimension X", toSave);
+	entry(std::to_string(constants.world.showDimensionY), "Show Galaxy Dimension Y", toSave);
 
 	headline("Sound", toSave);
 	entry(std::to_string(constants.sound.muteVolume), "Volume Mute (1 = mute)", toSave);

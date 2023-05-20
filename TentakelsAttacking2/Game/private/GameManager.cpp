@@ -18,7 +18,7 @@ enum class CopyGalaxyType {
 
 // help Lambdas
 static auto popup = [](std::string const& text) {
-	auto const popupEvent{ ShowMessagePopUpEvent("Invalid Input", text) };
+	ShowMessagePopUpEvent const popupEvent{ "Invalid Input", text };
 	AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
 };
 static auto message = [](std::string& messageText, std::string const& first, std::string const& second) {
@@ -29,8 +29,10 @@ static auto message = [](std::string& messageText, std::string const& first, std
 
 // player
 bool GameManager::ValidAddPlayer() const {
-	return AppContext::GetInstance().constants.player.maxPlayerCount
-		> m_players.size();
+	return {
+		AppContext::GetInstance().constants.player.maxPlayerCount
+		> m_players.size() 
+	};
 }
 unsigned int GameManager::GetNextPlayerID() const {
 	unsigned int nextID{ 1 };
@@ -75,44 +77,44 @@ bool GameManager::GetNextPlayer(std::shared_ptr<Player>& nextPlayer) const {
 
 void GameManager::AddPlayer(AddPlayerEvent const* event) {
 	if (!ValidAddPlayer()) {
-		auto const UIEvent{ ShowMessagePopUpEvent(
+		ShowMessagePopUpEvent const UIEvent{
 			"Max Player",
 			"No more Player slots are available"
-		) };
+		};
 		AppContext::GetInstance().eventManager.InvokeEvent(UIEvent);
 		return;
 	}
 
 	unsigned int const newID{ GetNextPlayerID() };
-	auto player = std::make_shared<Player>(
+	auto const player = std::make_shared<Player>(
 		newID,
 		PlayerType::HUMAN
 	);
 	m_players.push_back(player);
 
-	auto const AddEvent{ AddPlayerUIEvent(
+	AddPlayerUIEvent const AddEvent{
 		newID,
 		event->GetName(),
 		event->GetColor()
-	) };
+	};
 	AppContext::GetInstance().eventManager.InvokeEvent(AddEvent);
 }
 void GameManager::EditPlayer(EditPlayerEvent const* event) const {
 
 	if (!IsExistingPlayerID(event->GetID())) {
-		auto const UIEvent{ ShowMessagePopUpEvent(
+		ShowMessagePopUpEvent const UIEvent{
 			"Invalid ID",
 			"ID " + std::to_string(event->GetID()) + " is not existing"
-		) };
+		};
 		AppContext::GetInstance().eventManager.InvokeEvent(UIEvent);
 		return;
 	}
 
-	auto const editEvent{ EditPlayerUIEvent(
+	EditPlayerUIEvent const editEvent{
 		event->GetID(),
 		event->GetName(),
 		event->GetColor()
-	) };
+	};
 	AppContext::GetInstance().eventManager.InvokeEvent(editEvent);
 }
 void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
@@ -126,10 +128,10 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 	}
 
 	if (!toDelete) {
-		auto const messageEvent{ ShowMessagePopUpEvent(
+		ShowMessagePopUpEvent const messageEvent{
 			"Invalid ID",
 			"ID " + std::to_string(event->GetID()) + " is not existing"
-		) };
+		};
 		AppContext::GetInstance().eventManager.InvokeEvent(messageEvent);
 		return;
 	}
@@ -138,29 +140,33 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 		m_players.begin(), m_players.end(), toDelete),
 		m_players.end());
 
-	auto const deleteEvent{ DeletePlayerUIEvent(event->GetID()) };
+	DeletePlayerUIEvent const deleteEvent{ event->GetID() };
 	AppContext::GetInstance().eventManager.InvokeEvent(deleteEvent);
 }
 void GameManager::ResetPlayer() {
 	m_players.clear();
 
-	auto const event{ ResetPlayerUIEvent() };
+	ResetPlayerUIEvent const event{ };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 void GameManager::CheckPlayerCount() const {
 
-	AppContext& appContext{ AppContext::GetInstance() };
-	bool valid{ };
+	AppContext const& appContext{ AppContext::GetInstance() };
+	bool valid;
 
 	if (m_players.size() < appContext.constants.player.minPlayerCount) {
-		auto const event{ ShowMessagePopUpEvent("Player Count",
-			"Not enough players.\n current min. Player Count: " + std::to_string(appContext.constants.player.minPlayerCount)) };
+		ShowMessagePopUpEvent const event{
+			"Player Count",
+			"Not enough players.\n current min. Player Count: " + std::to_string(appContext.constants.player.minPlayerCount) 
+		};
 		appContext.eventManager.InvokeEvent(event);
 		valid = false;
 	}
 	else if (m_players.size() > appContext.constants.player.maxPlayerCount) {
-		auto const event{ ShowMessagePopUpEvent("Player Count",
-			"Too many players.\n current max Player Count: " + std::to_string(appContext.constants.player.maxPlayerCount)) };
+		ShowMessagePopUpEvent const event{
+			"Player Count",
+			"Too many players.\n current max Player Count: " + std::to_string(appContext.constants.player.maxPlayerCount)
+		};
 		appContext.eventManager.InvokeEvent(event);
 		valid = false;
 	}
@@ -168,7 +174,7 @@ void GameManager::CheckPlayerCount() const {
 		valid = true;
 	}
 
-	auto const event{ ValidatePlayerCountResultEvent(valid) };
+	ValidatePlayerCountResultEvent const event{ valid };
 	appContext.eventManager.InvokeEvent(event);
 }
 void GameManager::ShuffleCurrentRoundPlayer() {
@@ -176,7 +182,7 @@ void GameManager::ShuffleCurrentRoundPlayer() {
 }
 
 void GameManager::SendCurrentPlayerID() {
-	unsigned int ID{ };
+	unsigned int ID;
 	std::shared_ptr<Player> player{ nullptr };
 
 	if (GetCurrentPlayer(player)) {
@@ -186,11 +192,11 @@ void GameManager::SendCurrentPlayerID() {
 		ID = 0;
 	}
 
-	auto const event{ UpdateCurrentPlayerIDEvent(ID) };
+	UpdateCurrentPlayerIDEvent const event{ ID };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 void GameManager::SendNextPlayerID() {
-	unsigned int ID{ };
+	unsigned int ID;
 	std::shared_ptr<Player> player{ nullptr };
 
 	if (GetNextPlayer(player)) {
@@ -200,7 +206,7 @@ void GameManager::SendNextPlayerID() {
 		ID = 0;
 	}
 
-	auto const event{ UpdateNextPlayerIDEvent(ID) };
+	UpdateNextPlayerIDEvent const event{ ID };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
@@ -241,23 +247,23 @@ void GameManager::NextTurn(bool valid) {
 void GameManager::ValidateNextTurn() {
 
 	if (m_currentRoundPlayers.size() <= 1) {
-		auto const event{ ShowValidatePopUp(
+		ShowValidatePopUp const event{
 			"next round?",
 			"your turn will be over.",
 			[this](bool valid) {
 				this->NextRound(valid);
 			}
-		) };
+		};
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 	else {
-		auto const event{ ShowValidatePopUp(
+		ShowValidatePopUp const event{
 			"next player?",
 			"your turn will be over.",
 			[this](bool valid) {
 				this->NextTurn(valid);
 			}
-		) };
+		};
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
@@ -280,18 +286,18 @@ void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 		m_gameEvents[event->GetType()] = event->GetIsChecked();
 	}
 
-	auto const updateEvent{ UpdateCheckGameEventsUI(&m_gameEvents) };
+	UpdateCheckGameEventsUI const updateEvent{ &m_gameEvents };
 	AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
 }
 
 // galaxy
 void GameManager::GenerateGalaxy() {
-	AppContext& appContext{ AppContext::GetInstance() };
-	Vec2<int> size = {
+	AppContext const& appContext{ AppContext::GetInstance() };
+	Vec2<int> const size = {
 		appContext.constants.world.currentDimensionX,
 		appContext.constants.world.currentDimensionY
 	};
-	auto galaxy = std::make_shared<Galaxy>(
+	auto const galaxy = std::make_shared<Galaxy>(
 		size,
 		appContext.constants.world.currentPlanetCount,
 		m_players,
@@ -301,22 +307,25 @@ void GameManager::GenerateGalaxy() {
 	if (galaxy->IsValid()) {
 		m_mainGalaxy = galaxy;
 		CopyGalaxies(CopyGalaxyType::COPY_ALL);
-		auto const event{ GalaxyGeneratedUIEvent() };
+		GalaxyGeneratedUIEvent const event{ };
 		appContext.eventManager.InvokeEvent(event);
 	}
 	else {
-		auto const event{ ShowMessagePopUpEvent("Galaxy", "Unable to generate the Galaxy.\nTo many Plantes.") };
+		ShowMessagePopUpEvent const event{
+			"Galaxy",
+			"Unable to generate the Galaxy.\nTo many Plantes."
+		};
 		appContext.eventManager.InvokeEvent(event);
 	}
 }
 void GameManager::GenerateShowGalaxy() {
-	AppContext& appContext{ AppContext::GetInstance() };
-	Vec2<int> size = {
+	AppContext const& appContext{ AppContext::GetInstance() };
+	Vec2<int> const size = {
 		appContext.constants.world.showDimensionX,
 		appContext.constants.world.showDimensionY,
 	};
 
-	auto galaxy = std::make_shared<Galaxy>(
+	auto const galaxy = std::make_shared<Galaxy>(
 		size,
 		appContext.constants.world.showPlanetCount,
 		m_players,
@@ -325,11 +334,11 @@ void GameManager::GenerateShowGalaxy() {
 
 	if (galaxy->IsValid()) {
 		m_showGalaxy = galaxy;
-		auto const event{ SendGalaxyPointerEvent(m_showGalaxy.get(), true) };
+		SendGalaxyPointerEvent const event{ m_showGalaxy.get(), true };
 		appContext.eventManager.InvokeEvent(event);
 	}
 	else if (m_showGalaxy) {
-		auto const event{ SendGalaxyPointerEvent(m_showGalaxy.get(), true) };
+		SendGalaxyPointerEvent const event{ m_showGalaxy.get(), true };
 		appContext.eventManager.InvokeEvent(event);
 		Print("Could not generated ShowGalaxy -> Use old Galaxy", PrintType::EXPECTED_ERROR);
 	}
@@ -358,13 +367,13 @@ void GameManager::AddFleet(SendFleetInstructionEvent const* event) {
 	bool const validCurrentFleet{ m_currentGalaxy->AddFleet(event, currentPlayer) };
 	if (not validCurrentFleet) { Print("Not able to add Fleet to current Galaxy", PrintType::ERROR); }
 
-	auto const returnEvent{ ReturnFleetInstructionEvent(isValidFleet) };
+	ReturnFleetInstructionEvent const returnEvent{ isValidFleet };
 	AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
 }
 
 bool GameManager::ValidateAddFleetInput(SendFleetInstructionEvent const* event) {
 
-	std::string messageText{ };
+	std::string messageText;
 
 	if (event->GetOrigin() <= 0) {
 		message(messageText, "input in origin", "origin");
@@ -456,7 +465,7 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* GameEvent = dynamic_cast<InitialCheckGameEventDataEvent const*>(&event)) {
-		auto const updateEvent{ UpdateCheckGameEventsUI(&m_gameEvents) };
+		UpdateCheckGameEventsUI const updateEvent{ &m_gameEvents };
 		AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
 		return;
 	}
@@ -467,7 +476,7 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* galaxyEvent = dynamic_cast<GetGalaxyPointerEvent const*>(&event)) {
-		auto const returnEvent{ SendGalaxyPointerEvent(m_currentGalaxy.get(), false) };
+		SendGalaxyPointerEvent const returnEvent{ m_currentGalaxy.get(), false };
 		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
 		return;
 	}

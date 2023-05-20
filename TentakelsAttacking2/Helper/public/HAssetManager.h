@@ -31,9 +31,9 @@ private:
 		"arrow_down.png",
 		"arrow_left.png",
 	};
-	std::unordered_map<AssetType, Texture2D> m_assets{ }; ///< contains all assets
-	std::vector<std::string> m_title{ }; ///< contains the tile
-	Font m_font{ }; ///< contains the font
+	std::unordered_map<AssetType, Texture2D> m_assets; ///< contains all assets
+	std::vector<std::string> m_title; ///< contains the tile
+	Font m_font; ///< contains the font
 
 	/**
 	 * loads the title.

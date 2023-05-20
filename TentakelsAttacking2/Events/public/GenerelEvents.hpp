@@ -17,8 +17,8 @@ class Galaxy;
  */
 class PlayerEvent : public Event {
 private:
-	std::string m_name{ };
-	Color m_color{ };
+	std::string m_name;
+	Color m_color;
 
 public:
 	PlayerEvent(std::string const& name, Color color)
@@ -36,7 +36,7 @@ public:
  */
 class PlayerWithIDEvent : public PlayerEvent {
 private:
-	unsigned int m_ID{ };
+	unsigned int m_ID;
 
 public:
 	PlayerWithIDEvent(unsigned int ID, std::string const& name, Color color)
@@ -66,7 +66,7 @@ public:
  */
 class DeletePlayerEvent final : public Event {
 private:
-	unsigned int m_ID{ };
+	unsigned int m_ID;
 public:
 	DeletePlayerEvent(unsigned int ID)
 		:m_ID{ ID } { }
@@ -106,7 +106,7 @@ public:
  */
 class DeletePlayerUIEvent final : public Event {
 private:
-	unsigned int m_ID{ };
+	unsigned int m_ID;
 public:
 	DeletePlayerUIEvent(unsigned int ID)
 		:m_ID{ ID } { }
@@ -126,7 +126,7 @@ class ResetPlayerUIEvent final : public Event { };
  */
 class PlayerIDEvent : public Event {
 private:
-	unsigned int m_ID{ };
+	unsigned int m_ID;
 
 public:
 	PlayerIDEvent(unsigned int ID)
@@ -174,7 +174,7 @@ class ValidatePlayerCountEvent final : public Event { };
  */
 class ValidatePlayerCountResultEvent final : public Event {
 private:
-	bool m_validPlayerCount{ };
+	bool m_validPlayerCount;
 
 public:
 	ValidatePlayerCountResultEvent(bool validPlayerCount)
@@ -196,8 +196,8 @@ class StartGameEvent final : public Event { };
  */
 class UpdateCheckGameEvent final : public Event {
 private:
-	GameEventType m_type{ };
-	bool m_isChecked{ };
+	GameEventType m_type;
+	bool m_isChecked;
 
 public:
 	UpdateCheckGameEvent(GameEventType type, bool isChecked)
@@ -216,7 +216,7 @@ public:
 class UpdateCheckGameEventsUI final : public Event {
 private:
 	using Map = std::unordered_map<GameEventType, bool>const*;
-	Map m_types{ };
+	Map m_types;
 
 public:
 	UpdateCheckGameEventsUI(Map types)
@@ -237,7 +237,7 @@ class InitialCheckGameEventDataEvent final : public Event { };
  */
 class SetCurrentLastRoundEvent final : public Event {
 private:
-	int m_lastRound{ };
+	int m_lastRound;
 
 public:
 	SetCurrentLastRoundEvent(int lastRound)
@@ -272,8 +272,8 @@ class GetShowGalaxyPointerEvent final : public Event { };
  */
 class SendGalaxyPointerEvent final : public Event {
 private:
-	Galaxy const* const m_galaxy{ nullptr };
-	bool m_isShowGalaxy{ false };
+	Galaxy const* const m_galaxy;
+	bool m_isShowGalaxy;
 
 public:
 	SendGalaxyPointerEvent(Galaxy const* const galaxy, bool isShowGalaxy)
@@ -293,11 +293,11 @@ public:
  */
 class SendFleetInstructionEvent final : public Event {
 private:
-	unsigned int m_origin{ };
-	unsigned int m_destination{ };
-	int m_destinationX{ };
-	int m_destinationY{ };
-	size_t m_shipCount{ };
+	unsigned int m_origin;
+	unsigned int m_destination;
+	int m_destinationX;
+	int m_destinationY;
+	size_t m_shipCount;
 
 public:
 	SendFleetInstructionEvent(unsigned int origin, unsigned int destination, int destinationX,
@@ -326,7 +326,7 @@ public:
  */
 class ReturnFleetInstructionEvent final : public Event {
 private:
-	bool m_isValidFleet{ };
+	bool m_isValidFleet;
 
 public:
 	ReturnFleetInstructionEvent(bool validFeet)

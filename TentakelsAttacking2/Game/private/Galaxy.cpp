@@ -13,7 +13,7 @@
 
 // help Lambdas
 static auto popup = [](std::string const& text) {
-	auto const popupEvent{ ShowMessagePopUpEvent("Invalid Input", text) };
+	ShowMessagePopUpEvent const popupEvent{ "Invalid Input", text };
 	AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
 };
 static auto message = [](std::string& messageText, std::string const& first, std::string const& second) {
@@ -53,7 +53,7 @@ void Galaxy::InitializePlanets(size_t planetCount,
 int Galaxy::GenerateHomePlanets(std::vector<std::shared_ptr<Player>> players) {
 
 	Random& random{ Random::GetInstance() };
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext const& appContext{ AppContext::GetInstance() };
 	int currentPlanet{ 1 };
 
 
@@ -61,12 +61,12 @@ int Galaxy::GenerateHomePlanets(std::vector<std::shared_ptr<Player>> players) {
 	for (auto& p : players) {
 		int counter{ 0 };
 		while (true) {
-			Vec2<int> newPosition{
+			Vec2<int> const newPosition{
 			   static_cast<int>(random.random(m_size.x)),
 			   static_cast<int>(random.random(m_size.y))
 			};
 
-			auto newPlanet = std::make_shared<Planet>(
+			auto const newPlanet = std::make_shared<Planet>(
 				GetNextID(),
 				newPosition,
 				p,
@@ -96,19 +96,19 @@ int Galaxy::GenerateHomePlanets(std::vector<std::shared_ptr<Player>> players) {
 void Galaxy::GenerateOtherPlanets(size_t planetCount, int currentPlanet,
 	std::shared_ptr<Player> player) {
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext const& appContext{ AppContext::GetInstance() };
 	Random& random{ Random::GetInstance() };
 
 
 	for (; currentPlanet <= planetCount; ++currentPlanet) {
 		int counter{ 0 };
 		while (true) {
-			Vec2<int> newPosition{
+			Vec2<int> const newPosition{
 				static_cast<int>(random.random(m_size.x)),
 				static_cast<int>(random.random(m_size.y))
 			};
 
-			auto newPlanet = std::make_shared<Planet>(
+			auto const newPlanet = std::make_shared<Planet>(
 				GetNextID(),
 				newPosition,
 				player,
@@ -134,13 +134,13 @@ void Galaxy::GenerateOtherPlanets(size_t planetCount, int currentPlanet,
 
 bool Galaxy::IsValidNewPlanet(std::shared_ptr<Planet> newPlanet,
 	AppContext const& appContext) const {
-	int validPlanet{ true };
+	bool validPlanet{ true };
 
 	// works because Home Planets are generated first.
 	float const factor = newPlanet->IsHomePlanet()
 		? appContext.constants.planet.homeworldSpacing
 		: appContext.constants.planet.globalSpacing;
-	double spacing{ m_size.Length() * factor };
+	double const spacing{ m_size.Length() * factor };
 
 	for (auto& p : m_planets) {
 		double const currentSpacing{ (p->GetPos() - newPlanet->GetPos()).Length() };
@@ -163,7 +163,7 @@ bool Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, std::sha
 	}
 
 	// check origin
-	auto originPlanet{ GetPlanetByID(static_cast<unsigned int>(event->GetOrigin())) };
+	auto const originPlanet{ GetPlanetByID(static_cast<unsigned int>(event->GetOrigin())) };
 	if (originPlanet->GetPlayer() != currentPlayer) {
 		popup("the chosen origin isn't your Planet.");
 		return false;
@@ -174,7 +174,7 @@ bool Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, std::sha
 	}
 
 	// get destination
-	auto destination = GetOrGenerateDestination(
+	auto const destination = GetOrGenerateDestination(
 		event->GetDestination(),
 		static_cast<int>(event->GetDestinationX()),
 		static_cast<int>(event->GetDestinationY()),
@@ -182,7 +182,7 @@ bool Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, std::sha
 	);
 
 	// create fleet
-	auto fleet = std::make_shared<Fleet>(
+	auto const fleet = std::make_shared<Fleet>(
 		GetNextID(),
 		originPlanet->GetPos(),
 		event->GetShipCount(),
@@ -224,8 +224,8 @@ std::shared_ptr<SpaceObject> Galaxy::GetOrGenerateDestination(unsigned int ID,
 		}
 	}
 
-	Vec2<int> point{ X,Y };
-	auto targetPoint = std::make_shared<TargetPoint>(
+	Vec2<int> const point{ X,Y };
+	auto const targetPoint = std::make_shared<TargetPoint>(
 		GetNextID(),
 		point,
 		currentPlayer
@@ -248,17 +248,17 @@ Galaxy::Galaxy(Galaxy const& old)
 
 	for (auto o : old.m_objects) {
 		if (o->IsFleet()) {
-			auto object = std::make_shared<Fleet>(*std::static_pointer_cast<Fleet>(o));
+			auto const object = std::make_shared<Fleet>(*std::static_pointer_cast<Fleet>(o));
 			m_objects.push_back(object);
 			m_fleets.push_back(object);
 		}
 		else if (o->IsPlanet()) {
-			auto object = std::make_shared<Planet>(*std::static_pointer_cast<Planet>(o));
+			auto const object = std::make_shared<Planet>(*std::static_pointer_cast<Planet>(o));
 			m_objects.push_back(object);
 			m_planets.push_back(object);
 		}
 		else if (o->IsTargetPoint()) {
-			auto object = std::make_shared<TargetPoint>(*std::static_pointer_cast<TargetPoint>(o));
+			auto const object = std::make_shared<TargetPoint>(*std::static_pointer_cast<TargetPoint>(o));
 			m_objects.push_back(object);
 			m_targetPoints.push_back(object);
 		}
@@ -325,12 +325,15 @@ bool Galaxy::AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Pl
 	if (!IsValidSpaceObjectID(event->GetDestination())) {
 
 		bool const validCoordinates{
-			(event->GetDestinationX() > 0
-				&& event->GetDestinationX() <= m_size.x)
-			&& (event->GetDestinationY() > 0
-				&& event->GetDestinationY() <= m_size.y) };
+				(event->GetDestinationX() > 0
+			and event->GetDestinationX() <= m_size.x)
+			and (event->GetDestinationY() > 0
+			and event->GetDestinationY() <= m_size.y)
+		};
 		bool const coordinateInput{
-			event->GetDestinationX() > 0 && event->GetDestinationY() > 0 };
+				event->GetDestinationX() > 0 
+			and event->GetDestinationY() > 0
+		};
 
 		if (!validCoordinates && coordinateInput) {
 			popup("destination coordinates outside of the map. X: "

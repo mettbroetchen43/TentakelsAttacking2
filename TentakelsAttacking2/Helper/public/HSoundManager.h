@@ -17,7 +17,7 @@
  */
 class SoundManager final : public EventListener {
 private:
-	std::unordered_map<SoundType, Sound> m_sounds{ }; ///< contains all sounds
+	std::unordered_map<SoundType, Sound> m_sounds; ///< contains all sounds
 	std::array<std::string, 5> m_files{
 		"clicked_accepted_std.mp3",
 		"clicked_press_std.mp3",
@@ -26,7 +26,7 @@ private:
 		"hovered_std.mp3",
 	};
 
-	std::vector<Sound> m_textSounds{ }; ///< contains the text sounds
+	std::vector<Sound> m_textSounds; ///< contains the text sounds
 
 	/**
 	 * loads all sounds.

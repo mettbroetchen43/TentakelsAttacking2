@@ -10,9 +10,9 @@
 
 
 void AssetManager::LoadTitle() {
-	std::fstream newFile{ };
+	std::fstream newFile;
 	m_title.clear();
-	std::string line{ };
+	std::string line;
 
 	std::string const filename{ "Assets/Text/title.txt" };
 	if (!std::filesystem::exists(filename)) {

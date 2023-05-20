@@ -13,7 +13,7 @@
  */
 template<class T>
 struct Vec2 final {
-	T x{ }, y{ }; ///< contains the 2 values the Vec is holding,
+	T x, y; ///< contains the 2 values the Vec is holding,
 
 	/**
 	 * ctor.

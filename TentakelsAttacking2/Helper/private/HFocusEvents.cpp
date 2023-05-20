@@ -10,57 +10,57 @@
 
 void AddFocusLayer(bool isPopUp) {
 	if (isPopUp) {
-		auto const event{ NewFocusPopUpLayerEvent() };
+		NewFocusPopUpLayerEvent const event{ };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 	else {
-		auto const event{ NewFocusLayerEvent() };
+		NewFocusLayerEvent const event{ };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
 void DeleteFocusLayer(bool isPopUp) {
 	if (isPopUp) {
-		auto const event{ DeleteFocusPopUpLayerEvent() };
+		DeleteFocusPopUpLayerEvent const event{ };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 	else {
-		auto const event{ DeleteFocusLayerEvent() };
+		DeleteFocusLayerEvent const event{ };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
 
 void AddFocusElement(Focusable* focusable, bool isPopUp) {
 	if (isPopUp) {
-		auto const event{ NewFocusPopUpElementEvent(focusable) };
+		NewFocusPopUpElementEvent const event{ focusable };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 	else {
-		auto const event{ NewFocusElementEvent(focusable) };
+		NewFocusElementEvent const event{ focusable };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
 void DeleteFocusElement(Focusable* focusable, bool isPopUp) {
 	if (isPopUp) {
-		auto const event{ DeleteFocusPopUpElementEvent(focusable) };
+		DeleteFocusPopUpElementEvent const event{ focusable };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 	else {
-		auto const event{ DeleteFocusElementEvent(focusable) };
+		DeleteFocusElementEvent const event{ focusable };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
 
 void SelectNextFocusElement() {
-	auto const event{ SelectNextFocusElementEvent() };
+	SelectNextFocusElementEvent const event{ };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 void SelectFocusElement(Focusable* focusable, bool isPopUp) {
 	if (isPopUp) {
-		auto const event{ SelectFocusPopUpElementEvent(focusable) };
+		SelectFocusPopUpElementEvent const event{ focusable };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 	else {
-		auto const event{ SelectFocusElementEvent(focusable) };
+		SelectFocusElementEvent const event{ focusable };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }

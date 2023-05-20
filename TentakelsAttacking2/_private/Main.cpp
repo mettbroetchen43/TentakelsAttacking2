@@ -23,7 +23,7 @@ int main() {
 
 	Print(appContext.constants.global.version, PrintType::BUILD);
 
-	UIManager uiManager{ };
+	UIManager uiManager;
 
 	appContext.LoadConfig();
 

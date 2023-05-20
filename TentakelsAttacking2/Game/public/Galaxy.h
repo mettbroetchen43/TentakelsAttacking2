@@ -21,12 +21,12 @@ struct AppContext;
 class Galaxy final {
 private:
 	bool m_validGalaxy{ true }; ///< specifies if the generation in valid and the galaxy is able to use
-	std::vector<std::shared_ptr<SpaceObject>> m_objects{ }; ///< contains all space object for updating 
-	std::vector<std::shared_ptr<Planet>> m_planets{ }; ///< contains all planets 
-	std::vector<std::shared_ptr<Fleet>> m_fleets{ }; ///< contains all fleets
-	std::vector<std::shared_ptr<TargetPoint>> m_targetPoints{ }; ///< contains all target points
+	std::vector<std::shared_ptr<SpaceObject>> m_objects; ///< contains all space object for updating 
+	std::vector<std::shared_ptr<Planet>> m_planets; ///< contains all planets 
+	std::vector<std::shared_ptr<Fleet>> m_fleets; ///< contains all fleets
+	std::vector<std::shared_ptr<TargetPoint>> m_targetPoints; ///< contains all target points
 
-	Vec2<int> m_size{ 0, 0 }; ///< contains the size of the galaxy
+	Vec2<int> m_size; ///< contains the size of the galaxy
 
 	/**
 	 * returns the next free ID for an Space object that is the nearest to 0.

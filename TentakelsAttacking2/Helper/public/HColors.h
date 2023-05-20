@@ -13,7 +13,7 @@
  */
 struct Colors final {
 private:
-	using ColorArray = std::array<Color, 16>; ///< type of the color arrray
+	using ColorArray = std::array<Color, 16>; ///< type of the color array
 	ColorArray m_colors { ///< contains all colors of the game.
 	YELLOW,
 	GOLD,

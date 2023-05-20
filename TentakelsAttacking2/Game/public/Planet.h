@@ -15,9 +15,9 @@ private:
 	bool m_isHomePlanet{ }; ///< contains if this planet is a home planet
 	bool m_isDestroyed{ false }; ///< contains if the planet is destroyed
 	bool m_isDiscovered{ false }; ///< contains if any player has discovered this planet
-	int m_planetNumber{ }; ///< contains the planet number
-	size_t m_maxShips{ }; ///< contains the max amount of ships the planet can hold by non hunman players
-	size_t m_production{ }; ///< contains the production hat gets add every round
+	int m_planetNumber; ///< contains the planet number
+	size_t m_maxShips; ///< contains the max amount of ships the planet can hold by non human players
+	size_t m_production; ///< contains the production hat gets add every round
 
 public:
 	/**

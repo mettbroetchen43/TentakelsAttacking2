@@ -23,12 +23,12 @@
  */
 struct AppContext final : public EventListener {
 public:
-	SoundManager soundManager{ }; ///< loads and manage all sounds
-	AssetManager assetManager{ }; ///< loads and manage all assets
-	EventManager eventManager{ }; ///< manage the EventListener and invokes events
-	PlayerCollection playerCollection{ }; ///< contains non logic info's about player
-	Colors colors{ }; ///< contains all colors and check valid color
-	Constants constants{ }; ///< contains all constants of the game
+	SoundManager soundManager; ///< loads and manage all sounds
+	AssetManager assetManager; ///< loads and manage all assets
+	EventManager eventManager; ///< manage the EventListener and invokes events
+	PlayerCollection playerCollection; ///< contains non logic info's about player
+	Colors colors; ///< contains all colors and check valid color
+	Constants constants; ///< contains all constants of the game
 
 
 	/**
@@ -77,9 +77,10 @@ public:
 		if (lhs < rhs) { return; }
 
 		rhs = lhs + 1;
-		auto event = ShowMessagePopUpEvent("Invalid Config",
+		ShowMessagePopUpEvent const event{
+			"Invalid Config",
 			lhsMessage + " >= " + rhsMessage + "\nset " + rhsMessage + " to " + std::to_string(rhs)
-		);
+		};
 		eventManager.InvokeEvent(event);
 	}
 	/**
@@ -95,10 +96,11 @@ public:
 		if (value <= max) { return; }
 
 		value = max;
-		auto event = ShowMessagePopUpEvent("Invalid Config",
+		ShowMessagePopUpEvent const event{
+			"Invalid Config",
 			valueMessage + " > " + std::to_string(max) +
 			"\nset " + valueMessage + " to " + std::to_string(value)
-		);
+		};
 		eventManager.InvokeEvent(event);
 	}
 	/**
@@ -114,10 +116,11 @@ public:
 		if (value >= min) { return; }
 
 		value = min;
-		auto event = ShowMessagePopUpEvent("Invalid Config",
+		ShowMessagePopUpEvent const event{
+			"Invalid Config",
 			valueMessage + " < " + std::to_string(min) +
 			"\nset " + valueMessage + " to " + std::to_string(value)
-		);
+		};
 		eventManager.InvokeEvent(event);
 	}
 

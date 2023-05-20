@@ -36,4 +36,3 @@ struct CWindow final {
 	 */
 	[[nodiscard]] std::pair<int, int> GetIntFromResolution(Resolution resolution);
 };
-

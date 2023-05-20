@@ -18,7 +18,7 @@
 template<class T>
 class LayeredVector final {
 private:
-	std::vector<std::vector<T*>> m_elements{ }; ///< contains all elements in layers
+	std::vector<std::vector<T*>> m_elements; ///< contains all elements in layers
 	size_t m_layer{ 0 }; ///< contains the layer count as index
 
 	/**

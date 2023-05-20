@@ -16,7 +16,7 @@
  */
 class PlayerCollection final : public EventListener {
 private:
-	std::vector<PlayerData> m_playerData{ }; ///< contains player data
+	std::vector<PlayerData> m_playerData; ///< contains player data
 	std::vector<PlayerData> m_npcData{ ///< contains the player data for the npcs
 		{ 100, "neutral player", WHITE }
 	};

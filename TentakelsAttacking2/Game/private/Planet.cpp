@@ -13,7 +13,7 @@ Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player
 	: SpaceObject{ ID, position, player }, m_isHomePlanet{ isHomePlanet },
 	m_planetNumber{ planetNumber } {
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext const & appContext{ AppContext::GetInstance() };
 	m_maxShips = appContext.constants.planet.maxShips;
 
 	if (m_isHomePlanet) {
@@ -50,8 +50,8 @@ bool Planet::IsDestroyed() const {
 	return m_isDestroyed;
 }
 
-void Planet::SetDiscovered(bool isDescovered) {
-	m_isDiscovered = isDescovered;
+void Planet::SetDiscovered(bool isDiscovered) {
+	m_isDiscovered = isDiscovered;
 }
 
 bool Planet::IsDiscovered() const {

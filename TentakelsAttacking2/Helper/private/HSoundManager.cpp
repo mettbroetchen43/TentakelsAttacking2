@@ -49,7 +49,7 @@ void SoundManager::PlayTextSound() const {
 
 	static unsigned long long lastIndex{ 0 };
 
-	unsigned long long nextIndex{ };
+	unsigned long long nextIndex;
 	do {
 		nextIndex = random.random(m_textSounds.size());
 	} while (lastIndex == nextIndex);

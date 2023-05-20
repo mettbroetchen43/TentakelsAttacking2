@@ -30,7 +30,7 @@ class CloseWindowEvent final : public Event { };
  */
 class SetTargetFPSEvent final : public Event {
 private:
-	size_t m_fps{ };
+	size_t m_fps;
 
 public:
 	SetTargetFPSEvent(size_t fps)
@@ -49,7 +49,7 @@ class ToggleFullscreenEvent final : public Event { };
  */
 class SetNewResolutionEvent final : public Event {
 private:
-	Resolution m_resolution{ };
+	Resolution m_resolution;
 
 public:
 	SetNewResolutionEvent(Resolution resolution )
@@ -65,7 +65,7 @@ public:
  */
 class PlaySoundEvent final : public Event {
 private:
-	SoundType m_soundType{ };
+	SoundType m_soundType;
 
 public:
 	PlaySoundEvent(SoundType soundType)
@@ -81,7 +81,7 @@ public:
  */
 class SetMasterVolumeEvent final : public Event {
 private:
-	float m_level{ };
+	float m_level;
 
 public:
 	SetMasterVolumeEvent(float level)
@@ -96,7 +96,7 @@ public:
  */
 class MuteMasterVolumeEvent final : public Event {
 private:
-	bool m_mute{ };
+	bool m_mute;
 
 public:
 	MuteMasterVolumeEvent(bool mute)
@@ -112,7 +112,7 @@ public:
  */
 class RenderHoverEvent final : public Event {
 private:
-	Hover* m_hover{ };
+	Hover* m_hover;
 public:
 	RenderHoverEvent(Hover* hover)
 		: m_hover{ hover } { }
@@ -127,7 +127,7 @@ public:
  */
 class FocusEvent : public Event {
 protected:
-	Focusable* m_focusable{ };
+	Focusable* m_focusable;
 
 public:
 	FocusEvent(Focusable* focusable)
@@ -143,7 +143,7 @@ public:
  */
 class RenderFocusEvent final: public Event {
 private:
-	bool m_render{ };
+	bool m_render;
 public:
 	RenderFocusEvent(bool render)
 		: m_render{ render } { }
@@ -236,10 +236,11 @@ class ClearFocusEvent final : public Event { };
  */
 class SwitchSceneEvent final :public Event {
 private:
-	SceneType m_sceneType{ };
+	SceneType m_sceneType;
 public:
 	SwitchSceneEvent(SceneType sceneType)
 		:m_sceneType{ sceneType } { }
+
 	[[nodiscard]] SceneType GetSceneType() const {
 		return m_sceneType;
 	}
@@ -249,11 +250,12 @@ public:
  */
 class ClosePopUpEvent final : public Event {
 private:
-	PopUp* m_popUp{ };
+	PopUp* m_popUp;
 
 public:
 	ClosePopUpEvent(PopUp* popUp)
 		:m_popUp{ popUp } { }
+
 	PopUp* GetPop() const {
 		return m_popUp;
 	}
@@ -263,8 +265,8 @@ public:
  */
 class PopUpEvent : public Event {
 private:
-	std::string m_title{ };
-	std::string m_subTitle{ };
+	std::string m_title;
+	std::string m_subTitle;
 
 public:
 	PopUpEvent(std::string const& title, std::string const& subTile)
@@ -283,7 +285,7 @@ public:
  */
 class ShowMessagePopUpEvent final : public PopUpEvent {
 private:
-	std::function<void()> m_callback{ []() {} };
+	std::function<void()> m_callback;
 public:
 	ShowMessagePopUpEvent(std::string const& title, std::string const& subTile,
 		std::function<void()> callback = []() {})
@@ -301,7 +303,7 @@ template <typename T>
 class ShowCellPopUpEvent final : public PopUpEvent {
 private:
 	T m_currentValue{ };
-	std::function<void(T)> m_onClick{ [](T) {} };
+	std::function<void(T)> m_onClick;
 
 public:
 	ShowCellPopUpEvent(std::string const& title,
@@ -322,7 +324,7 @@ public:
  * this will "freeze" the ui until the popup is closed.
  */
 class ShowDeletePlayerPopUpEvent final : public PopUpEvent {
-	std::function<void(unsigned int)> m_onClick{ [](unsigned int) {} };
+	std::function<void(unsigned int)> m_onClick;
 
 public:
 	ShowDeletePlayerPopUpEvent(std::string const& title,
@@ -340,7 +342,7 @@ public:
  */
 class ShowValidatePopUp final : public PopUpEvent {
 private:
-	std::function<void(bool)> m_callback{ [](bool) {} };
+	std::function<void(bool)> m_callback;
 
 public:
 	ShowValidatePopUp(std::string const& title, std::string const& subTile, std::function<void(bool)> callback)

@@ -23,16 +23,16 @@ enum class CopyGalaxyType;
 class GameManager final : public EventListener {
 private:
 	std::default_random_engine m_random{ std::default_random_engine() }; ///< contains a random engine to shuffle the player each round
-	std::unordered_map<PlayerType, std::shared_ptr<Player>> m_npcs{ }; ///< contains all npcs to seperaste them from the player
-	std::vector<std::shared_ptr<Player>> m_players{ }; ///< contains all player -> this is the main player vector
-	std::vector<std::shared_ptr<Player>> m_currentRoundPlayers{ }; ///< contains the remaining player of the current round
+	std::unordered_map<PlayerType, std::shared_ptr<Player>> m_npcs; ///< contains all npcs to separate them from the player
+	std::vector<std::shared_ptr<Player>> m_players; ///< contains all player -> this is the main player vector
+	std::vector<std::shared_ptr<Player>> m_currentRoundPlayers; ///< contains the remaining player of the current round
 	
-	std::unordered_map<GameEventType, bool> m_gameEvents{ }; ///< contains whether the game Events are active or not
+	std::unordered_map<GameEventType, bool> m_gameEvents; ///< contains whether the game Events are active or not
 	
-	std::shared_ptr<Galaxy> m_mainGalaxy { nullptr }; ///< contains the global galaxy with all changes.
-	std::shared_ptr<Galaxy> m_startGalaxy{ nullptr }; ///< contains the data at round begin. every round it gets overwritten by the main galaxy
-	std::shared_ptr<Galaxy> m_currentGalaxy{ nullptr }; ///< is used to store the player data of one player. every turn it gets overwritten by the start Galaxy
-	std::shared_ptr<Galaxy> m_showGalaxy{ nullptr }; ///< is a hardcoded galaxy that is used to garaty, that it generation is valid.
+	std::shared_ptr<Galaxy> m_mainGalaxy; ///< contains the global galaxy with all changes.
+	std::shared_ptr<Galaxy> m_startGalaxy; ///< contains the data at round begin. every round it gets overwritten by the main galaxy
+	std::shared_ptr<Galaxy> m_currentGalaxy; ///< is used to store the player data of one player. every turn it gets overwritten by the start Galaxy
+	std::shared_ptr<Galaxy> m_showGalaxy; ///< is a hardcoded galaxy that is used to guaranty, that it generation is valid.
 
 	// player
 	/**
@@ -193,4 +193,3 @@ public:
 	 */
 	void OnEvent(Event const& event) override;
 };
-

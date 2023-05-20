@@ -18,10 +18,10 @@ class Player;
 class SpaceObject /*: public LogicUpdate */ {
 protected:
 	using vec2pos = Vec2<int>; ///< the position type
-	unsigned int m_ID{ }; ///< contains the unique id
-	size_t m_ships{ 0 }; ///< contains the current amount of ships
-	vec2pos m_position{ 0, 0 }; ///< contains the absolute position within the galaxy
-	std::shared_ptr<Player> m_player{ }; ///< contains a pointer to a player who owns the object
+	unsigned int m_ID; ///< contains the unique id
+	size_t m_ships; ///< contains the current amount of ships
+	vec2pos m_position; ///< contains the absolute position within the galaxy
+	std::shared_ptr<Player> m_player; ///< contains a pointer to a player who owns the object
 
 public:
 	/**

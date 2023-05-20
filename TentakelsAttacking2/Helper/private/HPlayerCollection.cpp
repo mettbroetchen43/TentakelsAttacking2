@@ -44,20 +44,20 @@ bool PlayerCollection::ContainsColor(Color color) const {
 void PlayerCollection::CheckValidColor(Color& color) {
 	AppContext const& appContext{ AppContext::GetInstance() };
 	if (appContext.colors.CheckValidColor(color)) {
-		auto const event{ ShowMessagePopUpEvent(
+		ShowMessagePopUpEvent const event{
 			"Invalid Color",
 			"The chosen color does not exist"
-		) };
+		};
 		appContext.eventManager.InvokeEvent(event);
 		color = GetPossibleColor();
 	}
 }
 void PlayerCollection::CheckRemainingColor(Color& color) {
 	if (ContainsColor(color)) {
-		auto const event{ ShowMessagePopUpEvent(
+		ShowMessagePopUpEvent const event{
 			"Invalid Color",
 			"The chosen color already exists."
-	) };
+		};
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 		color = GetPossibleColor();
 	}
@@ -67,19 +67,19 @@ void PlayerCollection::CheckRemainingName(std::string& name) {
 	bool invalidName{ false };
 
 	if (name.empty()) {
-		auto const event{ ShowMessagePopUpEvent(
+		ShowMessagePopUpEvent const event{
 			"Invalid name",
 			"No name entered."
-		) };
+		};
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 		invalidName = true;
 	}
 
 	if (ContainsName(name)) {
-		auto const event{ ShowMessagePopUpEvent(
+		ShowMessagePopUpEvent const event{
 			"Invalid name",
 			"The chosen name already exists."
-		) };
+		};
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 		invalidName = true;
 	}

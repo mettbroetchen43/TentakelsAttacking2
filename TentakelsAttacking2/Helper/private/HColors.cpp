@@ -34,8 +34,10 @@ std::string Colors::AsString(Color color) {
 	else                                 { return "Invalid Color"; }
 }
 bool Colors::AreSame(Color lhs, Color rhs) {
-	return  lhs.r == rhs.r
+	return  {
+			lhs.r == rhs.r
 		and lhs.g == rhs.g
 		and lhs.b == rhs.b
-		and lhs.a == rhs.a;
+		and lhs.a == rhs.a 
+	};
 }

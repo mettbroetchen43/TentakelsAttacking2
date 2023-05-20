@@ -13,7 +13,7 @@
 	std::string const& text) {
 	size_t lhs{ 0 };
 	size_t rhs{ 0 };
-	std::vector<std::string> toReturn{ };
+	std::vector<std::string> toReturn;
 
 	while (true) {
 		rhs = text.find_first_of('\n', rhs + 1);
@@ -31,7 +31,7 @@
 [[nodiscard]] std::string GetStringFromVector(
 	std::vector<std::string> const& slicedText) {
 
-	std::string toReturn{ };
+	std::string toReturn;
 
 	for (auto const& s : slicedText) {
 		toReturn += s;
@@ -90,7 +90,7 @@ std::vector<std::string>  BreakTextInVector(std::string const& toBreak, float fo
 	
 	size_t lhs{ 0 };
 	size_t rhs{ 0 };
-	std::vector<std::string> toReturn{ };
+	std::vector<std::string> toReturn;
 
 
 	while (true) {
@@ -241,7 +241,7 @@ std::vector<float> GetVerticalAlignedOffset(std::vector<std::string> text,
 
 	AppContext const& appContext{ AppContext::GetInstance() };
 	TextAlignment const textAlignment{ GetVerticalTextAlignment(alignment) };
-	std::vector<float> toReturn{ };
+	std::vector<float> toReturn;
 
 	assert(text.size() > 0);
 
@@ -296,7 +296,7 @@ std::string GetHorizontalAlignedText(std::string const& text,
 	) };
 
 	std::vector<std::string> const slicedText{ GetSerializedText(text) };
-	std::vector<std::string> alignedSlicedText{ };
+	std::vector<std::string> alignedSlicedText;
 
 	for (auto const& t : slicedText) {
 		Vector2 const textSize{ MeasureTextEx(
@@ -333,7 +333,7 @@ std::vector<float> GetHorizontalAlignedOffset(std::vector<std::string> text, Rec
 	AppContext const& appContext{ AppContext::GetInstance() };
 	TextAlignment const textAlignment{ GetHorizontalTextAlignment(alignment) };
 
-	std::vector<float> toReturn{ };
+	std::vector<float> toReturn;
 
 	if (textAlignment == TextAlignment::LEFT) {
 		for (int i = 0; i < text.size(); ++i) {

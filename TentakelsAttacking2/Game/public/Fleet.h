@@ -8,7 +8,7 @@
 
 class Fleet final : public SpaceObject {
 private:
-	std::shared_ptr<SpaceObject> m_target{ nullptr };
+	std::shared_ptr<SpaceObject> m_target;
 
 public:
 	/**

@@ -8,10 +8,10 @@
 // Colors
 bool operator==(Color lhs, Color rhs) {
 	return {
-		lhs.a == rhs.a
-		&& lhs.b == rhs.b
-		&& lhs.g == rhs.g
-		&& lhs.r == rhs.r
+			lhs.a == rhs.a
+		and lhs.b == rhs.b
+		and lhs.g == rhs.g
+		and lhs.r == rhs.r
 	};
 }
 bool operator!=(Color lhs, Color rhs) {
