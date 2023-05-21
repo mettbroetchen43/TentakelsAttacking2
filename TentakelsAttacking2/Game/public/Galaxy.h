@@ -56,6 +56,22 @@ private:
 
 	// Fleet
 	/**
+	 * checks if the provided ID is a valid Feet.
+	 */
+	[[nodiscard]] bool IsValidFleet(unsigned int const ID) const;
+	/**
+	 * returns a fleet by ID.
+	 * throws an runtime error if no Fleet exists for that ID.
+	 */
+	[[nodiscard]] std::shared_ptr<Fleet> GetFleetByID(unsigned int const ID) const;
+	/**
+	 * returns a fleet if existing.
+	 * returns a nullptr if not.
+	 */
+	[[nodiscard]] std::shared_ptr<Fleet> TryGetExistingFleetByOriginAndDestination(
+		std::shared_ptr<SpaceObject> origin, std::shared_ptr<SpaceObject> destination) const;
+
+	/**
 	 * validates the data from the UI if the instruction is for a planet.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
@@ -74,6 +90,9 @@ private:
 	 */
 	[[nodiscard]] bool AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 
+	/**
+	 * returns a existing destination er generate a TargetPoint as destination.
+	 */
 	[[nodiscard]] std::shared_ptr<SpaceObject> GetOrGenerateDestination(unsigned int ID,
 		int X, int Y, std::shared_ptr<Player> currentPlayer);
 

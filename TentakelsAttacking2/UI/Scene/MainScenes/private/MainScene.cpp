@@ -472,7 +472,6 @@ void MainScene::Switch(MainSceneType sceneType) {
 	m_fleetTable ->SetActive(sceneType == MainSceneType::FLEET_TABLE,  appContext);
 
 	m_currentMainSceneType = sceneType;
-	Print("Set new SceneType", PrintType::DEBUG);
 }
 
 bool MainScene::HasAnyInputLineFocus() {
