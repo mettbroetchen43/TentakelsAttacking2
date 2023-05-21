@@ -8,6 +8,8 @@
 
 class Galaxy;
 class Table;
+template<typename T>
+struct Vec2;
 
 class FleetTable final : public Scene {
 private:
@@ -18,6 +20,11 @@ private:
 	 * initializes the table from the current galaxy.
 	 */
 	void Initialization();
+
+	/**
+	 * returns the current position as a string.
+	 */
+	[[nodiscard]] std::string GetStringFromPosition(Vec2<int> position) const;
 
 public:
 	/**

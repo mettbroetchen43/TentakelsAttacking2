@@ -41,8 +41,7 @@ void FleetTable::Initialization() {
 		);
 
 		// position
-		std::string const pos{ "x: " + std::to_string(fleet->GetPos().x)
-			+ " | y: " + std::to_string(fleet->GetPos().y) };
+		std::string const pos{ GetStringFromPosition(fleet->GetPos()) };
 		m_table->SetValue<std::string>(
 			i + 1,
 			1,
@@ -77,6 +76,19 @@ void FleetTable::Initialization() {
 			dest
 		);
 	}
+}
+
+std::string FleetTable::GetStringFromPosition(Vec2<int> position) const {
+
+	for (auto const& p : m_galaxy->GetPlanets()) {
+		auto const& pos{ p->GetPos() };
+		if (pos == position) {
+			return "Planet " + std::to_string(p->GetID());
+		}
+	}
+
+	return "x: " + std::to_string(position.x)
+		+ " | y: " + std::to_string(position.y);
 }
 
 FleetTable::FleetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy const* galaxy)
