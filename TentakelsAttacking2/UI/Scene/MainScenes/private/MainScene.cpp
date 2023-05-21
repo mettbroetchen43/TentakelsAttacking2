@@ -37,7 +37,7 @@ void MainScene::Initialize() {
 
 	// Btn
 	auto settingsBtn = std::make_shared<ClassicButton>(
-		103,
+		203,
 		GetElementPosition(0.95f, 0.02f),
 		GetElementSize(0.05f, 0.05f),
 		Alignment::TOP_RIGHT,
@@ -53,7 +53,7 @@ void MainScene::Initialize() {
 
 
 	auto galaxyBtn = std::make_shared<ClassicButton>(
-		100,
+		200,
 		GetElementPosition(0.7f, 0.02f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
@@ -67,7 +67,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(galaxyBtn);
 
 	auto planetTableBtn = std::make_shared<ClassicButton>(
-		101,
+		201,
 		GetElementPosition(0.8f, 0.02f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
@@ -81,7 +81,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(planetTableBtn);
 
 	auto fleetTableBtn = std::make_shared<ClassicButton>(
-		102,
+		202,
 		GetElementPosition(0.9f, 0.02f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
@@ -95,7 +95,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(fleetTableBtn);
 
 	m_nextBtn = std::make_shared<ClassicButton>(
-		200,
+		100,
 		GetElementPosition(0.99f, 0.95f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
