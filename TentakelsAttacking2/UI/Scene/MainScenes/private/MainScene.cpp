@@ -530,8 +530,7 @@ MainScene::MainScene(Vector2 resolution)
 	InitializeGalaxy();
 	InitializePlanetTable();
 	InitializeFleetTable();
-	SetPlayerText();
-	Switch(MainSceneType::GALAXY);
+	NextTurn();
 	SetAcceptButton();
 }
 MainScene::~MainScene() {
