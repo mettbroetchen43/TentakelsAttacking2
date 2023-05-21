@@ -224,7 +224,6 @@ clicked:
 	cell->Clicked(mousePositon, appContext);
 	return;
 }
-
 void Table::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 	if (not m_isScrollable) { return; }
 	if (not CheckCollisionPointRec(mousePosition, m_collider)) { return; } // check if collider is maybe to big
@@ -254,6 +253,7 @@ void Table::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
+
 Vector2 Table::GetAbsoluteSize() const {
 
 	Vector2 toReturn{ 0.0f,0.0f };
