@@ -415,6 +415,7 @@ void MainScene::NextTurn() {
 	InitializeGalaxy();
 	InitializePlanetTable();
 	InitializeFleetTable();
+	ClearInputLines();
 
 	ShowMessagePopUpEvent event{
 		"start turn?",
@@ -432,6 +433,7 @@ void MainScene::NextRound() {
 	InitializeGalaxy();
 	InitializePlanetTable();
 	InitializeFleetTable();
+	ClearInputLines();
 
 	m_currentRound->SetText(std::to_string(appContext.constants.global.currentRound));
 	m_currentTargetRound->SetText(std::to_string(appContext.constants.global.currentTargetRound));
@@ -459,6 +461,7 @@ void MainScene::Switch(MainSceneType sceneType) {
 
 	assert(m_galaxy);
 	assert(m_planetTable);
+	assert(m_fleetTable);
 
 	m_galaxy     ->SetActive(false, appContext);
 	m_planetTable->SetActive(false, appContext);
@@ -494,8 +497,6 @@ void MainScene::SetAcceptButton() {
 }
 
 void MainScene::SendFleetInstruction() {
-
-	// TODO: validate input -> implement validation in logic first
 
 	SendFleetInstructionEvent event{
 		static_cast<unsigned int>(m_origin->GetValue()),
