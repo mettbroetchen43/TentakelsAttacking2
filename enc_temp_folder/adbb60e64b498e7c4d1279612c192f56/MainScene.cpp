@@ -22,8 +22,6 @@ void MainScene::Initialize() {
 
 	AppContext const& appContext{ AppContext::GetInstance() };
 
-	// Galaxy and tables are Focus ID 1000+
-
 	// Title
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.31f, 0.0f),

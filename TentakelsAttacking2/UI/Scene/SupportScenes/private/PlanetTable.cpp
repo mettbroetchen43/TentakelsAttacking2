@@ -15,7 +15,7 @@ void PlanetTable::Initialization() {
 		GetElementSize(1.0f, 1.0f),
 		Alignment::TOP_LEFT,
 		m_resolution,
-		100,
+		1000,
 		static_cast<int>(planets.size() + 1),
 		4,
 		Vector2(0.25f, 0.05f),
