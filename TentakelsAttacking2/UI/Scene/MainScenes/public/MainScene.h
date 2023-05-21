@@ -12,7 +12,7 @@
 
 class GalaxyScene;
 class PlanetTable;
-class FleetTable;
+class FleetAndTargetPointTable;
 class ClassicButton;
 class Text;
 template<typename T>
@@ -33,7 +33,7 @@ private:
 
 	std::shared_ptr<GalaxyScene> m_galaxy; ///< contains the current ui galaxy
 	std::shared_ptr<PlanetTable> m_planetTable; ///< contains the current planet table
-	std::shared_ptr<FleetTable> m_fleetTable; ///< contains the current fleet table
+	std::shared_ptr<FleetAndTargetPointTable> m_fleetTable; ///< contains the current fleet table
 	std::shared_ptr<ClassicButton> m_nextBtn; ///< contains the next turn / round button
 	std::shared_ptr<Text> m_currentPlayerName; ///< contains the current player name
 	std::shared_ptr<Text> m_nextPlayerName; ///< contains the next player name

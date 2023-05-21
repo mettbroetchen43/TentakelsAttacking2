@@ -95,7 +95,7 @@ private:
 	/**
 	 * checks if the provided ID is a target point.
 	 */
-	[[nodscard]] bool IsValidTargetPoint(unsigned int const ID) const;
+	[[nodiscard]] bool IsValidTargetPoint(unsigned int const ID) const;
 	/**
 	 * returns the target point of the provided ID.
 	 * throws an runtime error if no target point exists.
@@ -147,6 +147,10 @@ public:
 	 */
 	[[nodiscard]] std::vector<std::shared_ptr<Fleet>> const GetFleets() const;
 	/**
+	 * returns the target points of the galaxy.
+	 */
+	[[nodiscard]] std::vector<std::shared_ptr<TargetPoint>> const GetTargetPoints() const;
+ 	/**
 	 * returns a specific planet by ID.
 	 */
 	[[nodiscard]] std::shared_ptr<Planet> const GetPlanetByID(unsigned int ID) const;
