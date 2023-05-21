@@ -79,7 +79,8 @@ public:
 		rhs = lhs + 1;
 		ShowMessagePopUpEvent const event{
 			"Invalid Config",
-			lhsMessage + " >= " + rhsMessage + "\nset " + rhsMessage + " to " + std::to_string(rhs)
+			lhsMessage + " >= " + rhsMessage + "\nset " + rhsMessage + " to " + std::to_string(rhs),
+			[]() {}
 		};
 		eventManager.InvokeEvent(event);
 	}
@@ -98,8 +99,8 @@ public:
 		value = max;
 		ShowMessagePopUpEvent const event{
 			"Invalid Config",
-			valueMessage + " > " + std::to_string(max) +
-			"\nset " + valueMessage + " to " + std::to_string(value)
+			valueMessage + " > " + std::to_string(max) + "\nset " + valueMessage + " to " + std::to_string(value),
+			[]() {}
 		};
 		eventManager.InvokeEvent(event);
 	}
@@ -118,8 +119,8 @@ public:
 		value = min;
 		ShowMessagePopUpEvent const event{
 			"Invalid Config",
-			valueMessage + " < " + std::to_string(min) +
-			"\nset " + valueMessage + " to " + std::to_string(value)
+			valueMessage + " < " + std::to_string(min) + "\nset " + valueMessage + " to " + std::to_string(value),
+			[]() {}
 		};
 		eventManager.InvokeEvent(event);
 	}
