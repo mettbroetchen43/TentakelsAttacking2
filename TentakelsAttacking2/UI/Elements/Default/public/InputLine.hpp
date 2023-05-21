@@ -112,7 +112,7 @@ public:
 
 		if (!IsFocused()) { return; }
 
-		bool const enter{ IsOnlyEnterConfirmInputReleased() };
+		bool const enter{ IsOnlyEnterConfirmInputPressed() };
 		if (enter) {
 			m_onEnter();
 		}

@@ -63,7 +63,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		);
 	colorPicker->SetColor(appContext.playerCollection.GetPossibleColor());
 	colorPicker->SetOnEnter([this]() {
-		AddPlayer();
+		this->AddPlayer();
 		});
 	m_elements.push_back(colorPicker);
 	m_nestedFocus.push_back(colorPicker.get());
@@ -246,9 +246,9 @@ void NewGamePlayerScene::UpdateSceneEntries(AppContext const& appContext) {
 		appContext.eventManager.InvokeEvent(focusEvent);
 	}
 
-	SelectFocusElementEvent const event{ m_inputLine };
+	SelectFocusElementEvent const event{m_inputLine};
 	appContext.eventManager.InvokeEvent(event);
-
+	
 	auto const PlayerData{ appContext.playerCollection.GetPlayerData() };
 
 	int index{ 1 };
