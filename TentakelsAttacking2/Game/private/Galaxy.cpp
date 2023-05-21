@@ -534,10 +534,18 @@ bool Galaxy::AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Pl
 
 void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
 	auto const newEnd{ std::remove_if(m_fleets.begin(), m_fleets.end(),
-		[currentPlayerID](std::shared_ptr<Fleet> fleet) { return fleet->GetPlayer()->GetID() != currentPlayerID; }) };
+		[currentPlayerID](std::shared_ptr<Fleet> const& fleet) { return fleet->GetPlayer()->GetID() != currentPlayerID; }) };
 	m_fleets.erase(newEnd, m_fleets.end());
 
 	auto const newEnd2{ std::remove_if(m_objects.begin(), m_objects.end(),
-		[currentPlayerID](std::shared_ptr<SpaceObject> object) { return object->IsFleet() and object->GetPlayer()->GetID() != currentPlayerID; }) };
+		[currentPlayerID](std::shared_ptr<SpaceObject> const& object) { return object->IsFleet() and object->GetPlayer()->GetID() != currentPlayerID; }) };
 	m_objects.erase(newEnd2, m_objects.end());
+
+	auto const newEnd3{ std::remove_if(m_targetPoints.begin(), m_targetPoints.end(),
+		[currentPlayerID](std::shared_ptr<TargetPoint> const& targetPoint) { return targetPoint->GetPlayer()->GetID() != currentPlayerID; }) };
+	m_targetPoints.erase(newEnd3, m_targetPoints.end());
+
+	auto const newEnd4{ std::remove_if(m_objects.begin(), m_objects.end(),
+		[currentPlayerID](std::shared_ptr<SpaceObject> const& object) {return object->IsTargetPoint() and object->GetPlayer()->GetID() != currentPlayerID; } )};
+	m_objects.erase(newEnd4, m_objects.end());
 }
