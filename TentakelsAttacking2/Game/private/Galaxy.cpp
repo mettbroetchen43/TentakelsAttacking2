@@ -308,8 +308,8 @@ bool Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std
 		popup("the chosen origin isn't your target point");
 		return false;
 	}
-	if (origin->GetShipCount() > event->GetShipCount()) {
-		popup("not enough ships in fleet " + std::to_string(event->GetOrigin()));
+	if (origin->GetShipCount() < event->GetShipCount()) {
+		popup("not enough ships at target point " + std::to_string(event->GetOrigin()));
 		return false;
 	}
 
