@@ -86,7 +86,7 @@ void MainScene::Initialize() {
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
 		m_resolution,
-		"fleet table",
+		"fleet / point table",
 		SoundType::CLICKED_RELEASE_STD
 		);
 	fleetTableBtn->SetOnClick([this]() {
