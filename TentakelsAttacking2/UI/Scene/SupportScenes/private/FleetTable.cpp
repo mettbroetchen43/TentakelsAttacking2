@@ -66,7 +66,7 @@ void FleetTable::Initialization() {
 			dest = "Fleet " + std::to_string(destination->GetID());
 		}
 		else if (destination->IsTargetPoint()) {
-			dest = "Target Point x: " + std::to_string(fleet->GetPos().x) + " | y: " + std::to_string(fleet->GetPos().y);
+			dest = "Target Point x: " + std::to_string(fleet->GetTarget()->GetPos().x) + " | y: " + std::to_string(fleet->GetTarget()->GetPos().y);
 		}
 		else {
 			dest = "Invalid Destination";
