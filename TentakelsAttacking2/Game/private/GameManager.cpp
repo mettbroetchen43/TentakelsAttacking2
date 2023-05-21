@@ -18,7 +18,11 @@ enum class CopyGalaxyType {
 
 // help Lambdas
 static auto popup = [](std::string const& text) {
-	ShowMessagePopUpEvent const popupEvent{ "Invalid Input", text };
+	ShowMessagePopUpEvent const popupEvent{
+		"Invalid Input",
+		text,
+		[]() {}
+	};
 	AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
 };
 static auto message = [](std::string& messageText, std::string const& first, std::string const& second) {
@@ -79,7 +83,8 @@ void GameManager::AddPlayer(AddPlayerEvent const* event) {
 	if (!ValidAddPlayer()) {
 		ShowMessagePopUpEvent const UIEvent{
 			"Max Player",
-			"No more Player slots are available"
+			"No more Player slots are available",
+			[]() {}
 		};
 		AppContext::GetInstance().eventManager.InvokeEvent(UIEvent);
 		return;
@@ -104,7 +109,8 @@ void GameManager::EditPlayer(EditPlayerEvent const* event) const {
 	if (!IsExistingPlayerID(event->GetID())) {
 		ShowMessagePopUpEvent const UIEvent{
 			"Invalid ID",
-			"ID " + std::to_string(event->GetID()) + " is not existing"
+			"ID " + std::to_string(event->GetID()) + " is not existing",
+			[]() {}
 		};
 		AppContext::GetInstance().eventManager.InvokeEvent(UIEvent);
 		return;
@@ -130,7 +136,8 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 	if (!toDelete) {
 		ShowMessagePopUpEvent const messageEvent{
 			"Invalid ID",
-			"ID " + std::to_string(event->GetID()) + " is not existing"
+			"ID " + std::to_string(event->GetID()) + " is not existing",
+			[]() {}
 		};
 		AppContext::GetInstance().eventManager.InvokeEvent(messageEvent);
 		return;
@@ -157,7 +164,8 @@ void GameManager::CheckPlayerCount() const {
 	if (m_players.size() < appContext.constants.player.minPlayerCount) {
 		ShowMessagePopUpEvent const event{
 			"Player Count",
-			"Not enough players.\n current min. Player Count: " + std::to_string(appContext.constants.player.minPlayerCount) 
+			"Not enough players.\n current min. Player Count: " + std::to_string(appContext.constants.player.minPlayerCount),
+			[]() {}
 		};
 		appContext.eventManager.InvokeEvent(event);
 		valid = false;
@@ -165,7 +173,8 @@ void GameManager::CheckPlayerCount() const {
 	else if (m_players.size() > appContext.constants.player.maxPlayerCount) {
 		ShowMessagePopUpEvent const event{
 			"Player Count",
-			"Too many players.\n current max Player Count: " + std::to_string(appContext.constants.player.maxPlayerCount)
+			"Too many players.\n current max Player Count: " + std::to_string(appContext.constants.player.maxPlayerCount),
+			[]() {}
 		};
 		appContext.eventManager.InvokeEvent(event);
 		valid = false;
@@ -313,7 +322,8 @@ void GameManager::GenerateGalaxy() {
 	else {
 		ShowMessagePopUpEvent const event{
 			"Galaxy",
-			"Unable to generate the Galaxy.\nTo many Plantes."
+			"Unable to generate the Galaxy.\nTo many Plantes.",
+			[]() {}
 		};
 		appContext.eventManager.InvokeEvent(event);
 	}

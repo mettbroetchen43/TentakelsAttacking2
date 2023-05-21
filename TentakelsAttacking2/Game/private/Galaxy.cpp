@@ -13,7 +13,11 @@
 
 // help Lambdas
 static auto popup = [](std::string const& text) {
-	ShowMessagePopUpEvent const popupEvent{ "Invalid Input", text };
+	ShowMessagePopUpEvent const popupEvent{
+		"Invalid Input",
+		text,
+		[]() {}
+	};
 	AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
 };
 static auto message = [](std::string& messageText, std::string const& first, std::string const& second) {

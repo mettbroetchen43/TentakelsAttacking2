@@ -138,7 +138,11 @@ public:
 			if (!IsValidKey(key)) { continue; }
 
 			if (!AddChar(key)) {
-				ShowMessagePopUpEvent const event{ "Max Input", "Maximum number of input values reached" };
+				ShowMessagePopUpEvent const event{
+					"Max Input",
+					"Maximum number of input values reached",
+					[]() { }
+				};
 				appContext.eventManager.InvokeEvent(event);
 				break;
 			}

@@ -288,7 +288,7 @@ private:
 	std::function<void()> m_callback;
 public:
 	ShowMessagePopUpEvent(std::string const& title, std::string const& subTile,
-		std::function<void()> callback = []() {})
+		std::function<void()> callback)
 		:PopUpEvent{ title, subTile }, m_callback{ callback } { }
 
 	[[nodiscard]] std::function<void()> GetCallback() const {

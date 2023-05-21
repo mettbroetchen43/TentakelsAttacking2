@@ -440,7 +440,8 @@ void MainScene::NextRound() {
 
 	ShowMessagePopUpEvent event{
 		"start round",
-		"next round is starting\n just for debug to know"
+		"next round is starting\n just for debug to know",
+		[]() {}
 	};
 	appContext.eventManager.InvokeEvent(event);
 
