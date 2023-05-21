@@ -29,6 +29,7 @@ private:
 		FLEET_TABLE,
 		CLEAR,
 	};
+	MainSceneType m_currentMainSceneType{ MainSceneType::GALAXY }; ///< contains witch scenetype is currently loaded
 
 	std::shared_ptr<GalaxyScene> m_galaxy; ///< contains the current ui galaxy
 	std::shared_ptr<PlanetTable> m_planetTable; ///< contains the current planet table

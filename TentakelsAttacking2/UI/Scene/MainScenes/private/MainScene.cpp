@@ -470,6 +470,9 @@ void MainScene::Switch(MainSceneType sceneType) {
 	m_galaxy     ->SetActive(sceneType == MainSceneType::GALAXY,       appContext);
 	m_planetTable->SetActive(sceneType == MainSceneType::PLANET_TABLE, appContext);
 	m_fleetTable ->SetActive(sceneType == MainSceneType::FLEET_TABLE,  appContext);
+
+	m_currentMainSceneType = sceneType;
+	Print("Set new SceneType", PrintType::DEBUG);
 }
 
 bool MainScene::HasAnyInputLineFocus() {
@@ -566,6 +569,7 @@ void MainScene::OnEvent(Event const& event) {
 			ClearInputLines();
 			InitializePlanetTable();
 			InitializeFleetTable();
+			Switch(m_currentMainSceneType);
 		}
 		return;
 	}
