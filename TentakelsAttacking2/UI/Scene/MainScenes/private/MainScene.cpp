@@ -22,6 +22,8 @@ void MainScene::Initialize() {
 
 	AppContext const& appContext{ AppContext::GetInstance() };
 
+	// Galaxy and tables are Focus ID 1000+
+
 	// Title
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.31f, 0.0f),
@@ -35,7 +37,7 @@ void MainScene::Initialize() {
 
 	// Btn
 	auto settingsBtn = std::make_shared<ClassicButton>(
-		5,
+		203,
 		GetElementPosition(0.95f, 0.02f),
 		GetElementSize(0.05f, 0.05f),
 		Alignment::TOP_RIGHT,
@@ -51,7 +53,7 @@ void MainScene::Initialize() {
 
 
 	auto galaxyBtn = std::make_shared<ClassicButton>(
-		1,
+		200,
 		GetElementPosition(0.7f, 0.02f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
@@ -65,7 +67,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(galaxyBtn);
 
 	auto planetTableBtn = std::make_shared<ClassicButton>(
-		2,
+		201,
 		GetElementPosition(0.8f, 0.02f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
@@ -79,7 +81,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(planetTableBtn);
 
 	auto fleetTableBtn = std::make_shared<ClassicButton>(
-		3,
+		202,
 		GetElementPosition(0.9f, 0.02f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
@@ -93,7 +95,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(fleetTableBtn);
 
 	m_nextBtn = std::make_shared<ClassicButton>(
-		4,
+		100,
 		GetElementPosition(0.99f, 0.95f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
@@ -219,7 +221,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(text);
 
 	m_origin = std::make_shared<InputLine<int>>(
-		1000,
+		1,
 		GetElementPosition(0.99f, 0.25f),
 		GetElementSize(0.08f, 0.04f),
 		Alignment::TOP_RIGHT,
@@ -247,7 +249,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(text);
 
 	m_destination = std::make_shared<InputLine<int>>(
-		1001,
+		2,
 		GetElementPosition(0.99f, 0.32f),
 		GetElementSize(0.08f, 0.04f),
 		Alignment::TOP_RIGHT,
@@ -264,7 +266,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(m_destination);
 
 	m_destinationX = std::make_shared<InputLine<int>>(
-		1002,
+		3,
 		GetElementPosition(0.949f, 0.37f),
 		GetElementSize(0.039f, 0.04f),
 		Alignment::TOP_RIGHT,
@@ -281,7 +283,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(m_destinationX);
 
 	m_destinationY = std::make_shared<InputLine<int>>(
-		1003,
+		4,
 		GetElementPosition(0.99f, 0.37f),
 		GetElementSize(0.039f, 0.04f),
 		Alignment::TOP_RIGHT,
@@ -309,7 +311,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(text);
 
 	m_shipCount = std::make_shared<InputLine<int>>(
-		1004,
+		5,
 		GetElementPosition(0.99f, 0.47f),
 		GetElementSize(0.08f, 0.04f),
 		Alignment::TOP_RIGHT,
@@ -326,7 +328,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(m_shipCount);
 
 	m_acceptBtn = std::make_shared<ClassicButton>(
-		1005,
+		6,
 		GetElementPosition(0.99f, 0.54f),
 		GetElementSize(0.04f, 0.04f),
 		Alignment::TOP_RIGHT,
@@ -340,7 +342,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(m_acceptBtn);
 
 	m_resetBtn = std::make_shared<ClassicButton>(
-		1006,
+		7,
 		GetElementPosition(0.95f, 0.54f),
 		GetElementSize(0.04f, 0.04f),
 		Alignment::TOP_RIGHT,
@@ -413,6 +415,7 @@ void MainScene::NextTurn() {
 	InitializeGalaxy();
 	InitializePlanetTable();
 	InitializeFleetTable();
+	ClearInputLines();
 
 	ShowMessagePopUpEvent event{
 		"start turn?",
@@ -430,6 +433,7 @@ void MainScene::NextRound() {
 	InitializeGalaxy();
 	InitializePlanetTable();
 	InitializeFleetTable();
+	ClearInputLines();
 
 	m_currentRound->SetText(std::to_string(appContext.constants.global.currentRound));
 	m_currentTargetRound->SetText(std::to_string(appContext.constants.global.currentTargetRound));
@@ -457,6 +461,7 @@ void MainScene::Switch(MainSceneType sceneType) {
 
 	assert(m_galaxy);
 	assert(m_planetTable);
+	assert(m_fleetTable);
 
 	m_galaxy     ->SetActive(false, appContext);
 	m_planetTable->SetActive(false, appContext);
@@ -465,6 +470,9 @@ void MainScene::Switch(MainSceneType sceneType) {
 	m_galaxy     ->SetActive(sceneType == MainSceneType::GALAXY,       appContext);
 	m_planetTable->SetActive(sceneType == MainSceneType::PLANET_TABLE, appContext);
 	m_fleetTable ->SetActive(sceneType == MainSceneType::FLEET_TABLE,  appContext);
+
+	m_currentMainSceneType = sceneType;
+	Print("Set new SceneType", PrintType::DEBUG);
 }
 
 bool MainScene::HasAnyInputLineFocus() {
@@ -492,8 +500,6 @@ void MainScene::SetAcceptButton() {
 }
 
 void MainScene::SendFleetInstruction() {
-
-	// TODO: validate input -> implement validation in logic first
 
 	SendFleetInstructionEvent event{
 		static_cast<unsigned int>(m_origin->GetValue()),
@@ -527,8 +533,7 @@ MainScene::MainScene(Vector2 resolution)
 	InitializeGalaxy();
 	InitializePlanetTable();
 	InitializeFleetTable();
-	SetPlayerText();
-	Switch(MainSceneType::GALAXY);
+	NextTurn();
 	SetAcceptButton();
 }
 MainScene::~MainScene() {
@@ -564,6 +569,7 @@ void MainScene::OnEvent(Event const& event) {
 			ClearInputLines();
 			InitializePlanetTable();
 			InitializeFleetTable();
+			Switch(m_currentMainSceneType);
 		}
 		return;
 	}

@@ -188,25 +188,25 @@ void Table::UpdateFirstRowPosition() {
 	}
 }
 
-void Table::CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext const& appContext) {
-	if (not CheckCollisionPointRec(mousePositon, m_collider)) { return; }
+void Table::CheckAndUpdateClickCell(Vector2 const& mousePosition, AppContext const& appContext) {
+	if (not CheckCollisionPointRec(mousePosition, m_collider)) { return; }
 	if (not IsMouseButtonPressed(0)) { return; }
 
 	auto cell{ m_cells.at(0).at(0) };
-	if (cell->IsColliding(mousePositon)) {
+	if (cell->IsColliding(mousePosition)) {
 		goto clicked;
 	}
 
 	for (int row = 1; row < m_rowCount; ++row) {
 		cell = m_cells.at(row).at(0);
-		if (cell->IsColliding(mousePositon)) {
+		if (cell->IsColliding(mousePosition)) {
 			goto clicked;
 		}
 	}
 
 	for (int column = 1; column < m_columnCount; ++column) {
 		cell = m_cells.at(0).at(column);
-		if (cell->IsColliding(mousePositon)) {
+		if (cell->IsColliding(mousePosition)) {
 			goto clicked;
 		}
 	}
@@ -214,17 +214,16 @@ void Table::CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext cons
 	for (int row = 1; row < m_rowCount; ++row) {
 		for (int column = 1; column < m_columnCount; ++column) {
 			cell = m_cells.at(row).at(column);
-			if (cell->IsColliding(mousePositon)) {
+			if (cell->IsColliding(mousePosition)) {
 				goto clicked;
 			}
 		}
 	}
 
 clicked:
-	cell->Clicked(mousePositon, appContext);
+	cell->Clicked(mousePosition, appContext);
 	return;
 }
-
 void Table::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 	if (not m_isScrollable) { return; }
 	if (not CheckCollisionPointRec(mousePosition, m_collider)) { return; } // check if collider is maybe to big
@@ -254,6 +253,7 @@ void Table::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
+
 Vector2 Table::GetAbsoluteSize() const {
 
 	Vector2 toReturn{ 0.0f,0.0f };
@@ -277,20 +277,15 @@ void Table::ClampScrollOffset(Vector2& offset) {
 	auto const cellSecondTopLeft{ m_cells.at(1).at(1)->GetCollider() };
 	auto const cellBottomLeft{ m_cells.at(m_rowCount - 1).at(m_columnCount - 1)->GetCollider() };
 
-	// clamp left x
-	float cell{ cellSecondTopLeft.x + offset.x };
-	float table{ m_collider.x + cellTopLeft.width };
-	if (cell > table) { offset.x -= cell - table; }
-
 	// clamp right x
-	cell = cellBottomLeft.x + cellBottomLeft.width + offset.x;
-	table = m_collider.x + m_collider.width;
+	float cell{ cellBottomLeft.x + cellBottomLeft.width + offset.x };
+	float table{ m_collider.x + m_collider.width };
 	if (cell < table) { offset.x += table - cell; }
 
-	// clamp top y
-	cell = cellSecondTopLeft.y + offset.y;
-	table = m_collider.y + cellTopLeft.height;
-	if (cell > table) { offset.y -= cell - table; }
+	// clamp left x
+	cell = cellSecondTopLeft.x + offset.x;
+	table = m_collider.x + cellTopLeft.width;
+	if (cell > table) { offset.x -= cell - table; }
 
 	// clamp bottom y
 	cell = cellBottomLeft.y + cellBottomLeft.height + offset.y;
@@ -298,6 +293,10 @@ void Table::ClampScrollOffset(Vector2& offset) {
 	table = m_collider.y + m_collider.height;
 	if (cell < table) { offset.y += table - cell; }
 
+	// clamp top y
+	cell = cellSecondTopLeft.y + offset.y;
+	table = m_collider.y + cellTopLeft.height;
+	if (cell > table) { offset.y -= cell - table; }
 }
 void Table::ScrollFocused() {
 	if (not m_isScrollable) { return; }
