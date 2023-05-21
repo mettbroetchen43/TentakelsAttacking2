@@ -315,7 +315,7 @@
     <ClInclude Include="UI\public\HoverRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Scene\SupportScenes\public\FleetTable.h">
+    <ClInclude Include="UI\Scene\SupportScenes\public\FleetAndTargetPointTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

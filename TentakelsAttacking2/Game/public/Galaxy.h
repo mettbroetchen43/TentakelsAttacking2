@@ -56,6 +56,22 @@ private:
 
 	// Fleet
 	/**
+	 * checks if the provided ID is a valid Feet.
+	 */
+	[[nodiscard]] bool IsValidFleet(unsigned int const ID) const;
+	/**
+	 * returns a fleet by ID.
+	 * throws an runtime error if no Fleet exists for that ID.
+	 */
+	[[nodiscard]] std::shared_ptr<Fleet> GetFleetByID(unsigned int const ID) const;
+	/**
+	 * returns a fleet if existing.
+	 * returns a nullptr if not.
+	 */
+	[[nodiscard]] std::shared_ptr<Fleet> TryGetExistingFleetByOriginAndDestination(
+		std::shared_ptr<SpaceObject> origin, std::shared_ptr<SpaceObject> destination) const;
+
+	/**
 	 * validates the data from the UI if the instruction is for a planet.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
@@ -74,6 +90,21 @@ private:
 	 */
 	[[nodiscard]] bool AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 
+
+	// Target Point
+	/**
+	 * checks if the provided ID is a target point.
+	 */
+	[[nodiscard]] bool IsValidTargetPoint(unsigned int const ID) const;
+	/**
+	 * returns the target point of the provided ID.
+	 * throws an runtime error if no target point exists.
+	 */
+	[[nodiscard]] std::shared_ptr<TargetPoint> GetTargetPointByID(unsigned int const ID) const;
+
+	/**
+	 * returns a existing destination er generate a TargetPoint as destination.
+	 */
 	[[nodiscard]] std::shared_ptr<SpaceObject> GetOrGenerateDestination(unsigned int ID,
 		int X, int Y, std::shared_ptr<Player> currentPlayer);
 
@@ -116,6 +147,10 @@ public:
 	 */
 	[[nodiscard]] std::vector<std::shared_ptr<Fleet>> const GetFleets() const;
 	/**
+	 * returns the target points of the galaxy.
+	 */
+	[[nodiscard]] std::vector<std::shared_ptr<TargetPoint>> const GetTargetPoints() const;
+ 	/**
 	 * returns a specific planet by ID.
 	 */
 	[[nodiscard]] std::shared_ptr<Planet> const GetPlanetByID(unsigned int ID) const;

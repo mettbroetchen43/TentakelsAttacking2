@@ -6,7 +6,7 @@
 #include "MainScene.h"
 #include "GalaxyAndSlider.h"
 #include "PlanetTable.h"
-#include "FleetTable.h"
+#include "FleetAndTargetPointTable.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
 #include "GenerelEvents.hpp"
@@ -86,7 +86,7 @@ void MainScene::Initialize() {
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
 		m_resolution,
-		"fleet table",
+		"fleet / point table",
 		SoundType::CLICKED_RELEASE_STD
 		);
 	fleetTableBtn->SetOnClick([this]() {
@@ -398,7 +398,7 @@ void MainScene::InitializeFleetTable() {
 		m_fleetTable = nullptr;
 	}
 
-	m_fleetTable = std::make_shared<FleetTable>(
+	m_fleetTable = std::make_shared<FleetAndTargetPointTable>(
 		GetElementPosition(0.01f, 0.95f),
 		GetElementSize(0.85f, 0.78f),
 		Alignment::BOTTOM_LEFT,
@@ -472,7 +472,6 @@ void MainScene::Switch(MainSceneType sceneType) {
 	m_fleetTable ->SetActive(sceneType == MainSceneType::FLEET_TABLE,  appContext);
 
 	m_currentMainSceneType = sceneType;
-	Print("Set new SceneType", PrintType::DEBUG);
 }
 
 bool MainScene::HasAnyInputLineFocus() {
