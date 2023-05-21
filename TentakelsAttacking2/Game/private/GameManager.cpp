@@ -10,7 +10,6 @@
 #include <cassert>
 #include <algorithm>
 #include <stdexcept>
-#include <iostream>
 
 enum class CopyGalaxyType {
 	COPY_ALL,
