@@ -296,7 +296,77 @@ bool Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, std::shar
 	return true;
 }
 bool Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
+	// check if origin ID is existing
+	if (not IsValidTargetPoint(event->GetOrigin())) {
+		popup("no target point with ID " + std::to_string(event->GetOrigin()) + " existing");
+		return false;
+	}
+	
+	// check origin
+	auto const& origin{ GetTargetPointByID(event->GetOrigin()) };
+	if (origin->GetPlayer() != currentPlayer) {
+		popup("the chosen origin isn't your target point");
+		return false;
+	}
+	if (origin->GetShipCount() > event->GetShipCount()) {
+		popup("not enough ships in fleet " + std::to_string(event->GetOrigin()));
+		return false;
+	}
+
+	// get destination
+	auto const& destination{ GetOrGenerateDestination(
+		event->GetDestination(),
+		event->GetDestinationX(),
+		event->GetDestinationY(),
+		currentPlayer
+	) };
+
+	if (origin->GetPos() == destination->GetPos()) {
+		*origin      -= event->GetShipCount();
+		*destination += event->GetShipCount();
+		return true;
+	}
+	if (auto const& fleet = TryGetExistingFleetByOriginAndDestination(origin, destination)) {
+		*origin      -= event->GetShipCount();
+		*destination += event->GetShipCount();
+		return true;
+	}
+
+	// get fleet
+	auto const fleet = std::make_shared<Fleet>(
+		GetNextID(),
+		origin->GetPos(),
+		event->GetShipCount(),
+		currentPlayer,
+		destination
+	);
+
+	// manage ships
+	*origin -= *fleet;
+
+	m_objects.push_back(fleet);
+	m_fleets.push_back(fleet);
+
+	return true;
+}
+
+// Target Point
+bool Galaxy::IsValidTargetPoint(unsigned int const ID) const {
+	for (auto const& tp : m_targetPoints) {
+		if (tp->GetID() == ID) {
+			return true;
+		}
+	}
 	return false;
+}
+std::shared_ptr<TargetPoint> Galaxy::GetTargetPointByID(unsigned int const ID) const {
+	for (auto const& tp : m_targetPoints) {
+		if (tp->GetID() == ID) {
+			return tp;
+		}
+	}
+
+	throw std::runtime_error("no Target Point with ID " + std::to_string(ID));
 }
 
 std::shared_ptr<SpaceObject> Galaxy::GetOrGenerateDestination(unsigned int ID,
@@ -326,6 +396,8 @@ std::shared_ptr<SpaceObject> Galaxy::GetOrGenerateDestination(unsigned int ID,
 
 	return targetPoint;
 }
+
+
 
 Galaxy::Galaxy(Vec2<int> size, size_t planetCount,
 	std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer)

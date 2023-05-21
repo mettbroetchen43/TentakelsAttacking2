@@ -90,6 +90,18 @@ private:
 	 */
 	[[nodiscard]] bool AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 
+
+	// Target Point
+	/**
+	 * checks if the provided ID is a target point.
+	 */
+	[[nodscard]] bool IsValidTargetPoint(unsigned int const ID) const;
+	/**
+	 * returns the target point of the provided ID.
+	 * throws an runtime error if no target point exists.
+	 */
+	[[nodiscard]] std::shared_ptr<TargetPoint> GetTargetPointByID(unsigned int const ID) const;
+
 	/**
 	 * returns a existing destination er generate a TargetPoint as destination.
 	 */
