@@ -11,7 +11,11 @@
 
 Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
 	bool isHomePlanet, int planetNumber)
-	: SpaceObject{ ID, position, player }, m_isHomePlanet{ isHomePlanet },
+	: Planet{ID, position, player, isHomePlanet, planetNumber, 0 } { }
+
+Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
+	bool isHomePlanet, int planetNumber, size_t ships)
+	: SpaceObject{ ID, position, ships,  player }, m_isHomePlanet{ isHomePlanet },
 	m_planetNumber{ planetNumber } {
 
 	AppContext const & appContext{ AppContext::GetInstance() };
@@ -49,6 +53,10 @@ void Planet::SetDestroyed(bool isDestroyed) {
 }
 bool Planet::IsDestroyed() const {
 	return m_isDestroyed;
+}
+
+int Planet::GetPlanetNumber() const{
+	return m_planetNumber;
 }
 
 void Planet::SetDiscovered(bool isDiscovered) {

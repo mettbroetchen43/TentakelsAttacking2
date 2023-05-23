@@ -18,8 +18,8 @@ bool Fleet::IsFleet() const {
     return true;
 }
 
-SpaceObject const* Fleet::GetTarget() const {
-    return m_target.get();
+std::shared_ptr<SpaceObject> Fleet::GetTarget() const {
+    return m_target;
 }
 
 void Fleet::Update() {

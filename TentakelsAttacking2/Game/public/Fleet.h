@@ -31,7 +31,7 @@ public:
 	/**
 	 * returns the target of the fleet.
 	 */
-	[[nodiscard]] SpaceObject const* GetTarget() const;
+	[[nodiscard]] std::shared_ptr<SpaceObject> GetTarget() const;
 
 	/**
 	 * moves the fleet to the target.

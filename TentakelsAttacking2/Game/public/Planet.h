@@ -26,6 +26,13 @@ public:
 	 */
 	Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
 		bool isHomePlanet, int m_planetNumber);
+	/**
+	 * ctor.
+	 * initialize all values.
+	 * with ships
+	 */
+	Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
+		bool isHomePlanet, int m_planetNumber, size_t ships);
 
 	/**
 	 * returns if the planet is a home planet.
@@ -41,6 +48,10 @@ public:
 	 * returns the production count.
 	 */
 	[[nodiscard]] size_t GetProduction() const;
+	/**
+	 * returns the planet number.
+	 */
+	[[nodiscard]] int GetPlanetNumber() const;
 
 	/**
 	 * sets if the planet is destroyed.

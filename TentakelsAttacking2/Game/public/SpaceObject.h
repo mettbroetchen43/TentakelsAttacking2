@@ -67,9 +67,15 @@ public:
 	[[nodiscard]] vec2pos GetPos() const;
 
 	/**
+	 * sets a new ship count.
+	 * only if necessary.
+	 */
+	void SetShipCount(size_t shipCount);
+	/**
 	 * returns the current ship Count
 	 */
 	[[nodiscard]] size_t GetShipCount() const;
+
 
 	/**
 	 * returns if the current space object is a planet.

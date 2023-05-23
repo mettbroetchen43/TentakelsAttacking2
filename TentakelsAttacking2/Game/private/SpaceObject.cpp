@@ -29,6 +29,10 @@ SpaceObject::vec2pos SpaceObject::GetPos() const {
 	return m_position;
 }
 
+void SpaceObject::SetShipCount(size_t shipCount) {
+	m_ships = shipCount;
+}
+
 size_t SpaceObject::GetShipCount() const {
 	return m_ships;
 }

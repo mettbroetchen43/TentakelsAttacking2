@@ -12,6 +12,7 @@
 #include "HPrint.h"
 #include "Player.h"
 #include "GameManager.h"
+#include "FleetResult.hpp"
 
 void GalaxyManager::FilterCurrentGalaxy() {
 	std::shared_ptr<Player> currentPlayer{ nullptr };
@@ -33,8 +34,7 @@ void GalaxyManager::GenerateGalaxy() {
 		size,
 		appContext.constants.world.currentPlanetCount,
 		m_gameManager->m_players,
-		m_gameManager->m_npcs[PlayerType::NEUTRAL],
-		this
+		m_gameManager->m_npcs[PlayerType::NEUTRAL]
 	);
 
 	if (galaxy->IsValid()) {
@@ -63,8 +63,7 @@ void GalaxyManager::GenerateShowGalaxy() {
 		size,
 		appContext.constants.world.showPlanetCount,
 		m_gameManager->m_players,
-		m_gameManager->m_npcs[PlayerType::NEUTRAL],
-		this
+		m_gameManager->m_npcs[PlayerType::NEUTRAL]
 	);
 
 	if (galaxy->IsValid()) {
@@ -96,19 +95,15 @@ Galaxy* GalaxyManager::GetGalaxy() const {
 
 bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
 
-	auto const isValidFleet {m_mainGalaxy->AddFleet(event, currentPlayer)};
-	if (not isValidFleet) {
+	auto const result {m_mainGalaxy->AddFleet(event, currentPlayer)};
+	if (not result.valid) {
 		Print("Not able to add Fleet to current Galaxy", PrintType::ERROR);
 
-		ReturnFleetInstructionEvent const returnEvent{ isValidFleet };
+		ReturnFleetInstructionEvent const returnEvent{ result.valid };
 		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
 		return false;
 	}
-	/*
-		1. main galaxy validates
-		2. instruction object with IDs
-		3. add Fleet in both
-	*/
+	m_currentGalaxy->HandleFleetResult(result);
 
 	return true;
 }
