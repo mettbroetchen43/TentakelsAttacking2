@@ -13,6 +13,7 @@
 #include <memory>
 
 struct AppContext;
+class GalaxyManager;
 
 /**
  * contains objects witch include planet, fleets, target points
@@ -20,6 +21,7 @@ struct AppContext;
  */
 class Galaxy final {
 private:
+	GalaxyManager* m_galaxyManager; ///< contains the current galaxy manager 
 	bool m_validGalaxy{ true }; ///< specifies if the generation in valid and the galaxy is able to use
 	std::vector<std::shared_ptr<SpaceObject>> m_objects; ///< contains all space object for updating 
 	std::vector<std::shared_ptr<Planet>> m_planets; ///< contains all planets 
@@ -115,7 +117,7 @@ public:
 	 * that the	generation is valid.
 	 */
 	Galaxy(Vec2<int> size, size_t planetCount, std::vector<std::shared_ptr<Player>> players,
-		std::shared_ptr<Player> neutralPlayer);
+		std::shared_ptr<Player> neutralPlayer, GalaxyManager* galaxyManager);
 	/**
 	 * makes a exact copy of a galaxy
 	 */
@@ -130,7 +132,7 @@ public:
 	[[nodiscard]] bool IsValid() const;
 
 	/**
-	 * returns if the provided ID is existing in this galaxy.
+	 * returns true if the provided ID is existing in this galaxy.
 	 */
 	[[nodiscard]] bool IsValidSpaceObjectID(unsigned int ID) const;
 
@@ -150,7 +152,7 @@ public:
 	 * returns the target points of the galaxy.
 	 */
 	[[nodiscard]] std::vector<std::shared_ptr<TargetPoint>> const GetTargetPoints() const;
- 	/**
+	/**
 	 * returns a specific planet by ID.
 	 */
 	[[nodiscard]] std::shared_ptr<Planet> const GetPlanetByID(unsigned int ID) const;
@@ -166,4 +168,16 @@ public:
 	 * filters the galaxy for relevant data for the provided player.
 	 */
 	void FilterByPlayer(unsigned int currentPlayerID);
+	/**
+	 * moves ships from origin to destination without checks.
+	 */
+	void MoveShips(unsigned int originID, unsigned int destinationID, size_t ships);
+	/**
+	 * subtracts ships from SpaceObject.
+	 */
+	void SubstractShips(unsigned int spaceObjectID, size_t ships);
+	/**
+	 * adds a new SpaceObject directly.
+	 */
+	void AddSpaceObjectDirectly(std::shared_ptr<SpaceObject> object);
 };

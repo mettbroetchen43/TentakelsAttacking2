@@ -165,8 +165,10 @@
     <ClInclude Include="Events\public\GenerelEvents.hpp" />
     <ClInclude Include="Events\public\UIEvents.hpp" />
     <ClInclude Include="Events\public\MainEvent.hpp" />
+    <ClInclude Include="Game\public\CopyGalaxyType.hpp" />
     <ClInclude Include="Game\public\Fleet.h" />
     <ClInclude Include="Game\public\Galaxy.h" />
+    <ClInclude Include="Game\public\GalaxyManager.h" />
     <ClInclude Include="Game\public\GameManager.h" />
     <ClInclude Include="Game\public\Planet.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
@@ -256,6 +258,7 @@
   <ItemGroup>
     <ClCompile Include="Constants\private\ConfigIO.cpp" />
     <ClCompile Include="Constants\private\CWindow.cpp" />
+    <ClCompile Include="Game\private\GalaxyManager.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
     <ClCompile Include="Game\private\Planet.cpp" />

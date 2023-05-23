@@ -7,14 +7,10 @@
 #include "AppContext.h"
 #include "GenerelEvents.hpp"
 #include "HPrint.h"
+#include "CopyGalaxyType.hpp"
 #include <cassert>
 #include <algorithm>
 #include <stdexcept>
-
-enum class CopyGalaxyType {
-	COPY_ALL,
-	COPY_START,
-};
 
 // help Lambdas
 static auto popup = [](std::string const& text) {
@@ -231,7 +227,7 @@ void GameManager::NextRound(bool valid) {
 	m_currentRoundPlayers = m_players;
 	ShuffleCurrentRoundPlayer();
 
-	CopyGalaxies(CopyGalaxyType::COPY_ALL);
+	m_galaxyManager.CopyGalaxies(CopyGalaxyType::COPY_ALL);
 
 	SendCurrentPlayerID();
 	SendNextPlayerID();
@@ -246,7 +242,7 @@ void GameManager::NextTurn(bool valid) {
 
 	m_currentRoundPlayers.pop_back();
 
-	CopyGalaxies(CopyGalaxyType::COPY_START);
+	m_galaxyManager.CopyGalaxies(CopyGalaxyType::COPY_START);
 
 	SendCurrentPlayerID();
 	SendNextPlayerID();
@@ -277,13 +273,6 @@ void GameManager::ValidateNextTurn() {
 	}
 }
 
-void GameManager::FilterCurrentGalaxy() {
-	std::shared_ptr<Player> currentPlayer{ nullptr };
-	bool const valid{ GetCurrentPlayer(currentPlayer) };
-	if (not valid) { return; }
-	m_currentGalaxy->FilterByPlayer(currentPlayer->GetID());
-}
-
 // events
 void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 	if (event->GetType() == GameEventType::GLOBAL) {
@@ -300,70 +289,6 @@ void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 }
 
 // galaxy
-void GameManager::GenerateGalaxy() {
-	AppContext const& appContext{ AppContext::GetInstance() };
-	Vec2<int> const size = {
-		appContext.constants.world.currentDimensionX,
-		appContext.constants.world.currentDimensionY
-	};
-	auto const galaxy = std::make_shared<Galaxy>(
-		size,
-		appContext.constants.world.currentPlanetCount,
-		m_players,
-		m_npcs[PlayerType::NEUTRAL]
-	);
-
-	if (galaxy->IsValid()) {
-		m_mainGalaxy = galaxy;
-		CopyGalaxies(CopyGalaxyType::COPY_ALL);
-		GalaxyGeneratedUIEvent const event{ };
-		appContext.eventManager.InvokeEvent(event);
-	}
-	else {
-		ShowMessagePopUpEvent const event{
-			"Galaxy",
-			"Unable to generate the Galaxy.\nTo many Plantes.",
-			[]() {}
-		};
-		appContext.eventManager.InvokeEvent(event);
-	}
-}
-void GameManager::GenerateShowGalaxy() {
-	AppContext const& appContext{ AppContext::GetInstance() };
-	Vec2<int> const size = {
-		appContext.constants.world.showDimensionX,
-		appContext.constants.world.showDimensionY,
-	};
-
-	auto const galaxy = std::make_shared<Galaxy>(
-		size,
-		appContext.constants.world.showPlanetCount,
-		m_players,
-		m_npcs[PlayerType::NEUTRAL]
-	);
-
-	if (galaxy->IsValid()) {
-		m_showGalaxy = galaxy;
-		SendGalaxyPointerEvent const event{ m_showGalaxy.get(), true };
-		appContext.eventManager.InvokeEvent(event);
-	}
-	else if (m_showGalaxy) {
-		SendGalaxyPointerEvent const event{ m_showGalaxy.get(), true };
-		appContext.eventManager.InvokeEvent(event);
-		Print("Could not generated ShowGalaxy -> Use old Galaxy", PrintType::EXPECTED_ERROR);
-	}
-	else {
-		Print("Could not generated ShowGalaxy -> No Galaxy", PrintType::ERROR);
-	}
-}
-
-void GameManager::CopyGalaxies(CopyGalaxyType copyType) {
-	if (copyType == CopyGalaxyType::COPY_ALL) {
-		m_startGalaxy = std::make_shared<Galaxy>(*m_mainGalaxy);
-	}
-	m_currentGalaxy = std::make_shared<Galaxy>(*m_startGalaxy);
-	FilterCurrentGalaxy();
-}
 
 // Fleet
 void GameManager::AddFleet(SendFleetInstructionEvent const* event) {
@@ -373,18 +298,7 @@ void GameManager::AddFleet(SendFleetInstructionEvent const* event) {
 	std::shared_ptr<Player> currentPlayer{ nullptr };
 	if (!GetCurrentPlayer(currentPlayer)) { popup("No current player selected."); return; }
 
-	bool const validCurrentFleet{ m_currentGalaxy->AddFleet(event, currentPlayer) };
-	if (not validCurrentFleet) {
-		Print("Not able to add Fleet to current Galaxy", PrintType::ERROR);
-
-		ReturnFleetInstructionEvent const returnEvent{ validCurrentFleet };
-		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
-		return;
-	}
-
-	bool const isValidFleet{ m_mainGalaxy->AddFleet(event, currentPlayer) };
-	if (not isValidFleet) { Print("Not able to add Fleet to main Galaxy", PrintType::ERROR); }
-
+	bool const isValidFleet{ m_galaxyManager.AddFleet(event, currentPlayer) };
 	ReturnFleetInstructionEvent const returnEvent{ isValidFleet };
 	AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
 }
@@ -431,7 +345,9 @@ void GameManager::StartGame() {
 	SendNextPlayerID();
 }
 
-GameManager::GameManager() {
+GameManager::GameManager() 
+	: m_galaxyManager{ this } {
+
 	AppContext::GetInstance().eventManager.AddListener(this);
 	for (auto e : settableGameEventTypes) {
 		m_gameEvents[e] = true;
@@ -490,16 +406,16 @@ void GameManager::OnEvent(Event const& event) {
 
 	// Galaxy
 	if (auto const* galaxyEvent = dynamic_cast<GenerateGalaxyEvent const*>(&event)) {
-		GenerateGalaxy();
+		m_galaxyManager.GenerateGalaxy();
 		return;
 	}
 	if (auto const* galaxyEvent = dynamic_cast<GetGalaxyPointerEvent const*>(&event)) {
-		SendGalaxyPointerEvent const returnEvent{ m_currentGalaxy.get(), false };
+		SendGalaxyPointerEvent const returnEvent{ m_galaxyManager.GetGalaxy(), false};
 		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
 		return;
 	}
 	if (auto const* galaxyEvent = dynamic_cast<GetShowGalaxyPointerEvent const*> (&event)) {
-		GenerateShowGalaxy();
+		m_galaxyManager.GenerateShowGalaxy();
 		return;
 	}
 
