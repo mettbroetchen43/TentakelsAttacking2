@@ -9,6 +9,7 @@
 #include "HRandom.h"
 #include "UIEvents.hpp"
 #include "HPrint.h"
+#include "GalaxyManager.h"
 #include <stdexcept>
 
 // help Lambdas
@@ -190,48 +191,52 @@ std::shared_ptr<Fleet> Galaxy::GetFleetByID(unsigned int const ID) const {
 	return nullptr;
 }
 
-Galaxy::add_fleet_ty Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
-	std::vector<std::shared_ptr<SpaceObject>> generated_vec;
+bool Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
 	// check origin id
 	if (event->GetOrigin() > m_planets.size()) {
 		popup("input for planet in origin to high");
-		return { false, generated_vec };
+		return false;
 	}
 
 	// check origin
 	auto const originPlanet{ GetPlanetByID(static_cast<unsigned int>(event->GetOrigin())) };
 	if (originPlanet->GetPlayer() != currentPlayer) {
 		popup("the chosen origin isn't your Planet.");
-		return { false, generated_vec };
+		return false;
 	}
 	if (originPlanet->GetShipCount() < event->GetShipCount()) {
 		popup("not enough ships on planet " + std::to_string(event->GetOrigin()));
-		return { false, generated_vec };
+		return false;
 	}
 
 	// get destination
-	auto const [generated,destination] = GetOrGenerateDestination(
+	auto const destination = GetOrGenerateDestination(
 		event->GetDestination(),
 		static_cast<int>(event->GetDestinationX()),
 		static_cast<int>(event->GetDestinationY()),
 		currentPlayer
 	);
-	if (generated) { generated_vec.push_back(destination); }
 
 	if (destination->IsPlanet()) {
 		if (destination->GetID() == originPlanet->GetID()) {
 			popup("origin planet and destination planet is the same planet");
-			return { false, generated_vec };
+			return false;
 		}
 	}
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
 		popup("destination isn't yours");
-		return { false, generated_vec };
+		return false;
 	}
 	if (auto const fleet = TryGetExistingFleetByOriginAndDestination(originPlanet, destination)) {
-		*fleet        += event->GetShipCount();
 		*originPlanet -= event->GetShipCount();
-		return { true, generated_vec };
+		*fleet        += event->GetShipCount();
+		m_galaxyManager->m_currentGalaxy->MoveShips(
+			originPlanet->GetID(),
+			fleet->GetID(),
+			event->GetShipCount()
+		);
+
+		return true;
 	}
 
 	// create fleet
@@ -245,55 +250,67 @@ Galaxy::add_fleet_ty Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const*
 
 	m_objects.push_back(fleet);
 	m_fleets.push_back(fleet);
-	generated_vec.push_back(fleet);
+	m_galaxyManager->m_currentGalaxy->AddSpaceObjectDirectly(fleet);
 
 	// remove fleet ships from origin planet
 	*originPlanet -= *fleet;
+	m_galaxyManager->m_currentGalaxy->SubstractShips(
+		originPlanet->GetID(),
+		fleet->GetShipCount()
+	);
 
-	return { true, generated_vec };
+	return true;
 }
-Galaxy::add_fleet_ty Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
-	std::vector<std::shared_ptr<SpaceObject>> generated_vec;
+bool Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
 	// check if origin ID is existing
 	if (not IsValidFleet(event->GetOrigin())) {
 		popup("Fleet with ID " + std::to_string(event->GetOrigin()) + " is not existing");
-		return { false, generated_vec };
+		return false;
 	}
 
 	// check origin
 	auto const& origin{ GetFleetByID(event->GetOrigin()) };
 	if (origin->GetPlayer() != currentPlayer) {
 		popup("the chosen origin isn't your fleet");
-		return { false, generated_vec };
+		return false;
 	}
 	if (origin->GetShipCount() < event->GetShipCount()) {
 		popup("not enough ships in fleet " + std::to_string(event->GetOrigin()));
-		return { false, generated_vec };
+		return false;
 	}
 
 	// get destination
-	auto const [generated, destination] { GetOrGenerateDestination(
+	auto const destination { GetOrGenerateDestination(
 		event->GetDestination(),
 		event->GetDestinationX(),
 		event->GetDestinationY(),
 		currentPlayer
 	) };
-	if (generated) { generated_vec.push_back(destination); }
 
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
 		popup("destination isn't yours");
-		return { false, generated_vec };
+		return false;
 	}
 
 	if (destination->GetPos() == origin->GetPos()) {
 		*origin      -= event->GetShipCount();
 		*destination += event->GetShipCount();
-		return { true, generated_vec };
+		m_galaxyManager->m_currentGalaxy->MoveShips(
+			origin->GetID(),
+			destination->GetID(),
+			event->GetShipCount()
+		);
+		return true;
 	}
 	if (auto const fleet = TryGetExistingFleetByOriginAndDestination(origin, destination)) {
-		*fleet  += event->GetShipCount();
 		*origin -= event->GetShipCount();
-		return { true, generated_vec };
+		*fleet  += event->GetShipCount();
+		m_galaxyManager->m_currentGalaxy->MoveShips(
+			origin->GetID(),
+			destination->GetID(),
+			event->GetShipCount()
+		);
+		return true;
 	}
 
 	// create fleet
@@ -307,56 +324,64 @@ Galaxy::add_fleet_ty Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* 
 
 	m_objects.push_back(fleet);
 	m_fleets.push_back(fleet);
-	generated_vec.push_back(fleet);
+	m_galaxyManager->m_currentGalaxy->AddSpaceObjectDirectly(fleet);
 
 	// remove fleet ships from origin planet
 	*origin -= *fleet;
+	m_galaxyManager->m_currentGalaxy->SubstractShips(origin->GetID(), fleet->GetShipCount());
 
-	return { true, generated_vec };
+	return true;
 }
-Galaxy::add_fleet_ty Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
-	std::vector<std::shared_ptr<SpaceObject>> generated_vec;
-
+bool Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
 	// check if origin ID is existing
 	if (not IsValidTargetPoint(event->GetOrigin())) {
 		popup("no target point with ID " + std::to_string(event->GetOrigin()) + " existing");
-		return { false, generated_vec };
+		return false;
 	}
 	
 	// check origin
 	auto const& origin{ GetTargetPointByID(event->GetOrigin()) };
 	if (origin->GetPlayer() != currentPlayer) {
 		popup("the chosen origin isn't your target point");
-		return { false, generated_vec };
+		return false;
 	}
 	if (origin->GetShipCount() < event->GetShipCount()) {
 		popup("not enough ships at target point " + std::to_string(event->GetOrigin()));
-		return { false, generated_vec };
+		return false;
 	}
 
 	// get destination
-	auto const [generated, destination] { GetOrGenerateDestination(
+	auto const destination { GetOrGenerateDestination(
 		event->GetDestination(),
 		event->GetDestinationX(),
 		event->GetDestinationY(),
 		currentPlayer
 	) };
-	if (generated) { generated_vec.push_back(destination); }
 
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
 		popup("destination isn't yours");
-		return { false, generated_vec };
+		return false;
 	}
 
 	if (origin->GetPos() == destination->GetPos()) {
 		*origin      -= event->GetShipCount();
 		*destination += event->GetShipCount();
-		return { true, generated_vec };
+		m_galaxyManager->m_currentGalaxy->MoveShips(
+			origin->GetID(),
+			destination->GetID(),
+			event->GetShipCount()
+		);
+		return true;
 	}
 	if (auto const& fleet = TryGetExistingFleetByOriginAndDestination(origin, destination)) {
 		*origin      -= event->GetShipCount();
 		*destination += event->GetShipCount();
-		return { true, generated_vec };
+		m_galaxyManager->m_currentGalaxy->MoveShips(
+			origin->GetID(),
+			destination->GetID(),
+			event->GetShipCount()
+		);
+		return true;
 	}
 
 	// get fleet
@@ -368,14 +393,15 @@ Galaxy::add_fleet_ty Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent c
 		destination
 	);
 
-	// manage ships
-	*origin -= *fleet;
-
 	m_objects.push_back(fleet);
 	m_fleets.push_back(fleet);
-	generated_vec.push_back(fleet);
+	m_galaxyManager->m_currentGalaxy->AddSpaceObjectDirectly(fleet);
 
-	return { false, generated_vec };
+	// manage ships
+	*origin -= *fleet;
+	m_galaxyManager->m_currentGalaxy->SubstractShips(origin->GetID(), fleet->GetShipCount());
+
+	return false;
 }
 
 // Target Point
@@ -397,17 +423,17 @@ std::shared_ptr<TargetPoint> Galaxy::GetTargetPointByID(unsigned int const ID) c
 	throw std::runtime_error("no Target Point with ID " + std::to_string(ID));
 }
 
-std::pair<bool,std::shared_ptr<SpaceObject>> Galaxy::GetOrGenerateDestination(unsigned int ID,
+std::shared_ptr<SpaceObject> Galaxy::GetOrGenerateDestination(unsigned int ID,
 	int X, int Y, std::shared_ptr<Player> currentPlayer) {
 
 	for (auto& object : m_objects) {
 
-		if (object->GetID() == ID) { return { false, object }; }
+		if (object->GetID() == ID) { return object; }
 
 		auto const pos{ object->GetPos() };
 		if (pos.x == X && pos.y == Y) {
 			if (object->GetPlayer() == currentPlayer) {
-				return { false, object };
+				return object;
 			}
 		}
 	}
@@ -421,20 +447,21 @@ std::pair<bool,std::shared_ptr<SpaceObject>> Galaxy::GetOrGenerateDestination(un
 
 	m_objects.push_back(targetPoint);
 	m_targetPoints.push_back(targetPoint);
+	m_galaxyManager->m_currentGalaxy->AddSpaceObjectDirectly(targetPoint);
 
-	return { true, targetPoint };
+	return targetPoint;
 }
 
 
 
 Galaxy::Galaxy(Vec2<int> size, size_t planetCount,
-	std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer)
-	: m_size{ size } {
+	std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer, GalaxyManager* galaxyManager)
+	: m_size{ size }, m_galaxyManager{ galaxyManager }  {
 
 	InitializePlanets(planetCount, players, neutralPlayer);
 }
 Galaxy::Galaxy(Galaxy const& old)
-	: m_validGalaxy{ old.m_validGalaxy }, m_size{ old.m_size } {
+	: m_validGalaxy{ old.m_validGalaxy }, m_size{ old.m_size }, m_galaxyManager{ old.m_galaxyManager } {
 
 	for (auto o : old.m_objects) {
 		if (o->IsFleet()) {
@@ -509,30 +536,12 @@ std::shared_ptr<SpaceObject> const Galaxy::GetSpaceObjectByID(unsigned int ID) c
 	throw std::runtime_error("no space object with ID " + std::to_string(ID));
 }
 
-bool Galaxy::AddSpaceObjectImmediately(std::shared_ptr<SpaceObject> object) {
-	
-	if (IsValidSpaceObjectID(object->GetID())) { return false; } // checks if the ID is already existing in the galaxy
-
-	m_objects.push_back(object);
-	if (object->IsFleet()) {
-		m_fleets.push_back(std::dynamic_pointer_cast<Fleet>(object));
-	}
-	else if (object->IsPlanet()){
-		m_planets.push_back(std::dynamic_pointer_cast<Planet>(object));
-	}
-	else if (object->IsTargetPoint()) {
-		m_targetPoints.push_back(std::dynamic_pointer_cast<TargetPoint>(object));
-	}
-
-	return true;
-}
-
-Galaxy::add_fleet_ty Galaxy::AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
+bool Galaxy::AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
 
 	// valid ID?
 	if (!IsValidSpaceObjectID(event->GetOrigin())) {
 		popup("ID not existing as origin: " + std::to_string(event->GetOrigin()));
-		return { false, { } };
+		return false;
 	}
 	if (!IsValidSpaceObjectID(event->GetDestination())) {
 
@@ -553,11 +562,11 @@ Galaxy::add_fleet_ty Galaxy::AddFleet(SendFleetInstructionEvent const* event, st
 				+ ", Y: "
 				+ std::to_string(event->GetDestinationY())
 			);
-			return { false, { } };
+			return false;
 		}
 		else if (!coordinateInput) {
 			popup("ID not existing as destination: " + std::to_string(event->GetDestination()));
-			return { false, { } };
+			return false;
 		}
 	}
 
@@ -575,7 +584,7 @@ Galaxy::add_fleet_ty Galaxy::AddFleet(SendFleetInstructionEvent const* event, st
 	}
 
 	popup("can't recognize provided origin: " + std::to_string(event->GetOrigin()));
-	return { false, { } };
+	return false;
 }
 
 void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
@@ -594,4 +603,33 @@ void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
 	auto const newEnd4{ std::remove_if(m_objects.begin(), m_objects.end(),
 		[currentPlayerID](std::shared_ptr<SpaceObject> const& object) {return object->IsTargetPoint() and object->GetPlayer()->GetID() != currentPlayerID; } )};
 	m_objects.erase(newEnd4, m_objects.end());
+}
+
+void Galaxy::MoveShips(unsigned int originID, unsigned int destinationID, size_t ships) {
+	auto origin{ GetSpaceObjectByID(originID) };
+	auto destination{ GetSpaceObjectByID(destinationID) };
+	*origin -= ships;
+	*destination += ships;
+}
+void Galaxy::SubstractShips(unsigned int spaceObjectID, size_t ships) {
+	auto spaceObject{ GetSpaceObjectByID(spaceObjectID) };
+	*spaceObject -= ships;
+}
+
+void Galaxy::AddSpaceObjectDirectly(std::shared_ptr<SpaceObject> object) {
+	if (object->IsPlanet()) {
+		auto const newObject = std::make_shared<Planet>(*std::static_pointer_cast<Planet>(object));
+		m_objects.push_back(newObject);
+		m_planets.push_back(newObject);
+	}
+	if (object->IsFleet()) {
+		auto const newObject = std::make_shared<Fleet>(*std::static_pointer_cast<Fleet>(object));
+		m_objects.push_back(newObject);
+		m_fleets.push_back(newObject);
+	}
+	if (object->IsTargetPoint()) {
+		auto const newObject = std::make_shared<TargetPoint>(*std::static_pointer_cast<TargetPoint>(object));
+		m_objects.push_back(newObject);
+		m_targetPoints.push_back(newObject);
+	}
 }

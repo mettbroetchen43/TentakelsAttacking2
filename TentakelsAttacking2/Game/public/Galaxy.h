@@ -13,6 +13,7 @@
 #include <memory>
 
 struct AppContext;
+class GalaxyManager;
 
 /**
  * contains objects witch include planet, fleets, target points
@@ -20,7 +21,7 @@ struct AppContext;
  */
 class Galaxy final {
 private:
-	using add_fleet_ty = std::pair<bool, std::vector<std::shared_ptr<SpaceObject>>>; ///< contains the return type of AddFleet
+	GalaxyManager* m_galaxyManager; ///< contains the current galaxy manager 
 	bool m_validGalaxy{ true }; ///< specifies if the generation in valid and the galaxy is able to use
 	std::vector<std::shared_ptr<SpaceObject>> m_objects; ///< contains all space object for updating 
 	std::vector<std::shared_ptr<Planet>> m_planets; ///< contains all planets 
@@ -77,19 +78,19 @@ private:
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] add_fleet_ty AddFleetFromPlanet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleetFromPlanet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a fleet.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] add_fleet_ty AddFleetFromFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleetFromFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a target point.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] add_fleet_ty AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 
 
 	// Target Point
@@ -106,7 +107,7 @@ private:
 	/**
 	 * returns a existing destination er generate a TargetPoint as destination.
 	 */
-	[[nodiscard]] std::pair<bool, std::shared_ptr<SpaceObject>> GetOrGenerateDestination(unsigned int ID,
+	[[nodiscard]] std::shared_ptr<SpaceObject> GetOrGenerateDestination(unsigned int ID,
 		int X, int Y, std::shared_ptr<Player> currentPlayer);
 
 public:
@@ -116,7 +117,7 @@ public:
 	 * that the	generation is valid.
 	 */
 	Galaxy(Vec2<int> size, size_t planetCount, std::vector<std::shared_ptr<Player>> players,
-		std::shared_ptr<Player> neutralPlayer);
+		std::shared_ptr<Player> neutralPlayer, GalaxyManager* galaxyManager);
 	/**
 	 * makes a exact copy of a galaxy
 	 */
@@ -160,15 +161,23 @@ public:
 	 */
 	[[nodiscard]] std::shared_ptr<SpaceObject> const GetSpaceObjectByID(unsigned int ID) const;
 	/**
-	 * add a SpaceObject immediately only with ID checks.
-	 */
-	[[nodiscard]] bool AddSpaceObjectImmediately(std::shared_ptr<SpaceObject> object);
-	/**
 	 * adds a new fleet to the galaxy for the provided player.
 	 */
-	[[nodiscard]] add_fleet_ty AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 	/**
 	 * filters the galaxy for relevant data for the provided player.
 	 */
 	void FilterByPlayer(unsigned int currentPlayerID);
+	/**
+	 * moves ships from origin to destination without checks.
+	 */
+	void MoveShips(unsigned int originID, unsigned int destinationID, size_t ships);
+	/**
+	 * subtracts ships from SpaceObject.
+	 */
+	void SubstractShips(unsigned int spaceObjectID, size_t ships);
+	/**
+	 * adds a new SpaceObject directly.
+	 */
+	void AddSpaceObjectDirectly(std::shared_ptr<SpaceObject> object);
 };

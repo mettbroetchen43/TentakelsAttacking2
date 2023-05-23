@@ -12,9 +12,13 @@ class Player;
 enum class CopyGalaxyType;
 class SendFleetInstructionEvent;
 
+/**
+ * all instructions are executed on the main Galaxy
+ */
 class GalaxyManager final {
 private:
 	GameManager* m_gameManager; ///< contains the current game manager
+	friend Galaxy;
 	std::shared_ptr<Galaxy> m_mainGalaxy{ nullptr }; ///< contains the global galaxy with all changes.
 	std::shared_ptr<Galaxy> m_startGalaxy{ nullptr }; ///< contains the data at round begin. every round it gets overwritten by the main galaxy
 	std::shared_ptr<Galaxy> m_currentGalaxy{ nullptr }; ///< is used to store the player data of one player. every turn it gets overwritten by the start Galaxy
