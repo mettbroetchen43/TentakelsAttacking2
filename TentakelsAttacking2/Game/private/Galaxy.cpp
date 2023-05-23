@@ -485,6 +485,24 @@ std::shared_ptr<SpaceObject> const Galaxy::GetSpaceObjectByID(unsigned int ID) c
 	throw std::runtime_error("no space object with ID " + std::to_string(ID));
 }
 
+bool Galaxy::AddSpaceObjectImmediately(std::shared_ptr<SpaceObject> object) {
+	
+	if (IsValidSpaceObjectID(object->GetID())) { return false; } // checks if the ID is already existing in the galaxy
+
+	m_objects.push_back(object);
+	if (object->IsFleet()) {
+		m_fleets.push_back(std::dynamic_pointer_cast<Fleet>(object));
+	}
+	else if (object->IsPlanet()){
+		m_planets.push_back(std::dynamic_pointer_cast<Planet>(object));
+	}
+	else if (object->IsTargetPoint()) {
+		m_targetPoints.push_back(std::dynamic_pointer_cast<TargetPoint>(object));
+	}
+
+	return true;
+}
+
 bool Galaxy::AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
 
 	// valid ID?

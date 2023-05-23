@@ -1,0 +1,56 @@
+//
+// PurpurTentakel
+// 23.05.23
+//
+
+#pragma once
+#include <memory>
+
+class Galaxy;
+class GameManager;
+enum class CopyGalaxyType;
+class SendFleetInstructionEvent;
+
+class GalaxyManager final {
+private:
+	GameManager* m_gameManager; ///< contains the current game manager
+	std::shared_ptr<Galaxy> m_mainGalaxy{ nullptr }; ///< contains the global galaxy with all changes.
+	std::shared_ptr<Galaxy> m_startGalaxy{ nullptr }; ///< contains the data at round begin. every round it gets overwritten by the main galaxy
+	std::shared_ptr<Galaxy> m_currentGalaxy{ nullptr }; ///< is used to store the player data of one player. every turn it gets overwritten by the start Galaxy
+	std::shared_ptr<Galaxy> m_showGalaxy{ nullptr }; ///< is a hardcoded galaxy that is used to guaranty, that it generation is valid.
+
+	/**
+	 * filters the current galaxy for relevant only data for current player.
+	 */
+	void FilterCurrentGalaxy();
+
+public:
+	GalaxyManager(GameManager* gameManager);
+
+	/**
+	 * generates a new galaxy.
+	 * if the new galaxy is valid the old galaxy gets override and informs the ui via event.
+	 * if not the old galaxy will be keep and generates an failure popup.
+	 */
+	void GenerateGalaxy();
+	/**
+	 * generates a new show galaxy.
+	 * if the new galaxy is valid the old galaxy gets override and sends a galaxy* via event to the ui.
+	 * if not and an old galaxy exists, the old galaxy will be keep and will be provided via event to the ui.
+	 * also prints a log entry to the console.
+	 * if not and no galaxy exists it only prints a log entry to the console.
+	 */
+	void GenerateShowGalaxy();
+	/**
+	 * copies all galaxies.
+	 */
+	void CopyGalaxies(CopyGalaxyType copyType);
+	/**
+	 * return the current galaxy raw pointer.
+	 */
+	[[nodiscard]] Galaxy* GetGalaxy() const;
+	/** 
+	 * add a new fleet to the Galaxies.
+	 */
+	[[nodiscard]] bool AddFleet(SendFleetInstructionEvent const* event);
+};

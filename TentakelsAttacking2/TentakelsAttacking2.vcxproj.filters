@@ -318,6 +318,12 @@
     <ClInclude Include="UI\Scene\SupportScenes\public\FleetAndTargetPointTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game\public\GalaxyManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\public\CopyGalaxyType.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -540,6 +546,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Scene\SupportScenes\private\FleetTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\private\GalaxyManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

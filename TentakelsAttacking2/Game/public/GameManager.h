@@ -5,7 +5,7 @@
 
 #pragma once
 #include "Player.h"
-#include "Galaxy.h"
+#include "GalaxyManager.h"
 #include "EventListener.hpp"
 #include "UIEvents.hpp"
 #include "GenerelEvents.hpp"
@@ -13,8 +13,6 @@
 #include <vector>
 #include <random>
 #include <memory>
-
-enum class CopyGalaxyType;
 
 /**
  * manage the hole game.
@@ -29,10 +27,8 @@ private:
 	
 	std::unordered_map<GameEventType, bool> m_gameEvents; ///< contains whether the game Events are active or not
 	
-	std::shared_ptr<Galaxy> m_mainGalaxy; ///< contains the global galaxy with all changes.
-	std::shared_ptr<Galaxy> m_startGalaxy; ///< contains the data at round begin. every round it gets overwritten by the main galaxy
-	std::shared_ptr<Galaxy> m_currentGalaxy; ///< is used to store the player data of one player. every turn it gets overwritten by the start Galaxy
-	std::shared_ptr<Galaxy> m_showGalaxy; ///< is a hardcoded galaxy that is used to guaranty, that it generation is valid.
+	friend GalaxyManager; ///< need access because of "callbacks"
+	GalaxyManager m_galaxyManager; ///< contains all galaxy related stuff
 
 	// player
 	/**
@@ -123,10 +119,7 @@ private:
 	 * PopUp automatically calls the provided function
 	 */
 	void ValidateNextTurn();
-	/**
-	 * filters the current galaxy for relevant only data for current player.
-	 */
-	void FilterCurrentGalaxy();
+
 
 	// events
 	/**
@@ -134,26 +127,6 @@ private:
 	 * calls the ui via event to update.
 	 */
 	void SetGameEventActive(UpdateCheckGameEvent const* event);
-
-	// galaxy
-	/**
-	 * generates a new galaxy.
-	 * if the new galaxy is valid the old galaxy gets override and informs the ui via event. 
-	 * if not the old galaxy will be keep and generates an failure popup.
-	 */
-	void GenerateGalaxy();
-	/**
-	 * generates a new show galaxy.
-	 * if the new galaxy is valid the old galaxy gets override and sends a galaxy* via event to the ui.
-	 * if not and an old galaxy exists, the old galaxy will be keep and will be provided via event to the ui.
-	 * also prints a log entry to the console.
-	 * if not and no galaxy exists it only prints a log entry to the console.
-	 */
-	void GenerateShowGalaxy();
-	/**
-	 * copies all galaxies.
-	 */
-	void CopyGalaxies(CopyGalaxyType copyType);
 
 	// fleet
 	/**

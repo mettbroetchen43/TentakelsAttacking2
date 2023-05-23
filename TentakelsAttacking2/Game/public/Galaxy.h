@@ -130,7 +130,7 @@ public:
 	[[nodiscard]] bool IsValid() const;
 
 	/**
-	 * returns if the provided ID is existing in this galaxy.
+	 * returns true if the provided ID is existing in this galaxy.
 	 */
 	[[nodiscard]] bool IsValidSpaceObjectID(unsigned int ID) const;
 
@@ -158,6 +158,10 @@ public:
 	 * returns a SpaceObject with the provided ID.
 	 */
 	[[nodiscard]] std::shared_ptr<SpaceObject> const GetSpaceObjectByID(unsigned int ID) const;
+	/**
+	 * add a SpaceObject immediately only with ID checks.
+	 */
+	[[nodiscard]] bool AddSpaceObjectImmediately(std::shared_ptr<SpaceObject> object);
 	/**
 	 * adds a new fleet to the galaxy for the provided player.
 	 */
