@@ -222,6 +222,7 @@ void GameManager::NextRound(bool valid) {
 
 	AppContext& appContext{ AppContext::GetInstance() };
 	// events and so on first
+	Update();
 
 
 	m_currentRoundPlayers = m_players;
@@ -358,10 +359,23 @@ GameManager::GameManager()
 }
 
 void GameManager::Update() {
+	m_galaxyManager.Update();
 	/*
 	preUpdate -> moving and stuff
+		-> move fleets
+		-> production in planets
 	Update -> general update
+		-> merging fleets
+		-> delete all arrived fleet
+		-> fights -> display in popup
+			-> defender starts
+			-> chance to hit one other ship per own ship
+			-> over?
+				-> if planet looses the player chances
 	postUpdate -> cleanup
+		-> delete all fleets with not ships
+			-> redirect fleets that had this fleet as a target.
+		-> delete target points with not ships and no arriving fleets. 
 	*/
 }
 void GameManager::OnEvent(Event const& event) {

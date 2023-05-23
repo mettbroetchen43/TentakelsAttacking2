@@ -7,6 +7,7 @@
 #include "HRandom.h"
 #include "AppContext.h"
 #include "Player.h"
+#include "HPrint.h"
 
 Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
 	bool isHomePlanet, int planetNumber)
@@ -56,4 +57,11 @@ void Planet::SetDiscovered(bool isDiscovered) {
 
 bool Planet::IsDiscovered() const {
 	return m_isDiscovered;
+}
+
+void Planet::Update() {
+	m_ships += m_production;
+	if (not m_player->IsHumanPlayer() and m_ships > m_maxShips) {
+		m_ships = m_maxShips;
+	}
 }

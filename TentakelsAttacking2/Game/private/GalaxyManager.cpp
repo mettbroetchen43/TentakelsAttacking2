@@ -112,3 +112,7 @@ bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, std::shared
 
 	return true;
 }
+
+void GalaxyManager::Update() {
+	m_mainGalaxy->Update();
+}

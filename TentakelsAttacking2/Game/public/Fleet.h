@@ -32,4 +32,9 @@ public:
 	 * returns the target of the fleet.
 	 */
 	[[nodiscard]] SpaceObject const* GetTarget() const;
+
+	/**
+	 * moves the fleet to the target.
+	 */
+	void Update() override;
 };

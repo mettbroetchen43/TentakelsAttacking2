@@ -4,6 +4,7 @@
 //
 
 #include "Fleet.h"
+#include "HPrint.h"
 
 Fleet::Fleet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
     std::shared_ptr<SpaceObject> target)
@@ -19,4 +20,8 @@ bool Fleet::IsFleet() const {
 
 SpaceObject const* Fleet::GetTarget() const {
     return m_target.get();
+}
+
+void Fleet::Update() {
+    Print("Update Fleet, Fleet should move", PrintType::DEBUG);
 }

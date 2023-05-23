@@ -58,4 +58,9 @@ public:
 	 * returns if the planet is discovered from any player.
 	 */
 	[[nodiscard]] bool IsDiscovered() const;
+
+	/**
+	 * products ships.
+	 */
+	void Update() override;
 };

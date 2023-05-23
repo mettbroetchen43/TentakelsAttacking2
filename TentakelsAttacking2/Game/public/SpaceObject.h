@@ -8,14 +8,13 @@
 #include "Vec2.hpp"
 #include <string>
 #include <memory>
-#include "LogicUpdate.hpp"
 
 class Player;
 
 /**
  * the basic space object, that every element in the galaxy is implementing.
  */
-class SpaceObject /*: public LogicUpdate */ {
+class SpaceObject{
 protected:
 	using vec2pos = Vec2<int>; ///< the position type
 	unsigned int m_ID; ///< contains the unique id
@@ -38,6 +37,11 @@ public:
 	 * virtual dtor to provide a default one.
 	 */
 	virtual ~SpaceObject() = default;
+
+	/**
+	 * updates the SpaceObject.
+ 	 */
+	virtual void Update() = 0; 
 
 	/**
 	 * returns the unique id.

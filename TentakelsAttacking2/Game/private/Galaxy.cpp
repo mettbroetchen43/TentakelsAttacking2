@@ -633,3 +633,9 @@ void Galaxy::AddSpaceObjectDirectly(std::shared_ptr<SpaceObject> object) {
 		m_targetPoints.push_back(newObject);
 	}
 }
+
+void Galaxy::Update() {
+	for (auto& o : m_objects) {
+		o->Update();
+	}
+}

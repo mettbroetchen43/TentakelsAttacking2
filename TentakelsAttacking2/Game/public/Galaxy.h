@@ -180,4 +180,8 @@ public:
 	 * adds a new SpaceObject directly.
 	 */
 	void AddSpaceObjectDirectly(std::shared_ptr<SpaceObject> object);
+	/**
+	 * updates the Galaxy.
+	 */
+	void Update();
 };

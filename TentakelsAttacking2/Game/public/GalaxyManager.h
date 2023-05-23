@@ -58,4 +58,9 @@ public:
 	 * add a new fleet to the Galaxies.
 	 */
 	[[nodiscard]] bool AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	
+	/**
+	 * updates the main galaxy
+	 */
+	void Update();
 };
