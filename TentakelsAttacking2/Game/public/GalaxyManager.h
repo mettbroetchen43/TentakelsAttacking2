@@ -8,6 +8,7 @@
 
 class Galaxy;
 class GameManager;
+class Player;
 enum class CopyGalaxyType;
 class SendFleetInstructionEvent;
 
@@ -52,5 +53,5 @@ public:
 	/** 
 	 * add a new fleet to the Galaxies.
 	 */
-	[[nodiscard]] bool AddFleet(SendFleetInstructionEvent const* event);
+	[[nodiscard]] bool AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
 };

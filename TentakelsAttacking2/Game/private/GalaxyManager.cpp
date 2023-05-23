@@ -92,7 +92,21 @@ Galaxy* GalaxyManager::GetGalaxy() const {
 	return m_currentGalaxy.get();
 }
 
-bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event) {
-	Print("Fleet \"added\"", PrintType::DEBUG);
-	return false;
+bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
+
+	auto const [isValidFleet, generated_vec] {m_mainGalaxy->AddFleet(event, currentPlayer)};
+	if (not isValidFleet) {
+		Print("Not able to add Fleet to current Galaxy", PrintType::ERROR);
+
+		ReturnFleetInstructionEvent const returnEvent{ isValidFleet };
+		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
+		return false;
+	}
+
+	for (auto& g : generated_vec) {
+		bool const valid{ m_currentGalaxy->AddSpaceObjectImmediately(g) };
+		if (not valid) { Print("not able to add generated SpaceObjects to current Galaxy", PrintType::ERROR); }
+	}
+
+	return true;
 }
