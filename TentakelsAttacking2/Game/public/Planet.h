@@ -73,5 +73,5 @@ public:
 	/**
 	 * products ships.
 	 */
-	void Update() override;
+	void Update(Galaxy const* galaxy) override;
 };

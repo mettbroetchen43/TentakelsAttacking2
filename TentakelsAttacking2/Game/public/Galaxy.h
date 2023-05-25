@@ -161,6 +161,10 @@ public:
 	 */
 	[[nodiscard]] std::shared_ptr<SpaceObject> const GetSpaceObjectByID(unsigned int ID) const;
 	/**
+	 * returns if the new position is a valid position.
+	 */
+	[[nodiscard]] bool IsValidPosition(Vec2<int>const& position) const;
+	/**
 	 * adds a new fleet to the galaxy for the provided player.
 	 */
 	[[nodiscard]] FleetResult AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);

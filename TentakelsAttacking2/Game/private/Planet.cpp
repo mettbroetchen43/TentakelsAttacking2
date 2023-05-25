@@ -67,7 +67,7 @@ bool Planet::IsDiscovered() const {
 	return m_isDiscovered;
 }
 
-void Planet::Update() {
+void Planet::Update(Galaxy const*) {
 	m_ships += m_production;
 	if (not m_player->IsHumanPlayer() and m_ships > m_maxShips) {
 		m_ships = m_maxShips;

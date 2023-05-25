@@ -10,6 +10,7 @@
 #include <memory>
 
 class Player;
+class Galaxy;
 
 /**
  * the basic space object, that every element in the galaxy is implementing.
@@ -41,7 +42,7 @@ public:
 	/**
 	 * updates the SpaceObject.
  	 */
-	virtual void Update() = 0; 
+	virtual void Update(Galaxy const* galaxy) = 0; 
 
 	/**
 	 * returns the unique id.

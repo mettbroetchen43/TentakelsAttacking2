@@ -303,7 +303,7 @@ FleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, st
 	);
 
 	if (destination->IsFleet()) {
-		auto const result{ TryGetTarget(fleet, fleet->GetTarget()) };
+		auto const result{ TryGetTarget(fleet.get(), fleet->GetTarget())};
 		if (not result.first) { // not valid
 			popup("this operation would produce a fleet circle");
 			return { nullptr, nullptr, nullptr, false };
@@ -509,6 +509,15 @@ std::shared_ptr<SpaceObject> const Galaxy::GetSpaceObjectByID(unsigned int ID) c
 	return nullptr;
 }
 
+bool Galaxy::IsValidPosition(Vec2<int>const& position) const {
+	for (auto const& p : m_planets) {
+		if (p->GetPos() == position) {
+			return false;
+		}
+	}
+	return true;
+}
+
 FleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
 
 	// valid ID?
@@ -637,6 +646,6 @@ void Galaxy::HandleFleetResult(FleetResult const& fleetResult) {
 
 void Galaxy::Update() {
 	for (auto& o : m_objects) {
-		o->Update();
+		o->Update(this);
 	}
 }
