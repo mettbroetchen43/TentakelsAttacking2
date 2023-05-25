@@ -333,6 +333,10 @@ void DropDown::SetEnabled(bool isEnabled) {
 	m_isEnabled = isEnabled;
 }
 
+bool DropDown::IsFoldedOut() const {
+	return m_isFoldouts;
+}
+
 Rectangle DropDown::GetCollider() const {
 	return m_collider;
 }

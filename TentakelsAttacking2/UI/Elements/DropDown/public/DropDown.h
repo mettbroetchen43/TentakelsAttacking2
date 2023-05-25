@@ -128,6 +128,10 @@ public:
 	 * sets if the element is currently enabled.
 	 */
 	void SetEnabled(bool isEnabled);
+	/**
+	 * returns if the drop down is folded out.
+	 */
+	[[nodiscard]] bool IsFoldedOut() const;
 
 	/**
 	 * returns the current collider of the element.

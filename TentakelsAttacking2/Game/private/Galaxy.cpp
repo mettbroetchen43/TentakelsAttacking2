@@ -572,7 +572,7 @@ void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
 void Galaxy::HandleFleetResult(FleetResult const& fleetResult) {
 	auto add = [this](std::shared_ptr<SpaceObject> const& obj) {
 		if (obj->IsPlanet()) {
-			auto const* planet = dynamic_cast<Planet const*>(&*obj);
+			auto const* planet = dynamic_cast<Planet const*>(obj.get());
 			auto newDest = std::make_shared<Planet>(
 				planet->GetID(),
 				planet->GetPos(),
@@ -586,7 +586,7 @@ void Galaxy::HandleFleetResult(FleetResult const& fleetResult) {
 
 		}
 		else if (obj->IsFleet()) {
-			auto const* fleet = dynamic_cast<Fleet const*>(&*obj);
+			auto const* fleet = dynamic_cast<Fleet const*>(obj.get());
 			auto newDest = std::make_shared<Fleet>(
 				fleet->GetID(),
 				fleet->GetPos(),
@@ -598,7 +598,7 @@ void Galaxy::HandleFleetResult(FleetResult const& fleetResult) {
 			this->m_fleets.push_back(newDest);
 		}
 		else if (obj->IsTargetPoint()) {
-			auto const* t_p = dynamic_cast<TargetPoint const*>(&*obj);
+			auto const* t_p = dynamic_cast<TargetPoint const*>(obj.get());
 			auto newDest = std::make_shared<TargetPoint>(
 				t_p->GetID(),
 				t_p->GetPos(),

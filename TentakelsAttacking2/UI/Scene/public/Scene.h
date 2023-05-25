@@ -85,7 +85,7 @@ public:
 	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
 
 	/**
-	 * moves the scene and all its elements by a certian speed to a certain direction.
+	 * moves the scene and all its elements by a certain speed to a certain direction.
 	 * result is a linear movement.
 	 * moved until it gets Stopped with StopMoving.
 	 * the angle is clockwise.

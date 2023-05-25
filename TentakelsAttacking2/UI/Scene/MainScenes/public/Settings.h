@@ -7,6 +7,8 @@
 #include "Scene.h"
 
 class SliderAndInputLine;
+class ClassicButton;
+class DropDown;
 
 /**
  * provides a scenes, where the global settings can be set.
@@ -15,7 +17,8 @@ class SettingsScene final : public Scene {
 private:
 	std::shared_ptr<SliderAndInputLine> m_volume; ///< contains the volume slider
 	std::vector<std::pair<Resolution, std::string>> m_rawResolutionEntries; ///< contains die raw resolution information
-
+	std::pair<std::shared_ptr<ClassicButton>, std::shared_ptr<ClassicButton>> m_dropDownBtn{ nullptr, nullptr }; ///< contains the two buttons that are hidden by the drop down
+	std::shared_ptr<DropDown> m_dropDown{ nullptr };///< contains the drop down
 	/**
 	 * initializes all ui elements.
 	 * connects the actions.
@@ -37,4 +40,17 @@ public:
 	 * only initialization.
 	 */
 	SettingsScene(Vector2 resolution, SceneType continueScene);
+
+	/**
+	 * updates all elements in elements.
+	 */
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	/**
+	 * renders all elements in elements and elements out update.
+	 */
+	void Render(AppContext const& appContext) override;
+	/**
+	 * resizes all elements in elements and elements out update.
+	 */
+	void Resize(Vector2 resolution, AppContext const& appContext) override;
 };
