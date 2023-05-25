@@ -10,6 +10,7 @@
 
 class GameEventSettings;
 class SliderAndInputLine;
+enum class SliderType;
 
 /**
  * provides a scene where you can set the game parameter of an new game.
@@ -28,7 +29,7 @@ private:
 	/**
 	 * sets the value of the slider by there id.
 	 */
-	void SetValue(int value, int ID) const;
+	void SetValue(int value, SliderType type) const;
 	/**
 	 * calls the event setting and slider to set random values.
 	 */
