@@ -15,6 +15,7 @@
 class Line final : public UIElement {
 private:
 	float m_thick; ///< contains the thickness of the line
+	Color m_color; ///< contains the color the line gets rendered with
 
 public:
 	/**
@@ -22,7 +23,7 @@ public:
 	 * only initialisation.
 	 */
 	Line(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		float thick);
+		float thick, Color color);
 
 	/**
 	 * renders the line.

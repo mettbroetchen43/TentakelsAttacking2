@@ -31,7 +31,8 @@ void CreditTableScene::Initialize(std::string const& headline,
 		GetElementSize(0.7f, 0.0f),
 		Alignment::TOP_MID,
 		m_resolution,
-		3.0f
+		3.0f,
+		WHITE
 	);
 	m_elements.push_back(headlineLine);
 

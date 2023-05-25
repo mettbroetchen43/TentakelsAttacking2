@@ -35,7 +35,8 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 		GetElementSize(0.3f, 0.0f),
 		Alignment::TOP_MID,
 		resolution,
-		3.0f
+		3.0f,
+		WHITE
 	));
 
 	// Text and Check Box

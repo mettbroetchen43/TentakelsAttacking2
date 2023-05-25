@@ -8,18 +8,109 @@
 #include "SceneType.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
+#include "Arrow.h"
 
 
 
 void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
-
-	m_hover = std::make_shared<Hover>(
-		0.05f,
-		"Test text next line",
+	// TL
+	auto arrow = std::make_shared<Arrow>(
+		GetElementPosition(0.02f, 0.02f),
+		GetElementSize(0.3f, 0.3f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
 		WHITE,
-		Vector2(0.01f, 0.01f),
-		m_resolution
+		3.0f
 	);
+	m_elements.push_back(arrow);
+
+	// TM
+	arrow = std::make_shared<Arrow>(
+		GetElementPosition(0.35f, 0.02f),
+		GetElementSize(0.3f, 0.3f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_MID,
+		WHITE,
+		3.0f
+	);
+	m_elements.push_back(arrow);
+
+	// TR
+	arrow = std::make_shared<Arrow>(
+		GetElementPosition(0.68f, 0.02f),
+		GetElementSize(0.3f, 0.3f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_RIGHT,
+		WHITE,
+		3.0f
+	);
+	m_elements.push_back(arrow);
+
+	// ML
+	arrow = std::make_shared<Arrow>(
+		GetElementPosition(0.02f, 0.35f),
+		GetElementSize(0.3f, 0.3f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::MID_LEFT,
+		WHITE,
+		3.0f
+	);
+	m_elements.push_back(arrow);
+
+	// MM not valid
+
+	// MR
+	arrow = std::make_shared<Arrow>(
+		GetElementPosition(0.68f, 0.35f),
+		GetElementSize(0.3f, 0.3f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::MID_RIGHT,
+		WHITE,
+		3.0f
+	);
+	m_elements.push_back(arrow);
+
+	// BL
+	arrow = std::make_shared<Arrow>(
+		GetElementPosition(0.02f, 0.68f),
+		GetElementSize(0.3f, 0.3f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::BOTTOM_LEFT,
+		WHITE,
+		3.0f
+	);
+	m_elements.push_back(arrow);
+
+	// BM
+	arrow = std::make_shared<Arrow>(
+		GetElementPosition(0.35f, 0.68f),
+		GetElementSize(0.3f, 0.3f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::BOTTOM_MID,
+		WHITE,
+		3.0f
+	);
+	m_elements.push_back(arrow);
+
+	// BR
+	arrow = std::make_shared<Arrow>(
+		GetElementPosition(0.68f, 0.68f),
+		GetElementSize(0.3f, 0.3f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::BOTTOM_RIGHT,
+		WHITE,
+		3.0f
+	);
+	m_elements.push_back(arrow);
+	
 	
 
 	// to get Back No testing
@@ -54,30 +145,8 @@ void TestScene::TestLambda([[maybe_unused]] unsigned int value) { }
 
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
-	CheckHover(mousePosition, appContext);
-	m_hover->CheckAndUpdate(mousePosition, appContext);
 }
 
 void TestScene::Render(AppContext const& appContext) {
 	Scene::Render(appContext);
-	RenderRectangle(appContext);
-	if (m_isHover) {
-		m_isHover = false;
-		m_hover->Render(appContext);
-	}
-}
-
-void TestScene::RenderRectangle(AppContext const&) {
-	DrawRectangleLinesEx(
-		m_toRender,
-		3.0f,
-		WHITE
-	);
-}
-
-void TestScene::CheckHover(Vector2 const& mousePosition, AppContext const& appContext) {
-	if (CheckCollisionPointRec(mousePosition, m_toRender)) {
-		m_hover->SetRenderHover(mousePosition, appContext);
-		m_isHover = true;
-	}
 }

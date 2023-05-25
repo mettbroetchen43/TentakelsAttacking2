@@ -66,7 +66,8 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, 0.0f),
 		Alignment::MID_MID,
 		resolution,
-		3.0f
+		3.0f,
+		WHITE
 		);
 	AddMovingElement(creditsLine);
 
@@ -87,7 +88,8 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.9f, 0.0f),
 		Alignment::MID_MID,
 		resolution,
-		5.0f
+		5.0f,
+		WHITE
 		);
 	// Added to Element when moving is true
 

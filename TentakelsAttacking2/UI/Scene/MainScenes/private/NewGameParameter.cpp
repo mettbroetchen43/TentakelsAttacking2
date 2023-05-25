@@ -55,7 +55,8 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.0f, 0.65f),
 		Alignment::TOP_MID,
 		resolution,
-		2.0f
+		2.0f,
+		WHITE
 	));
 
 	// events

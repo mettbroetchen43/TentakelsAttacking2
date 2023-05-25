@@ -104,7 +104,8 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementSize(0.0f, 0.7f),
 		Alignment::TOP_MID,
 		resolution,
-		2.0f
+		2.0f,
+		WHITE
 		);
 	m_elements.push_back(line);
 
