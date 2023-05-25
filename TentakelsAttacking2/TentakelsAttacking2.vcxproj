@@ -181,6 +181,7 @@
     <ClInclude Include="Helper\public\HConcepts.hpp" />
     <ClInclude Include="Helper\public\HErrorLog.h" />
     <ClInclude Include="Helper\public\HFocusEvents.h" />
+    <ClInclude Include="Helper\public\HGalaxy.h" />
     <ClInclude Include="Helper\public\HInput.h" />
     <ClInclude Include="Helper\public\HPlayerCollection.h" />
     <ClInclude Include="Helper\public\HPrint.h" />
@@ -268,6 +269,7 @@
     <ClCompile Include="Game\private\TargetPoint.cpp" />
     <ClCompile Include="Game\private\Fleet.cpp" />
     <ClCompile Include="Helper\private\HErrorLog.cpp" />
+    <ClCompile Include="Helper\private\HGalaxy.cpp" />
     <ClCompile Include="Helper\private\HRandom.cpp" />
     <ClCompile Include="Game\private\Player.cpp" />
     <ClCompile Include="Helper\private\HTextProcessing.cpp" />

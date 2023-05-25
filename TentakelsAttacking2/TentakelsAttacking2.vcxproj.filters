@@ -327,6 +327,9 @@
     <ClInclude Include="Game\public\FleetResult.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Helper\public\HGalaxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -555,6 +558,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Constants\public\CFleet.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\private\HGalaxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

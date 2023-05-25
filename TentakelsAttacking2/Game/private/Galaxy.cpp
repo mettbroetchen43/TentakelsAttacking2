@@ -10,6 +10,7 @@
 #include "UIEvents.hpp"
 #include "HPrint.h"
 #include "FleetResult.hpp"
+#include "HGalaxy.h"
 #include <stdexcept>
 
 // help Lambdas
@@ -300,6 +301,14 @@ FleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, st
 		currentPlayer,
 		destination
 	);
+
+	if (destination->IsFleet()) {
+		auto const result{ TryGetTarget(fleet, fleet->GetTarget()) };
+		if (not result.first) { // not valid
+			popup("this operation would produce a fleet circle");
+			return { nullptr, nullptr, nullptr, false };
+		}
+	}
 
 	m_objects.push_back(fleet);
 	m_fleets.push_back(fleet);
