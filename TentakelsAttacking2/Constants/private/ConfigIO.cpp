@@ -169,6 +169,13 @@ void LoadConfig() {
 	};
 	addFloat(floatEntries, file, input, nextEntry);
 
+	intEntries = {
+		// Fleet
+		&constants.fleet.minFleetSpeed,
+		&constants.fleet.maxFleetSpeed,
+	};
+	addInt(intEntries, file, input, nextEntry);
+
 	file.close();
 
 #ifdef _DEBUG
@@ -247,6 +254,10 @@ void SaveConfig() {
 	entry(std::to_string(constants.planet.maxProduction), "Max Production", toSave);
 	entry(std::to_string(constants.planet.homeworldSpacing), "Homeworld Spacing (0.0 - 1.0)", toSave);
 	entry(std::to_string(constants.planet.globalSpacing), "Global Spacing (0.0 - 1.0)", toSave);
+
+	headline("Fleet", toSave);
+	entry(std::to_string(constants.fleet.minFleetSpeed), "Min Fleet Speed", toSave);
+	entry(std::to_string(constants.fleet.maxFleetSpeed), "Max Fleet Speed", toSave);
 
 	file << toSave;
 	file.close();

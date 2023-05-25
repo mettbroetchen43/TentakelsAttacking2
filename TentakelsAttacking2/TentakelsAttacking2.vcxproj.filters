@@ -554,6 +554,9 @@
     <ClCompile Include="Game\private\GalaxyManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Constants\public\CFleet.hpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\Text\title.txt" />
