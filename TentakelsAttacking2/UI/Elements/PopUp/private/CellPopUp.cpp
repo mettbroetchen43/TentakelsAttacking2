@@ -34,7 +34,7 @@ void CellPopUp::Initialize([[maybe_unused]] AppContext_ty_c appContext,
 
 	m_elements.push_back(cancelBtn);
 }
-std::shared_ptr<ClassicButton> CellPopUp::InitializeAcceptButton(
+ClassicButton_ty CellPopUp::InitializeAcceptButton(
 	[[maybe_unused]] AppContext_ty_c appContext, Vector2 resolution) {
 
 	auto acceptBtn = std::make_shared<ClassicButton>(

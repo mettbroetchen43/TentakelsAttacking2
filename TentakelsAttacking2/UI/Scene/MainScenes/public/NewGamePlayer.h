@@ -22,9 +22,9 @@ private:
 	InputLine<std::string>* m_inputLine; ///< contains an input line where the player name where entered
 	ColorPicker* m_colorPicker; ///< contains the color picker where the player color gets choose
 	Table* m_table; ///< contains the table where the current player where displayed
-	std::shared_ptr<ClassicButton> m_nextBTN; ///< contains the button, witch the calls the next scene
+	ClassicButton_ty m_nextBTN; ///< contains the button, witch the calls the next scene
 	std::vector<Focusable*> m_nestedFocus; ///< contains focusable* that are abe to have an nested focus
-	std::vector<std::shared_ptr<ClassicButton>> m_playerButtons; ///< contains the remove player buttons
+	std::vector<ClassicButton_ty> m_playerButtons; ///< contains the remove player buttons
 
 	/**
 	 * initializes all ui elements.

@@ -34,7 +34,7 @@ private:
 	std::shared_ptr<GalaxyScene> m_galaxy; ///< contains the current ui galaxy
 	std::shared_ptr<PlanetTable> m_planetTable; ///< contains the current planet table
 	std::shared_ptr<FleetAndTargetPointTable> m_fleetTable; ///< contains the current fleet table
-	std::shared_ptr<ClassicButton> m_nextBtn; ///< contains the next turn / round button
+	ClassicButton_ty m_nextBtn; ///< contains the next turn / round button
 	std::shared_ptr<Text> m_currentPlayerName; ///< contains the current player name
 	std::shared_ptr<Text> m_nextPlayerName; ///< contains the next player name
 	std::shared_ptr<Text> m_currentRound;  ///< contains the current round count
@@ -48,8 +48,8 @@ private:
 	std::shared_ptr<InputLine<int>> m_destinationY; ///< provides the destination planet Y
 	std::shared_ptr<InputLine<int>> m_shipCount; ///< provides the ship count
 
-	std::shared_ptr<ClassicButton> m_acceptBtn; ///< sends the fleet event into the logic
-	std::shared_ptr<ClassicButton> m_resetBtn; ///< clears the input lines
+	ClassicButton_ty m_acceptBtn; ///< sends the fleet event into the logic
+	ClassicButton_ty m_resetBtn; ///< clears the input lines
 
 	/**
 	 * initializes all ui elements.

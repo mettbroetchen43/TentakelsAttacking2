@@ -18,7 +18,7 @@ protected:
 	 * initializes all ui elements.
 	 */
 	virtual void Initialize(AppContext_ty_c appContext, Vector2 resolution);
-	[[nodiscard]] std::shared_ptr<ClassicButton> InitializeAcceptButton(
+	[[nodiscard]] ClassicButton_ty InitializeAcceptButton(
 		AppContext_ty_c appContext, Vector2 resolution);
 
 	/**

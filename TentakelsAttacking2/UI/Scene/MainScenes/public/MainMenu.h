@@ -14,7 +14,7 @@ class ClassicButton;
  */
 class MainMenu final : public Scene, public EventListener {
 private:
-	std::shared_ptr<ClassicButton> m_continueBtn; ///< contains the continue button
+	ClassicButton_ty m_continueBtn; ///< contains the continue button
 	/**
 	 * initializes all ui elements.
 	 * connects the actions.

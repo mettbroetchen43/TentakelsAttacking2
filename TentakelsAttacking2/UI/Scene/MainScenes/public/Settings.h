@@ -17,7 +17,7 @@ class SettingsScene final : public Scene {
 private:
 	std::shared_ptr<SliderAndInputLine> m_volume; ///< contains the volume slider
 	std::vector<std::pair<Resolution, std::string>> m_rawResolutionEntries; ///< contains die raw resolution information
-	std::pair<std::shared_ptr<ClassicButton>, std::shared_ptr<ClassicButton>> m_dropDownBtn{ nullptr, nullptr }; ///< contains the two buttons that are hidden by the drop down
+	std::pair<ClassicButton_ty, ClassicButton_ty> m_dropDownBtn{ nullptr, nullptr }; ///< contains the two buttons that are hidden by the drop down
 	std::shared_ptr<DropDown> m_dropDown{ nullptr };///< contains the drop down
 	/**
 	 * initializes all ui elements.

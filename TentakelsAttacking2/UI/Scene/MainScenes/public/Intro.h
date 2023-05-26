@@ -22,7 +22,7 @@ class Title;
 class Intro final : public Scene {
 private:
 	std::shared_ptr<Title> m_title{ nullptr }; ///< contains the title
-	std::shared_ptr<ClassicButton> m_btn{ nullptr }; ///< contains the next button.
+	ClassicButton_ty m_btn{ nullptr }; ///< contains the next button.
 	bool m_btnMovementFinish{ false }; ///< contains if the button has finished moving
 	SceneType m_nextScene{ SceneType::MAIN_MENU }; ///< contains the next Scene Type that will be loaded
 	

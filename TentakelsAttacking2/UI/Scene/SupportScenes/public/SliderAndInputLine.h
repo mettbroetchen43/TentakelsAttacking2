@@ -18,7 +18,7 @@ class SliderAndInputLine : public Scene {
 private:
 	std::shared_ptr<Slider> m_slider; ///< contains a the slider
 	std::shared_ptr<InputLine<int>> m_inputLine; ///< contains a the input line
-	std::shared_ptr<ClassicButton> m_btn; ///< contains a the button
+	ClassicButton_ty m_btn; ///< contains a the button
 	std::function<void(int)> m_onSave{ [](int) {} }; ///< contains the llambda that gets called on save -> provides the current value
 
 	bool m_isEnabled{ true }; ///< contains if the scene is enabled
