@@ -67,3 +67,8 @@ using Slider_ty_c = std::shared_ptr<Slider> const&;
 class Text;
 using Text_ty =   std::shared_ptr<Text>;
 using Text_ty_c = std::shared_ptr<Text> const&;
+
+class Title;
+using Title_ty =   std::shared_ptr<Title>;
+using Title_ty_c = std::shared_ptr<Title> const&;
+

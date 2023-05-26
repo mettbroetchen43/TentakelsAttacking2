@@ -15,7 +15,7 @@ class Line;
  */
 class CreditsScene final : public Scene {
 private:
-	std::shared_ptr<Title> m_title; ///< contains the title
+	Title_ty m_title; ///< contains the title
 	Line_ty m_titleLine; ///< contains the line below title
 	ClassicButton_ty m_finishBTN;  ///< contains the button that gets displayed at the end of the credits
 	ClassicButton_ty m_speedBTN; ///< contains the button that can toggle the credit speed
