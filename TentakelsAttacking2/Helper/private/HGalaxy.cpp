@@ -8,13 +8,13 @@
 #include "SpaceObject.h"
 
 std::pair<bool, SpaceObject_ty> TryGetTarget(
-	Fleet const* fleet, SpaceObject_ty const& target) {
+	Fleet_ty_raw fleet, SpaceObject_ty const& target) {
 
 	if (target->IsFleet()) {
 		if (target->GetID() == fleet->GetID()) {
 			return { false, nullptr };
 		}
-		Fleet const* n_target = dynamic_cast<Fleet const*>(target.get());
+		Fleet_ty_raw n_target = dynamic_cast<Fleet_ty_raw>(target.get());
 		return TryGetTarget(fleet, n_target->GetTarget());
 	}
 

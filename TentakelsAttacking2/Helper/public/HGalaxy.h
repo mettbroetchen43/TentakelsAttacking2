@@ -8,7 +8,5 @@
 #include <memory>
 #include <CLogicAlias.hpp>
 
-class Fleet;
-
 [[nodiscard]] std::pair<bool, SpaceObject_ty> TryGetTarget(
-	Fleet const* fleet, SpaceObject_ty const& target);
+	Fleet_ty_raw fleet, SpaceObject_ty const& target);

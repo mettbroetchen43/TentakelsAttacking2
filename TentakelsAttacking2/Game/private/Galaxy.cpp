@@ -169,7 +169,7 @@ bool Galaxy::IsValidFleet(unsigned int const ID) const {
 	}
 	return false;
 }
-std::shared_ptr<Fleet> Galaxy::GetFleetByID(unsigned int const ID) const {
+Fleet_ty Galaxy::GetFleetByID(unsigned int const ID) const {
 	for (auto const& f : m_fleets) {
 		if (f->GetID() == ID) {
 			return f;
@@ -178,7 +178,7 @@ std::shared_ptr<Fleet> Galaxy::GetFleetByID(unsigned int const ID) const {
 
 	throw std::runtime_error("no fleet with this ID: " + std::to_string(ID));
 }
-[[nodiscard]] std::shared_ptr<Fleet> Galaxy::TryGetExistingFleetByOriginAndDestination(
+[[nodiscard]] Fleet_ty Galaxy::TryGetExistingFleetByOriginAndDestination(
 	SpaceObject_ty origin, SpaceObject_ty destination) const {
 
 	for (auto const& f : m_fleets) {
@@ -480,7 +480,7 @@ std::vector<std::shared_ptr<Planet>> const Galaxy::GetPlanets() const {
 	return m_planets;
 }
 
-std::vector<std::shared_ptr<Fleet>> const Galaxy::GetFleets() const {
+std::vector<Fleet_ty> const Galaxy::GetFleets() const {
 	return m_fleets;
 }
 
@@ -571,7 +571,7 @@ FleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty c
 
 void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
 	auto const newEnd{ std::remove_if(m_fleets.begin(), m_fleets.end(),
-		[currentPlayerID](std::shared_ptr<Fleet> const& fleet) { return fleet->GetPlayer()->GetID() != currentPlayerID; }) };
+		[currentPlayerID](Fleet_ty_c fleet) { return fleet->GetPlayer()->GetID() != currentPlayerID; }) };
 	m_fleets.erase(newEnd, m_fleets.end());
 
 	auto const newEnd2{ std::remove_if(m_objects.begin(), m_objects.end(),
@@ -604,7 +604,7 @@ void Galaxy::HandleFleetResult(FleetResult const& fleetResult) {
 
 		}
 		else if (obj->IsFleet()) {
-			auto const* fleet = dynamic_cast<Fleet const*>(obj.get());
+			auto const* fleet = dynamic_cast<Fleet_ty_raw>(obj.get());
 			auto newDest = std::make_shared<Fleet>(
 				fleet->GetID(),
 				fleet->GetPos(),

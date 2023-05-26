@@ -24,7 +24,7 @@ private:
 	bool m_validGalaxy{ true }; ///< specifies if the generation in valid and the galaxy is able to use
 	std::vector<SpaceObject_ty> m_objects; ///< contains all space object for updating 
 	std::vector<std::shared_ptr<Planet>> m_planets; ///< contains all planets 
-	std::vector<std::shared_ptr<Fleet>> m_fleets; ///< contains all fleets
+	std::vector<Fleet_ty> m_fleets; ///< contains all fleets
 	std::vector<std::shared_ptr<TargetPoint>> m_targetPoints; ///< contains all target points
 
 	Vec2<int> m_size; ///< contains the size of the galaxy
@@ -64,12 +64,12 @@ private:
 	 * returns a fleet by ID.
 	 * throws an runtime error if no Fleet exists for that ID.
 	 */
-	[[nodiscard]] std::shared_ptr<Fleet> GetFleetByID(unsigned int const ID) const;
+	[[nodiscard]] Fleet_ty GetFleetByID(unsigned int const ID) const;
 	/**
 	 * returns a fleet if existing.
 	 * returns a nullptr if not.
 	 */
-	[[nodiscard]] std::shared_ptr<Fleet> TryGetExistingFleetByOriginAndDestination(
+	[[nodiscard]] Fleet_ty TryGetExistingFleetByOriginAndDestination(
 		SpaceObject_ty origin, SpaceObject_ty destination) const;
 
 	/**
@@ -146,7 +146,7 @@ public:
 	/**
 	 * returns the fleets of the galaxy.
 	 */
-	[[nodiscard]] std::vector<std::shared_ptr<Fleet>> const GetFleets() const;
+	[[nodiscard]] std::vector<Fleet_ty> const GetFleets() const;
 	/**
 	 * returns the target points of the galaxy.
 	 */
