@@ -35,7 +35,7 @@ protected:
 	 * returns the focusable instance from the id.
 	 * returns a nullptr if no instance with that id exists
 	 */
-	Focusable* GetFocusableByFocusID(unsigned int ID) const;
+	Focusable_ty_raw GetFocusableByFocusID(unsigned int ID) const;
 
 
 public:

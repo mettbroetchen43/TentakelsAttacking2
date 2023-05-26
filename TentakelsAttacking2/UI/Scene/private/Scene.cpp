@@ -12,13 +12,13 @@
 void Scene::SetFocusActive(AppContext_ty_c) {
 	if (m_active) {
 		for (auto& element : m_elements) {
-			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
+			if (auto focusable = dynamic_cast<Focusable_ty_raw>(element.get())) {
 				AddFocusElement(focusable);
 				continue;
 			}
 		}
 		for (auto& element : m_elementsOutUpdates) {
-			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
+			if (auto focusable = dynamic_cast<Focusable_ty_raw>(element.get())) {
 				AddFocusElement(focusable);
 				continue;
 			}
@@ -26,13 +26,13 @@ void Scene::SetFocusActive(AppContext_ty_c) {
 	}
 	else {
 		for (auto& element : m_elements) {
-			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
+			if (auto focusable = dynamic_cast<Focusable_ty_raw>(element.get())) {
 				DeleteFocusElement(focusable);
 				continue;
 			}
 		}
 		for (auto& element : m_elementsOutUpdates) {
-			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
+			if (auto focusable = dynamic_cast<Focusable_ty_raw>(element.get())) {
 				DeleteFocusElement(focusable);
 				continue;
 			}
@@ -53,16 +53,16 @@ Vector2 Scene::GetElementSize(float x, float y) {
 	};
 }
 
-Focusable* Scene::GetFocusableByFocusID(unsigned int ID) const {
+Focusable_ty_raw Scene::GetFocusableByFocusID(unsigned int ID) const {
 	for (auto element : m_elements) {
-		if (auto focus = dynamic_cast<Focusable*>(element.get())) {
+		if (auto focus = dynamic_cast<Focusable_ty_raw>(element.get())) {
 			if (focus->GetFocusID() == ID) {
 				return focus;
 			}
 		}
 	}
 	for (auto element : m_elementsOutUpdates) {
-		if (auto focus = dynamic_cast<Focusable*>(element.get())) {
+		if (auto focus = dynamic_cast<Focusable_ty_raw>(element.get())) {
 			if (focus->GetFocusID() == ID) {
 				return focus;
 			}

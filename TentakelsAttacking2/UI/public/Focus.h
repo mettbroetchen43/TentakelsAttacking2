@@ -6,18 +6,17 @@
 #pragma once
 #include "LayeredVector.hpp"
 #include "EventListener.hpp"
+#include "CUIAlias.hpp"
 #include <vector>
 
-class Focusable;
-
 /**
- * provides a focus system that can handle focusable*.
+ * provides a focus system that can handle Focusable_ty_raw.
  */
 class Focus final : public EventListener {
 private:
-	Focusable* m_currentFocus{ nullptr }; ///< contains the current focus
+	Focusable_ty_raw m_currentFocus{ nullptr }; ///< contains the current focus
 	LayeredVector<Focusable> m_focus; ///< contains all focusable elements in layer
-	std::vector<Focusable*> m_lastFocus; ///< stores the correct focus of the underlaying layers
+	std::vector<Focusable_ty_raw> m_lastFocus; ///< stores the correct focus of the underlaying layers
 	bool m_renderFocus{ false }; ///< contains if the focus gets rendered
 
 	size_t m_PopUpLayerCounter{ 0 }; ///< contains the mount of popups that are in the focus layers
@@ -39,19 +38,19 @@ private:
 	/**
 	 * calculates and returns the focus element with the smallest id.
 	 */
-	[[nodiscard]] Focusable* GetFirstFocus();
+	[[nodiscard]] Focusable_ty_raw GetFirstFocus();
 	/**
 	 * calculates and returns the focus element with the highest id.
 	 */
-	[[nodiscard]] Focusable* GetLastFocus();
+	[[nodiscard]] Focusable_ty_raw GetLastFocus();
 	/**
 	 * calculates and returns the focus element with the next id.
 	 */
-	[[nodiscard]] Focusable* GetNextFocus();
+	[[nodiscard]] Focusable_ty_raw GetNextFocus();
 	/**
 	 * calculates and returns the focus element with the previous id.
 	 */
-	[[nodiscard]] Focusable* GetPreviousFocus();
+	[[nodiscard]] Focusable_ty_raw GetPreviousFocus();
 	/**
 	 * sets the initial focus.
 	 */
@@ -67,21 +66,21 @@ private:
 	/**
 	 * checks and returns if the provided focus element is existing in the top layer.
 	 */
-	[[nodiscard]] bool IsExistingFocus(Focusable* focusable);
+	[[nodiscard]] bool IsExistingFocus(Focusable_ty_raw focusable);
 
 	/**
 	 * sets the provided focus active and the previous focus inactive.
 	 */
-	void SetSpecificFocus(Focusable* focusable);
+	void SetSpecificFocus(Focusable_ty_raw focusable);
 	/**
 	 * sets the provided focus active and the previous focus inactive if no popup is active.
 	 * otherwise the request is held back and executed when all popups are closed.
 	 */
-	void SetSpecificNormalFocus(Focusable* focusable);
+	void SetSpecificNormalFocus(Focusable_ty_raw focusable);
 	/**
 	 * sets the provided focus active and the previous focus inactive.
 	 */
-	void SetSpecificPopUpFocus(Focusable* focusable);
+	void SetSpecificPopUpFocus(Focusable_ty_raw focusable);
 
 	/**
 	 * adds a new layer to the focus vector.
@@ -125,30 +124,30 @@ private:
 	 * adds the provided focus element to the vector.
 	 * sets a new active focus if provided. 
 	 */
-	void AddElement(Focusable* focusable, bool setNewFocus = true);
+	void AddElement(Focusable_ty_raw focusable, bool setNewFocus = true);
 	/**
 	 * adds the provided focus element to the vector if no popup is active.
 	 * otherwise the request is held back and executed when all popups are closed.
 	 */
-	void AddNormalElement(Focusable* focusable);
+	void AddNormalElement(Focusable_ty_raw focusable);
 	/**
 	 * adds the provided focus element always to the vector.
 	 */
-	void AddPopUpElement(Focusable* focusable);
+	void AddPopUpElement(Focusable_ty_raw focusable);
 	/**
 	 * deletes the provided focus element from the vector.
 	 * sets a new active focus if provided.
 	 */
-	void DeleteElement(Focusable* focusable, bool setNewFocus = true);
+	void DeleteElement(Focusable_ty_raw focusable, bool setNewFocus = true);
 	/**
 	 * deletes the provided focus element from the vector if no popup is active.
 	 * otherwise the request is held back and executed when all popups are closed.
 	 */
-	void DeleteNormalElement(Focusable* focusable);
+	void DeleteNormalElement(Focusable_ty_raw focusable);
 	/**
 	 * deletes the provided focus element always from the vector.
 	 */
-	void DeletePopUpElement(Focusable* focusable);
+	void DeletePopUpElement(Focusable_ty_raw focusable);
 
 	/**
 	 * executes all requests that are hold back while a popup was active.

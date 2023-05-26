@@ -27,8 +27,8 @@ void Focus::UnfocusAllAtTopLayer() {
 
 	m_currentFocus = nullptr;
 }
-Focusable* Focus::GetFirstFocus() {
-	Focusable* firstFocus{ nullptr };
+Focusable_ty_raw Focus::GetFirstFocus() {
+	Focusable_ty_raw firstFocus{ nullptr };
 	bool const hasAnyEnabledElements{ HasAnyEnabledElements() };
 
 	for (auto focus : m_focus) {
@@ -47,8 +47,8 @@ Focusable* Focus::GetFirstFocus() {
 
 	return firstFocus;
 }
-Focusable* Focus::GetLastFocus() {
-	Focusable* lastFocus{ nullptr };
+Focusable_ty_raw Focus::GetLastFocus() {
+	Focusable_ty_raw lastFocus{ nullptr };
 	bool const hasAnyEnabledElements{ HasAnyEnabledElements() };
 
 	for (auto focus : m_focus) {
@@ -67,9 +67,9 @@ Focusable* Focus::GetLastFocus() {
 
 	return lastFocus;
 }
-Focusable* Focus::GetNextFocus() {
+Focusable_ty_raw Focus::GetNextFocus() {
 	unsigned int const currentID{ m_currentFocus ? m_currentFocus->GetFocusID() : 0 };
-	Focusable* nextFocus{ nullptr };
+	Focusable_ty_raw nextFocus{ nullptr };
 	bool const hasAnyEnabledElements{ HasAnyEnabledElements() };
 
 	for (auto focus : m_focus) {
@@ -93,10 +93,10 @@ Focusable* Focus::GetNextFocus() {
 
 	return nextFocus;
 }
-Focusable* Focus::GetPreviousFocus() {
+Focusable_ty_raw Focus::GetPreviousFocus() {
 	unsigned int const currentID{ m_currentFocus ? m_currentFocus->GetFocusID()
 		: static_cast<unsigned int>(m_focus.size()) };
-	Focusable* previousFocus{ nullptr };
+	Focusable_ty_raw previousFocus{ nullptr };
 	bool const hasAnyEnabledElements{ HasAnyEnabledElements() };
 
 	for (auto focus : m_focus) {
@@ -126,7 +126,7 @@ void Focus::SetInitialFocus() {
 void Focus::SetNextFocus() {
 	m_currentFocus->SetFocus(false);
 
-	Focusable* nextFocus{ GetNextFocus() };
+	Focusable_ty_raw nextFocus{ GetNextFocus() };
 	if (!nextFocus) {
 		nextFocus = GetFirstFocus();
 	}
@@ -137,7 +137,7 @@ void Focus::SetNextFocus() {
 void Focus::SetPreviousFocus() {
 	m_currentFocus->SetFocus(false);
 
-	Focusable* previousFocus{ GetPreviousFocus() };
+	Focusable_ty_raw previousFocus{ GetPreviousFocus() };
 	if (!previousFocus) {
 		previousFocus = GetLastFocus();
 	}
@@ -145,7 +145,7 @@ void Focus::SetPreviousFocus() {
 	m_currentFocus = previousFocus;
 	m_currentFocus->SetFocus(true);
 }
-bool Focus::IsExistingFocus(Focusable* focusable) {
+bool Focus::IsExistingFocus(Focusable_ty_raw focusable) {
 	for (auto focus : m_focus) {
 		if (focus == focusable) {
 			return true;
@@ -154,7 +154,7 @@ bool Focus::IsExistingFocus(Focusable* focusable) {
 	return false;
 }
 
-void Focus::SetSpecificFocus(Focusable* focusable) {
+void Focus::SetSpecificFocus(Focusable_ty_raw focusable) {
 	if (!IsExistingFocus(focusable)) { return; }
 
 	if (m_currentFocus) {
@@ -163,7 +163,7 @@ void Focus::SetSpecificFocus(Focusable* focusable) {
 	m_currentFocus = focusable;
 	m_currentFocus->SetFocus(true);
 }
-void Focus::SetSpecificNormalFocus(Focusable* focusable) {
+void Focus::SetSpecificNormalFocus(Focusable_ty_raw focusable) {
 	if (m_PopUpLayerCounter == 0) {
 		SetSpecificFocus(focusable);
 	}
@@ -171,7 +171,7 @@ void Focus::SetSpecificNormalFocus(Focusable* focusable) {
 		m_toSelectRequest.AddElement(focusable);
 	}
 }
-void Focus::SetSpecificPopUpFocus(Focusable* focusable) {
+void Focus::SetSpecificPopUpFocus(Focusable_ty_raw focusable) {
 	SetSpecificFocus(focusable);
 }
 
@@ -231,7 +231,7 @@ void Focus::DeletePopUpLayer() {
 	}
 }
 
-void Focus::AddElement(Focusable* focusable, bool setNewFocus) {
+void Focus::AddElement(Focusable_ty_raw focusable, bool setNewFocus) {
 	CheckNewID(focusable->GetFocusID());
 	m_focus.AddElement(focusable);
 
@@ -244,7 +244,7 @@ void Focus::AddElement(Focusable* focusable, bool setNewFocus) {
 	}
 	SetInitialFocus();
 }
-void Focus::AddNormalElement(Focusable* focusable) {
+void Focus::AddNormalElement(Focusable_ty_raw focusable) {
 	if (m_PopUpLayerCounter == 0) {
 		AddElement(focusable);
 	}
@@ -252,10 +252,10 @@ void Focus::AddNormalElement(Focusable* focusable) {
 		m_addElementRequest.AddElement(focusable);
 	}
 }
-void Focus::AddPopUpElement(Focusable* focusable) {
+void Focus::AddPopUpElement(Focusable_ty_raw focusable) {
 	AddElement(focusable);
 }
-void Focus::DeleteElement(Focusable* focusable, bool setNextFocus) {
+void Focus::DeleteElement(Focusable_ty_raw focusable, bool setNextFocus) {
 	m_focus.RemoveElement(focusable);
 
 	if (!setNextFocus) {
@@ -266,7 +266,7 @@ void Focus::DeleteElement(Focusable* focusable, bool setNextFocus) {
 		m_currentFocus = GetNextFocus();
 	}
 }
-void Focus::DeleteNormalElement(Focusable* focusable) {
+void Focus::DeleteNormalElement(Focusable_ty_raw focusable) {
 	if (m_PopUpLayerCounter == 0) {
 		DeleteElement(focusable);
 	}
@@ -274,7 +274,7 @@ void Focus::DeleteNormalElement(Focusable* focusable) {
 		m_removeElementRequest.AddElement(focusable);
 	}
 }
-void Focus::DeletePopUpElement(Focusable* focusable) {
+void Focus::DeletePopUpElement(Focusable_ty_raw focusable) {
 	DeleteElement(focusable);
 }
 

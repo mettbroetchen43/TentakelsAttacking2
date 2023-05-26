@@ -11,11 +11,8 @@
 #include <memory>
 #include <vector>
 
-class Focus;
-class Focusable;
 class Scene;
 struct AppContext;
-struct Vector2;
 class UIManager;
 
 /**

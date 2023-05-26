@@ -23,7 +23,7 @@ private:
 	ColorPicker* m_colorPicker; ///< contains the color picker where the player color gets choose
 	Table* m_table; ///< contains the table where the current player where displayed
 	ClassicButton_ty m_nextBTN; ///< contains the button, witch the calls the next scene
-	std::vector<Focusable*> m_nestedFocus; ///< contains focusable* that are abe to have an nested focus
+	std::vector<Focusable_ty_raw> m_nestedFocus; ///< contains Focusable_ty_raw that are abe to have an nested focus
 	std::vector<ClassicButton_ty> m_playerButtons; ///< contains the remove player buttons
 
 	/**

@@ -98,3 +98,9 @@ using AbstractTableCell_ty_c = std::shared_ptr<AbstractTableCell> const&;
 class Table;
 using Table_ty =   std::shared_ptr<Table>;
 using Table_ty_c = std::shared_ptr<Table> const&;
+
+
+// public
+// Focusable
+class Focusable;
+using Focusable_ty_raw = Focusable*;

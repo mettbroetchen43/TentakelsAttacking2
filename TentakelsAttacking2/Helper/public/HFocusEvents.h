@@ -4,7 +4,7 @@
 //
 
 #pragma once
-class Focusable;
+#include "CUIAlias.hpp"
 
 /**
  * wraps the events to add a focus layer.
@@ -21,12 +21,12 @@ void DeleteFocusLayer(bool isPopUp = false);
  * wraps the events to add a focus element.
  * if the bool is set the popup version in invoked.
  */
-void AddFocusElement(Focusable* focusable, bool isPopUp = false);
+void AddFocusElement(Focusable_ty_raw focusable, bool isPopUp = false);
 /**
  * wraps the events to delete a focus element.
  * if the bool is set the popup version in invoked.
  */
-void DeleteFocusElement(Focusable* focusable, bool isPopUp = false);
+void DeleteFocusElement(Focusable_ty_raw focusable, bool isPopUp = false);
 
 /**
  * wraps the event to select the next focus element.
@@ -36,4 +36,4 @@ void SelectNextFocusElement();
  * wraps the events to select a focus element.
  * if the bool is set the popup version in invoked.
  */
-void SelectFocusElement(Focusable* focusable, bool isPopUp = false);
+void SelectFocusElement(Focusable_ty_raw focusable, bool isPopUp = false);
