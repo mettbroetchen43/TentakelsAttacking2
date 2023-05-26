@@ -19,7 +19,7 @@ class Slider;
 
 class Table final : public UIElement, public Focusable {
 private:
-	using cells_ty = std::vector<std::vector<std::shared_ptr<AbstractTableCell>>>;
+	using cells_ty = std::vector<std::vector<AbstractTableCell_ty>>;
 	int m_rowCount; ///< contains the current mount of rows in the table
 	int m_columnCount; ///< contains the current mount of column in the table
 	cells_ty m_cells; ///< contains all cells the table is holding
@@ -305,7 +305,7 @@ public:
 		if (row == m_cells.size()) { /* nothing */ }
 		else if (!IsValidRow(row)) { Print("invalid row index", PrintType::ERROR), throw std::out_of_range("row-index"); }
 
-		auto line{ std::vector<std::shared_ptr<AbstractTableCell>>() };
+		auto line{ std::vector<AbstractTableCell_ty>() };
 
 		for (int column = 0; column < m_columnCount; ++column) {
 

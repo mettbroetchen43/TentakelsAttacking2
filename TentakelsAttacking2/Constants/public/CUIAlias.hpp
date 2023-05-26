@@ -89,3 +89,12 @@ using UIGalaxy_ty_c = std::shared_ptr<UIGalaxy> const&;
 class UIPlanet;
 using UIPlanet_ty =   std::shared_ptr<UIPlanet>;
 using UIPlanet_ty_c = std::shared_ptr<UIPlanet> const&;
+
+// Table
+class AbstractTableCell;
+using AbstractTableCell_ty =   std::shared_ptr<AbstractTableCell>;
+using AbstractTableCell_ty_c = std::shared_ptr<AbstractTableCell> const&;
+
+class Table;
+using Table_ty =   std::shared_ptr<Table>;
+using Table_ty_c = std::shared_ptr<Table> const&;

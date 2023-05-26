@@ -302,7 +302,7 @@ void Table::ScrollFocused() {
 	if (not m_isScrollable) { return; }
 	if (not IsNestedFocus()) { return; }
 
-	std::shared_ptr<AbstractTableCell> cell{ nullptr };
+	AbstractTableCell_ty cell{ nullptr };
 	for (int row = 0; row < m_cells.size(); ++row) {
 		for (int column = 0; column < m_cells.at(row).size(); ++column) {
 			auto const cCell = m_cells.at(row).at(column);
@@ -500,7 +500,7 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	m_cells.clear();
 	for (int row = 0; row < m_rowCount; ++row) {
 
-		auto line{ std::vector<std::shared_ptr<AbstractTableCell>>() };
+		auto line{ std::vector<AbstractTableCell_ty>() };
 		for (int column = 0; column < columnCount; ++column) {
 
 			auto cell = std::make_shared<TableCell<std::string>>(
