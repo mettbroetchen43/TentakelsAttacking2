@@ -41,7 +41,7 @@ private:
 	bool m_activeVerticalSlider; ///< contains if the vertical slider is needed
 
 	bool m_isHoveredHighlighted{ false }; ///< contains if the hovered row and column gets highlighted
-	Vec2<int>m_currentHighlighted{ -1,-1 }; ///< contains the currently hightlithed row (x) and column (y) index
+	vec2pos_ty m_currentHighlighted{ -1,-1 }; ///< contains the currently hightlithed row (x) and column (y) index
 
 	std::function<void(AbstractTableCell const*, std::string, std::string)> m_updatedStringCell{ [](AbstractTableCell const*, std::string, std::string) {} }; ///< string
 	std::function<void(AbstractTableCell const*, int, int)> m_updatedIntCell{ [](AbstractTableCell const*, int, int) {} }; ///< int

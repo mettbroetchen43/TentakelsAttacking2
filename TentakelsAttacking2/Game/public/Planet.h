@@ -11,7 +11,7 @@
  */
 class Planet final : public SpaceObject {
 private:
-	using vec2pos = Vec2<int>; ///< the type of the position
+	using vec2pos = vec2pos_ty; ///< the type of the position
 	bool m_isHomePlanet{ }; ///< contains if this planet is a home planet
 	bool m_isDestroyed{ false }; ///< contains if the planet is destroyed
 	bool m_isDiscovered{ false }; ///< contains if any player has discovered this planet

@@ -404,7 +404,7 @@ void Table::CalculateSlider() {
 }
 
 void Table::CalculateHoverHighlighted(Vector2 mousePosition) {
-	Vec2<int> newPosition{ -1,-1 };
+	vec2pos_ty newPosition{ -1,-1 };
 	if (not m_isHoveredHighlighted) { goto found; }
 	if (not CheckCollisionPointRec(mousePosition, m_collider)) { goto found; }
 

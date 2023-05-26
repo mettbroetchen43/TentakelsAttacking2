@@ -17,7 +17,7 @@ class Galaxy;
  */
 class SpaceObject{
 protected:
-	using vec2pos = Vec2<int>; ///< the position type
+	using vec2pos = vec2pos_ty; ///< the position type
 	unsigned int m_ID; ///< contains the unique id
 	size_t m_ships; ///< contains the current amount of ships
 	vec2pos m_position; ///< contains the absolute position within the galaxy

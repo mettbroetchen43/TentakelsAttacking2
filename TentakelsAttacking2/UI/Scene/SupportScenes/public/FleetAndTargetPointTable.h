@@ -24,7 +24,7 @@ private:
 	/**
 	 * returns the current position as a string.
 	 */
-	[[nodiscard]] std::string GetStringFromPosition(Vec2<int> position) const;
+	[[nodiscard]] std::string GetStringFromPosition(vec2pos_ty position) const;
 
 public:
 	/**

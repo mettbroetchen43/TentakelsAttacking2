@@ -126,7 +126,7 @@ void FleetAndTargetPointTable::Initialization() {
 	}
 }
 
-std::string FleetAndTargetPointTable::GetStringFromPosition(Vec2<int> position) const {
+std::string FleetAndTargetPointTable::GetStringFromPosition(vec2pos_ty position) const {
 
 	for (auto const& p : m_galaxy->GetPlanets()) {
 		auto const& pos{ p->GetPos() };

@@ -8,7 +8,6 @@
 #include <memory>
 
 class GameManager;
-class Player;
 enum class CopyGalaxyType;
 class SendFleetInstructionEvent;
 

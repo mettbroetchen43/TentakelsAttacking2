@@ -9,6 +9,13 @@ struct AppContext;
 using AppContext_ty = AppContext&;
 using AppContext_ty_c = AppContext const&;
 
+template<typename T>
+struct Vec2;
+using vec2pos_ty = Vec2<int>;
+using vec2pos_ty_ref = Vec2<int>&;
+using vec2pos_ty_c = Vec2<int> const;
+using vec2pos_ty_ref_c = Vec2<int> const&;
+
 class SpaceObject;
 using SpaceObject_ty = std::shared_ptr<SpaceObject>;
 using SpaceObject_ty_c = SpaceObject_ty const&;
@@ -26,6 +33,12 @@ using Fleet_ty = std::shared_ptr<Fleet>;
 using Fleet_ty_c = std::shared_ptr<Fleet> const&;
 using Fleet_ty_raw = Fleet const*;
 using Fleet_ty_raw_c = Fleet const* const;
+
+class Planet;
+using Planet_ty = std::shared_ptr<Planet>;
+using Planet_ty_c = std::shared_ptr<Planet> const&;
+using Planet_ty_raw = Planet const*;
+using Planet_ty_raw_c = Planet const* const;
 
 class Player;
 using Player_ty = std::shared_ptr<Player>;

@@ -26,7 +26,7 @@ GalaxyManager::GalaxyManager(GameManager* gameManager)
 
 void GalaxyManager::GenerateGalaxy() {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
-	Vec2<int> const size = {
+	vec2pos_ty_c size = {
 		appContext.constants.world.currentDimensionX,
 		appContext.constants.world.currentDimensionY
 	};
@@ -54,7 +54,7 @@ void GalaxyManager::GenerateGalaxy() {
 }
 void GalaxyManager::GenerateShowGalaxy() {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
-	Vec2<int> const size = {
+	vec2pos_ty_c size = {
 		appContext.constants.world.showDimensionX,
 		appContext.constants.world.showDimensionY,
 	};

@@ -12,7 +12,6 @@
 #include <vector>
 #include <memory>
 
-struct AppContext;
 struct FleetResult;
 
 /**
@@ -23,11 +22,11 @@ class Galaxy final {
 private:
 	bool m_validGalaxy{ true }; ///< specifies if the generation in valid and the galaxy is able to use
 	std::vector<SpaceObject_ty> m_objects; ///< contains all space object for updating 
-	std::vector<std::shared_ptr<Planet>> m_planets; ///< contains all planets 
+	std::vector<Planet_ty> m_planets; ///< contains all planets 
 	std::vector<Fleet_ty> m_fleets; ///< contains all fleets
 	std::vector<std::shared_ptr<TargetPoint>> m_targetPoints; ///< contains all target points
 
-	Vec2<int> m_size; ///< contains the size of the galaxy
+	vec2pos_ty m_size; ///< contains the size of the galaxy
 
 	/**
 	 * returns the next free ID for an Space object that is the nearest to 0.
@@ -53,7 +52,7 @@ private:
 	 * mainly if the distance to every other planet is big enough.
 	 * returns a bool.
 	 */
-	[[nodiscard]] bool IsValidNewPlanet(std::shared_ptr<Planet> newPlanet, AppContext_ty_c appContext) const;
+	[[nodiscard]] bool IsValidNewPlanet(Planet_ty newPlanet, AppContext_ty_c appContext) const;
 
 	// Fleet
 	/**
@@ -115,7 +114,7 @@ public:
 	 * IsValid should be called after construction because there is no guaranty,
 	 * that the	generation is valid.
 	 */
-	Galaxy(Vec2<int> size, size_t planetCount, std::vector<Player_ty> players,
+	Galaxy(vec2pos_ty size, size_t planetCount, std::vector<Player_ty> players,
 		Player_ty neutralPlayer);
 	/**
 	 * makes a exact copy of a galaxy
@@ -138,11 +137,11 @@ public:
 	/**
 	 * returns the size of the galaxy.
 	 */
-	[[nodiscard]] Vec2<int> GetSize() const;
+	[[nodiscard]] vec2pos_ty GetSize() const;
 	/**
 	 * returns the planets of the galaxy.
 	 */
-	[[nodiscard]] std::vector<std::shared_ptr<Planet>> const GetPlanets() const;
+	[[nodiscard]] std::vector<Planet_ty> const GetPlanets() const;
 	/**
 	 * returns the fleets of the galaxy.
 	 */
@@ -154,7 +153,7 @@ public:
 	/**
 	 * returns a specific planet by ID.
 	 */
-	[[nodiscard]] std::shared_ptr<Planet> const GetPlanetByID(unsigned int ID) const;
+	[[nodiscard]] Planet_ty const GetPlanetByID(unsigned int ID) const;
 	/**
 	 * returns a SpaceObject with the provided ID.
 	 * returns nullptr if there is no SpaceObject.
@@ -163,7 +162,7 @@ public:
 	/**
 	 * returns if the new position is a valid position.
 	 */
-	[[nodiscard]] bool IsValidPosition(Vec2<int>const& position) const;
+	[[nodiscard]] bool IsValidPosition(vec2pos_ty_ref_c position) const;
 	/**
 	 * adds a new fleet to the galaxy for the provided player.
 	 */

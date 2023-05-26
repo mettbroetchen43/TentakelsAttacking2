@@ -67,7 +67,7 @@ int Galaxy::GenerateHomePlanets(std::vector<Player_ty> players) {
 	for (auto& p : players) {
 		int counter{ 0 };
 		while (true) {
-			Vec2<int> const newPosition{
+			vec2pos_ty_c newPosition{
 			   static_cast<int>(random.random(m_size.x)),
 			   static_cast<int>(random.random(m_size.y))
 			};
@@ -109,7 +109,7 @@ void Galaxy::GenerateOtherPlanets(size_t planetCount, int currentPlanet,
 	for (; currentPlanet <= planetCount; ++currentPlanet) {
 		int counter{ 0 };
 		while (true) {
-			Vec2<int> const newPosition{
+			vec2pos_ty_c newPosition{
 				static_cast<int>(random.random(m_size.x)),
 				static_cast<int>(random.random(m_size.y))
 			};
@@ -138,7 +138,7 @@ void Galaxy::GenerateOtherPlanets(size_t planetCount, int currentPlanet,
 	}
 }
 
-bool Galaxy::IsValidNewPlanet(std::shared_ptr<Planet> newPlanet,
+bool Galaxy::IsValidNewPlanet(Planet_ty newPlanet,
 	AppContext_ty_c appContext) const {
 	bool validPlanet{ true };
 
@@ -412,7 +412,7 @@ SpaceObject_ty Galaxy::GetOrGenerateDestination(unsigned int ID,
 		}
 	}
 
-	Vec2<int> const point{ X,Y };
+	vec2pos_ty_c point{ X,Y };
 	auto const targetPoint = std::make_shared<TargetPoint>(
 		GetNextID(),
 		point,
@@ -427,7 +427,7 @@ SpaceObject_ty Galaxy::GetOrGenerateDestination(unsigned int ID,
 
 
 
-Galaxy::Galaxy(Vec2<int> size, size_t planetCount,
+Galaxy::Galaxy(vec2pos_ty size, size_t planetCount,
 	std::vector<Player_ty> players, Player_ty neutralPlayer)
 	: m_size{ size } {
 
@@ -473,10 +473,10 @@ bool Galaxy::IsValidSpaceObjectID(unsigned int ID) const {
 	return false;
 }
 
-Vec2<int> Galaxy::GetSize() const {
+vec2pos_ty Galaxy::GetSize() const {
 	return m_size;
 }
-std::vector<std::shared_ptr<Planet>> const Galaxy::GetPlanets() const {
+std::vector<Planet_ty> const Galaxy::GetPlanets() const {
 	return m_planets;
 }
 
@@ -488,7 +488,7 @@ std::vector<std::shared_ptr<TargetPoint>> const Galaxy::GetTargetPoints() const 
 	return m_targetPoints;
 }
 
-std::shared_ptr<Planet> const Galaxy::GetPlanetByID(unsigned int ID) const {
+Planet_ty const Galaxy::GetPlanetByID(unsigned int ID) const {
 	for (auto const& planet : m_planets) {
 		if (planet->GetID() == ID) {
 			return planet;
@@ -509,7 +509,7 @@ SpaceObject_ty const Galaxy::GetSpaceObjectByID(unsigned int ID) const {
 	return nullptr;
 }
 
-bool Galaxy::IsValidPosition(Vec2<int>const& position) const {
+bool Galaxy::IsValidPosition(vec2pos_ty_ref_c position) const {
 	for (auto const& p : m_planets) {
 		if (p->GetPos() == position) {
 			return false;
@@ -590,7 +590,7 @@ void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
 void Galaxy::HandleFleetResult(FleetResult const& fleetResult) {
 	auto add = [this](SpaceObject_ty const& obj) {
 		if (obj->IsPlanet()) {
-			auto const* planet = dynamic_cast<Planet const*>(obj.get());
+			auto const* planet = dynamic_cast<Planet_ty_raw>(obj.get());
 			auto newDest = std::make_shared<Planet>(
 				planet->GetID(),
 				planet->GetPos(),
