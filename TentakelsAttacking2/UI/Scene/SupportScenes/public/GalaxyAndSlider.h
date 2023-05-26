@@ -19,8 +19,8 @@ class UIGalaxy;
 class GalaxyScene final : public Scene {
 private:
 	bool m_isEnabled = true; ///< contains id it is enabled
-	std::shared_ptr<Line> m_scaleLineX; ///< contains the line that displays the scale in X direction
-	std::shared_ptr<Line> m_scaleLineY; ///< contains the line that displays the scale in Y direction
+	Line_ty m_scaleLineX; ///< contains the line that displays the scale in X direction
+	Line_ty m_scaleLineY; ///< contains the line that displays the scale in Y direction
 	std::shared_ptr<Slider> m_verticalSlider; ///< contains the slider that slides in Y direction
 	std::shared_ptr<Slider> m_horizontalSlider; //< contains the slider that slides in X direction
 	ClassicButton_ty m_zoomInBtn; ///< contains the button to zoom in

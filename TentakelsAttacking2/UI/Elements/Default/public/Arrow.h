@@ -13,9 +13,9 @@ class Line;
 
 class Arrow final : public UIElement {
 private:
-	std::shared_ptr<Line> m_long; ///< contains the long line of the arrow
-	std::shared_ptr<Line> m_shortLeft; ///< contains the line that goes to the left when the arrow points upwards
-	std::shared_ptr<Line> m_shortRight; ///< contains the line that goes to the right when the arrow points upwards
+	Line_ty m_long; ///< contains the long line of the arrow
+	Line_ty m_shortLeft; ///< contains the line that goes to the left when the arrow points upwards
+	Line_ty m_shortRight; ///< contains the line that goes to the right when the arrow points upwards
 	Alignment m_direction; ///< contains the direction the arrow is pointing to
 	Color m_color; ///< contains the color the arrow is rendered with
 	float m_thick; ///< contains how thick the lines of the arrow are

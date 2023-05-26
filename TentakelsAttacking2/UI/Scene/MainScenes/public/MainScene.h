@@ -15,8 +15,6 @@ class PlanetTable;
 class FleetAndTargetPointTable;
 class ClassicButton;
 class Text;
-template<typename T>
-class InputLine;
 
 /**
  * provides the main scene.
@@ -42,11 +40,11 @@ private:
 	PlayerData m_currentPlayer; ///< contains the data of the current player
 	PlayerData m_nextPlayer; ///< contains the data of the next player
 
-	std::shared_ptr<InputLine<int>> m_origin; ///< provides the origin planet ID
-	std::shared_ptr<InputLine<int>> m_destination; ///< provides the destination planet ID
-	std::shared_ptr<InputLine<int>> m_destinationX; ///< provides the destination planet X
-	std::shared_ptr<InputLine<int>> m_destinationY; ///< provides the destination planet Y
-	std::shared_ptr<InputLine<int>> m_shipCount; ///< provides the ship count
+	InputLine_int_ty m_origin; ///< provides the origin planet ID
+	InputLine_int_ty m_destination; ///< provides the destination planet ID
+	InputLine_int_ty m_destinationX; ///< provides the destination planet X
+	InputLine_int_ty m_destinationY; ///< provides the destination planet Y
+	InputLine_int_ty m_shipCount; ///< provides the ship count
 
 	ClassicButton_ty m_acceptBtn; ///< sends the fleet event into the logic
 	ClassicButton_ty m_resetBtn; ///< clears the input lines
