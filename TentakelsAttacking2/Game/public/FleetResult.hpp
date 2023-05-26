@@ -4,7 +4,6 @@
 //
 
 #include <memory>
-class SpaceObject;
 
 struct FleetResult final {
 	SpaceObject_ty origin;

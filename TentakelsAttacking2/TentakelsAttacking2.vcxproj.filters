@@ -237,9 +237,6 @@
     <ClInclude Include="Game\public\SpaceObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game\public\LogicUpdate.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Game\public\Planet.h">
       <Filter>Header Files</Filter>
     </ClInclude>

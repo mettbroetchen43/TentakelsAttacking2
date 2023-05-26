@@ -174,7 +174,6 @@
     <ClInclude Include="Game\public\Planet.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
     <ClInclude Include="Game\public\SpaceObject.h" />
-    <ClInclude Include="Game\public\LogicUpdate.hpp" />
     <ClInclude Include="Game\public\TargetPoint.h" />
     <ClInclude Include="Helper\public\GameEventTypes.hpp" />
     <ClInclude Include="Constants\public\CLogicAlias.hpp" />

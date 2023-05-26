@@ -3,6 +3,7 @@
 // 26.05.2023
 //
 
+#pragma once
 #include <memory>
 
 struct AppContext;
