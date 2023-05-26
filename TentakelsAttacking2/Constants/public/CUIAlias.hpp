@@ -35,3 +35,7 @@ using Arrow_ty_c = std::shared_ptr<Arrow> const&;
 class CheckBox;
 using CheckBox_ty = std::shared_ptr<CheckBox>;
 using CheckBox_ty_c = std::shared_ptr<CheckBox> const&;
+
+class Hover;
+using Hover_ty = std::shared_ptr<Hover>;
+using Hover_ty_c = std::shared_ptr<Hover> const&;
