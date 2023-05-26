@@ -90,7 +90,7 @@ Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext_ty_c appContext) c
 
 }
 
-bool UIGalaxy::IsPlanetInCollider(std::shared_ptr<UIPlanet> planet) const {
+bool UIGalaxy::IsPlanetInCollider(UIPlanet_ty planet) const {
 	Rectangle const planetCollider{ planet->GetCollider() };
 
 	if (planetCollider.x < m_collider.x) { return false; }

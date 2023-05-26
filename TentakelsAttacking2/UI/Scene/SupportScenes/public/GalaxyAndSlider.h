@@ -25,7 +25,7 @@ private:
 	Slider_ty m_horizontalSlider; //< contains the slider that slides in X direction
 	ClassicButton_ty m_zoomInBtn; ///< contains the button to zoom in
 	ClassicButton_ty m_zoomOutBtn; ///< contains the button to zoom out
-	std::shared_ptr<UIGalaxy> m_galaxy; ///< contains the ui galaxy
+	UIGalaxy_ty m_galaxy; ///< contains the ui galaxy
 
 	/**
 	 * initializes all ui elements.
