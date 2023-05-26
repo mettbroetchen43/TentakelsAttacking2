@@ -24,7 +24,7 @@ private:
 	std::vector<SpaceObject_ty> m_objects; ///< contains all space object for updating 
 	std::vector<Planet_ty> m_planets; ///< contains all planets 
 	std::vector<Fleet_ty> m_fleets; ///< contains all fleets
-	std::vector<std::shared_ptr<TargetPoint>> m_targetPoints; ///< contains all target points
+	std::vector<TargetPoint_ty> m_targetPoints; ///< contains all target points
 
 	vec2pos_ty m_size; ///< contains the size of the galaxy
 
@@ -100,7 +100,7 @@ private:
 	 * returns the target point of the provided ID.
 	 * throws an runtime error if no target point exists.
 	 */
-	[[nodiscard]] std::shared_ptr<TargetPoint> GetTargetPointByID(unsigned int const ID) const;
+	[[nodiscard]] TargetPoint_ty GetTargetPointByID(unsigned int const ID) const;
 
 	/**
 	 * returns a existing destination er generate a TargetPoint as destination.
@@ -149,7 +149,7 @@ public:
 	/**
 	 * returns the target points of the galaxy.
 	 */
-	[[nodiscard]] std::vector<std::shared_ptr<TargetPoint>> const GetTargetPoints() const;
+	[[nodiscard]] std::vector<TargetPoint_ty> const GetTargetPoints() const;
 	/**
 	 * returns a specific planet by ID.
 	 */

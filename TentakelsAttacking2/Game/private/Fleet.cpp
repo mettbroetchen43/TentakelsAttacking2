@@ -10,11 +10,11 @@
 #include "AppContext.h"
 #include <cmath>
 
-Fleet::Fleet(unsigned int ID, vec2pos position, Player_ty player,
+Fleet::Fleet(unsigned int ID, vec2pos_ty position, Player_ty player,
     SpaceObject_ty target)
     : SpaceObject{ ID, position, player }, m_target{ target } { }
 
-Fleet::Fleet(unsigned int ID, vec2pos position, size_t ships, Player_ty player,
+Fleet::Fleet(unsigned int ID, vec2pos_ty position, size_t ships, Player_ty player,
     SpaceObject_ty target)
     : SpaceObject{ ID, position, ships, player }, m_target{ target } { }
 

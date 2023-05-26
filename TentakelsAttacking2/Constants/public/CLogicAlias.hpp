@@ -40,6 +40,12 @@ using Planet_ty_c = std::shared_ptr<Planet> const&;
 using Planet_ty_raw = Planet const*;
 using Planet_ty_raw_c = Planet const* const;
 
+class TargetPoint;
+using TargetPoint_ty = std::shared_ptr<TargetPoint>;
+using TargetPoint_ty_c = std::shared_ptr<TargetPoint> const&;
+using TargetPoint_ty_raw = TargetPoint const*;
+using TargetPoint_ty_raw_c = TargetPoint const* const;
+
 class Player;
 using Player_ty = std::shared_ptr<Player>;
 using Player_ty_c = Player_ty const&;

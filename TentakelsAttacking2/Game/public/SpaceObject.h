@@ -17,10 +17,9 @@ class Galaxy;
  */
 class SpaceObject{
 protected:
-	using vec2pos = vec2pos_ty; ///< the position type
 	unsigned int m_ID; ///< contains the unique id
 	size_t m_ships; ///< contains the current amount of ships
-	vec2pos m_position; ///< contains the absolute position within the galaxy
+	vec2pos_ty m_position; ///< contains the absolute position within the galaxy
 	Player_ty m_player; ///< contains a pointer to a player who owns the object
 
 public:
@@ -28,12 +27,12 @@ public:
 	 * ctor without ships.
 	 * only initialisation
 	 */
-	SpaceObject(unsigned int ID, vec2pos position, Player_ty player);
+	SpaceObject(unsigned int ID, vec2pos_ty position, Player_ty player);
 	/**
 	 * ctor.
 	 * only initialisation.
 	 */
-	SpaceObject(unsigned int ID, vec2pos position, size_t ships, Player_ty player);
+	SpaceObject(unsigned int ID, vec2pos_ty position, size_t ships, Player_ty player);
 	/**
 	 * virtual dtor to provide a default one.
 	 */
@@ -61,11 +60,11 @@ public:
 	/**
 	 * sets a new position in the galaxy.
 	 */
-	void SetPos(vec2pos pos);
+	void SetPos(vec2pos_ty pos);
 	/**
 	 * returns the current position.
 	 */
-	[[nodiscard]] vec2pos GetPos() const;
+	[[nodiscard]] vec2pos_ty GetPos() const;
 
 	/**
 	 * sets a new ship count.

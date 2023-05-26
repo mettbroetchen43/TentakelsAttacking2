@@ -387,7 +387,7 @@ bool Galaxy::IsValidTargetPoint(unsigned int const ID) const {
 	}
 	return false;
 }
-std::shared_ptr<TargetPoint> Galaxy::GetTargetPointByID(unsigned int const ID) const {
+TargetPoint_ty Galaxy::GetTargetPointByID(unsigned int const ID) const {
 	for (auto const& tp : m_targetPoints) {
 		if (tp->GetID() == ID) {
 			return tp;
@@ -484,7 +484,7 @@ std::vector<Fleet_ty> const Galaxy::GetFleets() const {
 	return m_fleets;
 }
 
-std::vector<std::shared_ptr<TargetPoint>> const Galaxy::GetTargetPoints() const {
+std::vector<TargetPoint_ty> const Galaxy::GetTargetPoints() const {
 	return m_targetPoints;
 }
 
@@ -579,7 +579,7 @@ void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
 	m_objects.erase(newEnd2, m_objects.end());
 
 	auto const newEnd3{ std::remove_if(m_targetPoints.begin(), m_targetPoints.end(),
-		[currentPlayerID](std::shared_ptr<TargetPoint> const& targetPoint) { return targetPoint->GetPlayer()->GetID() != currentPlayerID; }) };
+		[currentPlayerID](TargetPoint_ty_c targetPoint) { return targetPoint->GetPlayer()->GetID() != currentPlayerID; }) };
 	m_targetPoints.erase(newEnd3, m_targetPoints.end());
 
 	auto const newEnd4{ std::remove_if(m_objects.begin(), m_objects.end(),
@@ -616,7 +616,7 @@ void Galaxy::HandleFleetResult(FleetResult const& fleetResult) {
 			this->m_fleets.push_back(newDest);
 		}
 		else if (obj->IsTargetPoint()) {
-			auto const* t_p = dynamic_cast<TargetPoint const*>(obj.get());
+			auto const* t_p = dynamic_cast<TargetPoint_ty_raw>(obj.get());
 			auto newDest = std::make_shared<TargetPoint>(
 				t_p->GetID(),
 				t_p->GetPos(),

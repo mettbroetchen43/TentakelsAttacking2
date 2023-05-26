@@ -15,12 +15,12 @@ public:
 	 * ctor without ships.
 	 * only initialization
 	 */
-	Fleet(unsigned int ID, vec2pos position, Player_ty player, SpaceObject_ty target);
+	Fleet(unsigned int ID, vec2pos_ty position, Player_ty player, SpaceObject_ty target);
 	/**
 	 * ctor.
 	 * only initialization.
 	 */
-	Fleet(unsigned int ID, vec2pos position, size_t ships, Player_ty player, SpaceObject_ty target);
+	Fleet(unsigned int ID, vec2pos_ty position, size_t ships, Player_ty player, SpaceObject_ty target);
 
 	/**
 	 * returns if the current space object is a planet.
