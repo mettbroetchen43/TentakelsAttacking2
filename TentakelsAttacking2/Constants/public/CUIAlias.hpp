@@ -72,3 +72,11 @@ class Title;
 using Title_ty =   std::shared_ptr<Title>;
 using Title_ty_c = std::shared_ptr<Title> const&;
 
+// DropDown
+class DropDown;
+using DropDown_ty =   std::shared_ptr<DropDown>;
+using DropDown_ty_c = std::shared_ptr<DropDown> const&;
+
+class DropDownElement;
+using DropDownElement_ty =   std::shared_ptr<DropDownElement>;
+using DropDownElement_ty_c = std::shared_ptr<DropDownElement> const&;
