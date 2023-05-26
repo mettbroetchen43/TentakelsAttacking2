@@ -14,7 +14,7 @@
 #include "AppContext.h"
 
 void CreditsScene::Initialize(Vector2 resolution) {
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 
 	// not moving btn
 	m_speedBTN = std::make_shared<ClassicButton>(
@@ -282,7 +282,7 @@ CreditsScene::CreditsScene(Vector2 resolution)
 	Initialize(resolution);
 }
 
-void CreditsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void CreditsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
 	if (m_title->IsTitleFinished()) {
@@ -301,7 +301,7 @@ void CreditsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const
 		m_moving = !m_moving;
 	}*/
 }
-void CreditsScene::Resize(Vector2 resolution, AppContext const& appContext) {
+void CreditsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	m_resolution = resolution;
 	Scene::Resize(resolution, appContext);
 }

@@ -136,5 +136,5 @@ public:
 	 * updates all elements in elements.
 	 * calls the CheckAndUpdate from the Scene.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 };

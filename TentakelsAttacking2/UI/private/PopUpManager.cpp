@@ -193,19 +193,19 @@ void PopUpManager::CheckForDeleteRemainingPopUps() {
 }
 
 void PopUpManager::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+	AppContext_ty_c appContext) {
 	if (!IsActivePopUp()) {
 		return;
 	}
 
 	m_popUps.back()->CheckAndUpdate(mousePosition, appContext);
 }
-void PopUpManager::Render(AppContext const& appContext) {
+void PopUpManager::Render(AppContext_ty_c appContext) {
 	for (auto& p : m_popUps) {
 		p->Render(appContext);
 	}
 }
-void PopUpManager::Resize(Vector2 resolution, AppContext const& appContext) {
+void PopUpManager::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	m_resolution = resolution;
 	for (auto& e : m_popUps) {
 		e->Resize(resolution, appContext);

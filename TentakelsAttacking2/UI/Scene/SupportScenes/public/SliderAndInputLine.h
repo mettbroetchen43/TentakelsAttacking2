@@ -72,7 +72,7 @@ public:
 	/**
 	 * scene logic.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 
 	/**
 	 * sets if the scene is enabled.

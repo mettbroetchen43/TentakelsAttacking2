@@ -8,6 +8,7 @@
 #include "GenerelEvents.hpp"
 #include "HPrint.h"
 #include "CopyGalaxyType.hpp"
+#include "CLogicAlias.hpp"
 #include <cassert>
 #include <algorithm>
 #include <stdexcept>
@@ -62,13 +63,13 @@ bool GameManager::IsExistingPlayerID(unsigned int ID) const {
 	return false;
 }
 
-bool GameManager::GetCurrentPlayer(std::shared_ptr<Player>& currentPlayer) const {
+bool GameManager::GetCurrentPlayer(Player_ty& currentPlayer) const {
 	if (m_currentRoundPlayers.empty()) { return false; }
 
 	currentPlayer = m_currentRoundPlayers.back();
 	return true;
 }
-bool GameManager::GetNextPlayer(std::shared_ptr<Player>& nextPlayer) const {
+bool GameManager::GetNextPlayer(Player_ty& nextPlayer) const {
 	if (m_currentRoundPlayers.size() < 2) { return false; }
 
 	nextPlayer = m_currentRoundPlayers.at(m_currentRoundPlayers.size() - 2);
@@ -121,7 +122,7 @@ void GameManager::EditPlayer(EditPlayerEvent const* event) const {
 }
 void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 
-	std::shared_ptr<Player> toDelete{ nullptr };
+	Player_ty toDelete{ nullptr };
 	for (auto& p : m_players) {
 		if (p->GetID() == event->GetID()) {
 			toDelete = p;
@@ -154,7 +155,7 @@ void GameManager::ResetPlayer() {
 }
 void GameManager::CheckPlayerCount() const {
 
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	bool valid;
 
 	if (m_players.size() < appContext.constants.player.minPlayerCount) {
@@ -188,7 +189,7 @@ void GameManager::ShuffleCurrentRoundPlayer() {
 
 void GameManager::SendCurrentPlayerID() {
 	unsigned int ID;
-	std::shared_ptr<Player> player{ nullptr };
+	Player_ty player{ nullptr };
 
 	if (GetCurrentPlayer(player)) {
 		ID = player->GetID();
@@ -202,7 +203,7 @@ void GameManager::SendCurrentPlayerID() {
 }
 void GameManager::SendNextPlayerID() {
 	unsigned int ID;
-	std::shared_ptr<Player> player{ nullptr };
+	Player_ty player{ nullptr };
 
 	if (GetNextPlayer(player)) {
 		ID = player->GetID();
@@ -220,7 +221,7 @@ void GameManager::NextRound(bool valid) {
 
 	if (!valid) { return; }
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 	// events and so on first
 	Update();
 
@@ -296,7 +297,7 @@ void GameManager::AddFleet(SendFleetInstructionEvent const* event) {
 
 	if (!ValidateAddFleetInput(event)) { return; }
 
-	std::shared_ptr<Player> currentPlayer{ nullptr };
+	Player_ty currentPlayer{ nullptr };
 	if (!GetCurrentPlayer(currentPlayer)) { popup("No current player selected."); return; }
 
 	bool const isValidFleet{ m_galaxyManager.AddFleet(event, currentPlayer) };

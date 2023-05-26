@@ -4,9 +4,9 @@
 //
 
 #pragma once
+#include "CLogicAlias.hpp"
 #include <memory>
 
-class Galaxy;
 class GameManager;
 class Player;
 enum class CopyGalaxyType;
@@ -19,10 +19,10 @@ class GalaxyManager final {
 private:
 	GameManager* m_gameManager; ///< contains the current game manager
 	friend Galaxy;
-	std::shared_ptr<Galaxy> m_mainGalaxy{ nullptr }; ///< contains the global galaxy with all changes.
-	std::shared_ptr<Galaxy> m_startGalaxy{ nullptr }; ///< contains the data at round begin. every round it gets overwritten by the main galaxy
-	std::shared_ptr<Galaxy> m_currentGalaxy{ nullptr }; ///< is used to store the player data of one player. every turn it gets overwritten by the start Galaxy
-	std::shared_ptr<Galaxy> m_showGalaxy{ nullptr }; ///< is a hardcoded galaxy that is used to guaranty, that it generation is valid.
+	Galaxy_ty m_mainGalaxy{ nullptr }; ///< contains the global galaxy with all changes.
+	Galaxy_ty m_startGalaxy{ nullptr }; ///< contains the data at round begin. every round it gets overwritten by the main galaxy
+	Galaxy_ty m_currentGalaxy{ nullptr }; ///< is used to store the player data of one player. every turn it gets overwritten by the start Galaxy
+	Galaxy_ty m_showGalaxy{ nullptr }; ///< is a hardcoded galaxy that is used to guaranty, that it generation is valid.
 
 	/**
 	 * filters the current galaxy for relevant only data for current player.
@@ -57,7 +57,7 @@ public:
 	/** 
 	 * add a new fleet to the Galaxies.
 	 */
-	[[nodiscard]] bool AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] bool AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	
 	/**
 	 * updates the main galaxy

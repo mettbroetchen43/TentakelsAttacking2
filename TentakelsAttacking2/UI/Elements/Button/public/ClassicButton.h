@@ -34,7 +34,7 @@ public:
 	 * calculates the logic of the button and calls the other functions.
 	 * calls CheckAndUpdate in button.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	
 	/**
 	 * return current collider of the button.

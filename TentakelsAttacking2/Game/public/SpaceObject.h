@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#include <memory>
+#include "CLogicAlias.hpp"
 #include "Vec2.hpp"
 #include <string>
 #include <memory>
@@ -21,19 +21,19 @@ protected:
 	unsigned int m_ID; ///< contains the unique id
 	size_t m_ships; ///< contains the current amount of ships
 	vec2pos m_position; ///< contains the absolute position within the galaxy
-	std::shared_ptr<Player> m_player; ///< contains a pointer to a player who owns the object
+	Player_ty m_player; ///< contains a pointer to a player who owns the object
 
 public:
 	/**
 	 * ctor without ships.
 	 * only initialisation
 	 */
-	SpaceObject(unsigned int ID, vec2pos position, std::shared_ptr<Player> player);
+	SpaceObject(unsigned int ID, vec2pos position, Player_ty player);
 	/**
 	 * ctor.
 	 * only initialisation.
 	 */
-	SpaceObject(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Player> player);
+	SpaceObject(unsigned int ID, vec2pos position, size_t ships, Player_ty player);
 	/**
 	 * virtual dtor to provide a default one.
 	 */
@@ -42,7 +42,7 @@ public:
 	/**
 	 * updates the SpaceObject.
  	 */
-	virtual void Update(Galaxy const* galaxy) = 0; 
+	virtual void Update(Galaxy_ty_raw galaxy) = 0; 
 
 	/**
 	 * returns the unique id.
@@ -52,11 +52,11 @@ public:
 	/**
 	 * sets a new player as owner of the object.
 	 */
-	void SetPlayer(std::shared_ptr<Player> player);
+	void SetPlayer(Player_ty player);
 	/**
 	 * returns the current player who owns the object.
 	 */
-	[[nodiscard]] std::shared_ptr<Player> GetPlayer() const;
+	[[nodiscard]] Player_ty GetPlayer() const;
 
 	/**
 	 * sets a new position in the galaxy.

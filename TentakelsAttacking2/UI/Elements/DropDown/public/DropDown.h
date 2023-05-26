@@ -110,15 +110,15 @@ public:
 	 * calls the CheckAndUpdate of the UIElement.
 	 * contains the DropDown logic.
 	 */
-	void CheckAndUpdate(Vector2 const&, AppContext const&) override;
+	void CheckAndUpdate(Vector2 const&, AppContext_ty_c) override;
 	/**
 	 * renders the DropDown.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resizes itself and alle elements it contains.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 
 	/**
 	 * returns if the element is currently enabled.

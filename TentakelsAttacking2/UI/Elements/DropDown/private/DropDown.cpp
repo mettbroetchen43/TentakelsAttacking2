@@ -78,7 +78,7 @@ void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
 
 void DropDown::ToggleFoldedOut() {
 
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	m_isFoldouts = !m_isFoldouts;
 
@@ -230,7 +230,7 @@ bool DropDown::SetCurrentElementByID(unsigned int ID) {
 	return false;
 }
 
-void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -271,7 +271,7 @@ void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		}
 	}
 }
-void DropDown::Render(AppContext const& appContext) {
+void DropDown::Render(AppContext_ty_c appContext) {
 	DrawRectangleLinesEx(
 		m_collider,
 		2.0f,
@@ -316,7 +316,7 @@ void DropDown::Render(AppContext const& appContext) {
 		EndScissorMode();
 	}
 }
-void DropDown::Resize(Vector2 resolution, AppContext const& appContext) {
+void DropDown::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
 	UIElement::Resize(resolution, appContext);
 

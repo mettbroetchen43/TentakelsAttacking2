@@ -8,7 +8,7 @@
 #include "UIEvents.hpp"
 #include "HInput.h"
 
-void CheckBox::Check(AppContext const& appContext) {
+void CheckBox::Check(AppContext_ty_c appContext) {
 	if (m_isChecked) {
 		PlaySoundEvent const event{ SoundType::CLICKED_RELEASE_STD };
 		appContext.eventManager.InvokeEvent(event);
@@ -32,7 +32,7 @@ CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height,
 	m_size.x = resolution.y / resolution.x * m_size.y;
 	UpdateCollider();
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 	m_texture = appContext.assetManager.GetTexture(AssetType::CHECK);
 	m_textureRec = {
 		0.0f,
@@ -76,7 +76,7 @@ Rectangle CheckBox::GetCollider() const {
 }
 
 void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+	AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -115,7 +115,7 @@ void CheckBox::CheckAndUpdate(Vector2 const& mousePosition,
 		Check(appContext);
 	}
 }
-void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
+void CheckBox::Render([[maybe_unused]] AppContext_ty_c appContext) {
 	DrawRectangleLinesEx(
 		m_collider,
 		3.0f,
@@ -156,7 +156,7 @@ void CheckBox::Render([[maybe_unused]] AppContext const& appContext) {
 	}
 }
 
-void CheckBox::Resize(Vector2 resolution, AppContext const& appContext) {
+void CheckBox::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
 	m_size.x = resolution.y / resolution.x * m_size.y;
 

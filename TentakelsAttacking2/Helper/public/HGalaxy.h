@@ -6,9 +6,9 @@
 #pragma once
 #include <utility>
 #include <memory>
+#include <CLogicAlias.hpp>
 
 class Fleet;
-class SpaceObject; 
 
-[[nodiscard]] std::pair<bool, std::shared_ptr<SpaceObject>> TryGetTarget(
-	Fleet const* fleet, std::shared_ptr<SpaceObject> const& target);
+[[nodiscard]] std::pair<bool, SpaceObject_ty> TryGetTarget(
+	Fleet const* fleet, SpaceObject_ty const& target);

@@ -72,17 +72,17 @@ public:
 	 * logic of the slider.
 	 * calls the button to update.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the slider.
 	 * calls the button to render.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resizes the slider.
 	 * calls the button to resize.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
  
 	/**
 	 * sets the onSlide lambda that gets called when the slider gets slide.

@@ -10,7 +10,7 @@
 #include "HPrint.h"
 
 
-AppContext& AppContext::GetInstance() {
+AppContext_ty AppContext::GetInstance() {
 	static AppContext appContext;
 	return appContext;
 }

@@ -92,7 +92,7 @@ Alignment Arrow::GetDirection() const {
 	return m_direction;
 }
 
-void Arrow::Render(AppContext const& appContext){
+void Arrow::Render(AppContext_ty_c appContext){
 	m_long->Render(appContext);
 	// m_shortLeft->Render(appContext);
 	// m_shortRight->Render(appContext);

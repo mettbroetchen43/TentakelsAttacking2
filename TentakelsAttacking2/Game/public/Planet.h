@@ -24,14 +24,14 @@ public:
 	 * ctor.
 	 * initialize all values.
 	 */
-	Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
+	Planet(unsigned int ID, vec2pos position, Player_ty player,
 		bool isHomePlanet, int m_planetNumber);
 	/**
 	 * ctor.
 	 * initialize all values.
 	 * with ships
 	 */
-	Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
+	Planet(unsigned int ID, vec2pos position, Player_ty player,
 		bool isHomePlanet, int m_planetNumber, size_t ships);
 
 	/**
@@ -73,5 +73,5 @@ public:
 	/**
 	 * products ships.
 	 */
-	void Update(Galaxy const* galaxy) override;
+	void Update(Galaxy_ty_raw galaxy) override;
 };

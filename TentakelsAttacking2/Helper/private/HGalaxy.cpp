@@ -7,8 +7,8 @@
 #include "Fleet.h"
 #include "SpaceObject.h"
 
-std::pair<bool, std::shared_ptr<SpaceObject>> TryGetTarget(
-	Fleet const* fleet, std::shared_ptr<SpaceObject>const& target) {
+std::pair<bool, SpaceObject_ty> TryGetTarget(
+	Fleet const* fleet, SpaceObject_ty const& target) {
 
 	if (target->IsFleet()) {
 		if (target->GetID() == fleet->GetID()) {

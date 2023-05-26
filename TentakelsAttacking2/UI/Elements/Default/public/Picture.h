@@ -28,5 +28,5 @@ public:
 	/**
 	 * renders the picture.
 	 */
-	void Render(AppContext const& appContext);
+	void Render(AppContext_ty_c appContext);
 };

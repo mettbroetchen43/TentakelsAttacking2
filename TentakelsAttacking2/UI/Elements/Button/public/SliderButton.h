@@ -18,6 +18,6 @@ public:
 	 * logic of the slider button.
 	 * calls CheckAndUpdate from button.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 
 };

@@ -36,5 +36,5 @@ public:
 	 * renders the popup.
 	 * calls the slider, checkbox and button to render.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 };

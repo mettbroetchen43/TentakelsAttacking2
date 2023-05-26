@@ -36,7 +36,7 @@ DropDownElement::DropDownElement(Vector2 pos, Vector2 size, Alignment alignment,
     m_getTemporaryCollider{ getTemporaryCollider } {
 
 
-    AppContext& appContext{ AppContext::GetInstance() };
+    AppContext_ty appContext{ AppContext::GetInstance() };
     m_grey50 = appContext.assetManager.GetTexture(AssetType::GREY_50);
     m_textureRecGrey50 = {
         0.0f,
@@ -55,7 +55,7 @@ DropDownElement::DropDownElement(Vector2 pos, Vector2 size, Alignment alignment,
     CreateToRender();
 }
 
-void DropDownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void DropDownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
     UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -66,7 +66,7 @@ void DropDownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext co
     if (m_hover && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) { m_onClick(m_ID); }
     if (IsFocused() && IsConfirmInputPressed()) { m_onClick(m_ID); }
 }
-void DropDownElement::Render(AppContext const& appContext) {
+void DropDownElement::Render(AppContext_ty_c appContext) {
 
     DrawTexturePro(
         *m_grey,

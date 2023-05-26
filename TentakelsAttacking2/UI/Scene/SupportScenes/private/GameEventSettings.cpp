@@ -144,7 +144,7 @@ found:
 GameEventSettings::GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution)
 	: Scene{ pos, size, alignment, resolution } {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext_ty appContext = AppContext::GetInstance();
 	appContext.eventManager.AddListener(this);
 
 	Initialize(resolution, focusID);
@@ -166,7 +166,7 @@ void GameEventSettings::OnEvent(Event const& event) {
 
 void GameEventSettings::SetRandom() {
 	Random& random{ Random::GetInstance() };
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	for (auto& c : m_checkBoxes) {
 		if (c->GetID() == 0) { continue; } ///< id 0 is the gloabl check box

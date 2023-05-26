@@ -52,11 +52,11 @@ public:
 	 * calls the CheckAndUpdate member function of the UIElement.
 	 * contains the element logic.
 	 */
-	void CheckAndUpdate(Vector2 const&, AppContext const&) override;
+	void CheckAndUpdate(Vector2 const&, AppContext_ty_c) override;
 	/**
 	 * renders the element.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 
 	/**
 	 * returns if the element is currently enabled.

@@ -63,10 +63,10 @@ public:
 	 * sets moving to true when the title is fully animated.
 	 * calls the moving elements to move as long as moving is true.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * sets the new resolution.
 	 * calls all elements zu resize.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 };

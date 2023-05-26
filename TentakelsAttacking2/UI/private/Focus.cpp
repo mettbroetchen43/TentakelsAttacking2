@@ -355,7 +355,7 @@ void Focus::CheckNewID(unsigned int newID) {
 
 Focus::Focus() {
 	AddLayer();
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 	appContext.eventManager.AddListener(this);
 
 	Print("Focus", PrintType::INITIALIZE);

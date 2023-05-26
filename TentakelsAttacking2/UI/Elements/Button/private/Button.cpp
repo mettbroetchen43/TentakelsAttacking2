@@ -6,7 +6,7 @@
 #include "Button.h"
 #include "AppContext.h"
 
-void Button::SetTextSizeAndPosition(AppContext const& appContext) {
+void Button::SetTextSizeAndPosition(AppContext_ty_c appContext) {
 	m_textSize = m_collider.height / 2;
 	Vector2 textSize{ MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
@@ -63,7 +63,7 @@ Button::Button()
 	m_sound{ SoundType::CLICKED_RELEASE_STD }, m_textPosition{ 0.0f,0.0f },
 	m_texture{ nullptr }, m_textureRec{ 0.0f,0.0f,0.0f,0.0f } {}
 
-void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
 	bool const hover{ CheckCollisionPointRec(mousePosition, m_collider )};
@@ -127,7 +127,7 @@ void Button::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 	}
 
 }
-void Button::Render(AppContext const& appContext) {
+void Button::Render(AppContext_ty_c appContext) {
 	m_textureRec.y = static_cast<int>(m_state) * m_textureRec.height;
 	DrawTexturePro(
 		*m_texture,
@@ -144,7 +144,7 @@ void Button::Render(AppContext const& appContext) {
 		0,
 		WHITE);
 }
-void Button::Resize(Vector2 resolution, AppContext const& appContext) {
+void Button::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	UIElement::Resize(resolution, appContext);
 	SetTextSizeAndPosition(appContext);
 }

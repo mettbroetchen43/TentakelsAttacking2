@@ -6,19 +6,19 @@
 #include "SpaceObject.h"
 #include <cassert>
 
-SpaceObject::SpaceObject(unsigned int ID, vec2pos position, std::shared_ptr<Player> player)
+SpaceObject::SpaceObject(unsigned int ID, vec2pos position, Player_ty player)
 	: SpaceObject{ ID, position, 0, player } {}
-SpaceObject::SpaceObject(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Player> player)
+SpaceObject::SpaceObject(unsigned int ID, vec2pos position, size_t ships, Player_ty player)
 	: m_ID{ID}, m_position{position}, m_player{player}, m_ships{ships} {}
 
 unsigned int SpaceObject::GetID() const {
 	return m_ID;
 }
 
-void SpaceObject::SetPlayer(std::shared_ptr<Player> player) {
+void SpaceObject::SetPlayer(Player_ty player) {
 	m_player = player;
 }
-std::shared_ptr<Player> SpaceObject::GetPlayer() const {
+Player_ty SpaceObject::GetPlayer() const {
 	return m_player;
 }
 

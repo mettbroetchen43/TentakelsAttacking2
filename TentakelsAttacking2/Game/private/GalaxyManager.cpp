@@ -15,7 +15,7 @@
 #include "FleetResult.hpp"
 
 void GalaxyManager::FilterCurrentGalaxy() {
-	std::shared_ptr<Player> currentPlayer{ nullptr };
+	Player_ty currentPlayer{ nullptr };
 	bool const valid{ m_gameManager->GetCurrentPlayer(currentPlayer) };
 	if (not valid) { return; }
 	m_currentGalaxy->FilterByPlayer(currentPlayer->GetID());
@@ -25,7 +25,7 @@ GalaxyManager::GalaxyManager(GameManager* gameManager)
 	: m_gameManager {gameManager} { }
 
 void GalaxyManager::GenerateGalaxy() {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	Vec2<int> const size = {
 		appContext.constants.world.currentDimensionX,
 		appContext.constants.world.currentDimensionY
@@ -53,7 +53,7 @@ void GalaxyManager::GenerateGalaxy() {
 	}
 }
 void GalaxyManager::GenerateShowGalaxy() {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	Vec2<int> const size = {
 		appContext.constants.world.showDimensionX,
 		appContext.constants.world.showDimensionY,
@@ -93,7 +93,7 @@ Galaxy* GalaxyManager::GetGalaxy() const {
 	return m_currentGalaxy.get();
 }
 
-bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
+bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
 
 	auto const result {m_mainGalaxy->AddFleet(event, currentPlayer)};
 	if (not result.valid) {

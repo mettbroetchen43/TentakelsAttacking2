@@ -14,7 +14,7 @@ namespace {
 	std::string subTitle{ "" };
 }
 
-void CellPopUp::Initialize([[maybe_unused]] AppContext const& appContext,
+void CellPopUp::Initialize([[maybe_unused]] AppContext_ty_c appContext,
 	Vector2 resolution) {
 	auto cancelBtn = std::make_shared<ClassicButton>(
 		2,
@@ -35,7 +35,7 @@ void CellPopUp::Initialize([[maybe_unused]] AppContext const& appContext,
 	m_elements.push_back(cancelBtn);
 }
 std::shared_ptr<ClassicButton> CellPopUp::InitializeAcceptButton(
-	[[maybe_unused]] AppContext const& appContext, Vector2 resolution) {
+	[[maybe_unused]] AppContext_ty_c appContext, Vector2 resolution) {
 
 	auto acceptBtn = std::make_shared<ClassicButton>(
 		1,
@@ -73,7 +73,7 @@ void CellPopUp::CheckEnter() {
 	LateUpdate();
 }
 
-void CellPopUp::Close(AppContext const& appContext) {
+void CellPopUp::Close(AppContext_ty_c appContext) {
 	if (m_shouldClose) {
 		auto event = ClosePopUpEvent(this);
 		appContext.eventManager.InvokeEvent(event);
@@ -88,7 +88,7 @@ CellPopUp::CellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 res
 }
 
 void CellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+	AppContext_ty_c appContext) {
 
 	PopUp::CheckAndUpdate(mousePosition, appContext);
 

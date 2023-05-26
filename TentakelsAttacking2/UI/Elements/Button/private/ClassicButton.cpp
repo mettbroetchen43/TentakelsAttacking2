@@ -18,7 +18,7 @@ ClassicButton::ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size,
 };
 
 void ClassicButton::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+	AppContext_ty_c appContext) {
 
 	if (IsFocused()) {
 		if (m_state == State::DISABLED) {

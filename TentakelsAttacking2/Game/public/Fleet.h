@@ -8,20 +8,19 @@
 
 class Fleet final : public SpaceObject {
 private:
-	std::shared_ptr<SpaceObject> m_target;
+	SpaceObject_ty m_target;
 
 public:
 	/**
 	 * ctor without ships.
 	 * only initialization
 	 */
-	Fleet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player, std::shared_ptr<SpaceObject> target);
+	Fleet(unsigned int ID, vec2pos position, Player_ty player, SpaceObject_ty target);
 	/**
 	 * ctor.
 	 * only initialization.
 	 */
-	Fleet(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Player> player,
-		std::shared_ptr<SpaceObject> target);
+	Fleet(unsigned int ID, vec2pos position, size_t ships, Player_ty player, SpaceObject_ty target);
 
 	/**
 	 * returns if the current space object is a planet.
@@ -31,10 +30,10 @@ public:
 	/**
 	 * returns the target of the fleet.
 	 */
-	[[nodiscard]] std::shared_ptr<SpaceObject> GetTarget() const;
+	[[nodiscard]] SpaceObject_ty GetTarget() const;
 
 	/**
 	 * moves the fleet to the target.
 	 */
-	void Update(Galaxy const* galaxy) override;
+	void Update(Galaxy_ty_raw galaxy) override;
 };

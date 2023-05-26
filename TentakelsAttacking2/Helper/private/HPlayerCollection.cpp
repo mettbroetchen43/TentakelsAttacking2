@@ -7,6 +7,7 @@
 #include "UIEvents.hpp"
 #include "GenerelEvents.hpp"
 #include "AppContext.h"
+#include "CLogicAlias.hpp"
 #include <algorithm>
 #include <stdexcept>
 
@@ -42,7 +43,7 @@ bool PlayerCollection::ContainsColor(Color color) const {
 }
 
 void PlayerCollection::CheckValidColor(Color& color) {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	if (appContext.colors.CheckValidColor(color)) {
 		ShowMessagePopUpEvent const event{
 			"Invalid Color",
@@ -153,7 +154,7 @@ void PlayerCollection::ResetPlayer(){
 }
 
 Color PlayerCollection::GetPossibleColor() const {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	for (auto const c : appContext.colors.GetColors()) {
 		if (!ContainsColor(c)) {
 			return c;

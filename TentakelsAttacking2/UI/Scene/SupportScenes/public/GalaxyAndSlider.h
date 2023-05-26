@@ -5,13 +5,13 @@
 
 #pragma once
 #include "Scene.h"
+#include "CLogicAlias.hpp"
 #include <vector>
 
 class Slider;
 class Line;
 class ClassicButton;
 class UIGalaxy;
-class Galaxy;
 
 /**
  * provides a scene that can display the logic galaxy.
@@ -60,7 +60,7 @@ public:
 
 	/**
 	 * sets if the scene is enabled.
-	 * sets galaxy, and zoom button seperated enabled.
+	 * sets galaxy, and zoom button separated enabled.
 	 */
 	void SetIsEnabled(bool isEnabled);
 	/**
@@ -71,24 +71,24 @@ public:
 	/**
 	 * return the current ui galaxy.
 	 */
-	[[nodiscard]] Galaxy const* GetGalaxy() const;
+	[[nodiscard]] Galaxy_ty_raw GetGalaxy() const;
 
 	/**
 	 * updates the scene.
 	 * updates the scale buttons only if scaling.
 	 * updates the slider only if the galaxy is actually scaled.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the scene.
 	 * renders the scale buttons and scale lines only if scaling.
 	 * renders the slider only if the galaxy is actually scaled.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resize the scene.
 	 * resize the scale buttons, scale lines and buttons seperated.
 	 * 
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 };

@@ -54,5 +54,5 @@ public:
 	/**
 	 * calls the lines to render.
 	 */
-	void Render(AppContext const& appContext);
+	void Render(AppContext_ty_c appContext);
 };

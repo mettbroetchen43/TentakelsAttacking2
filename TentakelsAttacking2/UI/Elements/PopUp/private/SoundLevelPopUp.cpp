@@ -13,7 +13,7 @@
 #include "HFocusEvents.h"
 
 void SoundLevelPopUp::Initialize(Vector2 resolution) {
-	AppContext const& appContext = AppContext::GetInstance();
+	AppContext_ty_c appContext = AppContext::GetInstance();
 	
 	m_slider = std::make_shared<Slider>(
 		GetElementPosition(m_pos, m_size, 0.5f, 0.65f),
@@ -40,7 +40,7 @@ void SoundLevelPopUp::Initialize(Vector2 resolution) {
 		);
 	m_checkBox->SetChecked(appContext.constants.sound.muteVolume);
 	m_checkBox->SetOnCheck([this](unsigned int, bool isChecked) {
-		AppContext& appContext = AppContext::GetInstance();
+		AppContext_ty appContext = AppContext::GetInstance();
 		auto event = MuteMasterVolumeEvent(isChecked);
 		appContext.eventManager.InvokeEvent(event);
 		m_slider->SetEnabled(!isChecked);
@@ -83,7 +83,7 @@ SoundLevelPopUp::SoundLevelPopUp(Vector2 pos, Vector2 size,
 	Initialize(resolution);
 }
 
-void SoundLevelPopUp::Render(AppContext const& appContext) {
+void SoundLevelPopUp::Render(AppContext_ty_c appContext) {
 	
 	PopUp::Render(appContext);
 

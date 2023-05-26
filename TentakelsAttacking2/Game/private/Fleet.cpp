@@ -10,23 +10,23 @@
 #include "AppContext.h"
 #include <cmath>
 
-Fleet::Fleet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
-    std::shared_ptr<SpaceObject> target)
+Fleet::Fleet(unsigned int ID, vec2pos position, Player_ty player,
+    SpaceObject_ty target)
     : SpaceObject{ ID, position, player }, m_target{ target } { }
 
-Fleet::Fleet(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Player> player,
-    std::shared_ptr<SpaceObject> target)
+Fleet::Fleet(unsigned int ID, vec2pos position, size_t ships, Player_ty player,
+    SpaceObject_ty target)
     : SpaceObject{ ID, position, ships, player }, m_target{ target } { }
 
 bool Fleet::IsFleet() const {
     return true;
 }
 
-std::shared_ptr<SpaceObject> Fleet::GetTarget() const {
+SpaceObject_ty Fleet::GetTarget() const {
     return m_target;
 }
 
-void Fleet::Update(Galaxy const* galaxy) {
+void Fleet::Update(Galaxy_ty_raw galaxy) {
 
     auto [valid, target] { TryGetTarget(this, m_target) };
     if (not valid) { target = m_target; };

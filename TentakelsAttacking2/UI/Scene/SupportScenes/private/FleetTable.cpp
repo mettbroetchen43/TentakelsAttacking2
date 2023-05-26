@@ -139,13 +139,13 @@ std::string FleetAndTargetPointTable::GetStringFromPosition(Vec2<int> position) 
 		+ " | y: " + std::to_string(position.y);
 }
 
-FleetAndTargetPointTable::FleetAndTargetPointTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy const* galaxy)
+FleetAndTargetPointTable::FleetAndTargetPointTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy_ty_raw galaxy)
 	: Scene{ pos, size, alignment, resolution }, m_galaxy{ galaxy } {
 
 	Initialization();
 }
 
-void FleetAndTargetPointTable::SetActive(bool active, AppContext const& appContext) {
+void FleetAndTargetPointTable::SetActive(bool active, AppContext_ty_c appContext) {
 
 	if (active == m_active) { return; }
 

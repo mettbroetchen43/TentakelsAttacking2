@@ -58,12 +58,12 @@ void SoundManager::PlayTextSound() const {
 	lastIndex = nextIndex;
 }
 void SoundManager::MuteMasterSoundLevel(bool mute) const {
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 	appContext.constants.sound.muteVolume = mute;
 	SetMasterSoundLevel(appContext.constants.sound.masterVolume);
 }
 void SoundManager::SetMasterSoundLevel(float level) const {
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 
 	appContext.constants.sound.masterVolume = level;
 	if (appContext.constants.sound.muteVolume) {

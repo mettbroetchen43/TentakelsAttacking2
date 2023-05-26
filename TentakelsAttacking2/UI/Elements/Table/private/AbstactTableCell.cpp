@@ -34,7 +34,7 @@ bool AbstractTableCell::IsColliding(Vector2 point) const {
 	return CheckCollisionPointRec(point, m_collider);
 }
 
-void AbstractTableCell::Render(AppContext const&) {
+void AbstractTableCell::Render(AppContext_ty_c) {
 
 	DrawRectangleRec(
 		m_collider,

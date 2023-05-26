@@ -92,7 +92,7 @@ public:
 	/**
 	 * logic of the input line.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override {
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override {
 
 		UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -151,7 +151,7 @@ public:
 	/**
 	 * renders the input line
 	 */
-	void Render(AppContext const& appContext) override {
+	void Render(AppContext_ty_c appContext) override {
 
 		auto const constants{ appContext.constants.textProcessing };
 		// Update here to make sure its after call of HasValueChanced();

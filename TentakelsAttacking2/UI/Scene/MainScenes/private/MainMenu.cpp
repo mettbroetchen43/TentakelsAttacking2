@@ -12,7 +12,7 @@
 #include "Text.h"
 #include <memory>
 
-void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
+void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 	float const btnPosX{ 0.23f };
 	float       btnPosY{ 0.115f };
 	float const btnSizX{ 0.2f };
@@ -190,7 +190,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext& appContext) {
 MainMenu::MainMenu(Vector2 resolution)
 	: Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution } {
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 	appContext.eventManager.AddListener(this);
 
 	Initialize(resolution, appContext);

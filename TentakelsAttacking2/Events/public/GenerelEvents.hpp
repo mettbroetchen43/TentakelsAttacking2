@@ -6,11 +6,11 @@
 #pragma once
 #include "MainEvent.hpp"
 #include "CustomRaylib.h"
+#include "CLogicAlias.hpp"
 #include <string>
 #include <unordered_map>
 
 enum class GameEventType;
-class Galaxy;
 
 /**
  * general event to provide player name and color.
@@ -272,14 +272,14 @@ class GetShowGalaxyPointerEvent final : public Event { };
  */
 class SendGalaxyPointerEvent final : public Event {
 private:
-	Galaxy const* const m_galaxy;
+	Galaxy_ty_c_raw m_galaxy;
 	bool m_isShowGalaxy;
 
 public:
-	SendGalaxyPointerEvent(Galaxy const* const galaxy, bool isShowGalaxy)
+	SendGalaxyPointerEvent(Galaxy_ty_c_raw galaxy, bool isShowGalaxy)
 		: m_galaxy{ galaxy }, m_isShowGalaxy{ isShowGalaxy } { }
 
-	[[nodiscard]] Galaxy const* const GetGalaxy() const {
+	[[nodiscard]] Galaxy_ty_c_raw GetGalaxy() const {
 		return m_galaxy;
 	}
 	[[nodiscard]] bool IsShowGalaxy() const {

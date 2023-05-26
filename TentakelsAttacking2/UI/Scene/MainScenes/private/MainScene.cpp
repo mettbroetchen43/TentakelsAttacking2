@@ -20,7 +20,7 @@
 
 void MainScene::Initialize() {
 
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	// Galaxy and tables are Focus ID 1000+
 
@@ -356,7 +356,7 @@ void MainScene::Initialize() {
 	m_elements.push_back(m_resetBtn);
 }
 void MainScene::InitializeGalaxy() {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	if (m_galaxy) {
 		m_galaxy->SetActive(false, appContext);
 		m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), m_galaxy), m_elements.end());
@@ -373,7 +373,7 @@ void MainScene::InitializeGalaxy() {
 }
 void MainScene::InitializePlanetTable() {
 
-	AppContext const& appContext = AppContext::GetInstance();
+	AppContext_ty_c appContext = AppContext::GetInstance();
 	if (m_planetTable) {
 		m_planetTable->SetActive(false, appContext);
 		m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), m_planetTable), m_elements.end());
@@ -391,7 +391,7 @@ void MainScene::InitializePlanetTable() {
 }
 void MainScene::InitializeFleetTable() {
 	 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 	if (m_fleetTable) {
 		m_fleetTable->SetActive(false, appContext);
 		m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), m_fleetTable), m_elements.end());
@@ -409,7 +409,7 @@ void MainScene::InitializeFleetTable() {
 }
 
 void MainScene::NextTurn() {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	Switch(MainSceneType::CLEAR);
 	SetPlayerText();
 	InitializeGalaxy();
@@ -427,7 +427,7 @@ void MainScene::NextTurn() {
 	appContext.eventManager.InvokeEvent(event);
 }
 void MainScene::NextRound() {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	SetPlayerText();
 	InitializeGalaxy();
@@ -458,7 +458,7 @@ void MainScene::SetPlayerText() {
 }
 
 void MainScene::Switch(MainSceneType sceneType) {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	assert(m_galaxy);
 	assert(m_planetTable);
@@ -525,7 +525,7 @@ void MainScene::ClearInputLines() {
 MainScene::MainScene(Vector2 resolution)
 	: Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 	appContext.eventManager.AddListener(this);
 	appContext.eventManager.InvokeEvent(LoadCurrentPlayerEvent{ });
 
@@ -541,7 +541,7 @@ MainScene::~MainScene() {
 }
 
 void MainScene::OnEvent(Event const& event) {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	
 	// player
 	if (auto const* playerEvent = dynamic_cast<UpdateCurrentPlayerIDEvent const*>(&event)) {
@@ -575,7 +575,7 @@ void MainScene::OnEvent(Event const& event) {
 	}
 }
 
-void MainScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void MainScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	if (!HasAnyInputLineFocus()) {
 

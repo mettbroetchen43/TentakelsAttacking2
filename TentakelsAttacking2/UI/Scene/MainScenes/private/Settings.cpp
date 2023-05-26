@@ -18,7 +18,7 @@
 
 void SettingsScene::Initialize(SceneType continueScene) {
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 
 	float       elementY{ 0.3f };
 	float const sliderOffset{ 0.04f };
@@ -109,7 +109,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		);
 	muteCB->SetChecked(appContext.constants.sound.muteVolume);
 	muteCB->SetOnCheck([this](unsigned int, bool isChecked) {
-		AppContext& appContext = AppContext::GetInstance();
+		AppContext_ty appContext = AppContext::GetInstance();
 	auto event = MuteMasterVolumeEvent(isChecked);
 	appContext.eventManager.InvokeEvent(event);
 	m_volume->SetEnabled(!isChecked);
@@ -329,7 +329,7 @@ SettingsScene::SettingsScene(Vector2 resolution, SceneType continueScene)
 	Initialize(continueScene);
 }
 
-void SettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void SettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
 	bool const folded = not m_dropDown->IsFoldedOut();
@@ -345,12 +345,12 @@ void SettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext cons
 		m_dropDownBtn.second->CheckAndUpdate(mousePosition, appContext);
 	}
 }
-void SettingsScene::Render(AppContext const& appContext) {
+void SettingsScene::Render(AppContext_ty_c appContext) {
 	m_dropDownBtn.first->Render(appContext);
 	m_dropDownBtn.second->Render(appContext);
 	Scene::Render(appContext);
 }
-void SettingsScene::Resize(Vector2 resolution, AppContext const& appContext) {
+void SettingsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	m_dropDownBtn.first->Resize(resolution, appContext);
 	m_dropDownBtn.second->Resize(resolution, appContext);
 	Scene::Resize(resolution, appContext);

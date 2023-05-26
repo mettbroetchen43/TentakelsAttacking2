@@ -19,7 +19,7 @@ private:
 	/**
 	 * initializes all ui elements.
 	 */
-	void Initialize(AppContext const& appContext,
+	void Initialize(AppContext_ty_c appContext,
 		Vector2 resolution) override;
 	/**
 	 * gets the id from the input line and calls onClick.

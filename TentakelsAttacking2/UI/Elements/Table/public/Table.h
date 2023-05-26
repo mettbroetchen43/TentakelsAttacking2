@@ -101,7 +101,7 @@ private:
 	 * checks if any cell is clicked and updates it if so.
 	 * returns after the top cell is clicked.
 	 */
-	void CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext const& appContext);
+	void CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext_ty_c appContext);
 
 	/**
 	 * checks and scrolls if scrollable
@@ -143,22 +143,22 @@ private:
 	 * calls the top left cell to render.
 	 * sets the scissors mode for it.
 	 */
-	void RenderTopLeft(AppContext const& appContext);
+	void RenderTopLeft(AppContext_ty_c appContext);
 	/**
 	 * calls the headline (without the top left corner) to render.
 	 * sets the scissors mode for it.
 	 */
-	void RenderHeadline(AppContext const& appContext);
+	void RenderHeadline(AppContext_ty_c appContext);
 	/**
 	 * calls the first column (without the top left corner) to render.
 	 * sets the scissors mode for it.
 	 */
-	void RenderFirstColumn(AppContext const& appContext);
+	void RenderFirstColumn(AppContext_ty_c appContext);
 	/**
 	 * calls all the other cells to render.
 	 * sets the scissors mode for it.
 	 */
-	void RenderOtherCells(AppContext const& appContext);
+	void RenderOtherCells(AppContext_ty_c appContext);
 	/**
 	 * renders the outline of the table.
 	 * sets the scissors mode for it.
@@ -496,10 +496,10 @@ public:
 	 * contains the logic of the table.
 	 * calls all cells to check and Update itself.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the table.
 	 * calls all cells to render itself.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 };

@@ -8,7 +8,7 @@
 #include "HGeneral.h"
 #include "HFocusEvents.h"
 
-void ColorCellPopUp::Initialize(AppContext const& appContext,
+void ColorCellPopUp::Initialize(AppContext_ty_c appContext,
 	Vector2 resolution, Color currentColor) {
 
 	auto acceptBtn = InitializeAcceptButton(appContext, resolution);

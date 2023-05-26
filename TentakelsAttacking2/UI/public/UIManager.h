@@ -22,7 +22,7 @@ class Scene;
  */
 class UIManager final : public EventListener {
 private:
-	AppContext& m_appContext; ///< contains a AppContext ref.
+	AppContext_ty m_appContext; ///< contains a AppContext ref.
 	Focus m_focus; ///< contains the focus system.
 	SceneManager m_sceneManager; ///< contains the scene manager.
 	GameManager m_gameManager; ///< contains the game logic

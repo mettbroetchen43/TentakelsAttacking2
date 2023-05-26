@@ -7,8 +7,8 @@
 class SpaceObject;
 
 struct FleetResult final {
-	std::shared_ptr<SpaceObject> origin;
+	SpaceObject_ty origin;
 	std::shared_ptr<Fleet> fleet;
-	std::shared_ptr<SpaceObject> destination;
+	SpaceObject_ty destination;
 	bool valid;
 };

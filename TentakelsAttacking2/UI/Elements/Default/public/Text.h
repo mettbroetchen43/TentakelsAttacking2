@@ -60,16 +60,16 @@ public:
 	 * text logic.
 	 * in particular if it gets pressed.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext);
 	/**
 	 * renders the text.
 	 */
-	void Render(AppContext const& appContext);
+	void Render(AppContext_ty_c appContext);
 	/**
 	 * resizes the text.
 	 * creates a not render string.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext);
+	void Resize(Vector2 resolution, AppContext_ty_c appContext);
 
 	/**
 	 * updates the text position and the collider.

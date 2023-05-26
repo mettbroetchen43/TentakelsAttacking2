@@ -30,23 +30,23 @@ private:
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize(Vector2 resolution, AppContext& appContext);
+	void Initialize(Vector2 resolution, AppContext_ty appContext);
 	/**
 	 * initializes remove player button.
 	 * connects the actions.
 	 */
-	void InitializePlayerButtons(AppContext& appContext);
+	void InitializePlayerButtons(AppContext_ty appContext);
 	/**
 	 * checks  if the element has an nested focus and if the mouse position is outside the curtain collider.
 	 * if so, a focus layer gets deleted and the nested focus gets set to false.
 	 */
 	void CheckForNestedFocus(Vector2 const& mousePosition,
-		AppContext const& appContext) const;
+		AppContext_ty_c appContext) const;
 
 	/**
 	 * updates the scene elements when a player gets added / edit / deleted.
 	 */
-	void UpdateSceneEntries(AppContext const& appContext);
+	void UpdateSceneEntries(AppContext_ty_c appContext);
 
 	/**
 	 * adds a new player via event.
@@ -58,7 +58,7 @@ private:
 	 * calls the scene elements to update.
 	 */
 	void UpdatePlayer(unsigned int ID, std::string const& name,
-		Color color, AppContext const& appContext);
+		Color color, AppContext_ty_c appContext);
 	/**
 	 * updates a player name.
 	 * calls the update player.
@@ -93,7 +93,7 @@ private:
 	/**
 	 * sets the next scene button enables or disabled whether the player count is valid.
 	 */
-	void SetNextButton(AppContext const& appContext);
+	void SetNextButton(AppContext_ty_c appContext);
 
 public:
 	/**
@@ -111,15 +111,15 @@ public:
 	 * updates the scene.
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition,
-		AppContext const& appContext) override;
+		AppContext_ty_c appContext) override;
 	/**
 	 * renders the scene.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resize the scene.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 
 	/**
 	 * receives all events and calls the member functions.

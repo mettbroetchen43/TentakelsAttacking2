@@ -12,7 +12,7 @@
 
 
 
-void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
+void TestScene::Initialize(	[[maybe_unused]] AppContext_ty appContext) {
 	// TL
 	auto arrow = std::make_shared<Arrow>(
 		GetElementPosition(0.02f, 0.02f),
@@ -133,20 +133,20 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 TestScene::TestScene(Vector2 resolution)
 	: Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution } {
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 	Initialize(appContext);
 }
 
-void TestScene::SetActive(bool active, AppContext const& appContext) {
+void TestScene::SetActive(bool active, AppContext_ty_c appContext) {
 	Scene::SetActive(active, appContext);
 }
 
 void TestScene::TestLambda([[maybe_unused]] unsigned int value) { }
 
-void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 }
 
-void TestScene::Render(AppContext const& appContext) {
+void TestScene::Render(AppContext_ty_c appContext) {
 	Scene::Render(appContext);
 }

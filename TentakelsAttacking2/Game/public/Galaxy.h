@@ -22,7 +22,7 @@ struct FleetResult;
 class Galaxy final {
 private:
 	bool m_validGalaxy{ true }; ///< specifies if the generation in valid and the galaxy is able to use
-	std::vector<std::shared_ptr<SpaceObject>> m_objects; ///< contains all space object for updating 
+	std::vector<SpaceObject_ty> m_objects; ///< contains all space object for updating 
 	std::vector<std::shared_ptr<Planet>> m_planets; ///< contains all planets 
 	std::vector<std::shared_ptr<Fleet>> m_fleets; ///< contains all fleets
 	std::vector<std::shared_ptr<TargetPoint>> m_targetPoints; ///< contains all target points
@@ -38,22 +38,22 @@ private:
 	/**
 	 * coordinates the generation of all planets.
 	 */
-	void InitializePlanets(size_t planetCount, std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer);
+	void InitializePlanets(size_t planetCount, std::vector<Player_ty> players, Player_ty neutralPlayer);
 	/**
 	 * generation one home planet for every player.
 	 * returns the planet count for generating the other planets.
 	 */
-	[[nodiscard]] int GenerateHomePlanets(std::vector<std::shared_ptr<Player>> players);
+	[[nodiscard]] int GenerateHomePlanets(std::vector<Player_ty> players);
 	/**
 	 * generation all other planet until the planet count is reached.
 	 */
-	void GenerateOtherPlanets(size_t PlanetCount, int currentPlanet, std::shared_ptr<Player> player);
+	void GenerateOtherPlanets(size_t PlanetCount, int currentPlanet, Player_ty player);
 	/**
 	 * validates if the new planet has a valid position.
 	 * mainly if the distance to every other planet is big enough.
 	 * returns a bool.
 	 */
-	[[nodiscard]] bool IsValidNewPlanet(std::shared_ptr<Planet> newPlanet, AppContext const& appContext) const;
+	[[nodiscard]] bool IsValidNewPlanet(std::shared_ptr<Planet> newPlanet, AppContext_ty_c appContext) const;
 
 	// Fleet
 	/**
@@ -70,26 +70,26 @@ private:
 	 * returns a nullptr if not.
 	 */
 	[[nodiscard]] std::shared_ptr<Fleet> TryGetExistingFleetByOriginAndDestination(
-		std::shared_ptr<SpaceObject> origin, std::shared_ptr<SpaceObject> destination) const;
+		SpaceObject_ty origin, SpaceObject_ty destination) const;
 
 	/**
 	 * validates the data from the UI if the instruction is for a planet.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] FleetResult AddFleetFromPlanet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] FleetResult AddFleetFromPlanet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a fleet.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] FleetResult AddFleetFromFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] FleetResult AddFleetFromFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a target point.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] FleetResult AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] FleetResult AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 
 
 	// Target Point
@@ -106,8 +106,8 @@ private:
 	/**
 	 * returns a existing destination er generate a TargetPoint as destination.
 	 */
-	[[nodiscard]] std::shared_ptr<SpaceObject> GetOrGenerateDestination(unsigned int ID,
-		int X, int Y, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] SpaceObject_ty GetOrGenerateDestination(unsigned int ID,
+		int X, int Y, Player_ty currentPlayer);
 
 public:
 	/**
@@ -115,8 +115,8 @@ public:
 	 * IsValid should be called after construction because there is no guaranty,
 	 * that the	generation is valid.
 	 */
-	Galaxy(Vec2<int> size, size_t planetCount, std::vector<std::shared_ptr<Player>> players,
-		std::shared_ptr<Player> neutralPlayer);
+	Galaxy(Vec2<int> size, size_t planetCount, std::vector<Player_ty> players,
+		Player_ty neutralPlayer);
 	/**
 	 * makes a exact copy of a galaxy
 	 */
@@ -159,7 +159,7 @@ public:
 	 * returns a SpaceObject with the provided ID.
 	 * returns nullptr if there is no SpaceObject.
 	 */
-	[[nodiscard]] std::shared_ptr<SpaceObject> const GetSpaceObjectByID(unsigned int ID) const;
+	[[nodiscard]] SpaceObject_ty const GetSpaceObjectByID(unsigned int ID) const;
 	/**
 	 * returns if the new position is a valid position.
 	 */
@@ -167,7 +167,7 @@ public:
 	/**
 	 * adds a new fleet to the galaxy for the provided player.
 	 */
-	[[nodiscard]] FleetResult AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] FleetResult AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
 	 * filters the galaxy for relevant data for the provided player.
 	 */

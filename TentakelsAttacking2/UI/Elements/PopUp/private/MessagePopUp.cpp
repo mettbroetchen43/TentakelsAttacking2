@@ -9,7 +9,7 @@
 #include <memory>
 
 void MessagePopUp::Initialize(Vector2 resolution) {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	auto btn = std::make_shared<ClassicButton>(
 		1,
@@ -39,7 +39,7 @@ MessagePopUp::MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vecto
 }
 
 void MessagePopUp::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+	AppContext_ty_c appContext) {
 
 	if (!m_firstEnter) {
 		PopUp::CheckAndUpdate(mousePosition, appContext);

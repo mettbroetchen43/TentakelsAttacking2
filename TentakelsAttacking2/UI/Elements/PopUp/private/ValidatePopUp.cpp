@@ -59,7 +59,7 @@ ValidatePopUp::ValidatePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vec
 	if (IsConfirmInputReleased()) { m_firstEnter = true; }
 }
 
-void ValidatePopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void ValidatePopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	if (!m_firstEnter) { PopUp::CheckAndUpdate(mousePosition, appContext); }
 	else { LateUpdate(); }
 }

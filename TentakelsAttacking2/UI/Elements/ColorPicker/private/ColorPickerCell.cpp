@@ -53,7 +53,7 @@ Rectangle ColorPickerCell::GetCollider() const {
 }
 
 void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+	AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 	m_hover.CheckAndUpdate(mousePosition, appContext);
@@ -85,7 +85,7 @@ void ColorPickerCell::CheckAndUpdate(Vector2 const& mousePosition,
 		m_colorPicker->SetColor(m_color);
 	}
 }
-void ColorPickerCell::Render([[maybe_unused]] AppContext const& appContext) {
+void ColorPickerCell::Render([[maybe_unused]] AppContext_ty_c appContext) {
 	if (!m_enabled) {
 		return;
 	}

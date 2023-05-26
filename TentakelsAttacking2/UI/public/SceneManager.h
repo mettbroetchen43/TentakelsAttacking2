@@ -41,7 +41,7 @@ private:
 	 * calls initialize scene.
 	 * override current scene type.
 	 */
-	void SwitchScene(AppContext const& appContext);
+	void SwitchScene(AppContext_ty_c appContext);
 	/**
 	 * returns the continue scene type to be able to return to the previous loaded scene.
 	 */
@@ -59,17 +59,17 @@ public:
 	 * calls update popups if active popup.
 	 * else calls current scene to update.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext);
 	/**
 	 * calls current scene to render.
 	 * calls the popup manager to render the popups.
 	 */
-	void Render(AppContext const& appContext);
+	void Render(AppContext_ty_c appContext);
 	/**
 	 * calls current scene to resize.
 	 * calls the popup manager to resize the popups.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext);
+	void Resize(Vector2 resolution, AppContext_ty_c appContext);
 
 	void SetResolution(Vector2 resolution);
 

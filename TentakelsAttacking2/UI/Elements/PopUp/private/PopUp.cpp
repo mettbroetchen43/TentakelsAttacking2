@@ -111,7 +111,7 @@ PopUp::PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	}
 }
 
-void PopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void PopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -123,7 +123,7 @@ void PopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 		appContext.eventManager.InvokeEvent(ClosePopUpEvent(this));
 	}
 }
-void PopUp::Render(AppContext const& appContext) {
+void PopUp::Render(AppContext_ty_c appContext) {
 	for (auto const& e : m_elements) {
 		e->Render(appContext);
 	}
@@ -134,7 +134,7 @@ void PopUp::Render(AppContext const& appContext) {
 		PURPLE
 	);
 }
-void PopUp::Resize(Vector2 resolution, AppContext const& appContext) {
+void PopUp::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	for (auto const& e : m_elements) {
 		e->Resize(resolution, appContext);
 	}

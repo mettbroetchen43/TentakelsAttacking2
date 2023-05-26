@@ -55,7 +55,7 @@ Text::Text(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	CreateToRender();
 }
 
-void Text::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void Text::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -65,7 +65,7 @@ void Text::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCon
 		}
 	}
 }
-void Text::Render(AppContext const& appContext) {
+void Text::Render(AppContext_ty_c appContext) {
 	for (auto const&[text, position] : m_toRender) {
 		DrawTextEx(
 			*(appContext.assetManager.GetFont()),
@@ -85,7 +85,7 @@ void Text::Render(AppContext const& appContext) {
 		);
 	}
 }
-void Text::Resize(Vector2 resolution, AppContext const& appContext) {
+void Text::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	UIElement::Resize(resolution, appContext);
 	m_textSize = m_textHeight * resolution.y;
 	CreateToRender();

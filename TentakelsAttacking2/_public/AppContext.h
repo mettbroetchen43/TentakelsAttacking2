@@ -13,6 +13,7 @@
 #include "CConstants.hpp"
 #include "EventListener.hpp"
 #include "HConcepts.hpp"
+#include "CLogicAlias.hpp"
 #include <string>
 
 /**
@@ -35,7 +36,7 @@ public:
 	 * creates a Singleton.
 	 * returns an instance.
 	 */
-	[[nodiscard]] static AppContext& GetInstance();
+	[[nodiscard]] static AppContext_ty GetInstance();
 
 	/**
 	 * loads config.

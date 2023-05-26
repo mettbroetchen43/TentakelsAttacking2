@@ -18,7 +18,7 @@ private:
 	/**
 	 * initialize all ui elements.
 	 */
-	void Initialize(AppContext const& appContext,
+	void Initialize(AppContext_ty_c appContext,
 		Vector2 resolution, Color currentColor);
 	/**
 	 * gets the new color from the color picker and calls the onClick.

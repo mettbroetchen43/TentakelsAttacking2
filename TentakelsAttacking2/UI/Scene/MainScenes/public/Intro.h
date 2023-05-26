@@ -43,18 +43,18 @@ public:
 	 * calls title to animate, then enables and moves the button.
 	 * checks for skip input.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext);
 	/**
 	 * calls all elements to render.
 	 */
-	void Render(AppContext const& appContext);
+	void Render(AppContext_ty_c appContext);
 	/**
 	 * calls all elements to resize.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 	/**
 	 * sets scene active.
 	 * selects the button as focus.
 	 */
-	void SetActive(bool active, AppContext const& appContext) override;
+	void SetActive(bool active, AppContext_ty_c appContext) override;
 };

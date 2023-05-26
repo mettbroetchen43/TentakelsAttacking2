@@ -21,5 +21,5 @@ public:
 	 */
 	[[nodiscard]] bool IsTargetPoint() const override;
 
-	void Update(Galaxy const* galaxy) override;
+	void Update(Galaxy_ty_raw galaxy) override;
 };

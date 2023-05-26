@@ -68,7 +68,7 @@ void ValidateGalaxyScene::Initialize() {
 	m_elements.push_back(nextBtn);
 }
 void ValidateGalaxyScene::InitializePlayerLegend() {
-	AppContext const& appContext = AppContext::GetInstance();
+	AppContext_ty_c appContext = AppContext::GetInstance();
 
 	auto const players = appContext.playerCollection.GetPlayerData();
 
@@ -96,7 +96,7 @@ void ValidateGalaxyScene::InitializePlayerLegend() {
 
 }
 void ValidateGalaxyScene::InitializeGalaxy() {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	m_galaxy = std::make_shared<GalaxyScene>(
 		GetElementPosition(0.05f, 0.465f),
@@ -109,7 +109,7 @@ void ValidateGalaxyScene::InitializeGalaxy() {
 }
 
 void ValidateGalaxyScene::NewGalaxy() {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	m_galaxy->SetActive(false, appContext);
 	m_elements.erase(std::remove(m_elements.begin(), m_elements.end(), m_galaxy), m_elements.end());
@@ -122,7 +122,7 @@ void ValidateGalaxyScene::NewGalaxy() {
 }
 
 void ValidateGalaxyScene::StartGame() const {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	appContext.eventManager.InvokeEvent(StartGameEvent{ });
 	appContext.eventManager.InvokeEvent(SwitchSceneEvent{ SceneType::MAIN });
 }

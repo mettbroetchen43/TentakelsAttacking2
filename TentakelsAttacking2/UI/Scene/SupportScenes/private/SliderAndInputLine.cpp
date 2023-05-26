@@ -102,7 +102,7 @@ SliderAndInputLine::SliderAndInputLine(unsigned int focusID, Vector2 pos,
 }
 
 void SliderAndInputLine::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+	AppContext_ty_c appContext) {
 
 	if (!m_isEnabled) { return; }
 

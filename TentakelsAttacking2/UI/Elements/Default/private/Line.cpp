@@ -9,7 +9,7 @@ Line::Line(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	float thick, Color color)
 	: UIElement{ pos, size, alignment, resolution }, m_thick{ thick }, m_color{ color } { }
 
-void Line::Render(AppContext const&) {
+void Line::Render(AppContext_ty_c) {
 	DrawLineEx(
 		Vector2(
 			m_collider.x,

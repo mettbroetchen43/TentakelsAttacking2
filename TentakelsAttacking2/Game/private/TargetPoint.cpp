@@ -11,6 +11,6 @@ bool TargetPoint::IsTargetPoint() const {
     return true;
 }
 
-void TargetPoint::Update(Galaxy const*) {
+void TargetPoint::Update(Galaxy_ty_raw) {
     Print("Updated TargetPoint. Nothing Happens", PrintType::DEBUG);
 }

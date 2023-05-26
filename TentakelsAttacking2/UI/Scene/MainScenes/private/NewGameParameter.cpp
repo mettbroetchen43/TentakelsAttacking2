@@ -23,7 +23,7 @@ enum class SliderType {
 };
 
 void NewGameParameterScene::Initialize(Vector2 resolution) {
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 
 	// title
 	m_elements.push_back(std::make_shared<Title>(

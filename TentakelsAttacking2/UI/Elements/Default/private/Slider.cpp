@@ -160,7 +160,7 @@ Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 	CalculateInitialButton();
 }
 
-void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -179,7 +179,7 @@ void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appC
 
 	m_btn.CheckAndUpdate(mousePosition, appContext);
 }
-void Slider::Render(AppContext const& appContext) {
+void Slider::Render(AppContext_ty_c appContext) {
 	DrawTexturePro(
 		*m_texture,
 		m_textureRec,
@@ -190,7 +190,7 @@ void Slider::Render(AppContext const& appContext) {
 	);
 	m_btn.Render(appContext);
 }
-void Slider::Resize(Vector2 resolution, AppContext const& appContext) {
+void Slider::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
 	UIElement::Resize(resolution, appContext);
 

@@ -11,8 +11,8 @@
 #include "HInput.h"
 #include "HFocusEvents.h"
 
-void UIGalaxy::Initialize(Galaxy const* const galaxy) {
-	AppContext const& appContext{ AppContext::GetInstance() };
+void UIGalaxy::Initialize(Galaxy_ty_c_raw galaxy) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	m_currentGalaxy = galaxy;
 
@@ -43,7 +43,7 @@ void UIGalaxy::Initialize(Galaxy const* const galaxy) {
 	}
 	m_onZoom(1.0f, GetCurrentScaleReference());
 }
-Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext const& appContext) const {
+Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext_ty_c appContext) const {
 	Vector2 const newPos{
 		(m_collider.x + m_resolution.x * 0.05f) / m_resolution.x,
 		(m_collider.y + m_resolution.y * 0.05f) / m_resolution.y,
@@ -66,7 +66,7 @@ Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext const& appContext)
 	}
 
 }
-Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext const& appContext) const {
+Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext_ty_c appContext) const {
 	Vector2 const newPos{
 		m_resolution.x * 0.045f / m_collider.width,
 		m_resolution.y * 0.045f / m_collider.height,
@@ -201,7 +201,7 @@ UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignme
 	m_isShowGalaxy(isShowGalaxy) {
 	m_absoluteSize = m_collider;
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 
 	appContext.eventManager.AddListener(this);
 
@@ -295,7 +295,7 @@ void UIGalaxy::SetOnPlanetClick(std::function<void(unsigned int)> onPlanetClick)
 	m_onPlanetClick = onPlanetClick;
 }
 
-void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -360,14 +360,14 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		}
 	}
 }
-void UIGalaxy::Render(AppContext const& appContext) {
+void UIGalaxy::Render(AppContext_ty_c appContext) {
 	for (auto const& p : m_uiPlanets) {
 		if (IsPlanetInCollider(p)) {
 			p->Render(appContext);
 		}
 	}
 }
-void UIGalaxy::Resize(Vector2 resolution, AppContext const& appContext) {
+void UIGalaxy::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
 	m_absoluteSize = {
 		m_absoluteSize.x / m_resolution.x * resolution.x,
@@ -394,7 +394,7 @@ Rectangle UIGalaxy::GetCollider() const {
 	return UIElement::GetCollider();
 }
 
-Galaxy const* UIGalaxy::GetGalaxy() const {
+Galaxy_ty_raw UIGalaxy::GetGalaxy() const {
 	return m_currentGalaxy;
 }
 
