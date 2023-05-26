@@ -15,7 +15,7 @@ class CheckBox;
  */
 class SoundLevelPopUp final : public PopUp {
 private:
-	std::shared_ptr<Slider> m_slider; ///< contains the slider to set the sound level
+	Slider_ty m_slider; ///< contains the slider to set the sound level
 	CheckBox_ty m_checkBox; ///< contains the checkbox to mute the sound
 	ClassicButton_ty m_acceptBtn; ///< contains the button to set the current value
 

@@ -35,9 +35,9 @@ private:
 	float m_scroll_speed; ///< contains the speed the table ist scrolled with
 	Vector2 m_absoluteScrollingOffset{ 0.0f,0.0f }; ///< contains the absolute scrolling offset 
 
-	std::shared_ptr<Slider> m_horizontalSlider; ///< contains the horizontal slider
+	Slider_ty m_horizontalSlider; ///< contains the horizontal slider
 	bool m_activeHorizontalSlider; ///< contains if the horizontal slider is needed
-	std::shared_ptr<Slider> m_verticalSlider; ///< contains the vertical slider
+	Slider_ty m_verticalSlider; ///< contains the vertical slider
 	bool m_activeVerticalSlider; ///< contains if the vertical slider is needed
 
 	bool m_isHoveredHighlighted{ false }; ///< contains if the hovered row and column gets highlighted

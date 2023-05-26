@@ -16,7 +16,7 @@ class ClassicButton;
  */
 class SliderAndInputLine : public Scene {
 private:
-	std::shared_ptr<Slider> m_slider; ///< contains a the slider
+	Slider_ty m_slider; ///< contains a the slider
 	InputLine_int_ty m_inputLine; ///< contains a the input line
 	ClassicButton_ty m_btn; ///< contains a the button
 	std::function<void(int)> m_onSave{ [](int) {} }; ///< contains the llambda that gets called on save -> provides the current value

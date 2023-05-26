@@ -55,3 +55,11 @@ using InputLine_str_ty_c = std::shared_ptr<InputLine<std::string>> const&;
 class Line;
 using Line_ty = std::shared_ptr<Line>;
 using Line_ty_c = std::shared_ptr<Line> const&;
+
+class Picture;
+using Picture_ty = std::shared_ptr<Picture>;
+using Picture_ty_c = std::shared_ptr<Picture> const&;
+
+class Slider;
+using Slider_ty = std::shared_ptr<Slider>;
+using Slider_ty_c = std::shared_ptr<Slider> const&;
