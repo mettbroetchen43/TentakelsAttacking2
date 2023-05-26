@@ -7,10 +7,6 @@
 #include "UIElement.hpp"
 #include <memory>
 
-class Line;
-
-
-
 class Arrow final : public UIElement {
 private:
 	Line_ty m_long; ///< contains the long line of the arrow

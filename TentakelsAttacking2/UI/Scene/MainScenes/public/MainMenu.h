@@ -7,8 +7,6 @@
 #include "Scene.h"
 #include "EventListener.hpp"
 
-class ClassicButton;
-
 /**
  * provides the main menu scene.
  */

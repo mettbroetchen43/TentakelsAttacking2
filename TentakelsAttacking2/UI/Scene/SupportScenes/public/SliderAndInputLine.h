@@ -8,8 +8,6 @@
 #include "InputLine.hpp"
 #include <functional>
 
-class Slider;
-class ClassicButton;
 
 /**
  * provides a scene that contains a slider, a button and an input line.

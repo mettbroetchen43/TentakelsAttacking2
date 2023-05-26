@@ -9,11 +9,6 @@
 #include "AbstractTableCell.h"
 #include "EventListener.hpp"
 
-class ColorPicker;
-class Table;
-class Focusable;
-class ClassicButton;
-
 /**
  * provides a scene where the player can be edit of a new game.
  */

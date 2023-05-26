@@ -8,10 +8,6 @@
 #include "CLogicAlias.hpp"
 #include <vector>
 
-class Slider;
-class Line;
-class ClassicButton;
-class UIGalaxy;
 
 /**
  * provides a scene that can display the logic galaxy.

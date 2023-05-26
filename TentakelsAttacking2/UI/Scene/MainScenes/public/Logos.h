@@ -8,7 +8,6 @@
 #include "SceneType.h"
 #include <functional>
 
-struct AppContext;
 enum class SceneType;
 
 /**

@@ -6,10 +6,6 @@
 #pragma once
 #include "Scene.h"
 
-class Title;
-class ClassicButton;
-class Line;
-
 /**
  * provides the credits scene.
  */

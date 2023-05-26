@@ -9,8 +9,6 @@
 #include <string>
 #include <memory>
 
-class Player;
-class Galaxy;
 
 /**
  * the basic space object, that every element in the galaxy is implementing.

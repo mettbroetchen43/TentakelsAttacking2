@@ -7,9 +7,6 @@
 #include "CLogicAlias.hpp"
 #pragma once
 
-class Table;
-template<typename T>
-struct Vec2;
 
 class FleetAndTargetPointTable final : public Scene {
 private:

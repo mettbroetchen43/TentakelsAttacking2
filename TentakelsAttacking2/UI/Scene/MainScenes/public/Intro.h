@@ -13,9 +13,6 @@
 #include <array>
 #include <functional>
 
-class ClassicButton;
-class Title;
-
 /**
  * provides the intro scene.
  */

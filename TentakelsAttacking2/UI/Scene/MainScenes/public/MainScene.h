@@ -13,8 +13,6 @@
 class GalaxyScene;
 class PlanetTable;
 class FleetAndTargetPointTable;
-class ClassicButton;
-class Text;
 
 /**
  * provides the main scene.

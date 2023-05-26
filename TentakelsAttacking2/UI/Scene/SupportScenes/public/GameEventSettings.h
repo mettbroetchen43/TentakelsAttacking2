@@ -8,7 +8,6 @@
 #include "EventListener.hpp"
 #include "GenerelEvents.hpp"
 
-class CheckBox;
 enum class GameEventTypes;
 
 /**

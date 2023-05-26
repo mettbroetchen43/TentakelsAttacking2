@@ -12,7 +12,6 @@
 #include <vector>
 
 class Scene;
-struct AppContext;
 class UIManager;
 
 /**

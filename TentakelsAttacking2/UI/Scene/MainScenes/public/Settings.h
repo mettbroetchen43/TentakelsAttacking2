@@ -7,8 +7,6 @@
 #include "Scene.h"
 
 class SliderAndInputLine;
-class ClassicButton;
-class DropDown;
 
 /**
  * provides a scenes, where the global settings can be set.
