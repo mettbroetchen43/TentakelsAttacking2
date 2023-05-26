@@ -21,3 +21,7 @@ using SliderButton_ty_c = std::shared_ptr<SliderButton> const&;
 class ColorPicker;
 using ColorPicker_ty = std::shared_ptr<ColorPicker>;
 using ColorPicker_ty_c = std::shared_ptr<ColorPicker> const&;
+
+class ColorPickerCell;
+using ColorPickerCell_ty = std::shared_ptr<ColorPickerCell>;
+using ColorPickerCell_ty_c = std::shared_ptr<ColorPickerCell> const&;
