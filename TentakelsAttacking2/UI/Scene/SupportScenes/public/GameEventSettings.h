@@ -16,7 +16,7 @@ enum class GameEventTypes;
  */
 class GameEventSettings : public Scene, public EventListener {
 private:
-	std::vector<std::shared_ptr<CheckBox>> m_checkBoxes; ///< contains all check boxes
+	std::vector<CheckBox_ty> m_checkBoxes; ///< contains all check boxes
 
 	/**
 	 * initializes all ui elements.

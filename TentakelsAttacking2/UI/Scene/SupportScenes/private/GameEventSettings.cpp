@@ -108,7 +108,7 @@ void GameEventSettings::UpdateElements(UpdateCheckGameEventsUI const* event) {
 	SetGlobalCheckbox();
 }
 void GameEventSettings::SetGlobalCheckbox(){
-	std::shared_ptr<CheckBox> globalCheckbox{ nullptr };
+	CheckBox_ty globalCheckbox{ nullptr };
 	bool check{ true };
 	bool value{ false };
 

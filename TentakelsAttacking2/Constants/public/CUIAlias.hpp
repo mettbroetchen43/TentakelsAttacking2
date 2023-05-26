@@ -31,3 +31,7 @@ using ColorPickerCell_ty_c = std::shared_ptr<ColorPickerCell> const&;
 class Arrow;
 using Arrow_ty = std::shared_ptr<Arrow>;
 using Arrow_ty_c = std::shared_ptr<Arrow> const&;
+
+class CheckBox;
+using CheckBox_ty = std::shared_ptr<CheckBox>;
+using CheckBox_ty_c = std::shared_ptr<CheckBox> const&;
