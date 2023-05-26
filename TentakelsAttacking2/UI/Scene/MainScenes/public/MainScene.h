@@ -33,10 +33,10 @@ private:
 	std::shared_ptr<PlanetTable> m_planetTable; ///< contains the current planet table
 	std::shared_ptr<FleetAndTargetPointTable> m_fleetTable; ///< contains the current fleet table
 	ClassicButton_ty m_nextBtn; ///< contains the next turn / round button
-	std::shared_ptr<Text> m_currentPlayerName; ///< contains the current player name
-	std::shared_ptr<Text> m_nextPlayerName; ///< contains the next player name
-	std::shared_ptr<Text> m_currentRound;  ///< contains the current round count
-	std::shared_ptr<Text> m_currentTargetRound;  ///< contains the current target round count
+	Text_ty m_currentPlayerName; ///< contains the current player name
+	Text_ty m_nextPlayerName; ///< contains the next player name
+	Text_ty m_currentRound;  ///< contains the current round count
+	Text_ty m_currentTargetRound;  ///< contains the current target round count
 	PlayerData m_currentPlayer; ///< contains the data of the current player
 	PlayerData m_nextPlayer; ///< contains the data of the next player
 
