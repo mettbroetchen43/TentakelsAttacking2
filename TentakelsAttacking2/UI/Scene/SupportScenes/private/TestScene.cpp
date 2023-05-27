@@ -10,108 +10,8 @@
 #include "ClassicButton.h"
 #include "Arrow.h"
 
-
-
 void TestScene::Initialize(	[[maybe_unused]] AppContext_ty appContext) {
-	// TL
-	auto arrow = std::make_shared<Arrow>(
-		GetElementPosition(0.02f, 0.02f),
-		GetElementSize(0.3f, 0.3f),
-		Alignment::TOP_LEFT,
-		m_resolution,
-		Alignment::TOP_LEFT,
-		WHITE,
-		3.0f
-	);
-	m_elements.push_back(arrow);
 
-	// TM
-	arrow = std::make_shared<Arrow>(
-		GetElementPosition(0.35f, 0.02f),
-		GetElementSize(0.3f, 0.3f),
-		Alignment::TOP_LEFT,
-		m_resolution,
-		Alignment::TOP_MID,
-		WHITE,
-		3.0f
-	);
-	m_elements.push_back(arrow);
-
-	// TR
-	arrow = std::make_shared<Arrow>(
-		GetElementPosition(0.68f, 0.02f),
-		GetElementSize(0.3f, 0.3f),
-		Alignment::TOP_LEFT,
-		m_resolution,
-		Alignment::TOP_RIGHT,
-		WHITE,
-		3.0f
-	);
-	m_elements.push_back(arrow);
-
-	// ML
-	arrow = std::make_shared<Arrow>(
-		GetElementPosition(0.02f, 0.35f),
-		GetElementSize(0.3f, 0.3f),
-		Alignment::TOP_LEFT,
-		m_resolution,
-		Alignment::MID_LEFT,
-		WHITE,
-		3.0f
-	);
-	m_elements.push_back(arrow);
-
-	// MM not valid
-
-	// MR
-	arrow = std::make_shared<Arrow>(
-		GetElementPosition(0.68f, 0.35f),
-		GetElementSize(0.3f, 0.3f),
-		Alignment::TOP_LEFT,
-		m_resolution,
-		Alignment::MID_RIGHT,
-		WHITE,
-		3.0f
-	);
-	m_elements.push_back(arrow);
-
-	// BL
-	arrow = std::make_shared<Arrow>(
-		GetElementPosition(0.02f, 0.68f),
-		GetElementSize(0.3f, 0.3f),
-		Alignment::TOP_LEFT,
-		m_resolution,
-		Alignment::BOTTOM_LEFT,
-		WHITE,
-		3.0f
-	);
-	m_elements.push_back(arrow);
-
-	// BM
-	arrow = std::make_shared<Arrow>(
-		GetElementPosition(0.35f, 0.68f),
-		GetElementSize(0.3f, 0.3f),
-		Alignment::TOP_LEFT,
-		m_resolution,
-		Alignment::BOTTOM_MID,
-		WHITE,
-		3.0f
-	);
-	m_elements.push_back(arrow);
-
-	// BR
-	arrow = std::make_shared<Arrow>(
-		GetElementPosition(0.68f, 0.68f),
-		GetElementSize(0.3f, 0.3f),
-		Alignment::TOP_LEFT,
-		m_resolution,
-		Alignment::BOTTOM_RIGHT,
-		WHITE,
-		3.0f
-	);
-	m_elements.push_back(arrow);
-	
-	
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -124,10 +24,21 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext_ty appContext) {
 		SoundType::CLICKED_PRESS_STD
 	);
 	backBtn->SetOnClick([]() {
-		auto event = SwitchSceneEvent(SceneType::MAIN_MENU);
+		SwitchSceneEvent const event{ SceneType::MAIN_MENU };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 		});
 	m_elements.push_back(backBtn);
+}
+
+void TestScene::InstantiateArrow(Vector2 start, Vector2 end) {
+	m_arrow = std::make_shared<Arrow>(
+		start,
+		end,
+		Alignment::TOP_LEFT,
+		m_resolution,
+		PURPLE,
+		3.0f
+	);
 }
 
 TestScene::TestScene(Vector2 resolution)
@@ -145,8 +56,40 @@ void TestScene::TestLambda([[maybe_unused]] unsigned int value) { }
 
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
+
+	if (IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
+		Vector2 start{
+			mousePosition.x / m_resolution.x,
+			mousePosition.y / m_resolution.y,
+		};
+		InstantiateArrow(start, start);
+	}
+
+	if (IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
+		m_arrow = nullptr;
+	}
+
+	if (m_arrow) {
+		Vector2 end{
+			mousePosition.x / m_resolution.x,
+			mousePosition.y / m_resolution.y,
+		};
+		m_arrow->SetEnd(end);
+		m_arrow->Update();
+	}
+
 }
 
 void TestScene::Render(AppContext_ty_c appContext) {
 	Scene::Render(appContext);
+	if (m_arrow) {
+		m_arrow->Render(appContext);
+	}
+}
+
+void TestScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+	Scene::Resize(resolution, appContext);
+	if (m_arrow) {
+		m_arrow->Resize(resolution, appContext);
+	}
 }

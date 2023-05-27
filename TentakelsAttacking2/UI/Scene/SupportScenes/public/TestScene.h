@@ -12,7 +12,10 @@
  */
 class TestScene : public Scene {
 private:
+	std::shared_ptr<Arrow> m_arrow;
+
 	void Initialize(AppContext_ty appContext);
+	void InstantiateArrow(Vector2 start, Vector2 end);
 
 public:
 	TestScene(Vector2 resolution);
@@ -21,4 +24,5 @@ public:
 	void TestLambda(unsigned int value);
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	void Render(AppContext_ty_c appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 };

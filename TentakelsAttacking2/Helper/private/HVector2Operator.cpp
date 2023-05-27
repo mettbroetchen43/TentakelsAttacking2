@@ -17,6 +17,14 @@ Vector2 operator-(Vector2 const& lhs, Vector2 const& rhs) {
     };
 }
 
+Vector2 operator/(Vector2 const& lhs, float rhs) {
+    return { lhs.x / rhs,lhs.y / rhs };
+}
+
+Vector2 operator/(Vector2 const& lhs, int rhs) {
+    return { lhs.x / rhs,lhs.y / rhs };
+}
+
 float LenVec2(Vector2 const& value) {
     return std::sqrt(value.x * value.x + value.y * value.y);
 }
