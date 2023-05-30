@@ -24,8 +24,8 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 	m_galaxy->SetOnZoom([this](float scaleFactor, Vector2 referenceScale) {
 		this->Zoom(scaleFactor, referenceScale);
 		});
-	m_galaxy->SetOnSlide([this](float position, bool isHorzontal) {
-		this->Slide(position, isHorzontal);
+	m_galaxy->SetOnSlide([this](float position, bool isHorizontal) {
+		this->Slide(position, isHorizontal);
 		});
 	m_elements.push_back(m_galaxy);
 
@@ -95,8 +95,8 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 	);
 
 	m_scaleLineY = std::make_shared<Line>(
+		GetElementPosition(0.036f, 0.73f),
 		GetElementPosition(0.036f, 0.93f),
-		GetElementSize(0.036f, 0.73f),
 		resolution,
 		2.0f,
 		WHITE
@@ -110,17 +110,21 @@ void GalaxyScene::Zoom(float scaleFactor, Vector2 referenceScale) {
 	m_verticalSlider->SetAbsoluteDimension(scaleFactor);
 	m_horizontalSlider->SetAbsoluteDimension(scaleFactor);
 
-	m_scaleLineX->SetSize(
-		Vector2(referenceScale.x / m_resolution.x, 0.0f)
-	);
+	auto const startX{ m_scaleLineX->GetStart() };
+	auto       endX  { m_scaleLineX->GetEnd() };
+	auto const sizeX{ referenceScale.x / m_resolution.x };
 
-	Vector2 const size{ m_scaleLineY->GetSize() };
-	m_scaleLineY->SetSize(
-		Vector2(0.0f, referenceScale.y / m_resolution.y)
-	);
-	m_scaleLineY->SetPosition(
-		GetElementPosition(0.036f, 0.93f)
-	);
+	endX.x = startX.x + sizeX;
+	m_scaleLineX->SetEnd(endX);
+	m_scaleLineX->Update();
+
+	auto       startY{ m_scaleLineY->GetStart() };
+	auto const endY  { m_scaleLineY->GetEnd() };
+	auto const sizeY { referenceScale.y / m_resolution.y };
+
+	startY.y = endY.y - sizeY;
+	m_scaleLineY->SetStart(startY);
+	m_scaleLineY->Update();
 }
 void GalaxyScene::Slide(float position, bool isHorizontal) {
 	if (isHorizontal) {
