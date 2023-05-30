@@ -31,11 +31,11 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 
 	// Line
 	m_elements.push_back(std::make_shared<Line>(
-		GetElementPosition(0.5f, 0.15f),
-		GetElementSize(0.3f, 0.0f),
-		Alignment::TOP_MID,
+		GetElementPosition(0.3f, 0.15f),
+		GetElementPosition(0.7f, 0.15f),
 		resolution,
-		3.0f
+		3.0f,
+		WHITE
 	));
 
 	// Text and Check Box

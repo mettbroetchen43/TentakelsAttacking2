@@ -5,9 +5,8 @@
 
 #include "Line.h"
 
-Line::Line(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	float thick)
-	: UIElement{ pos, size, alignment, resolution }, m_thick{ thick } { }
+Line::Line(Vector2 start, Vector2 end, Vector2 resolution, float thick, Color color)
+	: UIElement{ start, end - start, Alignment::DEFAULT, resolution }, m_thick{ thick }, m_color{ color } { }
 
 void Line::Render(AppContext const&) {
 	DrawLineEx(
@@ -20,7 +19,7 @@ void Line::Render(AppContext const&) {
 			m_collider.y + m_collider.height
 		),
 		m_thick,
-		WHITE
+		m_color
 	);
 }
 

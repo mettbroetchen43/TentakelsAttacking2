@@ -88,18 +88,18 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 	// scale
 	m_scaleLineX = std::make_shared<Line>(
 		GetElementPosition(0.041f, 0.94f),
-		GetElementSize(0.2f, 0.0f),
-		Alignment::BOTTOM_LEFT,
+		GetElementPosition(0.241f, 0.94f),
 		resolution,
-		2.0f
-		);
+		2.0f,
+		WHITE
+	);
 
 	m_scaleLineY = std::make_shared<Line>(
 		GetElementPosition(0.036f, 0.93f),
-		GetElementSize(0.0f, 0.2f),
-		Alignment::BOTTOM_LEFT,
+		GetElementSize(0.036f, 0.73f),
 		resolution,
-		2.0f
+		2.0f,
+		WHITE
 		);
 
 	m_galaxy->Zoom(false, 0);

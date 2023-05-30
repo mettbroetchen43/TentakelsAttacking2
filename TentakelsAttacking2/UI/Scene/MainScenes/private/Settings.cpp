@@ -50,10 +50,10 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	// line
 	m_elements.push_back(std::make_shared<Line>(
 		GetElementPosition(0.5f, elementY),
-		GetElementSize(0.0f, 0.65f),
-		Alignment::TOP_MID,
+		GetElementPosition(0.5f, 0.95f),
 		m_resolution,
-		2.0f
+		2.0f,
+		WHITE
 		));
 
 	// events
