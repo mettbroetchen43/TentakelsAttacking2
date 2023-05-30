@@ -34,7 +34,7 @@ public:
 	/**
 	 * Updates all chances.
 	 */
-	void Update();
+	virtual void Update();
 
 	/**
 	 * return the relative start point.
@@ -44,7 +44,7 @@ public:
 	 * sets the relative start point.
 	 * need to update.
 	 */
-	void SetStart(Vector2 start);
+	virtual void SetStart(Vector2 start);
 	
 	/**
 	 * returns the relative end point.
@@ -54,7 +54,7 @@ public:
 	 * sets the relative end point.
 	 * need tp update.
 	 */
-	void SetEnd(Vector2 end);
+	virtual void SetEnd(Vector2 end);
 
 	/**
 	 * return the thickness.
