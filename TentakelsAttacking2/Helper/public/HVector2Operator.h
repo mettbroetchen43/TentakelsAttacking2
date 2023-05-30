@@ -19,7 +19,7 @@
  */
 [[nodiscard]] Vector2 operator/ (Vector2 const& lhs, float rhs);
 /**
- * divides a Vector2 from RayLib with a int.
+* divides a Vector2 from RayLib with a int.
  */
 [[nodiscard]] Vector2 operator/ (Vector2 const& lhs, int rhs);
 

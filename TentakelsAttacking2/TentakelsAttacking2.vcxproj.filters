@@ -327,9 +327,6 @@
     <ClInclude Include="Helper\public\HGalaxy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Elements\Default\public\Arrow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Constants\public\CLogicAlias.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -564,9 +561,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Helper\private\HGalaxy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\Elements\Default\private\Arrow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Constants\public\CUIAlias.hpp">
