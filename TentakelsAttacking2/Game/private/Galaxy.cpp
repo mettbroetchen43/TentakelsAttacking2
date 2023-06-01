@@ -378,6 +378,49 @@ FleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* eve
 	return { origin, fleet, destination, true };
 }
 
+std::vector<Fleet_ty> Galaxy::GetFleetsOfTarget(SpaceObject_ty_c object) const {
+	std::vector<Fleet_ty> vec{ };
+
+	for (auto const& fleet : m_fleets) {
+		if (fleet->GetTarget()->GetID() == object->GetID()) {
+			vec.push_back(fleet);
+		}
+	}
+
+	return vec;
+}
+
+void Galaxy::DeleteFleet(std::vector<Fleet_ty> const& fleets) {
+	auto const& containsFleet{ [fleets](Fleet_ty const& fleet) -> bool {
+		for (auto const& fleet_r : fleets) {
+			if (fleet->GetID() == fleet_r->GetID()) {
+				return true;
+			}
+		}
+		return false;
+	} };
+	auto const& containsObject{ [fleets](SpaceObject_ty const& object) -> bool {
+		for (auto const& fleet : fleets) {
+			if (object->GetID() == fleet->GetID()) {
+				return true;
+			}
+		}
+		return false;
+	} };
+
+	auto const newStart1{ std::remove_if(m_fleets.begin(), m_fleets.end(), containsFleet) };
+	m_fleets.erase(newStart1, m_fleets.end());
+
+	auto const newStart2{ std::remove_if(m_objects.begin(), m_objects.end(), containsObject) };
+	m_objects.erase(newStart2, m_objects.end());
+}
+void Galaxy::DeleteFleet(Fleet_ty_c fleet) {
+	m_fleets.erase(std::remove_if(m_fleets.begin(), m_fleets.end(),
+		[fleet](Fleet_ty_c currentFleet) { return fleet->GetID() == currentFleet->GetID(); }));
+	m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(),
+		[fleet](SpaceObject_ty const& object) { return fleet->GetID() == object->GetID(); }));
+}
+
 // Target Point
 bool Galaxy::IsValidTargetPoint(unsigned int const ID) const {
 	for (auto const& tp : m_targetPoints) {
@@ -387,6 +430,7 @@ bool Galaxy::IsValidTargetPoint(unsigned int const ID) const {
 	}
 	return false;
 }
+
 TargetPoint_ty Galaxy::GetTargetPointByID(unsigned int const ID) const {
 	for (auto const& tp : m_targetPoints) {
 		if (tp->GetID() == ID) {
@@ -424,9 +468,30 @@ SpaceObject_ty Galaxy::GetOrGenerateDestination(unsigned int ID,
 
 	return targetPoint;
 }
+ // update
+void Galaxy::UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty_c target) {
+	for (auto const& fleet : fleets) {
+		fleet->SetTarget(target);
+	}
+}
+
+void Galaxy::CheckArrivingFriendlyFleets() {
+	std::vector<Fleet_ty> toDelete{ };
+	for (auto const& fleet : m_fleets) {
+		bool const friendly{ fleet->GetTarget()->GetPlayer() == fleet->GetPlayer() };
+		if (friendly and fleet->IsArrived()) {
+			auto const& target = fleet->GetTarget();
+			*target += fleet->GetShipCount();
+			auto const origins{ GetFleetsOfTarget(fleet) };
+			UpdateFleetTargets(origins, target);
+			toDelete.push_back(fleet);
+		}
+	}
+	DeleteFleet(toDelete);
+}
 
 
-
+// public
 Galaxy::Galaxy(vec2pos_ty size, size_t planetCount,
 	std::vector<Player_ty> players, Player_ty neutralPlayer)
 	: m_size{ size } {
@@ -570,21 +635,21 @@ FleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty c
 }
 
 void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
-	auto const newEnd{ std::remove_if(m_fleets.begin(), m_fleets.end(),
+	auto const newStart{ std::remove_if(m_fleets.begin(), m_fleets.end(),
 		[currentPlayerID](Fleet_ty_c fleet) { return fleet->GetPlayer()->GetID() != currentPlayerID; }) };
-	m_fleets.erase(newEnd, m_fleets.end());
+	m_fleets.erase(newStart, m_fleets.end());
 
-	auto const newEnd2{ std::remove_if(m_objects.begin(), m_objects.end(),
-		[currentPlayerID](SpaceObject_ty const& object) { return object->IsFleet() and object->GetPlayer()->GetID() != currentPlayerID; }) };
-	m_objects.erase(newEnd2, m_objects.end());
+	auto const newStart2{ std::remove_if(m_objects.begin(), m_objects.end(),
+		[currentPlayerID](SpaceObject_ty_c object) { return object->IsFleet() and object->GetPlayer()->GetID() != currentPlayerID; }) };
+	m_objects.erase(newStart2, m_objects.end());
 
-	auto const newEnd3{ std::remove_if(m_targetPoints.begin(), m_targetPoints.end(),
+	auto const newStart3{ std::remove_if(m_targetPoints.begin(), m_targetPoints.end(),
 		[currentPlayerID](TargetPoint_ty_c targetPoint) { return targetPoint->GetPlayer()->GetID() != currentPlayerID; }) };
-	m_targetPoints.erase(newEnd3, m_targetPoints.end());
+	m_targetPoints.erase(newStart3, m_targetPoints.end());
 
-	auto const newEnd4{ std::remove_if(m_objects.begin(), m_objects.end(),
-		[currentPlayerID](SpaceObject_ty const& object) {return object->IsTargetPoint() and object->GetPlayer()->GetID() != currentPlayerID; }) };
-	m_objects.erase(newEnd4, m_objects.end());
+	auto const newStart4{ std::remove_if(m_objects.begin(), m_objects.end(),
+		[currentPlayerID](SpaceObject_ty_c object) {return object->IsTargetPoint() and object->GetPlayer()->GetID() != currentPlayerID; }) };
+	m_objects.erase(newStart4, m_objects.end());
 }
 
 void Galaxy::HandleFleetResult(FleetResult const& fleetResult) {
@@ -644,8 +709,11 @@ void Galaxy::HandleFleetResult(FleetResult const& fleetResult) {
 	handle(fleetResult.destination);
 }
 
+
+// update
 void Galaxy::Update() {
 	for (auto& o : m_objects) {
 		o->Update(this);
 	}
+	CheckArrivingFriendlyFleets();
 }
