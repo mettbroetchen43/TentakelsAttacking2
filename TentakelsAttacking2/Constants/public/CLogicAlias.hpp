@@ -19,7 +19,7 @@ using vec2pos_ty_ref_c = Vec2<int> const&;
 
 class SpaceObject;
 using SpaceObject_ty = std::shared_ptr<SpaceObject>;
-using SpaceObject_ty_c = SpaceObject_ty const&;
+using SpaceObject_ty_c = std::shared_ptr<SpaceObject> const&;
 using SpaceObject_ty_raw = SpaceObject const*;
 using SpaceObject_ty_raw_c = SpaceObject const* const;
 

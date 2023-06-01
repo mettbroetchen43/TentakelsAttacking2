@@ -25,6 +25,14 @@ bool Fleet::IsFleet() const {
 SpaceObject_ty Fleet::GetTarget() const {
     return m_target;
 }
+void Fleet::SetTarget(SpaceObject_ty target) {
+    m_target = target;
+}
+
+bool Fleet::IsArrived() const {
+    return m_position == m_target->GetPos();
+}
+
 
 void Fleet::Update(Galaxy_ty_raw galaxy) {
 

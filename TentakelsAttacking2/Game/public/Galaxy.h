@@ -90,6 +90,19 @@ private:
 	 */
 	[[nodiscard]] FleetResult AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 
+	/**
+	 * returns a vector of fleets that has the provided SpaceObject as target.
+	 */
+	[[nodiscard]] std::vector<Fleet_ty> GetFleetsOfTarget(SpaceObject_ty_c object) const;
+
+	/**
+	 * deletes a vector of fleets.
+	 */
+	void DeleteFleet(std::vector<Fleet_ty> const& fleets);
+	/**
+	 * delete a single fleet.
+	 */
+	void DeleteFleet(Fleet_ty_c fleet);
 
 	// Target Point
 	/**
@@ -107,6 +120,18 @@ private:
 	 */
 	[[nodiscard]] SpaceObject_ty GetOrGenerateDestination(unsigned int ID,
 		int X, int Y, Player_ty currentPlayer);
+
+	// update
+	/**
+	 * updates the targets of the provided fleets.
+	 */
+	void UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty_c target);
+
+	/**
+	 * checks if any fleet is arrived.
+	 * calls the other fleets to gets a new target.
+	 */
+	[[nodiscard]] void CheckArrivingFriendlyFleets();
 
 public:
 	/**
@@ -175,8 +200,13 @@ public:
 	 * handles the changes of the FleetResult.
 	 */
 	void HandleFleetResult(FleetResult const& fleetResult);
+
+	// update
+
 	/**
 	 * updates the Galaxy.
 	 */
 	void Update();
+
+
 };

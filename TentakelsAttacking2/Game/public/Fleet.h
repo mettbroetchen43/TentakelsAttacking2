@@ -31,6 +31,15 @@ public:
 	 * returns the target of the fleet.
 	 */
 	[[nodiscard]] SpaceObject_ty GetTarget() const;
+	/**
+	 * sets a new target.
+	 */
+	[[nodiscard]] void SetTarget(SpaceObject_ty target);
+
+	/**
+	 * returns if the fleet is arrived.
+	 */
+	[[nodiscard]] bool IsArrived() const;
 
 	/**
 	 * moves the fleet to the target.
