@@ -8,19 +8,21 @@
 #include "SceneType.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
+#include "LineDrag.h"
 
 
 
-void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
+void TestScene::Initialize([[maybe_unused]] AppContext& appContext) {
 
-	m_hover = std::make_shared<Hover>(
-		0.05f,
-		"Test text next line",
+	auto line = std::make_shared<LineDrag>(
+		m_resolution,
+		2.0f,
 		WHITE,
-		Vector2(0.01f, 0.01f),
-		m_resolution
+		[this](Vector2 start, Vector2 end) {
+			this->LineCallBack(start, end);
+		}
 	);
-	
+	m_elements.push_back(line);
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -40,7 +42,7 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext& appContext) {
 }
 
 TestScene::TestScene(Vector2 resolution)
-	: Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution } {
+	: Scene{ {0.5f, 0.5f}, {0.75f, 0.75f}, Alignment::MID_MID, resolution } {
 
 	AppContext& appContext{ AppContext::GetInstance() };
 	Initialize(appContext);
@@ -54,30 +56,24 @@ void TestScene::TestLambda([[maybe_unused]] unsigned int value) { }
 
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
-	CheckHover(mousePosition, appContext);
-	m_hover->CheckAndUpdate(mousePosition, appContext);
 }
 
 void TestScene::Render(AppContext const& appContext) {
 	Scene::Render(appContext);
-	RenderRectangle(appContext);
-	if (m_isHover) {
-		m_isHover = false;
-		m_hover->Render(appContext);
-	}
-}
-
-void TestScene::RenderRectangle(AppContext const&) {
 	DrawRectangleLinesEx(
-		m_toRender,
-		3.0f,
+		m_collider,
+		2.0f,
 		WHITE
 	);
 }
 
-void TestScene::CheckHover(Vector2 const& mousePosition, AppContext const& appContext) {
-	if (CheckCollisionPointRec(mousePosition, m_toRender)) {
-		m_hover->SetRenderHover(mousePosition, appContext);
-		m_isHover = true;
-	}
+void TestScene::LineCallBack(Vector2 start, Vector2 end) {
+	Vector2 const elementStart = {
+		GetElementPositionReversed(m_pos, m_size, start)
+	};
+	Vector2 const elementEnd = {
+		GetElementPositionReversed(m_pos,m_size,end)
+	};
+	Print("Callback global  relative -> start: " + ToString(start)        + " | end: " + ToString(end),        PrintType::DEBUG);
+	Print("Callback element relative -> start: " + ToString(elementStart) + " | end: " + ToString(elementEnd), PrintType::DEBUG);
 }
