@@ -62,11 +62,11 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	AddMovingElement(creditsText);
 
 	auto creditsLine = std::make_shared<Line>(
-		GetElementPosition(0.5f, 0.21f),
-		GetElementSize(0.5f, 0.0f),
-		Alignment::MID_MID,
+		GetElementPosition(0.35f, 0.21f),
+		GetElementPosition(0.65f, 0.21f),
 		resolution,
-		3.0f
+		3.0f,
+		WHITE
 		);
 	AddMovingElement(creditsLine);
 
@@ -83,12 +83,12 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	AddMovingElement(m_title);
 
 	m_titleLine = std::make_shared<Line>(
-		GetElementPosition(0.5f, 0.5f),
-		GetElementSize(0.9f, 0.0f),
-		Alignment::MID_MID,
+		GetElementPosition(0.05f, 0.5f),
+		GetElementPosition(0.95f, 0.5f),
 		resolution,
-		5.0f
-		);
+		5.0f,
+		WHITE
+	);
 	// Added to Element when moving is true
 
 	float Y{ 1.1f };

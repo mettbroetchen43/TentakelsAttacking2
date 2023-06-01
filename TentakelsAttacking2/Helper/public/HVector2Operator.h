@@ -5,6 +5,7 @@
 
 #pragma once
 #include "CustomRaylib.h"
+#include <string>
 
 /**
  * adds two Vector2 from Raylib.
@@ -19,3 +20,8 @@
  * returns the length of an Vector2 from Raylib.
  */
 [[nodiscard]] float LenVec2(Vector2 const& value);
+
+/**
+ * returns a string representation.
+ */
+[[nodiscard]] std::string ToString(Vector2 const& value);
