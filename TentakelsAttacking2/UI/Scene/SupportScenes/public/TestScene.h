@@ -15,6 +15,7 @@ private:
 	std::shared_ptr<Arrow> m_arrow;
 
 	void Initialize(AppContext_ty appContext);
+	void Initialize(AppContext& appContext);
 
 public:
 	TestScene(Vector2 resolution);

@@ -28,3 +28,7 @@ Vector2 operator/(Vector2 const& lhs, int rhs) {
 float LenVec2(Vector2 const& value) {
     return std::sqrt(value.x * value.x + value.y * value.y);
 }
+
+std::string ToString(Vector2 const& value) {
+    return "x: " + std::to_string(value.x) + " | y: " + std::to_string(value.y);
+}

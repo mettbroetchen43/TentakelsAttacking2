@@ -27,9 +27,8 @@ void CreditTableScene::Initialize(std::string const& headline,
 	m_elements.push_back(headlineText);
 
 	auto headlineLine = std::make_shared<Line>(
-		GetElementPosition(0.5f, 0.15f),
-		GetElementSize(0.7f, 0.0f),
-		Alignment::TOP_MID,
+		GetElementPosition(0.15f, 0.15f),
+		GetElementPosition(0.85f, 0.15f),
 		m_resolution,
 		3.0f,
 		WHITE
@@ -42,7 +41,7 @@ void CreditTableScene::Initialize(std::string const& headline,
 	for (size_t i = 0; i < entries.size(); ++i) {
 		auto e{ entries.at(i) };
 		if (e.size() == 0) { continue; }
-		if (containsLink && e.size() % 2 != 0) { throw std::out_of_range("not able to bevide by 2 with link"); }
+		if (containsLink && e.size() % 2 != 0) { throw std::out_of_range("not able to divide by 2 with link"); }
 		if (e.size() > 4) { throw std::out_of_range("too many Entries with link"); }
 		if (!containsLink && e.size() > 2) { throw std::out_of_range("too many Entries without link"); }
 

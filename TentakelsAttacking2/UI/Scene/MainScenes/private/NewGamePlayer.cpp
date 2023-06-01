@@ -101,8 +101,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 
 	auto line = std::make_shared<Line>(
 		GetElementPosition(0.5f, 0.25f),
-		GetElementSize(0.0f, 0.7f),
-		Alignment::TOP_MID,
+		GetElementPosition(0.5f, 0.95f),
 		resolution,
 		2.0f,
 		WHITE

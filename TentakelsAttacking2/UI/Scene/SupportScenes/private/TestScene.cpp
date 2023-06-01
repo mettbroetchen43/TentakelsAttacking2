@@ -8,9 +8,21 @@
 #include "SceneType.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
+#include "LineDrag.h"
 
-void TestScene::Initialize(	[[maybe_unused]] AppContext_ty appContext) {
 
+
+void TestScene::Initialize([[maybe_unused]] AppContext& appContext) {
+
+	auto line = std::make_shared<LineDrag>(
+		m_resolution,
+		2.0f,
+		WHITE,
+		[this](Vector2 start, Vector2 end) {
+			this->LineCallBack(start, end);
+		}
+	);
+	m_elements.push_back(line);
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -31,7 +43,7 @@ void TestScene::Initialize(	[[maybe_unused]] AppContext_ty appContext) {
 
 
 TestScene::TestScene(Vector2 resolution)
-	: Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution } {
+	: Scene{ {0.5f, 0.5f}, {0.75f, 0.75f}, Alignment::MID_MID, resolution } {
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
 	Initialize(appContext);
@@ -49,8 +61,20 @@ void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c app
 
 void TestScene::Render(AppContext_ty_c appContext) {
 	Scene::Render(appContext);
+	DrawRectangleLinesEx(
+		m_collider,
+		2.0f,
+		WHITE
+	);
 }
 
-void TestScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	Scene::Resize(resolution, appContext);
+void TestScene::LineCallBack(Vector2 start, Vector2 end) {
+	Vector2 const elementStart = {
+		GetElementPositionReversed(m_pos, m_size, start)
+	};
+	Vector2 const elementEnd = {
+		GetElementPositionReversed(m_pos,m_size,end)
+	};
+	Print("Callback global  relative -> start: " + ToString(start)        + " | end: " + ToString(end),        PrintType::DEBUG);
+	Print("Callback element relative -> start: " + ToString(elementStart) + " | end: " + ToString(elementEnd), PrintType::DEBUG);
 }

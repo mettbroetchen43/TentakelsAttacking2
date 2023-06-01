@@ -51,13 +51,12 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 
 	// line
 	m_elements.push_back(std::make_shared<Line>(
-		GetElementPosition(0.5f, 0.3f),
-		GetElementSize(0.0f, 0.65f),
-		Alignment::TOP_MID,
+		GetElementPosition(0.5f,0.3f),
+		GetElementPosition(0.5f,0.95f),
 		resolution,
 		2.0f,
 		WHITE
-	));
+		));
 
 	// events
 	m_eventSettings = std::make_shared<GameEventSettings>(
