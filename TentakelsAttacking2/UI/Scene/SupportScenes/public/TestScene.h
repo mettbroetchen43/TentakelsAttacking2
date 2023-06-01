@@ -15,7 +15,6 @@ private:
 	std::shared_ptr<Arrow> m_arrow;
 
 	void Initialize(AppContext_ty appContext);
-	void Initialize(AppContext& appContext);
 
 public:
 	TestScene(Vector2 resolution);
@@ -25,4 +24,6 @@ public:
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	void Render(AppContext_ty_c appContext) override;
 	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+
+	void LineCallBack(Vector2 start, Vector2 end);
 };

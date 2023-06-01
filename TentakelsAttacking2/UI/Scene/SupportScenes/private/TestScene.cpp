@@ -12,7 +12,7 @@
 
 
 
-void TestScene::Initialize([[maybe_unused]] AppContext& appContext) {
+void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 
 	auto line = std::make_shared<LineDrag>(
 		m_resolution,
@@ -66,6 +66,10 @@ void TestScene::Render(AppContext_ty_c appContext) {
 		2.0f,
 		WHITE
 	);
+}
+
+void TestScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+	Scene::Resize(resolution, appContext);
 }
 
 void TestScene::LineCallBack(Vector2 start, Vector2 end) {
