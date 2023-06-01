@@ -303,7 +303,7 @@ FleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, Pl
 	);
 
 	if (destination->IsFleet()) {
-		auto const result{ TryGetTarget(fleet.get(), fleet->GetTarget())};
+		auto const result{ TryGetTarget(fleet.get(), fleet->GetTarget()) };
 		if (not result.first) { // not valid
 			popup("this operation would produce a fleet circle");
 			return { nullptr, nullptr, nullptr, false };
@@ -378,7 +378,7 @@ FleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* eve
 	return { origin, fleet, destination, true };
 }
 
-std::vector<Fleet_ty> Galaxy::GetFleetsOfTarget(SpaceObject_ty_c object) const {
+std::vector<Fleet_ty> Galaxy::GetFleetsOfTarget(SpaceObject_ty object) const {
 	std::vector<Fleet_ty> vec{ };
 
 	for (auto const& fleet : m_fleets) {
@@ -414,7 +414,7 @@ void Galaxy::DeleteFleet(std::vector<Fleet_ty> const& fleets) {
 	auto const newStart2{ std::remove_if(m_objects.begin(), m_objects.end(), containsObject) };
 	m_objects.erase(newStart2, m_objects.end());
 }
-void Galaxy::DeleteFleet(Fleet_ty_c fleet) {
+void Galaxy::DeleteFleet(Fleet_ty fleet) {
 	m_fleets.erase(std::remove_if(m_fleets.begin(), m_fleets.end(),
 		[fleet](Fleet_ty_c currentFleet) { return fleet->GetID() == currentFleet->GetID(); }));
 	m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(),
@@ -468,8 +468,8 @@ SpaceObject_ty Galaxy::GetOrGenerateDestination(unsigned int ID,
 
 	return targetPoint;
 }
- // update
-void Galaxy::UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty_c target) {
+// update
+void Galaxy::UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty target) {
 	for (auto const& fleet : fleets) {
 		fleet->SetTarget(target);
 	}
@@ -481,12 +481,50 @@ void Galaxy::CheckArrivingFriendlyFleets() {
 		bool const friendly{ fleet->GetTarget()->GetPlayer() == fleet->GetPlayer() };
 		if (friendly and fleet->IsArrived()) {
 			auto const& target = fleet->GetTarget();
-			*target += fleet->GetShipCount();
+			*target += *fleet;
 			auto const origins{ GetFleetsOfTarget(fleet) };
 			UpdateFleetTargets(origins, target);
 			toDelete.push_back(fleet);
 		}
 	}
+	DeleteFleet(toDelete);
+}
+void Galaxy::CheckMergingFriendlyFleets() {
+	std::vector<std::pair<Fleet_ty_c, Fleet_ty_c>> same{ };
+	auto const containsSame{ [&](Fleet_ty_c first, Fleet_ty_c second) {
+		for (auto const& s : same) {
+			if (s.first == first and s.second == second) { return true; }
+			else if (s.first == second and s.second == first) { return true; }
+		}
+		return false;
+	} };
+
+	// find mergeable fleets
+	for (int first = 0; first < m_fleets.size(); ++first) {
+		for (int second = first + 1; second < m_fleets.size(); ++second) {
+			auto const fleet1{ m_fleets.at(first) };
+			auto const fleet2{ m_fleets.at(second) };
+
+			bool const mergable{
+				fleet1->GetPlayer() == fleet2->GetPlayer()
+				and fleet1->GetPos() == fleet2->GetPos()
+			};
+			if (mergable and not containsSame(fleet1, fleet2)) {
+				same.emplace_back(fleet1, fleet2);
+			}
+		}
+	}
+	if (same.size() == 0) { return; } // no found
+
+	// merge fleets
+	std::vector<Fleet_ty> toDelete{ };
+	for (auto const& match : same) {
+		*match.first += *match.second;
+		auto const& origins{ GetFleetsOfTarget(match.second) };
+		UpdateFleetTargets(origins, match.second->GetTarget());
+		toDelete.push_back(match.second);
+	}
+
 	DeleteFleet(toDelete);
 }
 
@@ -716,4 +754,5 @@ void Galaxy::Update() {
 		o->Update(this);
 	}
 	CheckArrivingFriendlyFleets();
+	CheckMergingFriendlyFleets();
 }

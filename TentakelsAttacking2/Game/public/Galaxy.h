@@ -93,7 +93,7 @@ private:
 	/**
 	 * returns a vector of fleets that has the provided SpaceObject as target.
 	 */
-	[[nodiscard]] std::vector<Fleet_ty> GetFleetsOfTarget(SpaceObject_ty_c object) const;
+	[[nodiscard]] std::vector<Fleet_ty> GetFleetsOfTarget(SpaceObject_ty object) const;
 
 	/**
 	 * deletes a vector of fleets.
@@ -102,7 +102,7 @@ private:
 	/**
 	 * delete a single fleet.
 	 */
-	void DeleteFleet(Fleet_ty_c fleet);
+	void DeleteFleet(Fleet_ty fleet);
 
 	// Target Point
 	/**
@@ -125,13 +125,18 @@ private:
 	/**
 	 * updates the targets of the provided fleets.
 	 */
-	void UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty_c target);
+	void UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty target);
 
 	/**
 	 * checks if any fleet is arrived.
 	 * calls the other fleets to gets a new target.
 	 */
 	[[nodiscard]] void CheckArrivingFriendlyFleets();
+	/**
+	 * checks if any fleets from one player are at the same spot.
+	 * class the other fleets zo gets a new target.
+	 */
+	[[nodiscard]] void CheckMergingFriendlyFleets();
 
 public:
 	/**
