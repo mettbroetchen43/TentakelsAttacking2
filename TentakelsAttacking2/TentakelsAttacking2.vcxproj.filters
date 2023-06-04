@@ -321,7 +321,7 @@
     <ClInclude Include="Game\public\CopyGalaxyType.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game\public\FleetResult.hpp">
+    <ClInclude Include="Helper\public\HFleetResult.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Helper\public\HGalaxy.h">

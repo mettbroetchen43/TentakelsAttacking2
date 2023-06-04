@@ -3,6 +3,7 @@
 // 23.05.2023
 //
 
+#include "LogicAlias.hpp"
 #include <memory>
 
 struct FleetResult final {

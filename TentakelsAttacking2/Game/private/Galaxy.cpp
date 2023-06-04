@@ -9,7 +9,7 @@
 #include "HRandom.h"
 #include "UIEvents.hpp"
 #include "HPrint.h"
-#include "FleetResult.hpp"
+#include "HFleetResult.hpp"
 #include "HGalaxy.h"
 #include <stdexcept>
 

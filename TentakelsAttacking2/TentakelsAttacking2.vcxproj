@@ -167,7 +167,7 @@
     <ClInclude Include="Events\public\MainEvent.hpp" />
     <ClInclude Include="Game\public\CopyGalaxyType.hpp" />
     <ClInclude Include="Game\public\Fleet.h" />
-    <ClInclude Include="Game\public\FleetResult.hpp" />
+    <ClInclude Include="Helper\public\HFleetResult.hpp" />
     <ClInclude Include="Game\public\Galaxy.h" />
     <ClInclude Include="Game\public\GalaxyManager.h" />
     <ClInclude Include="Game\public\GameManager.h" />
