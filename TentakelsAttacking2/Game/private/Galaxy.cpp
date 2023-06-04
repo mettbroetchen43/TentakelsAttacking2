@@ -527,7 +527,27 @@ void Galaxy::CheckMergingFriendlyFleets() {
 
 	DeleteFleet(toDelete);
 }
+void Galaxy::CheckDeleteFleetsWithoutShips() {
+	auto getFleets{ [&]() {
+		std::vector<Fleet_ty> fleets{ };
+		for (auto const& f : m_fleets) {
+			if (f->GetShipCount() == 0) {
+				fleets.push_back(f);
+			}
+		}
+		return fleets;
+	} };
 
+	auto const& fleets{ getFleets() };
+	if (fleets.size() == 0) { return; }
+
+	for (auto const& f : fleets) {
+		auto const& origins{ GetFleetsOfTarget(f) };
+		UpdateFleetTargets(origins, f->GetTarget());
+	}
+
+	DeleteFleet(fleets);
+}
 
 // public
 Galaxy::Galaxy(vec2pos_ty size, size_t planetCount,
@@ -755,4 +775,5 @@ void Galaxy::Update() {
 	}
 	CheckArrivingFriendlyFleets();
 	CheckMergingFriendlyFleets();
+	CheckDeleteFleetsWithoutShips();
 }
