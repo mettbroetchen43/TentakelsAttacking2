@@ -4,7 +4,7 @@
 //
 
 #include "Scene.h"
-#include "LogicAlias.hpp"
+#include "HLogicAlias.hpp"
 #pragma once
 
 

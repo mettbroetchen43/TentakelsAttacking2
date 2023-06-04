@@ -176,7 +176,7 @@
     <ClInclude Include="Game\public\SpaceObject.h" />
     <ClInclude Include="Game\public\TargetPoint.h" />
     <ClInclude Include="Helper\public\HGameEventTypes.hpp" />
-    <ClInclude Include="Helper\public\LogicAlias.hpp" />
+    <ClInclude Include="Helper\public\HLogicAlias.hpp" />
     <ClInclude Include="Helper\public\HColors.h" />
     <ClInclude Include="Helper\public\HConcepts.hpp" />
     <ClInclude Include="Helper\public\HErrorLog.h" />

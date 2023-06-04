@@ -5,7 +5,7 @@
 
 #pragma once
 #include "CustomRaylib.h"
-#include "LogicAlias.hpp"
+#include "HLogicAlias.hpp"
 #include <string>
 #include <vector>
 

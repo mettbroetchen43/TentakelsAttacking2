@@ -327,7 +327,7 @@
     <ClInclude Include="Helper\public\HGalaxy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\LogicAlias.hpp">
+    <ClInclude Include="Helper\public\HLogicAlias.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\Default\public\LineDrag.h">

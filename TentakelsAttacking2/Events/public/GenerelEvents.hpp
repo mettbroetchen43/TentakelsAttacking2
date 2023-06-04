@@ -6,7 +6,7 @@
 #pragma once
 #include "MainEvent.hpp"
 #include "CustomRaylib.h"
-#include "LogicAlias.hpp"
+#include "HLogicAlias.hpp"
 #include <string>
 #include <unordered_map>
 

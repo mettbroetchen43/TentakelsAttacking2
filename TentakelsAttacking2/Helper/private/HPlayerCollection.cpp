@@ -7,7 +7,7 @@
 #include "UIEvents.hpp"
 #include "GenerelEvents.hpp"
 #include "AppContext.h"
-#include "LogicAlias.hpp"
+#include "HLogicAlias.hpp"
 #include <algorithm>
 #include <stdexcept>
 

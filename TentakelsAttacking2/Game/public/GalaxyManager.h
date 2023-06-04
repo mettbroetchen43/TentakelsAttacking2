@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#include "LogicAlias.hpp"
+#include "HLogicAlias.hpp"
 #include <memory>
 
 class GameManager;
