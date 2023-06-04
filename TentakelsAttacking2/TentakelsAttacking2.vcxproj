@@ -262,7 +262,7 @@
     <ClCompile Include="Constants\private\ConfigIO.cpp" />
     <ClCompile Include="Constants\private\CWindow.cpp" />
     <ClCompile Include="Constants\public\CFleet.hpp" />
-    <ClCompile Include="Helper\public\UIAlias.hpp" />
+    <ClCompile Include="Helper\public\HUIAlias.hpp" />
     <ClCompile Include="Game\private\GalaxyManager.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />

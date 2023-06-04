@@ -566,7 +566,7 @@
     <ClCompile Include="Helper\private\HGalaxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Helper\public\UIAlias.hpp">
+    <ClCompile Include="Helper\public\HUIAlias.hpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Default\private\LineDrag.cpp">
