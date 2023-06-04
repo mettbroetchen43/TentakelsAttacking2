@@ -12,7 +12,7 @@
 #include <vector>
 #include <memory>
 
-struct FleetResult;
+struct HFleetResult;
 struct HFightResult;
 
 /**
@@ -77,19 +77,19 @@ private:
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] FleetResult AddFleetFromPlanet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
+	[[nodiscard]] HFleetResult AddFleetFromPlanet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a fleet.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] FleetResult AddFleetFromFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
+	[[nodiscard]] HFleetResult AddFleetFromFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a target point.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] FleetResult AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
+	[[nodiscard]] HFleetResult AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 
 	/**
 	 * returns a vector of fleets that has the provided SpaceObject as target.
@@ -228,7 +228,7 @@ public:
 	/**
 	 * adds a new fleet to the galaxy for the provided player.
 	 */
-	[[nodiscard]] FleetResult AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
+	[[nodiscard]] HFleetResult AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
 	 * filters the galaxy for relevant data for the provided player.
 	 */
@@ -236,7 +236,7 @@ public:
 	/**
 	 * handles the changes of the FleetResult.
 	 */
-	void HandleFleetResult(FleetResult const& fleetResult);
+	void HandleFleetResult(HFleetResult const& fleetResult);
 
 	// update
 

@@ -194,7 +194,7 @@ Fleet_ty Galaxy::GetFleetByID(unsigned int const ID) const {
 	return nullptr;
 }
 
-FleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
+HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
 	// check origin id
 	if (event->GetOrigin() > m_planets.size()) {
 		popup("input for planet in origin to high");
@@ -253,7 +253,7 @@ FleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, P
 
 	return { originPlanet, fleet, destination, true };
 }
-FleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
+HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
 	// check if origin ID is existing
 	if (not IsValidFleet(event->GetOrigin())) {
 		popup("Fleet with ID " + std::to_string(event->GetOrigin()) + " is not existing");
@@ -328,7 +328,7 @@ FleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, Pl
 
 	return { origin, fleet, destination, true };
 }
-FleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
+HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
 	// check if origin ID is existing
 	if (not IsValidTargetPoint(event->GetOrigin())) {
 		popup("no target point with ID " + std::to_string(event->GetOrigin()) + " existing");
@@ -728,7 +728,7 @@ bool Galaxy::IsValidPosition(vec2pos_ty_ref_c position) const {
 }
 
 // actions
-FleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
+HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
 
 	// valid ID?
 	if (!IsValidSpaceObjectID(event->GetOrigin())) {
@@ -797,7 +797,7 @@ void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
 	m_objects.erase(newStart4, m_objects.end());
 }
 
-void Galaxy::HandleFleetResult(FleetResult const& fleetResult) {
+void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
 	auto add = [this](SpaceObject_ty_c obj) {
 		if (obj->IsPlanet()) {
 			auto const* planet = dynamic_cast<Planet_ty_raw>(obj.get());
