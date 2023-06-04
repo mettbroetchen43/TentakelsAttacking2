@@ -13,6 +13,7 @@
 #include "CPlanet.hpp"
 #include "CFleet.hpp"
 #include "CWindow.h"
+#include "CFight.hpp"
 
 /**
  * contains all constants.
@@ -27,4 +28,5 @@ struct Constants final {
 	CWorld world; ///< contains the world constants
 	CPlanet planet; ///< contains the planet constants
 	CFleet fleet; ///< contains the fleet constants
+	CFight fight; ///< contains the fight constants
 };

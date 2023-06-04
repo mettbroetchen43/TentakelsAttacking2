@@ -6,7 +6,7 @@
 #pragma once
 #include <utility>
 #include <memory>
-#include <CLogicAlias.hpp>
+#include "HLogicAlias.hpp"
 
 [[nodiscard]] std::pair<bool, SpaceObject_ty> TryGetTarget(
 	Fleet_ty_raw fleet, SpaceObject_ty const& target);

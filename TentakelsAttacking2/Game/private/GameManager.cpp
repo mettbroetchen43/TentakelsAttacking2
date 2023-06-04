@@ -8,7 +8,7 @@
 #include "GenerelEvents.hpp"
 #include "HPrint.h"
 #include "CopyGalaxyType.hpp"
-#include "CLogicAlias.hpp"
+#include "HLogicAlias.hpp"
 #include <cassert>
 #include <algorithm>
 #include <stdexcept>
@@ -277,7 +277,7 @@ void GameManager::ValidateNextTurn() {
 
 // events
 void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
-	if (event->GetType() == GameEventType::GLOBAL) {
+	if (event->GetType() == HGameEventType::GLOBAL) {
 		for (auto e : settableGameEventTypes) {
 			m_gameEvents[e] = event->GetIsChecked();
 		}

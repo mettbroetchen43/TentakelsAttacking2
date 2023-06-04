@@ -3,9 +3,10 @@
 // 23.05.2023
 //
 
+#include "HLogicAlias.hpp"
 #include <memory>
 
-struct FleetResult final {
+struct HFleetResult final {
 	SpaceObject_ty origin;
 	Fleet_ty fleet;
 	SpaceObject_ty destination;

@@ -7,7 +7,7 @@
 #include "UIElement.hpp"
 #include "EventListener.hpp"
 #include "Focusable.h"
-#include "CLogicAlias.hpp"
+#include "HLogicAlias.hpp"
 #include <functional>
 #include <memory>
 #include <vector>

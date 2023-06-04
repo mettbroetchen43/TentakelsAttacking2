@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#include "CLogicAlias.hpp"
+#include "HLogicAlias.hpp"
 #include "Vec2.hpp"
 #include <string>
 #include <memory>

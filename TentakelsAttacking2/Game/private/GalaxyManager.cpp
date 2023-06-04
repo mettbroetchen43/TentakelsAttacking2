@@ -12,7 +12,7 @@
 #include "HPrint.h"
 #include "Player.h"
 #include "GameManager.h"
-#include "FleetResult.hpp"
+#include "HFleetResult.hpp"
 
 void GalaxyManager::FilterCurrentGalaxy() {
 	Player_ty currentPlayer{ nullptr };

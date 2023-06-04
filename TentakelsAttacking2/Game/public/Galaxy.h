@@ -12,7 +12,8 @@
 #include <vector>
 #include <memory>
 
-struct FleetResult;
+struct HFleetResult;
+struct HFightResult;
 
 /**
  * contains objects witch include planet, fleets, target points
@@ -76,19 +77,19 @@ private:
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] FleetResult AddFleetFromPlanet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
+	[[nodiscard]] HFleetResult AddFleetFromPlanet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a fleet.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] FleetResult AddFleetFromFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
+	[[nodiscard]] HFleetResult AddFleetFromFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a target point.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] FleetResult AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
+	[[nodiscard]] HFleetResult AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 
 	/**
 	 * returns a vector of fleets that has the provided SpaceObject as target.
@@ -143,6 +144,31 @@ private:
 	 */
 	void CheckDeleteFleetsWithoutShips();
 
+	/**
+	 * manages all fights while update.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFight();
+	/**
+	 * simulates the fight between a fleet and a planet.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightFleetPlanet();
+	/**
+	 * simulates the fight between a fleet and a SpacePoint.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightFleetTargetPoint();
+	/**
+	 * simulates the fight between 2 fleets.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightFleetFleet();
+	/**
+	 * simulates a single fight.
+	 */
+	[[nodiscard]] HFightResult Fight(SpaceObject_ty defender, SpaceObject_ty attacker);
+	/**
+	 * simulate a salve.
+	 * return a hit count.
+	 */
+	[[nodiscard]] int Salve(SpaceObject_ty obj) const;
 
 public:
 	/**
@@ -202,7 +228,7 @@ public:
 	/**
 	 * adds a new fleet to the galaxy for the provided player.
 	 */
-	[[nodiscard]] FleetResult AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
+	[[nodiscard]] HFleetResult AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
 	 * filters the galaxy for relevant data for the provided player.
 	 */
@@ -210,7 +236,7 @@ public:
 	/**
 	 * handles the changes of the FleetResult.
 	 */
-	void HandleFleetResult(FleetResult const& fleetResult);
+	void HandleFleetResult(HFleetResult const& fleetResult);
 
 	// update
 
@@ -218,6 +244,4 @@ public:
 	 * updates the Galaxy.
 	 */
 	void Update();
-
-
 };

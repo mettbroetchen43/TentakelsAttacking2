@@ -9,7 +9,7 @@
 /**
  * provides the Types of all game events.
  */
-enum class GameEventType {
+enum class HGameEventType {
 	GLOBAL,
 	PIRATES,
 	REVOLTS,
@@ -19,12 +19,12 @@ enum class GameEventType {
 	ENGINE_PROBLEM,
 };
 
-using EventTypeArray = std::array<GameEventType, 6>; ///< type of the settable events
+using EventTypeArray = std::array<HGameEventType, 6>; ///< type of the settable events
 constexpr EventTypeArray settableGameEventTypes{ ///< contains the settable events
-	GameEventType::PIRATES,
-	GameEventType::REVOLTS,
-	GameEventType::RENEGADE_SHIPS,
-	GameEventType::BLACK_HOLE,
-	GameEventType::SUPERNOVA,
-	GameEventType::ENGINE_PROBLEM,
+	HGameEventType::PIRATES,
+	HGameEventType::REVOLTS,
+	HGameEventType::RENEGADE_SHIPS,
+	HGameEventType::BLACK_HOLE,
+	HGameEventType::SUPERNOVA,
+	HGameEventType::ENGINE_PROBLEM,
 };

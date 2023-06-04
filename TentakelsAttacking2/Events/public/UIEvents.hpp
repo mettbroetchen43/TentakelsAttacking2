@@ -7,7 +7,7 @@
 #include "MainEvent.hpp"
 #include "HSoundType.hpp"
 #include "CustomRaylib.h"
-#include "CUIAlias.hpp"
+#include "HUIAlias.hpp"
 #include <string>
 #include <functional>
 
