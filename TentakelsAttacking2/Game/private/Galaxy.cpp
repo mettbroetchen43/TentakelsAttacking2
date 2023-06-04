@@ -227,7 +227,7 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 		}
 	}
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
-		popup("destination isn't yours");
+		popup("destination blocked");
 		return { nullptr, nullptr, nullptr, false };
 	}
 	if (auto const fleet = TryGetExistingFleetByOriginAndDestination(originPlanet, destination)) {
@@ -281,7 +281,7 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 
 	// check destination
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
-		popup("destination isn't yours");
+		popup("destination blocked");
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -355,7 +355,7 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 	) };
 
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
-		popup("destination isn't yours");
+		popup("destination blocked");
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -460,7 +460,10 @@ SpaceObject_ty Galaxy::GetOrGenerateDestination(unsigned int ID,
 
 		auto const pos{ object->GetPos() };
 		if (pos.x == X && pos.y == Y) {
-			if (object->GetPlayer() == currentPlayer) {
+			if (object->IsTargetPoint() or object->IsPlanet()) {
+				return object;
+			}
+			else if (object->IsFleet() and object->GetPlayer() == currentPlayer) {
 				return object;
 			}
 		}
