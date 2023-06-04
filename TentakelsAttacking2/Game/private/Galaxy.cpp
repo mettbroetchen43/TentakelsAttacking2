@@ -562,7 +562,9 @@ void Galaxy::CheckDeleteFleetsWithoutShips() {
 
 std::vector<HFightResult> Galaxy::SimulateFight() {
 	std::vector<HFightResult> results{ SimulateFightFleetPlanet() };
-	// Fleet : Target Point (with ships)
+
+	std::vector<HFightResult> singleResult{ SimulateFightFleetTargetPoint() };
+	std::copy(results.begin(), results.end(), std::back_inserter(singleResult));
 	// Fleet : Fleet -> check if fight is double selected
 	return results;
 }
@@ -589,6 +591,26 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetPlanet() {
 			*p += *f;
 			f->SetShipCount(0);
 		}
+	}
+
+	return results;
+}
+std::vector<HFightResult> Galaxy::SimulateFightFleetTargetPoint() {
+	std::vector<std::pair<SpaceObject_ty, SpaceObject_ty>> fights{ };
+	for (auto const& f : m_fleets) {
+		for (auto const& t : m_targetPoints) {
+			if (f->GetPos() == t->GetPos()) {
+				fights.emplace_back(t, f);
+			}
+		}
+	}
+
+	std::vector<HFightResult> results{ };
+	for (auto const& [t, f] : fights) {
+		auto const result{ Fight(t, f) };
+		if (not result.IsValid()) { continue; }
+
+		results.push_back(result);
 	}
 
 	return results;
