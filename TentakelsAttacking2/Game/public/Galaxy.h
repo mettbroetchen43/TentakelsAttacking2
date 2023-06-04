@@ -13,6 +13,7 @@
 #include <memory>
 
 struct FleetResult;
+struct HFightResult;
 
 /**
  * contains objects witch include planet, fleets, target points
@@ -143,6 +144,31 @@ private:
 	 */
 	void CheckDeleteFleetsWithoutShips();
 
+	/**
+	 * manages all fights while update.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFight();
+	/**
+	 * simulates the fight between a fleet and a planet.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightFleetPlanet();
+	/**
+	 * simulates the fight between a fleet and a SpacePoint.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightFleetTargetPoint();
+	/**
+	 * simulates the fight between 2 fleets.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightFleetFleet();
+	/**
+	 * simulates a single fight.
+	 */
+	[[nodiscard]] HFightResult Fight(SpaceObject_ty defender, SpaceObject_ty attacker);
+	/**
+	 * simulate a salve.
+	 * return a hit count.
+	 */
+	[[nodiscard]] int Salve(SpaceObject_ty obj) const;
 
 public:
 	/**
@@ -218,6 +244,4 @@ public:
 	 * updates the Galaxy.
 	 */
 	void Update();
-
-
 };
