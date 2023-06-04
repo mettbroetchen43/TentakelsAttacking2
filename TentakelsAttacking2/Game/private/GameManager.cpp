@@ -277,7 +277,7 @@ void GameManager::ValidateNextTurn() {
 
 // events
 void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
-	if (event->GetType() == GameEventType::GLOBAL) {
+	if (event->GetType() == HGameEventType::GLOBAL) {
 		for (auto e : settableGameEventTypes) {
 			m_gameEvents[e] = event->GetIsChecked();
 		}

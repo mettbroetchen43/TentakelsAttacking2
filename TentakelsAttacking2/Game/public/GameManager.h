@@ -25,7 +25,7 @@ private:
 	std::vector<Player_ty> m_players; ///< contains all player -> this is the main player vector
 	std::vector<Player_ty> m_currentRoundPlayers; ///< contains the remaining player of the current round
 	
-	std::unordered_map<GameEventType, bool> m_gameEvents; ///< contains whether the game Events are active or not
+	std::unordered_map<HGameEventType, bool> m_gameEvents; ///< contains whether the game Events are active or not
 	
 	friend GalaxyManager; ///< need access because of "callbacks"
 	GalaxyManager m_galaxyManager; ///< contains all galaxy related stuff
