@@ -17,8 +17,9 @@ UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vec
 		player.name,
 		player.color,
 		Vector2(0.01f,0.01f),
-		resolution }
-{ }
+		resolution
+	}
+	{ }
 
 void UIPlanet::UpdatePosition(Rectangle newCollider) {
 	m_collider.x = newCollider.x + newCollider.width * m_colliderPos.x;

@@ -84,7 +84,6 @@ public:
 	 */
 	void Render(AppContext_ty_c appContext) override;
 	/**
-	/**
 	 * resizes the planet.
 	 * calls the hover text to resize.
 	 */

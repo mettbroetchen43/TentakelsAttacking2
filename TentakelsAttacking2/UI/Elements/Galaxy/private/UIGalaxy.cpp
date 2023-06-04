@@ -10,6 +10,7 @@
 #include "UIPlanet.h"
 #include "HInput.h"
 #include "HFocusEvents.h"
+#include "Player.h"
 
 void UIGalaxy::Initialize(Galaxy_ty_c_raw galaxy) {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
@@ -20,7 +21,7 @@ void UIGalaxy::Initialize(Galaxy_ty_c_raw galaxy) {
 		auto planet = std::make_shared<UIPlanet>(
 			p->GetID(),
 			p->GetID(),
-			appContext.playerCollection.GetPlayerByIDOrDefaultPlayer(p->GetID()),
+			appContext.playerCollection.GetPlayerByIDOrDefaultPlayer(p->GetPlayer()->GetID()),
 			GetAbsolutePosition({
 				static_cast<float>(p->GetPos().x),
 				static_cast<float>(p->GetPos().y),
