@@ -48,3 +48,6 @@
 // Fleet
 2 / Min Fleet Speed
 10 / Max Fleet Speed
+
+// Fight
+0.300000 / Hit Chance for a single ship

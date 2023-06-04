@@ -176,6 +176,11 @@ void LoadConfig() {
 	};
 	addInt(intEntries, file, input, nextEntry);
 
+	floatEntries = {
+		// Fight
+		&constants.fight.hitChance,
+	};
+	addFloat(floatEntries, file, input, nextEntry);
 	file.close();
 
 #ifdef _DEBUG
@@ -258,6 +263,9 @@ void SaveConfig() {
 	headline("Fleet", toSave);
 	entry(std::to_string(constants.fleet.minFleetSpeed), "Min Fleet Speed", toSave);
 	entry(std::to_string(constants.fleet.maxFleetSpeed), "Max Fleet Speed", toSave);
+
+	headline("Fight", toSave);
+	entry(std::to_string(constants.fight.hitChance), "Hit Chance for a single ship", toSave);
 
 	file << toSave;
 	file.close();

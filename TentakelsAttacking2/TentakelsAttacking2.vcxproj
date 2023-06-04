@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants\public\CConstants.hpp" />
+    <ClInclude Include="Constants\public\CFight.hpp" />
     <ClInclude Include="Constants\public\CFiles.hpp" />
     <ClInclude Include="Constants\public\ConfigIO.h" />
     <ClInclude Include="Constants\public\CPlanet.hpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Events\public\MainEvent.hpp" />
     <ClInclude Include="Game\public\CopyGalaxyType.hpp" />
     <ClInclude Include="Game\public\Fleet.h" />
+    <ClInclude Include="Helper\public\HFightResult.h" />
     <ClInclude Include="Helper\public\HFleetResult.hpp" />
     <ClInclude Include="Game\public\Galaxy.h" />
     <ClInclude Include="Game\public\GalaxyManager.h" />
@@ -262,6 +264,7 @@
     <ClCompile Include="Constants\private\ConfigIO.cpp" />
     <ClCompile Include="Constants\private\CWindow.cpp" />
     <ClCompile Include="Constants\public\CFleet.hpp" />
+    <ClCompile Include="Helper\private\HFightResult.cpp" />
     <ClCompile Include="Helper\public\HUIAlias.hpp" />
     <ClCompile Include="Game\private\GalaxyManager.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />
