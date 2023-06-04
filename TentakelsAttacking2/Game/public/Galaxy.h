@@ -131,12 +131,18 @@ private:
 	 * checks if any fleet is arrived.
 	 * calls the other fleets to gets a new target.
 	 */
-	[[nodiscard]] void CheckArrivingFriendlyFleets();
+	void CheckArrivingFriendlyFleets();
 	/**
 	 * checks if any fleets from one player are at the same spot.
 	 * class the other fleets zo gets a new target.
 	 */
-	[[nodiscard]] void CheckMergingFriendlyFleets();
+	void CheckMergingFriendlyFleets();
+	/**
+	 * Checks if there is a Fleet without ships.
+	 * if it is so the fleets gets deleted and the other fleets gets redirected. 
+	 */
+	void CheckDeleteFleetsWithoutShips();
+
 
 public:
 	/**

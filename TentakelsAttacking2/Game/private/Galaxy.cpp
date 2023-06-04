@@ -277,20 +277,28 @@ FleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, Pl
 		currentPlayer
 	) };
 
+	// check destination
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
 		popup("destination isn't yours");
 		return { nullptr, nullptr, nullptr, false };
 	}
 
+	// shift ships directly
 	if (destination->GetPos() == origin->GetPos()) {
 		*origin -= event->GetShipCount();
 		*destination += event->GetShipCount();
 		return { origin, nullptr, destination, true };
 	}
-	if (auto const fleet = TryGetExistingFleetByOriginAndDestination(origin, destination)) {
+	if (auto const fleet{ TryGetExistingFleetByOriginAndDestination(origin, destination) }) {
 		*origin -= event->GetShipCount();
 		*fleet += event->GetShipCount();
 		return { origin, fleet, nullptr, true };
+	}
+
+	// redirect fleet
+	if (origin->GetShipCount() == event->GetShipCount()) {
+		origin->SetTarget(destination);
+		return { origin, nullptr, nullptr, true };
 	}
 
 	// create fleet
@@ -527,7 +535,27 @@ void Galaxy::CheckMergingFriendlyFleets() {
 
 	DeleteFleet(toDelete);
 }
+void Galaxy::CheckDeleteFleetsWithoutShips() {
+	auto getFleets{ [&]() {
+		std::vector<Fleet_ty> fleets{ };
+		for (auto const& f : m_fleets) {
+			if (f->GetShipCount() == 0) {
+				fleets.push_back(f);
+			}
+		}
+		return fleets;
+	} };
 
+	auto const& fleets{ getFleets() };
+	if (fleets.size() == 0) { return; }
+
+	for (auto const& f : fleets) {
+		auto const& origins{ GetFleetsOfTarget(f) };
+		UpdateFleetTargets(origins, f->GetTarget());
+	}
+
+	DeleteFleet(fleets);
+}
 
 // public
 Galaxy::Galaxy(vec2pos_ty size, size_t planetCount,
@@ -564,7 +592,6 @@ Galaxy::Galaxy(Galaxy const& old)
 bool Galaxy::IsValid() const {
 	return m_validGalaxy;
 }
-
 bool Galaxy::IsValidSpaceObjectID(unsigned int ID) const {
 
 	for (auto const& object : m_objects) {
@@ -691,7 +718,7 @@ void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
 }
 
 void Galaxy::HandleFleetResult(FleetResult const& fleetResult) {
-	auto add = [this](SpaceObject_ty const& obj) {
+	auto add = [this](SpaceObject_ty_c obj) {
 		if (obj->IsPlanet()) {
 			auto const* planet = dynamic_cast<Planet_ty_raw>(obj.get());
 			auto newDest = std::make_shared<Planet>(
@@ -730,11 +757,18 @@ void Galaxy::HandleFleetResult(FleetResult const& fleetResult) {
 			this->m_targetPoints.push_back(newDest);
 		}
 	};
-	auto handle = [this, add](SpaceObject_ty const& obj) {
+	auto handle = [this, add](SpaceObject_ty_c obj) {
 		if (obj) {
 			auto& my_obj{ this->GetSpaceObjectByID(obj->GetID()) };
 			if (my_obj) {
 				my_obj->SetShipCount(obj->GetShipCount());
+				if (my_obj->IsFleet()) {
+					auto *const my_fleet{ dynamic_cast<Fleet *const>(&*my_obj) };
+					auto const* const obj_fleet{ dynamic_cast<Fleet const* const>(&*obj) };
+					if (obj_fleet) {
+						my_fleet->SetTarget(obj_fleet->GetTarget());
+					}
+				}
 			}
 			else {
 				add(obj);
@@ -755,4 +789,5 @@ void Galaxy::Update() {
 	}
 	CheckArrivingFriendlyFleets();
 	CheckMergingFriendlyFleets();
+	CheckDeleteFleetsWithoutShips();
 }
