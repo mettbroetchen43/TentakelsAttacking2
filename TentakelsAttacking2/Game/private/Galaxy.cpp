@@ -622,6 +622,10 @@ HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 		return { 0, 0, { }, false };
 	}
 
+	if (defender->GetPlayer() == attacker->GetPlayer()) {
+		return { 0, 0, { }, false };
+	}
+
 	HFightResult::rounds_ty rounds{ };
 	while (true) {
 		auto defenderCount{ Salve(defender) };
