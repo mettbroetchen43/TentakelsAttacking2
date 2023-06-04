@@ -8,7 +8,7 @@
 #include "GenerelEvents.hpp"
 #include "HPrint.h"
 #include "CopyGalaxyType.hpp"
-#include "CLogicAlias.hpp"
+#include "LogicAlias.hpp"
 #include <cassert>
 #include <algorithm>
 #include <stdexcept>

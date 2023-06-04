@@ -4,7 +4,7 @@
 //
 
 #pragma once
-#include "CUIAlias.hpp"
+#include "UIAlias.hpp"
 
 /**
  * wraps the events to add a focus layer.

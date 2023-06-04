@@ -13,7 +13,7 @@
 #include "CConstants.hpp"
 #include "EventListener.hpp"
 #include "HConcepts.hpp"
-#include "CLogicAlias.hpp"
+#include "LogicAlias.hpp"
 #include <string>
 
 /**

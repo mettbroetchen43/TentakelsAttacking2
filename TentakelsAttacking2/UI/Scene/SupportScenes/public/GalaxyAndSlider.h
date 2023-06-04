@@ -5,7 +5,7 @@
 
 #pragma once
 #include "Scene.h"
-#include "CLogicAlias.hpp"
+#include "LogicAlias.hpp"
 #include <vector>
 
 

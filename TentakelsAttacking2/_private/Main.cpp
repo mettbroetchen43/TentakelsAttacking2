@@ -10,7 +10,7 @@
 #include "UIManager.h"
 #include "HErrorLog.h"
 #include "AppContext.h"
-#include "CLogicAlias.hpp"
+#include "LogicAlias.hpp"
 
 int main() {
 	SetConfigFlags(FLAG_VSYNC_HINT);
