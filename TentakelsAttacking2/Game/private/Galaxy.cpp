@@ -789,5 +789,7 @@ void Galaxy::Update() {
 	}
 	CheckArrivingFriendlyFleets();
 	CheckMergingFriendlyFleets();
-	CheckDeleteFleetsWithoutShips();
+	CheckDeleteFleetsWithoutShips(); // Check bevor Fight so there will be no fight without ships
+	// fight
+	CheckDeleteFleetsWithoutShips(); // Check after fight so all fleets that lost there ships gets deleted.
 }
