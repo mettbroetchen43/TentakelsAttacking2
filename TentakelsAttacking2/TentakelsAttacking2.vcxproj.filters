@@ -192,7 +192,7 @@
     <ClInclude Include="UI\Scene\SupportScenes\public\GameEventSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\GameEventTypes.hpp">
+    <ClInclude Include="Helper\public\HGameEventTypes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Scene\SupportScenes\public\SliderAndInputLine.h">

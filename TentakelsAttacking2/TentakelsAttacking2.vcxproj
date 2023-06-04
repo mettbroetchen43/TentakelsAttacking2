@@ -175,7 +175,7 @@
     <ClInclude Include="Game\public\PlayerType.hpp" />
     <ClInclude Include="Game\public\SpaceObject.h" />
     <ClInclude Include="Game\public\TargetPoint.h" />
-    <ClInclude Include="Helper\public\GameEventTypes.hpp" />
+    <ClInclude Include="Helper\public\HGameEventTypes.hpp" />
     <ClInclude Include="Helper\public\LogicAlias.hpp" />
     <ClInclude Include="Helper\public\HColors.h" />
     <ClInclude Include="Helper\public\HConcepts.hpp" />

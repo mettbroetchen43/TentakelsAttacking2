@@ -7,7 +7,7 @@
 #include "Text.h"
 #include "CheckBox.h"
 #include "Line.h"
-#include "GameEventTypes.hpp"
+#include "HGameEventTypes.hpp"
 #include "AppContext.h"
 #include "HRandom.h"
 #include <array>
