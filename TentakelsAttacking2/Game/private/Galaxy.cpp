@@ -564,11 +564,17 @@ void Galaxy::CheckDeleteFleetsWithoutShips() {
 }
 
 std::vector<HFightResult> Galaxy::SimulateFight() {
+	// Fleet Planet
 	std::vector<HFightResult> results{ SimulateFightFleetPlanet() };
 
+	// Fleet TargetPoint
 	std::vector<HFightResult> singleResult{ SimulateFightFleetTargetPoint() };
 	std::copy(results.begin(), results.end(), std::back_inserter(singleResult));
-	// Fleet : Fleet -> check if fight is double selected
+
+	// Fleet Fleet
+	singleResult = { SimulateFightFleetFleet() };
+	std::copy(results.begin(), results.end(), std::back_inserter(singleResult));
+
 	return results;
 }
 
@@ -611,6 +617,48 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetTargetPoint() {
 	std::vector<HFightResult> results{ };
 	for (auto const& [t, f] : fights) {
 		auto const result{ Fight(t, f) };
+		if (not result.IsValid()) { continue; }
+
+		results.push_back(result);
+	}
+
+	return results;
+}
+std::vector<HFightResult> Galaxy::SimulateFightFleetFleet() {
+	std::vector<std::pair<SpaceObject_ty, SpaceObject_ty>> fights{ };
+	auto contains{ [&](SpaceObject_ty_c f1, SpaceObject_ty_c f2) {
+		for (auto const& [o_f1, o_f2] : fights) {
+			if (o_f1->GetID() == f1->GetID() and o_f2->GetID() == f2->GetID()) { return true; };
+			if (o_f1->GetID() == f2->GetID() and o_f2->GetID() == f1->GetID()) { return true; };
+		}
+		return false;
+		}
+	};
+
+	for (auto const& f1 : m_fleets) {
+		for (auto const& f2 : m_fleets) {
+			if (f1->GetID() == f2->GetID()) { continue; }
+			if (f1->GetPos() == f2->GetPos()) {
+				if (not contains(f1, f2)) {
+					fights.emplace_back(f1, f2);
+				}
+			}
+		}
+	}
+
+	std::vector<HFightResult> results{ };
+	Random& random{ Random::GetInstance() };
+	auto const testSwitch = random.random(2);
+	Print("should switch: " + std::to_string(testSwitch), PrintType::DEBUG);
+	for (auto& [f1, f2] : fights) {
+		auto const shouldSwitch = random.random(2);
+		HFightResult result{ 0,0,{ },false };
+		if (shouldSwitch) {
+			result = { Fight(f2, f1) };
+		}
+		else {
+			result = { Fight(f1, f2) };
+		}
 		if (not result.IsValid()) { continue; }
 
 		results.push_back(result);
