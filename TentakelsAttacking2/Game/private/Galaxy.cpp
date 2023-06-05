@@ -56,6 +56,7 @@ void Galaxy::InitializePlanets(size_t planetCount,
 	int const currentPlanet{ GenerateHomePlanets(players) };
 	if (m_validGalaxy) {
 		GenerateOtherPlanets(planetCount, currentPlanet, neutralPlayer);
+		UpdatePlanetDiscovered();
 	}
 }
 int Galaxy::GenerateHomePlanets(std::vector<Player_ty> players) {
@@ -159,6 +160,27 @@ bool Galaxy::IsValidNewPlanet(Planet_ty newPlanet,
 	}
 
 	return validPlanet;
+}
+
+
+void Galaxy::UpdatePlanetDiscovered() {
+	for (auto const& p : m_planets) {
+		p->SetDiscovered(p->GetPlayer()->IsHumanPlayer());
+	}
+
+	for (auto const& p_p : m_planets) {
+		if (not p_p->IsDiscovered()) { continue; }
+		if (not p_p->GetPlayer()->IsHumanPlayer()) { continue; }
+
+		for (auto const& p_n : m_planets) {
+			if (p_n->IsDiscovered()) { continue; }
+			if (p_p->GetID() == p_n->GetID()) { continue; }
+
+			if (p_p->IsInRange(p_n)) {
+				p_n->SetDiscovered(true);
+			}
+		}
+	}
 }
 
 // Fleet
@@ -674,8 +696,6 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetFleet() {
 
 	std::vector<HFightResult> results{ };
 	Random& random{ Random::GetInstance() };
-	auto const testSwitch = random.random(2);
-	Print("should switch: " + std::to_string(testSwitch), PrintType::DEBUG);
 	for (auto& [f1, f2] : fights) {
 		auto const shouldSwitch = random.random(2);
 		HFightResult result{ 0,0,{ },false };
@@ -975,6 +995,6 @@ void Galaxy::Update() {
 	std::vector<HFightResult> results{ SimulateFight() };
 	CheckDeleteFleetsWithoutShips(); // Check after fight so all fleets that lost there ships gets deleted.
 	CheckDeleteTargetPoints();
-
+	UpdatePlanetDiscovered();
 	// event to show fights
 }

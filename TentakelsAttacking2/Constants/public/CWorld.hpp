@@ -24,4 +24,6 @@ struct CWorld final {
 
 	int showDimensionX{ 200 }; ///< defines the width of the show galaxy (override by config)
 	int showDimensionY{ 150 }; ///< defines the height of the show galaxy (override by config)
+
+	int discoverRange{ 15 }; ///< defines the range a SpaceObject discovers a nother (override by config)
 };

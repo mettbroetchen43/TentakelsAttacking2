@@ -4,6 +4,7 @@
 //
 
 #include "SpaceObject.h"
+#include "AppContext.h"
 #include <cassert>
 
 SpaceObject::SpaceObject(unsigned int ID, vec2pos_ty position, Player_ty player)
@@ -45,6 +46,22 @@ bool SpaceObject::IsFleet() const {
 }
 bool SpaceObject::IsTargetPoint() const {
 	return false;
+}
+
+bool SpaceObject::IsInRange(SpaceObject_ty_c object) const {
+	auto const range = AppContext::GetInstance().constants.world.discoverRange;
+	auto const& objPos{ object->GetPos() };
+
+	bool const validX{
+			m_position.x - range <= objPos.x
+		and m_position.x + range >= objPos.x
+	};
+	bool const validY{
+			m_position.y - range <= objPos.y
+		and m_position.y + range >= objPos.y
+	};
+
+	return validX and validY;
 }
 
 SpaceObject& SpaceObject::operator+=(size_t ships) {
