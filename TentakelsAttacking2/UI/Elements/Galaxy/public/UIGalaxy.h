@@ -13,6 +13,7 @@
 #include <vector>
 
 class UIPlanet;
+class SendGalaxyPointerEvent;
 
 /**
  * the representation of the logic galaxy.
@@ -42,7 +43,7 @@ private:
 	/**
 	 * initializes all elements of the galaxy.
 	 */
-	void Initialize(Galaxy_ty_c_raw galaxy);
+	void Initialize(SendGalaxyPointerEvent const* event);
 	/**
 	 * returns the absolute position if the provided pos in px.
 	 */

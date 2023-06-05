@@ -12,8 +12,9 @@
 #include "HFocusEvents.h"
 #include "Player.h"
 
-void UIGalaxy::Initialize(Galaxy_ty_c_raw galaxy) {
+void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	Galaxy_ty_c_raw galaxy{ event->GetGalaxy() };
 
 	m_currentGalaxy = galaxy;
 
@@ -34,6 +35,9 @@ void UIGalaxy::Initialize(Galaxy_ty_c_raw galaxy) {
 			);
 		if (p->IsDestroyed()) {
 			planet->SetEnabled(false);
+			planet->SetColor(DARKGRAY);
+		}
+		else if (not p->IsDiscovered() and not event->IsShowGalaxy()) {
 			planet->SetColor(GRAY);
 		}
 		planet->SetOnClick([this](UIPlanet* planet) {
@@ -401,8 +405,8 @@ Galaxy_ty_raw UIGalaxy::GetGalaxy() const {
 
 void UIGalaxy::OnEvent(Event const& event) {
 	
-	if (auto const* GalaxyEvent = dynamic_cast<SendGalaxyPointerEvent const*>(&event)) {
-		Initialize(GalaxyEvent->GetGalaxy());
+	if (auto const* galaxyEvent = dynamic_cast<SendGalaxyPointerEvent const*>(&event)) {
+		Initialize(galaxyEvent);
 		return;
 	}
 }
