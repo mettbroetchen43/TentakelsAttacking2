@@ -696,8 +696,6 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetFleet() {
 
 	std::vector<HFightResult> results{ };
 	Random& random{ Random::GetInstance() };
-	auto const testSwitch = random.random(2);
-	Print("should switch: " + std::to_string(testSwitch), PrintType::DEBUG);
 	for (auto& [f1, f2] : fights) {
 		auto const shouldSwitch = random.random(2);
 		HFightResult result{ 0,0,{ },false };
