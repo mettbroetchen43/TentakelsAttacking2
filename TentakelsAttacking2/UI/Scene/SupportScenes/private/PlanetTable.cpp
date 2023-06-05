@@ -58,7 +58,7 @@ void PlanetTable::Initialization() {
 		);
 
 		if (planet->IsDestroyed()) { continue; }
-		// if (!planet->IsDiscovered()) { continue; }
+		if (!planet->IsDiscovered()) { continue; }
 
 		// production
 		m_table->SetValue<int>(
