@@ -34,7 +34,7 @@ public:
 	/**
 	 * sets a new target.
 	 */
-	[[nodiscard]] void SetTarget(SpaceObject_ty target);
+	void SetTarget(SpaceObject_ty target);
 
 	/**
 	 * returns if the fleet is arrived.
