@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <utility>
+#pragma once
 
 struct HFightResult final {
 public:

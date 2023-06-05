@@ -7,6 +7,7 @@
 #include "MainEvent.hpp"
 #include "CustomRaylib.h"
 #include "HLogicAlias.hpp"
+#include "HFightResult.h"
 #include <string>
 #include <unordered_map>
 
@@ -162,6 +163,26 @@ class ShowNextTurnEvent final : public Event { };
  * use this to trigger the ui to show the next round.
  */
 class ShowNextRoundEvent final : public Event { };
+
+/**
+ * use this to get the update evaluation.
+ */
+class GetUpdateEvaluation final : public Event { };
+/**
+ * sends the update evaluation.
+ */
+class SendUpdateEvaluation final : public Event {
+private:
+	std::vector<HFightResult> m_fightResults;
+
+public:
+	SendUpdateEvaluation(std::vector<HFightResult> fightResult)
+		: m_fightResults{ fightResult } { }
+
+	[[nodiscard]] std::vector<HFightResult> GetFightResults() const {
+		return m_fightResults;
+	}
+};
 
 /**
  * use this to trigger the logic to validate the Player count.
