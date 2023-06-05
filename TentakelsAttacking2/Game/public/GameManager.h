@@ -30,6 +30,8 @@ private:
 	friend GalaxyManager; ///< need access because of "callbacks"
 	GalaxyManager m_galaxyManager; ///< contains all galaxy related stuff
 
+	SendUpdateEvaluation m_updateEvaluationEvent{ { } }; ///< contains the last update evaluation
+
 	// player
 	/**
 	 * validates if its valid to add an other player.

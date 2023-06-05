@@ -252,5 +252,5 @@ public:
 	/**
 	 * updates the Galaxy.
 	 */
-	void Update();
+	[[nodiscaard]] std::vector<HFightResult> Update();
 };

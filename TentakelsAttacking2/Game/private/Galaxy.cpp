@@ -985,7 +985,7 @@ void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
 }
 
 // update
-void Galaxy::Update() {
+std::vector<HFightResult> Galaxy::Update() {
 	for (auto& o : m_objects) {
 		o->Update(this);
 	}
@@ -996,5 +996,7 @@ void Galaxy::Update() {
 	CheckDeleteFleetsWithoutShips(); // Check after fight so all fleets that lost there ships gets deleted.
 	CheckDeleteTargetPoints();
 	UpdatePlanetDiscovered();
+
+	return results;
 	// event to show fights
 }

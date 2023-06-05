@@ -61,5 +61,5 @@ public:
 	/**
 	 * updates the main galaxy
 	 */
-	void Update();
+	[[nodiscard]] std::vector<HFightResult> Update();
 };
