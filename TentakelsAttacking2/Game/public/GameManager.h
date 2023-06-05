@@ -10,6 +10,7 @@
 #include "UIEvents.hpp"
 #include "GenerelEvents.hpp"
 #include "HGameEventTypes.hpp"
+#include "HFightResult.h"
 #include <vector>
 #include <random>
 #include <memory>
@@ -21,14 +22,16 @@
 class GameManager final : public EventListener {
 private:
 	std::default_random_engine m_random{ std::default_random_engine() }; ///< contains a random engine to shuffle the player each round
-	std::unordered_map<PlayerType, Player_ty> m_npcs; ///< contains all npcs to separate them from the player
-	std::vector<Player_ty> m_players; ///< contains all player -> this is the main player vector
-	std::vector<Player_ty> m_currentRoundPlayers; ///< contains the remaining player of the current round
+	std::unordered_map<PlayerType, Player_ty> m_npcs{ }; ///< contains all npcs to separate them from the player
+	std::vector<Player_ty> m_players{ }; ///< contains all player -> this is the main player vector
+	std::vector<Player_ty> m_currentRoundPlayers{ }; ///< contains the remaining player of the current round
 	
-	std::unordered_map<HGameEventType, bool> m_gameEvents; ///< contains whether the game Events are active or not
+	std::unordered_map<HGameEventType, bool> m_gameEvents{ }; ///< contains whether the game Events are active or not
 	
 	friend GalaxyManager; ///< need access because of "callbacks"
 	GalaxyManager m_galaxyManager; ///< contains all galaxy related stuff
+
+	std::vector<HFightResult> m_lastFightResults{ }; ///< contains the last update fight result
 
 	// player
 	/**

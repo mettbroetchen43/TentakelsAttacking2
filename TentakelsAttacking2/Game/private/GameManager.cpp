@@ -32,7 +32,7 @@ static auto message = [](std::string& messageText, std::string const& first, std
 bool GameManager::ValidAddPlayer() const {
 	return {
 		AppContext::GetInstance().constants.player.maxPlayerCount
-		> m_players.size() 
+		> m_players.size()
 	};
 }
 unsigned int GameManager::GetNextPlayerID() const {
@@ -347,7 +347,7 @@ void GameManager::StartGame() {
 	SendNextPlayerID();
 }
 
-GameManager::GameManager() 
+GameManager::GameManager()
 	: m_galaxyManager{ this } {
 
 	AppContext::GetInstance().eventManager.AddListener(this);
@@ -360,25 +360,9 @@ GameManager::GameManager()
 }
 
 void GameManager::Update() {
-	m_galaxyManager.Update();
-	/*
-	preUpdate -> moving and stuff
-		-> move fleets
-		-> production in planets
-	Update -> general update
-		-> merging fleets
-		-> delete all arrived fleet
-		-> fights -> display in popup
-			-> defender starts
-			-> chance to hit one other ship per own ship
-			-> over?
-				-> if planet looses the player chances
-	postUpdate -> cleanup
-		-> delete all fleets with not ships
-			-> redirect fleets that had this fleet as a target.
-		-> delete target points with not ships and no arriving fleets. 
-	*/
+	m_lastFightResults = m_galaxyManager.Update();
 }
+
 void GameManager::OnEvent(Event const& event) {
 
 	// Player
@@ -425,7 +409,7 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* galaxyEvent = dynamic_cast<GetGalaxyPointerEvent const*>(&event)) {
-		SendGalaxyPointerEvent const returnEvent{ m_galaxyManager.GetGalaxy(), false};
+		SendGalaxyPointerEvent const returnEvent{ m_galaxyManager.GetGalaxy(), false };
 		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
 		return;
 	}
@@ -441,6 +425,10 @@ void GameManager::OnEvent(Event const& event) {
 	}
 	if (auto const* gameEvent = dynamic_cast<TriggerNextTurnEvent const*> (&event)) {
 		ValidateNextTurn();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<GetUpdateEvaluation const*> (&event)) {
+		AppContext::GetInstance().eventManager.InvokeEvent(SendUpdateEvaluation{ m_lastFightResults });
 		return;
 	}
 

@@ -27,6 +27,8 @@ std::string GetStringBySceneType(SceneType sceneType) {
 			return "SETTINGS";
 		case SceneType::CREDITS:
 			return "CREDITS";
+		case SceneType::UPDATE_EVALUATION:
+			return "UPDATE_EVALUATION";
 		case SceneType::NONE:
 			return "NONE";
 		default:

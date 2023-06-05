@@ -6,10 +6,12 @@
 #pragma once
 #include "HLogicAlias.hpp"
 #include <memory>
+#include <vector>
 
 class GameManager;
 enum class CopyGalaxyType;
 class SendFleetInstructionEvent;
+struct HFightResult;
 
 /**
  * all instructions are executed on the main Galaxy
@@ -61,5 +63,5 @@ public:
 	/**
 	 * updates the main galaxy
 	 */
-	void Update();
+	[[nodiscard]] std::vector<HFightResult> Update();
 };
