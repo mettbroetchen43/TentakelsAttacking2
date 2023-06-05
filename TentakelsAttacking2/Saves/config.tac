@@ -8,7 +8,7 @@
 
 // Global
 20 / Min Game Rounds
-94 / Current Target Game Round
+50 / Current Target Game Round
 100 / Max Game Rounds
 
 // Window
@@ -30,6 +30,7 @@
 160 / Max Dimension Y
 200 / Show Galaxy Dimension X
 150 / Show Galaxy Dimension Y
+15 / Discover Range of Space Objects
 
 // Sound
 0 / Volume Mute (1 = mute)

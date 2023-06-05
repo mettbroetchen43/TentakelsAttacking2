@@ -135,7 +135,9 @@ void LoadConfig() {
 		&constants.world.maxDimensionY,
 
 		&constants.world.showDimensionX,
-		&constants.world.showDimensionY
+		&constants.world.showDimensionY,
+
+		&constants.world.discoverRange,
 	};
 	addInt(intEntries, file, input, nextEntry);
 
@@ -245,6 +247,8 @@ void SaveConfig() {
 
 	entry(std::to_string(constants.world.showDimensionX), "Show Galaxy Dimension X", toSave);
 	entry(std::to_string(constants.world.showDimensionY), "Show Galaxy Dimension Y", toSave);
+
+	entry(std::to_string(constants.world.discoverRange), "Discover Range of Space Objects", toSave);
 
 	headline("Sound", toSave);
 	entry(std::to_string(constants.sound.muteVolume), "Volume Mute (1 = mute)", toSave);
