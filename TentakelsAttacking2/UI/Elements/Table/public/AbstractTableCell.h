@@ -73,14 +73,14 @@ public:
 	 * use this if the cell is clicked.
 	 * need to be implemented by every cell.
 	 */
-	virtual void Clicked(Vector2 const&, AppContext const&) = 0;
+	virtual void Clicked(Vector2 const&, AppContext_ty_c) = 0;
 	/**
 	 * calls the CheckAndUpdate member function of UIElement.
 	 * contains the logic of the cell.
 	 */
-	virtual void CheckAndUpdate(Vector2 const&, AppContext const&) override = 0;
+	virtual void CheckAndUpdate(Vector2 const&, AppContext_ty_c) override = 0;
 	/**
 	 * renders the cell
 	 */
-	virtual void Render(AppContext const& appContext) override;
+	virtual void Render(AppContext_ty_c appContext) override;
 };

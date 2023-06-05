@@ -29,7 +29,7 @@ public:
 	/**
 	 * renders the line.
 	 */
-	void Render(AppContext const& appContext);
+	void Render(AppContext_ty_c appContext);
 
 	/**
 	 * Updates all chances.

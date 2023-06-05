@@ -12,7 +12,7 @@
 
 
 
-void TestScene::Initialize([[maybe_unused]] AppContext& appContext) {
+void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 
 	auto line = std::make_shared<LineDrag>(
 		m_resolution,
@@ -35,36 +35,41 @@ void TestScene::Initialize([[maybe_unused]] AppContext& appContext) {
 		SoundType::CLICKED_PRESS_STD
 	);
 	backBtn->SetOnClick([]() {
-		auto event = SwitchSceneEvent(SceneType::MAIN_MENU);
+		SwitchSceneEvent const event{ SceneType::MAIN_MENU };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 		});
 	m_elements.push_back(backBtn);
 }
 
+
 TestScene::TestScene(Vector2 resolution)
 	: Scene{ {0.5f, 0.5f}, {0.75f, 0.75f}, Alignment::MID_MID, resolution } {
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 	Initialize(appContext);
 }
 
-void TestScene::SetActive(bool active, AppContext const& appContext) {
+void TestScene::SetActive(bool active, AppContext_ty_c appContext) {
 	Scene::SetActive(active, appContext);
 }
 
 void TestScene::TestLambda([[maybe_unused]] unsigned int value) { }
 
-void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 }
 
-void TestScene::Render(AppContext const& appContext) {
+void TestScene::Render(AppContext_ty_c appContext) {
 	Scene::Render(appContext);
 	DrawRectangleLinesEx(
 		m_collider,
 		2.0f,
 		WHITE
 	);
+}
+
+void TestScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+	Scene::Resize(resolution, appContext);
 }
 
 void TestScene::LineCallBack(Vector2 start, Vector2 end) {

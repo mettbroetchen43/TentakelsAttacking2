@@ -10,7 +10,6 @@
 #include <array>
 
 
-
 struct CWindow final {
 	Resolution current_resolution{ Resolution::LAST }; ///< contains the current resolution in window mode (override by contig)
 

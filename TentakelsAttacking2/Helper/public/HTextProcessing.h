@@ -5,17 +5,17 @@
 
 #pragma once
 #include "CustomRaylib.h"
+#include "HLogicAlias.hpp"
 #include <string>
 #include <vector>
 
-struct AppContext;
 enum class Alignment;
 
 /**
  * replace a space thru an \n so that the text will break while displaying.
  */
 void BreakText(std::string& toBreak, float fontSize, float length,
-	AppContext const& appContext);
+	AppContext_ty_c appContext);
 /**
  * splits the string and returns a vector.
  */
@@ -32,13 +32,13 @@ void BreakText(std::string& toBreak, float fontSize, float length,
  * adds indicators(dots) if the string is modified.
  */
 [[nodiscard]] std::string GetPrintableTextInCollider(std::string const& text,
-	float fontSize, Rectangle colider, AppContext const& appContext);
+	float fontSize, Rectangle colider, AppContext_ty_c appContext);
 /**
  * modifies the string so it fits into a collider.
  * adds indicators(dots) if the string is modified.
  */
 [[nodiscard]] std::string GetPrintablePlaceholderTextInCollider(std::string const& text,
-	float fontSize, Rectangle colider, AppContext const& appContext);
+	float fontSize, Rectangle colider, AppContext_ty_c appContext);
 
 /**
  * removes whitespace from the beginning and the end of a string.

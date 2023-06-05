@@ -159,11 +159,11 @@ bool GalaxyScene::IsEnabled() const {
 	return m_isEnabled;
 }
 
-Galaxy const* GalaxyScene::GetGalaxy() const {
+Galaxy_ty_raw GalaxyScene::GetGalaxy() const {
 	return m_galaxy->GetGalaxy();
 }
 
-void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	if (!IsActive()) { return; }
 
 	Scene::CheckAndUpdate(mousePosition, appContext);
@@ -178,7 +178,7 @@ void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const&
 		m_verticalSlider->CheckAndUpdate(mousePosition, appContext);
 	}
 }
-void GalaxyScene::Render(AppContext const& appContext) {
+void GalaxyScene::Render(AppContext_ty_c appContext) {
 	if (!IsActive()) { return; }
 
 	Scene::Render(appContext);
@@ -195,7 +195,7 @@ void GalaxyScene::Render(AppContext const& appContext) {
 		m_scaleLineY->Render(appContext);
 	}
 }
-void GalaxyScene::Resize(Vector2 resolution, AppContext const& appContext) {
+void GalaxyScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
 	Scene::Resize(resolution, appContext);
 

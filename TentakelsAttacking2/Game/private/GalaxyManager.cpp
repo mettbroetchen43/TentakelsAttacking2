@@ -12,9 +12,10 @@
 #include "HPrint.h"
 #include "Player.h"
 #include "GameManager.h"
+#include "HFleetResult.hpp"
 
 void GalaxyManager::FilterCurrentGalaxy() {
-	std::shared_ptr<Player> currentPlayer{ nullptr };
+	Player_ty currentPlayer{ nullptr };
 	bool const valid{ m_gameManager->GetCurrentPlayer(currentPlayer) };
 	if (not valid) { return; }
 	m_currentGalaxy->FilterByPlayer(currentPlayer->GetID());
@@ -24,8 +25,8 @@ GalaxyManager::GalaxyManager(GameManager* gameManager)
 	: m_gameManager {gameManager} { }
 
 void GalaxyManager::GenerateGalaxy() {
-	AppContext const& appContext{ AppContext::GetInstance() };
-	Vec2<int> const size = {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	vec2pos_ty_c size = {
 		appContext.constants.world.currentDimensionX,
 		appContext.constants.world.currentDimensionY
 	};
@@ -33,8 +34,7 @@ void GalaxyManager::GenerateGalaxy() {
 		size,
 		appContext.constants.world.currentPlanetCount,
 		m_gameManager->m_players,
-		m_gameManager->m_npcs[PlayerType::NEUTRAL],
-		this
+		m_gameManager->m_npcs[PlayerType::NEUTRAL]
 	);
 
 	if (galaxy->IsValid()) {
@@ -53,8 +53,8 @@ void GalaxyManager::GenerateGalaxy() {
 	}
 }
 void GalaxyManager::GenerateShowGalaxy() {
-	AppContext const& appContext{ AppContext::GetInstance() };
-	Vec2<int> const size = {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	vec2pos_ty_c size = {
 		appContext.constants.world.showDimensionX,
 		appContext.constants.world.showDimensionY,
 	};
@@ -63,8 +63,7 @@ void GalaxyManager::GenerateShowGalaxy() {
 		size,
 		appContext.constants.world.showPlanetCount,
 		m_gameManager->m_players,
-		m_gameManager->m_npcs[PlayerType::NEUTRAL],
-		this
+		m_gameManager->m_npcs[PlayerType::NEUTRAL]
 	);
 
 	if (galaxy->IsValid()) {
@@ -94,21 +93,21 @@ Galaxy* GalaxyManager::GetGalaxy() const {
 	return m_currentGalaxy.get();
 }
 
-bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer) {
+bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
 
-	auto const isValidFleet {m_mainGalaxy->AddFleet(event, currentPlayer)};
-	if (not isValidFleet) {
+	auto const result {m_mainGalaxy->AddFleet(event, currentPlayer)};
+	if (not result.valid) {
 		Print("Not able to add Fleet to current Galaxy", PrintType::ERROR);
 
-		ReturnFleetInstructionEvent const returnEvent{ isValidFleet };
+		ReturnFleetInstructionEvent const returnEvent{ result.valid };
 		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
 		return false;
 	}
-	/*
-		1. main galaxy validates
-		2. instruction object with IDs
-		3. add Fleet in both
-	*/
+	m_currentGalaxy->HandleFleetResult(result);
 
 	return true;
+}
+
+std::vector<HFightResult> GalaxyManager::Update() {
+	return m_mainGalaxy->Update();
 }

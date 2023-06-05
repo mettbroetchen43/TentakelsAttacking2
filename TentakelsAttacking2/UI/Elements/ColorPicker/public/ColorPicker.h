@@ -31,7 +31,7 @@ private:
 	/**
 	 * disables the cells if the colors are already used.
 	 */
-	void SetUsedColors(AppContext const& appContext);
+	void SetUsedColors(AppContext_ty_c appContext);
 	/**
 	 * retunes if not nested focus.
 	 * sets the color that is in focus.
@@ -42,7 +42,7 @@ private:
 	 * returns if its valid.
 	 * calls a valid color via event.
 	 */
-	void CheckForValidColor(AppContext const& appContext);
+	void CheckForValidColor(AppContext_ty_c appContext);
 
 public:
 	/**
@@ -87,7 +87,7 @@ public:
 	 * add a focus layer.
 	 * adds all cells as focus element.
 	 */
-	void SetCellFocuses(AppContext const& appContext);
+	void SetCellFocuses(AppContext_ty_c appContext);
 	/**
 	 * sets if a specific color is enabled.
 	 */
@@ -105,17 +105,17 @@ public:
 	 * logic of the color picker.
 	 * calls all cells to update.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the color picker.
 	 * calls all cells to render.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resizes the color picker.
 	 * calls all cells to resize.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 
 	/**
 	 * returns the current collider.

@@ -12,13 +12,13 @@
  */
 class ColorCellPopUp final : public CellPopUp {
 private:
-	std::shared_ptr<ColorPicker> m_colorPicker; ///< contains a pointer of a color picker for choosing a new color.
+	ColorPicker_ty m_colorPicker; ///< contains a pointer of a color picker for choosing a new color.
 	std::function<void(Color)> m_onClick{ [](Color) {} }; ///< contains the onClick lambda that gets called when the new color is accepted
 	 
 	/**
 	 * initialize all ui elements.
 	 */
-	void Initialize(AppContext const& appContext,
+	void Initialize(AppContext_ty_c appContext,
 		Vector2 resolution, Color currentColor);
 	/**
 	 * gets the new color from the color picker and calls the onClick.

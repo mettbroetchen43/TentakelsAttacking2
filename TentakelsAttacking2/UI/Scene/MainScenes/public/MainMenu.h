@@ -7,19 +7,17 @@
 #include "Scene.h"
 #include "EventListener.hpp"
 
-class ClassicButton;
-
 /**
  * provides the main menu scene.
  */
 class MainMenu final : public Scene, public EventListener {
 private:
-	std::shared_ptr<ClassicButton> m_continueBtn; ///< contains the continue button
+	ClassicButton_ty m_continueBtn; ///< contains the continue button
 	/**
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize(Vector2 resolution, AppContext& appContext);
+	void Initialize(Vector2 resolution, AppContext_ty appContext);
 
 public:
 	/**

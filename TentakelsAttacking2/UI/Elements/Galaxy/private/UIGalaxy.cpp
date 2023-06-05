@@ -10,9 +10,11 @@
 #include "UIPlanet.h"
 #include "HInput.h"
 #include "HFocusEvents.h"
+#include "Player.h"
 
-void UIGalaxy::Initialize(Galaxy const* const galaxy) {
-	AppContext const& appContext{ AppContext::GetInstance() };
+void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	Galaxy_ty_c_raw galaxy{ event->GetGalaxy() };
 
 	m_currentGalaxy = galaxy;
 
@@ -20,7 +22,7 @@ void UIGalaxy::Initialize(Galaxy const* const galaxy) {
 		auto planet = std::make_shared<UIPlanet>(
 			p->GetID(),
 			p->GetID(),
-			appContext.playerCollection.GetPlayerByIDOrDefaultPlayer(p->GetID()),
+			appContext.playerCollection.GetPlayerByIDOrDefaultPlayer(p->GetPlayer()->GetID()),
 			GetAbsolutePosition({
 				static_cast<float>(p->GetPos().x),
 				static_cast<float>(p->GetPos().y),
@@ -33,6 +35,9 @@ void UIGalaxy::Initialize(Galaxy const* const galaxy) {
 			);
 		if (p->IsDestroyed()) {
 			planet->SetEnabled(false);
+			planet->SetColor(DARKGRAY);
+		}
+		else if (not p->IsDiscovered() and not event->IsShowGalaxy()) {
 			planet->SetColor(GRAY);
 		}
 		planet->SetOnClick([this](UIPlanet* planet) {
@@ -43,7 +48,7 @@ void UIGalaxy::Initialize(Galaxy const* const galaxy) {
 	}
 	m_onZoom(1.0f, GetCurrentScaleReference());
 }
-Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext const& appContext) const {
+Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext_ty_c appContext) const {
 	Vector2 const newPos{
 		(m_collider.x + m_resolution.x * 0.05f) / m_resolution.x,
 		(m_collider.y + m_resolution.y * 0.05f) / m_resolution.y,
@@ -66,7 +71,7 @@ Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext const& appContext)
 	}
 
 }
-Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext const& appContext) const {
+Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext_ty_c appContext) const {
 	Vector2 const newPos{
 		m_resolution.x * 0.045f / m_collider.width,
 		m_resolution.y * 0.045f / m_collider.height,
@@ -90,7 +95,7 @@ Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext const& appContext)
 
 }
 
-bool UIGalaxy::IsPlanetInCollider(std::shared_ptr<UIPlanet> planet) const {
+bool UIGalaxy::IsPlanetInCollider(UIPlanet_ty planet) const {
 	Rectangle const planetCollider{ planet->GetCollider() };
 
 	if (planetCollider.x < m_collider.x) { return false; }
@@ -201,7 +206,7 @@ UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignme
 	m_isShowGalaxy(isShowGalaxy) {
 	m_absoluteSize = m_collider;
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 
 	appContext.eventManager.AddListener(this);
 
@@ -295,7 +300,7 @@ void UIGalaxy::SetOnPlanetClick(std::function<void(unsigned int)> onPlanetClick)
 	m_onPlanetClick = onPlanetClick;
 }
 
-void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -360,14 +365,14 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		}
 	}
 }
-void UIGalaxy::Render(AppContext const& appContext) {
+void UIGalaxy::Render(AppContext_ty_c appContext) {
 	for (auto const& p : m_uiPlanets) {
 		if (IsPlanetInCollider(p)) {
 			p->Render(appContext);
 		}
 	}
 }
-void UIGalaxy::Resize(Vector2 resolution, AppContext const& appContext) {
+void UIGalaxy::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
 	m_absoluteSize = {
 		m_absoluteSize.x / m_resolution.x * resolution.x,
@@ -394,14 +399,14 @@ Rectangle UIGalaxy::GetCollider() const {
 	return UIElement::GetCollider();
 }
 
-Galaxy const* UIGalaxy::GetGalaxy() const {
+Galaxy_ty_raw UIGalaxy::GetGalaxy() const {
 	return m_currentGalaxy;
 }
 
 void UIGalaxy::OnEvent(Event const& event) {
 	
-	if (auto const* GalaxyEvent = dynamic_cast<SendGalaxyPointerEvent const*>(&event)) {
-		Initialize(GalaxyEvent->GetGalaxy());
+	if (auto const* galaxyEvent = dynamic_cast<SendGalaxyPointerEvent const*>(&event)) {
+		Initialize(galaxyEvent);
 		return;
 	}
 }

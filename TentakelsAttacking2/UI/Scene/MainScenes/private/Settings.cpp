@@ -18,11 +18,11 @@
 
 void SettingsScene::Initialize(SceneType continueScene) {
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 
 	float       elementY{ 0.3f };
 	float const sliderOffset{ 0.04f };
-	float const elementOffset{ 0.15f };
+	float const elementOffset{ 0.12f };
 
 	// title
 	m_elements.push_back(std::make_shared<Title>(
@@ -108,7 +108,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		);
 	muteCB->SetChecked(appContext.constants.sound.muteVolume);
 	muteCB->SetOnCheck([this](unsigned int, bool isChecked) {
-		AppContext& appContext = AppContext::GetInstance();
+		AppContext_ty appContext = AppContext::GetInstance();
 	auto event = MuteMasterVolumeEvent(isChecked);
 	appContext.eventManager.InvokeEvent(event);
 	m_volume->SetEnabled(!isChecked);
@@ -128,6 +128,38 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	m_elements.push_back(muteText);
 
 	elementY += elementOffset;
+
+	// fleet speed
+	auto fleetSpeedText = std::make_shared<Text>(
+		GetElementPosition(0.75f, elementY),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.04f,
+		"Fleet Speed:"
+	);
+	// lastRoundText->RenderRectangle(true);
+	m_elements.push_back(fleetSpeedText);
+
+	auto fleetSpeed = std::make_shared<SliderAndInputLine>(
+		200,
+		GetElementPosition(0.75f, elementY + sliderOffset),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		m_resolution,
+		static_cast<int>(appContext.constants.fleet.minFleetSpeed),
+		static_cast<int>(appContext.constants.fleet.maxFleetSpeed),
+		static_cast<int>(appContext.constants.fleet.currentFleetSpeed)
+	);
+	fleetSpeed->SetActive(true, appContext);
+	fleetSpeed->SetOnSave([](int value) {
+		AppContext::GetInstance().constants.fleet.currentFleetSpeed = value;
+	});
+	m_elements.push_back(fleetSpeed);
+
+	elementY += elementOffset;
+
 	// last round
 	auto lastRoundText = std::make_shared<Text>(
 		GetElementPosition(0.75f, elementY),
@@ -142,7 +174,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	m_elements.push_back(lastRoundText);
 
 	auto lastRound = std::make_shared<SliderAndInputLine>(
-		200,
+		300,
 		GetElementPosition(0.75f, elementY + sliderOffset),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
@@ -153,7 +185,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		);
 	lastRound->SetActive(true, appContext);
 	lastRound->SetOnSave([](int value) {
-		auto event = SetCurrentLastRoundEvent(value);
+		SetCurrentLastRoundEvent const event{ value };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 		});
 	m_elements.push_back(lastRound);
@@ -187,27 +219,27 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	m_elements.push_back(resolutionHintText);
 
 	elementY += 0.02f;
-	auto resolution = std::make_shared<DropDown>(
+	m_dropDown = std::make_shared<DropDown>(
 		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		m_resolution,
-		0.13f,
-		300,
-		301,
+		0.2f,
+		400,
+		401,
 		GetStringsFromResolutionEntries()
 		);
-	resolution->SetCurrentElementByID(GetIndexFromResolution(appContext.constants.window.current_resolution) + 1);
-	resolution->SetOnSave([this](unsigned int ID) {
-		auto event = SetNewResolutionEvent(this->m_rawResolutionEntries[ID-1].first);
+	m_dropDown->SetCurrentElementByID(GetIndexFromResolution(appContext.constants.window.current_resolution) + 1);
+	m_dropDown->SetOnSave([this](unsigned int ID) {
+		SetNewResolutionEvent const event{ this->m_rawResolutionEntries[ID - 1].first };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	});
-	m_elements.push_back(resolution);
+	m_elements.push_back(m_dropDown);
 
 
 	// btn
 	auto finishBtn = std::make_shared<ClassicButton>(
-		400,
+		500,
 		GetElementPosition(0.55f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
@@ -216,10 +248,10 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		SoundType::CLICKED_RELEASE_STD
 		);
 	finishBtn->SetEnabled(false);
-	m_elements.push_back(finishBtn);
+	m_dropDownBtn.first = finishBtn;
 
-	auto fullscreenToggleBtn = std::make_shared<ClassicButton>(
-		401,
+	auto fullScreenToggleBtn = std::make_shared<ClassicButton>(
+		501,
 		GetElementPosition(0.95f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
@@ -227,11 +259,11 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		"Toggle Fullscreen",
 		SoundType::CLICKED_RELEASE_STD
 		);
-	fullscreenToggleBtn->SetOnClick([]() {
-		auto event = ToggleFullscreenEvent();
+	fullScreenToggleBtn->SetOnClick([]() {
+		ToggleFullscreenEvent const event{};
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	});
-	m_elements.push_back(fullscreenToggleBtn);
+	m_dropDownBtn.second = fullScreenToggleBtn;
 
 	auto continueBtn = std::make_shared<ClassicButton>(
 		1000,
@@ -259,12 +291,12 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
-		"main menue",
+		"main menu",
 		SoundType::CLICKED_RELEASE_STD
 		);
 	backBtn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::MAIN_MENU)
+			SwitchSceneEvent{ SceneType::MAIN_MENU }
 		);
 		}
 	);
@@ -294,4 +326,31 @@ SettingsScene::SettingsScene(Vector2 resolution, SceneType continueScene)
 	:Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
 	m_rawResolutionEntries = AppContext::GetInstance().constants.window.GetAllResolutionsAsString();
 	Initialize(continueScene);
+}
+
+void SettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
+	Scene::CheckAndUpdate(mousePosition, appContext);
+
+	bool const folded = not m_dropDown->IsFoldedOut();
+	if (folded != m_dropDownBtn.first->IsEnabled()) {
+		m_dropDownBtn.first->SetEnabled(folded);
+	}
+	if (folded != m_dropDownBtn.second->IsEnabled()) {
+		m_dropDownBtn.second->SetEnabled(folded);
+	}
+
+	if (folded) {
+		m_dropDownBtn.first->CheckAndUpdate(mousePosition, appContext);
+		m_dropDownBtn.second->CheckAndUpdate(mousePosition, appContext);
+	}
+}
+void SettingsScene::Render(AppContext_ty_c appContext) {
+	m_dropDownBtn.first->Render(appContext);
+	m_dropDownBtn.second->Render(appContext);
+	Scene::Render(appContext);
+}
+void SettingsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+	m_dropDownBtn.first->Resize(resolution, appContext);
+	m_dropDownBtn.second->Resize(resolution, appContext);
+	Scene::Resize(resolution, appContext);
 }

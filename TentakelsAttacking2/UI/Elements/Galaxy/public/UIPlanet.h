@@ -78,17 +78,16 @@ public:
 	/**
 	 * planet logic.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the planet.
 	 */
-	void Render(AppContext const& appContext) override;
-	/**
+	void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resizes the planet.
 	 * calls the hover text to resize.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 
 	/**
 	 * sets if the planets is enabled.

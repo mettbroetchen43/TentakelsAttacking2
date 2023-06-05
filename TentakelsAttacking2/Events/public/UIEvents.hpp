@@ -7,6 +7,7 @@
 #include "MainEvent.hpp"
 #include "HSoundType.hpp"
 #include "CustomRaylib.h"
+#include "HUIAlias.hpp"
 #include <string>
 #include <functional>
 
@@ -123,17 +124,17 @@ public:
 };
 
 /**
- * general focus event to provide an focusable* to the Focus system.
+ * general focus event to provide an Focusable_ty_raw to the Focus system.
  */
 class FocusEvent : public Event {
 protected:
-	Focusable* m_focusable;
+	Focusable_ty_raw m_focusable;
 
 public:
-	FocusEvent(Focusable* focusable)
+	FocusEvent(Focusable_ty_raw focusable)
 		: m_focusable{ focusable } { }
 
-	[[nodiscard]] Focusable* GetFocusable() const {
+	[[nodiscard]] Focusable_ty_raw GetFocusable() const {
 		return m_focusable;
 	}
 };

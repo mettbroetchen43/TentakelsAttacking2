@@ -54,7 +54,7 @@ LogoScene::LogoScene(Vector2 resolution)
 	Initialize();
 }
 void LogoScene::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+	AppContext_ty_c appContext) {
 	bool const nextScene{
 			IsBackInputPressed()
 		or (m_time + m_sceneLength) < GetTime() 
@@ -68,12 +68,12 @@ void LogoScene::CheckAndUpdate(Vector2 const& mousePosition,
 		e->CheckAndUpdate(mousePosition, appContext);
 	}
 }
-void LogoScene::Render(AppContext const& appContext) {
+void LogoScene::Render(AppContext_ty_c appContext) {
 	for (auto e : m_elements) {
 		e->Render(appContext);
 	}
 }
-void LogoScene::Resize(Vector2 resolution, AppContext const& appContext){
+void LogoScene::Resize(Vector2 resolution, AppContext_ty_c appContext){
 	for (auto e : m_elements) {
 		e->Resize(resolution, appContext);
 	}

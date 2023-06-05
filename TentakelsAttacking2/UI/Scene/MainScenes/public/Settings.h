@@ -15,7 +15,8 @@ class SettingsScene final : public Scene {
 private:
 	std::shared_ptr<SliderAndInputLine> m_volume; ///< contains the volume slider
 	std::vector<std::pair<Resolution, std::string>> m_rawResolutionEntries; ///< contains die raw resolution information
-
+	std::pair<ClassicButton_ty, ClassicButton_ty> m_dropDownBtn{ nullptr, nullptr }; ///< contains the two buttons that are hidden by the drop down
+	DropDown_ty m_dropDown{ nullptr };///< contains the drop down
 	/**
 	 * initializes all ui elements.
 	 * connects the actions.
@@ -37,4 +38,17 @@ public:
 	 * only initialization.
 	 */
 	SettingsScene(Vector2 resolution, SceneType continueScene);
+
+	/**
+	 * updates all elements in elements.
+	 */
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
+	/**
+	 * renders all elements in elements and elements out update.
+	 */
+	void Render(AppContext_ty_c appContext) override;
+	/**
+	 * resizes all elements in elements and elements out update.
+	 */
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 };

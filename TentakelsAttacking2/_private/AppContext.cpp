@@ -10,7 +10,7 @@
 #include "HPrint.h"
 
 
-AppContext& AppContext::GetInstance() {
+AppContext_ty AppContext::GetInstance() {
 	static AppContext appContext;
 	return appContext;
 }
@@ -69,6 +69,10 @@ void AppContext::ValidateConfig() {
 
 	ValidateLowerEqual<float>(constants.planet.globalSpacing, 1.0f, "Global Spacing");
 	ValidateGreaterEqual<float>(constants.planet.globalSpacing, 0.0f, "Global Spacing");
+
+	// Fleet
+	ValidateMinMax<int>(constants.fleet.minFleetSpeed, constants.fleet.maxFleetSpeed, "Min Fleet Movement", "Max Fleet Movement");
+	ValidateMinCurrentMax<int>(constants.fleet.minFleetSpeed, constants.fleet.currentFleetSpeed, constants.fleet.maxFleetSpeed);
 
 	Print("Config validated", PrintType::INFO);
 }

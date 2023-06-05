@@ -14,3 +14,4 @@ class EventListener {
 private:
 	virtual void OnEvent(Event const& event) = 0; ///! gets implemented by every listener to receive events
 };
+	

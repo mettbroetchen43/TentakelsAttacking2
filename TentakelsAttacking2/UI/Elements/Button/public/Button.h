@@ -38,7 +38,7 @@ protected:
 	/**
 	 * calculates the text size and position.
 	 */
-	void SetTextSizeAndPosition(AppContext const& appContext);
+	void SetTextSizeAndPosition(AppContext_ty_c appContext);
 	/**
 	 * checks if the provided state is the same as the current state.
 	 */
@@ -66,16 +66,16 @@ public:
 	/**
 	 * complete logic og the button.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the button.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 	/**
 	 * calls resize from UIElement.
 	 * resizes the text.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 
 	/**
 	 * sets the onClick lambda that is called when the button gets released.

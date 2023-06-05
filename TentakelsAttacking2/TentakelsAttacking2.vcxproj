@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Constants\public\CConstants.hpp" />
+    <ClInclude Include="Constants\public\CFight.hpp" />
     <ClInclude Include="Constants\public\CFiles.hpp" />
     <ClInclude Include="Constants\public\ConfigIO.h" />
     <ClInclude Include="Constants\public\CPlanet.hpp" />
@@ -167,19 +168,22 @@
     <ClInclude Include="Events\public\MainEvent.hpp" />
     <ClInclude Include="Game\public\CopyGalaxyType.hpp" />
     <ClInclude Include="Game\public\Fleet.h" />
+    <ClInclude Include="Helper\public\HFightResult.h" />
+    <ClInclude Include="Helper\public\HFleetResult.hpp" />
     <ClInclude Include="Game\public\Galaxy.h" />
     <ClInclude Include="Game\public\GalaxyManager.h" />
     <ClInclude Include="Game\public\GameManager.h" />
     <ClInclude Include="Game\public\Planet.h" />
     <ClInclude Include="Game\public\PlayerType.hpp" />
     <ClInclude Include="Game\public\SpaceObject.h" />
-    <ClInclude Include="Game\public\LogicUpdate.hpp" />
     <ClInclude Include="Game\public\TargetPoint.h" />
-    <ClInclude Include="Helper\public\GameEventTypes.hpp" />
+    <ClInclude Include="Helper\public\HGameEventTypes.hpp" />
+    <ClInclude Include="Helper\public\HLogicAlias.hpp" />
     <ClInclude Include="Helper\public\HColors.h" />
     <ClInclude Include="Helper\public\HConcepts.hpp" />
     <ClInclude Include="Helper\public\HErrorLog.h" />
     <ClInclude Include="Helper\public\HFocusEvents.h" />
+    <ClInclude Include="Helper\public\HGalaxy.h" />
     <ClInclude Include="Helper\public\HInput.h" />
     <ClInclude Include="Helper\public\HPlayerCollection.h" />
     <ClInclude Include="Helper\public\HPrint.h" />
@@ -224,6 +228,7 @@
     <ClInclude Include="UI\Scene\MainScenes\public\MainScene.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\NewGameParameter.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\Settings.h" />
+    <ClInclude Include="UI\Scene\MainScenes\public\UpdateEvaluation.h" />
     <ClInclude Include="UI\Scene\MainScenes\public\ValidateGalaxy.h" />
     <ClInclude Include="UI\public\PopUpManager.h" />
     <ClInclude Include="UI\Scene\SupportScenes\public\CreditTable.h" />
@@ -259,6 +264,9 @@
   <ItemGroup>
     <ClCompile Include="Constants\private\ConfigIO.cpp" />
     <ClCompile Include="Constants\private\CWindow.cpp" />
+    <ClCompile Include="Constants\public\CFleet.hpp" />
+    <ClCompile Include="Helper\private\HFightResult.cpp" />
+    <ClCompile Include="Helper\public\HUIAlias.hpp" />
     <ClCompile Include="Game\private\GalaxyManager.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />
     <ClCompile Include="Game\private\SpaceObject.cpp" />
@@ -267,6 +275,7 @@
     <ClCompile Include="Game\private\TargetPoint.cpp" />
     <ClCompile Include="Game\private\Fleet.cpp" />
     <ClCompile Include="Helper\private\HErrorLog.cpp" />
+    <ClCompile Include="Helper\private\HGalaxy.cpp" />
     <ClCompile Include="Helper\private\HRandom.cpp" />
     <ClCompile Include="Game\private\Player.cpp" />
     <ClCompile Include="Helper\private\HTextProcessing.cpp" />
@@ -319,6 +328,7 @@
     <ClCompile Include="UI\private\Focusable.cpp" />
     <ClCompile Include="UI\private\Focus.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\MainScene.cpp" />
+    <ClCompile Include="UI\Scene\MainScenes\private\UpdateEvaluation.cpp" />
     <ClCompile Include="UI\Scene\private\Scene.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\Logos.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\MainMenu.cpp" />

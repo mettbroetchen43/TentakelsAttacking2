@@ -15,9 +15,9 @@ class CheckBox;
  */
 class SoundLevelPopUp final : public PopUp {
 private:
-	std::shared_ptr<Slider> m_slider; ///< contains the slider to set the sound level
-	std::shared_ptr<CheckBox> m_checkBox; ///< contains the checkbox to mute the sound
-	std::shared_ptr<ClassicButton> m_acceptBtn; ///< contains the button to set the current value
+	Slider_ty m_slider; ///< contains the slider to set the sound level
+	CheckBox_ty m_checkBox; ///< contains the checkbox to mute the sound
+	ClassicButton_ty m_acceptBtn; ///< contains the button to set the current value
 
 	/**
 	 * initializes all ui elements.
@@ -36,5 +36,5 @@ public:
 	 * renders the popup.
 	 * calls the slider, checkbox and button to render.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 };

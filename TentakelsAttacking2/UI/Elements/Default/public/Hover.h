@@ -22,7 +22,7 @@ private:
 	/**
 	 * calculates textHeight, textPosition, colliderLength.
 	 */
-	void CalculateDefault(AppContext const& appContext);
+	void CalculateDefault(AppContext_ty_c appContext);
 
 public:
 	/**
@@ -34,18 +34,18 @@ public:
 	 * sets the position to the mouse position.
 	 * renders the hover.
 	 */
-	void SetRenderHover(Vector2 mousePosition, AppContext const& appContext);
+	void SetRenderHover(Vector2 mousePosition, AppContext_ty_c appContext);
 
 	/**
 	 * renders the hover.
 	 * gets called from HoverRender
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 
 	/**
 	 * resizes the argument
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 
 
 };

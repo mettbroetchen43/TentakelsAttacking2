@@ -17,8 +17,9 @@ UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vec
 		player.name,
 		player.color,
 		Vector2(0.01f,0.01f),
-		resolution }
-{ }
+		resolution
+	}
+	{ }
 
 void UIPlanet::UpdatePosition(Rectangle newCollider) {
 	m_collider.x = newCollider.x + newCollider.width * m_colliderPos.x;
@@ -54,7 +55,7 @@ bool UIPlanet::IsHover() const {
 	return m_renderHover;
 }
 
-void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -77,7 +78,7 @@ void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& ap
 		m_onClick(this);
 	}
 }
-void UIPlanet::Render(AppContext const& appContext) {
+void UIPlanet::Render(AppContext_ty_c appContext) {
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_stringID.c_str(),
@@ -87,7 +88,7 @@ void UIPlanet::Render(AppContext const& appContext) {
 		m_color
 	);
 }
-void UIPlanet::Resize(Vector2 resolution, AppContext const& appContext) {
+void UIPlanet::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
 	m_hover.Resize(resolution, appContext);
 	UIElement::Resize(resolution, appContext);

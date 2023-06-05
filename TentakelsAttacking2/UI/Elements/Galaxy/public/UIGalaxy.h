@@ -7,12 +7,13 @@
 #include "UIElement.hpp"
 #include "EventListener.hpp"
 #include "Focusable.h"
+#include "HLogicAlias.hpp"
 #include <functional>
 #include <memory>
 #include <vector>
 
-class Galaxy;
 class UIPlanet;
+class SendGalaxyPointerEvent;
 
 /**
  * the representation of the logic galaxy.
@@ -33,8 +34,8 @@ private:
 	float m_scaleFactor{ 1.0f }; ///< contains the scale factor of the galaxy
 	Vector2 m_lastMousePosition{ 0.0f,0.0f }; ///< contains the position of the mouse from last tick while the galaxy is moved by mouse
 	Rectangle m_absoluteSize; ///< contains the absolute size of the collider in px
-	Galaxy const* m_currentGalaxy{ nullptr }; ///< contains a pointer of the current logic galaxy
-	std::vector<std::shared_ptr<UIPlanet>> m_uiPlanets; ///< contains the UI planets that are generated from the logic galaxy
+	Galaxy_ty_raw m_currentGalaxy{ nullptr }; ///< contains a pointer of the current logic galaxy
+	std::vector<UIPlanet_ty> m_uiPlanets; ///< contains the UI planets that are generated from the logic galaxy
 	std::function<void(float, Vector2)> m_onZoom{ [](float, Vector2) {} }; ///< contains onZoom -> gets called if the galaxy gets zoomed
 	std::function<void(float, bool)> m_onSlide{ [](float, bool) {} }; ///< contains onSlide -> gets called if the galaxy gets slided
 	std::function<void(unsigned int)> m_onPlanetClick{ [](unsigned int) {} }; ///< contains onPlanetClick -> gets called if a planet gets clicked
@@ -42,20 +43,20 @@ private:
 	/**
 	 * initializes all elements of the galaxy.
 	 */
-	void Initialize(Galaxy const* const galaxy);
+	void Initialize(SendGalaxyPointerEvent const* event);
 	/**
 	 * returns the absolute position if the provided pos in px.
 	 */
-	[[nodiscard]] Vector2 GetAbsolutePosition(Vector2 pos, AppContext const& appContext) const;
+	[[nodiscard]] Vector2 GetAbsolutePosition(Vector2 pos, AppContext_ty_c appContext) const;
 	/**
 	 * returns the relative position if the provided pos.
 	 */
-	[[nodiscard]] Vector2 GetRelativePosition(Vector2 pos, AppContext const& appContext) const;
+	[[nodiscard]] Vector2 GetRelativePosition(Vector2 pos, AppContext_ty_c appContext) const;
 
 	/**
 	 * returns if the provided planet is still inside of the galaxy collider
 	 */
-	[[nodiscard]] bool IsPlanetInCollider(std::shared_ptr<UIPlanet> planet) const;
+	[[nodiscard]] bool IsPlanetInCollider(UIPlanet_ty planet) const;
 	/**
 	 * updates all button positions with the absolute size.
 	 */
@@ -149,17 +150,17 @@ public:
 	 * logic of the galaxy.
 	 * calls the UIPlanets zu update.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the galaxy.
 	 * calls the cells to render.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resizes the galaxy.
 	 * calls the cells to resize.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 
 	/**
 	 * sets if the galaxy is enabled.
@@ -177,7 +178,7 @@ public:
 	/**
 	 * returns the current galaxy.
 	 */
-	[[nodiscard]] Galaxy const* GetGalaxy() const;
+	[[nodiscard]] Galaxy_ty_raw GetGalaxy() const;
 
 	/**
 	 * receives all events and calls the me,ber functions.

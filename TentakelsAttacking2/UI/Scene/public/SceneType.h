@@ -20,6 +20,7 @@ enum class SceneType {
 	MAIN,
 	SETTINGS,
 	CREDITS,
+	UPDATE_EVALUATION,
 	NONE,
 };
 

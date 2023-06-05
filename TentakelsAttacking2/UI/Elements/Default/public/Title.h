@@ -36,13 +36,13 @@ private:
 	/**
 	 * enders the static title line by line.
 	 */
-	void RenderTitle(AppContext const& appContext);
+	void RenderTitle(AppContext_ty_c appContext);
 	/**
 	 * renders the title sequent.
 	 * every tick gets renders one character more.
 	 * adds a random postFix to the string.
 	 */
-	void RenderTitleSequens(AppContext const& appContext);
+	void RenderTitleSequens(AppContext_ty_c appContext);
 
 	/**
 	 * measures the amount of characters in the title.
@@ -51,12 +51,12 @@ private:
 	/**
 	 * calculates the collider out of the title length and position.
 	 */
-	void SetCollider(AppContext const& appContext, Vector2 const& resolution);
+	void SetCollider(AppContext_ty_c appContext, Vector2 const& resolution);
 
 	/**
 	 * sets the title finished.
 	 */
-	void TitleFinish(AppContext const& appContext);
+	void TitleFinish(AppContext_ty_c appContext);
 
 public:
 	/**
@@ -66,20 +66,20 @@ public:
 	 * sets collider.
 	 */
 	Title(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		bool drawTitle, AppContext& appContext);
+		bool drawTitle, AppContext_ty appContext);
 
 	/**
 	 * title logic.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the title animation or the static title.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resizes the title.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 
 	/**
 	 * returns if the title animation has finished.

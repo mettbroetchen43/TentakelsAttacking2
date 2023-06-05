@@ -8,6 +8,7 @@
 #include "GenerelEvents.hpp"
 #include "HPrint.h"
 #include "CopyGalaxyType.hpp"
+#include "HLogicAlias.hpp"
 #include <cassert>
 #include <algorithm>
 #include <stdexcept>
@@ -31,7 +32,7 @@ static auto message = [](std::string& messageText, std::string const& first, std
 bool GameManager::ValidAddPlayer() const {
 	return {
 		AppContext::GetInstance().constants.player.maxPlayerCount
-		> m_players.size() 
+		> m_players.size()
 	};
 }
 unsigned int GameManager::GetNextPlayerID() const {
@@ -62,13 +63,13 @@ bool GameManager::IsExistingPlayerID(unsigned int ID) const {
 	return false;
 }
 
-bool GameManager::GetCurrentPlayer(std::shared_ptr<Player>& currentPlayer) const {
+bool GameManager::GetCurrentPlayer(Player_ty& currentPlayer) const {
 	if (m_currentRoundPlayers.empty()) { return false; }
 
 	currentPlayer = m_currentRoundPlayers.back();
 	return true;
 }
-bool GameManager::GetNextPlayer(std::shared_ptr<Player>& nextPlayer) const {
+bool GameManager::GetNextPlayer(Player_ty& nextPlayer) const {
 	if (m_currentRoundPlayers.size() < 2) { return false; }
 
 	nextPlayer = m_currentRoundPlayers.at(m_currentRoundPlayers.size() - 2);
@@ -121,7 +122,7 @@ void GameManager::EditPlayer(EditPlayerEvent const* event) const {
 }
 void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 
-	std::shared_ptr<Player> toDelete{ nullptr };
+	Player_ty toDelete{ nullptr };
 	for (auto& p : m_players) {
 		if (p->GetID() == event->GetID()) {
 			toDelete = p;
@@ -154,7 +155,7 @@ void GameManager::ResetPlayer() {
 }
 void GameManager::CheckPlayerCount() const {
 
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	bool valid;
 
 	if (m_players.size() < appContext.constants.player.minPlayerCount) {
@@ -188,7 +189,7 @@ void GameManager::ShuffleCurrentRoundPlayer() {
 
 void GameManager::SendCurrentPlayerID() {
 	unsigned int ID;
-	std::shared_ptr<Player> player{ nullptr };
+	Player_ty player{ nullptr };
 
 	if (GetCurrentPlayer(player)) {
 		ID = player->GetID();
@@ -202,7 +203,7 @@ void GameManager::SendCurrentPlayerID() {
 }
 void GameManager::SendNextPlayerID() {
 	unsigned int ID;
-	std::shared_ptr<Player> player{ nullptr };
+	Player_ty player{ nullptr };
 
 	if (GetNextPlayer(player)) {
 		ID = player->GetID();
@@ -220,8 +221,9 @@ void GameManager::NextRound(bool valid) {
 
 	if (!valid) { return; }
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 	// events and so on first
+	Update();
 
 
 	m_currentRoundPlayers = m_players;
@@ -275,7 +277,7 @@ void GameManager::ValidateNextTurn() {
 
 // events
 void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
-	if (event->GetType() == GameEventType::GLOBAL) {
+	if (event->GetType() == HGameEventType::GLOBAL) {
 		for (auto e : settableGameEventTypes) {
 			m_gameEvents[e] = event->GetIsChecked();
 		}
@@ -295,7 +297,7 @@ void GameManager::AddFleet(SendFleetInstructionEvent const* event) {
 
 	if (!ValidateAddFleetInput(event)) { return; }
 
-	std::shared_ptr<Player> currentPlayer{ nullptr };
+	Player_ty currentPlayer{ nullptr };
 	if (!GetCurrentPlayer(currentPlayer)) { popup("No current player selected."); return; }
 
 	bool const isValidFleet{ m_galaxyManager.AddFleet(event, currentPlayer) };
@@ -345,7 +347,7 @@ void GameManager::StartGame() {
 	SendNextPlayerID();
 }
 
-GameManager::GameManager() 
+GameManager::GameManager()
 	: m_galaxyManager{ this } {
 
 	AppContext::GetInstance().eventManager.AddListener(this);
@@ -358,12 +360,9 @@ GameManager::GameManager()
 }
 
 void GameManager::Update() {
-	/*
-	preUpdate -> moving and stuff
-	Update -> general update
-	postUpdate -> cleanup
-	*/
+	m_lastFightResults = m_galaxyManager.Update();
 }
+
 void GameManager::OnEvent(Event const& event) {
 
 	// Player
@@ -410,7 +409,7 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* galaxyEvent = dynamic_cast<GetGalaxyPointerEvent const*>(&event)) {
-		SendGalaxyPointerEvent const returnEvent{ m_galaxyManager.GetGalaxy(), false};
+		SendGalaxyPointerEvent const returnEvent{ m_galaxyManager.GetGalaxy(), false };
 		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
 		return;
 	}
@@ -426,6 +425,10 @@ void GameManager::OnEvent(Event const& event) {
 	}
 	if (auto const* gameEvent = dynamic_cast<TriggerNextTurnEvent const*> (&event)) {
 		ValidateNextTurn();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<GetUpdateEvaluation const*> (&event)) {
+		AppContext::GetInstance().eventManager.InvokeEvent(SendUpdateEvaluation{ m_lastFightResults });
 		return;
 	}
 

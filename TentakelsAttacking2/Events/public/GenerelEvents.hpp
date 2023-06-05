@@ -6,11 +6,12 @@
 #pragma once
 #include "MainEvent.hpp"
 #include "CustomRaylib.h"
+#include "HLogicAlias.hpp"
+#include "HFightResult.h"
 #include <string>
 #include <unordered_map>
 
-enum class GameEventType;
-class Galaxy;
+enum class HGameEventType;
 
 /**
  * general event to provide player name and color.
@@ -164,6 +165,26 @@ class ShowNextTurnEvent final : public Event { };
 class ShowNextRoundEvent final : public Event { };
 
 /**
+ * use this to get the update evaluation.
+ */
+class GetUpdateEvaluation final : public Event { };
+/**
+ * sends the update evaluation.
+ */
+class SendUpdateEvaluation final : public Event {
+private:
+	std::vector<HFightResult> m_fightResults;
+
+public:
+	SendUpdateEvaluation(std::vector<HFightResult> fightResult)
+		: m_fightResults{ fightResult } { }
+
+	[[nodiscard]] std::vector<HFightResult> GetFightResults() const {
+		return m_fightResults;
+	}
+};
+
+/**
  * use this to trigger the logic to validate the Player count.
  * return an ValidatePlayerCountResultEvent.
  */
@@ -196,14 +217,14 @@ class StartGameEvent final : public Event { };
  */
 class UpdateCheckGameEvent final : public Event {
 private:
-	GameEventType m_type;
+	HGameEventType m_type;
 	bool m_isChecked;
 
 public:
-	UpdateCheckGameEvent(GameEventType type, bool isChecked)
+	UpdateCheckGameEvent(HGameEventType type, bool isChecked)
 		: m_type{ type }, m_isChecked{ isChecked } { }
 
-	[[nodiscard]] GameEventType GetType() const {
+	[[nodiscard]] HGameEventType GetType() const {
 		return m_type;
 	}
 	[[nodiscard]] bool GetIsChecked() const {
@@ -215,7 +236,7 @@ public:
  */
 class UpdateCheckGameEventsUI final : public Event {
 private:
-	using Map = std::unordered_map<GameEventType, bool>const*;
+	using Map = std::unordered_map<HGameEventType, bool>const*;
 	Map m_types;
 
 public:
@@ -272,14 +293,14 @@ class GetShowGalaxyPointerEvent final : public Event { };
  */
 class SendGalaxyPointerEvent final : public Event {
 private:
-	Galaxy const* const m_galaxy;
+	Galaxy_ty_c_raw m_galaxy;
 	bool m_isShowGalaxy;
 
 public:
-	SendGalaxyPointerEvent(Galaxy const* const galaxy, bool isShowGalaxy)
+	SendGalaxyPointerEvent(Galaxy_ty_c_raw galaxy, bool isShowGalaxy)
 		: m_galaxy{ galaxy }, m_isShowGalaxy{ isShowGalaxy } { }
 
-	[[nodiscard]] Galaxy const* const GetGalaxy() const {
+	[[nodiscard]] Galaxy_ty_c_raw GetGalaxy() const {
 		return m_galaxy;
 	}
 	[[nodiscard]] bool IsShowGalaxy() const {

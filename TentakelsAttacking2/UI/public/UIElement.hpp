@@ -10,10 +10,10 @@
 #include "Alignment.h"
 #include "HVector2Operator.h"
 #include "CustomRaylib.h"
+#include "HUIAlias.hpp"
 #include <cmath>
 #include <numbers>
 
-struct AppContext;
 
 /**
  * provides the basic UIElement.
@@ -289,7 +289,7 @@ public:
 	 * checks if there is a current movement.
 	 * moves the element if so.
 	 */
-	virtual void CheckAndUpdate(Vector2 const&, AppContext const&) {
+	virtual void CheckAndUpdate(Vector2 const&, AppContext_ty_c) {
 		switch (m_moveType) {
 			default:
 			case MoveType::NONE:
@@ -310,12 +310,12 @@ public:
 	 * to implement.
 	 * should render the element.
 	 */
-	virtual void Render(AppContext const& appContext) = 0;
+	virtual void Render(AppContext_ty_c appContext) = 0;
 	/**
 	 * sets new resolution.
 	 * calls update collider.
 	 */
-	virtual void Resize(Vector2 resolution, AppContext const&) {
+	virtual void Resize(Vector2 resolution, AppContext_ty_c) {
 		m_resolution = resolution;
 		UpdateCollider();
 	};

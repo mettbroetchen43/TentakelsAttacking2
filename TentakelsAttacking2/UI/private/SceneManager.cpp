@@ -56,10 +56,14 @@ void SceneManager::InitializeNewScene(SceneType sceneType) {
 			m_currentScene = std::make_shared<CreditsScene>(
 				m_uiManager->GetResolution());
 			return;
+		case SceneType::UPDATE_EVALUATION:
+			m_currentScene = std::make_shared<UpdateEvaluationScene>(
+				m_uiManager->GetResolution());
+			return;
 	}
 }
 
-void SceneManager::SwitchScene(AppContext const& appContext) {
+void SceneManager::SwitchScene(AppContext_ty_c appContext) {
 
 	if (m_currentSceneType == m_nextSceneType) {
 		return;
@@ -101,7 +105,7 @@ SceneManager::SceneManager(UIManager* uiManager)
 }
 
 void SceneManager::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+	AppContext_ty_c appContext) {
 
 	SwitchScene(appContext);
 
@@ -110,11 +114,11 @@ void SceneManager::CheckAndUpdate(Vector2 const& mousePosition,
 	}
 	m_popUpManager.CheckAndUpdate(mousePosition, appContext);
 }
-void SceneManager::Render(AppContext const& appContext) {
+void SceneManager::Render(AppContext_ty_c appContext) {
 	m_currentScene->Render(appContext);
 	m_popUpManager.Render(appContext);
 }
-void SceneManager::Resize(Vector2 resolution, AppContext const& appContext) {
+void SceneManager::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	m_currentScene->Resize(resolution, appContext);
 
 	m_popUpManager.Resize(resolution, appContext);

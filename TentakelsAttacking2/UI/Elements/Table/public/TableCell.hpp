@@ -49,7 +49,7 @@ public:
 	 * use this if the cell is clicked.
 	 * need to be implemented by every cell.
 	 */
-	void Clicked(Vector2 const&, AppContext const& appContext) override {
+	void Clicked(Vector2 const&, AppContext_ty_c appContext) override {
 
 		if (not IsEditable()) { return; }
 
@@ -64,7 +64,7 @@ public:
 	 * calls the CheckAndUpdate member function of UIElement.
 	 * contains the logic of the cell.
 	 */
-	void CheckAndUpdate(Vector2 const&, AppContext const& appContext) override {
+	void CheckAndUpdate(Vector2 const&, AppContext_ty_c appContext) override {
 		if (not IsEditable()) { return; }
 
 		bool shouldEdit{ false };
@@ -89,7 +89,7 @@ public:
 	/**
 	 * renders the cell
 	 */
-	void Render(AppContext const& appContext) override {
+	void Render(AppContext_ty_c appContext) override {
 		AbstractTableCell::Render(appContext);
 
 		DrawTextEx(
@@ -143,7 +143,7 @@ inline void TableCell<Color>::SetStringValue() {
  * overload because color is rendered different.
  */
 template<>
-inline void TableCell<Color>::Render(AppContext const& appContext) {
+inline void TableCell<Color>::Render(AppContext_ty_c appContext) {
 	AbstractTableCell::Render(appContext);
 
 	int const offset{ static_cast<int>(m_collider.height / 10) };

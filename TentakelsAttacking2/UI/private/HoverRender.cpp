@@ -19,7 +19,7 @@ HoverRender::~HoverRender() {
 void HoverRender::Render() {
 	if (m_elements.size() == 0) { return; }
 
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext_ty appContext = AppContext::GetInstance();
 	for (auto const& hover : m_elements) {
 		hover->Render(appContext);
 	}

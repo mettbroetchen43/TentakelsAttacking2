@@ -8,17 +8,15 @@
 #include "InputLine.hpp"
 #include <functional>
 
-class Slider;
-class ClassicButton;
 
 /**
  * provides a scene that contains a slider, a button and an input line.
  */
 class SliderAndInputLine : public Scene {
 private:
-	std::shared_ptr<Slider> m_slider; ///< contains a the slider
-	std::shared_ptr<InputLine<int>> m_inputLine; ///< contains a the input line
-	std::shared_ptr<ClassicButton> m_btn; ///< contains a the button
+	Slider_ty m_slider; ///< contains a the slider
+	InputLine_int_ty m_inputLine; ///< contains a the input line
+	ClassicButton_ty m_btn; ///< contains a the button
 	std::function<void(int)> m_onSave{ [](int) {} }; ///< contains the llambda that gets called on save -> provides the current value
 
 	bool m_isEnabled{ true }; ///< contains if the scene is enabled
@@ -72,7 +70,7 @@ public:
 	/**
 	 * scene logic.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 
 	/**
 	 * sets if the scene is enabled.

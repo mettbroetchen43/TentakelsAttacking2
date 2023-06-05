@@ -7,7 +7,7 @@
 #include "Text.h"
 #include "CheckBox.h"
 #include "Line.h"
-#include "GameEventTypes.hpp"
+#include "HGameEventTypes.hpp"
 #include "AppContext.h"
 #include "HRandom.h"
 #include <array>
@@ -84,7 +84,7 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 
 void GameEventSettings::SetChecked(unsigned int ID, bool isChecked) {
 	UpdateCheckGameEvent const event{
-		static_cast<GameEventType>(ID),
+		static_cast<HGameEventType>(ID),
 		isChecked
 	};
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
@@ -96,7 +96,7 @@ void GameEventSettings::UpdateElements(UpdateCheckGameEventsUI const* event) {
 
 	for (auto const& [type, b] : *types) {
 		for (auto checkBox : m_checkBoxes) {
-			auto const cbType{ static_cast<GameEventType>(checkBox->GetID()) };
+			auto const cbType{ static_cast<HGameEventType>(checkBox->GetID()) };
 			if (cbType == type) {
 				checkBox->SetChecked(b);
 				continue;
@@ -107,20 +107,20 @@ void GameEventSettings::UpdateElements(UpdateCheckGameEventsUI const* event) {
 	SetGlobalCheckbox();
 }
 void GameEventSettings::SetGlobalCheckbox(){
-	std::shared_ptr<CheckBox> globalCheckbox{ nullptr };
+	CheckBox_ty globalCheckbox{ nullptr };
 	bool check{ true };
 	bool value{ false };
 
 	for (size_t i = 0; i < m_checkBoxes.size(); ++i) {
-		auto const cbTypeI{ static_cast<GameEventType>(m_checkBoxes.at(i)->GetID()) };
-		if (cbTypeI == GameEventType::GLOBAL) {
+		auto const cbTypeI{ static_cast<HGameEventType>(m_checkBoxes.at(i)->GetID()) };
+		if (cbTypeI == HGameEventType::GLOBAL) {
 			globalCheckbox = m_checkBoxes.at(i);
 			continue;
 		}
 		value = m_checkBoxes.at(i)->IsChecked();
 		for (size_t j = i; j < m_checkBoxes.size(); ++j) {
-			auto cbTypeJ{ static_cast<GameEventType>(m_checkBoxes.at(i)->GetID()) };
-			if (cbTypeJ == GameEventType::GLOBAL) {
+			auto cbTypeJ{ static_cast<HGameEventType>(m_checkBoxes.at(i)->GetID()) };
+			if (cbTypeJ == HGameEventType::GLOBAL) {
 				continue;
 			}
 			if (m_checkBoxes.at(i)->IsChecked()
@@ -143,7 +143,7 @@ found:
 GameEventSettings::GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution)
 	: Scene{ pos, size, alignment, resolution } {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext_ty appContext = AppContext::GetInstance();
 	appContext.eventManager.AddListener(this);
 
 	Initialize(resolution, focusID);
@@ -165,7 +165,7 @@ void GameEventSettings::OnEvent(Event const& event) {
 
 void GameEventSettings::SetRandom() {
 	Random& random{ Random::GetInstance() };
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	for (auto& c : m_checkBoxes) {
 		if (c->GetID() == 0) { continue; } ///< id 0 is the gloabl check box
@@ -173,7 +173,7 @@ void GameEventSettings::SetRandom() {
 		bool r = random.random(2) == 1;
 		if (c->IsChecked() != r) {
 			UpdateCheckGameEvent const event{
-				static_cast<GameEventType>(c->GetID()),
+				static_cast<HGameEventType>(c->GetID()),
 				r
 			};
 			appContext.eventManager.InvokeEvent(event);

@@ -8,7 +8,7 @@
 #include "HGeneral.h"
 #include "HFocusEvents.h"
 
-void DeletePlayerPopUp::Initialize(AppContext const& appContext,
+void DeletePlayerPopUp::Initialize(AppContext_ty_c appContext,
 	Vector2 resolution) {
 
 	auto acceptBtn = InitializeAcceptButton(appContext, resolution);

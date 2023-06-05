@@ -6,19 +6,15 @@
 #pragma once
 #include "Scene.h"
 
-class Title;
-class ClassicButton;
-class Line;
-
 /**
  * provides the credits scene.
  */
 class CreditsScene final : public Scene {
 private:
-	std::shared_ptr<Title> m_title; ///< contains the title
-	std::shared_ptr<Line> m_titleLine; ///< contains the line below title
-	std::shared_ptr<ClassicButton> m_finishBTN;  ///< contains the button that gets displayed at the end of the credits
-	std::shared_ptr<ClassicButton> m_speedBTN; ///< contains the button that can toggle the credit speed
+	Title_ty m_title; ///< contains the title
+	Line_ty m_titleLine; ///< contains the line below title
+	ClassicButton_ty m_finishBTN;  ///< contains the button that gets displayed at the end of the credits
+	ClassicButton_ty m_speedBTN; ///< contains the button that can toggle the credit speed
 	float m_speed{ 0.07f }; ///< contains the base credit speed -> speed level 1
 	int m_maxSpeedLevel{ 3 }; ///< contains the maximum speed level.
 	int m_speedLevel{ 1 }; ///< contains the current speed level.
@@ -63,10 +59,10 @@ public:
 	 * sets moving to true when the title is fully animated.
 	 * calls the moving elements to move as long as moving is true.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * sets the new resolution.
 	 * calls all elements zu resize.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 };

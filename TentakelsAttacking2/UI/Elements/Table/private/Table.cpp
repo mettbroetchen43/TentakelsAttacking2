@@ -188,7 +188,7 @@ void Table::UpdateFirstRowPosition() {
 	}
 }
 
-void Table::CheckAndUpdateClickCell(Vector2 const& mousePosition, AppContext const& appContext) {
+void Table::CheckAndUpdateClickCell(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	if (not CheckCollisionPointRec(mousePosition, m_collider)) { return; }
 	if (not IsMouseButtonPressed(0)) { return; }
 
@@ -302,7 +302,7 @@ void Table::ScrollFocused() {
 	if (not m_isScrollable) { return; }
 	if (not IsNestedFocus()) { return; }
 
-	std::shared_ptr<AbstractTableCell> cell{ nullptr };
+	AbstractTableCell_ty cell{ nullptr };
 	for (int row = 0; row < m_cells.size(); ++row) {
 		for (int column = 0; column < m_cells.at(row).size(); ++column) {
 			auto const cCell = m_cells.at(row).at(column);
@@ -404,7 +404,7 @@ void Table::CalculateSlider() {
 }
 
 void Table::CalculateHoverHighlighted(Vector2 mousePosition) {
-	Vec2<int> newPosition{ -1,-1 };
+	vec2pos_ty newPosition{ -1,-1 };
 	if (not m_isHoveredHighlighted) { goto found; }
 	if (not CheckCollisionPointRec(mousePosition, m_collider)) { goto found; }
 
@@ -451,23 +451,23 @@ void Table::SetHighlightBackground(bool reset) {
 	}
 }
 
-void Table::RenderTopLeft(AppContext const& appContext) {
+void Table::RenderTopLeft(AppContext_ty_c appContext) {
 	m_cells.at(0).at(0)->Render(appContext);
 }
-void Table::RenderHeadline(AppContext const& appContext) {
+void Table::RenderHeadline(AppContext_ty_c appContext) {
 
 	auto const row{ m_cells.at(0) };
 	for (int column = 1; column < row.size(); ++column) { // start at 1 because cell 0 is rendered in TopLeft
 		row.at(column)->Render(appContext);
 	}
 }
-void Table::RenderFirstColumn(AppContext const& appContext) {
+void Table::RenderFirstColumn(AppContext_ty_c appContext) {
 
 	for (int row = 1; row < m_cells.size(); ++row) { // start at 1 because cell 0 is rendered in TopLeft
 		m_cells.at(row).at(0)->Render(appContext);
 	}
 }
-void Table::RenderOtherCells(AppContext const& appContext) {
+void Table::RenderOtherCells(AppContext_ty_c appContext) {
 
 	for (int row = 1; row < m_cells.size(); ++row) { // start at 1 because cell 0 is rendered in TopLeft or headline
 		for (int column = 1; column < m_cells.at(row).size(); ++column) { // start at 1 because cell 0 is renderd in TopLeft or first column
@@ -500,7 +500,7 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	m_cells.clear();
 	for (int row = 0; row < m_rowCount; ++row) {
 
-		auto line{ std::vector<std::shared_ptr<AbstractTableCell>>() };
+		auto line{ std::vector<AbstractTableCell_ty>() };
 		for (int column = 0; column < columnCount; ++column) {
 
 			auto cell = std::make_shared<TableCell<std::string>>(
@@ -689,7 +689,7 @@ Rectangle Table::GetCollider() const noexcept {
 	return m_collider;
 }
 
-void Table::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void Table::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	ResizeTable();
 	UpdateHeadlinePosition();
@@ -736,7 +736,7 @@ void Table::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 
 	CalculateHoverHighlighted(mousePosition);
 }
-void Table::Render(AppContext const& appContext) {
+void Table::Render(AppContext_ty_c appContext) {
 
 	BeginScissorMode(
 		static_cast<int>(m_collider.x),

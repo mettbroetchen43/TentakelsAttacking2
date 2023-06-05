@@ -9,16 +9,16 @@
 #include "AppContext.h"
 #include "HFocusEvents.h"
 
-void Scene::SetFocusActive(AppContext const&) {
+void Scene::SetFocusActive(AppContext_ty_c) {
 	if (m_active) {
 		for (auto& element : m_elements) {
-			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
+			if (auto focusable = dynamic_cast<Focusable_ty_raw>(element.get())) {
 				AddFocusElement(focusable);
 				continue;
 			}
 		}
 		for (auto& element : m_elementsOutUpdates) {
-			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
+			if (auto focusable = dynamic_cast<Focusable_ty_raw>(element.get())) {
 				AddFocusElement(focusable);
 				continue;
 			}
@@ -26,13 +26,13 @@ void Scene::SetFocusActive(AppContext const&) {
 	}
 	else {
 		for (auto& element : m_elements) {
-			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
+			if (auto focusable = dynamic_cast<Focusable_ty_raw>(element.get())) {
 				DeleteFocusElement(focusable);
 				continue;
 			}
 		}
 		for (auto& element : m_elementsOutUpdates) {
-			if (auto focusable = dynamic_cast<Focusable*>(element.get())) {
+			if (auto focusable = dynamic_cast<Focusable_ty_raw>(element.get())) {
 				DeleteFocusElement(focusable);
 				continue;
 			}
@@ -53,16 +53,16 @@ Vector2 Scene::GetElementSize(float x, float y) {
 	};
 }
 
-Focusable* Scene::GetFocusableByFocusID(unsigned int ID) const {
+Focusable_ty_raw Scene::GetFocusableByFocusID(unsigned int ID) const {
 	for (auto element : m_elements) {
-		if (auto focus = dynamic_cast<Focusable*>(element.get())) {
+		if (auto focus = dynamic_cast<Focusable_ty_raw>(element.get())) {
 			if (focus->GetFocusID() == ID) {
 				return focus;
 			}
 		}
 	}
 	for (auto element : m_elementsOutUpdates) {
-		if (auto focus = dynamic_cast<Focusable*>(element.get())) {
+		if (auto focus = dynamic_cast<Focusable_ty_raw>(element.get())) {
 			if (focus->GetFocusID() == ID) {
 				return focus;
 			}
@@ -78,7 +78,7 @@ Scene::Scene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
 bool Scene::IsActive() const {
 	return m_active;
 }
-void Scene::SetActive(bool active, AppContext const& appContext) {
+void Scene::SetActive(bool active, AppContext_ty_c appContext) {
 	if (active == m_active) {
 		return;
 	}
@@ -138,7 +138,7 @@ void Scene::SetSize(Vector2 size) {
 	UIElement::SetSize(size);
 }
 
-void Scene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void Scene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	if (!m_active) {
 		return;
@@ -150,7 +150,7 @@ void Scene::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 }
-void Scene::Render(AppContext const& appContext) {
+void Scene::Render(AppContext_ty_c appContext) {
 	if (!m_active) {
 		return;
 	}
@@ -159,7 +159,7 @@ void Scene::Render(AppContext const& appContext) {
 		element->Render(appContext);
 	}
 }
-void Scene::Resize(Vector2 resolution, AppContext const& appContext) {
+void Scene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
 	UIElement::Resize(resolution, appContext);
 

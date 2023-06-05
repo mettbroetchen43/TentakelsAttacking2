@@ -30,7 +30,7 @@ private:
 	/**
 	 * plays the sound and toggles the check state.
 	 */
-	void Check(AppContext const& appContext);
+	void Check(AppContext_ty_c appContext);
 
 public:
 	/**
@@ -76,14 +76,14 @@ public:
 	 * logic of the checkbox.
 	 * 
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the checkbox.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resizes the checkbox and calls the ui-element to resize.
 	 * updates horizontal size.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext) override;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 };

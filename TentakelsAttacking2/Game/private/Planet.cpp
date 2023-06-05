@@ -7,10 +7,15 @@
 #include "HRandom.h"
 #include "AppContext.h"
 #include "Player.h"
+#include "HPrint.h"
 
-Planet::Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
+Planet::Planet(unsigned int ID, vec2pos position, Player_ty player,
 	bool isHomePlanet, int planetNumber)
-	: SpaceObject{ ID, position, player }, m_isHomePlanet{ isHomePlanet },
+	: Planet{ID, position, player, isHomePlanet, planetNumber, 0 } { }
+
+Planet::Planet(unsigned int ID, vec2pos position, Player_ty player,
+	bool isHomePlanet, int planetNumber, size_t ships)
+	: SpaceObject{ ID, position, ships,  player }, m_isHomePlanet{ isHomePlanet },
 	m_planetNumber{ planetNumber } {
 
 	AppContext const & appContext{ AppContext::GetInstance() };
@@ -50,10 +55,21 @@ bool Planet::IsDestroyed() const {
 	return m_isDestroyed;
 }
 
+int Planet::GetPlanetNumber() const{
+	return m_planetNumber;
+}
+
 void Planet::SetDiscovered(bool isDiscovered) {
 	m_isDiscovered = isDiscovered;
 }
 
 bool Planet::IsDiscovered() const {
 	return m_isDiscovered;
+}
+
+void Planet::Update(Galaxy_ty_raw) {
+	m_ships += m_production;
+	if (not m_player->IsHumanPlayer() and m_ships > m_maxShips) {
+		m_ships = m_maxShips;
+	}
 }

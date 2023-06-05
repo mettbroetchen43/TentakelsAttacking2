@@ -19,7 +19,7 @@ protected:
 	/**
 	 * sets all elements in elements and elements out update active or inactive.
 	 */
-	void SetFocusActive(AppContext const& appContext);
+	void SetFocusActive(AppContext_ty_c appContext);
 
 	/**
 	 * calculates and returns the relative position in the scene
@@ -35,7 +35,7 @@ protected:
 	 * returns the focusable instance from the id.
 	 * returns a nullptr if no instance with that id exists
 	 */
-	Focusable* GetFocusableByFocusID(unsigned int ID) const;
+	Focusable_ty_raw GetFocusableByFocusID(unsigned int ID) const;
 
 
 public:
@@ -58,7 +58,7 @@ public:
 	 * sets if the scene is currently active.
 	 * calls set focus active.
 	 */
-	virtual void SetActive(bool active, AppContext const& appContext);
+	virtual void SetActive(bool active, AppContext_ty_c appContext);
 
 	/**
 	 * sets a new relative position in the scene.
@@ -74,18 +74,18 @@ public:
 	/**
 	 * updates all elements in elements.
 	 */
-	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders all elements in elements and elements out update.
  	 */
-	virtual void Render(AppContext const& appContext) override;
+	virtual void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resizes all elements in elements and elements out update.
 	 */
-	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
+	virtual void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 
 	/**
-	 * moves the scene and all its elements by a certian speed to a certain direction.
+	 * moves the scene and all its elements by a certain speed to a certain direction.
 	 * result is a linear movement.
 	 * moved until it gets Stopped with StopMoving.
 	 * the angle is clockwise.

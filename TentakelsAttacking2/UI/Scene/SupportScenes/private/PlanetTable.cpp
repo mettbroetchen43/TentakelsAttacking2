@@ -28,7 +28,7 @@ void PlanetTable::Initialization() {
 	m_table->SetHeadlineValues<std::string>({ "ID", "Player", "Production", "Ship Count" });
 	m_elements.push_back(m_table);
 
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	for (int i = 0; i < planets.size(); ++i) {
 		auto planet = planets.at(i);
@@ -46,7 +46,7 @@ void PlanetTable::Initialization() {
 			entry = "DESTROYED";
 		}
 		else if (!planet->IsDiscovered()) {
-			entry = "not discovered";
+			entry = "N/D";
 		}
 		else {
 			entry = appContext.playerCollection.GetPlayerOrNpcByID(planet->GetPlayer()->GetID()).name;
@@ -58,7 +58,7 @@ void PlanetTable::Initialization() {
 		);
 
 		if (planet->IsDestroyed()) { continue; }
-		// if (!planet->IsDiscovered()) { continue; }
+		if (!planet->IsDiscovered()) { continue; }
 
 		// production
 		m_table->SetValue<int>(
@@ -77,13 +77,13 @@ void PlanetTable::Initialization() {
 }
 
 PlanetTable::PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	Galaxy const* galaxy)
+	Galaxy_ty_raw galaxy)
 	: Scene{ pos, size, alignment, resolution }, m_galaxy{ galaxy } {
 	
 	Initialization();
 }
 
-void PlanetTable::SetActive(bool active, AppContext const& appContext) {
+void PlanetTable::SetActive(bool active, AppContext_ty_c appContext) {
 
 	if (active == m_active) { return; }
 

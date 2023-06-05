@@ -13,10 +13,6 @@
 class GalaxyScene;
 class PlanetTable;
 class FleetAndTargetPointTable;
-class ClassicButton;
-class Text;
-template<typename T>
-class InputLine;
 
 /**
  * provides the main scene.
@@ -34,22 +30,22 @@ private:
 	std::shared_ptr<GalaxyScene> m_galaxy; ///< contains the current ui galaxy
 	std::shared_ptr<PlanetTable> m_planetTable; ///< contains the current planet table
 	std::shared_ptr<FleetAndTargetPointTable> m_fleetTable; ///< contains the current fleet table
-	std::shared_ptr<ClassicButton> m_nextBtn; ///< contains the next turn / round button
-	std::shared_ptr<Text> m_currentPlayerName; ///< contains the current player name
-	std::shared_ptr<Text> m_nextPlayerName; ///< contains the next player name
-	std::shared_ptr<Text> m_currentRound;  ///< contains the current round count
-	std::shared_ptr<Text> m_currentTargetRound;  ///< contains the current target round count
+	ClassicButton_ty m_nextBtn; ///< contains the next turn / round button
+	Text_ty m_currentPlayerName; ///< contains the current player name
+	Text_ty m_nextPlayerName; ///< contains the next player name
+	Text_ty m_currentRound;  ///< contains the current round count
+	Text_ty m_currentTargetRound;  ///< contains the current target round count
 	PlayerData m_currentPlayer; ///< contains the data of the current player
 	PlayerData m_nextPlayer; ///< contains the data of the next player
 
-	std::shared_ptr<InputLine<int>> m_origin; ///< provides the origin planet ID
-	std::shared_ptr<InputLine<int>> m_destination; ///< provides the destination planet ID
-	std::shared_ptr<InputLine<int>> m_destinationX; ///< provides the destination planet X
-	std::shared_ptr<InputLine<int>> m_destinationY; ///< provides the destination planet Y
-	std::shared_ptr<InputLine<int>> m_shipCount; ///< provides the ship count
+	InputLine_int_ty m_origin; ///< provides the origin planet ID
+	InputLine_int_ty m_destination; ///< provides the destination planet ID
+	InputLine_int_ty m_destinationX; ///< provides the destination planet X
+	InputLine_int_ty m_destinationY; ///< provides the destination planet Y
+	InputLine_int_ty m_shipCount; ///< provides the ship count
 
-	std::shared_ptr<ClassicButton> m_acceptBtn; ///< sends the fleet event into the logic
-	std::shared_ptr<ClassicButton> m_resetBtn; ///< clears the input lines
+	ClassicButton_ty m_acceptBtn; ///< sends the fleet event into the logic
+	ClassicButton_ty m_resetBtn; ///< clears the input lines
 
 	/**
 	 * initializes all ui elements.
@@ -136,5 +132,5 @@ public:
 	 * updates all elements in elements.
 	 * calls the CheckAndUpdate from the Scene.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 };

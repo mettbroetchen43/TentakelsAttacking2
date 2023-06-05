@@ -50,15 +50,15 @@ public:
 	 * popup logic.
 	 * calls elements to update.
 	 */
-	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the popup.
 	 * calls the elements to render.
 	 */
-	virtual void Render(AppContext const& appContext) override;
+	virtual void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resizes the popup.
 	 * calls the elements to resize
 	 */
-	virtual void Resize(Vector2 resolution, AppContext const& appContext) override;
+	virtual void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 };

@@ -10,7 +10,7 @@
  */
 struct CPlanet final {
 	size_t maxShips{ 200 }; ///< defines the max ships a non human player can have on one planet. (override by config)
-	size_t startingHumanShipsMultiplicator{ 10 }; ///< defines the multiplicator to calculate the starting ships of human player. (override by config)
+	size_t startingHumanShipsMultiplicator{ 30 }; ///< defines the multiplicator to calculate the starting ships of human player. (override by config)
 	size_t startingGlobalShipsMultiplicator{ 5 }; ///< defines the multiplicator to calculate the starting ships of npc player. (override by config)
 
 	size_t homeworldProduction{ 10 }; ///< defines the production of a homeworld. (override by config)

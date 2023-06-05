@@ -20,4 +20,6 @@ public:
 	 * returns if the current space object is a planet.
 	 */
 	[[nodiscard]] bool IsTargetPoint() const override;
+
+	void Update(Galaxy_ty_raw galaxy) override;
 };

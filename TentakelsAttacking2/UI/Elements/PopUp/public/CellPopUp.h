@@ -17,9 +17,9 @@ protected:
 	/**
 	 * initializes all ui elements.
 	 */
-	virtual void Initialize(AppContext const& appContext, Vector2 resolution);
-	[[nodiscard]] std::shared_ptr<ClassicButton> InitializeAcceptButton(
-		AppContext const& appContext, Vector2 resolution);
+	virtual void Initialize(AppContext_ty_c appContext, Vector2 resolution);
+	[[nodiscard]] ClassicButton_ty InitializeAcceptButton(
+		AppContext_ty_c appContext, Vector2 resolution);
 
 	/**
 	 * sets the should close bool to true so this popup will close at the end of the tick.
@@ -37,7 +37,7 @@ protected:
 	/**
 	 * calls the close event at the end of the tick.
 	 */
-	void Close(AppContext const& appContext);
+	void Close(AppContext_ty_c appContext);
 public:
 	/**
 	 * ctor.
@@ -51,5 +51,5 @@ public:
 	 * gets extended by child classes.
 	 */
 	virtual void CheckAndUpdate(Vector2 const& mousePosition,
-		AppContext const& appContext) override;
+		AppContext_ty_c appContext) override;
 };

@@ -12,8 +12,8 @@
 #include <vector>
 #include <memory>
 
-struct AppContext;
-class GalaxyManager;
+struct HFleetResult;
+struct HFightResult;
 
 /**
  * contains objects witch include planet, fleets, target points
@@ -21,14 +21,13 @@ class GalaxyManager;
  */
 class Galaxy final {
 private:
-	GalaxyManager* m_galaxyManager; ///< contains the current galaxy manager 
 	bool m_validGalaxy{ true }; ///< specifies if the generation in valid and the galaxy is able to use
-	std::vector<std::shared_ptr<SpaceObject>> m_objects; ///< contains all space object for updating 
-	std::vector<std::shared_ptr<Planet>> m_planets; ///< contains all planets 
-	std::vector<std::shared_ptr<Fleet>> m_fleets; ///< contains all fleets
-	std::vector<std::shared_ptr<TargetPoint>> m_targetPoints; ///< contains all target points
+	std::vector<SpaceObject_ty> m_objects; ///< contains all space object for updating 
+	std::vector<Planet_ty> m_planets; ///< contains all planets 
+	std::vector<Fleet_ty> m_fleets; ///< contains all fleets
+	std::vector<TargetPoint_ty> m_targetPoints; ///< contains all target points
 
-	Vec2<int> m_size; ///< contains the size of the galaxy
+	vec2pos_ty m_size; ///< contains the size of the galaxy
 
 	/**
 	 * returns the next free ID for an Space object that is the nearest to 0.
@@ -39,22 +38,26 @@ private:
 	/**
 	 * coordinates the generation of all planets.
 	 */
-	void InitializePlanets(size_t planetCount, std::vector<std::shared_ptr<Player>> players, std::shared_ptr<Player> neutralPlayer);
+	void InitializePlanets(size_t planetCount, std::vector<Player_ty> players, Player_ty neutralPlayer);
 	/**
 	 * generation one home planet for every player.
 	 * returns the planet count for generating the other planets.
 	 */
-	[[nodiscard]] int GenerateHomePlanets(std::vector<std::shared_ptr<Player>> players);
+	[[nodiscard]] int GenerateHomePlanets(std::vector<Player_ty> players);
 	/**
 	 * generation all other planet until the planet count is reached.
 	 */
-	void GenerateOtherPlanets(size_t PlanetCount, int currentPlanet, std::shared_ptr<Player> player);
+	void GenerateOtherPlanets(size_t PlanetCount, int currentPlanet, Player_ty player);
 	/**
 	 * validates if the new planet has a valid position.
 	 * mainly if the distance to every other planet is big enough.
 	 * returns a bool.
 	 */
-	[[nodiscard]] bool IsValidNewPlanet(std::shared_ptr<Planet> newPlanet, AppContext const& appContext) const;
+	[[nodiscard]] bool IsValidNewPlanet(Planet_ty newPlanet, AppContext_ty_c appContext) const;
+	/**
+	 * updates all planets if they are discovered or not.
+	 */
+	void UpdatePlanetDiscovered();
 
 	// Fleet
 	/**
@@ -65,33 +68,46 @@ private:
 	 * returns a fleet by ID.
 	 * throws an runtime error if no Fleet exists for that ID.
 	 */
-	[[nodiscard]] std::shared_ptr<Fleet> GetFleetByID(unsigned int const ID) const;
+	[[nodiscard]] Fleet_ty GetFleetByID(unsigned int const ID) const;
 	/**
 	 * returns a fleet if existing.
 	 * returns a nullptr if not.
 	 */
-	[[nodiscard]] std::shared_ptr<Fleet> TryGetExistingFleetByOriginAndDestination(
-		std::shared_ptr<SpaceObject> origin, std::shared_ptr<SpaceObject> destination) const;
+	[[nodiscard]] Fleet_ty TryGetExistingFleetByOriginAndDestination(
+		SpaceObject_ty origin, SpaceObject_ty destination) const;
 
 	/**
 	 * validates the data from the UI if the instruction is for a planet.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] bool AddFleetFromPlanet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] HFleetResult AddFleetFromPlanet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a fleet.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] bool AddFleetFromFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] HFleetResult AddFleetFromFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
 	 * validates the data from the UI if the instruction is for a target point.
 	 * generates Popups if needed.
 	 * add new fleet if valid.
 	 */
-	[[nodiscard]] bool AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] HFleetResult AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 
+	/**
+	 * returns a vector of fleets that has the provided SpaceObject as target.
+	 */
+	[[nodiscard]] std::vector<Fleet_ty> GetFleetsOfTarget(SpaceObject_ty object) const;
+
+	/**
+	 * deletes a vector of fleets.
+	 */
+	void DeleteFleet(std::vector<Fleet_ty> const& fleets);
+	/**
+	 * delete a single fleet.
+	 */
+	void DeleteFleet(Fleet_ty fleet);
 
 	// Target Point
 	/**
@@ -102,13 +118,66 @@ private:
 	 * returns the target point of the provided ID.
 	 * throws an runtime error if no target point exists.
 	 */
-	[[nodiscard]] std::shared_ptr<TargetPoint> GetTargetPointByID(unsigned int const ID) const;
+	[[nodiscard]] TargetPoint_ty GetTargetPointByID(unsigned int const ID) const;
 
 	/**
 	 * returns a existing destination er generate a TargetPoint as destination.
 	 */
-	[[nodiscard]] std::shared_ptr<SpaceObject> GetOrGenerateDestination(unsigned int ID,
-		int X, int Y, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] SpaceObject_ty GetOrGenerateDestination(unsigned int ID,
+		int X, int Y, Player_ty currentPlayer);
+	/**
+	 * checks every target point if there are origins.
+	 * if not it gets deleted.
+	 */
+	void CheckDeleteTargetPoints();
+
+	// update
+	/**
+	 * updates the targets of the provided fleets.
+	 */
+	void UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty target);
+
+	/**
+	 * checks if any fleet is arrived.
+	 * calls the other fleets to gets a new target.
+	 */
+	void CheckArrivingFriendlyFleets();
+	/**
+	 * checks if any fleets from one player are at the same spot.
+	 * class the other fleets zo gets a new target.
+	 */
+	void CheckMergingFriendlyFleets();
+	/**
+	 * Checks if there is a Fleet without ships.
+	 * if it is so the fleets gets deleted and the other fleets gets redirected. 
+	 */
+	void CheckDeleteFleetsWithoutShips();
+
+	/**
+	 * manages all fights while update.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFight();
+	/**
+	 * simulates the fight between a fleet and a planet.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightFleetPlanet();
+	/**
+	 * simulates the fight between a fleet and a SpacePoint.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightFleetTargetPoint();
+	/**
+	 * simulates the fight between 2 fleets.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightFleetFleet();
+	/**
+	 * simulates a single fight.
+	 */
+	[[nodiscard]] HFightResult Fight(SpaceObject_ty defender, SpaceObject_ty attacker);
+	/**
+	 * simulate a salve.
+	 * return a hit count.
+	 */
+	[[nodiscard]] int Salve(SpaceObject_ty obj) const;
 
 public:
 	/**
@@ -116,8 +185,8 @@ public:
 	 * IsValid should be called after construction because there is no guaranty,
 	 * that the	generation is valid.
 	 */
-	Galaxy(Vec2<int> size, size_t planetCount, std::vector<std::shared_ptr<Player>> players,
-		std::shared_ptr<Player> neutralPlayer, GalaxyManager* galaxyManager);
+	Galaxy(vec2pos_ty size, size_t planetCount, std::vector<Player_ty> players,
+		Player_ty neutralPlayer);
 	/**
 	 * makes a exact copy of a galaxy
 	 */
@@ -139,45 +208,49 @@ public:
 	/**
 	 * returns the size of the galaxy.
 	 */
-	[[nodiscard]] Vec2<int> GetSize() const;
+	[[nodiscard]] vec2pos_ty GetSize() const;
 	/**
 	 * returns the planets of the galaxy.
 	 */
-	[[nodiscard]] std::vector<std::shared_ptr<Planet>> const GetPlanets() const;
+	[[nodiscard]] std::vector<Planet_ty> const GetPlanets() const;
 	/**
 	 * returns the fleets of the galaxy.
 	 */
-	[[nodiscard]] std::vector<std::shared_ptr<Fleet>> const GetFleets() const;
+	[[nodiscard]] std::vector<Fleet_ty> const GetFleets() const;
 	/**
 	 * returns the target points of the galaxy.
 	 */
-	[[nodiscard]] std::vector<std::shared_ptr<TargetPoint>> const GetTargetPoints() const;
+	[[nodiscard]] std::vector<TargetPoint_ty> const GetTargetPoints() const;
 	/**
 	 * returns a specific planet by ID.
 	 */
-	[[nodiscard]] std::shared_ptr<Planet> const GetPlanetByID(unsigned int ID) const;
+	[[nodiscard]] Planet_ty const GetPlanetByID(unsigned int ID) const;
 	/**
 	 * returns a SpaceObject with the provided ID.
+	 * returns nullptr if there is no SpaceObject.
 	 */
-	[[nodiscard]] std::shared_ptr<SpaceObject> const GetSpaceObjectByID(unsigned int ID) const;
+	[[nodiscard]] SpaceObject_ty const GetSpaceObjectByID(unsigned int ID) const;
+	/**
+	 * returns if the new position is a valid position.
+	 */
+	[[nodiscard]] bool IsValidPosition(vec2pos_ty_ref_c position) const;
 	/**
 	 * adds a new fleet to the galaxy for the provided player.
 	 */
-	[[nodiscard]] bool AddFleet(SendFleetInstructionEvent const* event, std::shared_ptr<Player> currentPlayer);
+	[[nodiscard]] HFleetResult AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
 	 * filters the galaxy for relevant data for the provided player.
 	 */
 	void FilterByPlayer(unsigned int currentPlayerID);
 	/**
-	 * moves ships from origin to destination without checks.
+	 * handles the changes of the FleetResult.
 	 */
-	void MoveShips(unsigned int originID, unsigned int destinationID, size_t ships);
+	void HandleFleetResult(HFleetResult const& fleetResult);
+
+	// update
+
 	/**
-	 * subtracts ships from SpaceObject.
+	 * updates the Galaxy.
 	 */
-	void SubstractShips(unsigned int spaceObjectID, size_t ships);
-	/**
-	 * adds a new SpaceObject directly.
-	 */
-	void AddSpaceObjectDirectly(std::shared_ptr<SpaceObject> object);
+	[[nodiscard]] std::vector<HFightResult> Update();
 };

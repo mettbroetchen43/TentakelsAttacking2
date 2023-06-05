@@ -32,5 +32,5 @@ public:
 	 * popup logic.
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition,
-		AppContext const& appContext) override;
+		AppContext_ty_c appContext) override;
 };

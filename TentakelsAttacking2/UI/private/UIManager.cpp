@@ -49,8 +49,6 @@ void UIManager::CheckAndSetNewResolution() {
 }
 
 void UIManager::CheckAndUpdate() {
-	m_gameManager.Update();
-
 	if(IsQuitInput()) {
 		CloseWindowEvent event;
 		m_appContext.eventManager.InvokeEvent(event);

@@ -4,29 +4,34 @@
 //
 
 #include "SpaceObject.h"
+#include "AppContext.h"
 #include <cassert>
 
-SpaceObject::SpaceObject(unsigned int ID, vec2pos position, std::shared_ptr<Player> player)
+SpaceObject::SpaceObject(unsigned int ID, vec2pos_ty position, Player_ty player)
 	: SpaceObject{ ID, position, 0, player } {}
-SpaceObject::SpaceObject(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Player> player)
+SpaceObject::SpaceObject(unsigned int ID, vec2pos_ty position, size_t ships, Player_ty player)
 	: m_ID{ID}, m_position{position}, m_player{player}, m_ships{ships} {}
 
 unsigned int SpaceObject::GetID() const {
 	return m_ID;
 }
 
-void SpaceObject::SetPlayer(std::shared_ptr<Player> player) {
+void SpaceObject::SetPlayer(Player_ty player) {
 	m_player = player;
 }
-std::shared_ptr<Player> SpaceObject::GetPlayer() const {
+Player_ty SpaceObject::GetPlayer() const {
 	return m_player;
 }
 
-void SpaceObject::SetPos(vec2pos pos) {
+void SpaceObject::SetPos(vec2pos_ty pos) {
 	m_position = pos;
 }
-SpaceObject::vec2pos SpaceObject::GetPos() const {
+vec2pos_ty SpaceObject::GetPos() const {
 	return m_position;
+}
+
+void SpaceObject::SetShipCount(size_t shipCount) {
+	m_ships = shipCount;
 }
 
 size_t SpaceObject::GetShipCount() const {
@@ -41,6 +46,22 @@ bool SpaceObject::IsFleet() const {
 }
 bool SpaceObject::IsTargetPoint() const {
 	return false;
+}
+
+bool SpaceObject::IsInRange(SpaceObject_ty_c object) const {
+	auto const range = AppContext::GetInstance().constants.world.discoverRange;
+	auto const& objPos{ object->GetPos() };
+
+	bool const validX{
+			m_position.x - range <= objPos.x
+		and m_position.x + range >= objPos.x
+	};
+	bool const validY{
+			m_position.y - range <= objPos.y
+		and m_position.y + range >= objPos.y
+	};
+
+	return validX and validY;
 }
 
 SpaceObject& SpaceObject::operator+=(size_t ships) {

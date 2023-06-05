@@ -13,7 +13,7 @@
 
 
 void ColorPicker::Initialize(Vector2 resolution) {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	auto const colors{ appContext.colors.GetColors() };
 
@@ -45,7 +45,7 @@ void ColorPicker::Initialize(Vector2 resolution) {
 		}
 	}
 }
-void ColorPicker::SetUsedColors(AppContext const& appContext) {
+void ColorPicker::SetUsedColors(AppContext_ty_c appContext) {
 	auto const& players = appContext.playerCollection.GetPlayerData();
 
 	for (auto& c : m_cells) {
@@ -72,7 +72,7 @@ void ColorPicker::SetColorFromFocus() {
 		}
 	}
 }
-void ColorPicker::CheckForValidColor(AppContext const& appContext) {
+void ColorPicker::CheckForValidColor(AppContext_ty_c appContext) {
 	if (m_currentColorCell) {
 		if (m_currentColorCell->IsEnabled()) {
 			return;
@@ -138,7 +138,7 @@ void ColorPicker::SetOnEnter(std::function<void()> onEnter) {
 	m_onEnter = onEnter;
 }
 
-void ColorPicker::SetCellFocuses([[maybe_unused]] AppContext const& appContext) {
+void ColorPicker::SetCellFocuses([[maybe_unused]] AppContext_ty_c appContext) {
 	if (m_isNestedFocus) {
 		return;
 	}
@@ -175,7 +175,7 @@ bool ColorPicker::IsEnabled() const {
 }
 
 void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext const& appContext) {
+	AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -210,7 +210,7 @@ void ColorPicker::CheckAndUpdate(Vector2 const& mousePosition,
 	SetColorFromFocus();
 	CheckForValidColor(appContext);
 }
-void ColorPicker::Render(AppContext const& appContext) {
+void ColorPicker::Render(AppContext_ty_c appContext) {
 	// update here to make sure all CheckAndUpdate() is done
 	m_previousColorCell = m_currentColorCell;
 
@@ -247,7 +247,7 @@ void ColorPicker::Render(AppContext const& appContext) {
 		);
 	}
 }
-void ColorPicker::Resize(Vector2 resolution, AppContext const& appContext) {
+void ColorPicker::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
 	UIElement::Resize(resolution, appContext);
 

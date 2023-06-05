@@ -8,7 +8,7 @@
 #include "HRandom.h"
 #include "HInput.h"
 
-void Title::RenderTitle(AppContext const& appContext) {
+void Title::RenderTitle(AppContext_ty_c appContext) {
 	for (int i = 0;i < m_title->size();++i) {
 		DrawTextEx(
 			*(appContext.assetManager.GetFont()),
@@ -20,7 +20,7 @@ void Title::RenderTitle(AppContext const& appContext) {
 		);
 	}
 }
-void Title::RenderTitleSequens(AppContext const& appContext) {
+void Title::RenderTitleSequens(AppContext_ty_c appContext) {
 	size_t localCharCount{ 0 };
 	std::string dummyText{ };
 	int i{ 0 };
@@ -81,7 +81,7 @@ void Title::MeasureTitleLength() {
 		m_maxCharCount += s.size();
 	}
 }
-void Title::SetCollider(AppContext const& appContext, Vector2 const& resolution) {
+void Title::SetCollider(AppContext_ty_c appContext, Vector2 const& resolution) {
 	m_fontSize = resolution.y * m_size.y / m_title->size();
 
 	std::string title{ "" };
@@ -112,14 +112,14 @@ void Title::SetCollider(AppContext const& appContext, Vector2 const& resolution)
 	m_size.x = size;
 }
 
-void Title::TitleFinish(AppContext const& appContext) {
+void Title::TitleFinish(AppContext_ty_c appContext) {
 	m_titleFinish = true;
 	PlaySoundEvent event{ SoundType::ACCEPTED };
 	appContext.eventManager.InvokeEvent(event);
 }
 
 Title::Title(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, bool drawTitle,
-	AppContext& appContext)
+	AppContext_ty appContext)
 	: UIElement{ pos, size, alignment, resolution }, m_titleFinish{ !drawTitle } {
 
 	m_title = appContext.assetManager.GetTitle();
@@ -127,7 +127,7 @@ Title::Title(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	SetCollider(appContext, resolution);
 }
 
-void Title::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void Title::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -140,7 +140,7 @@ void Title::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 		return;
 	}
 }
-void Title::Render(AppContext const& appContext) {
+void Title::Render(AppContext_ty_c appContext) {
 	// Update here to make sure the value ist correct
 	m_lastFinishedTitle = m_titleFinish;
 
@@ -151,7 +151,7 @@ void Title::Render(AppContext const& appContext) {
 		RenderTitle(appContext);
 	}
 }
-void Title::Resize(Vector2 resolution,AppContext const& appContext) {
+void Title::Resize(Vector2 resolution,AppContext_ty_c appContext) {
 
 	SetCollider(appContext, resolution);
 	UIElement::Resize(resolution, appContext);

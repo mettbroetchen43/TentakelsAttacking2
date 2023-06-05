@@ -19,7 +19,7 @@ class Slider;
 
 class Table final : public UIElement, public Focusable {
 private:
-	using cells_ty = std::vector<std::vector<std::shared_ptr<AbstractTableCell>>>;
+	using cells_ty = std::vector<std::vector<AbstractTableCell_ty>>;
 	int m_rowCount; ///< contains the current mount of rows in the table
 	int m_columnCount; ///< contains the current mount of column in the table
 	cells_ty m_cells; ///< contains all cells the table is holding
@@ -35,13 +35,13 @@ private:
 	float m_scroll_speed; ///< contains the speed the table ist scrolled with
 	Vector2 m_absoluteScrollingOffset{ 0.0f,0.0f }; ///< contains the absolute scrolling offset 
 
-	std::shared_ptr<Slider> m_horizontalSlider; ///< contains the horizontal slider
+	Slider_ty m_horizontalSlider; ///< contains the horizontal slider
 	bool m_activeHorizontalSlider; ///< contains if the horizontal slider is needed
-	std::shared_ptr<Slider> m_verticalSlider; ///< contains the vertical slider
+	Slider_ty m_verticalSlider; ///< contains the vertical slider
 	bool m_activeVerticalSlider; ///< contains if the vertical slider is needed
 
 	bool m_isHoveredHighlighted{ false }; ///< contains if the hovered row and column gets highlighted
-	Vec2<int>m_currentHighlighted{ -1,-1 }; ///< contains the currently hightlithed row (x) and column (y) index
+	vec2pos_ty m_currentHighlighted{ -1,-1 }; ///< contains the currently hightlithed row (x) and column (y) index
 
 	std::function<void(AbstractTableCell const*, std::string, std::string)> m_updatedStringCell{ [](AbstractTableCell const*, std::string, std::string) {} }; ///< string
 	std::function<void(AbstractTableCell const*, int, int)> m_updatedIntCell{ [](AbstractTableCell const*, int, int) {} }; ///< int
@@ -101,7 +101,7 @@ private:
 	 * checks if any cell is clicked and updates it if so.
 	 * returns after the top cell is clicked.
 	 */
-	void CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext const& appContext);
+	void CheckAndUpdateClickCell(Vector2 const& mousePositon, AppContext_ty_c appContext);
 
 	/**
 	 * checks and scrolls if scrollable
@@ -143,22 +143,22 @@ private:
 	 * calls the top left cell to render.
 	 * sets the scissors mode for it.
 	 */
-	void RenderTopLeft(AppContext const& appContext);
+	void RenderTopLeft(AppContext_ty_c appContext);
 	/**
 	 * calls the headline (without the top left corner) to render.
 	 * sets the scissors mode for it.
 	 */
-	void RenderHeadline(AppContext const& appContext);
+	void RenderHeadline(AppContext_ty_c appContext);
 	/**
 	 * calls the first column (without the top left corner) to render.
 	 * sets the scissors mode for it.
 	 */
-	void RenderFirstColumn(AppContext const& appContext);
+	void RenderFirstColumn(AppContext_ty_c appContext);
 	/**
 	 * calls all the other cells to render.
 	 * sets the scissors mode for it.
 	 */
-	void RenderOtherCells(AppContext const& appContext);
+	void RenderOtherCells(AppContext_ty_c appContext);
 	/**
 	 * renders the outline of the table.
 	 * sets the scissors mode for it.
@@ -305,7 +305,7 @@ public:
 		if (row == m_cells.size()) { /* nothing */ }
 		else if (!IsValidRow(row)) { Print("invalid row index", PrintType::ERROR), throw std::out_of_range("row-index"); }
 
-		auto line{ std::vector<std::shared_ptr<AbstractTableCell>>() };
+		auto line{ std::vector<AbstractTableCell_ty>() };
 
 		for (int column = 0; column < m_columnCount; ++column) {
 
@@ -496,10 +496,10 @@ public:
 	 * contains the logic of the table.
 	 * calls all cells to check and Update itself.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the table.
 	 * calls all cells to render itself.
 	 */
-	void Render(AppContext const& appContext) override;
+	void Render(AppContext_ty_c appContext) override;
 };

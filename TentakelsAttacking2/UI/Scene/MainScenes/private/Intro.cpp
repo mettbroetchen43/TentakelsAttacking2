@@ -14,7 +14,7 @@
 #include "HInput.h"
 
 void Intro::Initialize( ) {
-	AppContext& appContext = AppContext::GetInstance();
+	AppContext_ty appContext = AppContext::GetInstance();
 	m_title = std::make_shared<Title>(
 		GetElementPosition(0.5f, 0.1f),
 		GetElementSize(0.9f, 0.3f),
@@ -60,7 +60,7 @@ Intro::Intro(Vector2 resolution)
 	Initialize();
 }
 
-void Intro::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+void Intro::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	m_title->CheckAndUpdate(mousePosition, appContext);
 
 	bool const skipBtn{
@@ -84,18 +84,18 @@ void Intro::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appCo
 
 	m_btn->CheckAndUpdate(mousePosition, appContext);
 }
-void Intro::Render(AppContext const& appContext) {
+void Intro::Render(AppContext_ty_c appContext) {
 	for (auto& e : m_elements) {
 		e->Render(appContext);
 	}
 }
-void Intro::Resize(Vector2 resolution, AppContext const& appContext) {
+void Intro::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	for (auto& e : m_elements) {
 		e->Resize(resolution, appContext);
 	}
 }
 
-void Intro::SetActive(bool active, AppContext const& appContext) {
+void Intro::SetActive(bool active, AppContext_ty_c appContext) {
 	Scene::SetActive(active, appContext);
 	SelectFocusElementEvent const event{ m_btn.get() };
 	appContext.eventManager.InvokeEvent(event);

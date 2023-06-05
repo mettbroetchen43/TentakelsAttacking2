@@ -7,7 +7,7 @@
 #include "AppContext.h"
 #include "UIEvents.hpp"
 
-void Hover::CalculateDefault(AppContext const& appContext) {
+void Hover::CalculateDefault(AppContext_ty_c appContext) {
 	Vector2 const textOffset {
 		m_resolution.x * 0.01f,
 		m_resolution.y * 0.01f,
@@ -38,7 +38,7 @@ Hover::Hover(float height, std::string text, Color color, Vector2 hoverOffset, V
 	: UIElement(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), Alignment::BOTTOM_LEFT, resolution), m_color(color),
 	m_hoverOffset{ hoverOffset }, m_text{ text }, m_textHeight{ height * resolution.y } {
 
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 
 	CalculateDefault(appContext);
 
@@ -56,7 +56,7 @@ Hover::Hover(float height, std::string text, Color color, Vector2 hoverOffset, V
 	};
 }
 
-void Hover::SetRenderHover(Vector2 mousePosition, AppContext const& appContext) {
+void Hover::SetRenderHover(Vector2 mousePosition, AppContext_ty_c appContext) {
 	Rectangle const newCollider{
 		mousePosition.x + m_absoluteHoverOffset.x,
 		mousePosition.y - m_absoluteHoverOffset.y - m_collider.height,
@@ -70,7 +70,7 @@ void Hover::SetRenderHover(Vector2 mousePosition, AppContext const& appContext) 
 	appContext.eventManager.InvokeEvent(event);
 }
 
-void Hover::Render(AppContext const& appContext) {
+void Hover::Render(AppContext_ty_c appContext) {
 	DrawTexturePro(
 		*m_hoverTexture,
 		m_hoverTextureRec,
@@ -94,7 +94,7 @@ void Hover::Render(AppContext const& appContext) {
 		m_color
 	);
 }
-void Hover::Resize(Vector2 resolution, AppContext const& appContext) {
+void Hover::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	UIElement::Resize(resolution, appContext);
 	CalculateDefault(appContext);
 }

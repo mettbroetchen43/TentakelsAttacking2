@@ -4,40 +4,42 @@
 //
 
 #pragma once
-#include <memory>
+#include "HLogicAlias.hpp"
 #include "Vec2.hpp"
 #include <string>
 #include <memory>
-#include "LogicUpdate.hpp"
 
-class Player;
 
 /**
  * the basic space object, that every element in the galaxy is implementing.
  */
-class SpaceObject /*: public LogicUpdate */ {
+class SpaceObject{
 protected:
-	using vec2pos = Vec2<int>; ///< the position type
 	unsigned int m_ID; ///< contains the unique id
 	size_t m_ships; ///< contains the current amount of ships
-	vec2pos m_position; ///< contains the absolute position within the galaxy
-	std::shared_ptr<Player> m_player; ///< contains a pointer to a player who owns the object
+	vec2pos_ty m_position; ///< contains the absolute position within the galaxy
+	Player_ty m_player; ///< contains a pointer to a player who owns the object
 
 public:
 	/**
 	 * ctor without ships.
 	 * only initialisation
 	 */
-	SpaceObject(unsigned int ID, vec2pos position, std::shared_ptr<Player> player);
+	SpaceObject(unsigned int ID, vec2pos_ty position, Player_ty player);
 	/**
 	 * ctor.
 	 * only initialisation.
 	 */
-	SpaceObject(unsigned int ID, vec2pos position, size_t ships, std::shared_ptr<Player> player);
+	SpaceObject(unsigned int ID, vec2pos_ty position, size_t ships, Player_ty player);
 	/**
 	 * virtual dtor to provide a default one.
 	 */
 	virtual ~SpaceObject() = default;
+
+	/**
+	 * updates the SpaceObject.
+ 	 */
+	virtual void Update(Galaxy_ty_raw galaxy) = 0; 
 
 	/**
 	 * returns the unique id.
@@ -47,25 +49,31 @@ public:
 	/**
 	 * sets a new player as owner of the object.
 	 */
-	void SetPlayer(std::shared_ptr<Player> player);
+	void SetPlayer(Player_ty player);
 	/**
 	 * returns the current player who owns the object.
 	 */
-	[[nodiscard]] std::shared_ptr<Player> GetPlayer() const;
+	[[nodiscard]] Player_ty GetPlayer() const;
 
 	/**
 	 * sets a new position in the galaxy.
 	 */
-	void SetPos(vec2pos pos);
+	void SetPos(vec2pos_ty pos);
 	/**
 	 * returns the current position.
 	 */
-	[[nodiscard]] vec2pos GetPos() const;
+	[[nodiscard]] vec2pos_ty GetPos() const;
 
+	/**
+	 * sets a new ship count.
+	 * only if necessary.
+	 */
+	void SetShipCount(size_t shipCount);
 	/**
 	 * returns the current ship Count
 	 */
 	[[nodiscard]] size_t GetShipCount() const;
+
 
 	/**
 	 * returns if the current space object is a planet.
@@ -79,6 +87,11 @@ public:
 	 * returns if the current space object is a planet.
 	 */
 	[[nodiscard]] virtual bool IsTargetPoint() const;
+
+	/**
+	 * returns if the provided SpaceObject is in range of this.
+	 */
+	[[nodiscard]] bool IsInRange(SpaceObject_ty_c object) const;
 
 	/**
 	 * adds and returns the ship count of an object and a number.

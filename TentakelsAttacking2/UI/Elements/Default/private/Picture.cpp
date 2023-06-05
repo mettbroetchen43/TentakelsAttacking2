@@ -24,7 +24,7 @@ Picture::Picture(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolut
 	}
 }
 
-void Picture::Render(AppContext const&) {
+void Picture::Render(AppContext_ty_c) {
 	DrawTexturePro(
 		*m_texture,
 		Rectangle(

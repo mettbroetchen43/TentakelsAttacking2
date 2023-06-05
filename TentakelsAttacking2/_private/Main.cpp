@@ -10,11 +10,12 @@
 #include "UIManager.h"
 #include "HErrorLog.h"
 #include "AppContext.h"
+#include "HLogicAlias.hpp"
 
 int main() {
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(100, 100, "");
-	AppContext& appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 #ifdef _DEBUG
 	Print("Debug", PrintType::BUILD);
 #else

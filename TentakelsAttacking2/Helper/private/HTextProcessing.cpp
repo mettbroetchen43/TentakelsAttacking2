@@ -44,7 +44,7 @@
 
 
 void BreakText(std::string& toBreak, float fontSize, float length,
-	AppContext const& appContext) {
+	AppContext_ty_c appContext) {
 	size_t lhs{ 0 };
 	size_t rhs{ 0 };
 
@@ -127,7 +127,7 @@ float GetElementTextHeight(Vector2 const& relativeSize, float absoluteHeight) {
 }
 
 std::string GetPrintableTextInCollider(std::string const& text,
-	float fontSize, Rectangle collider, AppContext const& appContext) {
+	float fontSize, Rectangle collider, AppContext_ty_c appContext) {
 	auto constants = appContext.constants.textProcessing;
 	Vector2 textSize{ MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
@@ -160,7 +160,7 @@ std::string GetPrintableTextInCollider(std::string const& text,
 	};
 }
 std::string GetPrintablePlaceholderTextInCollider(std::string const& text,
-	float fontSize, Rectangle collider, AppContext const& appContext) {
+	float fontSize, Rectangle collider, AppContext_ty_c appContext) {
 	auto const constants{ appContext.constants.textProcessing };
 	Vector2 textSize{ MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
@@ -213,7 +213,7 @@ Vector2 GetVerticalAlignedTextPosition(std::string const& text,
 		};
 	}
 
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	Vector2 const textSize{ MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
 		text.c_str(),
@@ -239,7 +239,7 @@ Vector2 GetVerticalAlignedTextPosition(std::string const& text,
 std::vector<float> GetVerticalAlignedOffset(std::vector<std::string> text,
 	float fontSize, Rectangle collider, Alignment alignment) {
 
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	TextAlignment const textAlignment{ GetVerticalTextAlignment(alignment) };
 	std::vector<float> toReturn;
 
@@ -286,7 +286,7 @@ std::string GetHorizontalAlignedText(std::string const& text,
 		return text;
 	}
 
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	Vector2 const spaceSize{ MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
@@ -330,7 +330,7 @@ std::string GetHorizontalAlignedText(std::string const& text,
 
 std::vector<float> GetHorizontalAlignedOffset(std::vector<std::string> text, Rectangle collider,
 	float fontSize, Alignment alignment) {
-	AppContext const& appContext{ AppContext::GetInstance() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	TextAlignment const textAlignment{ GetHorizontalTextAlignment(alignment) };
 
 	std::vector<float> toReturn;

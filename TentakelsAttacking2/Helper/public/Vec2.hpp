@@ -137,3 +137,14 @@ Vec2<T> operator/ (const Vec2<T>& vector, const T number) {
 		vector.x / number, vector.y / number 
 	};
 }
+
+/**
+ * returns a positive vector.
+ */
+template <typename T>
+inline Vec2<T> Abs(Vec2<T> vec) {
+	return {
+		abs(vec.x),
+		abs(vec.y)
+	};
+}

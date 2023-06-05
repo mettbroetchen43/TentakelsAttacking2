@@ -106,13 +106,13 @@ public:
 	 * checks if any popup is active.
 	 * calls the last popup to update.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext);
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext);
 	/**
 	 * calls all popups to render.
 	 */
-	void Render(AppContext const& appContext);
+	void Render(AppContext_ty_c appContext);
 	/**
 	 * calls all popups to update.
 	 */
-	void Resize(Vector2 resolution, AppContext const& appContext);
+	void Resize(Vector2 resolution, AppContext_ty_c appContext);
 };

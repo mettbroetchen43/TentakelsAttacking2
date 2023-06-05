@@ -135,7 +135,9 @@ void LoadConfig() {
 		&constants.world.maxDimensionY,
 
 		&constants.world.showDimensionX,
-		&constants.world.showDimensionY
+		&constants.world.showDimensionY,
+
+		&constants.world.discoverRange,
 	};
 	addInt(intEntries, file, input, nextEntry);
 
@@ -169,6 +171,18 @@ void LoadConfig() {
 	};
 	addFloat(floatEntries, file, input, nextEntry);
 
+	intEntries = {
+		// Fleet
+		&constants.fleet.minFleetSpeed,
+		&constants.fleet.maxFleetSpeed,
+	};
+	addInt(intEntries, file, input, nextEntry);
+
+	floatEntries = {
+		// Fight
+		&constants.fight.hitChance,
+	};
+	addFloat(floatEntries, file, input, nextEntry);
 	file.close();
 
 #ifdef _DEBUG
@@ -234,6 +248,8 @@ void SaveConfig() {
 	entry(std::to_string(constants.world.showDimensionX), "Show Galaxy Dimension X", toSave);
 	entry(std::to_string(constants.world.showDimensionY), "Show Galaxy Dimension Y", toSave);
 
+	entry(std::to_string(constants.world.discoverRange), "Discover Range of Space Objects", toSave);
+
 	headline("Sound", toSave);
 	entry(std::to_string(constants.sound.muteVolume), "Volume Mute (1 = mute)", toSave);
 	entry(std::to_string(constants.sound.masterVolume), "Master Volume (0.0 - 100.0)", toSave);
@@ -247,6 +263,13 @@ void SaveConfig() {
 	entry(std::to_string(constants.planet.maxProduction), "Max Production", toSave);
 	entry(std::to_string(constants.planet.homeworldSpacing), "Homeworld Spacing (0.0 - 1.0)", toSave);
 	entry(std::to_string(constants.planet.globalSpacing), "Global Spacing (0.0 - 1.0)", toSave);
+
+	headline("Fleet", toSave);
+	entry(std::to_string(constants.fleet.minFleetSpeed), "Min Fleet Speed", toSave);
+	entry(std::to_string(constants.fleet.maxFleetSpeed), "Max Fleet Speed", toSave);
+
+	headline("Fight", toSave);
+	entry(std::to_string(constants.fight.hitChance), "Hit Chance for a single ship", toSave);
 
 	file << toSave;
 	file.close();

@@ -11,7 +11,7 @@
  */
 class Planet final : public SpaceObject {
 private:
-	using vec2pos = Vec2<int>; ///< the type of the position
+	using vec2pos = vec2pos_ty; ///< the type of the position
 	bool m_isHomePlanet{ }; ///< contains if this planet is a home planet
 	bool m_isDestroyed{ false }; ///< contains if the planet is destroyed
 	bool m_isDiscovered{ false }; ///< contains if any player has discovered this planet
@@ -24,8 +24,15 @@ public:
 	 * ctor.
 	 * initialize all values.
 	 */
-	Planet(unsigned int ID, vec2pos position, std::shared_ptr<Player> player,
+	Planet(unsigned int ID, vec2pos position, Player_ty player,
 		bool isHomePlanet, int m_planetNumber);
+	/**
+	 * ctor.
+	 * initialize all values.
+	 * with ships
+	 */
+	Planet(unsigned int ID, vec2pos position, Player_ty player,
+		bool isHomePlanet, int m_planetNumber, size_t ships);
 
 	/**
 	 * returns if the planet is a home planet.
@@ -41,6 +48,10 @@ public:
 	 * returns the production count.
 	 */
 	[[nodiscard]] size_t GetProduction() const;
+	/**
+	 * returns the planet number.
+	 */
+	[[nodiscard]] int GetPlanetNumber() const;
 
 	/**
 	 * sets if the planet is destroyed.
@@ -58,4 +69,9 @@ public:
 	 * returns if the planet is discovered from any player.
 	 */
 	[[nodiscard]] bool IsDiscovered() const;
+
+	/**
+	 * products ships.
+	 */
+	void Update(Galaxy_ty_raw galaxy) override;
 };
