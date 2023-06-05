@@ -616,13 +616,13 @@ std::vector<HFightResult> Galaxy::SimulateFight() {
 	std::vector<HFightResult> results{ SimulateFightFleetPlanet() };
 
 	// Fleet TargetPoint
-	std::vector<HFightResult> singleResult{ SimulateFightFleetTargetPoint() };
-	std::copy(results.begin(), results.end(), std::back_inserter(singleResult));
+	std::vector<HFightResult> singleResult{SimulateFightFleetTargetPoint()};
+	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 
 	// Fleet Fleet
 	singleResult = { SimulateFightFleetFleet() };
-	std::copy(results.begin(), results.end(), std::back_inserter(singleResult));
-
+	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
+	
 	return results;
 }
 
@@ -638,7 +638,7 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetPlanet() {
 
 	std::vector<HFightResult> results{ };
 	for (auto const& [p, f] : fights) {
-		auto const result { Fight(p, f) };
+		auto const result{ Fight(p, f) };
 		if (not result.IsValid()) { continue; }
 
 		results.push_back(result);
@@ -698,16 +698,16 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetFleet() {
 	Random& random{ Random::GetInstance() };
 	for (auto& [f1, f2] : fights) {
 		auto const shouldSwitch = random.random(2);
-		HFightResult result{ 0,0,{ },false };
 		if (shouldSwitch) {
-			result = { Fight(f2, f1) };
+			HFightResult result { Fight(f2, f1) };
+			if (not result.IsValid()) { continue; }
+			results.push_back(result);
 		}
 		else {
-			result = { Fight(f1, f2) };
+			HFightResult result{ Fight(f1, f2) };
+			if (not result.IsValid()) { continue; }
+			results.push_back(result);
 		}
-		if (not result.IsValid()) { continue; }
-
-		results.push_back(result);
 	}
 
 	return results;
@@ -716,14 +716,15 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetFleet() {
 HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 	if (defender->GetShipCount() == 0 or
 		attacker->GetShipCount() == 0) {
-		return { 0, 0, { }, false };
+		return { { nullptr, nullptr },{nullptr,nullptr },{ },false };
 	}
 
 	if (defender->GetPlayer() == attacker->GetPlayer()) {
-		return { 0, 0, { }, false };
+		return { { nullptr, nullptr },{nullptr,nullptr },{ },false };
 	}
 
 	HFightResult::rounds_ty rounds{ };
+	rounds.emplace_back(defender->GetShipCount(), attacker->GetShipCount());
 	while (true) {
 		auto defenderCount{ Salve(defender) };
 		if (attacker->GetShipCount() <= defenderCount) {
@@ -743,7 +744,7 @@ HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 		*defender -= attackerCount;
 		rounds.emplace_back(defender->GetShipCount(), attacker->GetShipCount());
 	}
-	return { defender->GetID(), attacker->GetID(), rounds, true };
+	return { {defender->GetPlayer(), attacker->GetPlayer()},{defender, attacker}, rounds, true };
 }
 int Galaxy::Salve(SpaceObject_ty obj) const {
 	float const hitChace{ AppContext::GetInstance().constants.fight.hitChance * 100 };
@@ -966,7 +967,7 @@ void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
 			if (my_obj) {
 				my_obj->SetShipCount(obj->GetShipCount());
 				if (my_obj->IsFleet()) {
-					auto *const my_fleet{ dynamic_cast<Fleet *const>(&*my_obj) };
+					auto* const my_fleet{ dynamic_cast<Fleet* const>(&*my_obj) };
 					auto const* const obj_fleet{ dynamic_cast<Fleet const* const>(&*obj) };
 					if (obj_fleet) {
 						my_fleet->SetTarget(obj_fleet->GetTarget());

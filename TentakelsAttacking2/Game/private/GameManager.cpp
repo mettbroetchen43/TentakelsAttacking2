@@ -32,7 +32,7 @@ static auto message = [](std::string& messageText, std::string const& first, std
 bool GameManager::ValidAddPlayer() const {
 	return {
 		AppContext::GetInstance().constants.player.maxPlayerCount
-		> m_players.size() 
+		> m_players.size()
 	};
 }
 unsigned int GameManager::GetNextPlayerID() const {
@@ -347,7 +347,7 @@ void GameManager::StartGame() {
 	SendNextPlayerID();
 }
 
-GameManager::GameManager() 
+GameManager::GameManager()
 	: m_galaxyManager{ this } {
 
 	AppContext::GetInstance().eventManager.AddListener(this);
@@ -360,8 +360,7 @@ GameManager::GameManager()
 }
 
 void GameManager::Update() {
-	auto fightResult{ m_galaxyManager.Update() };
-	m_updateEvaluationEvent = { fightResult };
+	m_lastFightResults = m_galaxyManager.Update();
 }
 
 void GameManager::OnEvent(Event const& event) {
@@ -410,7 +409,7 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* galaxyEvent = dynamic_cast<GetGalaxyPointerEvent const*>(&event)) {
-		SendGalaxyPointerEvent const returnEvent{ m_galaxyManager.GetGalaxy(), false};
+		SendGalaxyPointerEvent const returnEvent{ m_galaxyManager.GetGalaxy(), false };
 		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
 		return;
 	}
@@ -429,7 +428,8 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* gameEvent = dynamic_cast<GetUpdateEvaluation const*> (&event)) {
-		AppContext::GetInstance().eventManager.InvokeEvent(m_updateEvaluationEvent);
+		AppContext::GetInstance().eventManager.InvokeEvent(SendUpdateEvaluation{ m_lastFightResults });
+		return;
 	}
 
 	// Fleet
