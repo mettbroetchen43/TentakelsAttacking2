@@ -121,6 +121,11 @@ private:
 	 */
 	[[nodiscard]] SpaceObject_ty GetOrGenerateDestination(unsigned int ID,
 		int X, int Y, Player_ty currentPlayer);
+	/**
+	 * checks every target point if there are origins.
+	 * if not it gets deleted.
+	 */
+	void CheckDeleteTargetPoints();
 
 	// update
 	/**

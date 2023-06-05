@@ -300,7 +300,7 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 	// redirect fleet
 	if (origin->GetShipCount() == event->GetShipCount()) {
 		origin->SetTarget(destination);
-		return { origin, nullptr, nullptr, true };
+		return { origin, nullptr, destination, true };
 	}
 
 	// create fleet
@@ -480,6 +480,32 @@ SpaceObject_ty Galaxy::GetOrGenerateDestination(unsigned int ID,
 	m_targetPoints.push_back(targetPoint);
 
 	return targetPoint;
+}
+
+void Galaxy::CheckDeleteTargetPoints() {
+	// get
+	std::vector<TargetPoint_ty> toDelete{ };
+	for (auto const& t : m_targetPoints) {
+		if (t->GetShipCount() > 0) { continue; }
+		auto const& origins{ GetFleetsOfTarget(t) };
+		if (origins.size() > 0) { continue; }
+		toDelete.push_back(t);
+	}
+	// delete
+	auto const containsTargetPoint{ [toDelete](SpaceObject_ty d_t)->bool {
+		for (auto const& o_t : toDelete) {
+			if (d_t->GetID() == o_t->GetID()) {
+				return true;
+			}
+		}
+		return false;
+	} };
+
+	auto const start1{ std::remove_if(m_targetPoints.begin(), m_targetPoints.end(), containsTargetPoint) };
+	m_targetPoints.erase(start1, m_targetPoints.end());
+
+	auto const start2{ std::remove_if(m_objects.begin(), m_objects.end(), containsTargetPoint) };
+	m_objects.erase(start2, m_objects.end());
 }
 
 // update
@@ -948,6 +974,7 @@ void Galaxy::Update() {
 	CheckDeleteFleetsWithoutShips(); // Check bevor Fight so there will be no fight without ships
 	std::vector<HFightResult> results{ SimulateFight() };
 	CheckDeleteFleetsWithoutShips(); // Check after fight so all fleets that lost there ships gets deleted.
+	CheckDeleteTargetPoints();
 
 	// event to show fights
 }
