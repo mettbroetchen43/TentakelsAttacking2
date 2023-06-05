@@ -46,7 +46,7 @@ void PlanetTable::Initialization() {
 			entry = "DESTROYED";
 		}
 		else if (!planet->IsDiscovered()) {
-			entry = "not discovered";
+			entry = "N/D";
 		}
 		else {
 			entry = appContext.playerCollection.GetPlayerOrNpcByID(planet->GetPlayer()->GetID()).name;
