@@ -1,54 +1,50 @@
-//
-// Purpur Tentakel
-// Tentakels Attacking
-// Config
-//
-
-// Min Count >= 0
-
-// Global
-20 / Min Game Rounds
-50 / Current Target Game Round
-100 / Max Game Rounds
-
-// Window
-5 / contains the current solution as an enum
-0 / Starting Full Screen (0 = window)
-60 / Target FPS
-
-// Player
-2 / Min Player Count
-7 / Max Player Count
-
-// World
-20 / Min Planet Count
-100 / Max Planet Count
-25 / Show Galaxy Planet Count
-60 / Min Dimension X
-300 / Max Dimension X
-20 / Min Dimension Y
-160 / Max Dimension Y
-200 / Show Galaxy Dimension X
-150 / Show Galaxy Dimension Y
-15 / Discover Range of Space Objects
-
-// Sound
-0 / Volume Mute (1 = mute)
-50.000000 / Master Volume (0.0 - 100.0)
-
-// Planet
-200 / Max Ships
-30 / Starting Ships Multiplicator for Humans
-5 / Starting Ships Multiplicator for Global
-10 / HomeWorld Production
-3 / Min Production
-7 / Max Production
-0.150000 / Homeworld Spacing (0.0 - 1.0)
-0.020000 / Global Spacing (0.0 - 1.0)
-
-// Fleet
-2 / Min Fleet Speed
-10 / Max Fleet Speed
-
-// Fight
-0.300000 / Hit Chance for a single ship
+{
+    "fight": {
+        "hit_chance": 0.30000001192092896
+    },
+    "fleet": {
+        "fleet_speed_max": 10,
+        "fleet_speed_min": 2
+    },
+    "global": {
+        "game_rounds_current": 50,
+        "game_rounds_max": 100,
+        "game_rounds_min": 20,
+        "version_config": "c0.1.0.1",
+        "version_game": "v0.1.0"
+    },
+    "planet": {
+        "production_homeworld": 10,
+        "production_max": 7,
+        "production_min": 3,
+        "ships_max_factor": 200,
+        "spacing_global": 0.019999999552965164,
+        "spacing_homeworld": 0.15000000596046448,
+        "starting_ships_multiplicator_global": 5,
+        "starting_ships_multiplicator_human": 30
+    },
+    "player": {
+        "player_count_max": 7,
+        "player_count_min": 2
+    },
+    "sound": {
+        "volume_master": 50.0,
+        "volume_mute_bool": false
+    },
+    "window": {
+        "resolution_as_enum": 17,
+        "start_full_screen_bool": true,
+        "target_fps": 60
+    },
+    "world": {
+        "dimension_x_max": 300,
+        "dimension_x_min": 60,
+        "dimension_x_show_galaxy": 200,
+        "dimension_y_max": 160,
+        "dimension_y_min": 20,
+        "discover_range": 15,
+        "planet_count_max": 100,
+        "planet_count_min": 20,
+        "planet_count_show_galaxy": 25
+    }
+}
