@@ -14,6 +14,11 @@
 #include <charconv>
 #include <iomanip>
 
+// new imports
+#include "HConfigEnum.h"
+#include <nlohmann/json.hpp>
+#include <iostream>
+
 static constexpr char token{ '/' };
 
 template<typename T>
@@ -29,7 +34,7 @@ std::optional<T> ParseNumber(std::string& input) {
 };
 
 void LoadConfig() {
-	auto& constants = AppContext::GetInstance().constants;
+	/*auto& constants = AppContext::GetInstance().constants;
 	std::ifstream file;
 
 	if (!std::filesystem::exists(constants.files.configFile())) {
@@ -189,9 +194,93 @@ void LoadConfig() {
 	constants.window.startingModeFullScreen = false;
 #endif // _DEBUG
 
-	Print("config loaded", PrintType::INFO);
+	Print("config loaded", PrintType::INFO);*/
 }
 void SaveConfig() {
+	
+	// to json
+	auto const& constants{ AppContext::GetInstance().constants };
+	nlohmann::json save;
+	
+	save[CToS(ConfigTypes::FIGHT)] = {
+		{ CToS(ConfigTypes::HIT_CHANCE), constants.fight.hitChance },
+	};
+
+	save[CToS(ConfigTypes::FLEET)] = {
+		{ CToS(ConfigTypes::FLEET_SPEED_MAX), constants.fleet.maxFleetSpeed },
+		{ CToS(ConfigTypes::FLEET_SPEED_MIN), constants.fleet.minFleetSpeed },
+	};
+
+	save[CToS(ConfigTypes::GLOBAL)] = {
+		{ CToS(ConfigTypes::GAME_ROUNDS_CURRENT), constants.global.currentTargetRound },
+		{ CToS(ConfigTypes::GAME_ROUNDS_MAX),     constants.global.maxRounds          },
+		{ CToS(ConfigTypes::GAME_ROUNDS_MIN),     constants.global.minRounds          },
+		{ CToS(ConfigTypes::VERSION_CONFIG),      constants.global.configVersion      },
+		{ CToS(ConfigTypes::VERSION_GAME),        constants.global.gameVersion        },
+	};
+
+	save[CToS(ConfigTypes::PLANET)] = {
+		{ CToS(ConfigTypes::PRODUCTION_HOMEWORLD),                constants.planet.homeworldProduction              },
+		{ CToS(ConfigTypes::PRODUCTION_MAX),                      constants.planet.maxProduction                    },
+		{ CToS(ConfigTypes::PRODUCTION_MIN),                      constants.planet.minProduction                    },
+		{ CToS(ConfigTypes::SHIPS_MAX_FACTOR),                    constants.planet.maxShips                         },
+		{ CToS(ConfigTypes::SPACEING_GLOBAL),                     constants.planet.globalSpacing                    },
+		{ CToS(ConfigTypes::SPACEING_HOMEWORLD),                  constants.planet.homeworldSpacing                 },
+		{ CToS(ConfigTypes::STARTING_SHIPS_MULTIPLICATOR_GLOBAL), constants.planet.startingGlobalShipsMultiplicator },
+		{ CToS(ConfigTypes::STARTING_SHIPS_MULTIPLICATOR_HUMAN),  constants.planet.startingHumanShipsMultiplicator  },
+	};
+
+	save[CToS(ConfigTypes::PLAYER)] = {
+		{ CToS(ConfigTypes::PLAYER_COUNT_MAX), constants.player.maxPlayerCount },
+		{ CToS(ConfigTypes::PLAYER_COUNT_MIN), constants.player.minPlayerCount },
+	};
+
+	save[CToS(ConfigTypes::SOUND)] = {
+		{ CToS(ConfigTypes::VOLUME_MASTER),    constants.sound.masterVolume },
+		{ CToS(ConfigTypes::VOLUME_MUTE_BOOL), constants.sound.muteVolume   },
+	};
+
+	save[CToS(ConfigTypes::WINDOW)] = {
+		{ CToS(ConfigTypes::RESOLUTION_AS_ENUM),     constants.window.current_resolution     },
+		{ CToS(ConfigTypes::START_FULL_SCREEN_BOOL), constants.window.startingModeFullScreen },
+		{ CToS(ConfigTypes::TARGET_FPS),             constants.window.FPS                    },
+	};
+
+	save[CToS(ConfigTypes::WORLD)] = {
+		{ CToS(ConfigTypes::DIMENSION_X_MAX),          constants.world.maxDimensionX   },
+		{ CToS(ConfigTypes::DIMENSION_X_MIN),          constants.world.minDimensionX   },
+		{ CToS(ConfigTypes::DIMENSION_X_SHOW_GALAXY),  constants.world.showDimensionX  },
+		{ CToS(ConfigTypes::DIMENSION_Y_MAX),          constants.world.maxDimensionY   },
+		{ CToS(ConfigTypes::DIMENSION_Y_MIN),          constants.world.minDimensionY   },
+		{ CToS(ConfigTypes::DIMENSION_Y_SHOW_GALAXY),  constants.world.showDimensionY  },
+		{ CToS(ConfigTypes::DISCOVER_RANGE),           constants.world.discoverRange   },
+		{ CToS(ConfigTypes::PLANET_COUNT_MAX),         constants.world.maxPlanetCount  },
+		{ CToS(ConfigTypes::PLANET_COUNT_MIN),         constants.world.minPlanetCount  },
+		{ CToS(ConfigTypes::PLANET_COUNT_SHOW_GALAXY), constants.world.showPlanetCount },
+	};
+
+	// saving
+	std::ofstream file{ };
+
+	if (!std::filesystem::exists(constants.files.savesDir)) {
+		Print("saves dir does not exists", PrintType::EXPECTED_ERROR);
+		std::filesystem::create_directory(constants.files.savesDir);
+		Print("saves dir generated", PrintType::INFO);
+	}
+
+	if (!std::filesystem::exists(constants.files.configFile())) {
+		Print("config generated", PrintType::INFO);
+	}
+
+	file.open(constants.files.configFile());
+
+	file << save.dump(4);
+	file.close();
+
+	Print("config saved", PrintType::INFO);
+
+
+	/*
 	auto const& constants{ AppContext::GetInstance().constants };
 	std::ofstream file{ };
 
@@ -218,13 +307,9 @@ void SaveConfig() {
 	};
 
 	headline("Global", toSave);
-
-
 	entry(std::to_string(constants.global.minRounds), "Min Game Rounds", toSave);
 	entry(std::to_string(constants.global.currentTargetRound), "Current Target Game Round", toSave);
 	entry(std::to_string(constants.global.maxRounds), "Max Game Rounds", toSave);
-
-
 
 	headline("Window", toSave);
 	entry(std::to_string(static_cast<int>(constants.window.current_resolution)), "contains the current solution as an enum", toSave);
@@ -273,6 +358,6 @@ void SaveConfig() {
 
 	file << toSave;
 	file.close();
+	*/
 
-	Print("config saved", PrintType::INFO);
 }
