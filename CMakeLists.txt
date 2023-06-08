@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.12...${CMAKE_VERSION})
 #	static inline const std::string version = "v0.0.1";
 #	static inline const std::string version{ "v0.0.1 };
 file(READ TentakelsAttacking2/Constants/public/CGlobal.hpp CGlobal_contents)
-string(REGEX MATCH "version[ ]*{[ ]*\"v([0-9]+\.[0-9]+\.[0-9]+)\"" _ "${CGlobal_contents}")
+string(REGEX MATCH "version[ ]*=[ ]*\"v([0-9]+\.[0-9]+\.[0-9]+)\"" _ "${CGlobal_contents}")
 set(TA2_version ${CMAKE_MATCH_1})
 if ("${TA2_version}" STREQUAL "")
   message(FATAL_ERROR "Failed to extract version from CGlobal.hpp file")
