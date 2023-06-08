@@ -152,7 +152,7 @@ UIManager::~UIManager() {
 
 void UIManager::StartUI() {
 
-	SetWindowTitle(("Tentakels Attacking " + m_appContext.constants.global.version).c_str());
+	SetWindowTitle(("Tentakels Attacking " + m_appContext.constants.global.gameVersion).c_str());
 
 	if(m_appContext.constants.window.current_resolution == Resolution::LAST) {
 

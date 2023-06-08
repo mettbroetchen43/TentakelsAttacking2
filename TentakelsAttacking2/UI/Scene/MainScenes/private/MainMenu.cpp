@@ -181,7 +181,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.02f,
-		appContext.constants.global.version + '\n' 
+		appContext.constants.global.gameVersion + '\n' 
 			+ appContext.constants.global.copyRight
 		);
 	m_elements.push_back(versionAndCopyRight);
