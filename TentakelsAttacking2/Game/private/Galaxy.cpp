@@ -537,21 +537,25 @@ void Galaxy::UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty tar
 	}
 }
 
-void Galaxy::CheckArrivingFriendlyFleets() {
+std::vector<HMergeResult> Galaxy::CheckArrivingFriendlyFleets() {
 	std::vector<Fleet_ty> toDelete{ };
+	std::vector<HMergeResult> mergeResult{ };
 	for (auto const& fleet : m_fleets) {
 		bool const friendly{ fleet->GetTarget()->GetPlayer() == fleet->GetPlayer() };
 		if (friendly and fleet->IsArrived()) {
 			auto const& target = fleet->GetTarget();
+			auto const shipCount{ fleet->GetShipCount() };
 			*target += *fleet;
 			auto const origins{ GetFleetsOfTarget(fleet) };
 			UpdateFleetTargets(origins, target);
 			toDelete.push_back(fleet);
+			mergeResult.emplace_back(fleet->GetPlayer(), fleet, fleet->GetTarget(), shipCount);
 		}
 	}
 	DeleteFleet(toDelete);
+	return mergeResult;
 }
-void Galaxy::CheckMergingFriendlyFleets() {
+std::vector<HMergeResult> Galaxy::CheckMergingFriendlyFleets() {
 	std::vector<std::pair<Fleet_ty_c, Fleet_ty_c>> same{ };
 	auto const containsSame{ [&](Fleet_ty_c first, Fleet_ty_c second) {
 		for (auto const& s : same) {
@@ -576,18 +580,22 @@ void Galaxy::CheckMergingFriendlyFleets() {
 			}
 		}
 	}
-	if (same.size() == 0) { return; } // no found
+	if (same.size() == 0) { return { }; } // no found
 
 	// merge fleets
 	std::vector<Fleet_ty> toDelete{ };
+	std::vector<HMergeResult> mergeResult{ };
 	for (auto const& match : same) {
+		auto const shipCount{ match.second->GetShipCount() };
 		*match.first += *match.second;
 		auto const& origins{ GetFleetsOfTarget(match.second) };
 		UpdateFleetTargets(origins, match.second->GetTarget());
 		toDelete.push_back(match.second);
+		mergeResult.emplace_back(match.first->GetPlayer(), match.second, match.first, shipCount);
 	}
 
 	DeleteFleet(toDelete);
+	return mergeResult;
 }
 void Galaxy::CheckDeleteFleetsWithoutShips() {
 	auto getFleets{ [&]() {
@@ -986,18 +994,19 @@ void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
 }
 
 // update
-std::vector<HFightResult> Galaxy::Update() {
+UpdateResult_ty Galaxy::Update() {
 	for (auto& o : m_objects) {
 		o->Update(this);
 	}
-	CheckArrivingFriendlyFleets();
-	CheckMergingFriendlyFleets();
+	std::vector<HMergeResult> mergeResults{ CheckArrivingFriendlyFleets() };
+	std::vector<HMergeResult> singleMergeResult{ CheckMergingFriendlyFleets() };
+	std::copy(singleMergeResult.begin(), singleMergeResult.end(), std::back_inserter(mergeResults));
+
 	CheckDeleteFleetsWithoutShips(); // Check bevor Fight so there will be no fight without ships
-	std::vector<HFightResult> results{ SimulateFight() };
+	std::vector<HFightResult> fightResults{ SimulateFight() };
 	CheckDeleteFleetsWithoutShips(); // Check after fight so all fleets that lost there ships gets deleted.
 	CheckDeleteTargetPoints();
 	UpdatePlanetDiscovered();
 
-	return results;
-	// event to show fights
+	return { mergeResults, fightResults };
 }

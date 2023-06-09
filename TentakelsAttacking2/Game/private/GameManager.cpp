@@ -290,8 +290,6 @@ void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
 }
 
-// galaxy
-
 // Fleet
 void GameManager::AddFleet(SendFleetInstructionEvent const* event) {
 
@@ -360,7 +358,7 @@ GameManager::GameManager()
 }
 
 void GameManager::Update() {
-	m_lastFightResults = m_galaxyManager.Update();
+	m_lastUpdateResults = m_galaxyManager.Update();
 }
 
 void GameManager::OnEvent(Event const& event) {
@@ -428,7 +426,7 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* gameEvent = dynamic_cast<GetUpdateEvaluation const*> (&event)) {
-		AppContext::GetInstance().eventManager.InvokeEvent(SendUpdateEvaluation{ m_lastFightResults });
+		AppContext::GetInstance().eventManager.InvokeEvent(SendUpdateEvaluation{ m_lastUpdateResults.first ,m_lastUpdateResults.second});
 		return;
 	}
 

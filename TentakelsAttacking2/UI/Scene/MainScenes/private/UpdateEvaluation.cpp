@@ -6,6 +6,7 @@
 #include "UpdateEvaluation.h"
 #include "AppContext.h"
 #include "GenerelEvents.hpp"
+#include "SpaceObject.h"
 #include "SceneType.h"
 #include "Player.h"
 #include "HPrint.h"
@@ -15,6 +16,15 @@ void UpdateEvaluationScene::Initialize(SendUpdateEvaluation const* event) const 
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	Print("--------------------| Evaluation |--------------------", PrintType::DEBUG);
+
+	Print("------------------ | Merge Results |------------------", PrintType::BUILD);
+	for (auto const& e : event->GetMergeResults()) {
+		Print(appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer()->GetID()).name, PrintType::DEBUG);
+		Print(std::to_string(e.GetOrigin()->GetID()) + " -> " + std::to_string(e.GetDestination()->GetID()) + " | " + std::to_string(e.GetCount()), PrintType::DEBUG);
+		Print("------------------------------------------------------", PrintType::DEBUG);
+	}
+
+	Print("------------------ | Fight Results |------------------", PrintType::BUILD);
 	for (auto const& e : event->GetFightResults()) {
 		if (not e.IsValid()) { Print("invalid update Evaluation", PrintType::DEBUG);  continue; }
 
@@ -25,8 +35,9 @@ void UpdateEvaluationScene::Initialize(SendUpdateEvaluation const* event) const 
 		for (auto const& r : e.GetRounds()) {
 			Print(std::to_string(r.first) + " | " + std::to_string(r.second), PrintType::DEBUG);
 		}
-		Print("----------------------------------------------", PrintType::DEBUG);
+		Print("------------------------------------------------------", PrintType::DEBUG);
 	}
+	Print("------------------------------------------------------", PrintType::DEBUG);
 
 	ShowMessagePopUpEvent sendEvent{
 		"Update",

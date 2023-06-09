@@ -8,6 +8,7 @@
 #include "CustomRaylib.h"
 #include "HLogicAlias.hpp"
 #include "HFightResult.h"
+#include "HMergeResult.h"
 #include <string>
 #include <unordered_map>
 
@@ -173,12 +174,16 @@ class GetUpdateEvaluation final : public Event { };
  */
 class SendUpdateEvaluation final : public Event {
 private:
+	std::vector<HMergeResult> m_mergeResults;
 	std::vector<HFightResult> m_fightResults;
 
 public:
-	SendUpdateEvaluation(std::vector<HFightResult> fightResult)
-		: m_fightResults{ fightResult } { }
+	SendUpdateEvaluation(std::vector<HMergeResult> mergeResult, std::vector<HFightResult> fightResult)
+		: m_mergeResults{ mergeResult }, m_fightResults { fightResult } { }
 
+	[[nodiscard]] std::vector<HMergeResult> GetMergeResults() const {
+		return m_mergeResults;
+	}
 	[[nodiscard]] std::vector<HFightResult> GetFightResults() const {
 		return m_fightResults;
 	}
