@@ -1009,5 +1009,4 @@ UpdateResult_ty Galaxy::Update() {
 	UpdatePlanetDiscovered();
 
 	return { mergeResults, fightResults };
-	// event to show fights
 }
