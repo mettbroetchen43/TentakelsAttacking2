@@ -34,7 +34,7 @@ void UIManager::CheckAndSetNewResolution() {
 	bool const validResolution{ m_appContext.constants.window.IsPossibleResolution(m_nextResolution) };
 	if (!validResolution) { 
 		Print("Invalid resolution for this screen: " + m_appContext.constants.window.GetStringFromResolution(m_nextResolution),
-			PrintType::EXPECTED_ERROR);
+			PrintType::ERROR);
 		return;
 	}
 
