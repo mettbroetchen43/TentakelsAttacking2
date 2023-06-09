@@ -11,13 +11,13 @@ private:
 	Player_ty m_player;
 	SpaceObject_ty m_origin;
 	SpaceObject_ty m_destination;
-	int m_count;
+	size_t m_count;
 
 public:
-	HMergeResult(Player_ty player, SpaceObject_ty origin, SpaceObject_ty destination, int count);
+	HMergeResult(Player_ty player, SpaceObject_ty origin, SpaceObject_ty destination, size_t count);
 
 	[[nodiscard]] Player_ty GetPlayer() const;
 	[[nodiscard]] SpaceObject_ty GetOrigin() const;
 	[[nodiscard]] SpaceObject_ty GetDestination() const;
-	[[nodiscard]] int GetCount() const;
+	[[nodiscard]] size_t GetCount() const;
 };

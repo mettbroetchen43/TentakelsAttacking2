@@ -5,7 +5,7 @@
 
 #include "HMergeResult.h"
 
-HMergeResult::HMergeResult(Player_ty player, SpaceObject_ty origin, SpaceObject_ty destination, int count)
+HMergeResult::HMergeResult(Player_ty player, SpaceObject_ty origin, SpaceObject_ty destination, size_t count)
     : m_player{ player }, m_origin{ origin }, m_destination{ destination }, m_count{ count } { }
 
 Player_ty HMergeResult::GetPlayer() const {
@@ -17,6 +17,6 @@ SpaceObject_ty HMergeResult::GetOrigin() const {
 SpaceObject_ty HMergeResult::GetDestination() const {
     return m_destination;
 }
-int HMergeResult::GetCount() const {
+size_t HMergeResult::GetCount() const {
     return m_count;
 }
