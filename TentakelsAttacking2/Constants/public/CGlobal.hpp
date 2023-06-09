@@ -10,9 +10,13 @@
  * contains the global constants
  */
 struct CGlobal final {
-	static inline const std::string version = "v0.1.0" ; ///< current version string
-	static inline const std::string copyRight{ "(c) Purpur Tentakel" }; ///< copy right string
+	static inline int const configEntryCount{ 3 }; ///< config load checks if the count is idetical to the loaded entry count
+	static inline int const configVersionCount{ 2 }; ///< config load checks if the count is idetical to the loaded version count
+	static inline int const configSectionCount{ 9 }; ///< config load checks if the count is idetical to the loaded section count
 
+	static inline std::string const configVersion{ "v0.1.0.1" }; ///< contains the config version string
+	static inline std::string const gameVersion{ "v0.1.0" }; ///< current gameVersion string
+	static inline std::string const copyRight{ "(c) Purpur Tentakel" }; ///< copy right string
 
 	size_t minRounds{ 20 }; ///< defines the min of rounds the player can set (override by config)
 	size_t currentTargetRound{ 50 }; ///< contains the current target round that the player has set (override by config)

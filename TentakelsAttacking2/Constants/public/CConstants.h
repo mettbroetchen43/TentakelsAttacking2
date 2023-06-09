@@ -19,14 +19,22 @@
  * contains all constants.
  */
 struct Constants final {
+	// config related
+	CFight fight; ///< contains the fight constants
+	CFleet fleet; ///< contains the fleet constants
 	CGlobal global; ///< contains the global constants
+	CPlanet planet; ///< contains the planet constants
+	CPlayer player; ///< contains the player constants
+	CSound sound; ///< contains the sound constants
 	CWindow window; ///< contains the window constants
+	CWorld world; ///< contains the world constants
+
+	// non config related
 	CTextProcessing textProcessing; ///< contains the text processing constants
 	CFiles files; ///< contains the file constants
-	CSound sound; ///< contains the sound constants
-	CPlayer player; ///< contains the player constants
-	CWorld world; ///< contains the world constants
-	CPlanet planet; ///< contains the planet constants
-	CFleet fleet; ///< contains the fleet constants
-	CFight fight; ///< contains the fight constants
+
+	/**
+	 * calculates the sum of all config values.
+	 */
+	[[nodiscard]] int GetConfigValueCount() const;
 };

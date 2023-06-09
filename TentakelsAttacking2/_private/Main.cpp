@@ -22,7 +22,7 @@ int main() {
 	Print("Release", PrintType::BUILD);
 #endif // _DEBUG
 
-	Print(appContext.constants.global.version, PrintType::BUILD);
+	Print(appContext.constants.global.gameVersion, PrintType::BUILD);
 
 	UIManager uiManager;
 

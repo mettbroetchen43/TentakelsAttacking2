@@ -34,7 +34,7 @@ void UIManager::CheckAndSetNewResolution() {
 	bool const validResolution{ m_appContext.constants.window.IsPossibleResolution(m_nextResolution) };
 	if (!validResolution) { 
 		Print("Invalid resolution for this screen: " + m_appContext.constants.window.GetStringFromResolution(m_nextResolution),
-			PrintType::EXPECTED_ERROR);
+			PrintType::ERROR);
 		return;
 	}
 
@@ -152,7 +152,7 @@ UIManager::~UIManager() {
 
 void UIManager::StartUI() {
 
-	SetWindowTitle(("Tentakels Attacking " + m_appContext.constants.global.version).c_str());
+	SetWindowTitle(("Tentakels Attacking " + m_appContext.constants.global.gameVersion).c_str());
 
 	if(m_appContext.constants.window.current_resolution == Resolution::LAST) {
 
