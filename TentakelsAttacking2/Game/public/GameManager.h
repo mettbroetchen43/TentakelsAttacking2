@@ -10,7 +10,7 @@
 #include "UIEvents.hpp"
 #include "GenerelEvents.hpp"
 #include "HGameEventTypes.hpp"
-#include "HFightResult.h"
+// #include "HFightResult.h"
 #include <vector>
 #include <random>
 #include <memory>
@@ -31,7 +31,7 @@ private:
 	friend GalaxyManager; ///< need access because of "callbacks"
 	GalaxyManager m_galaxyManager; ///< contains all galaxy related stuff
 
-	std::vector<HFightResult> m_lastFightResults{ }; ///< contains the last update fight result
+	UpdateResult_ty m_lastUpdateResults{ }; ///< contains the last update result
 
 	// player
 	/**

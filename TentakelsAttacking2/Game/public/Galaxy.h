@@ -141,12 +141,12 @@ private:
 	 * checks if any fleet is arrived.
 	 * calls the other fleets to gets a new target.
 	 */
-	void CheckArrivingFriendlyFleets();
+	[[nodiscard]] std::vector<HMergeResult> CheckArrivingFriendlyFleets();
 	/**
 	 * checks if any fleets from one player are at the same spot.
 	 * class the other fleets zo gets a new target.
 	 */
-	void CheckMergingFriendlyFleets();
+	[[nodiscard]] std::vector<HMergeResult> CheckMergingFriendlyFleets();
 	/**
 	 * Checks if there is a Fleet without ships.
 	 * if it is so the fleets gets deleted and the other fleets gets redirected. 
@@ -252,5 +252,5 @@ public:
 	/**
 	 * updates the Galaxy.
 	 */
-	[[nodiscard]] std::vector<HFightResult> Update();
+	[[nodiscard]] UpdateResult_ty Update();
 };
