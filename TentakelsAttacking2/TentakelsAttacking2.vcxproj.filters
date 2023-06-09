@@ -198,7 +198,7 @@
     <ClInclude Include="UI\Scene\SupportScenes\public\SliderAndInputLine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Constants\public\CConstants.hpp">
+    <ClInclude Include="Constants\public\CConstants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Constants\public\CPlayer.hpp">
@@ -591,6 +591,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Helper\private\HConfigEnum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Constants\private\CConstants.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
