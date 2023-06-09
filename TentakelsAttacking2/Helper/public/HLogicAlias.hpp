@@ -4,6 +4,7 @@
 //
 
 #pragma once
+#include <vector>
 #include <memory>
 
 struct AppContext;
@@ -52,3 +53,7 @@ using Player_ty = std::shared_ptr<Player>;
 using Player_ty_c = Player_ty const&;
 using Player_ty_raw = Player const*;
 using Player_ty_raw_c = Player const* const;
+
+struct HMergeResult;
+struct HFightResult;
+using UpdateResult_ty = std::pair<std::vector<HMergeResult>, std::vector<HFightResult>>;
