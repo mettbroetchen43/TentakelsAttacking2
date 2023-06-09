@@ -64,13 +64,10 @@ endif()
 
 # find and link to nlohmann_json dependency
 find_package(nlohmann_json 3.11.2 REQUIRED)
-if (NOT nlohmann_json_FOUND)
-  message(STATUS "nlohmann_json dependency not found, adding 'nlohmann_json' subdirectory to satisfy dependency")
-  add_subdirectory(nlohmann_json EXCLUDE_FROM_ALL)
-find_package(raylib CONFIG QUIET)
 target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
 
 # find and link to raylib dependency
+find_package(raylib CONFIG QUIET)
 if (NOT raylib_FOUND)
   # workaround because raylib with vcpkg on Linux is broken with asan/ubsan build errors
   # see: https://github.com/microsoft/vcpkg/issues/21293
