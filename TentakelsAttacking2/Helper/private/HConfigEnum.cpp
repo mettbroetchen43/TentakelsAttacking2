@@ -7,6 +7,8 @@
 
 std::string CToS(ConfigTypes type) {
     switch (type) {
+		case ConfigTypes::CONFIFG:
+			return "config";
 	
 		case ConfigTypes::FIGHT:
 			return "fight";
@@ -15,6 +17,8 @@ std::string CToS(ConfigTypes type) {
 
 		case ConfigTypes::FLEET:
 			return "fleet";
+		case ConfigTypes::FLEET_SPEED_CURRENT:
+			return "fleet_speed_current";
 		case ConfigTypes::FLEET_SPEED_MAX:
 			return "fleet_speed_max";
 		case ConfigTypes::FLEET_SPEED_MIN:
@@ -28,10 +32,6 @@ std::string CToS(ConfigTypes type) {
 			return "game_rounds_max";
 		case ConfigTypes::GAME_ROUNDS_MIN:
 			return "game_rounds_min";
-		case ConfigTypes::VERSION_CONFIG:
-			return "version_config";
-		case ConfigTypes::VERSION_GAME:
-			return "version_game";
 
 		case ConfigTypes::PLANET:
 			return "planet";
@@ -66,36 +66,52 @@ std::string CToS(ConfigTypes type) {
 		case ConfigTypes::VOLUME_MUTE_BOOL:
 			return "volume_mute_bool";
 			
+		case ConfigTypes::VERSION:
+			return "version";
+		case ConfigTypes::VERSION_CONFIG:
+			return "version_config";
+		case ConfigTypes::VERSION_GAME:
+			return "version_game";
+
 		case ConfigTypes::WINDOW:
 			return "window";
 		case ConfigTypes::RESOLUTION_AS_ENUM:
 			return "resolution_as_enum";
-		case ConfigTypes::START_FULL_SCREEN_BOOL:
-			return "start_full_screen_bool";
+		case ConfigTypes::FULL_SCREEN_START_BOOL:
+			return "full_screen_start_bool";
 		case ConfigTypes::TARGET_FPS:
 			return "target_fps";
 
 		case ConfigTypes::WORLD:
 			return "world";
+		case ConfigTypes::DIMENSION_X_CURRENT:
+			return "dimension_x_current";
 		case ConfigTypes::DIMENSION_X_MAX:
 			return "dimension_x_max";
 		case ConfigTypes::DIMENSION_X_MIN:
 			return "dimension_x_min";
 		case ConfigTypes::DIMENSION_X_SHOW_GALAXY:
 			return "dimension_x_show_galaxy";
+		case ConfigTypes::DIMENSION_Y_CURRENT:
+			return "dimension_y_current";
 		case ConfigTypes::DIMENSION_Y_MAX:
 			return "dimension_y_max";
 		case ConfigTypes::DIMENSION_Y_MIN:
 			return "dimension_y_min";
 		case ConfigTypes::DIMENSION_Y_SHOW_GALAXY:
-			return "dimension_x_show_galaxy";
+			return "dimension_y_show_galaxy";
 		case ConfigTypes::DISCOVER_RANGE:
 			return "discover_range";
+		case ConfigTypes::PLANET_COUNT_CURRENT:
+			return "planet_count_current";
 		case ConfigTypes::PLANET_COUNT_MAX:
 			return "planet_count_max";
 		case ConfigTypes::PLANET_COUNT_MIN:
 			return "planet_count_min";
 		case ConfigTypes::PLANET_COUNT_SHOW_GALAXY:
 			return "planet_count_show_galaxy";
+
+		default:
+			return "missing_config_type";
     }
 }
