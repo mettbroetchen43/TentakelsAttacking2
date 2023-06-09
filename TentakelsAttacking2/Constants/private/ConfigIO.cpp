@@ -214,7 +214,7 @@ void LoadConfig() {
 		if (int   out;   loadInt(planet, out, ConfigTypes::PRODUCTION_HOMEWORLD))                { constants.planet.homeworldProduction              = out; }
 		if (int   out;   loadInt(planet, out, ConfigTypes::PRODUCTION_MAX))                      { constants.planet.maxProduction                    = out; }
 		if (int   out;   loadInt(planet, out, ConfigTypes::PRODUCTION_MIN))                      { constants.planet.minProduction                    = out; }
-		if (int   out;   loadInt(planet, out, ConfigTypes::SHIPS_MAX_FACTOR))                    { constants.planet.maxShips                         = out; }
+		if (int   out;   loadInt(planet, out, ConfigTypes::SHIPS_MAX_FACTOR))                    { constants.planet.maxShipsFactor                   = out; }
 		if (float out; loadFloat(planet, out, ConfigTypes::SPACEING_GLOBAL))                     { constants.planet.globalSpacing                    = out; }
 		if (float out; loadFloat(planet, out, ConfigTypes::SPACEING_HOMEWORLD))                  { constants.planet.homeworldSpacing                 = out; }
 		if (int   out;   loadInt(planet, out, ConfigTypes::STARTING_SHIPS_MULTIPLICATOR_GLOBAL)) { constants.planet.startingGlobalShipsMultiplicator = out; }
@@ -292,7 +292,7 @@ void SaveConfig() {
 		{ CToS(ConfigTypes::PRODUCTION_HOMEWORLD),                constants.planet.homeworldProduction              },
 		{ CToS(ConfigTypes::PRODUCTION_MAX),                      constants.planet.maxProduction                    },
 		{ CToS(ConfigTypes::PRODUCTION_MIN),                      constants.planet.minProduction                    },
-		{ CToS(ConfigTypes::SHIPS_MAX_FACTOR),                    constants.planet.maxShips                         },
+		{ CToS(ConfigTypes::SHIPS_MAX_FACTOR),                    constants.planet.maxShipsFactor                   },
 		{ CToS(ConfigTypes::SPACEING_GLOBAL),                     constants.planet.globalSpacing                    },
 		{ CToS(ConfigTypes::SPACEING_HOMEWORLD),                  constants.planet.homeworldSpacing                 },
 		{ CToS(ConfigTypes::STARTING_SHIPS_MULTIPLICATOR_GLOBAL), constants.planet.startingGlobalShipsMultiplicator },
