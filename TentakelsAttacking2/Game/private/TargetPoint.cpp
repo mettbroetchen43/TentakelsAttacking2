@@ -12,5 +12,8 @@ bool TargetPoint::IsTargetPoint() const {
 }
 
 void TargetPoint::Update(Galaxy_ty_raw) {
-    Print("Updated TargetPoint. Nothing Happens", PrintType::DEBUG);
+    /*
+        nothing to update here.
+        only implemented because the Space Object requires it.
+    */
 }
