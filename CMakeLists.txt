@@ -63,7 +63,11 @@ if (NOT has_std_format)
 endif()
 
 # find and link to nlohmann_json dependency
-find_package(nlohmann_json 3.11.2 REQUIRED)
+find_package(nlohmann_json 3.11.2 CONFIG QUIET)
+if (NOT nlohmann_json_FOUND)
+  message(STATUS "nlohmann_json dependency not found, adding 'external/nlohmann_json' subdirectory to satisfy dependency")
+  add_subdirectory(external/nlohmann_json EXCLUDE_FROM_ALL)
+endif()
 target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
 
 # find and link to raylib dependency
