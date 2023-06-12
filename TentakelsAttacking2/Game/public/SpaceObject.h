@@ -20,6 +20,8 @@ protected:
 	vec2pos_ty m_position; ///< contains the absolute position within the galaxy
 	Player_ty m_player; ///< contains a pointer to a player who owns the object
 
+	[[nodiscard]] static bool IsInRange(SpaceObject_ty_raw first, SpaceObject_ty_raw second, int range);
+
 public:
 	/**
 	 * ctor without ships.
@@ -89,9 +91,13 @@ public:
 	[[nodiscard]] virtual bool IsTargetPoint() const;
 
 	/**
-	 * returns if the provided SpaceObject is in range of this.
+	 * returns if the provided SpaceObject is in discover range of this.
 	 */
 	[[nodiscard]] bool IsInDiscoverRange(SpaceObject_ty_c object) const;
+	/**
+	 * returns if the provided SpaceObject is in fight range of this.
+	 */
+	[[nodiscard]] bool IsInFightRange(SpaceObject_ty_c object) const;
 
 	/**
 	 * adds and returns the ship count of an object and a number.

@@ -7,6 +7,11 @@
 #include "AppContext.h"
 #include <cassert>
 
+bool SpaceObject::IsInRange(SpaceObject_ty_raw first, SpaceObject_ty_raw second, int range) {
+	auto const actualRange{ (first->GetPos() - second->GetPos()).Length() };
+	return range >= actualRange;
+}
+
 SpaceObject::SpaceObject(unsigned int ID, vec2pos_ty position, Player_ty player)
 	: SpaceObject{ ID, position, 0, player } {}
 SpaceObject::SpaceObject(unsigned int ID, vec2pos_ty position, size_t ships, Player_ty player)
@@ -50,9 +55,13 @@ bool SpaceObject::IsTargetPoint() const {
 
 bool SpaceObject::IsInDiscoverRange(SpaceObject_ty_c object) const {
 	auto const range = AppContext::GetInstance().constants.world.discoverRange;
-	auto const actualRange{ (object->GetPos() - m_position).Length() };
-	return range >= actualRange;
+	return IsInRange(object.get(), this, range);
 }
+bool SpaceObject::IsInFightRange(SpaceObject_ty_c object) const {
+	auto const range = AppContext::GetInstance().constants.fight.fleetFightRange;
+	return IsInRange(object.get(), this, range);
+}
+
 
 SpaceObject& SpaceObject::operator+=(size_t ships) {
 	m_ships += ships;
