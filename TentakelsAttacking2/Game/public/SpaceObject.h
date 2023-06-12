@@ -91,7 +91,7 @@ public:
 	/**
 	 * returns if the provided SpaceObject is in range of this.
 	 */
-	[[nodiscard]] bool IsInRange(SpaceObject_ty_c object) const;
+	[[nodiscard]] bool IsInDiscoverRange(SpaceObject_ty_c object) const;
 
 	/**
 	 * adds and returns the ship count of an object and a number.

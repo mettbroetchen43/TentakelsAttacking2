@@ -176,7 +176,7 @@ void Galaxy::UpdatePlanetDiscovered() {
 			if (p_n->IsDiscovered()) { continue; }
 			if (p_p->GetID() == p_n->GetID()) { continue; }
 
-			if (p_p->IsInRange(p_n)) {
+			if (p_p->IsInDiscoverRange(p_n)) {
 				p_n->SetDiscovered(true);
 			}
 		}
