@@ -176,7 +176,7 @@ void Galaxy::UpdatePlanetDiscovered() {
 			if (p_n->IsDiscovered()) { continue; }
 			if (p_p->GetID() == p_n->GetID()) { continue; }
 
-			if (p_p->IsInRange(p_n)) {
+			if (p_p->IsInDiscoverRange(p_n)) {
 				p_n->SetDiscovered(true);
 			}
 		}
@@ -694,7 +694,7 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetFleet() {
 	for (auto const& f1 : m_fleets) {
 		for (auto const& f2 : m_fleets) {
 			if (f1->GetID() == f2->GetID()) { continue; }
-			if (f1->GetPos() == f2->GetPos()) {
+			if (f1->IsInFightRange(f2)) {
 				if (not contains(f1, f2)) {
 					fights.emplace_back(f1, f2);
 				}

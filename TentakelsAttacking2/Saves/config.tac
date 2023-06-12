@@ -1,5 +1,6 @@
 {
     "fight": {
+        "fleet_fight_range": 3,
         "hit_chance": 0.30000001192092896
     },
     "fleet": {

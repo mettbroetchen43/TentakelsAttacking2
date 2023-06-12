@@ -11,6 +11,7 @@ enum class ConfigTypes {
 
 	FIGHT,
 	HIT_CHANCE,
+	FLEET_FIGHT_RANGE,
 
 	FLEET,
 	FLEET_SPEED_CURRENT,
