@@ -266,6 +266,9 @@ void LoadConfig() {
 
 #ifdef _DEBUG
 	constants.window.startingModeFullScreen = false;
+	Print("set full screen to false", PrintType::DEBUG);
+	constants.window.current_resolution = Resolution::HD;
+	Print("set resolution ro HD", PrintType::DEBUG);
 #endif // _DEBUG
 
 	Print("config loaded", PrintType::INFO);
