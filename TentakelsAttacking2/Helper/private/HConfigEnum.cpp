@@ -14,6 +14,8 @@ std::string CToS(ConfigTypes type) {
 			return "fight";
 		case ConfigTypes::HIT_CHANCE:
 			return "hit_chance";
+		case ConfigTypes::FLEET_FIGHT_RANGE:
+			return "fleet_fight_range";
 
 		case ConfigTypes::FLEET:
 			return "fleet";
