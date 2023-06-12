@@ -269,6 +269,8 @@
     <ClCompile Include="Constants\public\CFleet.hpp" />
     <ClCompile Include="Helper\private\HFightResult.cpp" />
     <ClCompile Include="Helper\private\HConfigEnum.cpp" />
+    <ClCompile Include="Helper\private\HMergeResult.cpp" />
+    <ClCompile Include="Helper\public\HMergeResult.h" />
     <ClCompile Include="Helper\public\HUIAlias.hpp" />
     <ClCompile Include="Game\private\GalaxyManager.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />

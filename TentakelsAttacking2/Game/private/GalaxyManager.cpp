@@ -108,6 +108,6 @@ bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, Player_ty c
 	return true;
 }
 
-std::vector<HFightResult> GalaxyManager::Update() {
+UpdateResult_ty GalaxyManager::Update() {
 	return m_mainGalaxy->Update();
 }

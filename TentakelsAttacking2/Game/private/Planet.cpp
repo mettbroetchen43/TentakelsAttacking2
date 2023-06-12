@@ -19,7 +19,6 @@ Planet::Planet(unsigned int ID, vec2pos position, Player_ty player,
 	m_planetNumber{ planetNumber } {
 
 	AppContext const & appContext{ AppContext::GetInstance() };
-	m_maxShips = appContext.constants.planet.maxShips;
 
 	if (m_isHomePlanet) {
 		m_production = appContext.constants.planet.homeworldProduction;
@@ -34,6 +33,8 @@ Planet::Planet(unsigned int ID, vec2pos position, Player_ty player,
 		m_production = r + appContext.constants.planet.minProduction;
 		m_ships = m_production * appContext.constants.planet.startingGlobalShipsMultiplicator;
 	}
+
+	m_maxShips = appContext.constants.planet.maxShipsFactor * m_production;
 }
 
 bool Planet::IsHomePlanet() const {

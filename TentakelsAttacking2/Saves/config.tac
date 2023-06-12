@@ -1,5 +1,6 @@
 {
     "fight": {
+        "fleet_fight_range": 3,
         "hit_chance": 0.30000001192092896
     },
     "fleet": {
@@ -16,7 +17,7 @@
         "production_homeworld": 10,
         "production_max": 7,
         "production_min": 3,
-        "ships_max_factor": 200,
+        "ships_max_factor": 25,
         "spacing_global": 0.019999999552965164,
         "spacing_homeworld": 0.15000000596046448,
         "starting_ships_multiplicator_global": 5,

@@ -195,7 +195,8 @@ void LoadConfig() {
 	}
 	// fight
 	if (nlohmann::json fight; loadSection(load, fight, ConfigTypes::FIGHT, constants.fight.configEntryCount)) {
-		if (float out; loadFloat(fight, out, ConfigTypes::HIT_CHANCE)) { constants.fight.hitChance = out; }
+		if (float out; loadFloat(fight, out, ConfigTypes::HIT_CHANCE))        { constants.fight.hitChance =       out; }
+		if (int out;     loadInt(fight, out, ConfigTypes::FLEET_FIGHT_RANGE)) { constants.fight.fleetFightRange = out; }
 	}
 	// fleet
 	if (nlohmann::json fleet; loadSection(load, fleet, ConfigTypes::FLEET, constants.fleet.configEntryCount)) {
@@ -214,7 +215,7 @@ void LoadConfig() {
 		if (int   out;   loadInt(planet, out, ConfigTypes::PRODUCTION_HOMEWORLD))                { constants.planet.homeworldProduction              = out; }
 		if (int   out;   loadInt(planet, out, ConfigTypes::PRODUCTION_MAX))                      { constants.planet.maxProduction                    = out; }
 		if (int   out;   loadInt(planet, out, ConfigTypes::PRODUCTION_MIN))                      { constants.planet.minProduction                    = out; }
-		if (int   out;   loadInt(planet, out, ConfigTypes::SHIPS_MAX_FACTOR))                    { constants.planet.maxShips                         = out; }
+		if (int   out;   loadInt(planet, out, ConfigTypes::SHIPS_MAX_FACTOR))                    { constants.planet.maxShipsFactor                   = out; }
 		if (float out; loadFloat(planet, out, ConfigTypes::SPACEING_GLOBAL))                     { constants.planet.globalSpacing                    = out; }
 		if (float out; loadFloat(planet, out, ConfigTypes::SPACEING_HOMEWORLD))                  { constants.planet.homeworldSpacing                 = out; }
 		if (int   out;   loadInt(planet, out, ConfigTypes::STARTING_SHIPS_MULTIPLICATOR_GLOBAL)) { constants.planet.startingGlobalShipsMultiplicator = out; }
@@ -265,6 +266,9 @@ void LoadConfig() {
 
 #ifdef _DEBUG
 	constants.window.startingModeFullScreen = false;
+	Print("set full screen to false", PrintType::DEBUG);
+	constants.window.current_resolution = Resolution::HD;
+	Print("set resolution ro HD", PrintType::DEBUG);
 #endif // _DEBUG
 
 	Print("config loaded", PrintType::INFO);
@@ -276,7 +280,8 @@ void SaveConfig() {
 	nlohmann::json save;
 	
 	save[CToS(ConfigTypes::FIGHT)] = {
-		{ CToS(ConfigTypes::HIT_CHANCE), constants.fight.hitChance },
+		{ CToS(ConfigTypes::HIT_CHANCE),        constants.fight.hitChance       },
+		{ CToS(ConfigTypes::FLEET_FIGHT_RANGE), constants.fight.fleetFightRange },
 	};
 	save[CToS(ConfigTypes::FLEET)] = {
 		{ CToS(ConfigTypes::FLEET_SPEED_CURRENT), constants.fleet.currentFleetSpeed },
@@ -292,7 +297,7 @@ void SaveConfig() {
 		{ CToS(ConfigTypes::PRODUCTION_HOMEWORLD),                constants.planet.homeworldProduction              },
 		{ CToS(ConfigTypes::PRODUCTION_MAX),                      constants.planet.maxProduction                    },
 		{ CToS(ConfigTypes::PRODUCTION_MIN),                      constants.planet.minProduction                    },
-		{ CToS(ConfigTypes::SHIPS_MAX_FACTOR),                    constants.planet.maxShips                         },
+		{ CToS(ConfigTypes::SHIPS_MAX_FACTOR),                    constants.planet.maxShipsFactor                   },
 		{ CToS(ConfigTypes::SPACEING_GLOBAL),                     constants.planet.globalSpacing                    },
 		{ CToS(ConfigTypes::SPACEING_HOMEWORLD),                  constants.planet.homeworldSpacing                 },
 		{ CToS(ConfigTypes::STARTING_SHIPS_MULTIPLICATOR_GLOBAL), constants.planet.startingGlobalShipsMultiplicator },
