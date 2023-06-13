@@ -73,6 +73,7 @@ void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 		
 		if (m_planet->IsDiscovered()) {
 			m_renderHover = true;
+			UpdateHoverText();
 		}
 	}
 	else {
