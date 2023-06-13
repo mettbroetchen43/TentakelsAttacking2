@@ -16,7 +16,7 @@ UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vec
 	m_hover{
 		0.03f,
 		"",
-		WHITE,
+		player.color,
 		Vector2(0.01f,0.01f),
 		resolution
 	}, m_planet{ planet }
