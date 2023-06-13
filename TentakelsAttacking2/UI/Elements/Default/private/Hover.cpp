@@ -70,6 +70,10 @@ void Hover::SetRenderHover(Vector2 mousePosition, AppContext_ty_c appContext) {
 	appContext.eventManager.InvokeEvent(event);
 }
 
+void Hover::SetText(std::string const& text) {
+	m_text = { text };
+}
+
 void Hover::Render(AppContext_ty_c appContext) {
 	DrawTexturePro(
 		*m_hoverTexture,

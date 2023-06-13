@@ -7,19 +7,22 @@
 #include "HInput.h"
 #include "AppContext.h"
 #include "HPrint.h"
+#include "Planet.h"
 
 UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution,
-	Vector2 colliderPos)
+	Vector2 colliderPos, Planet_ty_raw_c planet)
 	:Focusable{ focusID }, UIElement{ pos, { 0.01f,0.02f }, Alignment::MID_MID, resolution }
 	, m_ID{ ID }, m_currentPlayer{ player }, m_colliderPos{ colliderPos }, m_color{ player.color }, m_stringID{ std::to_string(ID) },
 	m_hover{
 		0.03f,
-		player.name,
+		"",
 		player.color,
 		Vector2(0.01f,0.01f),
 		resolution
+	}, m_planet{ planet }
+	{
+		UpdateHoverText();
 	}
-	{ }
 
 void UIPlanet::UpdatePosition(Rectangle newCollider) {
 	m_collider.x = newCollider.x + newCollider.width * m_colliderPos.x;
@@ -35,6 +38,10 @@ void UIPlanet::SetPlayer(PlayerData player) {
 	if (m_color != GRAY) {
 		m_color = m_currentPlayer.color;
 	}
+}
+void UIPlanet::UpdateHoverText() {
+	std::string const hover{ m_currentPlayer.name + " | x: " + std::to_string(m_planet->GetPos().x) + " y: " + std::to_string(m_planet->GetPos().y) + " | ships: " + std::to_string(m_planet->GetShipCount()) };
+	m_hover.SetText(hover);
 }
 PlayerData UIPlanet::GetPlayer() const {
 	return m_currentPlayer;
@@ -63,8 +70,11 @@ void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			m_onClick(this);
 		}
-
-		m_renderHover = true;
+		
+		if (m_planet->IsDiscovered()) {
+			m_renderHover = true;
+			UpdateHoverText();
+		}
 	}
 	else {
 		m_renderHover = false;

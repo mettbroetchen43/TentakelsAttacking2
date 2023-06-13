@@ -9,6 +9,7 @@
 #include "Text.h"
 #include "HPlayerData.hpp"
 #include "Hover.h"
+#include "HLogicAlias.hpp"
 #include <functional>
 #include <memory>
 
@@ -27,7 +28,7 @@ private:
 	std::function<void(UIPlanet*)> m_onClick{ [](UIPlanet*) {} }; ///< contains on click that gets called when the planet is clicked
 	Hover m_hover; ///< contains the hover element
 	bool m_renderHover{ false }; ///< contains if the hover text should be rendered
-
+	Planet_ty_raw_c m_planet; ///< contains if the logic Planet to this Planet
 
 public:
 	/**
@@ -35,7 +36,7 @@ public:
 	 * converts the id to a string.
 	 */
 	UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution, 
-		Vector2 coliderPos);
+		Vector2 coliderPos, Planet_ty_raw_c planet);
 
 	/**
 	 * Updates the position with the collider position.
@@ -47,6 +48,11 @@ public:
 	 * provides this.
 	 */
 	void SetOnClick(std::function<void(UIPlanet*)> onClick);
+
+	/**
+	 * updates the hover text
+	 */
+	void UpdateHoverText();
 
 	/**
 	 * sets a player the planet ist currently owning.
