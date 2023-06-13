@@ -37,6 +37,11 @@ public:
 	void SetRenderHover(Vector2 mousePosition, AppContext_ty_c appContext);
 
 	/**
+	 * sets a new text to hovering
+	 */
+	void SetText(std::string const& text);
+
+	/**
 	 * renders the hover.
 	 * gets called from HoverRender
 	 */
