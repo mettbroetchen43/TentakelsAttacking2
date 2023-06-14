@@ -10,13 +10,18 @@
 void PlanetTable::Initialization() {
 	auto const planets{ m_galaxy->GetPlanets() };
 
+	int discoveredCount{ 0 };
+	for (auto const& p : planets) {
+		if (p->IsDiscovered()) { ++discoveredCount; }
+	}
+
 	m_table = std::make_shared<Table>(
 		GetElementPosition(0.0f, 0.0f),
 		GetElementSize(1.0f, 1.0f),
 		Alignment::TOP_LEFT,
 		m_resolution,
 		1000,
-		static_cast<int>(planets.size() + 1),
+		discoveredCount + 1,
 		4,
 		Vector2(0.25f, 0.05f),
 		0.2f
@@ -30,48 +35,52 @@ void PlanetTable::Initialization() {
 
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
-	for (int i = 0; i < planets.size(); ++i) {
-		auto planet = planets.at(i);
+	int addedCount{ 0 };
+	for (auto const& p : planets) {
+		//testing
+		if (discoveredCount == addedCount) { break; }
+		if (not p->IsDiscovered()) { continue; }
+		else{ ++addedCount; }
 
 		// planet ID
 		m_table->SetValue<int>(
-			i + 1,
+			addedCount,
 			0,
-			planet->GetID()
+			p->GetID()
 		);
 
 		// player name
 		std::string entry;
-		if (planet->IsDestroyed()) {
+		if (p->IsDestroyed()) {
 			entry = "DESTROYED";
 		}
-		else if (!planet->IsDiscovered()) {
+		else if (!p->IsDiscovered()) {
 			entry = "N/D";
 		}
 		else {
-			entry = appContext.playerCollection.GetPlayerOrNpcByID(planet->GetPlayer()->GetID()).name;
+			entry = appContext.playerCollection.GetPlayerOrNpcByID(p->GetPlayer()->GetID()).name;
 		}
 		m_table->SetValue<std::string>(
-			i + 1,
+			addedCount,
 			1,
 			entry
 		);
 
-		if (planet->IsDestroyed()) { continue; }
-		if (!planet->IsDiscovered()) { continue; }
+		if (p->IsDestroyed()) { continue; }
+		if (!p->IsDiscovered()) { continue; }
 
 		// production
 		m_table->SetValue<int>(
-			i + 1,
+			addedCount,
 			2,
-			static_cast<int>(planet->GetProduction())
+			static_cast<int>(p->GetProduction())
 		);
 
 		// ship count
 		m_table->SetValue<int>(
-			i + 1,
+			addedCount,
 			3,
-			static_cast<int>(planet->GetShipCount())
+			static_cast<int>(p->GetShipCount())
 		);
 	}
 }
