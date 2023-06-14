@@ -23,6 +23,10 @@ private:
 	 * calculates textHeight, textPosition, colliderLength.
 	 */
 	void CalculateDefault(AppContext_ty_c appContext);
+	/**
+	 * calculates the collider for drawing so it can not go out of screen.
+	 */
+	Vector2 GetRenderOffset() const;
 
 public:
 	/**

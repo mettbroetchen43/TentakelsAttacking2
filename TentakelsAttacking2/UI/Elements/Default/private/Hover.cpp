@@ -34,6 +34,18 @@ void Hover::CalculateDefault(AppContext_ty_c appContext) {
 	};
 }
 
+Vector2 Hover::GetRenderOffset() const {
+	Vector2 renderOffset{ 0, 0 };
+	if (m_collider.x + m_collider.width > m_resolution.x) {
+		renderOffset.x = m_collider.x + m_collider.width - m_resolution.x;
+	}
+	if (m_collider.y < 0) {
+		renderOffset.y = -m_collider.y;
+	}
+
+	return renderOffset;
+}
+
 Hover::Hover(float height, std::string text, Color color, Vector2 hoverOffset, Vector2 resolution)
 	: UIElement(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), Alignment::BOTTOM_LEFT, resolution), m_color(color),
 	m_hoverOffset{ hoverOffset }, m_text{ text }, m_textHeight{ height * resolution.y } {
@@ -75,16 +87,28 @@ void Hover::SetText(std::string const& text) {
 }
 
 void Hover::Render(AppContext_ty_c appContext) {
+	auto const& renderOffset{ GetRenderOffset() };
+	Rectangle const dummyCollider{
+		m_collider.x - renderOffset.x,
+		m_collider.y - renderOffset.y,
+		m_collider.width,
+		m_collider.height
+	};
+	Vector2 const dummyTextPosition{
+		m_textPosition.x - renderOffset.x,
+		m_textPosition.y - renderOffset.y
+	};
+
 	DrawTexturePro(
 		*m_hoverTexture,
 		m_hoverTextureRec,
-		m_collider,
+		dummyCollider,
 		Vector2(0.0f, 0.0f),
 		0.0f,
 		WHITE
 	);
 	DrawRectangleLinesEx(
-		m_collider,
+		dummyCollider,
 		2.0f,
 		PURPLE
 	);
@@ -92,7 +116,7 @@ void Hover::Render(AppContext_ty_c appContext) {
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_text.c_str(),
-		m_textPosition,
+		dummyTextPosition,
 		m_textHeight,
 		0.0f,
 		m_color
