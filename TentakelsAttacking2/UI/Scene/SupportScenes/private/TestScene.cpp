@@ -20,10 +20,10 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		Alignment::MID_MID,
 		m_resolution,
 		1,
-		11,
-		2,
+		50,
+		6,
 		Vector2{ 0.2f,0.1f },
-		2.0f
+		0.02f
 	);
 	m_table->SetScrollable(true);
 	m_elements.push_back(m_table);
