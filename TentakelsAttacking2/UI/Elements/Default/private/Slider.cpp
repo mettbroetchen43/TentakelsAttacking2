@@ -150,13 +150,7 @@ Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 	bool isHorizontal, float absoluteDimension)
 	: UIElement{ pos, size, alignment, resolution }, m_isHorizontal{ isHorizontal },
 	m_absoluteDimension{ absoluteDimension } {
-	m_texture = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
-	m_textureRec = {
-		0.0f,
-		0.0f,
-		static_cast<float>(m_texture->width),
-		static_cast<float>(m_texture->height)
-	};
+
 	CalculateInitialButton();
 }
 
@@ -180,13 +174,9 @@ void Slider::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appCon
 	m_btn.CheckAndUpdate(mousePosition, appContext);
 }
 void Slider::Render(AppContext_ty_c appContext) {
-	DrawTexturePro(
-		*m_texture,
-		m_textureRec,
+	DrawRectangleRec(
 		m_collider,
-		Vector2(0.0f, 0.0f),
-		0,
-		WHITE
+		GREY_100
 	);
 	m_btn.Render(appContext);
 }

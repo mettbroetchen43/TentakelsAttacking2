@@ -54,14 +54,6 @@ Hover::Hover(float height, std::string text, Color color, Vector2 hoverOffset, V
 
 	CalculateDefault(appContext);
 
-	m_hoverTexture = appContext.assetManager.GetTexture(AssetType::GREY);
-	m_hoverTextureRec = {
-		0.0f,
-		0.0f,
-		static_cast<float>(m_hoverTexture->width),
-		static_cast<float>(m_hoverTexture->height)
-	};
-
 	m_absoluteHoverOffset = {
 		hoverOffset.x * m_resolution.x,
 		hoverOffset.y * m_resolution.y
@@ -99,13 +91,9 @@ void Hover::Render(AppContext_ty_c appContext) {
 		m_textPosition.y - renderOffset.y
 	};
 
-	DrawTexturePro(
-		*m_hoverTexture,
-		m_hoverTextureRec,
+	DrawRectangleRec(
 		dummyCollider,
-		Vector2(0.0f, 0.0f),
-		0.0f,
-		WHITE
+		GREY_100
 	);
 	DrawRectangleLinesEx(
 		dummyCollider,

@@ -20,10 +20,6 @@ private:
 	std::function<void(unsigned int)> m_onClick{ [](unsigned int) {} }; ///< contains the action that gets called on click or enter
 	std::function<Rectangle(Rectangle)> m_getTemporaryCollider;
 
-	Texture* m_grey50; ///< contains a pointer to a texture in the appContext
-	Rectangle m_textureRecGrey50; ///< contains the absolute dimensions of the grey 50 texture
-	Texture* m_grey; ///< contains a pointer to a texture in the appContext
-	Rectangle m_textureRecGrey; //< contains the absolute dimensions of the grey texture
 	/**
 	 * generates the toRender string out of the raw string.
 	 */
