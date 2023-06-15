@@ -4,31 +4,16 @@
 //
 
 #pragma once
-#include "UIElement.hpp"
-#include "Focusable.h"
-#include "Text.h"
-#include "HPlayerData.hpp"
-#include "Hover.h"
+#include "UIGalaxyElement.h"
 #include "HLogicAlias.hpp"
-#include <functional>
-#include <memory>
 
 /**
  * provides a Ui representation if the logic Planet.
  * gets implemented by the UIGalaxy.
  */
-class UIPlanet final : public UIElement, public Focusable {
+class UIPlanet final : public UIGalaxyElement {
 private:
-	unsigned int m_ID; ///< contains the unique planet ID with is also the planet "name"
-	std::string m_stringID; ///< contains the ID as string
-	bool m_isEnabled{ true }; ///< contains if the element is enabled
-	Vector2 m_colliderPos; ///< the position of the collider
-	PlayerData m_currentPlayer; ///< contains the current player data that own the planet
-	Color m_color; ///< contains the current color -> match the player color
-	std::function<void(UIPlanet*)> m_onClick{ [](UIPlanet*) {} }; ///< contains on click that gets called when the planet is clicked
-	Hover m_hover; ///< contains the hover element
-	bool m_renderHover{ false }; ///< contains if the hover text should be rendered
-	Planet_ty_raw_c m_planet; ///< contains if the logic Planet to this Planet
+	Planet_ty_raw_c m_planet; ///< contains the logic Planet to this Planet
 
 public:
 	/**
@@ -39,47 +24,9 @@ public:
 		Vector2 coliderPos, Planet_ty_raw_c planet);
 
 	/**
-	 * Updates the position with the collider position.
-	 */
-	void UpdatePosition(Rectangle newColider);
-
-	/**
-	 * sets the onClick lambda that ´gets called when the planet is clicked.
-	 * provides this.
-	 */
-	void SetOnClick(std::function<void(UIPlanet*)> onClick);
-
-	/**
 	 * updates the hover text
 	 */
-	void UpdateHoverText();
-
-	/**
-	 * sets a player the planet ist currently owning.
-	 */
-	void SetPlayer(PlayerData player);
-	/**
-	 * returns the current player of the UIPlanet.
-	 */
-	[[nodiscard]] PlayerData GetPlayer() const;
-	/**
-	 * sets the current color if it should not match the player color.
-	 */
-	void SetColor(Color color);
-	/**
-	 * returns the current color.
-	 */
-	[[nodiscard]] Color GetColor() const;
-
-	/**
-	 * returns the unique id.
-	 */
-	[[nodiscard]] unsigned int GetID() const;
-
-	/**
-	 * returns if the mouse is currently over the planet.
-	 */
-	[[nodiscard]] bool IsHover() const;
+	void UpdateHoverText() override;
 
 	/**
 	 * planet logic.
@@ -94,18 +41,4 @@ public:
 	 * calls the hover text to resize.
 	 */
 	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
-
-	/**
-	 * sets if the planets is enabled.
-	 */
-	void SetEnabled(bool isEnabled);
-	/**
-	 * returns if the planet is enabled.
-	 */
-	[[nodiscard]] bool IsEnabled() const override;
-
-	/**
-	 * return the current collider.
-	 */
-	[[nodiscard]] Rectangle GetCollider() const override;
 };

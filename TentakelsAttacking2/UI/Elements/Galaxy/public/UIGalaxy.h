@@ -35,7 +35,7 @@ private:
 	Vector2 m_lastMousePosition{ 0.0f,0.0f }; ///< contains the position of the mouse from last tick while the galaxy is moved by mouse
 	Rectangle m_absoluteSize; ///< contains the absolute size of the collider in px
 	Galaxy_ty_raw m_currentGalaxy{ nullptr }; ///< contains a pointer of the current logic galaxy
-	std::vector<UIPlanet_ty> m_uiPlanets; ///< contains the UI planets that are generated from the logic galaxy
+	std::vector<UIGalaxyElement_ty> m_uiPlanets; ///< contains the UI planets that are generated from the logic galaxy
 	std::function<void(float, Vector2)> m_onZoom{ [](float, Vector2) {} }; ///< contains onZoom -> gets called if the galaxy gets zoomed
 	std::function<void(float, bool)> m_onSlide{ [](float, bool) {} }; ///< contains onSlide -> gets called if the galaxy gets slided
 	std::function<void(unsigned int)> m_onPlanetClick{ [](unsigned int) {} }; ///< contains onPlanetClick -> gets called if a planet gets clicked
@@ -56,7 +56,7 @@ private:
 	/**
 	 * returns if the provided planet is still inside of the galaxy collider
 	 */
-	[[nodiscard]] bool IsPlanetInCollider(UIPlanet_ty planet) const;
+	[[nodiscard]] bool IsUIGalaxyElementInCollider(UIGalaxyElement_ty element) const;
 	/**
 	 * updates all button positions with the absolute size.
 	 */
