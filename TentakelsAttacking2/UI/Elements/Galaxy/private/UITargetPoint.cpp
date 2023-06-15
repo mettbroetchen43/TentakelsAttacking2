@@ -10,7 +10,7 @@
 
 UITargetPoint::UITargetPoint(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos,
 	Vector2 resolution, Vector2 colliderPos, TargetPoint_ty_raw_c targetPoint)
-	: UIGalaxyElement{ focusID, ID, player, pos, resolution, colliderPos }, m_targetPoint{ targetPoint } {
+	: UIGalaxyElement{ focusID, ID,{ 0.005f,0.01f },  player, pos, resolution, colliderPos }, m_targetPoint{ targetPoint } {
 	UpdateHoverText();
 }
 
@@ -45,17 +45,10 @@ void UITargetPoint::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c
 	}
 }
 void UITargetPoint::Render(AppContext_ty_c appContext) {
-	DrawRectangleRec(
-		m_collider,
+	DrawCircle(
+		m_collider.x + m_collider.width / 2,
+		m_collider.y + m_collider.height / 2,
+		0.002f * m_resolution.x,
 		m_color
 	);
-
-	/*DrawTextEx(
-		*(appContext.assetManager.GetFont()),
-		m_stringID.c_str(),
-		{ m_collider.x, m_collider.y },
-		m_collider.height,
-		0.0f,
-		m_color
-	);*/
 }

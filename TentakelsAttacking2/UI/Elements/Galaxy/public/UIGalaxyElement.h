@@ -26,7 +26,7 @@ public:
 	 * ctor.
 	 * converts the id to a string.
 	 */
-	UIGalaxyElement(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution,
+	UIGalaxyElement(unsigned int focusID, unsigned int ID, Vector2 size, PlayerData player, Vector2 pos, Vector2 resolution,
 		Vector2 colliderPos);
 
 	/**

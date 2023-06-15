@@ -10,7 +10,7 @@
 
 UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution,
 	Vector2 colliderPos, Planet_ty_raw_c planet)
-	:UIGalaxyElement{ focusID, ID, player, pos, resolution, colliderPos }, m_planet{ planet } {
+	:UIGalaxyElement{ focusID, ID, { 0.01f,0.02f }, player, pos, resolution, colliderPos }, m_planet{ planet } {
 	
 	UpdateHoverText();
 }
