@@ -134,8 +134,8 @@ bool UIGalaxy::IsUIGalaxyElementInCollider(UIGalaxyElement_ty element) const {
 	return true;
 }
 void UIGalaxy::UpdateUIGalaxyElementPosition() {
-	for (auto const& p : m_uiPlanets) {
-		p->UpdatePosition(m_absoluteSize);
+	for (auto const& e : m_uiGalaxyElements) {
+		e->UpdatePosition(m_absoluteSize);
 	}
 }
 void UIGalaxy::SelectUIGalaxyElement(UIGalaxyElement* planet) {
