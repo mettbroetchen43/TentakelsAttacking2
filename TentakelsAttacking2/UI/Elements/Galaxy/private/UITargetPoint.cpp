@@ -9,7 +9,7 @@
 #include "HInput.h"
 
 UITargetPoint::UITargetPoint(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos,
-	Vector2 resolution, Vector2 colliderPos, TargetPoint_ty_c targetPoint)
+	Vector2 resolution, Vector2 colliderPos, TargetPoint_ty_raw_c targetPoint)
 	: UIGalaxyElement{ focusID, ID, player, pos, resolution, colliderPos }, m_targetPoint{ targetPoint } {
 	UpdateHoverText();
 }

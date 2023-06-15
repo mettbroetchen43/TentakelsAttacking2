@@ -13,7 +13,7 @@
  */
 class UITargetPoint final : public UIGalaxyElement {
 private:
-	TargetPoint_ty_c m_targetPoint; ///< contains the logic TargetPoint to this TargetPoint
+	TargetPoint_ty_raw_c m_targetPoint; ///< contains the logic TargetPoint to this TargetPoint
 
 public:
 	/**
@@ -21,7 +21,7 @@ public:
 	 * converts the id to a string.
 	 */
 	UITargetPoint(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution,
-		Vector2 colliderPos, TargetPoint_ty_c targetPoint);
+		Vector2 colliderPos, TargetPoint_ty_raw_c targetPoint);
 
 	/**
 	 * updates the hover text
