@@ -437,7 +437,7 @@ found:
 	SetHighlightBackground(false);
 }
 void Table::SetHighlightBackground(bool reset) {
-	Color const newColor{ reset ? BLACK : HOVERGREY };
+	Color const newColor{ reset ? BLACK : LIGHT_GREY_100 };
 
 	if (m_currentHighlighted.x >= 0) {
 		for (auto const& cell : m_cells.at(m_currentHighlighted.x)) {

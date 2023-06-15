@@ -28,7 +28,7 @@
         "player_count_min": 2
     },
     "sound": {
-        "volume_master": 50.0,
+        "volume_master": 40.0,
         "volume_mute_bool": false
     },
     "version": {

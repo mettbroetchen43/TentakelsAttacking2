@@ -22,9 +22,6 @@ private:
 	Texture* m_texture; ///< contains the texture of the chop
 	Rectangle m_textureRec; ///< contains the dimensions of the texture
 
-	Texture* m_greyTexture; ///< contains the disabled texture
-	Rectangle m_greyTextureRec; ///< contains the dimensions of the texture
-
 	std::function<void(unsigned int, bool)> m_onCheck{ [](unsigned int, bool) {} }; ///< contains the lambda onCheck -> gets called when the state chances
 
 	/**
