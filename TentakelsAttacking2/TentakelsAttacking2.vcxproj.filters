@@ -348,6 +348,9 @@
     <ClInclude Include="UI\Elements\Galaxy\public\UIGalaxyElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Elements\Galaxy\public\UITargetPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -606,6 +609,9 @@
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Galaxy\private\UIGalaxyElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\Galaxy\private\UITargetPoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
