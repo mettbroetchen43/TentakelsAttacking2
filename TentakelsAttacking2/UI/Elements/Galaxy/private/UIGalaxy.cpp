@@ -41,7 +41,7 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 		else if (not p->IsDiscovered() and not event->IsShowGalaxy()) {
 			planet->SetColor(GRAY);
 		}
-		planet->SetOnClick([this](UIPlanet* planet) {
+		planet->SetOnClick([this](UIGalaxyElement* planet) {
 			this->SelectUIGalaxyElement(planet);
 			});
 		planet->UpdatePosition(m_absoluteSize);
@@ -111,7 +111,7 @@ void UIGalaxy::UpdateUIGalaxyElementPosition() {
 		p->UpdatePosition(m_absoluteSize);
 	}
 }
-void UIGalaxy::SelectUIGalaxyElement(UIPlanet* planet) {
+void UIGalaxy::SelectUIGalaxyElement(UIGalaxyElement* planet) {
 	m_onUIGalaxyElementClick(planet->GetID());
 }
 

@@ -56,8 +56,3 @@ void UIPlanet::Render(AppContext_ty_c appContext) {
 		m_color
 	);
 }
-void UIPlanet::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-
-	m_hover.Resize(resolution, appContext);
-	UIElement::Resize(resolution, appContext);
-}

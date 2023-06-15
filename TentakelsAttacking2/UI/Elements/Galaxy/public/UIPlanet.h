@@ -21,7 +21,7 @@ public:
 	 * converts the id to a string.
 	 */
 	UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution, 
-		Vector2 coliderPos, Planet_ty_raw_c planet);
+		Vector2 colliderPos, Planet_ty_raw_c planet);
 
 	/**
 	 * updates the hover text
@@ -36,9 +36,4 @@ public:
 	 * renders the planet.
 	 */
 	void Render(AppContext_ty_c appContext) override;
-	/**
-	 * resizes the planet.
-	 * calls the hover text to resize.
-	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 };

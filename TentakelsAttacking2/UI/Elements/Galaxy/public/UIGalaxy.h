@@ -64,7 +64,7 @@ private:
 	/**
 	 * calls onPlanetClick with the planet that gets provided.
 	 */
-	void SelectUIGalaxyElement(UIPlanet* planet);
+	void SelectUIGalaxyElement(UIGalaxyElement* planet);
 
 	/**
 	 * claps the absolute position and size so it gets never smaller that the collider.

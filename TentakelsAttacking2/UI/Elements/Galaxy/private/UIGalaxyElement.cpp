@@ -25,7 +25,7 @@ void UIGalaxyElement::UpdatePosition(Rectangle newCollider) {
 	m_collider.y = newCollider.y + newCollider.height * m_colliderPos.y;
 }
 
-void UIGalaxyElement::SetOnClick(std::function<void(UIPlanet*)> onClick) {
+void UIGalaxyElement::SetOnClick(std::function<void(UIGalaxyElement*)> onClick) {
 	m_onClick = onClick;
 }
 
@@ -63,4 +63,9 @@ void UIGalaxyElement::SetEnabled(bool isEnabled) {
 
 Rectangle UIGalaxyElement::GetCollider() const {
 	return UIElement::GetCollider();
+}
+void UIGalaxyElement::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+
+	m_hover.Resize(resolution, appContext);
+	UIElement::Resize(resolution, appContext);
 }

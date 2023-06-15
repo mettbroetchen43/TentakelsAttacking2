@@ -17,7 +17,7 @@ protected:
 	Vector2 m_colliderPos; ///< the position of the collider
 	PlayerData m_currentPlayer; ///< contains the current player data that own the SpaceObject
 	Color m_color; ///< contains the current color.
-	std::function<void(UIPlanet*)> m_onClick{ [](UIPlanet*) {} }; ///< contains on click that gets called when the planet is clicked
+	std::function<void(UIGalaxyElement*)> m_onClick{ [](UIGalaxyElement*) {} }; ///< contains on click that gets called when the planet is clicked
 	Hover m_hover; ///< contains the hover element
 	bool m_renderHover{ false }; ///< contains if the hover text should be rendered
 
@@ -43,7 +43,7 @@ public:
 	 * sets the onClick lambda that ´gets called when the planet is clicked.
 	 * provides this.
 	 */
-	void SetOnClick(std::function<void(UIPlanet*)> onClick);
+	void SetOnClick(std::function<void(UIGalaxyElement*)> onClick);
 
 	/**
 	 * sets a player the planet ist currently owning.
@@ -100,5 +100,5 @@ public:
 	 * resizes the planet.
 	 * calls the hover text to resize.
 	 */
-	virtual void Resize(Vector2 resolution, AppContext_ty_c appContext) override = 0;
+	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
 };
