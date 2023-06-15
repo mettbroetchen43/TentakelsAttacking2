@@ -569,6 +569,7 @@ void MainScene::OnEvent(Event const& event) {
 	if (auto const* fleetEvent = dynamic_cast<ReturnFleetInstructionEvent const*>(&event)) {
 		if (fleetEvent->IsValidFleet()) {
 			ClearInputLines();
+			InitializeGalaxy();
 			InitializePlanetTable();
 			InitializeFleetTable();
 			Switch(m_currentMainSceneType);
