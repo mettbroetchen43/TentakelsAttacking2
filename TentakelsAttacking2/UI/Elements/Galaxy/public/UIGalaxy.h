@@ -38,7 +38,7 @@ private:
 	std::vector<UIGalaxyElement_ty> m_uiPlanets; ///< contains the UI planets that are generated from the logic galaxy
 	std::function<void(float, Vector2)> m_onZoom{ [](float, Vector2) {} }; ///< contains onZoom -> gets called if the galaxy gets zoomed
 	std::function<void(float, bool)> m_onSlide{ [](float, bool) {} }; ///< contains onSlide -> gets called if the galaxy gets slided
-	std::function<void(unsigned int)> m_onPlanetClick{ [](unsigned int) {} }; ///< contains onPlanetClick -> gets called if a planet gets clicked
+	std::function<void(unsigned int)> m_onUIGalaxyElementClick{ [](unsigned int) {} }; ///< contains onUIGalaxyElementClick -> gets called if a UIGalaxyElement gets clicked
 
 	/**
 	 * initializes all elements of the galaxy.
@@ -60,11 +60,11 @@ private:
 	/**
 	 * updates all button positions with the absolute size.
 	 */
-	void UpdatePlanetPosition();
+	void UpdateUIGalaxyElementPosition();
 	/**
 	 * calls onPlanetClick with the planet that gets provided.
 	 */
-	void SelectPlanet(UIPlanet* planet);
+	void SelectUIGalaxyElement(UIPlanet* planet);
 
 	/**
 	 * claps the absolute position and size so it gets never smaller that the collider.
@@ -144,7 +144,7 @@ public:
 	 * gets called if a planet is clicked.
 	 * contains the planet id.
 	 */
-	void SetOnPlanetClick(std::function<void(unsigned int)> onPlanetClick);
+	void SetOnUIGalaxyElementClick(std::function<void(unsigned int)> onPlanetClick);
 
 	/**
 	 * logic of the galaxy.

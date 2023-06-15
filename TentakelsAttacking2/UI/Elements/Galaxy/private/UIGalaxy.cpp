@@ -42,7 +42,7 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 			planet->SetColor(GRAY);
 		}
 		planet->SetOnClick([this](UIPlanet* planet) {
-			this->SelectPlanet(planet);
+			this->SelectUIGalaxyElement(planet);
 			});
 		planet->UpdatePosition(m_absoluteSize);
 		m_uiPlanets.push_back(planet);
@@ -106,13 +106,13 @@ bool UIGalaxy::IsUIGalaxyElementInCollider(UIGalaxyElement_ty element) const {
 
 	return true;
 }
-void UIGalaxy::UpdatePlanetPosition() {
+void UIGalaxy::UpdateUIGalaxyElementPosition() {
 	for (auto const& p : m_uiPlanets) {
 		p->UpdatePosition(m_absoluteSize);
 	}
 }
-void UIGalaxy::SelectPlanet(UIPlanet* planet) {
-	m_onPlanetClick(planet->GetID());
+void UIGalaxy::SelectUIGalaxyElement(UIPlanet* planet) {
+	m_onUIGalaxyElementClick(planet->GetID());
 }
 
 void UIGalaxy::ClampsPositionAndSize() {
@@ -175,7 +175,7 @@ void UIGalaxy::MoveByKey(Direction direction, float speed) {
 			break;
 	}
 	ClampsPositionAndSize();
-	UpdatePlanetPosition();
+	UpdateUIGalaxyElementPosition();
 }
 void UIGalaxy::MoveByMouse(Vector2 mousePosition) {
 	if (m_lastMousePosition.x == 0.0f
@@ -191,7 +191,7 @@ void UIGalaxy::MoveByMouse(Vector2 mousePosition) {
 
 	ClampsPositionAndSize();
 	PrepForOnSlide();
-	UpdatePlanetPosition();
+	UpdateUIGalaxyElementPosition();
 }
 
 Vector2 UIGalaxy::GetCurrentScaleReference() const {
@@ -273,7 +273,7 @@ void UIGalaxy::Zoom(bool zoomIn, int factor) {
 
 	m_onZoom(m_scaleFactor, GetCurrentScaleReference());
 	PrepForOnSlide();
-	UpdatePlanetPosition();
+	UpdateUIGalaxyElementPosition();
 }
 void UIGalaxy::Slide(float position, bool isHorizontal) {
 	if (isHorizontal) {
@@ -288,7 +288,7 @@ void UIGalaxy::Slide(float position, bool isHorizontal) {
 	}
 	ClampsPositionAndSize();
 	PrepForOnSlide();
-	UpdatePlanetPosition();
+	UpdateUIGalaxyElementPosition();
 }
 
 void UIGalaxy::SetOnZoom(std::function<void(float, Vector2)> onZoom) {
@@ -297,8 +297,8 @@ void UIGalaxy::SetOnZoom(std::function<void(float, Vector2)> onZoom) {
 void UIGalaxy::SetOnSlide(std::function<void(float, bool)> onSlide) {
 	m_onSlide = onSlide;
 }
-void UIGalaxy::SetOnPlanetClick(std::function<void(unsigned int)> onPlanetClick) {
-	m_onPlanetClick = onPlanetClick;
+void UIGalaxy::SetOnUIGalaxyElementClick(std::function<void(unsigned int)> onUIGalaxyElementClick) {
+	m_onUIGalaxyElementClick = onUIGalaxyElementClick;
 }
 
 void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
