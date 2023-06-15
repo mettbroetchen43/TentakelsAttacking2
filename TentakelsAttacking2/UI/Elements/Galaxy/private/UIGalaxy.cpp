@@ -8,6 +8,7 @@
 #include "AppContext.h"
 #include "Galaxy.h"
 #include "UIPlanet.h"
+#include "UITargetPoint.h"
 #include "HInput.h"
 #include "HFocusEvents.h"
 #include "Player.h"
@@ -17,10 +18,11 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 	Galaxy_ty_c_raw galaxy{ event->GetGalaxy() };
 
 	m_currentGalaxy = galaxy;
-
+	int currentFocusID{ 1 };
 	for (auto const& p  : galaxy->GetPlanets()) {
+		currentFocusID = p->GetID();
 		auto planet = std::make_shared<UIPlanet>(
-			p->GetID(),
+			currentFocusID,
 			p->GetID(),
 			appContext.playerCollection.GetPlayerOrNpcByID(p->GetPlayer()->GetID()),
 			GetAbsolutePosition({
@@ -45,7 +47,32 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 			this->SelectUIGalaxyElement(planet);
 			});
 		planet->UpdatePosition(m_absoluteSize);
+		m_uiGalaxyElements.push_back(planet);
 		m_uiPlanets.push_back(planet);
+	}
+	for (auto const& t : galaxy->GetTargetPoints()) {
+		++currentFocusID;
+		auto point = std::make_shared<UITargetPoint>(
+			currentFocusID,
+			t->GetID(),
+			appContext.playerCollection.GetPlayerOrNpcByID(t->GetPlayer()->GetID()),
+			GetAbsolutePosition({
+				static_cast<float>(t->GetPos().x),
+				static_cast<float>(t->GetPos().y),
+				}, appContext),
+			m_resolution,
+			GetRelativePosition({
+				static_cast<float>(t->GetPos().x),
+				static_cast<float>(t->GetPos().y),
+				}, appContext),
+			t.get()
+		);
+		point->SetOnClick([this](UIGalaxyElement* point) {
+			this->SelectUIGalaxyElement(point);
+			});
+		point->UpdatePosition(m_absoluteSize);
+		m_uiTargetPoints.push_back(point);
+		m_uiGalaxyElements.push_back(point);
 	}
 	m_onZoom(1.0f, GetCurrentScaleReference());
 }
@@ -333,17 +360,17 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 	}
 
 	if (m_isEnabled) {
-		for (auto const& p : m_uiPlanets) {
+		for (auto const& e : m_uiGalaxyElements) {
 
-			if (IsUIGalaxyElementInCollider(p) != p->IsEnabled()) {
-				p->SetEnabled(IsUIGalaxyElementInCollider(p));
-				if (!IsUIGalaxyElementInCollider(p) && p->IsFocused()) {
+			if (IsUIGalaxyElementInCollider(e) != e->IsEnabled()) {
+				e->SetEnabled(IsUIGalaxyElementInCollider(e));
+				if (!IsUIGalaxyElementInCollider(e) && e->IsFocused()) {
 					SelectNextFocusElement();
 				}
 			}
 
-			if (IsUIGalaxyElementInCollider(p)) {
-				p->CheckAndUpdate(mousePosition, appContext);
+			if (IsUIGalaxyElementInCollider(e)) {
+				e->CheckAndUpdate(mousePosition, appContext);
 			}
 		}
 
@@ -351,8 +378,8 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 			if (IsConfirmInputPressed()) {
 				m_isNestedFocus = true;
 				AddFocusLayer();
-				for (auto const& p : m_uiPlanets) {
-					AddFocusElement(p.get());
+				for (auto const& e : m_uiGalaxyElements) {
+					AddFocusElement(e.get());
 				}
 			}
 		}
@@ -367,6 +394,11 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 	}
 }
 void UIGalaxy::Render(AppContext_ty_c appContext) {
+	for (auto const& t : m_uiTargetPoints) {
+		if (IsUIGalaxyElementInCollider(t)) {
+			t->Render(appContext);
+		}
+	}
 	for (auto const& p : m_uiPlanets) {
 		if (IsUIGalaxyElementInCollider(p)) {
 			p->Render(appContext);
@@ -375,6 +407,8 @@ void UIGalaxy::Render(AppContext_ty_c appContext) {
 }
 void UIGalaxy::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
+	UIElement::Resize(resolution, appContext);
+
 	m_absoluteSize = {
 		m_absoluteSize.x / m_resolution.x * resolution.x,
 		m_absoluteSize.y / m_resolution.y * resolution.y,
@@ -382,11 +416,9 @@ void UIGalaxy::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 		m_absoluteSize.height / m_resolution.y * resolution.y,
 	};
 
-	UIElement::Resize(resolution, appContext);
-
-	for (auto const& p : m_uiPlanets) {
-		p->Resize(resolution, appContext);
-		p->UpdatePosition(m_absoluteSize);
+	for (auto const& e : m_uiGalaxyElements) {
+		e->Resize(resolution, appContext);
+		e->UpdatePosition(m_absoluteSize);
 	}
 }
 
