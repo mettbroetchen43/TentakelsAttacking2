@@ -16,12 +16,35 @@ HoverRender::~HoverRender() {
 	AppContext::GetInstance().eventManager.RemoveListener(this);
 }
 
+Vector2 HoverRender::GetStartRenderingOffset() const {
+	Vector2 offset{ 0.0f, 0.0f };
+	for (auto const& e : m_elements) {
+		auto const singleOffset{ e->GetRenderOffset() };
+		if (offset.x < singleOffset.x) { offset.x = singleOffset.x; }
+		if (offset.y < singleOffset.y) { offset.y = singleOffset.y; }
+	}
+
+	return offset;
+}
+
 void HoverRender::Render() {
 	if (m_elements.size() == 0) { return; }
 
 	AppContext_ty appContext = AppContext::GetInstance();
+	if (m_elements.size() == 1) {
+		m_elements.at(0)->Render(appContext);
+		m_elements.clear();
+		return;
+	}
+
+	auto renderingOffset{ GetStartRenderingOffset() };
+	auto const increase{ [&](float offset) {
+		renderingOffset.y -= offset + m_renderGap;
+	} };
+
 	for (auto const& hover : m_elements) {
-		hover->Render(appContext);
+		auto const newOffset = hover->RenderOffset(appContext, renderingOffset);
+		increase(newOffset);
 	}
 	m_elements.clear();
 }
