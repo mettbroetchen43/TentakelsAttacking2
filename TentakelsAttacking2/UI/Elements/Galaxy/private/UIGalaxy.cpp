@@ -405,9 +405,9 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 				e->CheckAndUpdate(mousePosition, appContext);
 			}
 
-			for (auto const& f : m_uiFleets) {
-				f->CheckAndUpdate(mousePosition, appContext);
-			}
+		}
+		for (auto const& f : m_uiFleets) {
+			f->CheckAndUpdate(mousePosition, appContext);
 		}
 
 		if (IsFocused() && !IsNestedFocus()) {
