@@ -17,17 +17,18 @@ void UpdateEvaluationScene::Initialize(SendUpdateEvaluation const* event) const 
 
 	Print("--------------------| Evaluation |--------------------", PrintType::DEBUG);
 
-	Print("------------------ | Merge Results |------------------", PrintType::BUILD);
+	Print("------------------ | Merge Results |------------------", PrintType::DEBUG);
 	for (auto const& e : event->GetMergeResults()) {
 		Print(appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer()->GetID()).name, PrintType::DEBUG);
 		Print(std::to_string(e.GetOrigin()->GetID()) + " -> " + std::to_string(e.GetDestination()->GetID()) + " | " + std::to_string(e.GetCount()), PrintType::DEBUG);
 		Print("------------------------------------------------------", PrintType::DEBUG);
 	}
 
-	Print("------------------ | Fight Results |------------------", PrintType::BUILD);
+	Print("------------------ | Fight Results |------------------", PrintType::DEBUG);
 	for (auto const& e : event->GetFightResults()) {
 		if (not e.IsValid()) { Print("invalid update Evaluation", PrintType::DEBUG);  continue; }
 
+		Print(std::to_string(e.GetSpaceObjects().first->GetID()) + " | " + std::to_string(e.GetSpaceObjects().second->GetID()), PrintType::DEBUG);
 		Print(appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer().first->GetID()).name
 			+ " | " +
 			appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer().second->GetID()).name, PrintType::DEBUG);
