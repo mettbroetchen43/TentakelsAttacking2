@@ -14,6 +14,7 @@
 class UIPlanet final : public UIGalaxyElement {
 private:
 	Planet_ty_raw_c m_planet; ///< contains the logic Planet to this Planet
+	Vector2 m_renderOffset; ///< contains the offset to the collider for rendering
 
 public:
 	/**

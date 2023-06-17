@@ -9,6 +9,7 @@
 #include "Galaxy.h"
 #include "UIPlanet.h"
 #include "UITargetPoint.h"
+#include "UIFleet.h"
 #include "HInput.h"
 #include "HFocusEvents.h"
 #include "Player.h"
@@ -19,7 +20,7 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 
 	m_currentGalaxy = galaxy;
 	int currentFocusID{ 1 };
-	for (auto const& p  : galaxy->GetPlanets()) {
+	for (auto const& p : galaxy->GetPlanets()) {
 		currentFocusID = p->GetID();
 		auto planet = std::make_shared<UIPlanet>(
 			currentFocusID,
@@ -73,6 +74,34 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 		point->UpdatePosition(m_absoluteSize);
 		m_uiTargetPoints.push_back(point);
 		m_uiGalaxyElements.push_back(point);
+	}
+	for (auto const& f : galaxy->GetFleets()) {
+		auto fleet = std::make_shared<UIFleet>(
+			appContext.playerCollection.GetPlayerOrNpcByID(f->GetPlayer()->GetID()),
+			GetAbsolutePosition({
+				static_cast<float>(f->GetPos().x),
+				static_cast<float>(f->GetPos().y)
+				}, appContext),
+			GetAbsolutePosition({
+				static_cast<float>(f->GetTarget()->GetPos().x),
+				static_cast<float>(f->GetTarget()->GetPos().y)
+				}, appContext),
+			m_resolution,
+			GetRelativePosition({
+				static_cast<float>(f->GetPos().x),
+				static_cast<float>(f->GetPos().y)
+				}, appContext
+			),
+			GetRelativePosition({
+				static_cast<float>(f->GetTarget()->GetPos().x),
+				static_cast<float>(f->GetTarget()->GetPos().y)
+				}, appContext),
+			f.get(),
+			[this](Vector2 const& mousePosition) {
+				return CheckCollisionPointRec(mousePosition, this->m_collider);
+			}
+		);
+		m_uiFleets.push_back(fleet);
 	}
 	m_onZoom(1.0f, GetCurrentScaleReference());
 }
@@ -136,6 +165,9 @@ bool UIGalaxy::IsUIGalaxyElementInCollider(UIGalaxyElement_ty element) const {
 void UIGalaxy::UpdateUIGalaxyElementPosition() {
 	for (auto const& e : m_uiGalaxyElements) {
 		e->UpdatePosition(m_absoluteSize);
+	}
+	for (auto const& f : m_uiFleets) {
+		f->UpdatePositions(m_absoluteSize);
 	}
 }
 void UIGalaxy::SelectUIGalaxyElement(UIGalaxyElement* planet) {
@@ -372,6 +404,10 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 			if (IsUIGalaxyElementInCollider(e)) {
 				e->CheckAndUpdate(mousePosition, appContext);
 			}
+
+			for (auto const& f : m_uiFleets) {
+				f->CheckAndUpdate(mousePosition, appContext);
+			}
 		}
 
 		if (IsFocused() && !IsNestedFocus()) {
@@ -394,14 +430,27 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 	}
 }
 void UIGalaxy::Render(AppContext_ty_c appContext) {
-	for (auto const& t : m_uiTargetPoints) {
-		if (IsUIGalaxyElementInCollider(t)) {
-			t->Render(appContext);
-		}
+	BeginScissorMode(
+		static_cast<int>(m_collider.x),
+		static_cast<int>(m_collider.y),
+		static_cast<int>(m_collider.width),
+		static_cast<int>(m_collider.height)
+	);
+
+	for (auto const& f : m_uiFleets) {
+		f->Render(appContext);
 	}
+
+	EndScissorMode();
+
 	for (auto const& p : m_uiPlanets) {
 		if (IsUIGalaxyElementInCollider(p)) {
 			p->Render(appContext);
+		}
+	}
+	for (auto const& t : m_uiTargetPoints) {
+		if (IsUIGalaxyElementInCollider(t)) {
+			t->Render(appContext);
 		}
 	}
 }

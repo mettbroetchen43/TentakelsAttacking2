@@ -10,8 +10,7 @@ UIGalaxyElement::UIGalaxyElement(unsigned int focusID, unsigned int ID, Vector2 
 	Vector2 resolution, Vector2 colliderPos)
 	: Focusable{ focusID }, UIElement{ pos, size, Alignment::MID_MID, resolution }
 	, m_ID{ ID }, m_currentPlayer{ player }, m_colliderPos{ colliderPos }, m_color{ player.color }, m_stringID {
-	std::to_string(ID)
-},
+	std::to_string(ID) },
 	m_hover{
 		0.03f,
 		"",
@@ -21,8 +20,11 @@ UIGalaxyElement::UIGalaxyElement(unsigned int focusID, unsigned int ID, Vector2 
 	} { }
 
 void UIGalaxyElement::UpdatePosition(Rectangle newCollider) {
-	m_collider.x = newCollider.x + newCollider.width * m_colliderPos.x;
-	m_collider.y = newCollider.y + newCollider.height * m_colliderPos.y;
+	Vector2 const newPos{
+		(newCollider.x + newCollider.width  * m_colliderPos.x) / m_resolution.x,
+		(newCollider.y + newCollider.height * m_colliderPos.y) / m_resolution.y
+	};
+	SetPosition(newPos);
 }
 
 void UIGalaxyElement::SetOnClick(std::function<void(UIGalaxyElement*)> onClick) {

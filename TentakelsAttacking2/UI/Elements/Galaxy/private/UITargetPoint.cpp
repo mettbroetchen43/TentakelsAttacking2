@@ -15,7 +15,8 @@ UITargetPoint::UITargetPoint(unsigned int focusID, unsigned int ID, PlayerData p
 }
 
 void UITargetPoint::UpdateHoverText() {
-	std::string const hover{ "x: " + std::to_string(m_targetPoint->GetPos().x) + " y: " + std::to_string(m_targetPoint->GetPos().y) + " | ships: " + std::to_string(m_targetPoint->GetShipCount()) };
+	std::string const position{ "x: " + std::to_string(m_targetPoint->GetPos().x) + ", y: " + std::to_string(m_targetPoint->GetPos().y) };
+	std::string const hover{ std::to_string(m_targetPoint->GetID()) + " | " + position + " | ships: " + std::to_string(m_targetPoint->GetShipCount())};
 	m_hover.SetText(hover);
 }
 
@@ -48,7 +49,7 @@ void UITargetPoint::Render(AppContext_ty_c) {
 	DrawCircle(
 		static_cast<int>(m_collider.x + m_collider.width / 2),
 		static_cast<int>(m_collider.y + m_collider.height / 2),
-		0.002f * m_resolution.x,
+		m_collider.width / 2,
 		m_color
 	);
 }
