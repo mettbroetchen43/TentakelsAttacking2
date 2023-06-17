@@ -96,7 +96,10 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 				static_cast<float>(f->GetTarget()->GetPos().x),
 				static_cast<float>(f->GetTarget()->GetPos().y)
 				}, appContext),
-			f.get()
+			f.get(),
+			[this](Vector2 const& mousePosition) {
+				return CheckCollisionPointRec(mousePosition, this->m_collider);
+			}
 		);
 		m_uiFleets.push_back(fleet);
 	}
