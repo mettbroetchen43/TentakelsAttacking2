@@ -29,7 +29,17 @@ UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vec
 }
 
 void UIPlanet::UpdateHoverText() {
-	std::string const hover{ m_currentPlayer.name + " | x: " + std::to_string(m_planet->GetPos().x) + " y: " + std::to_string(m_planet->GetPos().y) + " | ships: " + std::to_string(m_planet->GetShipCount()) };
+	auto const position{ [&]()->std::string {
+		return "x: " + std::to_string(m_planet->GetPos().x) + ", y: " + std::to_string(m_planet->GetPos().y);
+	} };
+
+	std::string hover{ };
+	if (m_planet->IsDiscovered()) {
+		hover = { m_currentPlayer.name + " | " + position() + " | ships: " + std::to_string(m_planet->GetShipCount()) };
+	}
+	else {
+		hover = { position()};
+	}
 	m_hover.SetText(hover);
 }
 
@@ -42,16 +52,15 @@ void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 			m_onClick(this);
 		}
 		
-		if (m_planet->IsDiscovered()) {
-			m_renderHover = true;
-			UpdateHoverText();
-		}
+		m_renderHover = true;
+		UpdateHoverText();
+
 	}
 	else {
 		m_renderHover = false;
 	}
 
-	if (m_renderHover && m_currentPlayer.ID != 0) {
+	if (m_renderHover) {
 		m_hover.SetRenderHover(mousePosition, appContext);
 	}
 
