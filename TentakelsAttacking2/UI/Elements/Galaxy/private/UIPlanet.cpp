@@ -29,16 +29,14 @@ UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vec
 }
 
 void UIPlanet::UpdateHoverText() {
-	auto const position{ [&]()->std::string {
-		return "x: " + std::to_string(m_planet->GetPos().x) + ", y: " + std::to_string(m_planet->GetPos().y);
-	} };
+	std::string const position{ "x: " + std::to_string(m_planet->GetPos().x) + ", y: " + std::to_string(m_planet->GetPos().y) };
 
 	std::string hover{ };
 	if (m_planet->IsDiscovered()) {
-		hover = { m_currentPlayer.name + " | " + position() + " | ships: " + std::to_string(m_planet->GetShipCount()) };
+		hover = { m_currentPlayer.name + " | " + position + " | ships: " + std::to_string(m_planet->GetShipCount()) };
 	}
 	else {
-		hover = { position()};
+		hover = { position };
 	}
 	m_hover.SetText(hover);
 }
