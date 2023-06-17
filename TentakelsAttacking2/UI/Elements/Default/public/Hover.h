@@ -21,16 +21,17 @@ private:
 	 * calculates textHeight, textPosition, colliderLength.
 	 */
 	void CalculateDefault(AppContext_ty_c appContext);
-	/**
-	 * calculates the collider for drawing so it can not go out of screen.
-	 */
-	Vector2 GetRenderOffset() const;
 
 public:
 	/**
 	 * ctor
 	 */
 	Hover(float height, std::string text, Color color, Vector2 hoverOffset, Vector2 resolution);
+
+	/**
+	 * calculates the collider for drawing so it can not go out of screen.
+	 */
+	[[nodiscard]] Vector2 GetRenderOffset() const;
 
 	/**
 	 * sets the position to the mouse position.
@@ -48,6 +49,11 @@ public:
 	 * gets called from HoverRender
 	 */
 	void Render(AppContext_ty_c appContext) override;
+	/**
+	 * renders the hover with offset.
+	 * gets called from HoverRenderer
+	 */
+	float RenderOffset(AppContext_ty_c appContex, Vector2 const& offset) const;
 
 	/**
 	 * resizes the argument
