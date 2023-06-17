@@ -46,6 +46,11 @@ void UITargetPoint::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c
 	}
 }
 void UITargetPoint::Render(AppContext_ty_c) {
+	DrawRectangleRec(
+		m_collider,
+		BLACK
+	);
+
 	DrawCircle(
 		static_cast<int>(m_collider.x + m_collider.width / 2),
 		static_cast<int>(m_collider.y + m_collider.height / 2),
