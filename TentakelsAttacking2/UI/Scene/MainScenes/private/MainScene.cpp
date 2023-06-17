@@ -464,6 +464,8 @@ void MainScene::Switch(MainSceneType sceneType) {
 	assert(m_planetTable);
 	assert(m_fleetTable);
 
+	if (m_currentMainSceneType == sceneType) { sceneType = MainSceneType::GALAXY; }
+
 	m_galaxy     ->SetActive(false, appContext);
 	m_planetTable->SetActive(false, appContext);
 	m_fleetTable ->SetActive(false, appContext);
