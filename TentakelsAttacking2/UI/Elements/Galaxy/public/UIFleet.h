@@ -16,6 +16,8 @@ private:
 	Fleet_ty_raw_c m_fleet; ///< contains the logic Planet to this Planet
 	Line m_line; ///< contains the line for displaying
 	Hover m_hover; ///< contains the hover Element
+	Vector2 m_relativeStart; ///< contains teh relative start of the line according to the galaxy
+	Vector2 m_relativeEnd; ///< contains teh relative end of the line according to the galaxy
 
 	/**
 	 * checks if a point is colliding with the line.
@@ -23,7 +25,7 @@ private:
 	[[nodiscard]] bool IsColliding(Vector2 const& mousePosition) const;
 
 public:
-	UIFleet(PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Fleet_ty_raw_c fleet);
+	UIFleet(PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd, Fleet_ty_raw_c fleet);
 	
 	/**
 	 * updates the hover text.
@@ -33,7 +35,7 @@ public:
 	/**
 	 * updates the start and end positions
 	 */
-	void UpdatePositions(Vector2 start, Vector2 end);
+	void UpdatePositions(Rectangle newCollider);
 
 	/**
 	 * calls the UIElement to Update.

@@ -87,6 +87,15 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 				static_cast<float>(f->GetTarget()->GetPos().y)
 				}, appContext),
 			m_resolution,
+			GetRelativePosition({
+				static_cast<float>(f->GetPos().x),
+				static_cast<float>(f->GetPos().y)
+				}, appContext
+			),
+			GetRelativePosition({
+				static_cast<float>(f->GetTarget()->GetPos().x),
+				static_cast<float>(f->GetTarget()->GetPos().y)
+				}, appContext),
 			f.get()
 		);
 		m_uiFleets.push_back(fleet);
@@ -153,6 +162,9 @@ bool UIGalaxy::IsUIGalaxyElementInCollider(UIGalaxyElement_ty element) const {
 void UIGalaxy::UpdateUIGalaxyElementPosition() {
 	for (auto const& e : m_uiGalaxyElements) {
 		e->UpdatePosition(m_absoluteSize);
+	}
+	for (auto const& f : m_uiFleets) {
+		f->UpdatePositions(m_absoluteSize);
 	}
 }
 void UIGalaxy::SelectUIGalaxyElement(UIGalaxyElement* planet) {

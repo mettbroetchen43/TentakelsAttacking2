@@ -21,8 +21,9 @@ bool UIFleet::IsColliding(Vector2 const& mousePosition) const {
     return CheckCollisionPointLine(mousePosition, start, end, 2);
 }
 
-UIFleet::UIFleet(PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Fleet_ty_raw_c fleet)
-    : UIElement{ start, { 0.0f,0.0f }, Alignment::MID_MID, resolution }, m_player{ player }, m_fleet{ fleet },
+UIFleet::UIFleet(PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd, Fleet_ty_raw_c fleet)
+    : UIElement{ start, { 0.0f,0.0f }, Alignment::MID_MID, resolution }, m_player{ player },
+    m_relativeStart{ relativeStart }, m_relativeEnd{ relativeEnd }, m_fleet { fleet },
     m_line{
         start,
         end,
@@ -45,9 +46,19 @@ void UIFleet::UpdateHoverText() {
     std::string const text{ std::to_string(m_fleet->GetID()) + " | " + position + " | ships: " + std::to_string(m_fleet->GetShipCount()) };
     m_hover.SetText(text);
 }
-void UIFleet::UpdatePositions(Vector2 start, Vector2 end) {
+void UIFleet::UpdatePositions(Rectangle newCollider) {
+    Vector2 const start{
+        (newCollider.x + newCollider.width  * m_relativeStart.x) / m_resolution.x,
+        (newCollider.y + newCollider.height * m_relativeStart.y) / m_resolution.y
+    };
+    Vector2 const end{
+        (newCollider.x + newCollider.width  * m_relativeEnd.x) / m_resolution.x,
+        (newCollider.y + newCollider.height * m_relativeEnd.y) / m_resolution.y
+    };
+
     m_line.SetStart(start);
     m_line.SetEnd(end);
+    m_line.Update();
 }
 
 void UIFleet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
