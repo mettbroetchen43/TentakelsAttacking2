@@ -428,14 +428,14 @@ void UIGalaxy::Render(AppContext_ty_c appContext) {
 
 	EndScissorMode();
 
-	for (auto const& t : m_uiTargetPoints) {
-		if (IsUIGalaxyElementInCollider(t)) {
-			t->Render(appContext);
-		}
-	}
 	for (auto const& p : m_uiPlanets) {
 		if (IsUIGalaxyElementInCollider(p)) {
 			p->Render(appContext);
+		}
+	}
+	for (auto const& t : m_uiTargetPoints) {
+		if (IsUIGalaxyElementInCollider(t)) {
+			t->Render(appContext);
 		}
 	}
 }
