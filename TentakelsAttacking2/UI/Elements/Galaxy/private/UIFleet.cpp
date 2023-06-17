@@ -41,8 +41,8 @@ UIFleet::UIFleet(PlayerData player, Vector2 start, Vector2 end, Vector2 resoluti
 }
 
 void UIFleet::UpdateHoverText() {
-    std::string const text{ std::to_string(m_fleet->GetID()) + " | x: " + std::to_string(m_fleet->GetPos().x) +
-        " x: " + std::to_string(m_fleet->GetPos().y) + " | ships: " + std::to_string(m_fleet->GetShipCount()) };
+    std::string const position{ "x: " + std::to_string(m_fleet->GetPos().x) + ", y: " + std::to_string(m_fleet->GetPos().y) };
+    std::string const text{ std::to_string(m_fleet->GetID()) + " | " + position + " | ships: " + std::to_string(m_fleet->GetShipCount()) };
     m_hover.SetText(text);
 }
 void UIFleet::UpdatePositions(Vector2 start, Vector2 end) {
