@@ -68,8 +68,8 @@ void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 }
 void UIPlanet::Render(AppContext_ty_c appContext) {
 	DrawCircle(
-		m_collider.x + m_collider.width / 2,
-		m_collider.y + m_collider.height / 2,
+		static_cast<int>(m_collider.x + m_collider.width / 2),
+		static_cast<int>(m_collider.y + m_collider.height / 2),
 		m_collider.width / 2,
 		BLACK
 	);
