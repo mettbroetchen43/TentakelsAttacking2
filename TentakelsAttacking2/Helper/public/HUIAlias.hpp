@@ -99,6 +99,10 @@ class UITargetPoint;
 using UITargetPoint_ty =   std::shared_ptr<UITargetPoint>;
 using UITargetPoint_ty_c = std::shared_ptr<UITargetPoint> const&;
 
+class UIFleet;
+using UIFleet_ty =   std::shared_ptr<UIFleet>;
+using UIFleet_ty_c = std::shared_ptr<UIFleet> const&;
+
 // Table
 class AbstractTableCell;
 using AbstractTableCell_ty =   std::shared_ptr<AbstractTableCell>;
