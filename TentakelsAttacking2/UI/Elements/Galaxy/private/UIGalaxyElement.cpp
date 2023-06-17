@@ -10,8 +10,7 @@ UIGalaxyElement::UIGalaxyElement(unsigned int focusID, unsigned int ID, Vector2 
 	Vector2 resolution, Vector2 colliderPos)
 	: Focusable{ focusID }, UIElement{ pos, size, Alignment::MID_MID, resolution }
 	, m_ID{ ID }, m_currentPlayer{ player }, m_colliderPos{ colliderPos }, m_color{ player.color }, m_stringID {
-	std::to_string(ID)
-},
+	std::to_string(ID) },
 	m_hover{
 		0.03f,
 		"",
