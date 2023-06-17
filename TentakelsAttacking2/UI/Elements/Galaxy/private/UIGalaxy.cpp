@@ -416,10 +416,10 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 }
 void UIGalaxy::Render(AppContext_ty_c appContext) {
 	BeginScissorMode(
-		m_collider.x,
-		m_collider.y,
-		m_collider.width,
-		m_collider.height
+		static_cast<int>(m_collider.x),
+		static_cast<int>(m_collider.y),
+		static_cast<int>(m_collider.width),
+		static_cast<int>(m_collider.height)
 	);
 
 	for (auto const& f : m_uiFleets) {
