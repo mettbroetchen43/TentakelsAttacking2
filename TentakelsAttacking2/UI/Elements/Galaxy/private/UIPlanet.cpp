@@ -10,8 +10,21 @@
 
 UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution,
 	Vector2 colliderPos, Planet_ty_raw_c planet)
-	:UIGalaxyElement{ focusID, ID, { 0.01f,0.02f }, player, pos, resolution, colliderPos }, m_planet{ planet } {
+	:UIGalaxyElement{ focusID, ID, { 0.015f, 0.025f }, player, pos, resolution, colliderPos }, m_planet{ planet } {
 	
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	auto const textSize{ MeasureTextEx(
+		*(appContext.assetManager.GetFont()),
+		m_stringID.c_str(),
+		m_collider.height,
+		0.0f
+	) };
+
+	m_renderOffset = {
+		(m_collider.width  - textSize.x) / 2,
+		(m_collider.height - textSize.y) / 2
+	};
+
 	UpdateHoverText();
 }
 
@@ -47,10 +60,15 @@ void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 	}
 }
 void UIPlanet::Render(AppContext_ty_c appContext) {
+	DrawRectangleRec(
+		m_collider,
+		BLACK
+	);
+
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_stringID.c_str(),
-		{ m_collider.x, m_collider.y },
+		{ m_collider.x + m_renderOffset.x, m_collider.y  + m_renderOffset.y },
 		m_collider.height,
 		0.0f,
 		m_color
