@@ -17,16 +17,14 @@ UIGalaxyElement::UIGalaxyElement(unsigned int focusID, unsigned int ID, Vector2 
 		player.color,
 		Vector2(0.01f,0.01f),
 		resolution
-	} {
-	auto u_pos = GetPosition();
-	u_pos.x -= m_size.x / 2;
-	u_pos.y -= m_size.y / 2;
-	SetPositionUnaligned(u_pos);
-}
+	} { }
 
 void UIGalaxyElement::UpdatePosition(Rectangle newCollider) {
-	m_collider.x = newCollider.x + newCollider.width * m_colliderPos.x;
-	m_collider.y = newCollider.y + newCollider.height * m_colliderPos.y;
+	Vector2 const newPos{
+		(newCollider.x + newCollider.width  * m_colliderPos.x) / m_resolution.x,
+		(newCollider.y + newCollider.height * m_colliderPos.y) / m_resolution.y
+	};
+	SetPosition(newPos);
 }
 
 void UIGalaxyElement::SetOnClick(std::function<void(UIGalaxyElement*)> onClick) {
