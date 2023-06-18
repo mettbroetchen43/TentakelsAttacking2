@@ -28,25 +28,47 @@ Vector2 HoverRender::GetStartRenderingOffset() const {
 }
 
 void HoverRender::Render() {
-	if (m_elements.size() == 0) { return; }
+	auto const handleReturn{ [&]() {
+		m_elements.clear();
+	} };
+	 // no elements
+	if (m_elements.size() == 0) { handleReturn(); return; }
 
+	// one element
 	AppContext_ty appContext = AppContext::GetInstance();
 	if (m_elements.size() == 1) {
 		m_elements.at(0)->Render(appContext);
-		m_elements.clear();
+		handleReturn();
 		return;
 	}
 
+	// multiple elements
 	auto renderingOffset{ GetStartRenderingOffset() };
-	auto const increase{ [&](float offset) {
-		renderingOffset.y -= offset + m_renderGap;
+	auto const increase{ [&](float offset, bool high) {
+		if (high) {
+			renderingOffset.y -= offset + m_renderGap;
+		}
+		else {
+			renderingOffset.y += offset + m_renderGap;
+		}
+
 	} };
+
+	auto const& window{ appContext.constants.window };
+	auto const& resolution{ window.GetIntFromResolution(window.current_resolution) };
+	bool const high{ resolution.second / 2 > GetMousePosition().y };
+
+	if (high) {
+		auto const offset{ m_elements.at(0)->GetCollider().height };
+		increase(offset, high);
+		increase(offset, high);
+	}
 
 	for (auto const& hover : m_elements) {
 		auto const newOffset = hover->RenderOffset(appContext, renderingOffset);
-		increase(newOffset);
+		increase(newOffset, high);
 	}
-	m_elements.clear();
+	handleReturn();
 }
 
 void HoverRender::OnEvent(Event const& event) {
