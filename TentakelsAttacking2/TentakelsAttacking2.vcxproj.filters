@@ -354,6 +354,9 @@
     <ClInclude Include="UI\Elements\Galaxy\public\UIFleet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Helper\public\HLaguageManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -620,8 +623,15 @@
     <ClCompile Include="UI\Elements\Galaxy\private\UIFleet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Helper\private\HLaguageManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\Text\title.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Languages\english.tal" />
+    <None Include="Assets\Languages\german.tal" />
   </ItemGroup>
 </Project>

@@ -88,6 +88,7 @@ void AppContext::OnEvent(Event const& event) {
 AppContext::AppContext() {
 	eventManager.AddListener(&soundManager);
 	eventManager.AddListener(&playerCollection);
+	eventManager.AddListener(&languageManager);
 	eventManager.AddListener(this);
 
 	Print("AppContext initialized", PrintType::INFO);

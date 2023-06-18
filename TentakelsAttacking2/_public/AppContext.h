@@ -5,6 +5,7 @@
 
 #pragma once
 #include "HSoundManager.h"
+#include "HLaguageManager.h"
 #include "EventManager.hpp"
 #include "HAssetManager.h"
 #include "HPlayerCollection.h"
@@ -24,6 +25,7 @@
  */
 struct AppContext final : public EventListener {
 public:
+	HLanguageManager languageManager; /// loads and manages all language things
 	SoundManager soundManager; ///< loads and manage all sounds
 	AssetManager assetManager; ///< loads and manage all assets
 	EventManager eventManager; ///< manage the EventListener and invokes events

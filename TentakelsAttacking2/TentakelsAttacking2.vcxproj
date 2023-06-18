@@ -179,6 +179,7 @@
     <ClInclude Include="Game\public\SpaceObject.h" />
     <ClInclude Include="Game\public\TargetPoint.h" />
     <ClInclude Include="Helper\public\HGameEventTypes.hpp" />
+    <ClInclude Include="Helper\public\HLaguageManager.h" />
     <ClInclude Include="Helper\public\HLogicAlias.hpp" />
     <ClInclude Include="Helper\public\HColors.h" />
     <ClInclude Include="Helper\public\HConcepts.hpp" />
@@ -273,6 +274,7 @@
     <ClCompile Include="Helper\private\HFightResult.cpp" />
     <ClCompile Include="Helper\private\HConfigEnum.cpp" />
     <ClCompile Include="Helper\private\HMergeResult.cpp" />
+    <ClCompile Include="Helper\private\HLaguageManager.cpp" />
     <ClCompile Include="Helper\public\HMergeResult.h" />
     <ClCompile Include="Helper\public\HUIAlias.hpp" />
     <ClCompile Include="Game\private\GalaxyManager.cpp" />
@@ -357,6 +359,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\Text\title.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Languages\english.tal" />
+    <None Include="Assets\Languages\german.tal" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
