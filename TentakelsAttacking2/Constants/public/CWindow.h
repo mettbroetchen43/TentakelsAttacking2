@@ -23,17 +23,17 @@ struct CWindow final {
 	/**
 	 * checks if the provided resolution would fit onto the screen
 	 */
-	[[nodiscard]] bool IsPossibleResolution(Resolution toProove);
+	[[nodiscard]] bool IsPossibleResolution(Resolution toProove) const;
 	/**
 	 * returns all resolutions as pair of resolution and string
 	 */
-	[[nodiscard]] std::vector<std::pair<Resolution, std::string>> GetAllResolutionsAsString();
+	[[nodiscard]] std::vector<std::pair<Resolution, std::string>> GetAllResolutionsAsString() const;
 	/** 
 	 * returns a string for the provided resolution.
 	 */
-	[[nodiscard]] std::string GetStringFromResolution(Resolution resolution);
+	[[nodiscard]] std::string GetStringFromResolution(Resolution resolution) const;
 	/**
 	 * returns the provided resolution as int.
 	 */
-	[[nodiscard]] std::pair<int, int> GetIntFromResolution(Resolution resolution);
+	[[nodiscard]] std::pair<int, int> GetIntFromResolution(Resolution resolution) const;
 };
