@@ -7,7 +7,7 @@
 #include "HPrint.h"
 #include <CustomRaylib.h>
 
-bool CWindow::IsPossibleResolution(Resolution toProve) {
+bool CWindow::IsPossibleResolution(Resolution toProve) const {
 	int const screen{ GetCurrentMonitor() };
 	int const height{ GetMonitorHeight(screen) };
 	int const width{ GetMonitorWidth(screen) };
@@ -19,7 +19,7 @@ bool CWindow::IsPossibleResolution(Resolution toProve) {
 	return true;
 }
 
-std::vector<std::pair<Resolution, std::string>> CWindow::GetAllResolutionsAsString() {
+std::vector<std::pair<Resolution, std::string>> CWindow::GetAllResolutionsAsString() const {
 	std::vector<std::pair<Resolution, std::string>> toReturn;
 
 	for (int i = 0; i != static_cast<int>(Resolution::LAST); ++i) {
@@ -33,7 +33,7 @@ std::vector<std::pair<Resolution, std::string>> CWindow::GetAllResolutionsAsStri
 	return toReturn;
 }
 
-std::string CWindow::GetStringFromResolution(Resolution resolution) {
+std::string CWindow::GetStringFromResolution(Resolution resolution) const {
 
 	switch (resolution) {
 
@@ -89,7 +89,7 @@ std::string CWindow::GetStringFromResolution(Resolution resolution) {
 	}
 }
 
-std::pair<int, int> CWindow::GetIntFromResolution(Resolution resolution) {
+std::pair<int, int> CWindow::GetIntFromResolution(Resolution resolution) const {
 
 	switch (resolution) {
 
