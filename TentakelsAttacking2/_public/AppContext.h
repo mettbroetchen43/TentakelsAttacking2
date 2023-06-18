@@ -138,4 +138,9 @@ private:
 	 * is the only place were an instance can be created.
 	 */
 	AppContext();
+
+	/**
+	 * just vor debugging
+	 */
+	~AppContext();
 };

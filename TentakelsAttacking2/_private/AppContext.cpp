@@ -92,3 +92,7 @@ AppContext::AppContext() {
 
 	Print("AppContext initialized", PrintType::INFO);
 }
+
+AppContext::~AppContext() {
+	Print("AppContext deleted", PrintType::INFO);
+}
