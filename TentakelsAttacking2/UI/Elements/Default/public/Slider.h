@@ -17,8 +17,6 @@ private:
 	bool m_isScroll{ false }; ///< contains if the slider if currently scrolling
 	float m_absoluteDimension{ 1.0f }; ////< contains the ration between the slider and button size
 	float m_btnOffset{ 0.0f }; ///< contains the offset between the mouse and the button center
-	Texture2D* m_texture; ///< contains a pointer if the slider texture
-	Rectangle m_textureRec; ///< contains the absolute size of the texture
 
 	SliderButton m_btn; ///< contains the button of the slider
 	std::function<void(float)> m_onSlide{ [](float) {} }; ///< contains the onSlider lambda it gets called if the button gets moved

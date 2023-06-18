@@ -18,7 +18,6 @@ private:
 
 	size_t m_countX{ }; ///< contains the count of columns
 	size_t m_countY{ }; ///< contains the count of rows
-	Texture* m_backGround{ }; ///< contains the texture behind the colors
 	std::vector<std::unique_ptr<ColorPickerCell>> m_cells{ }; ///< contains all current color cells
 	ColorPickerCell* m_currentColorCell{ nullptr }; ///< contains the current color cell
 	ColorPickerCell* m_previousColorCell{ nullptr }; ///< contains the previous color cell

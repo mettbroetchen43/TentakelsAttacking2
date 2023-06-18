@@ -42,20 +42,23 @@ Hover::Hover(float height, std::string text, Color color, Vector2 hoverOffset, V
 
 	CalculateDefault(appContext);
 
-	m_hoverTexture = appContext.assetManager.GetTexture(AssetType::GREY);
-	m_hoverTextureRec = {
-		0.0f,
-		0.0f,
-		static_cast<float>(m_hoverTexture->width),
-		static_cast<float>(m_hoverTexture->height)
-	};
-
 	m_absoluteHoverOffset = {
 		hoverOffset.x * m_resolution.x,
 		hoverOffset.y * m_resolution.y
 	};
 }
 
+Vector2 Hover::GetRenderOffset() const {
+	Vector2 renderOffset{ 0, 0 };
+	if (m_collider.x + m_collider.width > m_resolution.x) {
+		renderOffset.x = m_collider.x + m_collider.width - m_resolution.x;
+	}
+	if (m_collider.y < 0) {
+		renderOffset.y = -m_collider.y;
+	}
+
+	return renderOffset;
+}
 void Hover::SetRenderHover(Vector2 mousePosition, AppContext_ty_c appContext) {
 	Rectangle const newCollider{
 		mousePosition.x + m_absoluteHoverOffset.x,
@@ -70,17 +73,32 @@ void Hover::SetRenderHover(Vector2 mousePosition, AppContext_ty_c appContext) {
 	appContext.eventManager.InvokeEvent(event);
 }
 
+void Hover::SetText(std::string const& text) {
+	m_text = { text };
+}
+
 void Hover::Render(AppContext_ty_c appContext) {
-	DrawTexturePro(
-		*m_hoverTexture,
-		m_hoverTextureRec,
-		m_collider,
-		Vector2(0.0f, 0.0f),
-		0.0f,
-		WHITE
+	auto const& renderOffset{ GetRenderOffset() };
+	RenderOffset(appContext, renderOffset);
+}
+float Hover::RenderOffset(AppContext_ty_c appContext, Vector2 const& offset) const {
+	Rectangle const dummyCollider{
+		m_collider.x - offset.x,
+		m_collider.y - offset.y,
+		m_collider.width,
+		m_collider.height
+	};
+	Vector2 const dummyTextPosition{
+		m_textPosition.x - offset.x,
+		m_textPosition.y - offset.y
+	};
+
+	DrawRectangleRec(
+		dummyCollider,
+		GREY_100
 	);
 	DrawRectangleLinesEx(
-		m_collider,
+		dummyCollider,
 		2.0f,
 		PURPLE
 	);
@@ -88,12 +106,15 @@ void Hover::Render(AppContext_ty_c appContext) {
 	DrawTextEx(
 		*(appContext.assetManager.GetFont()),
 		m_text.c_str(),
-		m_textPosition,
+		dummyTextPosition,
 		m_textHeight,
 		0.0f,
 		m_color
 	);
+
+	return m_collider.height;
 }
+
 void Hover::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	UIElement::Resize(resolution, appContext);
 	CalculateDefault(appContext);

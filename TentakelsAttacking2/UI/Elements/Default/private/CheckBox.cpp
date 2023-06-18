@@ -40,14 +40,6 @@ CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height,
 		static_cast<float>(m_texture->width),
 		static_cast<float>(m_texture->height)
 	};
-
-	m_greyTexture = appContext.assetManager.GetTexture(AssetType::GREY_50);
-	m_greyTextureRec = {
-		0.0f,
-		0.0f,
-		static_cast<float>(m_greyTexture->width),
-		static_cast<float>(m_greyTexture->height)
-	};
 }
 
 void CheckBox::SetOnCheck(std::function<void(unsigned int, bool)> onCheck) {
@@ -134,24 +126,16 @@ void CheckBox::Render([[maybe_unused]] AppContext_ty_c appContext) {
 	}
 
 	if (!m_isEnabled) {
-		DrawTexturePro(
-			*m_greyTexture,
-			m_greyTextureRec,
+		DrawRectangleRec(
 			m_collider,
-			Vector2(0.0f, 0.0f),
-			0.0f,
-			WHITE
+			GREY_50
 		);
 	}
 
 	if (m_isHovered) {
-		DrawTexturePro(
-			*m_greyTexture,
-			m_greyTextureRec,
+		DrawRectangleRec(
 			m_collider,
-			Vector2(0.0f, 0.0f),
-			0.0f,
-			WHITE
+			GREY_50
 		);
 	}
 }

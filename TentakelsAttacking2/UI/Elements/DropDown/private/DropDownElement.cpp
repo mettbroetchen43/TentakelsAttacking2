@@ -35,23 +35,6 @@ DropDownElement::DropDownElement(Vector2 pos, Vector2 size, Alignment alignment,
     : UIElement{ pos, size, alignment, resolution }, Focusable{ focusID }, m_ID{ ID }, m_text{ text },
     m_getTemporaryCollider{ getTemporaryCollider } {
 
-
-    AppContext_ty appContext{ AppContext::GetInstance() };
-    m_grey50 = appContext.assetManager.GetTexture(AssetType::GREY_50);
-    m_textureRecGrey50 = {
-        0.0f,
-        0.0f,
-        static_cast<float>(m_grey50->width),
-        static_cast<float>(m_grey50->height)
-    };
-    m_grey = appContext.assetManager.GetTexture(AssetType::GREY);
-    m_textureRecGrey50 = {
-    0.0f,
-    0.0f,
-    static_cast<float>(m_grey->width),
-    static_cast<float>(m_grey->height)
-    };
-
     CreateToRender();
 }
 
@@ -68,13 +51,9 @@ void DropDownElement::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty
 }
 void DropDownElement::Render(AppContext_ty_c appContext) {
 
-    DrawTexturePro(
-        *m_grey,
-        m_textureRecGrey,
+    DrawRectangleRec(
         m_collider,
-        { 0.0f,0.0f },
-        0.0f,
-        WHITE
+        GREY_100
     );
 
     DrawRectangleLinesEx(
@@ -95,13 +74,9 @@ void DropDownElement::Render(AppContext_ty_c appContext) {
     );
 
     if (m_hover) {
-        DrawTexturePro(
-            *m_grey50,
-            m_textureRecGrey50,
+        DrawRectangleRec(
             m_collider,
-            { 0.0f,0.0f },
-            0.0f,
-            WHITE
+            GREY_50
         );
     }
 }

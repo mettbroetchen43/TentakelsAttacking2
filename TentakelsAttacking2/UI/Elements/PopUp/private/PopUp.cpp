@@ -15,25 +15,6 @@
 void PopUp::Initialize(std::string const& title, std::string& subTitle,
 	AssetType infoTexture, Vector2 resolution) {
 	
-	auto globalBackground = std::make_shared<Picture>(
-		Vector2(0.0f, 0.0f),
-		Vector2(1.0f, 1.0f),
-		Alignment::DEFAULT,
-		resolution,
-		AssetType::GREY_50
-		);
-	m_elements.push_back(globalBackground);
-
-	auto background = std::make_shared<Picture>(
-		m_pos,
-		m_size,
-		Alignment::DEFAULT,
-		resolution,
-		AssetType::GREY,
-		false
-		);
-	m_elements.push_back(background);
-
 	auto icon = std::make_shared<Picture>(
 		GetElementPosition(m_pos, m_size, 0.15f, 0.05f),
 		GetElementSize(m_size, 0.25f, 0.3f),
@@ -124,6 +105,17 @@ void PopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appCont
 	}
 }
 void PopUp::Render(AppContext_ty_c appContext) {
+	DrawRectangleRec(
+		Rectangle(
+			0.0f,
+			0.0f,
+			m_resolution.x,
+			m_resolution.y
+		),
+		GREY_50
+	);
+	DrawRectangleRec(m_collider, GREY_100);
+
 	for (auto const& e : m_elements) {
 		e->Render(appContext);
 	}

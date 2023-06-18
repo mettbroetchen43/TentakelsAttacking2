@@ -11,18 +11,17 @@
  * provides a Ui representation if the logic Planet.
  * gets implemented by the UIGalaxy.
  */
-class UIPlanet final : public UIGalaxyElement {
+class UITargetPoint final : public UIGalaxyElement {
 private:
-	Planet_ty_raw_c m_planet; ///< contains the logic Planet to this Planet
-	Vector2 m_renderOffset; ///< contains the offset to the collider for rendering
+	TargetPoint_ty_raw_c m_targetPoint; ///< contains the logic TargetPoint to this TargetPoint
 
 public:
 	/**
 	 * ctor.
 	 * converts the id to a string.
 	 */
-	UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution, 
-		Vector2 colliderPos, Planet_ty_raw_c planet);
+	UITargetPoint(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution,
+		Vector2 colliderPos, TargetPoint_ty_raw_c targetPoint);
 
 	/**
 	 * updates the hover text

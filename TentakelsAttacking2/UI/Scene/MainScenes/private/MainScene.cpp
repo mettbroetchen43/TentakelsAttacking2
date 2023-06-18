@@ -419,7 +419,7 @@ void MainScene::NextTurn() {
 
 	ShowMessagePopUpEvent event{
 		"start turn?",
-		"next plyer: " + m_currentPlayer.name + "\naccept to start your turn",
+		"next player: " + m_currentPlayer.name + "\naccept to start your turn",
 		[this]() {
 			this->Switch(MainSceneType::GALAXY);
 		}
@@ -463,6 +463,8 @@ void MainScene::Switch(MainSceneType sceneType) {
 	assert(m_galaxy);
 	assert(m_planetTable);
 	assert(m_fleetTable);
+
+	if (m_currentMainSceneType == sceneType) { sceneType = MainSceneType::GALAXY; }
 
 	m_galaxy     ->SetActive(false, appContext);
 	m_planetTable->SetActive(false, appContext);
@@ -569,6 +571,7 @@ void MainScene::OnEvent(Event const& event) {
 	if (auto const* fleetEvent = dynamic_cast<ReturnFleetInstructionEvent const*>(&event)) {
 		if (fleetEvent->IsValidFleet()) {
 			ClearInputLines();
+			InitializeGalaxy();
 			InitializePlanetTable();
 			InitializeFleetTable();
 			Switch(m_currentMainSceneType);

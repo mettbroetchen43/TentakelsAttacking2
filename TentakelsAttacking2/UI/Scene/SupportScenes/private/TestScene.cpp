@@ -8,21 +8,26 @@
 #include "SceneType.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
-#include "LineDrag.h"
+#include "Table.h"
 
 
 
 void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 
-	auto line = std::make_shared<LineDrag>(
+	m_table = std::make_shared<Table>(
+		Vector2{ 0.5f,0.5f },
+		Vector2{ 0.75f,0.75f },
+		Alignment::MID_MID,
 		m_resolution,
-		2.0f,
-		WHITE,
-		[this](Vector2 start, Vector2 end) {
-			this->LineCallBack(start, end);
-		}
+		1,
+		50,
+		6,
+		Vector2{ 0.2f,0.1f },
+		0.02f
 	);
-	m_elements.push_back(line);
+	m_table->SetScrollable(true);
+	m_elements.push_back(m_table);
+
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
@@ -43,7 +48,7 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 
 
 TestScene::TestScene(Vector2 resolution)
-	: Scene{ {0.5f, 0.5f}, {0.75f, 0.75f}, Alignment::MID_MID, resolution } {
+	: Scene{ {0.5f, 0.5f}, {1.0f, 1.0f}, Alignment::MID_MID, resolution } {
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
 	Initialize(appContext);
@@ -58,27 +63,9 @@ void TestScene::TestLambda([[maybe_unused]] unsigned int value) { }
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 }
-
 void TestScene::Render(AppContext_ty_c appContext) {
 	Scene::Render(appContext);
-	DrawRectangleLinesEx(
-		m_collider,
-		2.0f,
-		WHITE
-	);
 }
-
 void TestScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	Scene::Resize(resolution, appContext);
-}
-
-void TestScene::LineCallBack(Vector2 start, Vector2 end) {
-	Vector2 const elementStart = {
-		GetElementPositionReversed(m_pos, m_size, start)
-	};
-	Vector2 const elementEnd = {
-		GetElementPositionReversed(m_pos,m_size,end)
-	};
-	Print("Callback global  relative -> start: " + ToString(start)        + " | end: " + ToString(end),        PrintType::DEBUG);
-	Print("Callback element relative -> start: " + ToString(elementStart) + " | end: " + ToString(elementEnd), PrintType::DEBUG);
 }

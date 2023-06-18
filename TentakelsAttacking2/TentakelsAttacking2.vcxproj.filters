@@ -345,6 +345,15 @@
     <ClInclude Include="Helper\public\HConfigEnum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Elements\Galaxy\public\UIGalaxyElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Elements\Galaxy\public\UITargetPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Elements\Galaxy\public\UIFleet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -594,6 +603,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Constants\private\CConstants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\private\HMergeResult.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\public\HMergeResult.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\Galaxy\private\UIGalaxyElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\Galaxy\private\UITargetPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\Galaxy\private\UIFleet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
