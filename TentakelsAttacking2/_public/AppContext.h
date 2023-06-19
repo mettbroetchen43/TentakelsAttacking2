@@ -25,9 +25,9 @@
  */
 struct AppContext final : public EventListener {
 public:
-	HLanguageManager languageManager; /// loads and manages all language things
 	SoundManager soundManager; ///< loads and manage all sounds
 	AssetManager assetManager; ///< loads and manage all assets
+	HLanguageManager languageManager; /// loads and manages all language things
 	EventManager eventManager; ///< manage the EventListener and invokes events
 	PlayerCollection playerCollection; ///< contains non logic info's about player
 	Colors colors; ///< contains all colors and check valid color
@@ -39,6 +39,11 @@ public:
 	 * returns an instance.
 	 */
 	[[nodiscard]] static AppContext_ty GetInstance();
+
+	/**
+	 * loads the languages.
+	 */
+	void LoadLanguages();
 
 	/**
 	 * loads config.
