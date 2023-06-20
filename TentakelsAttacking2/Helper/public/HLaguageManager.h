@@ -10,9 +10,9 @@
 class HLanguageManager final : public EventListener {
 private:
 	nlohmann::json m_current_language; ///< contains all text in a specific language
-	std::string m_current_language_name{ "english" }; ///< contains the current language name <- gets overwritten by config
 	static inline std::vector<std::string> m_availableLanguages; ///< contains all available languages
 	static inline std::string const m_default_text{ "no language loaded" }; ///< contains the default string. this gets returnd when lo language is loaded
+	static inline std::string const m_default_language{ "english" }; ///< contains the default language -> gets loaded when the provided language is not able to be loaded
 
 	void InitializeLanguage();
 	void InitializeAvailableLanguages();
