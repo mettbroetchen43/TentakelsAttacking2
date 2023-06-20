@@ -361,3 +361,19 @@ class ShowInitialSoundLevelPopUpEvent final : public PopUpEvent {
 public:
 	using PopUpEvent::PopUpEvent;
 };
+
+/**
+ * changes the current language.
+ */
+class ChangeLanguageEvent final : public Event {
+private:
+	std::string m_language;
+
+public:
+	ChangeLanguageEvent(std::string const& language)
+		: m_language{ language } { }
+
+	[[nodiscard]] std::string GetLanguage() const {
+		return m_language;
+	}
+};
