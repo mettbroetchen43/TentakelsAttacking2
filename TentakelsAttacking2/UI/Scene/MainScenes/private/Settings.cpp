@@ -205,6 +205,17 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	// resolutionText->RenderRectangle(true);
 	m_elements.push_back(resolutionText);
 
+	auto languageText = std::make_shared<Text>(
+		GetElementPosition(0.25f, elementY + 0.02f),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.04f,
+		"Language"
+	);
+	m_elements.push_back(languageText);
+
 	elementY += 0.04f;
 	auto resolutionHintText = std::make_shared<Text>(
 		GetElementPosition(0.75f, elementY),
@@ -235,6 +246,24 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	});
 	m_elements.push_back(m_resolutionDropDown);
+
+	m_languageDropDown = std::make_shared<DropDown>(
+		GetElementPosition(0.25f, elementY),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		m_resolution,
+		0.2f,
+		500,
+		501,
+		appContext.languageManager.GetAvailableLanguages()
+	);
+	m_languageDropDown->SetCurrentElementByString(appContext.constants.global.currentLanguageName);
+	m_languageDropDown->SetOnSave([](unsigned int ID) {
+		auto const language{ AppContext::GetInstance().languageManager.GetAvailableLanguages().at(ID - 1) };
+		auto const event{ ChangeLanguageEvent(language) };
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+	});
+	m_elements.push_back(m_languageDropDown);
 
 
 	// btn
@@ -283,7 +312,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		);
 		}
 	);
-	m_elements.push_back(continueBtn);
+	m_languageDropDownBtn.second = { continueBtn, continueBtn->IsEnabled() };
 
 	auto backBtn = std::make_shared<ClassicButton>(
 		1001,
@@ -300,7 +329,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		);
 		}
 	);
-	m_elements.push_back(backBtn);
+	m_languageDropDownBtn.first = { backBtn, true };
 }
 
 std::vector<std::string> SettingsScene::GetStringsFromResolutionEntries() const {
@@ -331,30 +360,53 @@ SettingsScene::SettingsScene(Vector2 resolution, SceneType continueScene)
 void SettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
-	bool const folded = not m_resolutionDropDown->IsFoldedOut();
+	// resolution
+	bool const folded_1{ not m_resolutionDropDown->IsFoldedOut() };
 	if (m_resolutionDropDownBtn.first.second) {
-		if (folded != m_resolutionDropDownBtn.first.first->IsEnabled()) {
-			m_resolutionDropDownBtn.first.first->SetEnabled(folded);
+		if (folded_1 != m_resolutionDropDownBtn.first.first->IsEnabled()) {
+			m_resolutionDropDownBtn.first.first->SetEnabled(folded_1);
 		}
 	}
 	if (m_resolutionDropDownBtn.second.second) {
-		if (folded != m_resolutionDropDownBtn.second.first->IsEnabled()) {
-			m_resolutionDropDownBtn.second.first->SetEnabled(folded);
+		if (folded_1 != m_resolutionDropDownBtn.second.first->IsEnabled()) {
+			m_resolutionDropDownBtn.second.first->SetEnabled(folded_1);
 		}
 	}
 
-	if (folded) {
+	if (folded_1) {
 		m_resolutionDropDownBtn.first.first->CheckAndUpdate(mousePosition, appContext);
 		m_resolutionDropDownBtn.second.first->CheckAndUpdate(mousePosition, appContext);
+	}
+
+	// language
+	bool const folded_2{ not m_languageDropDown->IsFoldedOut() };
+	if (m_languageDropDownBtn.first.second) {
+		if (folded_2 != m_languageDropDownBtn.first.first->IsEnabled()) {
+			m_languageDropDownBtn.first.first->SetEnabled(folded_2);
+		}
+	}
+	if (m_languageDropDownBtn.second.second) {
+		if (folded_2 != m_languageDropDownBtn.second.first->IsEnabled()) {
+			m_languageDropDownBtn.second.first->SetEnabled(folded_2);
+		}
+	}
+
+	if (folded_2) {
+		m_languageDropDownBtn.first.first->CheckAndUpdate(mousePosition, appContext);
+		m_languageDropDownBtn.second.first->CheckAndUpdate(mousePosition, appContext);
 	}
 }
 void SettingsScene::Render(AppContext_ty_c appContext) {
 	m_resolutionDropDownBtn.first.first->Render(appContext);
 	m_resolutionDropDownBtn.second.first->Render(appContext);
+	m_languageDropDownBtn.first.first->Render(appContext);
+	m_languageDropDownBtn.second.first->Render(appContext);
 	Scene::Render(appContext);
 }
 void SettingsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	m_resolutionDropDownBtn.first.first->Resize(resolution, appContext);
 	m_resolutionDropDownBtn.second.first->Resize(resolution, appContext);
+	m_languageDropDownBtn.first.first->Resize(resolution, appContext);
+	m_languageDropDownBtn.second.first->Resize(resolution, appContext);
 	Scene::Resize(resolution, appContext);
 }
