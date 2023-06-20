@@ -219,7 +219,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	m_elements.push_back(resolutionHintText);
 
 	elementY += 0.02f;
-	m_dropDown = std::make_shared<DropDown>(
+	m_resolutionDropDown = std::make_shared<DropDown>(
 		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
@@ -229,12 +229,12 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		401,
 		GetStringsFromResolutionEntries()
 		);
-	m_dropDown->SetCurrentElementByID(GetIndexFromResolution(appContext.constants.window.current_resolution) + 1);
-	m_dropDown->SetOnSave([this](unsigned int ID) {
+	m_resolutionDropDown->SetCurrentElementByID(GetIndexFromResolution(appContext.constants.window.current_resolution) + 1);
+	m_resolutionDropDown->SetOnSave([this](unsigned int ID) {
 		SetNewResolutionEvent const event{ this->m_rawResolutionEntries[ID - 1].first };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	});
-	m_elements.push_back(m_dropDown);
+	m_elements.push_back(m_resolutionDropDown);
 
 
 	// btn
@@ -248,7 +248,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		SoundType::CLICKED_RELEASE_STD
 		);
 	finishBtn->SetEnabled(false);
-	m_dropDownBtn.first = finishBtn;
+	m_resolutionDropDownBtn.first = { finishBtn, false };
 
 	auto fullScreenToggleBtn = std::make_shared<ClassicButton>(
 		501,
@@ -263,7 +263,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		ToggleFullscreenEvent const event{};
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	});
-	m_dropDownBtn.second = fullScreenToggleBtn;
+	m_resolutionDropDownBtn.second = { fullScreenToggleBtn, true };
 
 	auto continueBtn = std::make_shared<ClassicButton>(
 		1000,
@@ -331,26 +331,30 @@ SettingsScene::SettingsScene(Vector2 resolution, SceneType continueScene)
 void SettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
-	bool const folded = not m_dropDown->IsFoldedOut();
-	if (folded != m_dropDownBtn.first->IsEnabled()) {
-		m_dropDownBtn.first->SetEnabled(folded);
+	bool const folded = not m_resolutionDropDown->IsFoldedOut();
+	if (m_resolutionDropDownBtn.first.second) {
+		if (folded != m_resolutionDropDownBtn.first.first->IsEnabled()) {
+			m_resolutionDropDownBtn.first.first->SetEnabled(folded);
+		}
 	}
-	if (folded != m_dropDownBtn.second->IsEnabled()) {
-		m_dropDownBtn.second->SetEnabled(folded);
+	if (m_resolutionDropDownBtn.second.second) {
+		if (folded != m_resolutionDropDownBtn.second.first->IsEnabled()) {
+			m_resolutionDropDownBtn.second.first->SetEnabled(folded);
+		}
 	}
 
 	if (folded) {
-		m_dropDownBtn.first->CheckAndUpdate(mousePosition, appContext);
-		m_dropDownBtn.second->CheckAndUpdate(mousePosition, appContext);
+		m_resolutionDropDownBtn.first.first->CheckAndUpdate(mousePosition, appContext);
+		m_resolutionDropDownBtn.second.first->CheckAndUpdate(mousePosition, appContext);
 	}
 }
 void SettingsScene::Render(AppContext_ty_c appContext) {
-	m_dropDownBtn.first->Render(appContext);
-	m_dropDownBtn.second->Render(appContext);
+	m_resolutionDropDownBtn.first.first->Render(appContext);
+	m_resolutionDropDownBtn.second.first->Render(appContext);
 	Scene::Render(appContext);
 }
 void SettingsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	m_dropDownBtn.first->Resize(resolution, appContext);
-	m_dropDownBtn.second->Resize(resolution, appContext);
+	m_resolutionDropDownBtn.first.first->Resize(resolution, appContext);
+	m_resolutionDropDownBtn.second.first->Resize(resolution, appContext);
 	Scene::Resize(resolution, appContext);
 }

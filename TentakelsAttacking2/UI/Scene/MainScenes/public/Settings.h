@@ -13,10 +13,12 @@ class SliderAndInputLine;
  */
 class SettingsScene final : public Scene {
 private:
+	using DropDownButton_ty = std::pair<ClassicButton_ty, bool>;
 	std::shared_ptr<SliderAndInputLine> m_volume; ///< contains the volume slider
 	std::vector<std::pair<Resolution, std::string>> m_rawResolutionEntries; ///< contains die raw resolution information
-	std::pair<ClassicButton_ty, ClassicButton_ty> m_dropDownBtn{ nullptr, nullptr }; ///< contains the two buttons that are hidden by the drop down
-	DropDown_ty m_dropDown{ nullptr };///< contains the drop down
+	std::pair<DropDownButton_ty, DropDownButton_ty> m_resolutionDropDownBtn; ///< contains the two buttons that are hidden by the resolution drop down
+	
+	DropDown_ty m_resolutionDropDown{ nullptr }; ///< contains the resoltuion drop down
 	/**
 	 * initializes all ui elements.
 	 * connects the actions.
