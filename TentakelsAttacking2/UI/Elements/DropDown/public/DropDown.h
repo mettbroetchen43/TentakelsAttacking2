@@ -104,6 +104,11 @@ public:
 	 * returns if the element was set.
 	 */
 	bool SetCurrentElementByID(unsigned int ID);
+	/**
+	 * sets the element of the provided string as current element.
+	 * returns if the element was set.
+	 */
+	bool SetCurrentElementByString(std::string const& element);
 
 
 	/**

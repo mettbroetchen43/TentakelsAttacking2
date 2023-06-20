@@ -229,6 +229,16 @@ bool DropDown::SetCurrentElementByID(unsigned int ID) {
 	}
 	return false;
 }
+bool DropDown::SetCurrentElementByString(std::string const& element) {
+
+	for (auto const& e : m_dropDownElements) {
+		if (e->GetText() == element) {
+			SetCurrentElement(e);
+			return true;
+		}
+	}
+	return false;
+}
 
 void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
