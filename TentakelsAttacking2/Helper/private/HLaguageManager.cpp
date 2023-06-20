@@ -10,10 +10,11 @@
 #include <iostream>
 
 void HLanguageManager::Initialize() {
-	InitializeLanguage();
 	InitializeAvailableLanguages();
+	InitializeLanguage();
 }
 void HLanguageManager::InitializeLanguage() {
+	LoadLanguage(AppContext::GetInstance().constants.global.currentLanguageName);
 	Print("Language", PrintType::INITIALIZE);
 }
 void HLanguageManager::InitializeAvailableLanguages() {
@@ -50,6 +51,36 @@ void HLanguageManager::InitializeAvailableLanguages() {
 		m_availableLanguages.push_back(fileName.string());
 	}
 
+}
+
+bool HLanguageManager::LoadLanguage(std::string const& language) {
+	bool found{ false };
+	for (auto const& l : m_availableLanguages) {
+		if (l == language) { found = true; break; }
+	}
+	if (not found) {
+		Print(" language \"" + language + "\" in not in available languages.", PrintType::ERROR);
+		return false;
+	}
+
+	std::string const directory{ "Assets/Languages" };
+	if (not DirectoryExists(directory.c_str())) {
+		Print("directory \"" + directory + "\" not existing. unable to load provided language", PrintType::ERROR);
+		return false;
+	}
+
+
+	std::ifstream in;
+	in.open(directory + "/" + language + ".tal");
+	if (not in.is_open()) {
+		Print("not able to open language. \"" + language + "\"", PrintType::ERROR);
+		return false;
+	}
+
+	in >> m_current_language;
+	in.close();
+	Print("language loaded: \"" + language + "\"", PrintType::INFO);
+	return true;
 }
 
 HLanguageManager::HLanguageManager() {

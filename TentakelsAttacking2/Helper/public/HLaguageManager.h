@@ -18,7 +18,7 @@ private:
 	void InitializeAvailableLanguages();
 
 	void ChanceLanguage(std::string const& language);
-	std::pair<bool, nlohmann::json> LoadLanguage(std::string const& language);
+	[[nodiscard]] bool LoadLanguage(std::string const& language);
 
 public:
 	HLanguageManager();
