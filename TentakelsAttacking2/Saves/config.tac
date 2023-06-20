@@ -9,6 +9,7 @@
         "fleet_speed_min": 2
     },
     "global": {
+        "current_language_name": "english",
         "game_rounds_current": 50,
         "game_rounds_max": 100,
         "game_rounds_min": 20
