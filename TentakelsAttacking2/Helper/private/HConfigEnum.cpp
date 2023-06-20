@@ -28,6 +28,8 @@ std::string CToS(ConfigTypes type) {
 	
 		case ConfigTypes::GLOBAL:
 			return "global";
+		case ConfigTypes::CURRENT_LANGUAGE_NAME:
+			return "current_language_name";
 		case ConfigTypes::GAME_ROUNDS_CURRENT:
 			return "game_rounds_current";
 		case ConfigTypes::GAME_ROUNDS_MAX:
