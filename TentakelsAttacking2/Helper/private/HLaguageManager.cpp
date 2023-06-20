@@ -14,7 +14,7 @@ void HLanguageManager::Initialize() {
 	InitializeLanguage();
 }
 void HLanguageManager::InitializeLanguage() {
-	LoadLanguage(AppContext::GetInstance().constants.global.currentLanguageName);
+	ChanceLanguage(AppContext::GetInstance().constants.global.currentLanguageName);
 	Print("Language", PrintType::INITIALIZE);
 }
 void HLanguageManager::InitializeAvailableLanguages() {
@@ -53,13 +53,34 @@ void HLanguageManager::InitializeAvailableLanguages() {
 
 }
 
+void HLanguageManager::ChanceLanguage(std::string const& language) {
+
+	bool const validLoad{ LoadLanguage(language) };
+
+	if (not validLoad) {
+		if (not m_current_language.empty()) {
+			Print("not able to load new language -> fallback to old language", PrintType::INFO);
+			return;
+		}
+		if (language != m_default_language) {
+			bool const validDefaultLoad{ LoadLanguage(m_default_language) };
+			if (validDefaultLoad) {
+				Print("fallback to default language: \"" + m_default_language + "\"", PrintType::INFO);
+				return;
+			}
+			m_current_language.clear();
+			AppContext::GetInstance().constants.global.currentLanguageName = "";
+			Print("not able to load any language.", PrintType::ERROR);
+		}
+	}
+}
 bool HLanguageManager::LoadLanguage(std::string const& language) {
 	bool found{ false };
 	for (auto const& l : m_availableLanguages) {
 		if (l == language) { found = true; break; }
 	}
 	if (not found) {
-		Print(" language \"" + language + "\" in not in available languages.", PrintType::ERROR);
+		Print("language \"" + language + "\" is not available", PrintType::ERROR);
 		return false;
 	}
 
@@ -79,6 +100,9 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 
 	in >> m_current_language;
 	in.close();
+
+	AppContext::GetInstance().constants.global.currentLanguageName = language;
+
 	Print("language loaded: \"" + language + "\"", PrintType::INFO);
 	return true;
 }
