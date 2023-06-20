@@ -8,10 +8,6 @@
 #include "HPrint.h"
 #include <filesystem>
 
-void HLanguageManager::Initialize() {
-	InitializeAvailableLanguages();
-	InitializeLanguage();
-}
 void HLanguageManager::InitializeLanguage() {
 	ChanceLanguage(AppContext::GetInstance().constants.global.currentLanguageName);
 	Print("Language", PrintType::INITIALIZE);
@@ -108,6 +104,15 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 
 HLanguageManager::HLanguageManager() {
 	Print("LanguageManager", PrintType::INITIALIZE);
+}
+
+void HLanguageManager::Initialize() {
+	InitializeAvailableLanguages();
+	InitializeLanguage();
+}
+
+std::vector<std::string> HLanguageManager::GetAvailableLanguages() const {
+	return m_availableLanguages;
 }
 
 std::string HLanguageManager::Text(std::string key) const {

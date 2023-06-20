@@ -25,6 +25,8 @@ public:
 
 	void Initialize();
 
+	[[nodiscard]] std::vector<std::string> GetAvailableLanguages() const;
+
 	[[nodiscard]] std::string Text(std::string key) const;
 	[[nodiscard]] std::string Text(std::string key, std::vector<std::string> replace) const;
 
