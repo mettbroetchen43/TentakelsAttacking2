@@ -7,7 +7,6 @@
 #include "AppContext.h"
 #include "HPrint.h"
 #include <filesystem>
-#include <iostream>
 
 void HLanguageManager::Initialize() {
 	InitializeAvailableLanguages();
@@ -133,5 +132,7 @@ std::string HLanguageManager::Text(std::string key, std::vector<std::string> rep
 }
 
 void HLanguageManager::OnEvent(Event const& event) {
-
+	if (auto const* ChaneEvent = dynamic_cast<ChangeLanguageEvent const*>(&event)) {
+		ChanceLanguage(ChaneEvent->GetLanguage());
+	}
 }
