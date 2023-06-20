@@ -14,7 +14,7 @@ void HLanguageManager::Initialize() {
 	InitializeAvailableLanguages();
 }
 void HLanguageManager::InitializeLanguage() {
-	Print("initialize Language", PrintType::DEBUG);
+	Print("Language", PrintType::INITIALIZE);
 }
 void HLanguageManager::InitializeAvailableLanguages() {
 	std::string const directory{ "Assets/Languages" };
