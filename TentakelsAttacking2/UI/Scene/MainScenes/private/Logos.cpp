@@ -14,6 +14,8 @@
 
 
 void LogoScene::Initialize() {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
 	auto logo = std::make_shared<Picture>(
 		GetElementPosition(0.5f, 0.1f),
 		GetElementSize(0.0f, 0.5f),
@@ -30,7 +32,7 @@ void LogoScene::Initialize() {
 		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		"A Purpur Tentakel production"
+		appContext.languageManager.Text("scene_logo_title","Purpur Tentakel")
 		);
 	//mainText->RenderRectangle(true);
 	m_elements.push_back(mainText);
@@ -42,7 +44,7 @@ void LogoScene::Initialize() {
 		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
-		"skip with [ESC]"
+		appContext.languageManager.Text("scene_logo_skip", "[ESC]")
 		);
 	// skipText->RenderRectangle(true);
 	m_elements.push_back(skipText);

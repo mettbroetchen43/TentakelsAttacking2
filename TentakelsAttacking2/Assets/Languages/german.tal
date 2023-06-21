@@ -1,4 +1,4 @@
 {
-    "popup_title_next_turn": "Naechster Zug:",
-    "popup_text_next_turn": "Der naechste Spieler ist {}"
+    "scene_logo_title": "Eine {0} Produktion",
+    "scene_logo_skip": "\u00fcberspringen mit {0}"
 }
