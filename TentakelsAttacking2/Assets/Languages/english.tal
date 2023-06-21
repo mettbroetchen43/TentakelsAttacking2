@@ -2,5 +2,12 @@
     "scene_logo_title": "A {0} production",
     "scene_logo_skip": "Skip with {0}",
     "scene_intro_start": "Start game",
-    "scene_intro_skip": "Skip with {0}"
+    "scene_intro_skip": "Skip with {0}",
+    "scene_main_menu_new_game": "New game",
+    "scene_main_menu_continue": "Continue",
+    "scene_main_menu_save": "Save game",
+    "scene_main_menu_load": "Load game",
+    "scene_main_menu_settings": "Settings",
+    "scene_main_menu_credits": "Credits",
+    "scene_main_menu_quit": "Quit"
 }

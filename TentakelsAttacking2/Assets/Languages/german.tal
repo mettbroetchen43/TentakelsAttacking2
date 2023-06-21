@@ -2,5 +2,12 @@
     "scene_logo_title": "Eine {0} Produktion",
     "scene_logo_skip": "{0} zum \u00fcberspringen",
     "scene_intro_start": "Spiel starten",
-    "scene_intro_skip": "{0} zum \u00fcberspringen"
+    "scene_intro_skip": "{0} zum \u00fcberspringen",
+    "scene_main_menu_new_game": "Neues Spiel",
+    "scene_main_menu_continue": "Weiter spielen",
+    "scene_main_menu_save": "Spiel speichern",
+    "scene_main_menu_load": "Spiel laden",
+    "scene_main_menu_settings": "Einstellungen",
+    "scene_main_menu_credits": "Abspann",
+    "scene_main_menu_quit": "Schlie\u00dfen"
 }
