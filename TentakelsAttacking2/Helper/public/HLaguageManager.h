@@ -4,6 +4,7 @@
 //
 
 #pragma once
+#include "HPrint.h"
 #include "EventListener.hpp"
 #include <nlohmann/json.hpp>
 
@@ -20,6 +21,12 @@ private:
 	void ChanceLanguage(std::string const& language);
 	[[nodiscard]] bool LoadLanguage(std::string const& language);
 
+	[[nodiscard]] std::string RawText(std::string const& key) const;
+
+	[[nodiscard]] std::string ReplacePlaceholders(std::string const& text) const;
+	template<typename... Args>
+	[[nodiscard]] std::string ReplacePlaceholders(std::string_view text, Args const&... args) const;
+
 public:
 	HLanguageManager();
 
@@ -27,8 +34,35 @@ public:
 
 	[[nodiscard]] std::vector<std::string> GetAvailableLanguages() const;
 
-	[[nodiscard]] std::string Text(std::string key) const;
-	[[nodiscard]] std::string Text(std::string key, std::vector<std::string> replace) const;
+	[[nodiscard]] std::string Text(std::string const& key) const;
+	template<typename... Args>
+	[[nodiscard]] std::string Text(std::string const& key, Args const&... args) const;
 
 	void OnEvent(Event const& event) override;
 };
+
+template<typename ...Args>
+inline std::string HLanguageManager::ReplacePlaceholders(std::string_view text, Args const & ...args) const {
+	try {
+		return std::vformat(text, std::make_format_args(args...));
+	}
+	catch (std::format_error const&) {
+		std::string t{ text.substr() };
+		Print("wrong format. appears mostly when arguments not matching: " + t, PrintType::ERROR);
+		assert(false and "wrong format");
+		return m_default_text;
+	}
+	catch (std::bad_alloc const&) {
+		std::string t{ text.substr() };
+		Print("bad alloc: " + t, PrintType::ERROR);
+		assert(false and "bad alloc");
+		return m_default_text;
+	}
+}
+
+template<typename ...Args>
+inline std::string HLanguageManager::Text(std::string const& key, Args const & ...args) const {
+	std::string text{ RawText(key) };
+	return ReplacePlaceholders(text, args...);
+}
+ 

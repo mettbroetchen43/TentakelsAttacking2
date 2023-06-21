@@ -102,20 +102,7 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 	return true;
 }
 
-HLanguageManager::HLanguageManager() {
-	Print("LanguageManager", PrintType::INITIALIZE);
-}
-
-void HLanguageManager::Initialize() {
-	InitializeAvailableLanguages();
-	InitializeLanguage();
-}
-
-std::vector<std::string> HLanguageManager::GetAvailableLanguages() const {
-	return m_availableLanguages;
-}
-
-std::string HLanguageManager::Text(std::string key) const {
+std::string HLanguageManager::RawText(std::string const& key) const {
 	if (m_current_language == nullptr) {
 		Print("No Current Language loaded", PrintType::ERROR);
 		return m_default_text;
@@ -132,8 +119,23 @@ std::string HLanguageManager::Text(std::string key) const {
 		return m_current_language[key];
 	}
 }
-std::string HLanguageManager::Text(std::string key, std::vector<std::string> replace) const {
-	return std::string();
+std::string HLanguageManager::ReplacePlaceholders(std::string const& text) const {
+	return text;
+}
+
+HLanguageManager::HLanguageManager() {
+	Print("LanguageManager", PrintType::INITIALIZE);
+}
+void HLanguageManager::Initialize() {
+	InitializeAvailableLanguages();
+	InitializeLanguage();
+}
+
+std::vector<std::string> HLanguageManager::GetAvailableLanguages() const {
+	return m_availableLanguages;
+}
+std::string HLanguageManager::Text(std::string const& key) const {
+	return RawText(key);
 }
 
 void HLanguageManager::OnEvent(Event const& event) {
