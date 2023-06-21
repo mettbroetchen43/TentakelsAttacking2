@@ -23,7 +23,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
 		resolution,
-		"Speed " + std::to_string(m_speedLevel) + "/" + std::to_string(m_maxSpeedLevel),
+		appContext.languageManager.Text("scene_credits_speed_toggle", m_speedLevel, m_maxSpeedLevel),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	m_speedBTN->SetOnClick([this]() {
@@ -38,7 +38,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
 		resolution,
-		"Back",
+		appContext.languageManager.Text("scene_credits_back"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	backBTN->SetOnClick([]() {
@@ -56,7 +56,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::MID_MID,
 		0.15f,
-		"Credits"
+		appContext.languageManager.Text("scene_credits_credits")
 		);
 	// creditsText->RenderRectangle(true);
 	AddMovingElement(creditsText);
@@ -117,11 +117,10 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_MID,
 		0.08f,
-		"A Purpur Tentakel Production"
+		appContext.languageManager.Text("scene_credits_subtitle", "Purpur Tentakel")
 		);
 	// logoText->RenderRectangle(true);
 	AddMovingElement(logoText);
-
 
 	// credits vector
 	// lib
@@ -165,7 +164,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		resolution,
-		"Libraries",
+		appContext.languageManager.Text("scene_credits_libraries"),
 		libVec,
 		true
 		);
@@ -178,7 +177,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		resolution,
-		"Inspiration",
+		appContext.languageManager.Text("scene_credits_inspiration"),
 		inspirationVec
 		);
 	inspirationTable->SetActive(true, appContext);
@@ -190,7 +189,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		resolution,
-		"Testers",
+		appContext.languageManager.Text("scene_credits_testers"),
 		testerVec
 		);
 	testersTable->SetActive(true, appContext);
@@ -202,7 +201,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		resolution,
-		"Special Thanks",
+		appContext.languageManager.Text("scene_credits_special_thanks"),
 		specialThanksVec
 		);
 	spatialThanksTable->SetActive(true, appContext);
@@ -214,7 +213,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		resolution,
-		"Contact",
+		appContext.languageManager.Text("scene_credits_contact"),
 		contactVec,
 		true
 		);
@@ -224,20 +223,20 @@ void CreditsScene::Initialize(Vector2 resolution) {
 
 	// finish btn
 	setHeight(0.1f, 0.0f);
-	m_finishBTN = std::make_shared<ClassicButton>(
+	m_endBTN = std::make_shared<ClassicButton>(
 		3,
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.15f, height),
 		Alignment::TOP_MID,
 		resolution,
-		"Finish",
+		appContext.languageManager.Text("scene_credits_end"),
 		SoundType::ACCEPTED
 		);
-	m_finishBTN->SetOnClick([]() {
+	m_endBTN->SetOnClick([]() {
 		auto event = SwitchSceneEvent(SceneType::MAIN_MENU);
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 		});
-	AddMovingElement(m_finishBTN);
+	AddMovingElement(m_endBTN);
 }
 
 void CreditsScene::AddMovingElement(std::shared_ptr<UIElement> element) {
@@ -255,10 +254,7 @@ void CreditsScene::ToggleSpeedLevel() {
 		m_speedLevel = 1;
 	}
 
-	std::string text{ m_speedBTN->GetText() };
-	text = text.substr(0, text.size() - 4);
-	text += " " + std::to_string(m_speedLevel) + "/" + std::to_string(m_maxSpeedLevel);
-	m_speedBTN->SetText(text);
+	m_speedBTN->SetText(AppContext::GetInstance().languageManager.Text("scene_credits_speed_toggle", m_speedLevel, m_maxSpeedLevel));
 	
 	for (auto e : m_movingElements) {
 		e->MoveBySpeed(m_speed * m_speedLevel, 0.0f);
@@ -266,8 +262,8 @@ void CreditsScene::ToggleSpeedLevel() {
 
 }
 void CreditsScene::CheckCreditsFinished() {
-	float const shouldY{ (m_resolution.y * 0.75f) - (m_finishBTN->GetCollider().height / 2) };
-	float const btnY{ m_finishBTN->GetCollider().y };
+	float const shouldY{ (m_resolution.y * 0.75f) - (m_endBTN->GetCollider().height / 2) };
+	float const btnY{ m_endBTN->GetCollider().y };
 	if (btnY <= shouldY) {
 		for (auto& e : m_movingElements) {
 			e->StopMoving();

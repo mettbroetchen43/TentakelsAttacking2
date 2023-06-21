@@ -13,7 +13,7 @@ class CreditsScene final : public Scene {
 private:
 	Title_ty m_title; ///< contains the title
 	Line_ty m_titleLine; ///< contains the line below title
-	ClassicButton_ty m_finishBTN;  ///< contains the button that gets displayed at the end of the credits
+	ClassicButton_ty m_endBTN;  ///< contains the button that gets displayed at the end of the credits
 	ClassicButton_ty m_speedBTN; ///< contains the button that can toggle the credit speed
 	float m_speed{ 0.07f }; ///< contains the base credit speed -> speed level 1
 	int m_maxSpeedLevel{ 3 }; ///< contains the maximum speed level.

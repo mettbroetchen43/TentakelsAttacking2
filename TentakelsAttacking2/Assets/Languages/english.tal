@@ -21,5 +21,15 @@
     "scene_settings_main_menu": "Main menu",
     "scene_settings_continue": "Continue",
     "scene_settings_end_game": "End game",
-    "scene_settings_toggle_fullscreen": "Toggle fullscreen"
+    "scene_settings_toggle_fullscreen": "Toggle fullscreen",
+    "scene_credits_speed_toggle": "Speed {0} / {1}",
+    "scene_credits_back": "Back",
+    "scene_credits_credits": "Credits",
+    "scene_credits_subtitle": "A {0} production",
+    "scene_credits_libraries": "Libraries",
+    "scene_credits_inspiration": "Inspiration",
+    "scene_credits_testers": "Testers",
+    "scene_credits_special_thanks": "Special Thanks",
+    "scene_credits_contact": "Contact",
+    "scene_credits_end": "End"
 }

@@ -21,5 +21,15 @@
     "scene_settings_main_menu": "Hauptmen\u00fc",
     "scene_settings_continue": "Weiter spielen",
     "scene_settings_end_game": "Spiel beenden",
-    "scene_settings_toggle_fullscreen": "Vollbild umschalten"
+    "scene_settings_toggle_fullscreen": "Vollbild umschalten",
+    "scene_credits_speed_toggle": "Geschwindigkeit {0} / {1}",
+    "scene_credits_back": "Zur\u00fcck",
+    "scene_credits_credits": "Abspann",
+    "scene_credits_subtitle": "Eine {0} Produktion",
+    "scene_credits_libraries": "Bibliotheken",
+    "scene_credits_inspiration": "Inspiration",
+    "scene_credits_testers": "Tester",
+    "scene_credits_special_thanks": "Besonderer Dank",
+    "scene_credits_contact": "Kontakt",
+    "scene_credits_end": "Ende"
 }
