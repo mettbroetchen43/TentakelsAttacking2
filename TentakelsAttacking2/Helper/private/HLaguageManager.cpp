@@ -105,11 +105,11 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 std::string HLanguageManager::RawText(std::string const& key) const {
 	if (m_current_language == nullptr) {
 		Print("No Current Language loaded", PrintType::ERROR);
-		return m_default_text;
+		return m_missing_language_text;
 	}
 	else if (m_current_language.is_null()) {
 		Print("current Language is null", PrintType::ERROR);
-		return m_default_text;
+		return m_missing_language_text;
 	}
 	else if (not m_current_language.contains(key)) {
 		Print("current language does not contain \"" + key + "\"", PrintType::ERROR);

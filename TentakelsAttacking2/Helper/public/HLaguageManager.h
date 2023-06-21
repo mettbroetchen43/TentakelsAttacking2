@@ -12,7 +12,9 @@ class HLanguageManager final : public EventListener {
 private:
 	nlohmann::json m_current_language; ///< contains all text in a specific language
 	static inline std::vector<std::string> m_availableLanguages; ///< contains all available languages
-	static inline std::string const m_default_text{ "no language loaded" }; ///< contains the default string. this gets returnd when lo language is loaded
+	static inline std::string const m_wrong_format_text{ "wrong format" }; ///< contains the default string. this gets returnd when the format is wrong
+	static inline std::string const m_missing_language_text{ "no language loaded" }; ///< contains the default string. this gets returnd when no language is loaded
+	static inline std::string const m_default_text{ "text not found" }; ///< contains the default string. this gets returnd when key is not exsisting
 	static inline std::string const m_default_language{ "english" }; ///< contains the default language -> gets loaded when the provided language is not able to be loaded
 
 	void InitializeLanguage();
@@ -50,13 +52,13 @@ inline std::string HLanguageManager::ReplacePlaceholders(std::string_view text, 
 		std::string t{ text.substr() };
 		Print("wrong format. appears mostly when arguments not matching: " + t, PrintType::ERROR);
 		assert(false and "wrong format");
-		return m_default_text;
+		return m_wrong_format_text;
 	}
 	catch (std::bad_alloc const&) {
 		std::string t{ text.substr() };
 		Print("bad alloc: " + t, PrintType::ERROR);
 		assert(false and "bad alloc");
-		return m_default_text;
+		return m_wrong_format_text;
 	}
 }
 
