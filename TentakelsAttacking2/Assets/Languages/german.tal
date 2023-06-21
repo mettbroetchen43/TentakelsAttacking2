@@ -1,4 +1,6 @@
 {
     "scene_logo_title": "Eine {0} Produktion",
-    "scene_logo_skip": "\u00fcberspringen mit {0}"
+    "scene_logo_skip": "{0} zum \u00fcberspringen",
+    "scene_intro_start": "Spiel starten",
+    "scene_intro_skip": "{0} zum \u00fcberspringen"
 }
