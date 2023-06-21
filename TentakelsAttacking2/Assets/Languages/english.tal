@@ -9,5 +9,17 @@
     "scene_main_menu_load": "Load game",
     "scene_main_menu_settings": "Settings",
     "scene_main_menu_credits": "Credits",
-    "scene_main_menu_quit": "Quit"
+    "scene_main_menu_quit": "Quit",
+    "scene_settings_settings": "Settings",
+    "scene_settings_volume": "Volume{0}",
+    "scene_settings_mute": "Mute",
+    "scene_settings_fleet_speed": "Fleet speed{0}",
+    "scene_settings_last_round": "ca. Last round{0}",
+    "scene_settings_resolution": "Resolution{0}",
+    "scene_settings_resolution_subtext": "this setting is only effecting window mode.",
+    "scene_settings_language": "Language{0}",
+    "scene_settings_main_menu": "Main menu",
+    "scene_settings_continue": "Continue",
+    "scene_settings_end_game": "End game",
+    "scene_settings_toggle_fullscreen": "Toggle fullscreen"
 }
