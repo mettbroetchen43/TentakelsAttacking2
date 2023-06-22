@@ -10,7 +10,6 @@
 #include "UIEvents.hpp"
 #include "GenerelEvents.hpp"
 #include "HGameEventTypes.hpp"
-// #include "HFightResult.h"
 #include <vector>
 #include <random>
 #include <memory>
