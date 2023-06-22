@@ -31,5 +31,16 @@
     "scene_credits_testers": "Testers",
     "scene_credits_special_thanks": "Special Thanks",
     "scene_credits_contact": "Contact",
-    "scene_credits_end": "End"
+    "scene_credits_end": "End",
+    "scene_new_game_player_add_player_headline": "Add Player{0}",
+    "scene_new_game_player_player_name_placeholder": "Player name",
+    "scene_new_game_player_reset": "Reset",
+    "scene_new_game_player_back": "Back",
+    "scene_new_game_player_current_player": "Current player{0}",
+    "scene_new_game_player_min_player_count": "current min player count{0} {1}",
+    "scene_new_game_player_table_headline_id": "ID",
+    "scene_new_game_player_table_headline_name": "Name",
+    "scene_new_game_player_table_headline_color": "Color",
+    "scene_new_game_player_add_player_btn": "Add Player",
+    "scene_new_game_player_next_btn": "Next"
 }

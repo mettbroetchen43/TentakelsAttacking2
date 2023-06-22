@@ -31,5 +31,16 @@
     "scene_credits_testers": "Tester",
     "scene_credits_special_thanks": "Besonderer Dank",
     "scene_credits_contact": "Kontakt",
-    "scene_credits_end": "Ende"
+    "scene_credits_end": "Ende",
+    "scene_new_game_player_add_player_headline": "Spieler hinzuf\u00fcgen{0}",
+    "scene_new_game_player_player_name_placeholder": "Spieler Name",
+    "scene_new_game_player_reset": "Zur\u00fccksetzten",
+    "scene_new_game_player_back": "Zur\u00fcck",
+    "scene_new_game_player_current_player": "Aktuelle Spieler{0}",
+    "scene_new_game_player_min_player_count": "Aktuelle Mindestanzahl an Spielern{0} {1}",
+    "scene_new_game_player_table_headline_id": "ID",
+    "scene_new_game_player_table_headline_name": "Name",
+    "scene_new_game_player_table_headline_color": "Farbe",
+    "scene_new_game_player_add_player_btn": "Spieler hinzuf\u00fcgen",
+    "scene_new_game_player_next_btn": "Weiter"
 }
