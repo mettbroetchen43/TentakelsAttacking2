@@ -7,6 +7,7 @@
 #include "HPrint.h"
 #include "EventListener.hpp"
 #include <nlohmann/json.hpp>
+#include <format>
 
 class HLanguageManager final : public EventListener {
 private:
