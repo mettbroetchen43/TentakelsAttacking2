@@ -32,7 +32,7 @@ void LogoScene::Initialize() {
 		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		appContext.languageManager.Text("scene_logo_title","Purpur Tentakel")
+		appContext.languageManager.Text("scene_logo_subtitle","Purpur Tentakel")
 		);
 	//mainText->RenderRectangle(true);
 	m_elements.push_back(mainText);

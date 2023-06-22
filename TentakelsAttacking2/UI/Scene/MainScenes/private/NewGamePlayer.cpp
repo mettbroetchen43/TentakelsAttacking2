@@ -75,7 +75,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_RIGHT,
 		resolution,
-		appContext.languageManager.Text("scene_new_game_player_reset"),
+		appContext.languageManager.Text("scene_new_game_player_reset_btn"),
 		SoundType::ACCEPTED
 		);
 	resetBTN->SetOnClick([this]() {
@@ -89,7 +89,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_LEFT,
 		resolution,
-		appContext.languageManager.Text("scene_new_game_player_back"),
+		appContext.languageManager.Text("scene_new_game_player_back_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	backBtn->SetOnClick([]() {
@@ -115,7 +115,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		resolution,
 		Alignment::TOP_LEFT,
 		0.05f,
-		appContext.languageManager.Text("scene_new_game_player_current_player", ":")
+		appContext.languageManager.Text("scene_new_game_player_current_player_headline", ":")
 		);
 	m_elements.push_back(currentPlayerText);
 
@@ -126,7 +126,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
-		appContext.languageManager.Text("scene_new_game_player_min_player_count", ":", appContext.constants.player.minPlayerCount)
+		appContext.languageManager.Text("scene_new_game_player_min_player_count_subtext", ":", appContext.constants.player.minPlayerCount)
 		);
 	m_elements.push_back(currentPlayerCount);
 

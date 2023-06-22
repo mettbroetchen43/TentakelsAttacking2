@@ -42,7 +42,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		appContext.languageManager.Text("scene_settings_settings")
+		appContext.languageManager.Text("scene_settings_settings_headline")
 		);
 	// settingsText->RenderRectangle(true);
 	m_elements.push_back(settingsText);
@@ -75,7 +75,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		appContext.languageManager.Text("scene_settings_volume", ":")
+		appContext.languageManager.Text("scene_settings_volume_subheadline", ":")
 		);
 	// volumeText->RenderRectangle(true);
 	m_elements.push_back(volumeText);
@@ -137,7 +137,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		appContext.languageManager.Text("scene_settings_fleet_speed", ":")
+		appContext.languageManager.Text("scene_settings_fleet_speed_subheadline", ":")
 	);
 	// lastRoundText->RenderRectangle(true);
 	m_elements.push_back(fleetSpeedText);
@@ -168,7 +168,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		appContext.languageManager.Text("scene_settings_last_round", ":")
+		appContext.languageManager.Text("scene_settings_last_round_subheadline", ":")
 		);
 	// lastRoundText->RenderRectangle(true);
 	m_elements.push_back(lastRoundText);
@@ -200,7 +200,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		appContext.languageManager.Text("scene_settings_resolution", ":")
+		appContext.languageManager.Text("scene_settings_resolution_subheadline", ":")
 		);
 	// resolutionText->RenderRectangle(true);
 	m_elements.push_back(resolutionText);
@@ -212,7 +212,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		appContext.languageManager.Text("scene_settings_language", ":")
+		appContext.languageManager.Text("scene_settings_language_subheadline", ":")
 	);
 	m_elements.push_back(languageText);
 
@@ -273,7 +273,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
-		appContext.languageManager.Text("scene_settings_end_game"),
+		appContext.languageManager.Text("scene_settings_end_game_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	finishBtn->SetEnabled(false);
@@ -285,7 +285,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
 		m_resolution,
-		appContext.languageManager.Text("scene_settings_toggle_fullscreen"),
+		appContext.languageManager.Text("scene_settings_toggle_fullscreen_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	fullScreenToggleBtn->SetOnClick([]() {
@@ -300,7 +300,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
 		m_resolution,
-		appContext.languageManager.Text("scene_settings_continue"),
+		appContext.languageManager.Text("scene_settings_continue_btn"),
 		SoundType::ACCEPTED
 	);
 	if (continueScene == SceneType::NONE) { continueBtn->SetEnabled(false); }
@@ -320,7 +320,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
-		appContext.languageManager.Text("scene_settings_main_menu"),
+		appContext.languageManager.Text("scene_settings_main_menu_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	backBtn->SetOnClick([]() {

@@ -26,7 +26,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
 		resolution,
-		appContext.languageManager.Text("scene_main_menu_new_game"),
+		appContext.languageManager.Text("scene_main_menu_new_game_btn"),
 		SoundType::ACCEPTED
 		);
 	newGameBtn->SetOnClick([]() {
@@ -44,7 +44,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
 		resolution,
-		appContext.languageManager.Text("scene_main_menu_continue"),
+		appContext.languageManager.Text("scene_main_menu_continue_btn"),
 		SoundType::ACCEPTED
 	);
 	m_continueBtn->SetOnClick([]() {
@@ -64,7 +64,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
 		resolution,
-		appContext.languageManager.Text("scene_main_menu_save"),
+		appContext.languageManager.Text("scene_main_menu_save_btn"),
 		SoundType::ACCEPTED
 	);
 	saveGameBtn->SetOnClick([]() {
@@ -85,7 +85,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
 		resolution,
-		appContext.languageManager.Text("scene_main_menu_load"),
+		appContext.languageManager.Text("scene_main_menu_load_btn"),
 		SoundType::ACCEPTED
 		);
 	loadGameBtn->SetOnClick([]() {
@@ -106,7 +106,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
 		resolution,
-		appContext.languageManager.Text("scene_main_menu_settings"),
+		appContext.languageManager.Text("scene_main_menu_settings_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	settingsBtn->SetOnClick([]() {
@@ -126,7 +126,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
 		resolution,
-		appContext.languageManager.Text("scene_main_menu_credits"),
+		appContext.languageManager.Text("scene_main_menu_credits_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	creditsBtn->SetOnClick([]() {
@@ -146,7 +146,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
 		resolution,
-		appContext.languageManager.Text("scene_main_menu_quit"),
+		appContext.languageManager.Text("scene_main_menu_quit_btn"),
 		SoundType::ACCEPTED
 		);
 	quitBtn->SetOnClick([]() {AppContext::GetInstance().eventManager.InvokeEvent(CloseWindowEvent());});

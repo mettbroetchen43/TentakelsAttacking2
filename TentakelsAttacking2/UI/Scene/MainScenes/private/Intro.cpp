@@ -31,7 +31,7 @@ void Intro::Initialize( ) {
 		GetElementSize(0.3f, 0.2f),
 		Alignment::MID_MID,
 		m_resolution,
-		appContext.languageManager.Text("scene_intro_start"),
+		appContext.languageManager.Text("scene_intro_start_btn"),
 		SoundType::ACCEPTED
 		);
 	m_btn->SetEnabled(false);

@@ -23,7 +23,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
 		resolution,
-		appContext.languageManager.Text("scene_credits_speed_toggle", m_speedLevel, m_maxSpeedLevel),
+		appContext.languageManager.Text("scene_credits_speed_toggle_btn", m_speedLevel, m_maxSpeedLevel),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	m_speedBTN->SetOnClick([this]() {
@@ -38,7 +38,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
 		resolution,
-		appContext.languageManager.Text("scene_credits_back"),
+		appContext.languageManager.Text("scene_credits_back_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	backBTN->SetOnClick([]() {
@@ -56,7 +56,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::MID_MID,
 		0.15f,
-		appContext.languageManager.Text("scene_credits_credits")
+		appContext.languageManager.Text("scene_credits_credits_title")
 		);
 	// creditsText->RenderRectangle(true);
 	AddMovingElement(creditsText);
@@ -164,7 +164,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		resolution,
-		appContext.languageManager.Text("scene_credits_libraries"),
+		appContext.languageManager.Text("scene_credits_libraries_headline"),
 		libVec,
 		true
 		);
@@ -177,7 +177,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		resolution,
-		appContext.languageManager.Text("scene_credits_inspiration"),
+		appContext.languageManager.Text("scene_credits_inspiration_headline"),
 		inspirationVec
 		);
 	inspirationTable->SetActive(true, appContext);
@@ -189,7 +189,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		resolution,
-		appContext.languageManager.Text("scene_credits_testers"),
+		appContext.languageManager.Text("scene_credits_testers_headline"),
 		testerVec
 		);
 	testersTable->SetActive(true, appContext);
@@ -201,7 +201,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		resolution,
-		appContext.languageManager.Text("scene_credits_special_thanks"),
+		appContext.languageManager.Text("scene_credits_special_thanks_headline"),
 		specialThanksVec
 		);
 	spatialThanksTable->SetActive(true, appContext);
@@ -213,7 +213,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
 		resolution,
-		appContext.languageManager.Text("scene_credits_contact"),
+		appContext.languageManager.Text("scene_credits_contact_headline"),
 		contactVec,
 		true
 		);
@@ -229,7 +229,7 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.15f, height),
 		Alignment::TOP_MID,
 		resolution,
-		appContext.languageManager.Text("scene_credits_end"),
+		appContext.languageManager.Text("scene_credits_end_btn"),
 		SoundType::ACCEPTED
 		);
 	m_endBTN->SetOnClick([]() {
