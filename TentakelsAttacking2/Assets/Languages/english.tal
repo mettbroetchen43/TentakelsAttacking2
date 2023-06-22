@@ -106,5 +106,11 @@
     "helper_color_purple": "Purple",
     "helper_color_violet": "Violet",
     "helper_color_dark_purple": "Dark purple",
-    "helper_color_invalid": "Invalid color"
+    "helper_color_invalid": "Invalid color",
+    "helper_player_collection_invalid_color_popup_title": "Invalid color",
+    "helper_player_collection_not_existing_color_popup_text": "The choosen color does not exists.",
+    "helper_player_collection_already_existing_color_popup_text": "The choosen color was already picked.",
+    "helper_player_collection_invalid_name_popup_title": "Invalid name",
+    "helper_player_collection_no_name_popup_text.": "No name entered.",
+    "helper_player_collection_already_existing_name_popup_text": "The coosen name is alredy existing."
 }
