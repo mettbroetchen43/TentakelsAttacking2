@@ -14,7 +14,7 @@
     "scene_settings_volume_subheadline": "Lautst\u00e4rke{0}",
     "scene_settings_mute": "Stumm",
     "scene_settings_fleet_speed_subheadline": "Flottengeschwindigkeit{0}",
-    "scene_settings_last_round_subheadline": "ca. Letzet Runde{0}",
+    "scene_settings_last_round_subheadline": "ca. Letzte Runde{0}",
     "scene_settings_resolution_subheadline": "Aufl\u00f6sung{0}",
     "scene_settings_resolution_subtext": "Diese Einstellung beeinflusst nur den Fenstermodus.",
     "scene_settings_language_subheadline": "Sprache{0}",
@@ -42,5 +42,14 @@
     "scene_new_game_player_table_headline_name": "Name",
     "scene_new_game_player_table_headline_color": "Farbe",
     "scene_new_game_player_add_player_btn": "Spieler hinzuf\u00fcgen",
-    "scene_new_game_player_next_btn": "Weiter"
+    "scene_new_game_player_next_btn": "Weiter",
+    "scene_new_game_parameter_parameter_headline": "Parameter",
+    "scene_new_game_parameter_planet_count_subheadline": "Planetenanzahl{0}",
+    "scene_new_game_parameter_galaxy_width_subheadline": "Galaxiebreite{0}",
+    "scene_new_game_parameter_galaxy_height_subheadline": "Galaxieh\u00f6he{0}",
+    "scene_new_game_parameter_fleet_speed_subheadline": "Flottengeschwindigkeit{0}",
+    "scene_new_game_parameter_last_round_subheadline": "ca. Letzte Runde{0}",
+    "scene_new_game_parameter_random_btn": "Zuf\u00e4llig",
+    "scene_new_game_parameter_back_btn": "Zur\u00fcck",
+    "scene_new_game_parameter_next_btn": "Weiter"
 }

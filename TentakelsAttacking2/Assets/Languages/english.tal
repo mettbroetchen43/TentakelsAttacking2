@@ -42,5 +42,14 @@
     "scene_new_game_player_table_headline_name": "Name",
     "scene_new_game_player_table_headline_color": "Color",
     "scene_new_game_player_add_player_btn": "Add Player",
-    "scene_new_game_player_next_btn": "Next"
+    "scene_new_game_player_next_btn": "Next",
+    "scene_new_game_parameter_parameter_headline": "Parameter",
+    "scene_new_game_parameter_planet_count_subheadline": "Planet count{0}",
+    "scene_new_game_parameter_galaxy_width_subheadline": "Galaxy width{0}",
+    "scene_new_game_parameter_galaxy_height_subheadline": "Galaxy height{0}",
+    "scene_new_game_parameter_fleet_speed_subheadline": "Fleet speed{0}",
+    "scene_new_game_parameter_last_round_subheadline": "ca. Last round{0}",
+    "scene_new_game_parameter_random_btn": "Random",
+    "scene_new_game_parameter_back_btn": "Back",
+    "scene_new_game_parameter_next_btn": "Next"
 }
