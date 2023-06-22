@@ -90,5 +90,21 @@
     "logic_galaxy_not_existing_destination_id_text": "Destination with ID {0} is not existing.",
     "logic_galaxy_cant_recognize_origin_text": "Can not recognize the porvided origin {0}.",
     "logic_galaxy_manager_unable_generate_galaxy_title": "Galaxy",
-    "logic_galaxy_manager_unable_generate_galaxy_text": "Unable to generate the galaxy.{0}Too many planets."
+    "logic_galaxy_manager_unable_generate_galaxy_text": "Unable to generate the galaxy.{0}Too many planets.",
+    "helper_color_yellow": "Yellow",
+    "helper_color_gold": "Gold",
+    "helper_color_pink": "Pink",
+    "helper_color_magenta": "Magenta",
+    "helper_color_orange": "Orange",
+    "helper_color_red": "Red",
+    "helper_color_maroon": "Maroon",
+    "helper_color_lime": "Lime",
+    "helper_color_dark_green": "Dark green",
+    "helper_color_sky_blue": "Sky blue",
+    "helper_color_blue": "Blue",
+    "helper_color_dark_blue": "Dark blue",
+    "helper_color_purple": "Purple",
+    "helper_color_violet": "Violet",
+    "helper_color_dark_purple": "Dark purple",
+    "helper_color_invalid": "Invalid color"
 }

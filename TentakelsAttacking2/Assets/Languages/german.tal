@@ -90,5 +90,21 @@
     "logic_galaxy_not_existing_destination_id_text": "Es existiert kein Zielort mit der ID {0}.",
     "logic_galaxy_cant_recognize_origin_text": "Der angegebene Zielort {0} ist nicht bekannt.",
     "logic_galaxy_manager_unable_generate_galaxy_title": "Galaxie",
-    "logic_galaxy_manager_unable_generate_galaxy_text": "Es ist nicht m\u00f6glich eine Galaxie zu generieren.{0}Es sind zu viele Planeten."
+    "logic_galaxy_manager_unable_generate_galaxy_text": "Es ist nicht m\u00f6glich eine Galaxie zu generieren.{0}Es sind zu viele Planeten.",
+    "helper_color_yellow": "Gelb",
+    "helper_color_gold": "Gold",
+    "helper_color_pink": "Pink",
+    "helper_color_magenta": "Magenta",
+    "helper_color_orange": "Oragne",
+    "helper_color_red": "Rot",
+    "helper_color_maroon": "Rotbraun",
+    "helper_color_lime": "Limette",
+    "helper_color_dark_green": "Dunkelgr\u00fcn",
+    "helper_color_sky_blue": "Himmelblau",
+    "helper_color_blue": "Blau",
+    "helper_color_dark_blue": "Dunkelblau",
+    "helper_color_purple": "Lila",
+    "helper_color_violet": "Violett",
+    "helper_color_dark_purple": "Dunkellila",
+    "helper_color_invalid": "Ung\u00fcltige Farbe"
 }
