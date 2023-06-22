@@ -75,12 +75,6 @@ private:
 	 * generates an popup.
 	 */
 	void NextTurn();
-	/**
-	 * updates player text and rounds.
-	 * initializes a new galaxy.
-	 * generates an popup.
-	 */
-	void NextRound();
 
 	/**
 	 * updates player text and color.

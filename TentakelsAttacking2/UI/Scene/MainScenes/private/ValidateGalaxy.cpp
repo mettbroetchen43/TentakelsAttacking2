@@ -14,6 +14,8 @@
 
 void ValidateGalaxyScene::Initialize() {
 
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
 	auto text = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.01f),
 		GetElementSize(0.4f, 0.07f),
@@ -21,7 +23,7 @@ void ValidateGalaxyScene::Initialize() {
 		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		"Validate your galaxy:"
+		appContext.languageManager.Text("scene_validate_galaxy_text", ":")
 		);
 	m_elements.push_back(text);
 
@@ -31,7 +33,7 @@ void ValidateGalaxyScene::Initialize() {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
-		"Back",
+		appContext.languageManager.Text("scene_validate_galaxy_back_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	backBtn->SetOnClick([]() {
@@ -45,7 +47,7 @@ void ValidateGalaxyScene::Initialize() {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
 		m_resolution,
-		"Regenerate",
+		appContext.languageManager.Text("scene_validate_galaxy_regenerate_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	reGenerateBtn->SetOnClick([this]() {
@@ -59,7 +61,7 @@ void ValidateGalaxyScene::Initialize() {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
 		m_resolution,
-		"Next",
+		appContext.languageManager.Text("scene_validate_galaxy_next_btn"),
 		SoundType::ACCEPTED
 		);
 	nextBtn->SetOnClick([this]() {
