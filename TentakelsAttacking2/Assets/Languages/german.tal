@@ -88,5 +88,7 @@
     "logic_galaxy_not_existing_origin_id_text": "Es existiert kein Herkunftsort mit der ID {0}.",
     "logic_galaxy_destination_coordinate_outside_of_map_text": "Die Zielkoordinaten liegen au\u00dferhalb der Karte. X:{0}, Y:{1}",
     "logic_galaxy_not_existing_destination_id_text": "Es existiert kein Zielort mit der ID {0}.",
-    "logic_galaxy_cant_recognize_origin_text": "Der angegebene Zielort {0} ist nicht bekannt."
+    "logic_galaxy_cant_recognize_origin_text": "Der angegebene Zielort {0} ist nicht bekannt.",
+    "logic_galaxy_manager_unable_generate_galaxy_title": "Galaxie",
+    "logic_galaxy_manager_unable_generate_galaxy_text": "Es ist nicht m\u00f6glich eine Galaxie zu generieren.{0}Es sind zu viele Planeten."
 }
