@@ -17,7 +17,7 @@
 // help Lambdas
 static auto popup = [](std::string const& text) {
 	ShowMessagePopUpEvent const popupEvent{
-		"Invalid Input",
+		AppContext::GetInstance().languageManager.Text("logic_galaxy_invalid_input_headline"),
 		text,
 		[]() {}
 	};
@@ -219,18 +219,18 @@ Fleet_ty Galaxy::GetFleetByID(unsigned int const ID) const {
 HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
 	// check origin id
 	if (event->GetOrigin() > m_planets.size()) {
-		popup("input for planet in origin to high");
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_input_origin_planet_high_text"));
 		return { nullptr, nullptr, nullptr, false };
 	}
 
 	// check origin
 	auto const originPlanet{ GetPlanetByID(static_cast<unsigned int>(event->GetOrigin())) };
 	if (originPlanet->GetPlayer() != currentPlayer) {
-		popup("the chosen origin isn't your Planet.");
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_your_origin_planet_text"));
 		return { nullptr, nullptr, nullptr, false };
 	}
 	if (originPlanet->GetShipCount() < event->GetShipCount()) {
-		popup("not enough ships on planet " + std::to_string(event->GetOrigin()));
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_enough_ships_on_planet_text", event->GetOrigin()));
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -244,12 +244,12 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 
 	if (destination->IsPlanet()) {
 		if (destination->GetID() == originPlanet->GetID()) {
-			popup("origin planet and destination planet is the same planet");
+			popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_are_same_planets_text"));
 			return { nullptr, nullptr, nullptr, false };
 		}
 	}
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
-		popup("destination blocked");
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_destination_blocked_text"));
 		return { nullptr, nullptr, nullptr, false };
 	}
 	if (auto const fleet = TryGetExistingFleetByOriginAndDestination(originPlanet, destination)) {
@@ -278,18 +278,18 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
 	// check if origin ID is existing
 	if (not IsValidFleet(event->GetOrigin())) {
-		popup("Fleet with ID " + std::to_string(event->GetOrigin()) + " is not existing");
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_fleet_text", event->GetOrigin()));
 		return { nullptr, nullptr, nullptr, false };
 	}
 
 	// check origin
 	auto const& origin{ GetFleetByID(event->GetOrigin()) };
 	if (origin->GetPlayer() != currentPlayer) {
-		popup("the chosen origin isn't your fleet");
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_your_origin_fleet_text"));
 		return { nullptr, nullptr, nullptr, false };
 	}
 	if (origin->GetShipCount() < event->GetShipCount()) {
-		popup("not enough ships in fleet " + std::to_string(event->GetOrigin()));
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_enough_ships_in_fleet_text", event->GetOrigin()));
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -303,7 +303,7 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 
 	// check destination
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
-		popup("destination blocked");
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_destination_blocked_text"));
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -337,7 +337,7 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 	if (destination->IsFleet()) {
 		auto const result{ TryGetTarget(fleet.get(), fleet->GetTarget()) };
 		if (not result.first) { // not valid
-			popup("this operation would produce a fleet circle");
+			popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_fleet_round_robin_text"));
 			return { nullptr, nullptr, nullptr, false };
 		}
 	}
@@ -353,18 +353,18 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* event, Player_ty currentPlayer) {
 	// check if origin ID is existing
 	if (not IsValidTargetPoint(event->GetOrigin())) {
-		popup("no target point with ID " + std::to_string(event->GetOrigin()) + " existing");
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_target_point_text", event->GetOrigin()));
 		return { nullptr, nullptr, nullptr, false };
 	}
 
 	// check origin
 	auto const& origin{ GetTargetPointByID(event->GetOrigin()) };
 	if (origin->GetPlayer() != currentPlayer) {
-		popup("the chosen origin isn't your target point");
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_your_origin_target_point_text"));
 		return { nullptr, nullptr, nullptr, false };
 	}
 	if (origin->GetShipCount() < event->GetShipCount()) {
-		popup("not enough ships at target point " + std::to_string(event->GetOrigin()));
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_enough_ships_at_target_point_text", event->GetOrigin()));
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -377,7 +377,7 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 	) };
 
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
-		popup("destination blocked");
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_destination_blocked_text"));
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -864,7 +864,7 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 
 	// valid ID?
 	if (!IsValidSpaceObjectID(event->GetOrigin())) {
-		popup("ID not existing as origin: " + std::to_string(event->GetOrigin()));
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_origin_id_text", event->GetOrigin()));
 		return { nullptr, nullptr, nullptr, false };
 	}
 	if (!IsValidSpaceObjectID(event->GetDestination())) {
@@ -881,15 +881,14 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 		};
 
 		if (!validCoordinates && coordinateInput) {
-			popup("destination coordinates outside of the map. X: "
-				+ std::to_string(event->GetDestinationX())
-				+ ", Y: "
-				+ std::to_string(event->GetDestinationY())
+			popup(AppContext::GetInstance().languageManager.Text(
+				"logic_galaxy_destination_coordinate_outside_of_map_text",
+				event->GetDestinationX(), event->GetDestinationY())
 			);
 			return { nullptr, nullptr, nullptr, false };
 		}
 		else if (!coordinateInput) {
-			popup("ID not existing as destination: " + std::to_string(event->GetDestination()));
+			popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_destination_id_text", event->GetDestination()));
 			return { nullptr, nullptr, nullptr, false };
 		}
 	}
@@ -907,7 +906,7 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 		return AddFleetFromTargetPoint(event, currentPlayer);
 	}
 
-	popup("can't recognize provided origin: " + std::to_string(event->GetOrigin()));
+	popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_cant_recognize_origin_text", event->GetOrigin()));
 	return { nullptr, nullptr, nullptr, false };
 }
 
