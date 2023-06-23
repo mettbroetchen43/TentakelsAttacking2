@@ -165,8 +165,8 @@ void UIManager::StartUI() {
 		m_sceneManager.SetResolution(m_resolution);
 
 		ShowInitialSoundLevelPopUpEvent event{
-			"Sound Level",
-			"Set the Initial Sound Level"
+			m_appContext.languageManager.Text("ui_manager_initial_sound_popup_title"),
+			m_appContext.languageManager.Text("ui_manager_initial_sound_popup_text")
 		};
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	} else {

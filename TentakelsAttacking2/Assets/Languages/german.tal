@@ -128,5 +128,7 @@
     "ui_validate_popup_accept_btn": "\u00dcbernehmen",
     "ui_validate_popup_cancel_btn": "Abbrechen",
     "ui_primitive_cell_popup_input_line_placeholder_text": "Eintrag bearbeiten",
-    "ui_table_cell_edit_entry_popup": "Eintrag bearbeiten"
+    "ui_table_cell_edit_entry_popup": "Eintrag bearbeiten",
+    "ui_manager_initial_sound_popup_title": "Lautst\u00e4rke",
+    "ui_manager_initial_sound_popup_text": "Einstellen der initialen Lautst\u00e4rke"
 }
