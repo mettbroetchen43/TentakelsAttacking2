@@ -127,5 +127,6 @@
     "ui_sound_level_popup_accept_btn": "Accept",
     "ui_validate_popup_accept_btn": "Accept",
     "ui_validate_popup_cancel_btn": "Cancel",
-    "ui_primitive_cell_popup_input_line_placeholder_text": "Edit Entry"
+    "ui_primitive_cell_popup_input_line_placeholder_text": "Edit Entry",
+    "ui_table_cell_edit_entry_popup": "Edit Entry"
 }
