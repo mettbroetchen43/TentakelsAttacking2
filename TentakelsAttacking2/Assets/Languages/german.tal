@@ -119,5 +119,13 @@
     "ui_input_line_popup_max_input_text": "Maximale L\u00e4nge der Eingabe erreicht.",
     "ui_fleet_hover": "{0} Schiffe: {1}",
     "ui_planet_hover": "{0} Schiffe: {1}",
-    "ui_target_point_hover": "{0} Schiffe: {1}"
+    "ui_target_point_hover": "{0} Schiffe: {1}",
+    "ui_cell_popup_cancel_btn": "Abbrechen",
+    "ui_cell_popup_accept_btn": "\u00dcbernehmen",
+    "ui_message_popup_ok_btn": "OK",
+    "ui_sound_level_popup_mute": "Stumm",
+    "ui_sound_level_popup_accept_btn": "\u00dcbernehmen",
+    "ui_validate_popup_accept_btn": "\u00dcbernehmen",
+    "ui_validate_popup_cancel_btn": "Abbrechen",
+    "ui_primitive_cell_popup_input_line_placeholder_text": "Eintrag bearbeiten"
 }

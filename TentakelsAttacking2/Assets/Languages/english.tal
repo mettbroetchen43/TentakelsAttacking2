@@ -119,5 +119,13 @@
     "ui_input_line_popup_max_input_text": "Maximum number of input values reached.",
     "ui_fleet_hover": "{0} ships: {1}",
     "ui_planet_hover": "{0} ships: {1}",
-    "ui_target_point_hover": "{0} ships: {1}"
+    "ui_target_point_hover": "{0} ships: {1}",
+    "ui_cell_popup_cancel_btn": "Cancel",
+    "ui_cell_popup_accept_btn": "Accept",
+    "ui_message_popup_ok_btn": "OK",
+    "ui_sound_level_popup_mute": "Mute",
+    "ui_sound_level_popup_accept_btn": "Accept",
+    "ui_validate_popup_accept_btn": "Accept",
+    "ui_validate_popup_cancel_btn": "Cancel",
+    "ui_primitive_cell_popup_input_line_placeholder_text": "Edit Entry"
 }
