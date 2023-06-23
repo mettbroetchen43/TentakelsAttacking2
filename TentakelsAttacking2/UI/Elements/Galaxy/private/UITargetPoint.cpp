@@ -5,6 +5,7 @@
 
 #include "UITargetPoint.h"
 #include "TargetPoint.h"
+#include "AppContext.h"
 #include "Player.h"
 #include "HInput.h"
 
@@ -16,8 +17,9 @@ UITargetPoint::UITargetPoint(unsigned int focusID, unsigned int ID, PlayerData p
 
 void UITargetPoint::UpdateHoverText() {
 	std::string const position{ "x: " + std::to_string(m_targetPoint->GetPos().x) + ", y: " + std::to_string(m_targetPoint->GetPos().y) };
-	std::string const hover{ std::to_string(m_targetPoint->GetID()) + " | " + position + " | ships: " + std::to_string(m_targetPoint->GetShipCount())};
-	m_hover.SetText(hover);
+	std::string const text_1{ std::to_string(m_targetPoint->GetID()) + " | " + position + " |"};
+	std::string const text_2{ std::to_string(m_targetPoint->GetShipCount())};
+	m_hover.SetText(AppContext::GetInstance().languageManager.Text("ui_target_point_hover", text_1, text_2));
 }
 
 void UITargetPoint::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {

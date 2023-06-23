@@ -116,5 +116,8 @@
     "helper_player_collection_neutral_player_name": "Neutraler Spieler",
     "helper_player_collection_no_player_name": "Kein Spieler",
     "ui_input_line_popup_max_input_title": "Maximaler Eingabewert",
-    "ui_input_line_popup_max_input_text": "Maximale L\u00e4nge der Eingabe erreicht."
+    "ui_input_line_popup_max_input_text": "Maximale L\u00e4nge der Eingabe erreicht.",
+    "ui_fleet_hover": "{0} Schiffe: {1}",
+    "ui_planet_hover": "{0} Schiffe: {1}",
+    "ui_target_point_hover": "{0} Schiffe: {1}"
 }

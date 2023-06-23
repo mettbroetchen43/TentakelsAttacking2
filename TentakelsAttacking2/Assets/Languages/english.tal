@@ -116,5 +116,8 @@
     "helper_player_collection_neutral_player_name": "neutral player",
     "helper_player_collection_no_player_name": "No player",
     "ui_input_line_popup_max_input_title": "Maximum input",
-    "ui_input_line_popup_max_input_text": "Maximum number of input values reached."
+    "ui_input_line_popup_max_input_text": "Maximum number of input values reached.",
+    "ui_fleet_hover": "{0} ships: {1}",
+    "ui_planet_hover": "{0} ships: {1}",
+    "ui_target_point_hover": "{0} ships: {1}"
 }
