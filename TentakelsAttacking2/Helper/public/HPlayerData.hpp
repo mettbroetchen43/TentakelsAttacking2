@@ -12,8 +12,16 @@
  */
 struct PlayerData final {
 	unsigned int ID{ 0 }; ///< contains the id -> matches the id in the logic
-	std::string name{ "" }; ///< contains the name
 	Color color{ WHITE }; ///< contains the color
+	PlayerData(unsigned int id, std::string const& name, Color col, std::string const& key = "");
+
+	void SetName(std::string const& name);
+	[[nodiscard]] std::string GetName() const;
+
+private:
+	std::string m_name{ "" }; ///< contains the name
+	std::string m_nameKey{ " " }; ///< contains the key for the language system
+
 };
 
 /**

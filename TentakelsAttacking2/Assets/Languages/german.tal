@@ -113,8 +113,6 @@
     "helper_player_collection_invalid_name_popup_title": "Ung\u00fcltiger Name",
     "helper_player_collection_no_name_popup_text.": "Es wurde kein Name eingegeben.",
     "helper_player_collection_already_existing_name_popup_text": "Der eingegebene Name existiert bereits.",
-    "helper_player_collection_neutral_player_name": "Neutraler Spieler",
-    "helper_player_collection_no_player_name": "Kein Spieler",
     "ui_input_line_popup_max_input_title": "Maximaler Eingabewert",
     "ui_input_line_popup_max_input_text": "Maximale L\u00e4nge der Eingabe erreicht.",
     "ui_fleet_hover": "{0} Schiffe: {1}",
@@ -158,5 +156,7 @@
     "ui_planet_table_headline_production": "Produktion",
     "ui_planet_table_headline_ship_count": "Schiffsanzahl",
     "ui_planet_table_player_name_destroyed": "ZERST\u00d6RT",
-    "ui_planet_table_player_name_not_discovered": "N/D"
+    "ui_planet_table_player_name_not_discovered": "N/D",
+    "helper_player_collection_npc_neutral_player": "Neutraler Spieler",
+    "helper_player_collection_npc_no_player": "Kein Spieler"
 }

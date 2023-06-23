@@ -33,7 +33,7 @@ void UIPlanet::UpdateHoverText() {
 
 	std::string hover{ };
 	if (m_planet->IsDiscovered()) {
-		std::string const text_1{m_currentPlayer.name + " | " + position + " |"};
+		std::string const text_1{m_currentPlayer.GetName() + " | " + position + " |"};
 		std::string const text_2{std::to_string(m_planet->GetShipCount())};
 		hover = { AppContext::GetInstance().languageManager.Text("ui_planet_hover", text_1, text_2)};
 	}

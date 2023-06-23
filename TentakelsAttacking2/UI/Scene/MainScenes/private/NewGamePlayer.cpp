@@ -258,7 +258,7 @@ void NewGamePlayerScene::UpdateSceneEntries(AppContext_ty_c appContext) {
 	int index{ 1 };
 	for (auto& p : PlayerData) {
 		m_table->SetValue<int>        (index, 0, p.ID);
-		m_table->SetValue<std::string>(index, 1, p.name);
+		m_table->SetValue<std::string>(index, 1, p.GetName());
 		m_table->SetValue<Color>      (index, 2, p.color);
 
 		m_table->SetSingleEditable(index, 1, true);
@@ -324,7 +324,7 @@ void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell const*,
 
 	UpdatePlayer(
 		playerData.ID,
-		playerData.name,
+		playerData.GetName(),
 		newValue,
 		appContext
 	);

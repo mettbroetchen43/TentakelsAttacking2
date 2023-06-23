@@ -87,7 +87,7 @@ void ValidateGalaxyScene::InitializePlayerLegend() {
 			m_resolution,
 			Alignment::TOP_RIGHT,
 			height,
-			player.name
+			player.GetName()
 		);
 		text->SetColor(player.color);
 

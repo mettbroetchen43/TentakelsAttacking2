@@ -13,13 +13,13 @@
 
 bool PlayerCollection::ContainsName(std::string const& name) const {
 	for (auto const& p : m_playerData) {
-		if (p.name == name) {
+		if (p.GetName() == name) {
 			return true;
 		}
 	}
 
 	for (auto const& p : m_npcData) {
-		if (p.name == name) {
+		if (p.GetName() == name) {
 			return true;
 		}
 	}
@@ -129,9 +129,9 @@ void PlayerCollection::EditPlayer(unsigned int ID,
 
 	PlayerData& playerData{ GetPlayerByIDmut(ID) };
 
-	if (playerData.name != name) {
+	if (playerData.GetName() != name) {
 		CheckRemainingName(name);
-		playerData.name = name;
+		playerData.SetName(name);
 	}
 
 	if (playerData.color != color) {
@@ -202,7 +202,7 @@ PlayerData PlayerCollection::GetPlayerByIDOrDefaultPlayer(unsigned int ID) const
 }
 PlayerData PlayerCollection::GetPlayerByName(std::string const& name) const {
 	for (auto const& p : m_playerData) {
-		if (p.name == name) {
+		if (p.GetName() == name) {
 			return p;
 		}
 	}

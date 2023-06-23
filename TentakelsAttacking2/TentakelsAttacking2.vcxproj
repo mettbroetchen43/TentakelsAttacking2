@@ -276,6 +276,7 @@
     <ClCompile Include="Helper\private\HMergeResult.cpp" />
     <ClCompile Include="Helper\private\HLaguageManager.cpp" />
     <ClCompile Include="Helper\public\HMergeResult.h" />
+    <ClCompile Include="Helper\private\HPlayerData.cpp" />
     <ClCompile Include="Helper\public\HUIAlias.hpp" />
     <ClCompile Include="Game\private\GalaxyManager.cpp" />
     <ClCompile Include="Game\private\GameManager.cpp" />

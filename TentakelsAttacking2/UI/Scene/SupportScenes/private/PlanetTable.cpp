@@ -61,7 +61,7 @@ void PlanetTable::Initialization() {
 			entry = appContext.languageManager.Text("ui_planet_table_player_name_not_discovered");
 		}
 		else {
-			entry = appContext.playerCollection.GetPlayerOrNpcByID(p->GetPlayer()->GetID()).name;
+			entry = appContext.playerCollection.GetPlayerOrNpcByID(p->GetPlayer()->GetID()).GetName();
 		}
 		m_table->SetValue<std::string>(
 			addedCount,
