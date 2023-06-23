@@ -137,8 +137,8 @@ public:
 
 			if (!AddChar(key)) {
 				ShowMessagePopUpEvent const event{
-					"Max Input",
-					"Maximum number of input values reached",
+					appContext.languageManager.Text("ui_input_line_popup_max_input_title"),
+					appContext.languageManager.Text("ui_input_line_popup_max_input_text"),
 					[]() { }
 				};
 				appContext.eventManager.InvokeEvent(event);

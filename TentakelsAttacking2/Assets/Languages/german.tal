@@ -95,7 +95,7 @@
     "helper_color_gold": "Gold",
     "helper_color_pink": "Pink",
     "helper_color_magenta": "Magenta",
-    "helper_color_orange": "Oragne",
+    "helper_color_orange": "Orange",
     "helper_color_red": "Rot",
     "helper_color_maroon": "Rotbraun",
     "helper_color_lime": "Limette",
@@ -111,6 +111,10 @@
     "helper_player_collection_not_existing_color_popup_text": "Die gew\u00e4hlte Farbe existiert nicht.",
     "helper_player_collection_already_existing_color_popup_text": "Die gew\u00e4hlte Farbe ist nicht mehr verf\u00fcgbar.",
     "helper_player_collection_invalid_name_popup_title": "Ung\u00fcltiger Name",
-    "helper_player_collection_no_name_popup_text.": "Es wurde kein Namen eingegeben.",
-    "helper_player_collection_already_existing_name_popup_text": "Der eingegebene Name existiert bereits."
+    "helper_player_collection_no_name_popup_text.": "Es wurde kein Name eingegeben.",
+    "helper_player_collection_already_existing_name_popup_text": "Der eingegebene Name existiert bereits.",
+    "helper_player_collection_neutral_player_name": "Neutraler Spieler",
+    "helper_player_collection_no_player_name": "Kein Spieler",
+    "ui_input_line_popup_max_input_title": "Maximaler Eingabewert",
+    "ui_input_line_popup_max_input_text": "Maximale L\u00e4nge der Eingabe erreicht."
 }

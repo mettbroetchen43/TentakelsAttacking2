@@ -112,5 +112,9 @@
     "helper_player_collection_already_existing_color_popup_text": "The choosen color was already picked.",
     "helper_player_collection_invalid_name_popup_title": "Invalid name",
     "helper_player_collection_no_name_popup_text.": "No name entered.",
-    "helper_player_collection_already_existing_name_popup_text": "The coosen name is alredy existing."
+    "helper_player_collection_already_existing_name_popup_text": "This name already exists.",
+    "helper_player_collection_neutral_player_name": "neutral player",
+    "helper_player_collection_no_player_name": "No player",
+    "ui_input_line_popup_max_input_title": "Maximum input",
+    "ui_input_line_popup_max_input_text": "Maximum number of input values reached."
 }
