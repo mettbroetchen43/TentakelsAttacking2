@@ -174,7 +174,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\DeletePlayerPopUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\HPlayerData.hpp">
+    <ClInclude Include="Helper\public\HPlayerData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Helper\public\HColors.h">
@@ -312,7 +312,7 @@
     <ClInclude Include="UI\public\HoverRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Scene\SupportScenes\public\FleetAndTargetPointTable.h">
+    <ClInclude Include="UI\Scene\SupportScenes\public\FleetTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game\public\GalaxyManager.h">
@@ -352,6 +352,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Elements\Galaxy\public\UIFleet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper\public\HLaguageManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -620,8 +623,18 @@
     <ClCompile Include="UI\Elements\Galaxy\private\UIFleet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Helper\private\HLaguageManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper\private\HPlayerData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\Text\title.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Languages\english.tal" />
+    <None Include="Assets\Languages\german.tal" />
   </ItemGroup>
 </Project>

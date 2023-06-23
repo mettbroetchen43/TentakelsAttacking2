@@ -6,7 +6,7 @@
 #include "MainScene.h"
 #include "GalaxyAndSlider.h"
 #include "PlanetTable.h"
-#include "FleetAndTargetPointTable.h"
+#include "FleetTable.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
 #include "GenerelEvents.hpp"
@@ -38,11 +38,11 @@ void MainScene::Initialize() {
 	// Btn
 	auto settingsBtn = std::make_shared<ClassicButton>(
 		203,
-		GetElementPosition(0.95f, 0.02f),
-		GetElementSize(0.05f, 0.05f),
+		GetElementPosition(0.975f, 0.02f),
+		GetElementSize(0.075f, 0.05f),
 		Alignment::TOP_RIGHT,
 		m_resolution,
-		"settings",
+		appContext.languageManager.Text("scene_main_scene_settings_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	settingsBtn->SetOnClick([]() {
@@ -58,7 +58,7 @@ void MainScene::Initialize() {
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
 		m_resolution,
-		"galaxy",
+		appContext.languageManager.Text("scene_main_scene_galaxy_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	galaxyBtn->SetOnClick([this]() {
@@ -72,7 +72,7 @@ void MainScene::Initialize() {
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
 		m_resolution,
-		"planet table",
+		appContext.languageManager.Text("scene_main_scene_planet_table_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	planetTableBtn->SetOnClick([this]() {
@@ -86,7 +86,7 @@ void MainScene::Initialize() {
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
 		m_resolution,
-		"fleet / point table",
+		appContext.languageManager.Text("scene_main_scene_fleet_point_table_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	fleetTableBtn->SetOnClick([this]() {
@@ -100,7 +100,7 @@ void MainScene::Initialize() {
 		GetElementSize(0.1f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
 		m_resolution,
-		"next Player",
+		appContext.languageManager.Text("scene_main_scene_next_player_btn"),
 		SoundType::ACCEPTED
 		);
 	m_nextBtn->SetOnClick([]() {
@@ -116,7 +116,7 @@ void MainScene::Initialize() {
 		m_resolution,
 		Alignment::TOP_RIGHT,
 		0.02f,
-		"current player:"
+		appContext.languageManager.Text("scene_main_scene_current_player_text", ":")
 		);
 	// currentPlayerLabel->RenderRectangle(true);
 	m_elements.push_back(currentPlayerLabel);
@@ -141,7 +141,7 @@ void MainScene::Initialize() {
 		m_resolution,
 		Alignment::TOP_RIGHT,
 		0.02f,
-		"current round:"
+		appContext.languageManager.Text("scene_main_scene_current_round_text", ":")
 		);
 	// currentRoundLabel->RenderRectangle(true);
 	m_elements.push_back(currentRoundLabel);
@@ -166,7 +166,7 @@ void MainScene::Initialize() {
 		m_resolution,
 		Alignment::TOP_RIGHT,
 		0.02f,
-		"target round:"
+		appContext.languageManager.Text("scene_main_scene_target_round_text", ":")
 		);
 	// currentTargetRoundLabel->RenderRectangle(true);
 	m_elements.push_back(currentTargetRoundLabel);
@@ -191,7 +191,7 @@ void MainScene::Initialize() {
 		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.02f,
-		"next player:"
+		appContext.languageManager.Text("scene_main_scene_next_player_text", ":")
 		);
 	// nextPlayerNameLabel->RenderRectangle(true);
 	m_elements.push_back(nextPlayerNameLabel);
@@ -216,7 +216,7 @@ void MainScene::Initialize() {
 		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
-		"origin:"
+		appContext.languageManager.Text("scene_main_scene_origin_text", ":")
 	);
 	m_elements.push_back(text);
 
@@ -234,7 +234,7 @@ void MainScene::Initialize() {
 	m_origin->SetOnValueChanced([this]() {
 			SetAcceptButton();
 		});
-	m_origin->SetPlaceholderText("ID");
+	m_origin->SetPlaceholderText(appContext.languageManager.Text("scene_main_scene_id_placeholder_text"));
 	m_elements.push_back(m_origin);
 
 	text = std::make_shared<Text>(
@@ -244,7 +244,7 @@ void MainScene::Initialize() {
 		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
-		"destination:"
+		appContext.languageManager.Text("scene_main_scene_destination_text", ":")
 		);
 	m_elements.push_back(text);
 
@@ -262,7 +262,7 @@ void MainScene::Initialize() {
 	m_destination->SetOnValueChanced([this]() {
 		SetAcceptButton();
 		});
-	m_destination->SetPlaceholderText("ID");
+	m_destination->SetPlaceholderText(appContext.languageManager.Text("scene_main_scene_id_placeholder_text"));
 	m_elements.push_back(m_destination);
 
 	m_destinationX = std::make_shared<InputLine<int>>(
@@ -306,7 +306,7 @@ void MainScene::Initialize() {
 		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
-		"ship count:"
+		appContext.languageManager.Text("scene_main_scene_ship_count_text", ":")
 		);
 	m_elements.push_back(text);
 
@@ -324,7 +324,7 @@ void MainScene::Initialize() {
 	m_shipCount->SetOnValueChanced([this]() {
 		SetAcceptButton();
 		});
-	m_shipCount->SetPlaceholderText("Count");
+	m_shipCount->SetPlaceholderText(appContext.languageManager.Text("scene_main_scene_ship_count_placeholder_text"));
 	m_elements.push_back(m_shipCount);
 
 	m_acceptBtn = std::make_shared<ClassicButton>(
@@ -418,42 +418,21 @@ void MainScene::NextTurn() {
 	ClearInputLines();
 
 	ShowMessagePopUpEvent event{
-		"start turn?",
-		"next player: " + m_currentPlayer.name + "\naccept to start your turn",
+		appContext.languageManager.Text("scene_main_scene_popup_text_turn_title"),
+		appContext.languageManager.Text("scene_main_scene_popup_text_turn_text", m_currentPlayer.GetName(), "\n"),
 		[this]() {
 			this->Switch(MainSceneType::GALAXY);
 		}
 	};
 	appContext.eventManager.InvokeEvent(event);
 }
-void MainScene::NextRound() {
-	AppContext_ty_c appContext{ AppContext::GetInstance() };
-
-	SetPlayerText();
-	InitializeGalaxy();
-	InitializePlanetTable();
-	InitializeFleetTable();
-	ClearInputLines();
-
-	m_currentRound->SetText(std::to_string(appContext.constants.global.currentRound));
-	m_currentTargetRound->SetText(std::to_string(appContext.constants.global.currentTargetRound));
-
-	ShowMessagePopUpEvent event{
-		"start round",
-		"next round is starting\n just for debug to know",
-		[]() {}
-	};
-	appContext.eventManager.InvokeEvent(event);
-
-	Switch(MainSceneType::GALAXY);
-}
 
 void MainScene::SetPlayerText() {
 
-	m_currentPlayerName->SetText(m_currentPlayer.name);
+	m_currentPlayerName->SetText(m_currentPlayer.GetName());
 	m_currentPlayerName->SetColor(m_currentPlayer.color);
 
-	m_nextPlayerName->SetText(m_nextPlayer.name);
+	m_nextPlayerName->SetText(m_nextPlayer.GetName());
 	m_nextPlayerName->SetColor(m_nextPlayer.color);
 }
 
@@ -561,7 +540,6 @@ void MainScene::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* playerEvent = dynamic_cast<ShowNextRoundEvent const*>(&event)) {
-		//NextRound();
 		SwitchSceneEvent sendEvent{ SceneType::UPDATE_EVALUATION };
 		AppContext::GetInstance().eventManager.InvokeEvent(sendEvent);
 		return;

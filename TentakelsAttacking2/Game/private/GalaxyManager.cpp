@@ -45,8 +45,8 @@ void GalaxyManager::GenerateGalaxy() {
 	}
 	else {
 		ShowMessagePopUpEvent const event{
-			"Galaxy",
-			"Unable to generate the Galaxy.\nTo many Plantes.",
+			appContext.languageManager.Text("logic_galaxy_manager_unable_generate_galaxy_title"),
+			appContext.languageManager.Text("logic_galaxy_manager_unable_generate_galaxy_text", "\n"),
 			[]() {}
 		};
 		appContext.eventManager.InvokeEvent(event);

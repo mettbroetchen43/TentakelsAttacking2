@@ -17,7 +17,7 @@ void MessagePopUp::Initialize(Vector2 resolution) {
 		GetElementSize(m_size,0.3f, 0.2f),
 		Alignment::MID_MID,
 		resolution,
-		"OK",
+		appContext.languageManager.Text("ui_message_popup_ok_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 

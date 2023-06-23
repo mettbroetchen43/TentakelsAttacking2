@@ -42,7 +42,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		"Settings"
+		appContext.languageManager.Text("scene_settings_settings_headline")
 		);
 	// settingsText->RenderRectangle(true);
 	m_elements.push_back(settingsText);
@@ -68,17 +68,17 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	m_elements.push_back(eventSettings);
 
 	// volume
-	auto eventText = std::make_shared<Text>(
+	auto volumeText = std::make_shared<Text>(
 		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Volume:"
+		appContext.languageManager.Text("scene_settings_volume_subheadline", ":")
 		);
-	// eventText->RenderRectangle(true);
-	m_elements.push_back(eventText);
+	// volumeText->RenderRectangle(true);
+	m_elements.push_back(volumeText);
 
 	m_volume = std::make_shared<SliderAndInputLine>(
 		100,
@@ -122,7 +122,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
-		"Mute"
+		appContext.languageManager.Text("scene_settings_mute")
 		);
 	// muteText->RenderRectangle(true);
 	m_elements.push_back(muteText);
@@ -137,7 +137,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Fleet Speed:"
+		appContext.languageManager.Text("scene_settings_fleet_speed_subheadline", ":")
 	);
 	// lastRoundText->RenderRectangle(true);
 	m_elements.push_back(fleetSpeedText);
@@ -168,7 +168,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"ca. Last Round:"
+		appContext.languageManager.Text("scene_settings_last_round_subheadline", ":")
 		);
 	// lastRoundText->RenderRectangle(true);
 	m_elements.push_back(lastRoundText);
@@ -200,10 +200,21 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Resolution"
+		appContext.languageManager.Text("scene_settings_resolution_subheadline", ":")
 		);
 	// resolutionText->RenderRectangle(true);
 	m_elements.push_back(resolutionText);
+
+	auto languageText = std::make_shared<Text>(
+		GetElementPosition(0.25f, elementY + 0.02f),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.04f,
+		appContext.languageManager.Text("scene_settings_language_subheadline", ":")
+	);
+	m_elements.push_back(languageText);
 
 	elementY += 0.04f;
 	auto resolutionHintText = std::make_shared<Text>(
@@ -213,13 +224,13 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		m_resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
-		"this setting is only effecting window mode"
+		appContext.languageManager.Text("scene_settings_resolution_subtext")
 		);
 	// resolutionHintText->RenderRectangle(true);
 	m_elements.push_back(resolutionHintText);
 
 	elementY += 0.02f;
-	m_dropDown = std::make_shared<DropDown>(
+	m_resolutionDropDown = std::make_shared<DropDown>(
 		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
@@ -229,12 +240,30 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		401,
 		GetStringsFromResolutionEntries()
 		);
-	m_dropDown->SetCurrentElementByID(GetIndexFromResolution(appContext.constants.window.current_resolution) + 1);
-	m_dropDown->SetOnSave([this](unsigned int ID) {
+	m_resolutionDropDown->SetCurrentElementByID(GetIndexFromResolution(appContext.constants.window.current_resolution) + 1);
+	m_resolutionDropDown->SetOnSave([this](unsigned int ID) {
 		SetNewResolutionEvent const event{ this->m_rawResolutionEntries[ID - 1].first };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	});
-	m_elements.push_back(m_dropDown);
+	m_elements.push_back(m_resolutionDropDown);
+
+	m_languageDropDown = std::make_shared<DropDown>(
+		GetElementPosition(0.25f, elementY),
+		GetElementSize(0.4f, 0.05f),
+		Alignment::TOP_MID,
+		m_resolution,
+		0.2f,
+		500,
+		501,
+		appContext.languageManager.GetAvailableLanguages()
+	);
+	m_languageDropDown->SetCurrentElementByString(appContext.constants.global.currentLanguageName);
+	m_languageDropDown->SetOnSave([](unsigned int ID) {
+		auto const language{ AppContext::GetInstance().languageManager.GetAvailableLanguages().at(ID - 1) };
+		auto const event{ ChangeLanguageEvent(language) };
+		AppContext::GetInstance().eventManager.InvokeEvent(event);
+	});
+	m_elements.push_back(m_languageDropDown);
 
 
 	// btn
@@ -244,11 +273,11 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
-		"End Game",
+		appContext.languageManager.Text("scene_settings_end_game_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	finishBtn->SetEnabled(false);
-	m_dropDownBtn.first = finishBtn;
+	m_resolutionDropDownBtn.first = { finishBtn, false };
 
 	auto fullScreenToggleBtn = std::make_shared<ClassicButton>(
 		501,
@@ -256,14 +285,14 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
 		m_resolution,
-		"Toggle Fullscreen",
+		appContext.languageManager.Text("scene_settings_toggle_fullscreen_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	fullScreenToggleBtn->SetOnClick([]() {
 		ToggleFullscreenEvent const event{};
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	});
-	m_dropDownBtn.second = fullScreenToggleBtn;
+	m_resolutionDropDownBtn.second = { fullScreenToggleBtn, true };
 
 	auto continueBtn = std::make_shared<ClassicButton>(
 		1000,
@@ -271,7 +300,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
 		m_resolution,
-		"continue",
+		appContext.languageManager.Text("scene_settings_continue_btn"),
 		SoundType::ACCEPTED
 	);
 	if (continueScene == SceneType::NONE) { continueBtn->SetEnabled(false); }
@@ -283,7 +312,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		);
 		}
 	);
-	m_elements.push_back(continueBtn);
+	m_languageDropDownBtn.second = { continueBtn, continueBtn->IsEnabled() };
 
 	auto backBtn = std::make_shared<ClassicButton>(
 		1001,
@@ -291,7 +320,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
-		"main menu",
+		appContext.languageManager.Text("scene_settings_main_menu_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	backBtn->SetOnClick([]() {
@@ -300,7 +329,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		);
 		}
 	);
-	m_elements.push_back(backBtn);
+	m_languageDropDownBtn.first = { backBtn, true };
 }
 
 std::vector<std::string> SettingsScene::GetStringsFromResolutionEntries() const {
@@ -331,26 +360,53 @@ SettingsScene::SettingsScene(Vector2 resolution, SceneType continueScene)
 void SettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
-	bool const folded = not m_dropDown->IsFoldedOut();
-	if (folded != m_dropDownBtn.first->IsEnabled()) {
-		m_dropDownBtn.first->SetEnabled(folded);
+	// resolution
+	bool const folded_1{ not m_resolutionDropDown->IsFoldedOut() };
+	if (m_resolutionDropDownBtn.first.second) {
+		if (folded_1 != m_resolutionDropDownBtn.first.first->IsEnabled()) {
+			m_resolutionDropDownBtn.first.first->SetEnabled(folded_1);
+		}
 	}
-	if (folded != m_dropDownBtn.second->IsEnabled()) {
-		m_dropDownBtn.second->SetEnabled(folded);
+	if (m_resolutionDropDownBtn.second.second) {
+		if (folded_1 != m_resolutionDropDownBtn.second.first->IsEnabled()) {
+			m_resolutionDropDownBtn.second.first->SetEnabled(folded_1);
+		}
 	}
 
-	if (folded) {
-		m_dropDownBtn.first->CheckAndUpdate(mousePosition, appContext);
-		m_dropDownBtn.second->CheckAndUpdate(mousePosition, appContext);
+	if (folded_1) {
+		m_resolutionDropDownBtn.first.first->CheckAndUpdate(mousePosition, appContext);
+		m_resolutionDropDownBtn.second.first->CheckAndUpdate(mousePosition, appContext);
+	}
+
+	// language
+	bool const folded_2{ not m_languageDropDown->IsFoldedOut() };
+	if (m_languageDropDownBtn.first.second) {
+		if (folded_2 != m_languageDropDownBtn.first.first->IsEnabled()) {
+			m_languageDropDownBtn.first.first->SetEnabled(folded_2);
+		}
+	}
+	if (m_languageDropDownBtn.second.second) {
+		if (folded_2 != m_languageDropDownBtn.second.first->IsEnabled()) {
+			m_languageDropDownBtn.second.first->SetEnabled(folded_2);
+		}
+	}
+
+	if (folded_2) {
+		m_languageDropDownBtn.first.first->CheckAndUpdate(mousePosition, appContext);
+		m_languageDropDownBtn.second.first->CheckAndUpdate(mousePosition, appContext);
 	}
 }
 void SettingsScene::Render(AppContext_ty_c appContext) {
-	m_dropDownBtn.first->Render(appContext);
-	m_dropDownBtn.second->Render(appContext);
+	m_resolutionDropDownBtn.first.first->Render(appContext);
+	m_resolutionDropDownBtn.second.first->Render(appContext);
+	m_languageDropDownBtn.first.first->Render(appContext);
+	m_languageDropDownBtn.second.first->Render(appContext);
 	Scene::Render(appContext);
 }
 void SettingsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	m_dropDownBtn.first->Resize(resolution, appContext);
-	m_dropDownBtn.second->Resize(resolution, appContext);
+	m_resolutionDropDownBtn.first.first->Resize(resolution, appContext);
+	m_resolutionDropDownBtn.second.first->Resize(resolution, appContext);
+	m_languageDropDownBtn.first.first->Resize(resolution, appContext);
+	m_languageDropDownBtn.second.first->Resize(resolution, appContext);
 	Scene::Resize(resolution, appContext);
 }

@@ -9,6 +9,7 @@
 
 void PlanetTable::Initialization() {
 	auto const planets{ m_galaxy->GetPlanets() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	int discoveredCount{ 0 };
 	for (auto const& p : planets) {
@@ -30,10 +31,12 @@ void PlanetTable::Initialization() {
 	m_table->SetFixedHeadline(true);
 	m_table->SetScrollable(true);
 	m_table->SetHighlightHover(true);
-	m_table->SetHeadlineValues<std::string>({ "ID", "Player", "Production", "Ship Count" });
+	m_table->SetHeadlineValues<std::string>({
+		appContext.languageManager.Text("ui_planet_table_headline_id"),
+		appContext.languageManager.Text("ui_planet_table_headline_player"),
+		appContext.languageManager.Text("ui_planet_table_headline_production"),
+		appContext.languageManager.Text("ui_planet_table_headline_ship_count")});
 	m_elements.push_back(m_table);
-
-	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	int addedCount{ 0 };
 	for (auto const& p : planets) {
@@ -52,13 +55,13 @@ void PlanetTable::Initialization() {
 		// player name
 		std::string entry;
 		if (p->IsDestroyed()) {
-			entry = "DESTROYED";
+			entry = appContext.languageManager.Text("ui_planet_table_player_name_destroyed");
 		}
 		else if (!p->IsDiscovered()) {
-			entry = "N/D";
+			entry = appContext.languageManager.Text("ui_planet_table_player_name_not_discovered");
 		}
 		else {
-			entry = appContext.playerCollection.GetPlayerOrNpcByID(p->GetPlayer()->GetID()).name;
+			entry = appContext.playerCollection.GetPlayerOrNpcByID(p->GetPlayer()->GetID()).GetName();
 		}
 		m_table->SetValue<std::string>(
 			addedCount,

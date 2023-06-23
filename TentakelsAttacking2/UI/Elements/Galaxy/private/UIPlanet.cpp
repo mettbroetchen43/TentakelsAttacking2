@@ -29,11 +29,13 @@ UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vec
 }
 
 void UIPlanet::UpdateHoverText() {
-	std::string const position{ "x: " + std::to_string(m_planet->GetPos().x) + ", y: " + std::to_string(m_planet->GetPos().y) };
+	std::string const position{ "X: " + std::to_string(m_planet->GetPos().x) + ", Y: " + std::to_string(m_planet->GetPos().y) };
 
 	std::string hover{ };
 	if (m_planet->IsDiscovered()) {
-		hover = { m_currentPlayer.name + " | " + position + " | ships: " + std::to_string(m_planet->GetShipCount()) };
+		std::string const text_1{m_currentPlayer.GetName() + " | " + position + " |"};
+		std::string const text_2{std::to_string(m_planet->GetShipCount())};
+		hover = { AppContext::GetInstance().languageManager.Text("ui_planet_hover", text_1, text_2)};
 	}
 	else {
 		hover = { position };

@@ -12,13 +12,15 @@
 
 void ValidatePopUp::Initialize() {
 
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
 	auto acceptBtn = std::make_shared<ClassicButton>(
 		2,
 		GetElementPosition(m_pos, m_size, 0.33f, 0.9f),
 		GetElementSize(m_size, 0.2f, 0.15f),
 		Alignment::BOTTOM_MID,
 		m_resolution,
-		"accept",
+		appContext.languageManager.Text("ui_validate_popup_accept_btn"),
 		SoundType::ACCEPTED
 		);
 	acceptBtn->SetOnClick([this]() {
@@ -34,7 +36,7 @@ void ValidatePopUp::Initialize() {
 		GetElementSize(m_size, 0.2f, 0.15f),
 		Alignment::BOTTOM_MID,
 		m_resolution,
-		"cancel",
+		appContext.languageManager.Text("ui_validate_popup_cancel_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	cancelBtn->SetOnClick([this]() {

@@ -42,7 +42,7 @@ private:
 		SelectFocusPopUpElementEvent event2{ inputChance.get() };
 		appContext.eventManager.InvokeEvent(event2);
 		inputChance->SetValue(currentValue);
-		inputChance->SetPlaceholderText("Edit Entry");
+		inputChance->SetPlaceholderText(appContext.languageManager.Text("ui_primitive_cell_popup_input_line_placeholder_text"));
 
 		m_elements.push_back(inputChance);
 		m_inputChange = inputChance;

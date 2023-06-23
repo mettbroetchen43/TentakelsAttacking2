@@ -54,7 +54,7 @@ public:
 		if (not IsEditable()) { return; }
 
 		ShowCellPopUpEvent<T> event{
-			"Edit Entry",
+			appContext.languageManager.Text("ui_table_cell_edit_entry_popup"),
 			m_value,
 			[this](T value) {this->UpdateValue(value); }
 		};
@@ -77,7 +77,7 @@ public:
 
 		if (shouldEdit) {
 			ShowCellPopUpEvent<T> event{
-				"Edit Entry",
+				appContext.languageManager.Text("ui_table_cell_edit_entry_popup"),
 				m_value,
 				[this](T value) {this->UpdateValue(value); }
 			};

@@ -28,6 +28,9 @@ void AppContext::LoadConfig() {
 	eventManager.InvokeEvent(event);
 
 }
+void AppContext::LoadLanguages() {
+	languageManager.Initialize();
+}
 void AppContext::SaveConfig() {
 	::SaveConfig();
 }
@@ -88,7 +91,16 @@ void AppContext::OnEvent(Event const& event) {
 AppContext::AppContext() {
 	eventManager.AddListener(&soundManager);
 	eventManager.AddListener(&playerCollection);
+	eventManager.AddListener(&languageManager);
 	eventManager.AddListener(this);
 
-	Print("AppContext initialized", PrintType::INFO);
+	Print("AppContext", PrintType::INITIALIZE);
+}
+
+AppContext::~AppContext() {
+	eventManager.RemoveListener(&soundManager);
+	eventManager.RemoveListener(&playerCollection);
+	eventManager.RemoveListener(&languageManager);
+	eventManager.RemoveListener(this);
+	Print("AppContext deleted", PrintType::INFO);
 }

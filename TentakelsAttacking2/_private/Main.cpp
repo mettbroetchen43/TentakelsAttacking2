@@ -27,6 +27,7 @@ int main() {
 	UIManager uiManager;
 
 	appContext.LoadConfig();
+	appContext.LoadLanguages();
 
 	uiManager.StartUI();
 

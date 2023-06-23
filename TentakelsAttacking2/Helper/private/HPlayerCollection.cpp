@@ -13,13 +13,13 @@
 
 bool PlayerCollection::ContainsName(std::string const& name) const {
 	for (auto const& p : m_playerData) {
-		if (p.name == name) {
+		if (p.GetName() == name) {
 			return true;
 		}
 	}
 
 	for (auto const& p : m_npcData) {
-		if (p.name == name) {
+		if (p.GetName() == name) {
 			return true;
 		}
 	}
@@ -46,8 +46,8 @@ void PlayerCollection::CheckValidColor(Color& color) {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	if (appContext.colors.CheckValidColor(color)) {
 		ShowMessagePopUpEvent const event{
-			"Invalid Color",
-			"The chosen color does not exist",
+			appContext.languageManager.Text("helper_player_collection_invalid_color_popup_title"),
+			appContext.languageManager.Text("helper_player_collection_already_existing_color_popup_text"),
 			[]() {}
 		};
 		appContext.eventManager.InvokeEvent(event);
@@ -56,42 +56,44 @@ void PlayerCollection::CheckValidColor(Color& color) {
 }
 void PlayerCollection::CheckRemainingColor(Color& color) {
 	if (ContainsColor(color)) {
+		AppContext_ty_c appContext{ AppContext::GetInstance() };
 		ShowMessagePopUpEvent const event{
-			"Invalid Color",
-			"The chosen color already exists.",
+			appContext.languageManager.Text("helper_player_collection_invalid_color_popup_title"),
+			appContext.languageManager.Text("helper_player_collection_already_existing_color_popup_text"),
 			[]() { }
 		};
-		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		appContext.eventManager.InvokeEvent(event);
 		color = GetPossibleColor();
 	}
 }
 void PlayerCollection::CheckRemainingName(std::string& name) {
 
 	bool invalidName{ false };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	if (name.empty()) {
 		ShowMessagePopUpEvent const event{
-			"Invalid name",
-			"No name entered.",
+			appContext.languageManager.Text("helper_player_collection_invalid_name_popup_title"),
+			appContext.languageManager.Text("helper_player_collection_no_name_popup_text."),
 			[]() {}
 		};
-		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		appContext.eventManager.InvokeEvent(event);
 		invalidName = true;
 	}
 
 	if (ContainsName(name)) {
 		ShowMessagePopUpEvent const event{
-			"Invalid name",
-			"The chosen name already exists.",
+			appContext.languageManager.Text("helper_player_collection_invalid_name_popup_title"),
+			appContext.languageManager.Text("helper_player_collection_already_existing_name_popup_text"),
 			[]() {}
 		};
-		AppContext::GetInstance().eventManager.InvokeEvent(event);
+		appContext.eventManager.InvokeEvent(event);
 		invalidName = true;
 	}
 
 	if (invalidName) {
 		static size_t invalidNameCounter{ 1 };
-		name = "Invalid Name " + std::to_string(invalidNameCounter);
+		name = appContext.languageManager.Text("helper_player_collection_invalid_name_popup_title") + " " + std::to_string(invalidNameCounter);
 		++invalidNameCounter;
 	}
 }
@@ -127,9 +129,9 @@ void PlayerCollection::EditPlayer(unsigned int ID,
 
 	PlayerData& playerData{ GetPlayerByIDmut(ID) };
 
-	if (playerData.name != name) {
+	if (playerData.GetName() != name) {
 		CheckRemainingName(name);
-		playerData.name = name;
+		playerData.SetName(name);
 	}
 
 	if (playerData.color != color) {
@@ -200,7 +202,7 @@ PlayerData PlayerCollection::GetPlayerByIDOrDefaultPlayer(unsigned int ID) const
 }
 PlayerData PlayerCollection::GetPlayerByName(std::string const& name) const {
 	for (auto const& p : m_playerData) {
-		if (p.name == name) {
+		if (p.GetName() == name) {
 			return p;
 		}
 	}

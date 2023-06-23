@@ -31,7 +31,7 @@ void Intro::Initialize( ) {
 		GetElementSize(0.3f, 0.2f),
 		Alignment::MID_MID,
 		m_resolution,
-		"Start Game",
+		appContext.languageManager.Text("scene_intro_start_btn"),
 		SoundType::ACCEPTED
 		);
 	m_btn->SetEnabled(false);
@@ -44,7 +44,7 @@ void Intro::Initialize( ) {
 		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
-		"skip with [ESC]"
+		appContext.languageManager.Text("scene_intro_skip", "[ESC]")
 		);
 	// skipText->RenderRectangle(true);
 	m_elements.push_back(skipText);

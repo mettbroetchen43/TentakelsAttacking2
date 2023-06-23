@@ -229,6 +229,16 @@ bool DropDown::SetCurrentElementByID(unsigned int ID) {
 	}
 	return false;
 }
+bool DropDown::SetCurrentElementByString(std::string const& element) {
+
+	for (auto const& e : m_dropDownElements) {
+		if (e->GetText() == element) {
+			SetCurrentElement(e);
+			return true;
+		}
+	}
+	return false;
+}
 
 void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
@@ -291,10 +301,22 @@ void DropDown::Render(AppContext_ty_c appContext) {
 		);
 	}
 
+	DrawRectangleLinesEx(
+		m_arrowCollider,
+		2.0f,
+		WHITE
+	);
+
+	float const offset{ m_collider.height * 0.1f };
 	DrawTexturePro(
 		*m_arrowTexture,
 		m_arrowTextureRec,
-		m_arrowCollider,
+		{
+			m_arrowCollider.x + offset,
+			m_arrowCollider.y + offset,
+			m_arrowCollider.width - 2.0f * offset,
+			m_arrowCollider.height - 2.0f * offset,
+		},
 		{ 0.0f,0.0f },
 		0.0f,
 		WHITE

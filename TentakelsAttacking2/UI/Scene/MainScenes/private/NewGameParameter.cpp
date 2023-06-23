@@ -44,7 +44,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		"Parameter"
+		appContext.languageManager.Text("scene_new_game_parameter_parameter_headline")
 	);
 	// parameterText->RenderRectangle(true);
 	m_elements.push_back(parameterText);
@@ -90,7 +90,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Planet Count:"
+		appContext.languageManager.Text("scene_new_game_parameter_planet_count_subheadline", ":")
 	));
 
 	auto planetCount = std::make_shared<SliderAndInputLine>(
@@ -119,7 +119,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Galaxy Width:"
+		appContext.languageManager.Text("scene_new_game_parameter_galaxy_width_subheadline", ":")
 	));
 
 	auto galaxyWidth = std::make_shared<SliderAndInputLine>(
@@ -148,7 +148,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Galaxy Height:"
+		appContext.languageManager.Text("scene_new_game_parameter_galaxy_height_subheadline", ":")
 	));
 
 	auto galaxyHeight = std::make_shared<SliderAndInputLine>(
@@ -177,7 +177,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Fleet Speed:"
+		appContext.languageManager.Text("scene_new_game_parameter_fleet_speed_subheadline", ":")
 	));
 
 	auto fleetSpeed = std::make_shared<SliderAndInputLine>(
@@ -206,7 +206,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"ca. Last Round:"
+		appContext.languageManager.Text("scene_new_game_parameter_last_round_subheadline", ":")
 	));
 
 	auto lastRound = std::make_shared<SliderAndInputLine>(
@@ -233,7 +233,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
 		resolution,
-		"Random",
+		appContext.languageManager.Text("scene_new_game_parameter_random_btn"),
 		SoundType::CLICKED_RELEASE_STD
 	);
 	randomBtn->SetOnClick([this]() {
@@ -247,7 +247,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
 		resolution,
-		"Back",
+		appContext.languageManager.Text("scene_new_game_parameter_back_btn"),
 		SoundType::CLICKED_RELEASE_STD
 	);
 	backBtn->SetOnClick([]() {
@@ -263,7 +263,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
 		resolution,
-		"Next",
+		appContext.languageManager.Text("scene_new_game_parameter_next_btn"),
 		SoundType::ACCEPTED
 	);
 	nextBtn->SetOnClick([]() {

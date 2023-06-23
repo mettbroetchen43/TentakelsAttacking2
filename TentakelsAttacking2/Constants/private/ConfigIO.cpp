@@ -206,9 +206,10 @@ void LoadConfig() {
 	}
 	// global
 	if (nlohmann::json global; loadSection(load, global, ConfigTypes::GLOBAL, constants.global.configEntryCount)) {
-		if (int out; loadInt(global, out, ConfigTypes::GAME_ROUNDS_CURRENT)) { constants.global.currentTargetRound = out; }
-		if (int out; loadInt(global, out, ConfigTypes::GAME_ROUNDS_MAX))     { constants.global.maxRounds          = out; }
-		if (int out; loadInt(global, out, ConfigTypes::GAME_ROUNDS_MIN))     { constants.global.minRounds          = out; }
+		if (std::string out; loadString(global, out, ConfigTypes::CURRENT_LANGUAGE_NAME)) { constants.global.currentLanguageName = out; }
+		if (int         out;    loadInt(global, out, ConfigTypes::GAME_ROUNDS_CURRENT))   { constants.global.currentTargetRound  = out; }
+		if (int         out;    loadInt(global, out, ConfigTypes::GAME_ROUNDS_MAX))       { constants.global.maxRounds           = out; }
+		if (int         out;    loadInt(global, out, ConfigTypes::GAME_ROUNDS_MIN))       { constants.global.minRounds           = out; }
 	}
 	// planet
 	if (nlohmann::json planet; loadSection(load, planet, ConfigTypes::PLANET, constants.planet.configEntryCount)) {
@@ -289,9 +290,10 @@ void SaveConfig() {
 		{ CToS(ConfigTypes::FLEET_SPEED_MIN),     constants.fleet.minFleetSpeed     },
 	};
 	save[CToS(ConfigTypes::GLOBAL)] = {
-		{ CToS(ConfigTypes::GAME_ROUNDS_CURRENT), constants.global.currentTargetRound },
-		{ CToS(ConfigTypes::GAME_ROUNDS_MAX),     constants.global.maxRounds          },
-		{ CToS(ConfigTypes::GAME_ROUNDS_MIN),     constants.global.minRounds          },
+		{ CToS(ConfigTypes::CURRENT_LANGUAGE_NAME), constants.global.currentLanguageName },
+		{ CToS(ConfigTypes::GAME_ROUNDS_CURRENT),   constants.global.currentTargetRound    },
+		{ CToS(ConfigTypes::GAME_ROUNDS_MAX),       constants.global.maxRounds             },
+		{ CToS(ConfigTypes::GAME_ROUNDS_MIN),       constants.global.minRounds             },
 	};
 	save[CToS(ConfigTypes::PLANET)] = {
 		{ CToS(ConfigTypes::PRODUCTION_HOMEWORLD),                constants.planet.homeworldProduction              },

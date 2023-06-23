@@ -5,6 +5,7 @@
 
 #include "UIFleet.h"
 #include "Fleet.h"
+#include "AppContext.h"
 
 bool UIFleet::IsColliding(Vector2 const& mousePosition) const {
     if (not m_isInGalaxyCollider(mousePosition)) { return false; }
@@ -45,9 +46,10 @@ UIFleet::UIFleet(PlayerData player, Vector2 start, Vector2 end, Vector2 resoluti
 }
 
 void UIFleet::UpdateHoverText() {
-    std::string const position{ "x: " + std::to_string(m_fleet->GetPos().x) + ", y: " + std::to_string(m_fleet->GetPos().y) };
-    std::string const text{ std::to_string(m_fleet->GetID()) + " | " + position + " | ships: " + std::to_string(m_fleet->GetShipCount()) };
-    m_hover.SetText(text);
+    std::string const position{ "X: " + std::to_string(m_fleet->GetPos().x) + ", Y: " + std::to_string(m_fleet->GetPos().y) };
+    std::string const text_1{ std::to_string(m_fleet->GetID()) + " | " + position + " |" };
+    std::string const text_2{ std::to_string(m_fleet->GetShipCount())};
+    m_hover.SetText(AppContext::GetInstance().languageManager.Text("ui_fleet_hover", text_1, text_2));
 }
 void UIFleet::UpdatePositions(Rectangle newCollider) {
     Vector2 const start{

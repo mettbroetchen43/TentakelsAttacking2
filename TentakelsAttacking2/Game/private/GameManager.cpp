@@ -253,10 +253,12 @@ void GameManager::NextTurn(bool valid) {
 }
 void GameManager::ValidateNextTurn() {
 
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
 	if (m_currentRoundPlayers.size() <= 1) {
 		ShowValidatePopUp const event{
-			"next round?",
-			"your turn will be over.",
+			appContext.languageManager.Text("logic_game_manager_popup_next_round_title", "?"),
+			appContext.languageManager.Text("logic_game_manager_popup_next_round_text"),
 			[this](bool valid) {
 				this->NextRound(valid);
 			}
@@ -265,8 +267,8 @@ void GameManager::ValidateNextTurn() {
 	}
 	else {
 		ShowValidatePopUp const event{
-			"next player?",
-			"your turn will be over.",
+			appContext.languageManager.Text("logic_game_manager_popup_next_turn_title", "?"),
+			appContext.languageManager.Text("logic_game_manager_popup_next_turn_text"),
 			[this](bool valid) {
 				this->NextTurn(valid);
 			}

@@ -9,6 +9,7 @@
         "fleet_speed_min": 2
     },
     "global": {
+        "current_language_name": "german",
         "game_rounds_current": 50,
         "game_rounds_max": 100,
         "game_rounds_min": 20
@@ -28,7 +29,7 @@
         "player_count_min": 2
     },
     "sound": {
-        "volume_master": 40.0,
+        "volume_master": 50.0,
         "volume_mute_bool": false
     },
     "version": {
@@ -41,16 +42,16 @@
         "target_fps": 60
     },
     "world": {
-        "dimension_x_current": 150,
+        "dimension_x_current": 175,
         "dimension_x_max": 300,
         "dimension_x_min": 60,
         "dimension_x_show_galaxy": 200,
-        "dimension_y_current": 80,
+        "dimension_y_current": 98,
         "dimension_y_max": 160,
         "dimension_y_min": 20,
         "dimension_y_show_galaxy": 150,
         "discover_range": 15,
-        "planet_count_current": 50,
+        "planet_count_current": 61,
         "planet_count_max": 100,
         "planet_count_min": 20,
         "planet_count_show_galaxy": 25

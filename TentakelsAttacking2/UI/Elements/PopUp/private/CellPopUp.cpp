@@ -22,7 +22,7 @@ void CellPopUp::Initialize([[maybe_unused]] AppContext_ty_c appContext,
 		GetElementSize(m_size, 0.3f, 0.2f),
 		Alignment::BOTTOM_LEFT,
 		resolution,
-		"Cancel",
+		appContext.languageManager.Text("ui_cell_popup_cancel_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 
@@ -43,7 +43,7 @@ ClassicButton_ty CellPopUp::InitializeAcceptButton(
 		GetElementSize(m_size, 0.3f, 0.2f),
 		Alignment::BOTTOM_RIGHT,
 		resolution,
-		"Accept",
+		appContext.languageManager.Text("ui_cell_popup_accept_btn"),
 		SoundType::ACCEPTED
 		);
 

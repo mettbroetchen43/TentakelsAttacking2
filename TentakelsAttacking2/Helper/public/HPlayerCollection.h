@@ -6,7 +6,7 @@
 #pragma once
 #include "EventListener.hpp"
 #include "HGeneral.h"
-#include "HPlayerData.hpp"
+#include "HPlayerData.h"
 #include <string>
 #include <array>
 #include <vector>
@@ -18,9 +18,9 @@ class PlayerCollection final : public EventListener {
 private:
 	std::vector<PlayerData> m_playerData; ///< contains player data
 	std::vector<PlayerData> m_npcData{ ///< contains the player data for the npcs
-		{ 100, "neutral player", WHITE }
+		{ 100, "", WHITE , "helper_player_collection_npc_neutral_player"}
 	};
-	PlayerData m_defaultPlayer{ 0,"no player", WHITE }; ///< contains default player witch is return if no other player is found.
+	PlayerData m_defaultPlayer{ 0,"", WHITE, "helper_player_collection_npc_no_player"}; ///< contains default player witch is return if no other player is found.
 
 	/**
 	 * checks if name already exists
