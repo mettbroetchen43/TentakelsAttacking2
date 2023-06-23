@@ -7,7 +7,7 @@
 #include "Scene.h"
 #include "SceneType.h"
 #include "EventListener.hpp"
-#include "HPlayerData.hpp"
+#include "HPlayerData.h"
 #include <memory>
 
 class GalaxyScene;

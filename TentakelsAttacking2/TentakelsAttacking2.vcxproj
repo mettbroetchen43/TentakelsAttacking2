@@ -195,7 +195,7 @@
     <ClInclude Include="Helper\public\HRandom.h" />
     <ClInclude Include="Constants\public\CTextProcessing.hpp" />
     <ClInclude Include="Helper\public\HTextProcessing.h" />
-    <ClInclude Include="Helper\public\HPlayerData.hpp" />
+    <ClInclude Include="Helper\public\HPlayerData.h" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
     <ClInclude Include="Game\public\Player.h" />
     <ClInclude Include="UI\Elements\Default\public\Hover.h" />

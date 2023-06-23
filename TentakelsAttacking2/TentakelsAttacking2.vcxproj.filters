@@ -174,7 +174,7 @@
     <ClInclude Include="UI\Elements\PopUp\public\DeletePlayerPopUp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Helper\public\HPlayerData.hpp">
+    <ClInclude Include="Helper\public\HPlayerData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Helper\public\HColors.h">
