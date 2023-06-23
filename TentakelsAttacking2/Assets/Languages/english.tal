@@ -144,5 +144,13 @@
     "ui_fleet_table_headline_target_point": "Target point{0}",
     "ui_fleet_table_no_target_point": "No target poits available.",
     "ui_fleet_table_orig_planet": "Planet {0}",
-    "ui_fleet_table_orig_target_point": "Target point {0}"
+    "ui_fleet_table_orig_target_point": "Target point {0}",
+    "ui_game_event_settings_title": "Events",
+    "ui_game_events_settings_event_global": "Global",
+    "ui_game_events_settings_event_pirates": "Pirates",
+    "ui_game_events_settings_event_revolts": "Revolts",
+    "ui_game_events_settings_event_renegade_ships": "Renegade ships",
+    "ui_game_events_settings_event_black_hole": "Black holes",
+    "ui_game_events_settings_event_supernova": "Supernova",
+    "ui_game_events_settings_event_engine_problems": "Engines problems"
 }

@@ -16,6 +16,8 @@
 
 void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
 	// Title
 	auto title = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.0f),
@@ -24,7 +26,7 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 		resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		"Events"
+		appContext.languageManager.Text("ui_game_event_settings_title")
 	);
 	// title->RenderRectangle(true);
 	m_elements.push_back(title);
@@ -44,13 +46,13 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 	float const cbX     { 0.51f };
 	float const textX   { 0.49f };
 	std::array<std::string, 7> const text{
-		"Global",
-		"Pirates",
-		"Revolts",
-		"Renegade ships",
-		"Black Hole",
-		"Supernova",
-		"Engine Problems"
+		AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_global"         ),
+		AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_pirates"        ),
+		AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_revolts"        ),
+		AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_renegade_ships" ),
+		AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_black_hole"     ),
+		AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_supernova"      ),
+		AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_engine_problems")
 	};
 
 	for (unsigned int i = 0; i < text.size(); ++i) {
