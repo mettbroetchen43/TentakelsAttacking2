@@ -18,7 +18,7 @@ struct CGlobal final {
 
 	static inline std::string const configVersion{ "v0.1.0.1" }; ///< contains the config version string
 	// gameVersion will be extracted with regex in the GitHub CI. Don't chance the following line. see CMakeList.txt
-	static inline std::string const gameVersion{ "v0.1.0" }; ///< current gameVersion string
+	static inline std::string const gameVersion{ "v0.1.1" }; ///< current gameVersion string
 	static inline std::string const copyRight{ "(c) Purpur Tentakel" }; ///< copy right string
 
 	size_t minRounds{ 20 }; ///< defines the min of rounds the player can set (override by config)
