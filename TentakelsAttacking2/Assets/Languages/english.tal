@@ -130,5 +130,19 @@
     "ui_primitive_cell_popup_input_line_placeholder_text": "Edit Entry",
     "ui_table_cell_edit_entry_popup": "Edit Entry",
     "ui_manager_initial_sound_popup_title": "Sound level",
-    "ui_manager_initial_sound_popup_text": "Set the Initial Sound Level"
+    "ui_manager_initial_sound_popup_text": "Set the Initial Sound Level",
+    "ui_fleet_table_headline_id": "ID",
+    "ui_fleet_table_headline_position": "Position",
+    "ui_fleet_table_headline_ship_count": "Ship count",
+    "ui_fleet_table_headline_destination": "Destination",
+    "ui_fleet_table_headline_fleets": "Fleets{0}",
+    "ui_fleet_table_dest_planet": "Planet {0}",
+    "ui_fleet_table_dest_fleet": "Fleet {0}",
+    "ui_fleet_table_dest_target_point": "Target point {0}",
+    "ui_fleet_table_dest_invalid": "Invalid destination",
+    "ui_fleet_table_no_fleets_text": "No Fleets available.",
+    "ui_fleet_table_headline_target_point": "Target point{0}",
+    "ui_fleet_table_no_target_point": "No target poits available.",
+    "ui_fleet_table_orig_planet": "Planet {0}",
+    "ui_fleet_table_orig_target_point": "Target point {0}"
 }

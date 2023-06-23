@@ -312,7 +312,7 @@
     <ClInclude Include="UI\public\HoverRender.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Scene\SupportScenes\public\FleetAndTargetPointTable.h">
+    <ClInclude Include="UI\Scene\SupportScenes\public\FleetTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game\public\GalaxyManager.h">

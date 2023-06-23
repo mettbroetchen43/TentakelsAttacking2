@@ -3,13 +3,14 @@
 // 15.05.2023
 //
 
-#include "FleetAndTargetPointTable.h"
+#include "FleetTable.h"
 #include "Table.h"
 #include "HFocusEvents.h"
 #include "Text.h"
 #include "Galaxy.h"
 
 void FleetAndTargetPointTable::Initialization() {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	auto const fleets{ m_galaxy->GetFleets() };
 	auto const targetPoints{ m_galaxy->GetTargetPoints() };
 	int constexpr startFleets{ 2 };
@@ -31,10 +32,15 @@ void FleetAndTargetPointTable::Initialization() {
 	m_table->SetFixedHeadline(true);
 	m_table->SetScrollable(true);
 	m_table->SetHighlightHover(true);
-	m_table->SetHeadlineValues<std::string>({ "ID", "Position", "Ship Count", "Destination" });
+	m_table->SetHeadlineValues<std::string>({
+		appContext.languageManager.Text("ui_fleet_table_headline_id"),
+		appContext.languageManager.Text("ui_fleet_table_headline_position"),
+		appContext.languageManager.Text("ui_fleet_table_headline_ship_count"),
+		appContext.languageManager.Text("ui_fleet_table_headline_destination"),
+		});
 	m_elements.push_back(m_table);
 
-	m_table->SetValue<std::string>(1, 0, "Fleets:");
+	m_table->SetValue<std::string>(1, 0, appContext.languageManager.Text("ui_fleet_table_headline_fleets",":"));
 	if (fleets.size() > 0) {
 		for (int i = 0; i < fleets.size(); ++i) {
 			auto const fleet{ fleets.at(i) };
@@ -65,16 +71,16 @@ void FleetAndTargetPointTable::Initialization() {
 			auto const destination{ fleet->GetTarget() };
 			std::string dest;
 			if (destination->IsPlanet()) {
-				dest = "Planet " + std::to_string(destination->GetID());
+				dest = appContext.languageManager.Text("ui_fleet_table_dest_planet", destination->GetID());
 			}
 			else if (destination->IsFleet()) {
-				dest = "Fleet " + std::to_string(destination->GetID());
+				dest = appContext.languageManager.Text("ui_fleet_table_dest_fleet", destination->GetID());
 			}
 			else if (destination->IsTargetPoint()) {
-				dest = "Target Point x: " + std::to_string(fleet->GetTarget()->GetPos().x) + " | y: " + std::to_string(fleet->GetTarget()->GetPos().y);
+				dest = appContext.languageManager.Text("ui_fleet_table_dest_target_point", destination->GetID());
 			}
 			else {
-				dest = "Invalid Destination";
+				dest = appContext.languageManager.Text("ui_fleet_table_dest_invalid");
 			}
 			m_table->SetValue<std::string>(
 				i + startFleets,
@@ -84,10 +90,10 @@ void FleetAndTargetPointTable::Initialization() {
 		}
 	}
 	else {
-		m_table->SetValue<std::string>(startFleets, 0, "no Fleets available");
+		m_table->SetValue<std::string>(startFleets, 0, appContext.languageManager.Text("ui_fleet_table_no_fleets_text"));
 	}
 
-	m_table->SetValue<std::string>(startTargetPoints-1, 0, "Target Points:");
+	m_table->SetValue<std::string>(startTargetPoints-1, 0, appContext.languageManager.Text("ui_fleet_table_headline_target_point", ":"));
 	if (targetPoints.size() > 0) {
 		for (int i = 0; i < targetPoints.size(); ++i) {
 			auto const targetPoint{ targetPoints.at(i) };
@@ -122,7 +128,7 @@ void FleetAndTargetPointTable::Initialization() {
 		}
 	}
 	else {
-		m_table->SetValue<std::string>(startTargetPoints, 0, "no target points available");
+		m_table->SetValue<std::string>(startTargetPoints, 0, appContext.languageManager.Text("ui_fleet_table_no_target_point"));
 	}
 }
 
@@ -131,12 +137,20 @@ std::string FleetAndTargetPointTable::GetStringFromPosition(vec2pos_ty position)
 	for (auto const& p : m_galaxy->GetPlanets()) {
 		auto const& pos{ p->GetPos() };
 		if (pos == position) {
-			return "Planet " + std::to_string(p->GetID());
+			return AppContext::GetInstance().languageManager.Text("ui_fleet_table_orig_planet", p->GetID());
+		}
+	}
+	for (auto const& t : m_galaxy->GetTargetPoints()) {
+		auto const& pos{ t->GetPos() };
+		if (pos == position) {
+			return  AppContext::GetInstance().languageManager.Text("ui_fleet_table_orig_target_point", t->GetID());
 		}
 	}
 
-	return "x: " + std::to_string(position.x)
-		+ " | y: " + std::to_string(position.y);
+	std::stringstream stream;
+
+	stream << "X: " << position.x << " | Y: " << position.y;
+	return stream.str();
 }
 
 FleetAndTargetPointTable::FleetAndTargetPointTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy_ty_raw galaxy)

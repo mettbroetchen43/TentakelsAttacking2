@@ -6,7 +6,7 @@
 #include "MainScene.h"
 #include "GalaxyAndSlider.h"
 #include "PlanetTable.h"
-#include "FleetAndTargetPointTable.h"
+#include "FleetTable.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
 #include "GenerelEvents.hpp"
