@@ -123,7 +123,7 @@
     "ui_message_popup_ok_btn": "OK",
     "ui_sound_level_popup_mute": "Stumm",
     "ui_sound_level_popup_accept_btn": "\u00dcbernehmen",
-    "ui_validate_popup_accept_btn": "\u00dcbernehmen",
+    "ui_validate_popup_accept_btn": "OK",
     "ui_validate_popup_cancel_btn": "Abbrechen",
     "ui_primitive_cell_popup_input_line_placeholder_text": "Eintrag bearbeiten",
     "ui_table_cell_edit_entry_popup": "Eintrag bearbeiten",
@@ -158,5 +158,9 @@
     "ui_planet_table_player_name_destroyed": "ZERST\u00d6RT",
     "ui_planet_table_player_name_not_discovered": "N/D",
     "helper_player_collection_npc_neutral_player": "Neutraler Spieler",
-    "helper_player_collection_npc_no_player": "Kein Spieler"
+    "helper_player_collection_npc_no_player": "Kein Spieler",
+    "logic_game_manager_popup_next_turn_title": "N\u00e4chster Spieler{0}",
+    "logic_game_manager_popup_next_turn_text": "Der Zug w\u00e4re zu Ende.",
+    "logic_game_manager_popup_next_round_title": "N\u00e4chste Runde{0}",
+    "logic_game_manager_popup_next_round_text": "Der Zug w\u00e4re zu Ende."
 }

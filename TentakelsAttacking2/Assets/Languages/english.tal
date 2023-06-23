@@ -158,5 +158,9 @@
     "ui_planet_table_player_name_destroyed": "DESTROYED",
     "ui_planet_table_player_name_not_discovered": "N/D",
     "helper_player_collection_npc_neutral_player": "Neutral player",
-    "helper_player_collection_npc_no_player": "No Player"
+    "helper_player_collection_npc_no_player": "No Player",
+    "logic_game_manager_popup_next_turn_title": "Next player{0}",
+    "logic_game_manager_popup_next_turn_text": "Your turn will be over.",
+    "logic_game_manager_popup_next_round_title": "Next Round{0}",
+    "logic_game_manager_popup_next_round_text": "Your turn will be over."
 }
