@@ -152,5 +152,11 @@
     "ui_game_events_settings_event_renegade_ships": "Renegade ships",
     "ui_game_events_settings_event_black_hole": "Black holes",
     "ui_game_events_settings_event_supernova": "Supernova",
-    "ui_game_events_settings_event_engine_problems": "Engines problems"
+    "ui_game_events_settings_event_engine_problems": "Engines problems",
+    "ui_planet_table_headline_id": "ID",
+    "ui_planet_table_headline_player": "Player",
+    "ui_planet_table_headline_production": "Production",
+    "ui_planet_table_headline_ship_count": "Ship count",
+    "ui_planet_table_player_name_destroyed": "DESTROYED",
+    "ui_planet_table_player_name_not_discovered": "N/D"
 }

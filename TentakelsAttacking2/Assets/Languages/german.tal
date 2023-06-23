@@ -152,5 +152,11 @@
     "ui_game_events_settings_event_renegade_ships": "Abtr\u00fcnnige Schiffe",
     "ui_game_events_settings_event_black_hole": "Schwarze L\u00f6cher",
     "ui_game_events_settings_event_supernova": "Supernova",
-    "ui_game_events_settings_event_engine_problems": "Antriebsprobleme"
+    "ui_game_events_settings_event_engine_problems": "Antriebsprobleme",
+    "ui_planet_table_headline_id": "ID",
+    "ui_planet_table_headline_player": "Spieler",
+    "ui_planet_table_headline_production": "Produktion",
+    "ui_planet_table_headline_ship_count": "Schiffsanzahl",
+    "ui_planet_table_player_name_destroyed": "ZERST\u00d6RT",
+    "ui_planet_table_player_name_not_discovered": "N/D"
 }
