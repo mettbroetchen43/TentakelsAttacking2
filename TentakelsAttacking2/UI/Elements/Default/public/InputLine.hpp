@@ -81,13 +81,6 @@ public:
 	InputLine& operator= (InputLine&&) = default;
 
 	/**
-	 * returns if the input line is enabled.
-	 */
-	[[nodiscard]] virtual bool IsEnabled() const override {
-		return true;
-	}
-
-	/**
 	 * logic of the input line.
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override {
@@ -298,6 +291,12 @@ public:
 		m_onValueChanced = onValueChanged;
 	}
 
+	/**
+	 * returns if the input line is enabled.
+	 */
+	[[nodiscard]] bool IsEnabled() const override {
+		return m_isEnabled;
+	}
 	/**
 	 * sets if the input line is enabled.
 	 */
