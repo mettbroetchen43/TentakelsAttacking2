@@ -109,12 +109,12 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 }
 Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext_ty_c appContext) const {
 	Vector2 const newPos{
-		(m_collider.x + m_resolution.x * 0.05f) / m_resolution.x,
-		(m_collider.y + m_resolution.y * 0.05f) / m_resolution.y,
+		(m_collider.x/*+ m_resolution.x * 0.05f*/) / m_resolution.x,
+		(m_collider.y/* + m_resolution.y * 0.05f */ ) / m_resolution.y,
 	};
 	Vector2 const newSize{
-		(m_collider.width - m_resolution.x * 0.1f) / m_resolution.x,
-		(m_collider.height - m_resolution.y * 0.1f) / m_resolution.y,
+		(m_collider.width /* - m_resolution.x * 0.1f*/ ) / m_resolution.x,
+		(m_collider.height/* - m_resolution.y * 0.1f */) / m_resolution.y,
 	};
 	if (m_isShowGalaxy) {
 		return {
@@ -131,24 +131,16 @@ Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext_ty_c appContext) c
 
 }
 Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext_ty_c appContext) const {
-	Vector2 const newPos{
-		m_resolution.x * 0.045f / m_collider.width,
-		m_resolution.y * 0.045f / m_collider.height,
-	};
-	Vector2 const newSize{
-		(m_collider.width - m_resolution.x * 0.1f) / m_collider.width,
-		(m_collider.height - m_resolution.y * 0.1f) / m_collider.height,
-	};
 	if (m_isShowGalaxy) {
 		return {
-			newPos.x + pos.x / appContext.constants.world.showDimensionX * newSize.x,
-			newPos.x + pos.y / appContext.constants.world.showDimensionY * newSize.y,
+			pos.x / appContext.constants.world.showDimensionX,
+			pos.y / appContext.constants.world.showDimensionY,
 		};
 	}
 	else {
 		return {
-			newPos.x + pos.x / appContext.constants.world.currentDimensionX * newSize.x,
-			newPos.x + pos.y / appContext.constants.world.currentDimensionY * newSize.y,
+			pos.x / appContext.constants.world.currentDimensionX,
+			pos.y / appContext.constants.world.currentDimensionY,
 		};
 	}
 
@@ -318,7 +310,15 @@ vec2pos_ty UIGalaxy::GetCoordinatesFromPoint(Vector2 point) const {
 		m_absoluteSize.width / m_resolution.x,
 		m_absoluteSize.height / m_resolution.y
 	};
-	auto const relative= GetElementPositionReversed(pos, size, point);
+	//auto const relative= GetElementPositionReversed(pos, size, point);
+	auto const relative = GetElementPositionReversed({
+			m_absoluteSize.x,
+			m_absoluteSize.y
+		}, {
+			m_absoluteSize.width,
+			m_absoluteSize.height
+		},
+		absolutePoint);
 	return { 
 		static_cast<int>(relative.x * galaxySize.x) ,
 		static_cast<int>(relative.y * galaxySize.y)
@@ -559,6 +559,17 @@ void UIGalaxy::Render(AppContext_ty_c appContext) {
 	if (m_updateLineDrag) {
 		m_lineDrag->Render(appContext);
 	}
+
+	DrawRectangleLinesEx(
+		m_absoluteSize,
+		1.0f,
+		WHITE
+	);
+	DrawRectangleLinesEx(
+		m_collider,
+		1.0f,
+		PURPLE
+	);
 }
 void UIGalaxy::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
