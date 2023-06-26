@@ -260,7 +260,8 @@ void MainScene::Initialize() {
 		this->SendFleetInstruction();
 		});
 	m_destination->SetOnValueChanced([this]() {
-		SetAcceptButton();
+		this->SetAcceptButton();
+		this->UpdateActiveDestination();
 		});
 	m_destination->SetPlaceholderText(appContext.languageManager.Text("scene_main_scene_id_placeholder_text"));
 	m_elements.push_back(m_destination);
@@ -478,6 +479,11 @@ void MainScene::SetAcceptButton() {
 	};
 
 	m_acceptBtn->SetEnabled(valid);
+}
+void MainScene::UpdateActiveDestination() {
+	bool const hasEntry{ m_destination->HasValue() };
+	m_destinationX->SetEnabled(!hasEntry);
+	m_destinationY->SetEnabled(!hasEntry);
 }
 
 void MainScene::SendFleetInstruction() {
