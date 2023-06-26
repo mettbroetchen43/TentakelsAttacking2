@@ -319,7 +319,10 @@ vec2pos_ty UIGalaxy::GetCoordinatesFromPoint(Vector2 point) const {
 		m_absoluteSize.height / m_resolution.y
 	};
 	auto const relative= GetElementPositionReversed(pos, size, point);
-	return { relative.x * galaxySize.x , relative.y * galaxySize.y };
+	return { 
+		static_cast<int>(relative.x * galaxySize.x) ,
+		static_cast<int>(relative.y * galaxySize.y)
+	};
 }
 
 void UIGalaxy::HandleDragLineResult(Vector2 start, Vector2 end) {
@@ -329,11 +332,15 @@ void UIGalaxy::HandleDragLineResult(Vector2 start, Vector2 end) {
 	if (destID <= 0) {
 		destCo = GetCoordinatesFromPoint(end);
 	}
-	std::ostringstream ss;
-	ss << "origin: " << originID << " | dest: " << destID << " | X: " << destCo.x << " | Y: " << destCo.y;
-	Print(ss.str(), PrintType::DEBUG);
 
 	m_updateLineDrag = false;
+	
+	DragLineFleetInstructionEvent const event{
+		originID,
+		destID,
+		destCo
+	};
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
 UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,

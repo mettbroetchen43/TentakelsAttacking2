@@ -418,7 +418,7 @@ void SettingsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 }
 
 void SettingsScene::OnEvent(Event const& event) {
-	if (auto const* LanguageEvent = dynamic_cast<UpdateLanguageInUI const*>(&event)) {
+	if (auto const* LanguageEvent = dynamic_cast<UpdateLanguageInUIEvent const*>(&event)) {
 		m_languageDropDown->SetCurrentElementByString(LanguageEvent->GetLanguage());
 		return;
 	}
