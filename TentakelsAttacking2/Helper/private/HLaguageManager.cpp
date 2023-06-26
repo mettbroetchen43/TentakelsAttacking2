@@ -96,8 +96,10 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 	try {
 		in >> m_current_language;
 	}
-	catch (nlohmann::json::parse_error const&) {
-		Print("not able to parse \"" + language + "\"", PrintType::ERROR);
+	catch (nlohmann::json::parse_error const& e) {
+		std::stringstream ss;
+		ss << "not able to parse \"" << language << "\" | Message:" << e.what() << " | byte: " << e.byte << " | ID: " << e.id;
+		Print(ss.str(), PrintType::ERROR);
 		in.close();
 		return false;
 	}
