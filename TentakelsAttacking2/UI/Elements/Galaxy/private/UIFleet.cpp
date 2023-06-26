@@ -7,23 +7,6 @@
 #include "Fleet.h"
 #include "AppContext.h"
 
-bool UIFleet::IsColliding(Vector2 const& mousePosition) const {
-    if (not m_isInGalaxyCollider(mousePosition)) { return false; }
-
-    auto const& lineStart{ m_line.GetStart() };
-    auto const& lineEnd  { m_line.GetEnd()   };
-    Vector2 const start{
-        lineStart.x * m_resolution.x,
-        lineStart.y * m_resolution.y
-    };
-    Vector2 const end{
-        lineEnd.x * m_resolution.x,
-        lineEnd.y * m_resolution.y,
-    };
-
-    return CheckCollisionPointLine(mousePosition, start, end, 5);
-}
-
 UIFleet::UIFleet(PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd,
     Fleet_ty_raw_c fleet, std::function<bool(Vector2 const&)> isInGalaxyCollider)
     : UIElement{ start, { 0.0f,0.0f }, Alignment::MID_MID, resolution }, m_player{ player },
@@ -43,6 +26,23 @@ UIFleet::UIFleet(PlayerData player, Vector2 start, Vector2 end, Vector2 resoluti
         resolution
     } {
     UpdateHoverText();
+}
+
+bool UIFleet::IsColliding(Vector2 const& mousePosition) const {
+    if (not m_isInGalaxyCollider(mousePosition)) { return false; }
+
+    auto const& lineStart{ m_line.GetStart() };
+    auto const& lineEnd{ m_line.GetEnd() };
+    Vector2 const start{
+        lineStart.x * m_resolution.x,
+        lineStart.y * m_resolution.y
+    };
+    Vector2 const end{
+        lineEnd.x * m_resolution.x,
+        lineEnd.y * m_resolution.y,
+    };
+
+    return CheckCollisionPointLine(mousePosition, start, end, 5);
 }
 
 void UIFleet::UpdateHoverText() {

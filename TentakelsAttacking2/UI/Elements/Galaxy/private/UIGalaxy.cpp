@@ -295,6 +295,29 @@ float UIGalaxy::GetScaleFactor() const {
 	return m_scaleFactor;
 }
 
+bool UIGalaxy::IsCollidingObjectPoint(Vector2 point) const {
+	if (!CheckCollisionPointRec(point, m_collider)) { return false; }
+	for (auto const& p : m_uiPlanets) {
+		auto const& collider{ p->GetCollider() };
+		if (CheckCollisionPointRec(point, collider)) {
+			return true ;
+		}
+	}
+	for (auto const& tp : m_uiTargetPoints) {
+		auto const& collider{ tp->GetCollider() };
+		if (CheckCollisionPointRec(point, collider)) {
+			return true;
+		}
+	}
+	for (auto const& f : m_uiFleets) {
+		if (f->IsColliding(point)) {
+			return true ;
+		}
+	}
+
+	return false;
+}
+
 void UIGalaxy::Zoom(bool zoomIn, int factor) {
 	if (!m_isScaling) { return; }
 
@@ -365,6 +388,7 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
 	if (m_isScaling) {
+		// zoom
 		if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
 			float const mouseWheel{ GetMouseWheelMove() };
 			if (mouseWheel != 0.0f) {
@@ -372,12 +396,14 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 			}
 		}
 
+		// move by keys
 		if (IsKeyDown(KEY_UP)) { MoveByKey(Direction::UP, 2.0f); }
 		if (IsKeyDown(KEY_DOWN)) { MoveByKey(Direction::DOWN, 2.0f); }
 		if (IsKeyDown(KEY_LEFT)) { MoveByKey(Direction::LEFT, 1.5f); }
 		if (IsKeyDown(KEY_RIGHT)) { MoveByKey(Direction::RIGHT, 1.5f); }
 
-		if (CheckCollisionPointRec(mousePosition, m_collider)) {
+		// move by mouse
+		if (CheckCollisionPointRec(mousePosition, m_collider) and !IsCollidingObjectPoint(mousePosition)) {
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				m_isScrollingByMouse = true;
 			}

@@ -118,6 +118,13 @@ public:
 	 * returns the current scale factor of  the galaxy.
 	 */
 	[[nodiscard]] float GetScaleFactor() const;
+
+	/**
+	 * checks if a UISpaceObject is colliding with the provided point.
+	 * return the colliding object if there is one.
+	 */
+	[[nodiscard]] bool IsCollidingObjectPoint(Vector2 point) const;
+
 	/**
 	 * zooms the galaxy in or out.
 	 * the factor defines how fast it is zooming.
