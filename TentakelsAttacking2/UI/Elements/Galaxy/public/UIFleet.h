@@ -12,6 +12,7 @@
 
 class UIFleet final : public UIElement {
 private:
+	unsigned int m_ID; ///< contains the logic ID
 	PlayerData m_player; ///< contains the current player data
 	Fleet_ty_raw_c m_fleet; ///< contains the logic Planet to this Planet
 	Line m_line; ///< contains the line for displaying
@@ -20,15 +21,19 @@ private:
 	Vector2 m_relativeEnd; ///< contains teh relative end of the line according to the galaxy
 	std::function<bool(Vector2 const&)> m_isInGalaxyCollider; ///< returns if a point is in the galaxy collider
 
+public:
+	UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd,
+		Fleet_ty_raw_c fleet, std::function<bool(Vector2 const&)> isInGalaxyCollider);
+	
+	/**
+	 * return the logic ID
+	 */
+	[[nodiscard]] unsigned int GetID() const;
 	/**
 	 * checks if a point is colliding with the line.
 	 */
 	[[nodiscard]] bool IsColliding(Vector2 const& mousePosition) const;
 
-public:
-	UIFleet(PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd,
-		Fleet_ty_raw_c fleet, std::function<bool(Vector2 const&)> isInGalaxyCollider);
-	
 	/**
 	 * updates the hover text.
 	 */

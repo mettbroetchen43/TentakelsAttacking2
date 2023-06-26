@@ -51,7 +51,7 @@ void HLanguageManager::InitializeAvailableLanguages() {
 void HLanguageManager::ChanceLanguage(std::string const& language) {
 	AppContext_ty appContext{ AppContext::GetInstance() };
 	auto handleUpdateLanguage{ [&]() {
-		auto const event{ UpdateLanguageInUI(appContext.constants.global.currentLanguageName) };
+		auto const event{ UpdateLanguageInUIEvent(appContext.constants.global.currentLanguageName) };
 		appContext.eventManager.InvokeEvent(event);
 	} };
 

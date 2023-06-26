@@ -110,6 +110,11 @@ private:
 	 */
 	void ClearInputLines();
 
+	/**
+	 * handles the galaxy drag line input
+	 */
+	void HandleGalaxyDragLineInput(DragLineFleetInstructionEvent const* event);
+
 public:
 	/**
 	 * ctor.

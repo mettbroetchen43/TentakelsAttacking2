@@ -57,6 +57,10 @@ class Line;
 using Line_ty =   std::shared_ptr<Line>;
 using Line_ty_c = std::shared_ptr<Line> const&;
 
+class LineDrag;
+using LineDrag_ty = std::shared_ptr<LineDrag>;
+using LineDrag_ty_c = std::shared_ptr<LineDrag> const&;
+
 class Picture;
 using Picture_ty =   std::shared_ptr<Picture>;
 using Picture_ty_c = std::shared_ptr<Picture> const&;

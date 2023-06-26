@@ -10,7 +10,7 @@
 #include "UIGalaxy.h"
 #include "ClassicButton.h"
 
-void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
+void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy, bool isAcceptingInput) {
 
 	// Galaxy
 	m_galaxy = std::make_shared<UIGalaxy>(
@@ -19,7 +19,8 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
 		GetElementSize(0.955f, 0.93f),
 		Alignment::TOP_RIGHT,
 		resolution,
-		isShowGalaxy
+		isShowGalaxy,
+		isAcceptingInput
 		);
 	m_galaxy->SetOnZoom([this](float scaleFactor, Vector2 referenceScale) {
 		this->Zoom(scaleFactor, referenceScale);
@@ -136,10 +137,10 @@ void GalaxyScene::Slide(float position, bool isHorizontal) {
 }
 
 GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution, bool isShowGalaxy)
+	Vector2 resolution, bool isShowGalaxy, bool isAcceptingInput = false)
 	: Scene{ pos, size, alignment, resolution } {
 
-	Initialize(resolution, isShowGalaxy);
+	Initialize(resolution, isShowGalaxy, isAcceptingInput);
 }
 
 void GalaxyScene::SetIsScaling(bool isScaling) {

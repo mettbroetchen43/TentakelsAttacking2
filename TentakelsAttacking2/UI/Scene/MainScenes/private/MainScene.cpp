@@ -368,8 +368,10 @@ void MainScene::InitializeGalaxy() {
 		GetElementPosition(0.01f, 0.99f),
 		GetElementSize(0.85f, 0.85f),
 		Alignment::BOTTOM_LEFT,
-		m_resolution
-		);
+		m_resolution,
+		false,
+		true
+	);
 	m_elements.push_back(m_galaxy);
 }
 void MainScene::InitializePlanetTable() {
@@ -509,6 +511,26 @@ void MainScene::ClearInputLines() {
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
+void MainScene::HandleGalaxyDragLineInput(DragLineFleetInstructionEvent const* event) {
+	m_origin      ->Clear();
+	m_destination ->Clear();
+	m_destinationX->Clear();
+	m_destinationY->Clear();
+
+	if (event->GetOriginID() > 0) { m_origin     ->SetValue(event->GetOriginID()); }
+	if (event->GetDestID()   > 0) { m_destination->SetValue(event->GetDestID()  ); }
+	else {
+		auto const& co{ event->GetDestCoordinates() };
+		if (co.x > 0 and co.y > 0) {
+			m_destinationX->SetValue(co.x);
+			m_destinationY->SetValue(co.y);
+		}
+	}
+
+	SelectFocusElementEvent const focusEvent{ m_shipCount.get() };
+	AppContext::GetInstance().eventManager.InvokeEvent(focusEvent);
+}
+
 MainScene::MainScene(Vector2 resolution)
 	: Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
 
@@ -560,6 +582,10 @@ void MainScene::OnEvent(Event const& event) {
 			InitializeFleetTable();
 			Switch(m_currentMainSceneType);
 		}
+		return;
+	}
+	if (auto const* dragLineEvent = dynamic_cast<DragLineFleetInstructionEvent const*>(&event)) {
+		HandleGalaxyDragLineInput(dragLineEvent);
 		return;
 	}
 }
