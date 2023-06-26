@@ -96,6 +96,10 @@ private:
 	 * sets the accept button active or inactive.
 	 */
 	void SetAcceptButton();
+	/**
+	 * enables or disables the destination x and y when the input in destination changes
+	 */
+	void UpdateActiveDestination();
 
 	/**
 	 * sends the ship instruction event.

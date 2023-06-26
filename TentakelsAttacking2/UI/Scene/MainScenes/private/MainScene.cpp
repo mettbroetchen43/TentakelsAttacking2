@@ -260,7 +260,8 @@ void MainScene::Initialize() {
 		this->SendFleetInstruction();
 		});
 	m_destination->SetOnValueChanced([this]() {
-		SetAcceptButton();
+		this->SetAcceptButton();
+		this->UpdateActiveDestination();
 		});
 	m_destination->SetPlaceholderText(appContext.languageManager.Text("scene_main_scene_id_placeholder_text"));
 	m_elements.push_back(m_destination);
@@ -479,14 +480,19 @@ void MainScene::SetAcceptButton() {
 
 	m_acceptBtn->SetEnabled(valid);
 }
+void MainScene::UpdateActiveDestination() {
+	bool const hasEntry{ m_destination->HasValue() };
+	m_destinationX->SetEnabled(!hasEntry);
+	m_destinationY->SetEnabled(!hasEntry);
+}
 
 void MainScene::SendFleetInstruction() {
 
 	SendFleetInstructionEvent event{
 		static_cast<unsigned int>(m_origin->GetValue()),
 		static_cast<unsigned int>(m_destination->GetValue()),
- 		                          m_destinationX->GetValue(),
-		                          m_destinationY->GetValue(),
+ 		                          m_destinationX->IsEnabled() ? m_destinationX->GetValue() : 0,
+		                          m_destinationY->IsEnabled() ? m_destinationY->GetValue() : 0,
 		static_cast<size_t>(      m_shipCount->GetValue())
 	};
 	AppContext::GetInstance().eventManager.InvokeEvent(event);

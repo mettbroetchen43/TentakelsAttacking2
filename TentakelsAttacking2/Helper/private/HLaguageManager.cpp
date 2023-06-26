@@ -49,22 +49,29 @@ void HLanguageManager::InitializeAvailableLanguages() {
 }
 
 void HLanguageManager::ChanceLanguage(std::string const& language) {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	auto handleUpdateLanguage{ [&]() {
+		auto const event{ UpdateLanguageInUI(appContext.constants.global.currentLanguageName) };
+		appContext.eventManager.InvokeEvent(event);
+	} };
 
 	bool const validLoad{ LoadLanguage(language) };
 
 	if (not validLoad) {
 		if (not m_current_language.empty()) {
 			Print("not able to load new language -> fallback to old language", PrintType::INFO);
+			handleUpdateLanguage();
 			return;
 		}
 		if (language != m_default_language) {
 			bool const validDefaultLoad{ LoadLanguage(m_default_language) };
 			if (validDefaultLoad) {
 				Print("fallback to default language: \"" + m_default_language + "\"", PrintType::INFO);
+				handleUpdateLanguage();
 				return;
 			}
 			m_current_language.clear();
-			AppContext::GetInstance().constants.global.currentLanguageName = "";
+			appContext.constants.global.currentLanguageName = "";
 			Print("not able to load any language.", PrintType::ERROR);
 		}
 	}
@@ -93,7 +100,17 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 		return false;
 	}
 
-	in >> m_current_language;
+	try {
+		in >> m_current_language;
+	}
+	catch (nlohmann::json::parse_error const& e) {
+		std::stringstream ss;
+		ss << "not able to parse \"" << language << "\" | Message:" << e.what() << " | byte: " << e.byte << " | ID: " << e.id;
+		Print(ss.str(), PrintType::ERROR);
+		in.close();
+		return false;
+	}
+
 	in.close();
 
 	AppContext::GetInstance().constants.global.currentLanguageName = language;

@@ -353,8 +353,14 @@ int SettingsScene::GetIndexFromResolution(Resolution resolution) const {
 
 SettingsScene::SettingsScene(Vector2 resolution, SceneType continueScene)
 	:Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
-	m_rawResolutionEntries = AppContext::GetInstance().constants.window.GetAllResolutionsAsString();
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	m_rawResolutionEntries = appContext.constants.window.GetAllResolutionsAsString();
+	appContext.eventManager.AddListener(this);
 	Initialize(continueScene);
+}
+
+SettingsScene::~SettingsScene() {
+	AppContext::GetInstance().eventManager.RemoveListener(this);
 }
 
 void SettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
@@ -409,4 +415,11 @@ void SettingsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	m_languageDropDownBtn.first.first->Resize(resolution, appContext);
 	m_languageDropDownBtn.second.first->Resize(resolution, appContext);
 	Scene::Resize(resolution, appContext);
+}
+
+void SettingsScene::OnEvent(Event const& event) {
+	if (auto const* LanguageEvent = dynamic_cast<UpdateLanguageInUI const*>(&event)) {
+		m_languageDropDown->SetCurrentElementByString(LanguageEvent->GetLanguage());
+		return;
+	}
 }
