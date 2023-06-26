@@ -93,7 +93,15 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 		return false;
 	}
 
-	in >> m_current_language;
+	try {
+		in >> m_current_language;
+	}
+	catch (nlohmann::json::parse_error const&) {
+		Print("not able to parse \"" + language + "\"", PrintType::ERROR);
+		in.close();
+		return false;
+	}
+
 	in.close();
 
 	AppContext::GetInstance().constants.global.currentLanguageName = language;
