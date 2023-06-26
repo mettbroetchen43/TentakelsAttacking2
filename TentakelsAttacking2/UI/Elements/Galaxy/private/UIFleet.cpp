@@ -7,9 +7,9 @@
 #include "Fleet.h"
 #include "AppContext.h"
 
-UIFleet::UIFleet(PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd,
+UIFleet::UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd,
     Fleet_ty_raw_c fleet, std::function<bool(Vector2 const&)> isInGalaxyCollider)
-    : UIElement{ start, { 0.0f,0.0f }, Alignment::MID_MID, resolution }, m_player{ player },
+    : UIElement{ start, { 0.0f,0.0f }, Alignment::MID_MID, resolution }, m_ID{ ID }, m_player{ player },
     m_relativeStart{ relativeStart }, m_relativeEnd{ relativeEnd }, m_fleet { fleet }, m_isInGalaxyCollider{ isInGalaxyCollider },
     m_line{
         start,
@@ -28,6 +28,9 @@ UIFleet::UIFleet(PlayerData player, Vector2 start, Vector2 end, Vector2 resoluti
     UpdateHoverText();
 }
 
+unsigned int UIFleet::GetID() const {
+    return m_ID;
+}
 bool UIFleet::IsColliding(Vector2 const& mousePosition) const {
     if (not m_isInGalaxyCollider(mousePosition)) { return false; }
 

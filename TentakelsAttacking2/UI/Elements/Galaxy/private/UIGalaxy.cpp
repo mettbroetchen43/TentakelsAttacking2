@@ -78,6 +78,7 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 	}
 	for (auto const& f : galaxy->GetFleets()) {
 		auto fleet = std::make_shared<UIFleet>(
+			f->GetID(),
 			appContext.playerCollection.GetPlayerOrNpcByID(f->GetPlayer()->GetID()),
 			GetAbsolutePosition({
 				static_cast<float>(f->GetPos().x),
@@ -261,10 +262,77 @@ Vector2 UIGalaxy::GetCurrentScaleReference() const {
 	};
 }
 
+bool UIGalaxy::IsCollidingObjectPoint(Vector2 point) const {
+	if (!CheckCollisionPointRec(point, m_collider)) { return false; }
+	for (auto const& p : m_uiPlanets) {
+		auto const& collider{ p->GetCollider() };
+		if (CheckCollisionPointRec(point, collider)) {
+			return true;
+		}
+	}
+	for (auto const& tp : m_uiTargetPoints) {
+		auto const& collider{ tp->GetCollider() };
+		if (CheckCollisionPointRec(point, collider)) {
+			return true;
+		}
+	}
+	for (auto const& f : m_uiFleets) {
+		if (f->IsColliding(point)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+unsigned int UIGalaxy::GetIDFromPoint(Vector2 point) const {
+	Vector2 absolutePoint{ m_resolution.x * point.x, m_resolution.y * point.y };
+	if (!CheckCollisionPointRec(absolutePoint, m_collider)) { return 0; }
+
+	for (auto const& p : m_uiPlanets) {
+		if (CheckCollisionPointRec(absolutePoint, p->GetCollider())) {
+			return p->GetID();
+		}
+	}
+	for (auto const& tp : m_uiTargetPoints){
+		if (CheckCollisionPointRec(absolutePoint, tp->GetCollider())) {
+			return tp->GetID();
+		}
+	}
+	for (auto const& f : m_uiFleets) {
+		if (f->IsColliding(absolutePoint)) {
+			return f->GetID();
+		}
+	}
+	return 0;
+}
+vec2pos_ty UIGalaxy::GetCoordinatesFromPoint(Vector2 point) const {
+	Vector2 const absolutePoint{ m_resolution.x * point.x, m_resolution.y * point.y };
+	if (!CheckCollisionPointRec(absolutePoint, m_collider)) { return { 0, 0 }; }
+
+	auto const galaxySize{ m_currentGalaxy->GetSize() };
+	Vector2 pos{
+		m_absoluteSize.x / m_resolution.x,
+		m_absoluteSize.y / m_resolution.y
+	};
+	Vector2 size{
+		m_absoluteSize.width / m_resolution.x,
+		m_absoluteSize.height / m_resolution.y
+	};
+	auto const relative= GetElementPositionReversed(pos, size, point);
+	return { relative.x * galaxySize.x , relative.y * galaxySize.y };
+}
+
 void UIGalaxy::HandleDragLineResult(Vector2 start, Vector2 end) {
-	std::stringstream ss;
-	ss << "start -> x: " << start.x << ", y: " << start.y << " | end -> x: " << end.x << ", y: " << end.y;
+	auto const originID{ GetIDFromPoint(start) };
+	auto const destID{ GetIDFromPoint(end) };
+	vec2pos_ty destCo{ 0, 0 };
+	if (destID <= 0) {
+		destCo = GetCoordinatesFromPoint(end);
+	}
+	std::ostringstream ss;
+	ss << "origin: " << originID << " | dest: " << destID << " | X: " << destCo.x << " | Y: " << destCo.y;
 	Print(ss.str(), PrintType::DEBUG);
+
 	m_updateLineDrag = false;
 }
 
@@ -309,29 +377,6 @@ bool UIGalaxy::IsScaling() const {
 
 float UIGalaxy::GetScaleFactor() const {
 	return m_scaleFactor;
-}
-
-bool UIGalaxy::IsCollidingObjectPoint(Vector2 point) const {
-	if (!CheckCollisionPointRec(point, m_collider)) { return false; }
-	for (auto const& p : m_uiPlanets) {
-		auto const& collider{ p->GetCollider() };
-		if (CheckCollisionPointRec(point, collider)) {
-			return true ;
-		}
-	}
-	for (auto const& tp : m_uiTargetPoints) {
-		auto const& collider{ tp->GetCollider() };
-		if (CheckCollisionPointRec(point, collider)) {
-			return true;
-		}
-	}
-	for (auto const& f : m_uiFleets) {
-		if (f->IsColliding(point)) {
-			return true ;
-		}
-	}
-
-	return false;
 }
 
 void UIGalaxy::Zoom(bool zoomIn, int factor) {

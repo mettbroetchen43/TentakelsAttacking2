@@ -101,6 +101,19 @@ private:
 	[[nodiscard]] Vector2 GetCurrentScaleReference() const;
 
 	/**
+	 * checks if a UISpaceObject is colliding with the provided point.
+	 * return the colliding object if there is one.
+	 */
+	[[nodiscard]] bool IsCollidingObjectPoint(Vector2 point) const;
+	/**
+	 * return the ID from the object at the location of the relative point.
+	 */
+	[[nodiscard]] unsigned int GetIDFromPoint(Vector2 point) const;
+	/**
+	 * returns the coordinates within the galaxy at the location of the relative point
+	 */
+	[[nodiscard]] vec2pos_ty GetCoordinatesFromPoint(Vector2 point) const;
+	/**
 	 * handles the drag line result
 	 */
 	void HandleDragLineResult(Vector2 start, Vector2 end);
@@ -131,12 +144,6 @@ public:
 	 * returns the current scale factor of  the galaxy.
 	 */
 	[[nodiscard]] float GetScaleFactor() const;
-
-	/**
-	 * checks if a UISpaceObject is colliding with the provided point.
-	 * return the colliding object if there is one.
-	 */
-	[[nodiscard]] bool IsCollidingObjectPoint(Vector2 point) const;
 
 	/**
 	 * zooms the galaxy in or out.
