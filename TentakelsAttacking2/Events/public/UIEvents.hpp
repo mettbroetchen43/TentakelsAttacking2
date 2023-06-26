@@ -377,3 +377,18 @@ public:
 		return m_language;
 	}
 };
+/**
+ * calls the UI to update the current language.
+ */
+class UpdateLanguageInUI final : public Event {
+private:
+	std::string m_language;
+
+public:
+	UpdateLanguageInUI(std::string const& language)
+		: m_language{ language } { }
+
+	[[nodiscard]] std::string GetLanguage() const {
+		return m_language;
+	}
+};

@@ -5,13 +5,14 @@
 
 #pragma once
 #include "Scene.h"
+#include "EventListener.hpp"
 
 class SliderAndInputLine;
 
 /**
  * provides a scenes, where the global settings can be set.
  */
-class SettingsScene final : public Scene {
+class SettingsScene final : public Scene, public EventListener {
 private:
 	using DropDownButton_ty = std::pair<ClassicButton_ty, bool>;
 	std::shared_ptr<SliderAndInputLine> m_volume; ///< contains the volume slider
@@ -41,6 +42,7 @@ public:
 	 * only initialization.
 	 */
 	SettingsScene(Vector2 resolution, SceneType continueScene);
+	~SettingsScene();
 
 	/**
 	 * updates all elements in elements.
@@ -54,4 +56,6 @@ public:
 	 * resizes all elements in elements and elements out update.
 	 */
 	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+
+	void OnEvent(Event const& event) override;
 };

@@ -49,22 +49,29 @@ void HLanguageManager::InitializeAvailableLanguages() {
 }
 
 void HLanguageManager::ChanceLanguage(std::string const& language) {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	auto handleUpdateLanguage{ [&]() {
+		auto const event{ UpdateLanguageInUI(appContext.constants.global.currentLanguageName) };
+		appContext.eventManager.InvokeEvent(event);
+	} };
 
 	bool const validLoad{ LoadLanguage(language) };
 
 	if (not validLoad) {
 		if (not m_current_language.empty()) {
 			Print("not able to load new language -> fallback to old language", PrintType::INFO);
+			handleUpdateLanguage();
 			return;
 		}
 		if (language != m_default_language) {
 			bool const validDefaultLoad{ LoadLanguage(m_default_language) };
 			if (validDefaultLoad) {
 				Print("fallback to default language: \"" + m_default_language + "\"", PrintType::INFO);
+				handleUpdateLanguage();
 				return;
 			}
 			m_current_language.clear();
-			AppContext::GetInstance().constants.global.currentLanguageName = "";
+			appContext.constants.global.currentLanguageName = "";
 			Print("not able to load any language.", PrintType::ERROR);
 		}
 	}
