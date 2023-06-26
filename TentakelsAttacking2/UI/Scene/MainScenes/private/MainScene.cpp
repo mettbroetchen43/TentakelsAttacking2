@@ -368,8 +368,10 @@ void MainScene::InitializeGalaxy() {
 		GetElementPosition(0.01f, 0.99f),
 		GetElementSize(0.85f, 0.85f),
 		Alignment::BOTTOM_LEFT,
-		m_resolution
-		);
+		m_resolution,
+		false,
+		true
+	);
 	m_elements.push_back(m_galaxy);
 }
 void MainScene::InitializePlanetTable() {

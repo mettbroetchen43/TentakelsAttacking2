@@ -104,7 +104,9 @@ void ValidateGalaxyScene::InitializeGalaxy() {
 		GetElementPosition(0.05f, 0.465f),
 		GetElementSize(0.75f, 0.75f),
 		Alignment::MID_LEFT,
-		m_resolution
+		m_resolution,
+		false,
+		false
 		);
 	m_galaxy->SetActive(true, appContext);
 	m_elements.push_back(m_galaxy);

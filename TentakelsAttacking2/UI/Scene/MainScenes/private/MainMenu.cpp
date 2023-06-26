@@ -157,7 +157,8 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementSize(0.7f, 0.7f),
 		Alignment::BOTTOM_RIGHT,
 		resolution,
-		true
+		true,
+		false
 		);
 	galaxy->SetActive(true, appContext);
 	galaxy->SetIsScaling(false);

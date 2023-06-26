@@ -13,6 +13,7 @@
 #include "HInput.h"
 #include "HFocusEvents.h"
 #include "Player.h"
+#include "LineDrag.h"
 
 void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
@@ -260,15 +261,30 @@ Vector2 UIGalaxy::GetCurrentScaleReference() const {
 	};
 }
 
+void UIGalaxy::HandleDragLineResult(Vector2 start, Vector2 end) {
+	std::stringstream ss;
+	ss << "start -> x: " << start.x << ", y: " << start.y << " | end -> x: " << end.x << ", y: " << end.y;
+	Print(ss.str(), PrintType::DEBUG);
+	m_updateLineDrag = false;
+}
+
 UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution, bool isShowGalaxy)
+	Vector2 resolution, bool isShowGalaxy, bool isAcceptingInput)
 	:Focusable{ ID }, UIElement{ pos, size, alignment, resolution },
-	m_isShowGalaxy(isShowGalaxy) {
+	m_isShowGalaxy{ isShowGalaxy }, m_isAcceptingInput{ isAcceptingInput } {
 	m_absoluteSize = m_collider;
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
-
 	appContext.eventManager.AddListener(this);
+
+	m_lineDrag = std::make_shared<LineDrag>(
+		m_resolution,
+		2.0f,
+		WHITE,
+		[this](Vector2 start, Vector2 end) -> void {
+			this->HandleDragLineResult(start, end);
+		}
+	);
 
 	if (isShowGalaxy) {
 		GetShowGalaxyPointerEvent event;
@@ -388,28 +404,36 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
 	if (m_isScaling) {
-		// zoom
-		if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
+		if (!m_updateLineDrag) {
+			// zoom
+			if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
 			float const mouseWheel{ GetMouseWheelMove() };
 			if (mouseWheel != 0.0f) {
 				Zoom(mouseWheel > 0.0f, 5);
 			}
 		}
 
-		// move by keys
-		if (IsKeyDown(KEY_UP)) { MoveByKey(Direction::UP, 2.0f); }
-		if (IsKeyDown(KEY_DOWN)) { MoveByKey(Direction::DOWN, 2.0f); }
-		if (IsKeyDown(KEY_LEFT)) { MoveByKey(Direction::LEFT, 1.5f); }
-		if (IsKeyDown(KEY_RIGHT)) { MoveByKey(Direction::RIGHT, 1.5f); }
+			// move by keys
+			if (IsKeyDown(KEY_UP)) { MoveByKey(Direction::UP, 2.0f); }
+			if (IsKeyDown(KEY_DOWN)) { MoveByKey(Direction::DOWN, 2.0f); }
+			if (IsKeyDown(KEY_LEFT)) { MoveByKey(Direction::LEFT, 1.5f); }
+			if (IsKeyDown(KEY_RIGHT)) { MoveByKey(Direction::RIGHT, 1.5f); }
+		}
 
 		// move by mouse
-		if (CheckCollisionPointRec(mousePosition, m_collider) and !IsCollidingObjectPoint(mousePosition)) {
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		if (CheckCollisionPointRec(mousePosition, m_collider) and IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			if (m_isAcceptingInput and IsCollidingObjectPoint(mousePosition)) {
+				m_updateLineDrag = true;
+			}
+			else {
 				m_isScrollingByMouse = true;
 			}
 		}
 		if (m_isScrollingByMouse) {
 			MoveByMouse(mousePosition);
+		}
+		if (m_updateLineDrag) {
+			m_lineDrag->CheckAndUpdate(mousePosition, appContext);
 		}
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 			m_lastMousePosition = { 0.0f, 0.0f };
@@ -479,10 +503,15 @@ void UIGalaxy::Render(AppContext_ty_c appContext) {
 			t->Render(appContext);
 		}
 	}
+
+	if (m_updateLineDrag) {
+		m_lineDrag->Render(appContext);
+	}
 }
 void UIGalaxy::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
 	UIElement::Resize(resolution, appContext);
+	m_lineDrag->Resize(resolution, appContext);
 
 	m_absoluteSize = {
 		m_absoluteSize.x / m_resolution.x * resolution.x,

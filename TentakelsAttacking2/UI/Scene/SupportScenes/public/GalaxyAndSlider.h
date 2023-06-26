@@ -27,7 +27,7 @@ private:
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize(Vector2 resolution, bool isShowGalaxy);
+	void Initialize(Vector2 resolution, bool isShowGalaxy, bool isAcceptingInput);
 	/**
 	 * updates the slider and scale lines.
 	 */
@@ -43,7 +43,7 @@ public:
 	 * only initialization.
 	 */
 	GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution, bool isShowGalaxy = false);
+		Vector2 resolution, bool isShowGalaxy, bool isAcceptingInput);
 
 	/**
 	 * loop that setting through to the galaxy.
@@ -83,7 +83,7 @@ public:
 	void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resize the scene.
-	 * resize the scale buttons, scale lines and buttons seperated.
+	 * resize the scale buttons, scale lines and buttons separated.
 	 * 
 	 */
 	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
