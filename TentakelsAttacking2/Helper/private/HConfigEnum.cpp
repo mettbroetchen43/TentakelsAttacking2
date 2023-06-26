@@ -104,8 +104,8 @@ std::string CToS(ConfigTypes type) {
 			return "dimension_y_min";
 		case ConfigTypes::DIMENSION_Y_SHOW_GALAXY:
 			return "dimension_y_show_galaxy";
-		case ConfigTypes::DISCOVER_RANGE:
-			return "discover_range";
+		case ConfigTypes::DISCOVER_RANGE_FACTOR:
+			return "discover_range_factor";
 		case ConfigTypes::PLANET_COUNT_CURRENT:
 			return "planet_count_current";
 		case ConfigTypes::PLANET_COUNT_MAX:

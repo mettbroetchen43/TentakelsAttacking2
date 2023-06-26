@@ -240,19 +240,19 @@ void LoadConfig() {
 	}
 	// world
 	if (nlohmann::json world; loadSection(load, world, ConfigTypes::WORLD, constants.world.configEntryCount)) {
-		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_X_CURRENT))      { constants.world.currentDimensionX  = out; }
-		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_X_MAX))          { constants.world.maxDimensionX      = out; }
-		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_X_MIN))          { constants.world.minDimensionX      = out; }
-		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_X_SHOW_GALAXY))  { constants.world.showDimensionX     = out; }
-		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_Y_CURRENT))      { constants.world.currentDimensionY  = out; }
-		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_Y_MAX))          { constants.world.maxDimensionY      = out; }
-		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_Y_MIN))          { constants.world.minDimensionY      = out; }
-		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_Y_SHOW_GALAXY))  { constants.world.showDimensionY     = out; }
-		if (int out; loadInt(world, out, ConfigTypes::DISCOVER_RANGE))           { constants.world.discoverRange      = out; }
-		if (int out; loadInt(world, out, ConfigTypes::PLANET_COUNT_CURRENT))     { constants.world.currentPlanetCount = out; }
-		if (int out; loadInt(world, out, ConfigTypes::PLANET_COUNT_MAX))         { constants.world.maxPlanetCount     = out; }
-		if (int out; loadInt(world, out, ConfigTypes::PLANET_COUNT_MIN))         { constants.world.minPlanetCount     = out; }
-		if (int out; loadInt(world, out, ConfigTypes::PLANET_COUNT_SHOW_GALAXY)) { constants.world.showPlanetCount    = out; }
+		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_X_CURRENT))      { constants.world.currentDimensionX   = out; }
+		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_X_MAX))          { constants.world.maxDimensionX       = out; }
+		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_X_MIN))          { constants.world.minDimensionX       = out; }
+		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_X_SHOW_GALAXY))  { constants.world.showDimensionX      = out; }
+		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_Y_CURRENT))      { constants.world.currentDimensionY   = out; }
+		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_Y_MAX))          { constants.world.maxDimensionY       = out; }
+		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_Y_MIN))          { constants.world.minDimensionY       = out; }
+		if (int out; loadInt(world, out, ConfigTypes::DIMENSION_Y_SHOW_GALAXY))  { constants.world.showDimensionY      = out; }
+		if (int out; loadInt(world, out, ConfigTypes::DISCOVER_RANGE_FACTOR))    { constants.world.discoverRangeFactor = out; }
+		if (int out; loadInt(world, out, ConfigTypes::PLANET_COUNT_CURRENT))     { constants.world.currentPlanetCount  = out; }
+		if (int out; loadInt(world, out, ConfigTypes::PLANET_COUNT_MAX))         { constants.world.maxPlanetCount      = out; }
+		if (int out; loadInt(world, out, ConfigTypes::PLANET_COUNT_MIN))         { constants.world.minPlanetCount      = out; }
+		if (int out; loadInt(world, out, ConfigTypes::PLANET_COUNT_SHOW_GALAXY)) { constants.world.showPlanetCount     = out; }
 	}
 
 	// check if all values are loaded
@@ -331,7 +331,7 @@ void SaveConfig() {
 		{ CToS(ConfigTypes::DIMENSION_Y_MAX),          constants.world.maxDimensionY      },
 		{ CToS(ConfigTypes::DIMENSION_Y_MIN),          constants.world.minDimensionY      },
 		{ CToS(ConfigTypes::DIMENSION_Y_SHOW_GALAXY),  constants.world.showDimensionY     },
-		{ CToS(ConfigTypes::DISCOVER_RANGE),           constants.world.discoverRange      },
+		{ CToS(ConfigTypes::DISCOVER_RANGE_FACTOR),           constants.world.discoverRangeFactor      },
 		{ CToS(ConfigTypes::PLANET_COUNT_CURRENT),     constants.world.currentPlanetCount },
 		{ CToS(ConfigTypes::PLANET_COUNT_MAX),         constants.world.maxPlanetCount     },
 		{ CToS(ConfigTypes::PLANET_COUNT_MIN),         constants.world.minPlanetCount     },
