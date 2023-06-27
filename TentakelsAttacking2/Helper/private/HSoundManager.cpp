@@ -42,7 +42,7 @@ void SoundManager::PlaySound(SoundType soundType) const {
 		return;
 	}
 
-	::PlaySoundMulti(m_sounds.at(soundType));
+	::PlaySound(m_sounds.at(soundType));
 }
 void SoundManager::PlayTextSound() const {
 	Random& random{ Random::GetInstance() };

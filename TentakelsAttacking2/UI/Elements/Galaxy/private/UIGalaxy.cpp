@@ -560,6 +560,7 @@ void UIGalaxy::Render(AppContext_ty_c appContext) {
 		m_lineDrag->Render(appContext);
 	}
 
+	/* 
 	DrawRectangleLinesEx(
 		m_absoluteSize,
 		1.0f,
@@ -570,6 +571,7 @@ void UIGalaxy::Render(AppContext_ty_c appContext) {
 		1.0f,
 		PURPLE
 	);
+	*/
 }
 void UIGalaxy::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
