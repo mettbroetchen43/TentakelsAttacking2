@@ -89,7 +89,6 @@ void CountingNumber::CountTo(Type type, int target, double timeIsS) {
 	m_targetNumber = target;
 	m_timeInS = timeIsS;
 	m_startNumber = m_currentNumber;
-	m_countingSpeed = { static_cast<float>((m_targetNumber - m_startNumber) / timeIsS )};
 }
 int CountingNumber::GetCurrentNumber() const {
 	return m_currentNumber;
