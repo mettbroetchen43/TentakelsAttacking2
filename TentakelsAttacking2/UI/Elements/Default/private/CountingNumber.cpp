@@ -11,8 +11,6 @@ CountingNumber::CountingNumber(Vector2 pos, Vector2 size, Alignment alignment, V
 	Alignment textAlignment, float textHeight, int startNumber) 
 	: UIElement(pos, size, alignment, resolution), m_currentNumber{ startNumber }, m_targetNumber{ startNumber }
 {
-	AppContext_ty appContext{ AppContext::GetInstance() };
-
 	m_text = std::make_shared<Text>(
 		pos,
 		size,
@@ -43,7 +41,7 @@ int CountingNumber::GetTargetNumber() const {
 }
 
 void CountingNumber::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
-	HandleCounting();
+	// HandleCounting();
 	m_text->CheckAndUpdate(mousePosition, appContext);
 }
 void CountingNumber::Render(AppContext_ty_c appContext) {

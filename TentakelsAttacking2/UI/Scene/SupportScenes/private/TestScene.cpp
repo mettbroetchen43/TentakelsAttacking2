@@ -15,8 +15,8 @@
 void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 
 	m_first = std::make_shared<CountingNumber>(
-		GetElementPosition(0.33f,0.5f),
-		GetElementSize(0.2f,0.1f),
+		GetElementPosition(0.25f + 0.16f, 0.5f),
+		GetElementSize(0.2f, 0.1f),
 		Alignment::MID_MID,
 		m_resolution,
 		Alignment::MID_MID,
@@ -25,11 +25,11 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 	);
 	m_first->SetCallback([this](CountingNumber::Type type, int current, float time) {
 		this->TestLambda(type, current, time);
-	});
+		});
 	m_elements.push_back(m_first);
 
 	m_second = std::make_shared<CountingNumber>(
-		GetElementPosition(0.66f, 0.5f),
+		GetElementPosition(0.75f - 0.16f, 0.5f),
 		GetElementSize(0.2f, 0.1f),
 		Alignment::MID_MID,
 		m_resolution,
@@ -78,6 +78,25 @@ void TestScene::TestLambda(CountingNumber::Type type, int current, float time) {
 
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
+
+	auto const nextNumberAndTime{ [&]() -> std::pair<int, float> {
+		int index{static_cast<int>(m_random.random(m_numbers.size()))};
+		int const number{ m_numbers.at(index) };
+
+		index = { static_cast<int>(m_random.random(m_times.size())) };
+		float const time{ m_times.at(index) };
+
+		return { number, time };
+	} };
+
+	if (not m_first->IsCounting()) {
+		auto const [number, time] {nextNumberAndTime()};
+		m_first->CountTo(CountingNumber::LINEAR, number, time);
+	}
+	if (not m_second->IsCounting()) {
+		auto const [number, time] {nextNumberAndTime()};
+		m_second->CountTo(CountingNumber::ASYMPTOTIC, number, time);
+	}
 }
 void TestScene::Render(AppContext_ty_c appContext) {
 	Scene::Render(appContext);
