@@ -7,35 +7,55 @@
 #include "UIElement.hpp"
 #include "HUIAlias.hpp"
 
+/**
+ * provides a number that can count in a amount of time to a new number.
+ * the callback gets called when the counting is finished.
+ * the number can be displayed in different colors while counting in default. 
+ */
 class CountingNumber : public UIElement {
 public:
+	/**
+	 * contains possible counting types.
+	 */
 	enum Type {
 		LINEAR,
 		ASYMPTOTIC,
 	};
 
 private:
-	Text_ty m_text;
+	Text_ty m_text; ///< contains the text that gets displayed
 
-	bool m_isCounting{ false };
-	Type m_countingType{ LINEAR };
-	int m_startNumber;
-	int m_currentNumber;
-	int m_targetNumber;
+	bool m_isCounting{ false }; ///< contains if the number is currently counting
+	Type m_countingType{ LINEAR }; ///< contains the current counting type
+	int m_startNumber; ///< contains the number the current counting stated with.
+	int m_currentNumber; ///< contains the current number. this number gets displayed
+	int m_targetNumber; ///< contains the number the current counting will end.
 
-	double m_timeInS{ 0.0f };
-	double m_startCountingTime{ GetTime() };
-	float m_countingSpeed{ 0.0f };
+	double m_timeInS{ 0.0f }; ///< contains the time the current counting will take.
+	double m_startCountingTime{ GetTime() }; ///< contains the time in seconds the current counting started
 
-	Color m_countingColor{ RED };
-	Color m_defaultColor{ WHITE };
+	Color m_countingColor{ RED }; ///< contains the color the text gets displayd with while counting
+	Color m_defaultColor{ WHITE }; ///< cointains the color the text gets displayed with while not counting
 
 	using callback_ty = std::function<void(Type, int, int, double)>;
-	callback_ty m_callback{[](Type, int, int, double) ->void {} };
+	callback_ty m_callback{[](Type, int, int, double) ->void {} }; ///< gets called when the counting has finidhed
 
+	/**
+	 * handles wether the number should count and how.
+	 */
 	void HandleCounting();
+	/**
+	 * hands the linear counting.
+	 */
 	void HandleLinearCounting();
+	/**
+	 * handles the asymptotic counting.
+	 * this counting will start fast and gets slower over time.
+	 */
 	void HandleAsymptoticCounting();
+	/**
+	 * sets the new number in this class and the text.
+	 */
 	void SetNewNumber(int number);
 
 public:
