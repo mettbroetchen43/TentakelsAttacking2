@@ -366,7 +366,7 @@ void MainScene::InitializeGalaxy() {
 
 	m_galaxy = std::make_shared<GalaxyScene>(
 		GetElementPosition(0.01f, 0.99f),
-		GetElementSize(0.85f, 0.85f),
+		GetElementSize(0.8f, 0.8f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
 		false,
