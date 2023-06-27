@@ -58,7 +58,7 @@ using Line_ty =   std::shared_ptr<Line>;
 using Line_ty_c = std::shared_ptr<Line> const&;
 
 class LineDrag;
-using LineDrag_ty = std::shared_ptr<LineDrag>;
+using LineDrag_ty =   std::shared_ptr<LineDrag>;
 using LineDrag_ty_c = std::shared_ptr<LineDrag> const&;
 
 class Picture;
@@ -72,6 +72,10 @@ using Slider_ty_c = std::shared_ptr<Slider> const&;
 class Text;
 using Text_ty =   std::shared_ptr<Text>;
 using Text_ty_c = std::shared_ptr<Text> const&;
+
+class CountingNumber;
+using CountingNumber_ty   = std::shared_ptr<CountingNumber>;
+using CountingNumber_ty_c = std::shared_ptr<CountingNumber> const&;
 
 class Title;
 using Title_ty =   std::shared_ptr<Title>;
