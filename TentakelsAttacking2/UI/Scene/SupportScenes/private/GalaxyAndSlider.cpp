@@ -16,7 +16,7 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy, bool isAccep
 	m_galaxy = std::make_shared<UIGalaxy>(
 		1000,
 		GetElementPosition(1.0f, 0.0f),
-		GetElementSize(0.955f, 0.93f),
+		GetElementSize(0.95f, 0.92f),
 		Alignment::TOP_RIGHT,
 		resolution,
 		isShowGalaxy,
