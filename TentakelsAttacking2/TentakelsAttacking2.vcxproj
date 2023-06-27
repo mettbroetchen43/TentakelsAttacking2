@@ -198,6 +198,7 @@
     <ClInclude Include="Helper\public\HPlayerData.h" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
     <ClInclude Include="Game\public\Player.h" />
+    <ClInclude Include="UI\Elements\Default\public\CountingNumber.h" />
     <ClInclude Include="UI\Elements\Default\public\Hover.h" />
     <ClInclude Include="UI\Elements\Default\public\LineDrag.h" />
     <ClInclude Include="UI\Elements\Galaxy\public\UIFleet.h" />
@@ -299,6 +300,7 @@
     <ClCompile Include="Helper\private\HVector2Operator.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Hover.cpp" />
     <ClCompile Include="UI\Elements\Default\private\LineDrag.cpp" />
+    <ClCompile Include="UI\Elements\Default\private\CountingNumber.cpp" />
     <ClCompile Include="UI\Elements\Galaxy\private\UIGalaxyElement.cpp" />
     <ClCompile Include="UI\Elements\Galaxy\private\UITargetPoint.cpp" />
     <ClCompile Include="UI\Elements\Galaxy\private\UIFleet.cpp" />
