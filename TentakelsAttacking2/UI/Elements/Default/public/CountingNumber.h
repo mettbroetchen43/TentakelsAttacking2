@@ -27,6 +27,9 @@ private:
 	double m_startCountingTime{ GetTime() };
 	float m_countingSpeed{ 0.0f };
 
+	Color m_countingColor{ RED };
+	Color m_defaultColor{ WHITE };
+
 	using callback_ty = std::function<void(Type, int, int, double)>;
 	callback_ty m_callback{[](Type, int, int, double) ->void {} };
 
@@ -38,7 +41,15 @@ private:
 public:
 	CountingNumber(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		Alignment textAlignment, float textHeight, int startNumber);
-
+	
+	/**
+	 * sets the color for rendering while counting.
+	 */
+	void SetCountingColor(Color color);
+	/**
+	 * sets the color for rendering without counting.
+	 */
+	void SetDefaultColor(Color color);
 	/**
 	 * returns if the number is currently counting.
 	 */
