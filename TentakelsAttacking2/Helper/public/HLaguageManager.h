@@ -7,7 +7,12 @@
 #include "HPrint.h"
 #include "EventListener.hpp"
 #include <nlohmann/json.hpp>
-#include <format>
+
+#ifdef USE_FMT_FORMAT
+	#include <fmt/format.h> // for ubuntu CI -> gcc 12
+#else
+	#include <format>
+#endif
 
 class HLanguageManager final : public EventListener {
 private:
@@ -47,7 +52,19 @@ public:
 template<typename ...Args>
 inline std::string HLanguageManager::ReplacePlaceholders(std::string_view text, Args const & ...args) const {
 	try {
-		return std::vformat(text, std::make_format_args(args...));
+		return 
+#ifdef USE_FMT_FORMAT
+		fmt::
+#else
+		std::
+#endif // USE_FMT_FORMAT
+			vformat(text,
+#ifdef USE_FMT_FORMAT
+		fmt::
+#else
+		std::
+#endif // USE_FMT_FORMAT
+		make_format_args(args...));
 	}
 	catch (std::format_error const&) {
 		std::string t{ text.substr() };
