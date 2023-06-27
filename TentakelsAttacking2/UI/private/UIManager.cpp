@@ -131,7 +131,6 @@ void UIManager::UILoop() {
 			break;
 		}
 	}
-	StopSoundMulti();
 	CloseWindow();
 }
 
