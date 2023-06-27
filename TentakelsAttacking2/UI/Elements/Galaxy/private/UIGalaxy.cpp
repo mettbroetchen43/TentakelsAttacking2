@@ -149,10 +149,10 @@ Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext_ty_c appContext) c
 bool UIGalaxy::IsUIGalaxyElementInCollider(UIGalaxyElement_ty element) const {
 	Rectangle const elementCollider{ element->GetCollider() };
 
-	if (elementCollider.x < m_collider.x) { return false; }
-	if (elementCollider.y < m_collider.y) { return false; }
-	if (elementCollider.x + elementCollider.width > m_collider.x + m_collider.width) { return false; }
-	if (elementCollider.y + elementCollider.height > m_collider.y + m_collider.height) { return false; }
+	if (elementCollider.x + elementCollider.width <= m_collider.x) { return false; }
+	if (elementCollider.y + elementCollider.height <= m_collider.y) { return false; }
+	if (elementCollider.x >= m_collider.x + m_collider.width) { return false; }
+	if (elementCollider.y >= m_collider.y + m_collider.height) { return false; }
 
 	return true;
 }
