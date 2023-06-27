@@ -20,7 +20,7 @@ private:
 	CountingNumber_ty m_second;
 
 	Random& m_random{ Random::GetInstance() };
-	std::array<float, 7> m_times{1.0f, 2.5f, 5.0f, 8.3f, 7.9f, 10.0f, 0.5f};
+	std::array<double, 7> m_times{3.5, 2.5, 5.0, 8.3, 7.9, 10.0, 12.0 };
 	std::array<int, 7> m_numbers{-1000, -265, -35, 0, 10, 345, 1065};
 
 	void Initialize(AppContext_ty appContext);
@@ -29,7 +29,7 @@ public:
 	TestScene(Vector2 resolution);
 	void SetActive(bool active, AppContext_ty_c appContext) override;
 
-	void TestLambda(CountingNumber::Type type, int current, float time);
+	void TestLambda(CountingNumber::Type type, int start, int current, double time);
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	void Render(AppContext_ty_c appContext) override;

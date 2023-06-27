@@ -23,8 +23,8 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		0.1f,
 		1000
 	);
-	m_first->SetCallback([this](CountingNumber::Type type, int current, float time) {
-		this->TestLambda(type, current, time);
+	m_first->SetCallback([this](CountingNumber::Type type, int start, int current, double time) {
+		this->TestLambda(type, start, current, time);
 		});
 	m_elements.push_back(m_first);
 
@@ -37,8 +37,8 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		0.1f,
 		1000
 	);
-	m_second->SetCallback([this](CountingNumber::Type type, int current, float time) {
-		this->TestLambda(type, current, time);
+	m_second->SetCallback([this](CountingNumber::Type type, int start, int current, double time) {
+		this->TestLambda(type, start, current, time);
 		});
 	m_elements.push_back(m_second);
 
@@ -70,21 +70,22 @@ void TestScene::SetActive(bool active, AppContext_ty_c appContext) {
 	Scene::SetActive(active, appContext);
 }
 
-void TestScene::TestLambda(CountingNumber::Type type, int current, float time) {
+void TestScene::TestLambda(CountingNumber::Type type, int start, int current, double time) {
+	if (type == CountingNumber::LINEAR) { return; }
 	std::stringstream ss;
-	ss << "type: " << type << " | current: " << current << " | time: " << time;
+	ss << "type: " << type << " | start: " << start << " | current: " << current << " | time: " << time;
 	Print(ss.str(), PrintType::DEBUG);
 }
 
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	Scene::CheckAndUpdate(mousePosition, appContext);
 
-	auto const nextNumberAndTime{ [&]() -> std::pair<int, float> {
+	auto const nextNumberAndTime{ [&]() -> std::pair<int, double> {
 		int index{static_cast<int>(m_random.random(m_numbers.size()))};
 		int const number{ m_numbers.at(index) };
 
 		index = { static_cast<int>(m_random.random(m_times.size())) };
-		float const time{ m_times.at(index) };
+		double const time{ m_times.at(index) };
 
 		return { number, time };
 	} };
@@ -92,10 +93,16 @@ void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c app
 	if (not m_first->IsCounting()) {
 		auto const [number, time] {nextNumberAndTime()};
 		m_first->CountTo(CountingNumber::LINEAR, number, time);
+		std::stringstream ss;
+		ss << "type: " << CountingNumber::LINEAR << " | number: " << number << " | time: " << time;
+		// Print(ss.str(), PrintType::DEBUG);
 	}
 	if (not m_second->IsCounting()) {
 		auto const [number, time] {nextNumberAndTime()};
 		m_second->CountTo(CountingNumber::ASYMPTOTIC, number, time);
+		std::stringstream ss;
+		ss << "type: " << CountingNumber::ASYMPTOTIC << " | number: " << number << " | time: " << time;
+		Print(ss.str(), PrintType::DEBUG);
 	}
 }
 void TestScene::Render(AppContext_ty_c appContext) {
