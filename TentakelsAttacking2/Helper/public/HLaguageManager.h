@@ -51,22 +51,15 @@ public:
 
 template<typename ...Args>
 inline std::string HLanguageManager::ReplacePlaceholders(std::string_view text, Args const & ...args) const {
+#ifdef USE_FMT_FORMAT
+		using namespace fmt;
+#else
+		using namespace std;
+#endif // USE_FMT_FORMAT
 	try {
-		return 
-#ifdef USE_FMT_FORMAT
-		fmt::
-#else
-		std::
-#endif // USE_FMT_FORMAT
-			vformat(text,
-#ifdef USE_FMT_FORMAT
-		fmt::
-#else
-		std::
-#endif // USE_FMT_FORMAT
-		make_format_args(args...));
+		return vformat(text, make_format_args(args...));	
 	}
-	catch (std::format_error const&) {
+	catch (format_error const&) {
 		std::string t{ text.substr() };
 		Print("wrong format. appears mostly when arguments not matching: " + t, PrintType::ERROR);
 		assert(false and "wrong format");
