@@ -17,12 +17,14 @@ void UpdateEvaluationScene::Initialize(SendUpdateEvaluation const* event) const 
 
 	Print("--------------------| Evaluation |--------------------", PrintType::DEBUG);
 
+	/*
 	Print("------------------ | Merge Results |------------------", PrintType::DEBUG);
 	for (auto const& e : event->GetMergeResults()) {
 		Print(appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer()->GetID()).GetName(), PrintType::DEBUG);
 		Print(std::to_string(e.GetOrigin()->GetID()) + " -> " + std::to_string(e.GetDestination()->GetID()) + " | " + std::to_string(e.GetCount()), PrintType::DEBUG);
 		Print("------------------------------------------------------", PrintType::DEBUG);
 	}
+	*/
 
 	Print("------------------ | Fight Results |------------------", PrintType::DEBUG);
 	for (auto const& e : event->GetFightResults()) {
