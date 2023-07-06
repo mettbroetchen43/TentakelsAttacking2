@@ -23,9 +23,9 @@ void FightResultPopup::Initialize() {
 	// subtitle
 	std::string fightText{"invalid"};
 	auto const& object{ m_result.GetSpaceObjects().first };
-	     if (object->IsPlanet())      { fightText = { "Fight at Planet " + std::to_string(object->GetID()) }; }
-	else if (object->IsFleet())       { fightText = { "Fight at " + std::to_string(object->GetPos().x) + " / " + std::to_string(object->GetPos().y) }; }
-	else if (object->IsTargetPoint()) { fightText = { "Fight at " + std::to_string(object->GetPos().x) + " / " + std::to_string(object->GetPos().y) }; }
+	     if (object->IsPlanet())      { fightText = { appContext.languageManager.Text("ui_popup_fight_result_fight_at_planet",      object->GetID())                        }; }
+	else if (object->IsFleet())       { fightText = { appContext.languageManager.Text("ui_popup_fight_result_fight_at_coordinates", object->GetPos().x, object->GetPos().y) }; }
+	else if (object->IsTargetPoint()) { fightText = { appContext.languageManager.Text("ui_popup_fight_result_fight_at_coordinates", object->GetPos().x, object->GetPos().y) }; }
 	
 	auto const subtitle = std::make_shared<Text>(
 		GetElementPosition(m_pos, m_size, 0.6f, Y),
@@ -117,7 +117,7 @@ void FightResultPopup::Initialize() {
 		GetElementSize(m_size, 0.2f, 0.15f),
 		Alignment::BOTTOM_MID,
 		m_resolution,
-		"skip",
+		appContext.languageManager.Text("helper_skip_big"),
 		SoundType::CLICKED_RELEASE_STD
 	);
 	m_closeBtn->SetOnClick([this]() {this->HandleButton(); });
@@ -149,7 +149,8 @@ void FightResultPopup::SetLastStep() {
 	SetEnd();
 }
 void FightResultPopup::SetEnd() {
-	m_closeBtn->SetText("Next");
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	m_closeBtn->SetText(appContext.languageManager.Text("helper_next_big"));
 
 	std::string dummy;
 	if (m_result.GetRounds().at(m_result.GetRounds().size() - 1).first == 0) {
@@ -161,8 +162,7 @@ void FightResultPopup::SetEnd() {
 		m_rightNumber->SetDefaultColor(RED);
 	}
 
-
-	m_winText->SetText(dummy + " wins!");
+	m_winText->SetText(appContext.languageManager.Text("ui_popup_fight_result_win_text", dummy));
 }
 void FightResultPopup::HandleButton() {
 	if (not m_finishedCounting){
@@ -176,8 +176,8 @@ void FightResultPopup::HandleButton() {
 
 FightResultPopup::FightResultPopup(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	HFightResult const result, callback_ty callback)
-	: PopUp{ pos, size, alignment, resolution, "Fight", s_emptyString, AssetType::EXCLAMATION_MARK},
-	m_result{result}, m_callback{callback} {
+	: PopUp{ pos, size, alignment, resolution, AppContext::GetInstance().languageManager.Text("helper_fight_big"),
+		s_emptyString, AssetType::EXCLAMATION_MARK}, m_result{result}, m_callback{callback} {
 
 	Initialize();
 	NextNumber();
