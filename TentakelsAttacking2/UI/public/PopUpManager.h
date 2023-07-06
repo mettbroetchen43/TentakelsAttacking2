@@ -30,7 +30,7 @@ public:
 	/**
 	 * removes the event listener
 	 */
-	~PopUpManager() = default;
+	~PopUpManager();
 
 	/**
 	 * returns if the it contains at least one popup.
@@ -67,6 +67,11 @@ public:
 	 * generates a new sound level popup.
 	 */
 	void NewSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event);
+	/**
+	 * adds a new focus layer.
+	 * generates a new fight result popup.
+	 */
+	void NewFightResultPopUp(ShowFightResultEvent const* event);
 	/**
 	 * adds a new focus layer.
 	 * generates a new primitive type cell (for table class) popup.

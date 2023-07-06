@@ -360,6 +360,9 @@
     <ClInclude Include="UI\Elements\Default\public\CountingNumber.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Elements\PopUp\public\FightResultPopup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -633,6 +636,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Default\private\CountingNumber.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\PopUp\private\FightResultPopup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

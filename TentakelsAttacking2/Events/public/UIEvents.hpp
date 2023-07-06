@@ -10,6 +10,7 @@
 #include "HLogicAlias.hpp"
 #include "Vec2.hpp"
 #include "HUIAlias.hpp"
+#include "HFightResult.h"
 #include <string>
 #include <functional>
 
@@ -55,10 +56,10 @@ private:
 	Resolution m_resolution;
 
 public:
-	SetNewResolutionEvent(Resolution resolution )
+	SetNewResolutionEvent(Resolution resolution)
 		: m_resolution{ resolution } { }
 
-	[[nodiscard]] Resolution GetResolution ( ) const {
+	[[nodiscard]] Resolution GetResolution() const {
 		return m_resolution;
 	}
 };
@@ -144,7 +145,7 @@ public:
  * use this to control if the focus system is currently render the focus.
  * does not hesitate from FocusEvent.
  */
-class RenderFocusEvent final: public Event {
+class RenderFocusEvent final : public Event {
 private:
 	bool m_render;
 public:
@@ -206,7 +207,7 @@ public:
 /**
  * use this to select any next element to the focus.
  */
-class SelectNextFocusElementEvent final: public Event { };
+class SelectNextFocusElementEvent final : public Event { };
 /**
  * use this to add an layer to the focus.
  * this is always executed and blocks other elements until the popup is closed.
@@ -363,6 +364,28 @@ class ShowInitialSoundLevelPopUpEvent final : public PopUpEvent {
 public:
 	using PopUpEvent::PopUpEvent;
 };
+/**
+ * use this to show a animated result.
+ * this will "freeze" the ui until the popup is closed.
+ */
+class ShowFightResultEvent final : public Event {
+private:
+	HFightResult m_result;
+	using callback_ty = std::function<void()>;
+	callback_ty m_callback{ []() {} };
+
+public:
+	ShowFightResultEvent(HFightResult result, callback_ty callback)
+		: m_result{ result }, m_callback{ callback } { }
+
+	[[nodiscard]] HFightResult GetResult() const {
+		return m_result;
+	}
+	[[nodiscard]] callback_ty GetCallback() const {
+		return m_callback;
+	}
+};
+
 
 /**
  * changes the current language.

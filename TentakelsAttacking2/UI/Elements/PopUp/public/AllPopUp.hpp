@@ -24,3 +24,6 @@
 
 // Sound
 #include "SoundLevelPopUp.h"
+
+// evaluation
+#include "FightResultPopup.h"
