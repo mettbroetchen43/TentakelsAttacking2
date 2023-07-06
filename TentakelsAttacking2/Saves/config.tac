@@ -34,7 +34,7 @@
     },
     "version": {
         "version_config": "v0.1.0.1",
-        "version_game": "v0.1.1"
+        "version_game": "v0.1.2"
     },
     "window": {
         "full_screen_start_bool": false,
