@@ -83,6 +83,10 @@ public:
 	 */
 	void CountTo(Type type, int target, double timeIsS);
 	/**
+	 * sets the number immediately without callback and stop all counting.
+	 */
+	void SetTo(int target);
+	/**
 	 * returns the current number.
 	 * differs from target number while counting.
 	 */
