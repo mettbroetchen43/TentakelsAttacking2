@@ -19,7 +19,6 @@ class UIManager;
  */
 class SceneManager final : public EventListener {
 private:
-	bool m_first{ true }; ///< contains if the first scene gets loaded
 	UIManager* m_uiManager; ///< contains a pointer of the UIManager
 	PopUpManager m_popUpManager; ///< contains the PopUpManager
 

@@ -13,6 +13,10 @@ PopUpManager::PopUpManager(Vector2 resolution)
 	Print("PopUpManager", PrintType::INITIALIZE);
 }
 
+PopUpManager::~PopUpManager() {
+	m_appContext->eventManager.RemoveListener(this);
+}
+
 bool PopUpManager::IsActivePopUp() const {
 	return !m_popUps.empty();
 }
@@ -20,53 +24,59 @@ bool PopUpManager::IsActivePopUp() const {
 void PopUpManager::OnEvent(Event const& event) {
 
 	// Message Pop Up
-	if (auto const PopUpEvent = dynamic_cast<ShowMessagePopUpEvent const*>(&event)) {
+	if (auto const* PopUpEvent = dynamic_cast<ShowMessagePopUpEvent const*>(&event)) {
 		NewMessagePopUp(PopUpEvent);
 		return;
 	}
 
 	// Delete Player Pop Up
-	if (auto const PopUpEvent = dynamic_cast<ShowDeletePlayerPopUpEvent const*>(&event)) {
+	if (auto const* PopUpEvent = dynamic_cast<ShowDeletePlayerPopUpEvent const*>(&event)) {
 		NewDeletePlayerPopUp(PopUpEvent);
 		return;
 	}
 
 	// Table Pop Up
-	if (auto const PopUpEvent = dynamic_cast<ShowCellPopUpEvent<std::string> const*>(&event)) {
+	if (auto const* PopUpEvent = dynamic_cast<ShowCellPopUpEvent<std::string> const*>(&event)) {
 		NewTableCellPopUp<std::string, ShowCellPopUpEvent<std::string>>(PopUpEvent);
 		return;
 	}
-	if (auto const PopUpEvent = dynamic_cast<ShowCellPopUpEvent<int> const*>(&event)) {
+	if (auto const* PopUpEvent = dynamic_cast<ShowCellPopUpEvent<int> const*>(&event)) {
 		NewTableCellPopUp<int, ShowCellPopUpEvent<int>>(PopUpEvent);
 		return;
 	}
-	if (auto const PopUpEvent = dynamic_cast<ShowCellPopUpEvent<float> const*>(&event)) {
+	if (auto const* PopUpEvent = dynamic_cast<ShowCellPopUpEvent<float> const*>(&event)) {
 		NewTableCellPopUp<float, ShowCellPopUpEvent<float>>(PopUpEvent);
 		return;
 	}
-	if (auto const PopUpEvent = dynamic_cast<ShowCellPopUpEvent<double> const*>(&event)) {
+	if (auto const* PopUpEvent = dynamic_cast<ShowCellPopUpEvent<double> const*>(&event)) {
 		NewTableCellPopUp<double, ShowCellPopUpEvent<double>>(PopUpEvent);
 		return;
 	}
-	if (auto const PopUpEvent = dynamic_cast<ShowCellPopUpEvent<Color> const*>(&event)) {
+	if (auto const* PopUpEvent = dynamic_cast<ShowCellPopUpEvent<Color> const*>(&event)) {
 		NewColorCellPopUp(PopUpEvent);
 		return;
 	}
 
 	// Initial Sound Pop Up
-	if (auto const PopUpEvent = dynamic_cast<ShowInitialSoundLevelPopUpEvent const*>(&event)) {
+	if (auto const* PopUpEvent = dynamic_cast<ShowInitialSoundLevelPopUpEvent const*>(&event)) {
 		NewSoundLevelPopUp(PopUpEvent);
 		return;
 	}
 
 	// Turn Events
-	if (auto const PopUpEvent = dynamic_cast<ShowValidatePopUp const*>(&event)) {
+	if (auto const* PopUpEvent = dynamic_cast<ShowValidatePopUp const*>(&event)) {
 		NewValidatePopUp(PopUpEvent);
 		return;
 	}
 
+	// Fight Result
+	if (auto const* PopUpEvent = dynamic_cast<ShowFightResultEvent const*>(&event)) {
+		NewFightResultPopUp(PopUpEvent);
+		return;
+	}
+
 	// Close Pop Up
-	if (auto const PopUpEvent = dynamic_cast<ClosePopUpEvent const*>(&event)) {
+	if (auto const* PopUpEvent = dynamic_cast<ClosePopUpEvent const*>(&event)) {
 		DeleteLastPopUp(PopUpEvent->GetPop());
 		return;
 	}

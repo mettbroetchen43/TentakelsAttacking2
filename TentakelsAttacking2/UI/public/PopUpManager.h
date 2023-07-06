@@ -30,7 +30,7 @@ public:
 	/**
 	 * removes the event listener
 	 */
-	~PopUpManager() = default;
+	~PopUpManager();
 
 	/**
 	 * returns if the it contains at least one popup.

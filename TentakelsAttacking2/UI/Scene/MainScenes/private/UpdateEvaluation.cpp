@@ -11,20 +11,23 @@
 #include "Player.h"
 #include "HPrint.h"
 
-void UpdateEvaluationScene::Initialize(SendUpdateEvaluation const* event) const {
+void UpdateEvaluationScene::TestPrint(SendUpdateEvaluation const* event) const {
+
+	/**
+	 * call in OnEvent.
+	 * only for debugging.
+	 */
 
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	Print("--------------------| Evaluation |--------------------", PrintType::DEBUG);
 
-	/*
 	Print("------------------ | Merge Results |------------------", PrintType::DEBUG);
 	for (auto const& e : event->GetMergeResults()) {
 		Print(appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer()->GetID()).GetName(), PrintType::DEBUG);
 		Print(std::to_string(e.GetOrigin()->GetID()) + " -> " + std::to_string(e.GetDestination()->GetID()) + " | " + std::to_string(e.GetCount()), PrintType::DEBUG);
 		Print("------------------------------------------------------", PrintType::DEBUG);
 	}
-	*/
 
 	Print("------------------ | Fight Results |------------------", PrintType::DEBUG);
 	for (auto const& e : event->GetFightResults()) {
@@ -42,6 +45,7 @@ void UpdateEvaluationScene::Initialize(SendUpdateEvaluation const* event) const 
 	}
 	Print("------------------------------------------------------", PrintType::DEBUG);
 }
+
 void UpdateEvaluationScene::DisplayMergeResult() {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	auto const data {m_mergeResults.at(m_currentIndex)};
@@ -51,18 +55,18 @@ void UpdateEvaluationScene::DisplayMergeResult() {
 		).GetName()
 	};
 	
-	std::string spaceOpjectText;
-	     if (data.GetDestination()->IsFleet())       { spaceOpjectText = appContext.languageManager.Text("helper_fleet");        }
-	else if (data.GetDestination()->IsPlanet())      { spaceOpjectText = appContext.languageManager.Text("helper_planet");       }
-	else if (data.GetDestination()->IsTargetPoint()) { spaceOpjectText = appContext.languageManager.Text("helper_target_point"); }
-	else                                             { spaceOpjectText = "Invalid";                                              }
+	std::string spaceObjectText;
+	     if (data.GetDestination()->IsFleet())       { spaceObjectText = appContext.languageManager.Text("helper_fleet");        }
+	else if (data.GetDestination()->IsPlanet())      { spaceObjectText = appContext.languageManager.Text("helper_planet");       }
+	else if (data.GetDestination()->IsTargetPoint()) { spaceObjectText = appContext.languageManager.Text("helper_target_point"); }
+	else                                             { spaceObjectText = "Invalid";                                              }
 
 	std::string const subText{
 		appContext.languageManager.Text(
 			"ui_popup_arriving_fleet_subtitle",
 			data.GetCount(),
 			playerName,
-			spaceOpjectText,
+			spaceObjectText,
 			data.GetDestination()->GetID()
 		)
 	};
@@ -75,7 +79,13 @@ void UpdateEvaluationScene::DisplayMergeResult() {
 	appContext.eventManager.InvokeEvent(event);
 }
 void UpdateEvaluationScene::DisplayFightResult() {
-	// implement fight result popup
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
+	ShowFightResultEvent const event{
+		m_fightResults.at(m_currentIndex),
+		[this]() {this->HandleNextPopup(); }
+	};
+	appContext.eventManager.InvokeEvent(event);
 }
 void UpdateEvaluationScene::HandleNextPopup() {
 
@@ -147,6 +157,6 @@ void UpdateEvaluationScene::OnEvent(Event const& event) {
 		m_mergeResults = evEvent->GetMergeResults();
 		m_fightResults = evEvent->GetFightResults();
 		HandleNextPopup();
-		Initialize(evEvent);
+		// TestPrint(evEvent); // to print the incoming event to the console
 	}
 }

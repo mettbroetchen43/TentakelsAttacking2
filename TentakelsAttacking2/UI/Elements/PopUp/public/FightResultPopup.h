@@ -20,7 +20,7 @@ private:
 	CountingNumber_ty m_leftNumber; ///< contains the left counting number
 	CountingNumber_ty m_rightNumber; ///< contains the right counting number
 	
-	std::string m_fightText{ "" }; ///< contains the subtitle -> hwo is fighting
+	static inline std::string s_emptyString{""}; ///< contains a empty string to initialize the popup
 	Text_ty m_winText; ///< contains the text who won -> gets set when the fight is finished
 	
 	ClassicButton_ty m_closeBtn; ///< contains the skip/close button
@@ -33,6 +33,7 @@ private:
 	 * returns if a number is still counting.
 	 * calls the numbers to count to the next number.
 	 */
+	void NextNumber();
 	void NextNumber(CountingNumber::Type, int, int, double);
 	/**
 	 * sets the numbers to ne last entry immediately.

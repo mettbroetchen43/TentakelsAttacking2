@@ -24,7 +24,7 @@ private:
 	int m_currentIndex{ 0 };
 	int m_popupCount{ 0 };
 
-	void Initialize(SendUpdateEvaluation const* event) const;
+	void TestPrint(SendUpdateEvaluation const* event) const;
 
 	void DisplayMergeResult();
 	void DisplayFightResult();

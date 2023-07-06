@@ -10,21 +10,36 @@
 #include "ClassicButton.h"
 #include "SpaceObject.h"
 #include "CountingNumber.h"
+#include "HTextProcessing.h"
 
 void FightResultPopup::Initialize() {
 	// constants
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
-	float constexpr leftX     { 0.4f };
-	float constexpr rightX    { 0.6f };
-	float           Y         { 0.5f };
-	float constexpr textSize  { 0.1f };
+	float constexpr leftX     { 0.25f };
+	float constexpr rightX    { 0.75f };
+	float           Y         { 0.35f };
+	float const     textSize  { GetElementTextHeight(m_size, 0.07f)};
 
 	// subtitle
+	std::string fightText{"invalid"};
 	auto const& object{ m_result.GetSpaceObjects().first };
-	     if (object->IsPlanet())      { m_fightText = "Fight at Planet " + std::to_string(object->GetID());                                          }
-	else if (object->IsFleet())       { m_fightText = "Fight at " + std::to_string(object->GetPos().x) + " / " + std::to_string(object->GetPos().y); }
-	else if (object->IsTargetPoint()) { m_fightText = "Fight at " + std::to_string(object->GetPos().x) + " / " + std::to_string(object->GetPos().y); }
+	     if (object->IsPlanet())      { fightText = { "Fight at Planet " + std::to_string(object->GetID()) }; }
+	else if (object->IsFleet())       { fightText = { "Fight at " + std::to_string(object->GetPos().x) + " / " + std::to_string(object->GetPos().y) }; }
+	else if (object->IsTargetPoint()) { fightText = { "Fight at " + std::to_string(object->GetPos().x) + " / " + std::to_string(object->GetPos().y) }; }
 	
+	auto const subtitle = std::make_shared<Text>(
+		GetElementPosition(m_pos, m_size, 0.6f, Y),
+		GetElementSize(m_size, 0.7f, textSize * 1.2f),
+		Alignment::MID_MID,
+		m_resolution,
+		Alignment::MID_MID,
+		textSize * 1.2f,
+		fightText
+	);
+	m_elements.push_back(subtitle);
+
+	Y += 0.15f;
+
 	// player names
 	auto playerName = std::make_shared<Text>(
 		GetElementPosition(m_pos, m_size, leftX, Y),
@@ -33,7 +48,7 @@ void FightResultPopup::Initialize() {
 		m_resolution,
 		Alignment::MID_MID,
 		textSize,
-		appContext.playerCollection.GetPlayerByID(m_result.GetPlayer().first->GetID()).GetName()
+		appContext.playerCollection.GetPlayerOrNpcByID(m_result.GetPlayer().first->GetID()).GetName()
 	);
 	m_elements.push_back(playerName);
 
@@ -44,7 +59,7 @@ void FightResultPopup::Initialize() {
 		m_resolution,
 		Alignment::MID_MID,
 		textSize,
-		appContext.playerCollection.GetPlayerByID(m_result.GetPlayer().second->GetID()).GetName()
+		appContext.playerCollection.GetPlayerOrNpcByID(m_result.GetPlayer().second->GetID()).GetName()
 	);
 	m_elements.push_back(playerName);
 
@@ -54,11 +69,11 @@ void FightResultPopup::Initialize() {
 	auto firstNumber{ m_result.GetRounds().at(0).first };
 	m_leftNumber = std::make_shared<CountingNumber>(
 		GetElementPosition(m_pos, m_size, leftX, Y),
-		GetElementSize(m_size, 0.5f, textSize),
+		GetElementSize(m_size, 0.5f, textSize * 1.5f),
 		Alignment::MID_MID,
 		m_resolution,
 		Alignment::MID_MID,
-		textSize,
+		textSize * 1.5f,
 		static_cast<int>(firstNumber)
 	);
 	m_leftNumber->SetCallback([this](CountingNumber::Type type, int from, int to, double time) {
@@ -66,14 +81,14 @@ void FightResultPopup::Initialize() {
 		});
 	m_elements.push_back(m_leftNumber);
 
-	firstNumber = { m_result.GetRounds().at(0).first };
+	firstNumber = { m_result.GetRounds().at(0).second };
 	m_rightNumber = std::make_shared<CountingNumber>(
 		GetElementPosition(m_pos, m_size, rightX, Y),
-		GetElementSize(m_size, 0.5f, textSize),
+		GetElementSize(m_size, 0.5f, textSize * 1.5f),
 		Alignment::MID_MID,
 		m_resolution,
 		Alignment::MID_MID,
-		textSize,
+		textSize * 1.5f,
 		static_cast<int>(firstNumber)
 	);
 	m_rightNumber->SetCallback([this](CountingNumber::Type type, int from, int to, double time) {
@@ -81,16 +96,16 @@ void FightResultPopup::Initialize() {
 		});
 	m_elements.push_back(m_rightNumber);
 
-	Y += 0.2f;
+	Y += 0.05f;
 
 	// win text
 	m_winText = std::make_shared<Text>(
 		GetElementPosition(m_pos, m_size, 0.5f, Y),
-		GetElementSize(m_size, 0.8f, textSize),
+		GetElementSize(m_size, 0.8f, textSize * 1.5f),
 		Alignment::MID_MID,
 		m_resolution,
 		Alignment::MID_MID,
-		textSize,
+		textSize * 1.5f,
 		""
 	);
 	m_elements.push_back(m_winText);
@@ -98,7 +113,7 @@ void FightResultPopup::Initialize() {
 	// button
 	m_closeBtn = std::make_shared<ClassicButton>(
 		1,
-		GetElementPosition(m_pos, m_size, 0.5f, 0.1f),
+		GetElementPosition(m_pos, m_size, 0.5f, 0.95f),
 		GetElementSize(m_size, 0.2f, 0.15f),
 		Alignment::BOTTOM_MID,
 		m_resolution,
@@ -109,20 +124,23 @@ void FightResultPopup::Initialize() {
 	m_elements.push_back(m_closeBtn);
 }
 
-void FightResultPopup::NextNumber(CountingNumber::Type, int, int, double) {
+void FightResultPopup::NextNumber() {
 	if (m_finishedCounting) { return; }
 	if (m_leftNumber->IsCounting() or m_rightNumber->IsCounting()) { return; }
-	if (m_result.GetRounds().size() >= m_index) {
+	if (m_index >= m_result.GetRounds().size()) {
 		m_finishedCounting = true;
 		SetEnd();
 		return;
 	}
 
-	float constexpr time{ 0.5f };
-	m_leftNumber-> CountTo(CountingNumber::ASYMPTOTIC, static_cast<int>(m_result.GetRounds().at(m_index).first),  time);
+	float constexpr time{ 1.5f };
+	m_leftNumber->CountTo(CountingNumber::ASYMPTOTIC, static_cast<int>(m_result.GetRounds().at(m_index).first), time);
 	m_rightNumber->CountTo(CountingNumber::ASYMPTOTIC, static_cast<int>(m_result.GetRounds().at(m_index).second), time);
 
 	++m_index;
+}
+void FightResultPopup::NextNumber(CountingNumber::Type, int, int, double) {
+	NextNumber();
 }
 void FightResultPopup::SetLastStep() {
 	m_index = m_result.GetRounds().size() - 1;
@@ -135,11 +153,14 @@ void FightResultPopup::SetEnd() {
 
 	std::string dummy;
 	if (m_result.GetRounds().at(m_result.GetRounds().size() - 1).first != 0) {
-		dummy = AppContext::GetInstance().playerCollection.GetPlayerByID(m_result.GetPlayer().first->GetID()).GetName();
+		dummy = AppContext::GetInstance().playerCollection.GetPlayerOrNpcByID(m_result.GetPlayer().first->GetID()).GetName();
+		m_rightNumber->SetDefaultColor(RED);
 	}
 	else {
-		dummy = AppContext::GetInstance().playerCollection.GetPlayerByID(m_result.GetPlayer().second->GetID()).GetName();
+		dummy = AppContext::GetInstance().playerCollection.GetPlayerOrNpcByID(m_result.GetPlayer().second->GetID()).GetName();
+		m_leftNumber->SetDefaultColor(RED);
 	}
+
 
 	m_winText->SetText(dummy + " wins!");
 }
@@ -155,8 +176,9 @@ void FightResultPopup::HandleButton() {
 
 FightResultPopup::FightResultPopup(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 	HFightResult const result, callback_ty callback)
-	: PopUp{ pos, size, alignment, resolution, "Fight", m_fightText, AssetType::EXCLAMATION_MARK},
+	: PopUp{ pos, size, alignment, resolution, "Fight", s_emptyString, AssetType::EXCLAMATION_MARK},
 	m_result{result}, m_callback{callback} {
 
 	Initialize();
+	NextNumber();
 }
