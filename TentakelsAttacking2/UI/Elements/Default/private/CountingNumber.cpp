@@ -91,6 +91,11 @@ void CountingNumber::CountTo(Type type, int target, double timeIsS) {
 	m_timeInS = timeIsS;
 	m_startNumber = m_currentNumber;
 }
+void CountingNumber::SetTo(int target) {
+	m_targetNumber = target;
+	m_currentNumber = m_targetNumber;
+	m_isCounting = false;
+}
 int CountingNumber::GetCurrentNumber() const {
 	return m_currentNumber;
 }
