@@ -85,6 +85,7 @@ void CountingNumber::SetCallback(callback_ty callback) {
 	m_callback = callback;
 }
 void CountingNumber::CountTo(Type type, int target, double timeIsS) {
+	if (target == m_currentNumber) { return; }
 	m_countingType = type;
 	m_targetNumber = target;
 	m_timeInS = timeIsS;
