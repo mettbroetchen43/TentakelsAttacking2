@@ -109,12 +109,12 @@ void FightResultPopup::Initialize() {
 	m_elements.push_back(m_closeBtn);
 }
 
-void FightResultPopup::NextNumber(CountingNumber::Type type, int from, int to, double time) {
+void FightResultPopup::NextNumber(CountingNumber::Type, int, int, double) {
 	if (m_finishedCounting) { return; }
 	if (m_leftNumber->IsCounting() or m_rightNumber->IsCounting()) { return; }
 	if (m_result.GetRounds().size() >= m_index) {
 		m_finishedCounting = true;
-		m_closeBtn->SetText("Next");
+		SetEnd();
 		return;
 	}
 
@@ -124,11 +124,28 @@ void FightResultPopup::NextNumber(CountingNumber::Type type, int from, int to, d
 
 	++m_index;
 }
+void FightResultPopup::SetLastStep() {
+	m_index = m_result.GetRounds().size() - 1;
+	m_leftNumber ->SetTo(m_result.GetRounds().at(m_index).first);
+	m_rightNumber->SetTo(m_result.GetRounds().at(m_index).second);
+	SetEnd();
+}
+void FightResultPopup::SetEnd() {
+	m_closeBtn->SetText("Next");
 
+	std::string dummy;
+	if (m_result.GetRounds().at(m_result.GetRounds().size() - 1).first != 0) {
+		dummy = AppContext::GetInstance().playerCollection.GetPlayerByID(m_result.GetPlayer().first->GetID()).GetName();
+	}
+	else {
+		dummy = AppContext::GetInstance().playerCollection.GetPlayerByID(m_result.GetPlayer().second->GetID()).GetName();
+	}
+
+	m_winText->SetText(dummy + " winns");
+}
 void FightResultPopup::HandleButton() {
 	if (not m_finishedCounting){
 		m_finishedCounting = true;
-		m_closeBtn->SetText("Next");
 		SetLastStep();
 		return;
 	}
