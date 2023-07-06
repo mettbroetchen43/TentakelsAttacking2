@@ -156,7 +156,12 @@ void UpdateEvaluationScene::OnEvent(Event const& event) {
 	if (auto const* evEvent = dynamic_cast<SendUpdateEvaluation const*> (&event)) {
 		m_mergeResults = evEvent->GetMergeResults();
 		m_fightResults = evEvent->GetFightResults();
-		HandleNextPopup();
+		ShowMessagePopUpEvent const messageEvent{
+			"Evaluation",
+			"start the evaluation when all players are present",
+			[this]() {this->HandleNextPopup(); }
+		};
+		AppContext::GetInstance().eventManager.InvokeEvent(messageEvent);
 		// TestPrint(evEvent); // to print the incoming event to the console
 	}
 }
