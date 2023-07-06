@@ -57,6 +57,10 @@ private:
 	 * sets the new number in this class and the text.
 	 */
 	void SetNewNumber(int number);
+	/**
+	 * updates the color within the text.
+	 */
+	void UpdateColor();
 
 public:
 	CountingNumber(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,

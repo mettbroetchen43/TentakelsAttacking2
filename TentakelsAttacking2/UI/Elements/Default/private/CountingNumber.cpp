@@ -11,7 +11,7 @@ void CountingNumber::HandleCounting() {
 	if (m_currentNumber != m_targetNumber and not m_isCounting) {
 		m_isCounting = true;
 		m_startCountingTime = GetTime();
-		m_text->SetColor(m_countingColor);
+		UpdateColor();
 	}
 	if (not m_isCounting) { return; }
 
@@ -35,7 +35,7 @@ void CountingNumber::HandleCounting() {
 	if (m_currentNumber == m_targetNumber and m_isCounting) {
 		m_isCounting = false;
 		m_callback(m_countingType, m_startNumber, m_currentNumber, m_timeInS);
-		m_text->SetColor(m_defaultColor);
+		UpdateColor();
 	}
 }
 void CountingNumber::HandleLinearCounting() {
@@ -53,6 +53,15 @@ void CountingNumber::HandleAsymptoticCounting() {
 void CountingNumber::SetNewNumber(int number) {
 	m_currentNumber = number;
 	m_text->SetText(std::to_string(m_currentNumber));
+}
+
+void CountingNumber::UpdateColor() {
+	if (m_isCounting) {
+		m_text->SetColor(m_countingColor);
+	}
+	else {
+		m_text->SetColor(m_defaultColor);
+	}
 }
 
 CountingNumber::CountingNumber(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
@@ -73,9 +82,11 @@ CountingNumber::CountingNumber(Vector2 pos, Vector2 size, Alignment alignment, V
 
 void CountingNumber::SetCountingColor(Color color) {
 	m_countingColor = color;
+	UpdateColor();
 }
 void CountingNumber::SetDefaultColor(Color color) {
 	m_defaultColor = color;
+	UpdateColor();
 }
 
 bool CountingNumber::IsCounting() const {
@@ -96,6 +107,7 @@ void CountingNumber::SetTo(int target) {
 	m_currentNumber = m_targetNumber;
 	m_text->SetText(std::to_string(m_currentNumber));
 	m_isCounting = false;
+	UpdateColor();
 }
 int CountingNumber::GetCurrentNumber() const {
 	return m_currentNumber;
