@@ -74,7 +74,7 @@ void UpdateEvaluationScene::DisplayMergeResult() {
 	ShowMessagePopUpEvent const event{
 		appContext.languageManager.Text("ui_popup_arriving_fleet_title"),
 		subText,
-		[this]() {this->HandleNextPopup(); }
+		[this]() {this->m_nextPopup = true; }
 	};
 	appContext.eventManager.InvokeEvent(event);
 }
@@ -83,7 +83,7 @@ void UpdateEvaluationScene::DisplayFightResult() {
 
 	ShowFightResultEvent const event{
 		m_fightResults.at(m_currentIndex),
-		[this]() {this->HandleNextPopup(); }
+		[this]() {this->m_nextPopup = true;; }
 	};
 	appContext.eventManager.InvokeEvent(event);
 }
@@ -152,6 +152,15 @@ UpdateEvaluationScene::~UpdateEvaluationScene() {
 	AppContext::GetInstance().eventManager.RemoveListener(this);
 }
 
+void UpdateEvaluationScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
+	Scene::CheckAndUpdate(mousePosition, appContext);
+
+	if (m_nextPopup) {
+		m_nextPopup = false;
+		HandleNextPopup();
+	}
+}
+
 void UpdateEvaluationScene::OnEvent(Event const& event) {
 	if (auto const* evEvent = dynamic_cast<SendUpdateEvaluation const*> (&event)) {
 		m_mergeResults = evEvent->GetMergeResults();
@@ -159,7 +168,7 @@ void UpdateEvaluationScene::OnEvent(Event const& event) {
 		ShowMessagePopUpEvent const messageEvent{
 			"Evaluation",
 			"start the evaluation when all players are present",
-			[this]() {this->HandleNextPopup(); }
+			[this]() {this->m_nextPopup = true; }
 		};
 		AppContext::GetInstance().eventManager.InvokeEvent(messageEvent);
 		// TestPrint(evEvent); // to print the incoming event to the console

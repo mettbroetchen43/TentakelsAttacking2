@@ -23,6 +23,7 @@ private:
 	ResultType m_currentResultType{ ResultType::MERGE };
 	int m_currentIndex{ 0 };
 	int m_popupCount{ 0 };
+	bool m_nextPopup{ false };
 
 	void TestPrint(SendUpdateEvaluation const* event) const;
 
@@ -33,6 +34,8 @@ private:
 public:
 	UpdateEvaluationScene(Vector2 resolution);
 	~UpdateEvaluationScene();
+
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 
 	void OnEvent(Event const& event) override;
 };
