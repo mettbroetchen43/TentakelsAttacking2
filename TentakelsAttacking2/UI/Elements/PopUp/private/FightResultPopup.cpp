@@ -59,7 +59,7 @@ void FightResultPopup::Initialize() {
 		m_resolution,
 		Alignment::MID_MID,
 		textSize,
-		firstNumber
+		static_cast<int>(firstNumber)
 	);
 	m_leftNumber->SetCallback([this](CountingNumber::Type type, int from, int to, double time) {
 		this->NextNumber(type, from, to, time); 
@@ -74,7 +74,7 @@ void FightResultPopup::Initialize() {
 		m_resolution,
 		Alignment::MID_MID,
 		textSize,
-		firstNumber
+		static_cast<int>(firstNumber)
 	);
 	m_rightNumber->SetCallback([this](CountingNumber::Type type, int from, int to, double time) {
 		this->NextNumber(type, from, to, time);
@@ -119,15 +119,15 @@ void FightResultPopup::NextNumber(CountingNumber::Type, int, int, double) {
 	}
 
 	float constexpr time{ 0.5f };
-	m_leftNumber-> CountTo(CountingNumber::ASYMPTOTIC, m_result.GetRounds().at(m_index).first,  time);
-	m_rightNumber->CountTo(CountingNumber::ASYMPTOTIC, m_result.GetRounds().at(m_index).second, time);
+	m_leftNumber-> CountTo(CountingNumber::ASYMPTOTIC, static_cast<int>(m_result.GetRounds().at(m_index).first),  time);
+	m_rightNumber->CountTo(CountingNumber::ASYMPTOTIC, static_cast<int>(m_result.GetRounds().at(m_index).second), time);
 
 	++m_index;
 }
 void FightResultPopup::SetLastStep() {
 	m_index = m_result.GetRounds().size() - 1;
-	m_leftNumber ->SetTo(m_result.GetRounds().at(m_index).first);
-	m_rightNumber->SetTo(m_result.GetRounds().at(m_index).second);
+	m_leftNumber ->SetTo(static_cast<int>(m_result.GetRounds().at(m_index).first));
+	m_rightNumber->SetTo(static_cast<int>(m_result.GetRounds().at(m_index).second));
 	SetEnd();
 }
 void FightResultPopup::SetEnd() {
@@ -141,7 +141,7 @@ void FightResultPopup::SetEnd() {
 		dummy = AppContext::GetInstance().playerCollection.GetPlayerByID(m_result.GetPlayer().second->GetID()).GetName();
 	}
 
-	m_winText->SetText(dummy + " winns");
+	m_winText->SetText(dummy + " wins!");
 }
 void FightResultPopup::HandleButton() {
 	if (not m_finishedCounting){

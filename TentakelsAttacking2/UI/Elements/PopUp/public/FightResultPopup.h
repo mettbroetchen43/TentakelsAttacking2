@@ -11,7 +11,7 @@
 class FightResultPopup : public PopUp {
 private:
 	HFightResult const m_result; ///< contains the result that will be shown
-	int m_index{ 1 }; ///< contains the current index within the result
+	size_t m_index{ 1 }; ///< contains the current index within the result
 	bool m_finishedCounting{ false }; ///< contains if the popup has finished all counting calls
 
 	using callback_ty = std::function<void()>; ///< type of the callback function
