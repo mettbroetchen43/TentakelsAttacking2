@@ -69,16 +69,11 @@ void SceneManager::SwitchScene(AppContext_ty_c appContext) {
 		return;
 	}
 
-	if (!m_first) {
-		ClearFocusEvent event;
-		appContext.eventManager.InvokeEvent(event);
-	}
-	else {
-		m_first = true;
-	}
+	ClearFocusEvent const closeEvent;
+	appContext.eventManager.InvokeEvent(closeEvent);
 
-	NewFocusLayerEvent event;
-	appContext.eventManager.InvokeEvent(event);
+	NewFocusLayerEvent const newLayerEvent;
+	appContext.eventManager.InvokeEvent(newLayerEvent);
 
 	InitializeNewScene(m_nextSceneType);
 

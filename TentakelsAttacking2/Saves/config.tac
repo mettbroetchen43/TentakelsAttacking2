@@ -4,12 +4,12 @@
         "hit_chance": 0.30000001192092896
     },
     "fleet": {
-        "fleet_speed_current": 6,
+        "fleet_speed_current": 8,
         "fleet_speed_max": 20,
         "fleet_speed_min": 1
     },
     "global": {
-        "current_language_name": "english",
+        "current_language_name": "german",
         "game_rounds_current": 54,
         "game_rounds_max": 100,
         "game_rounds_min": 20
@@ -34,7 +34,7 @@
     },
     "version": {
         "version_config": "v0.1.0.1",
-        "version_game": "v0.1.1"
+        "version_game": "v0.1.2"
     },
     "window": {
         "full_screen_start_bool": false,
@@ -42,7 +42,7 @@
         "target_fps": 60
     },
     "world": {
-        "dimension_x_current": 165,
+        "dimension_x_current": 180,
         "dimension_x_max": 300,
         "dimension_x_min": 60,
         "dimension_x_show_galaxy": 200,
