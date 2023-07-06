@@ -23,15 +23,35 @@ private:
 	std::string m_fightText{ "" }; ///< contains the subtitle -> hwo is fighting
 	Text_ty m_winText; ///< contains the text who won -> gets set when the fight is finished
 	
-	ClassicButton_ty m_closeBtn;
+	ClassicButton_ty m_closeBtn; ///< contains the skip/close button
 
+	/**
+	 * initialises all ui elements
+	 */
 	void Initialize();
+	/**
+	 * returns if a number is still counting.
+	 * calls the numbers to count to the next number.
+	 */
 	void NextNumber(CountingNumber::Type, int, int, double);
+	/**
+	 * sets the numbers to ne last entry immediately.
+	 */
 	void SetLastStep();
+	/**
+	 * sets the final text (after counting) in the popup.
+	 */
 	void SetEnd();
 
+	/**
+	 * handles the button callback.
+	 * closes the popup or skips the counting part.
+	 */
 	void HandleButton();
 
 public:
+	/**
+	 * ctor.
+	 */
 	FightResultPopup(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, HFightResult const result, callback_ty callback);
 };

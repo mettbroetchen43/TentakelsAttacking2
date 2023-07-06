@@ -69,6 +69,11 @@ public:
 	void NewSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event);
 	/**
 	 * adds a new focus layer.
+	 * generates a new fight result popup.
+	 */
+	void NewFightResultPopUp(ShowFightResultEvent const* event);
+	/**
+	 * adds a new focus layer.
 	 * generates a new primitive type cell (for table class) popup.
 	 */
 	template<typename T, typename eventType>

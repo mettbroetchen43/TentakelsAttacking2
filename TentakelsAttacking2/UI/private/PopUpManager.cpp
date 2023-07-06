@@ -145,6 +145,20 @@ void PopUpManager::NewSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* eve
 		)
 	);
 }
+void PopUpManager::NewFightResultPopUp(ShowFightResultEvent const* event) {
+	NewFocusLayerEvent focusEvent;
+	m_appContext->eventManager.InvokeEvent(focusEvent);
+
+	m_popUps.push_back(std::make_unique<FightResultPopup>(
+		Vector2(0.5f, 0.5f),
+		Vector2(0.8f, 0.8f),
+		Alignment::MID_MID,
+		m_resolution,
+		event->GetResult(),
+		event->GetCallback()
+		)
+	);
+}
 
 void PopUpManager::DeleteLastPopUp(PopUp* toDelete) {
 	if (m_popUps.size() == 0) {
