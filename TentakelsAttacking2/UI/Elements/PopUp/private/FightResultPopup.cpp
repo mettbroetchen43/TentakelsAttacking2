@@ -41,6 +41,7 @@ void FightResultPopup::Initialize() {
 	Y += 0.15f;
 
 	// player names
+	auto player{ appContext.playerCollection.GetPlayerOrNpcByID(m_result.GetPlayer().first->GetID()) };
 	auto playerName = std::make_shared<Text>(
 		GetElementPosition(m_pos, m_size, leftX, Y),
 		GetElementSize(m_size, 0.5f,textSize),
@@ -48,10 +49,12 @@ void FightResultPopup::Initialize() {
 		m_resolution,
 		Alignment::MID_MID,
 		textSize,
-		appContext.playerCollection.GetPlayerOrNpcByID(m_result.GetPlayer().first->GetID()).GetName()
+		player.GetName()
 	);
+	playerName->SetColor(player.color);
 	m_elements.push_back(playerName);
 
+	player = { appContext.playerCollection.GetPlayerOrNpcByID(m_result.GetPlayer().second->GetID()) };
 	playerName = std::make_shared<Text>(
 		GetElementPosition(m_pos, m_size, rightX, Y),
 		GetElementSize(m_size, 0.5f, textSize),
@@ -59,8 +62,9 @@ void FightResultPopup::Initialize() {
 		m_resolution,
 		Alignment::MID_MID,
 		textSize,
-		appContext.playerCollection.GetPlayerOrNpcByID(m_result.GetPlayer().second->GetID()).GetName()
+		player.GetName()
 	);
+	playerName->SetColor(player.color);
 	m_elements.push_back(playerName);
 
 	Y += 0.1f;
