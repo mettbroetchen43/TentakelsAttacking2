@@ -96,7 +96,7 @@ void FightResultPopup::Initialize() {
 		});
 	m_elements.push_back(m_rightNumber);
 
-	Y += 0.05f;
+	Y += 0.1f;
 
 	// win text
 	m_winText = std::make_shared<Text>(
@@ -152,13 +152,13 @@ void FightResultPopup::SetEnd() {
 	m_closeBtn->SetText("Next");
 
 	std::string dummy;
-	if (m_result.GetRounds().at(m_result.GetRounds().size() - 1).first != 0) {
-		dummy = AppContext::GetInstance().playerCollection.GetPlayerOrNpcByID(m_result.GetPlayer().first->GetID()).GetName();
-		m_rightNumber->SetDefaultColor(RED);
-	}
-	else {
+	if (m_result.GetRounds().at(m_result.GetRounds().size() - 1).first == 0) {
 		dummy = AppContext::GetInstance().playerCollection.GetPlayerOrNpcByID(m_result.GetPlayer().second->GetID()).GetName();
 		m_leftNumber->SetDefaultColor(RED);
+	}
+	else {
+		dummy = AppContext::GetInstance().playerCollection.GetPlayerOrNpcByID(m_result.GetPlayer().first->GetID()).GetName();
+		m_rightNumber->SetDefaultColor(RED);
 	}
 
 
