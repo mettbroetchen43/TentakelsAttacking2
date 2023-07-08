@@ -33,8 +33,8 @@ private:
 	 * returns if a number is still counting.
 	 * calls the numbers to count to the next number.
 	 */
-	void NextNumber();
-	void NextNumber(CountingNumber::Type, int, int, double);
+	void NextNumber(bool const left);
+	void NextNumber(CountingNumber::Type, int, int, double, bool const left);
 	/**
 	 * sets the numbers to ne last entry immediately.
 	 */

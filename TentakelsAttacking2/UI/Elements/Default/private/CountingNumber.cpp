@@ -7,6 +7,20 @@
 #include "AppContext.h"
 #include "Text.h"
 
+void CountingNumber::HandleCountingOutNumbers() {
+	if (not m_isCounting) {
+		m_isCounting = true;
+		m_startCountingTime = GetTime();
+		UpdateColor();
+	}
+
+	if (m_isCounting and (GetTime() > m_startCountingTime + m_timeInS)) {
+		m_isCounting = false;
+		m_isCountingOutNumbers = false;
+		UpdateColor();
+		m_callback(m_countingType, m_startNumber, m_currentNumber, m_timeInS);
+	}
+}
 void CountingNumber::HandleCounting() {
 	if (m_currentNumber != m_targetNumber and not m_isCounting) {
 		m_isCounting = true;
@@ -96,17 +110,21 @@ void CountingNumber::SetCallback(callback_ty callback) {
 	m_callback = callback;
 }
 void CountingNumber::CountTo(Type type, int target, double timeIsS) {
-	// if (target == m_currentNumber) { return; }
 	m_countingType = type;
 	m_targetNumber = target;
 	m_timeInS = timeIsS;
 	m_startNumber = m_currentNumber;
+	if (target == m_currentNumber) {
+		m_timeInS /= 3;
+		m_isCountingOutNumbers = true;
+	}
 }
 void CountingNumber::SetTo(int target) {
 	m_targetNumber = target;
 	m_currentNumber = m_targetNumber;
 	m_text->SetText(std::to_string(m_currentNumber));
 	m_isCounting = false;
+	m_isCountingOutNumbers = false;
 	UpdateColor();
 }
 int CountingNumber::GetCurrentNumber() const {
@@ -117,7 +135,12 @@ int CountingNumber::GetTargetNumber() const {
 }
 
 void CountingNumber::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
-	HandleCounting();
+	if (m_isCountingOutNumbers) {
+		HandleCountingOutNumbers();
+	}
+	else {
+		HandleCounting();
+	}
 	m_text->CheckAndUpdate(mousePosition, appContext);
 }
 void CountingNumber::Render(AppContext_ty_c appContext) {

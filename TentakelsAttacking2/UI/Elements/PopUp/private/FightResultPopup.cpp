@@ -81,7 +81,7 @@ void FightResultPopup::Initialize() {
 		static_cast<int>(firstNumber)
 	);
 	m_leftNumber->SetCallback([this](CountingNumber::Type type, int from, int to, double time) {
-		this->NextNumber(type, from, to, time); 
+		this->NextNumber(type, from, to, time, false); 
 		});
 	m_elements.push_back(m_leftNumber);
 
@@ -96,7 +96,7 @@ void FightResultPopup::Initialize() {
 		static_cast<int>(firstNumber)
 	);
 	m_rightNumber->SetCallback([this](CountingNumber::Type type, int from, int to, double time) {
-		this->NextNumber(type, from, to, time);
+		this->NextNumber(type, from, to, time, true);
 		});
 	m_elements.push_back(m_rightNumber);
 
@@ -128,7 +128,7 @@ void FightResultPopup::Initialize() {
 	m_elements.push_back(m_closeBtn);
 }
 
-void FightResultPopup::NextNumber() {
+void FightResultPopup::NextNumber(bool const left) {
 	if (m_finishedCounting) { return; }
 	if (m_leftNumber->IsCounting() or m_rightNumber->IsCounting()) { return; }
 	if (m_index >= m_result.GetRounds().size()) {
@@ -138,13 +138,17 @@ void FightResultPopup::NextNumber() {
 	}
 
 	float constexpr time{ 1.5f };
-	m_leftNumber->CountTo(CountingNumber::ASYMPTOTIC, static_cast<int>(m_result.GetRounds().at(m_index).first), time);
-	m_rightNumber->CountTo(CountingNumber::ASYMPTOTIC, static_cast<int>(m_result.GetRounds().at(m_index).second), time);
+	if (left) {
+		m_leftNumber->CountTo(CountingNumber::ASYMPTOTIC, static_cast<int>(m_result.GetRounds().at(m_index).first), time);
+	}
+	else {
+		m_rightNumber->CountTo(CountingNumber::ASYMPTOTIC, static_cast<int>(m_result.GetRounds().at(m_index).second), time);
+	}
 
 	++m_index;
 }
-void FightResultPopup::NextNumber(CountingNumber::Type, int, int, double) {
-	NextNumber();
+void FightResultPopup::NextNumber(CountingNumber::Type, int, int, double, bool const left) {
+	NextNumber(left);
 }
 void FightResultPopup::SetLastStep() {
 	m_index = m_result.GetRounds().size() - 1;
@@ -184,5 +188,5 @@ FightResultPopup::FightResultPopup(Vector2 pos, Vector2 size, Alignment alignmen
 		s_emptyString, AssetType::EXCLAMATION_MARK}, m_result{result}, m_callback{callback} {
 
 	Initialize();
-	NextNumber();
+	NextNumber(false);
 }
