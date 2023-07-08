@@ -6,6 +6,7 @@
 #include "Hover.h"
 #include "AppContext.h"
 #include "UIEvents.hpp"
+#include "HTextProcessing.h"
 
 void Hover::CalculateDefault(AppContext_ty_c appContext) {
 	Vector2 const textOffset {
@@ -103,14 +104,7 @@ float Hover::RenderOffset(AppContext_ty_c appContext, Vector2 const& offset) con
 		PURPLE
 	);
 
-	DrawTextEx(
-		*(appContext.assetManager.GetFont()),
-		m_text.c_str(),
-		dummyTextPosition,
-		m_textHeight,
-		0.0f,
-		m_color
-	);
+	DrawTextWithOutline(m_text, dummyTextPosition, m_textHeight, m_color, true);
 
 	return m_collider.height;
 }

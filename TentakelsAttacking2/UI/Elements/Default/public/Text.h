@@ -23,6 +23,7 @@ private:
 
 	bool m_lineBreaks{ false }; ///< contains if the text is automatically breaks in multiple lines
 	bool m_renderRectangle{ false }; ///< contains if the collider will be rendered
+	bool m_renderBackground{ false }; ///< contains if the text will render a background if its a dark color
 
 	/**
 	 * generates a printable version if the raw string.
@@ -131,4 +132,13 @@ public:
 	 * sets if the collider gets rendered.
 	 */
 	void RenderRectangle(bool renderRectangle);
+
+	/**
+	 * sets if the text renders a background for dark colors.
+	 */
+	void SetRenderBackground(bool isRenderBackround);
+	/**
+	 * returns if the backgrounds gets currently renders for dark colors.
+	 */
+	[[nodiscard]] bool GetRenderBackground() const;
 };
