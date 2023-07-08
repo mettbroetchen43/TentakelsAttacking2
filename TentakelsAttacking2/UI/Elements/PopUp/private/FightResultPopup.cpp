@@ -52,6 +52,7 @@ void FightResultPopup::Initialize() {
 		player.GetName()
 	);
 	playerName->SetColor(player.color);
+	playerName->SetRenderBackground(true);
 	m_elements.push_back(playerName);
 
 	player = { appContext.playerCollection.GetPlayerOrNpcByID(m_result.GetPlayer().second->GetID()) };
@@ -65,6 +66,7 @@ void FightResultPopup::Initialize() {
 		player.GetName()
 	);
 	playerName->SetColor(player.color);
+	playerName->SetRenderBackground(true);
 	m_elements.push_back(playerName);
 
 	Y += 0.1f;
