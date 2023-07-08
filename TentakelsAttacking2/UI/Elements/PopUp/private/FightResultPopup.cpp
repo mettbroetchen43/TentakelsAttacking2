@@ -129,7 +129,6 @@ void FightResultPopup::Initialize() {
 }
 
 void FightResultPopup::NextNumber(bool const left) {
-	Print("called", PrintType::DEBUG);
 	if (m_finishedCounting) { return; }
 	if (m_leftNumber->IsCounting() or m_rightNumber->IsCounting()) { return; }
 	if (m_index >= m_result.GetRounds().size()) {
