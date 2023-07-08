@@ -74,7 +74,7 @@ void TestScene::HandleNextNumber(bool left) {
 
 	if (left) {
 		auto const [number, time] {GetNextNumberAndTime()};
-		m_second->CountTo(CountingNumber::ASYMPTOTIC, 10, time);
+		m_second->CountTo(CountingNumber::ASYMPTOTIC, number, time);
 		std::stringstream ss;
 		ss << "type: " << CountingNumber::ASYMPTOTIC << " | number: " << number << " | time: " << time;
 		Print(ss.str(), PrintType::DEBUG);
