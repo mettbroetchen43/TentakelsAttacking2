@@ -43,5 +43,8 @@ bool Colors::AreSame(Color lhs, Color rhs) {
 	};
 }
 bool Colors::NeedBackground(Color color) {
-	return false;
+	return AreSame(color, MAGENTA  )
+	    or AreSame(color, DARKGREEN)
+	    or AreSame(color, DARKBLUE )
+	    or AreSame(color, VIOLET   );
 }
