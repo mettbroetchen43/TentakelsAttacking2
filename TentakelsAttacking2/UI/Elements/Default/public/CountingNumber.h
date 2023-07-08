@@ -33,7 +33,6 @@ private:
 
 	double m_timeInS{ 0.0f }; ///< contains the time the current counting will take.
 	double m_startCountingTime{ GetTime() }; ///< contains the time in seconds the current counting started
-	double m_timeInSOutCounting{ 0.0f }; ///< contains the time the counting will take when target and current number are the same
 
 	Color m_countingColor{ RED }; ///< contains the color the text gets displayd with while counting
 	Color m_defaultColor{ WHITE }; ///< cointains the color the text gets displayed with while not counting

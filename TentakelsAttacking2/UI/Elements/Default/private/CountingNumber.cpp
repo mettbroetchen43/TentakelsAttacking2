@@ -8,17 +8,17 @@
 #include "Text.h"
 
 void CountingNumber::HandleCountingOutNumbers() {
-	if (m_isCountingOutNumbers and not m_isCounting) {
+	if (not m_isCounting) {
 		m_isCounting = true;
 		m_startCountingTime = GetTime();
 		UpdateColor();
 	}
 
-	if (m_isCountingOutNumbers and m_isCounting and (GetTime() > m_startCountingTime + m_timeInSOutCounting)) {
+	if (m_isCounting and (GetTime() > m_startCountingTime + m_timeInS)) {
 		m_isCounting = false;
 		m_isCountingOutNumbers = false;
 		UpdateColor();
-		m_callback(m_countingType, m_startNumber, m_currentNumber, m_timeInSOutCounting);
+		m_callback(m_countingType, m_startNumber, m_currentNumber, m_timeInS);
 	}
 }
 void CountingNumber::HandleCounting() {
@@ -115,7 +115,7 @@ void CountingNumber::CountTo(Type type, int target, double timeIsS) {
 	m_timeInS = timeIsS;
 	m_startNumber = m_currentNumber;
 	if (target == m_currentNumber) {
-		m_timeInSOutCounting = timeIsS / 10;
+		m_timeInS /= 3;
 		m_isCountingOutNumbers = true;
 	}
 }
