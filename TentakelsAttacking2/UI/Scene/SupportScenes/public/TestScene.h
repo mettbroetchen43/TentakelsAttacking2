@@ -25,11 +25,14 @@ private:
 
 	void Initialize(AppContext_ty appContext);
 
+	std::pair<int, double> GetNextNumberAndTime();
+	void HandleNextNumber(bool left);
 public:
 	TestScene(Vector2 resolution);
 	void SetActive(bool active, AppContext_ty_c appContext) override;
 
 	void TestLambda(CountingNumber::Type type, int start, int current, double time);
+
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	void Render(AppContext_ty_c appContext) override;
