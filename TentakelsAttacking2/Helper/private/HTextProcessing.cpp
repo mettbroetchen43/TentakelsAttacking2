@@ -365,3 +365,63 @@ std::vector<float> GetHorizontalAlignedOffset(std::vector<std::string> text, Rec
 
 	return toReturn;
 }
+
+void DrawTextWithOutline(std::string const& text, Vector2 position, float size, Color color, bool background) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	// background text
+	if (Colors::NeedBackground(color) and background) {
+		DrawTextEx(
+			*(appContext.assetManager.GetFont()),
+			text.c_str(),
+			{
+				position.x - 1,
+				position.y - 1,
+			},
+			size,
+			0.0f,
+			TEXT_WHITE
+		);
+		DrawTextEx(
+			*(appContext.assetManager.GetFont()),
+			text.c_str(),
+			{
+				position.x + 1,
+				position.y - 1,
+			},
+			size,
+			0.0f,
+			TEXT_WHITE
+		);
+		DrawTextEx(
+			*(appContext.assetManager.GetFont()),
+			text.c_str(),
+			{
+				position.x - 1,
+				position.y + 1,
+			},
+			size,
+			0.0f,
+			TEXT_WHITE
+		);
+		DrawTextEx(
+			*(appContext.assetManager.GetFont()),
+			text.c_str(),
+			{
+				position.x + 1,
+				position.y + 1,
+			},
+			size,
+			0.0f,
+			TEXT_WHITE
+		);
+	}
+	// text
+	DrawTextEx(
+		*(appContext.assetManager.GetFont()),
+		text.c_str(),
+		position,
+		size,
+		0.0f,
+		color
+	);
+}

@@ -42,3 +42,6 @@ bool Colors::AreSame(Color lhs, Color rhs) {
 		and lhs.a == rhs.a 
 	};
 }
+bool Colors::NeedBackground(Color color) {
+	return false;
+}

@@ -65,16 +65,9 @@ void Text::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appConte
 		}
 	}
 }
-void Text::Render(AppContext_ty_c appContext) {
+void Text::Render([[maybe_unused]] AppContext_ty_c appContext) {
 	for (auto const&[text, position] : m_toRender) {
-		DrawTextEx(
-			*(appContext.assetManager.GetFont()),
-			text.c_str(),
-			position,
-			m_textSize,
-			0.0f,
-			m_color
-		);
+		DrawTextWithOutline(text, position, m_textSize, m_color, m_renderBackground);
 	}
 
 	if (m_renderRectangle) {
@@ -143,4 +136,11 @@ void Text::LineBreaks(bool lineBreaks) {
 }
 void Text::RenderRectangle(bool renderRectangle) {
 	m_renderRectangle = renderRectangle;
+}
+
+void Text::SetRenderBackground(bool isRenderBackround) {
+	m_renderBackground = isRenderBackround;
+}
+bool Text::GetRenderBackground() const {
+	return m_renderBackground;
 }
