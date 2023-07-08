@@ -33,6 +33,7 @@ private:
 
 	double m_timeInS{ 0.0f }; ///< contains the time the current counting will take.
 	double m_startCountingTime{ GetTime() }; ///< contains the time in seconds the current counting started
+	double m_timeInSOutCounting{ 0.0f }; ///< contains the time the counting will take when target and current number are the same
 
 	Color m_countingColor{ RED }; ///< contains the color the text gets displayd with while counting
 	Color m_defaultColor{ WHITE }; ///< cointains the color the text gets displayed with while not counting
@@ -40,6 +41,13 @@ private:
 	using callback_ty = std::function<void(Type, int, int, double)>;
 	callback_ty m_callback{[](Type, int, int, double) ->void {} }; ///< gets called when the counting has finidhed
 
+	bool m_isCountingOutNumbers{ false }; ///< contains if the current counting has same start and end.
+
+
+	/**
+	 * handles the "counting" when the target and the start number are the same from th beginning of the count.
+ 	 */
+	void HandleCountingOutNumbers();
 	/**
 	 * handles wether the number should count and how.
 	 */
