@@ -278,7 +278,7 @@ bool UIGalaxy::IsCollidingObjectPoint(Vector2 point) const {
 }
 unsigned int UIGalaxy::GetIDFromPoint(Vector2 point) const {
 	Vector2 absolutePoint{ m_resolution.x * point.x, m_resolution.y * point.y };
-	if (!CheckCollisionPointRec(absolutePoint, m_collider)) { return 0; }
+	// don't check if point is in galaxy collider because the oter planets get displayed on the edge of the collider 
 
 	for (auto const& p : m_uiPlanets) {
 		if (CheckCollisionPointRec(absolutePoint, p->GetCollider())) {
