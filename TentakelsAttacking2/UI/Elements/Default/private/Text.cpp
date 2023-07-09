@@ -20,7 +20,7 @@ void Text::CreateToRender() {
 	m_toRender.clear();
 	for (int i = 0; i < spitedText.size(); ++i) {
 		std::pair<std::string, Vector2> const a =
-			{ spitedText[i],{horizontalOffset[i] + m_collider.x, verticalOffset[i] + m_collider.y} };
+			{ spitedText[i],{horizontalOffset[i] + m_collider.x, verticalOffset[i] + m_collider.y}};
 		m_toRender.emplace_back(a);
 	}
 }

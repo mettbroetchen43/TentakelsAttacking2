@@ -81,7 +81,7 @@ std::vector<std::string>  BreakTextInVector(std::string const& toBreak, float fo
 	auto getTextLength = [fontSize](std::string const& text)->float {
 		Vector2 textSize = MeasureTextEx(
 			*(AppContext::GetInstance().assetManager.GetFont()),
-			text.data(),
+			text.c_str(),
 			fontSize,
 			0.0f
 		);
@@ -95,15 +95,17 @@ std::vector<std::string>  BreakTextInVector(std::string const& toBreak, float fo
 
 	while (true) {
 		rhs = toBreak.find_first_of(' ', rhs + 1);
+
+
 		if (rhs == std::string::npos) {
 			toReturn.push_back(toBreak.substr(lhs, rhs - lhs));
 			break;
 		}
 
-		std::string line{ toBreak.c_str() + lhs, rhs - lhs };
+		std::string line{ toBreak.c_str() + lhs, rhs + 1 - lhs };
 		auto const textLength{ getTextLength(line) };
 
-		if (textLength > length) {
+		if (textLength >= length) {
 			rhs = toBreak.find_last_of(' ', rhs - 1);
 			if (rhs == std::string::npos) {
 				rhs = toBreak.find_first_of(' ');
