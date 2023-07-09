@@ -334,8 +334,8 @@ public:
 	 * calls AddSpecificRow.
 	 */
 	template <typename T>
-	void AddLastRow(T defalutValue) {
-		AddSpecificRow<T>(static_cast<int>(m_cells.size()), defalutValue);
+	void AddLastRow(T defaultValue) {
+		AddSpecificRow<T>(static_cast<int>(m_cells.size()), defaultValue);
 	}
 	/**
 	 * adds a specific column.
@@ -452,6 +452,30 @@ public:
 	 */
 	[[nodiscard]] bool IsColumnEditable(int column) const;
 
+	/**
+	 * sets the text color of a specific cell.
+	 * color cells will ignore this.
+	 */
+	void SetSingleCellTextColor(Color color, int row, int column);
+	/**
+	 * returns the color of a specific cell.
+	 */
+	[[nodiscard]] Color GetSingleCellTextColor(int row, int column) const;
+	/**
+	 * sets the text color of all cells.
+	 * color cells will ignore this.
+	 */
+	void SetAllCellTextColor(Color color);
+	/**
+	 * sets the text color of a row of cells.
+	 * color cells will ignore this.
+	 */
+	void SetRowCellTextColor(Color color, int row);
+	/**
+	 * sets the text color of a column of cells.
+	 * color cells will ignore this.
+	 */
+	void SetColumnCellTextColor(Color color, int column);
 	/**
 	 * sets if the first row is fixed while scrolling.
 	 */

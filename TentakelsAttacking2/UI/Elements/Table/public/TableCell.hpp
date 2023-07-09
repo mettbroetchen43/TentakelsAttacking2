@@ -17,7 +17,7 @@ private:
 	T m_value; ///< contains the value
 	std::string m_stringValue; ///< contains the value as string
 	std::function<void(TableCell*, T, T)> m_updated{ [](TableCell*, T, T) {} }; ///< conains a lambda that provides that the value has chanced
-	
+
 	/**
 	 * Sets the value as string.
 	 */
@@ -98,7 +98,7 @@ public:
 			m_textPosition,
 			m_textSize,
 			0.0f,
-			WHITE
+			m_textColor
 		);
 	}
 

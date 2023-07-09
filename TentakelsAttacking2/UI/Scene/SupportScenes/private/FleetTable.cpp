@@ -8,6 +8,7 @@
 #include "HFocusEvents.h"
 #include "Text.h"
 #include "Galaxy.h"
+#include "Player.h"
 
 void FleetAndTargetPointTable::Initialization() {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
@@ -45,20 +46,28 @@ void FleetAndTargetPointTable::Initialization() {
 		for (int i = 0; i < fleets.size(); ++i) {
 			auto const fleet{ fleets.at(i) };
 
+			PlayerData player{ appContext.playerCollection.GetPlayerOrNpcByID(fleet->GetPlayer()->GetID()) };
 			// fleet ID
 			m_table->SetValue<int>(
 				i + startFleets,
 				0,
 				fleet->GetID()
 			);
+			m_table->SetSingleCellTextColor(
+				player.color,
+				i + startFleets,
+				0
+			);
 
 			// position
-			std::string const pos{ GetStringFromPosition(fleet->GetPos()) };
+			std::string const pos{ GetStringFromPosition(fleet->GetPos(), false) };
 			m_table->SetValue<std::string>(
 				i + startFleets,
 				1,
 				pos
 			);
+
+			// todo return when the player isnt the current player.
 
 			// count
 			m_table->SetValue<int>(
@@ -87,6 +96,11 @@ void FleetAndTargetPointTable::Initialization() {
 				3,
 				dest
 			);
+			m_table->SetSingleCellTextColor(
+				appContext.playerCollection.GetPlayerOrNpcByID(destination->GetPlayer()->GetID()).color,
+				i + startFleets,
+				3
+			);
 		}
 	}
 	else {
@@ -98,20 +112,29 @@ void FleetAndTargetPointTable::Initialization() {
 		for (int i = 0; i < targetPoints.size(); ++i) {
 			auto const targetPoint{ targetPoints.at(i) };
 
+			PlayerData player{ appContext.playerCollection.GetPlayerOrNpcByID(targetPoint->GetPlayer()->GetID()) };
 			// target point ID
 			m_table->SetValue<int>(
 				i + startTargetPoints,
 				0,
 				targetPoint->GetID()
 			);
+			m_table->SetSingleCellTextColor(
+				player.color,
+				i + startTargetPoints,
+				0
+			);
 
 			// position
-			std::string const pos{ GetStringFromPosition(targetPoint->GetPos()) };
+			std::string const pos{ GetStringFromPosition(targetPoint->GetPos(), true) };
 			m_table->SetValue<std::string>(
 				i + startTargetPoints,
 				1,
 				pos
 			);
+
+			// return if the current player is not this player.
+
 
 			// count
 			m_table->SetValue<int>(
@@ -132,21 +155,22 @@ void FleetAndTargetPointTable::Initialization() {
 	}
 }
 
-std::string FleetAndTargetPointTable::GetStringFromPosition(vec2pos_ty position) const {
+std::string FleetAndTargetPointTable::GetStringFromPosition(vec2pos_ty position, bool const getCoordinates) const {
 
-	for (auto const& p : m_galaxy->GetPlanets()) {
-		auto const& pos{ p->GetPos() };
-		if (pos == position) {
-			return AppContext::GetInstance().languageManager.Text("ui_fleet_table_orig_planet", p->GetID());
+	if (!getCoordinates) {
+		for (auto const& p : m_galaxy->GetPlanets()) {
+			auto const& pos{ p->GetPos() };
+			if (pos == position) {
+				return AppContext::GetInstance().languageManager.Text("ui_fleet_table_orig_planet", p->GetID());
+			}
+		}
+		for (auto const& t : m_galaxy->GetTargetPoints()) {
+			auto const& pos{ t->GetPos() };
+			if (pos == position) {
+				return  AppContext::GetInstance().languageManager.Text("ui_fleet_table_orig_target_point", t->GetID());
+			}
 		}
 	}
-	for (auto const& t : m_galaxy->GetTargetPoints()) {
-		auto const& pos{ t->GetPos() };
-		if (pos == position) {
-			return  AppContext::GetInstance().languageManager.Text("ui_fleet_table_orig_target_point", t->GetID());
-		}
-	}
-
 	std::stringstream stream;
 
 	stream << "X: " << position.x << " | Y: " << position.y;
