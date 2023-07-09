@@ -82,7 +82,7 @@ void Hover::Render(AppContext_ty_c appContext) {
 	auto const& renderOffset{ GetRenderOffset() };
 	RenderOffset(appContext, renderOffset);
 }
-float Hover::RenderOffset(AppContext_ty_c appContext, Vector2 const& offset) const {
+float Hover::RenderOffset(AppContext_ty_c, Vector2 const& offset) const {
 	Rectangle const dummyCollider{
 		m_collider.x - offset.x,
 		m_collider.y - offset.y,
