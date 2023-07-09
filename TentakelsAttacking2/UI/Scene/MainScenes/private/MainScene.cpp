@@ -15,6 +15,7 @@
 #include "Text.h"
 #include "InputLine.hpp"
 #include "HPrint.h"
+#include "Player.h"
 #include <cassert>
 
 
@@ -532,8 +533,44 @@ void MainScene::HandleGalaxyDragLineInput(DragLineFleetInstructionEvent const* e
 		}
 	}
 
+	if (auto const& spaceObject = GetSpaceObjectFromID(event->GetOriginID())) {
+		if (spaceObject->GetPlayer()->GetID() == m_currentPlayer.ID) {
+			m_shipCount->SetValue(static_cast<int>(spaceObject->GetShipCount()));
+			m_shipCount->ClearByNextInput();
+		}
+		else {
+			m_shipCount->Clear();
+		}
+	}
+	else {
+		m_shipCount->Clear();
+	}
+
+
 	SelectFocusElementEvent const focusEvent{ m_shipCount.get() };
 	AppContext::GetInstance().eventManager.InvokeEvent(focusEvent);
+}
+SpaceObject_ty_c MainScene::GetSpaceObjectFromID(unsigned int ID) const {
+	auto const& planetData{ m_galaxy->GetGalaxy()->GetPlanets() };
+	for (auto const& planet : planetData) {
+		if (planet->GetID() == ID) {
+			return planet;
+		}
+	}
+	auto const& fleetData{ m_galaxy->GetGalaxy()->GetFleets() };
+	for (auto const& fleet : fleetData) {
+		if (fleet->GetID() == ID) {
+			return fleet;
+		}
+	}
+	auto const& targetData{ m_galaxy->GetGalaxy()->GetTargetPoints() };
+	for (auto const& target : targetData) {
+		if (target->GetID() == ID) {
+			return target;
+		}
+	}
+
+	return nullptr;
 }
 
 MainScene::MainScene(Vector2 resolution)
