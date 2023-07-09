@@ -670,6 +670,38 @@ bool Table::IsColumnEditable(int column) const {
 	return m_editableRowsColumns.at(1).at(column);
 }
 
+void Table::SetSingleCellTextColor(Color color, int row, int column) {
+	if (!IsValidIndex(row, column)) { Print("row or column index out auf range", PrintType::ERROR); throw std::out_of_range("invalid index"); }
+	
+	m_cells.at(row).at(column)->SetTextColor(color);
+}
+Color Table::GetSingleCellTextColor(int row, int column) const {
+	if (!IsValidIndex(row, column)) { Print("row or column index out auf range", PrintType::ERROR); throw std::out_of_range("invalid index"); }
+
+	return m_cells.at(row).at(column)->GetTextColor();
+}
+void Table::SetAllCellTextColor(Color color) {
+	for (auto const& row : m_cells) {
+		for (auto const& cell : row) {
+			cell->SetTextColor(color);
+		}
+	}
+}
+void Table::SetRowCellTextColor(Color color, int row) {
+	if (!IsValidRow(row)){ Print("row out of range", PrintType::ERROR), throw std::out_of_range("row index"); }
+
+	for (auto const& cell : m_cells.at(row)) {
+		cell->SetTextColor(color);
+	}
+}
+void Table::SetColumnCellTextColor(Color color, int column){
+	if (!IsValidColumn(column)) { Print("column out of Range", PrintType::ERROR); throw std::out_of_range("column index"); }
+
+	for (auto const& row : m_cells) {
+		row.at(column)->SetTextColor(color);
+	}
+}
+
 void Table::SetFixedHeadline(bool isFixedHeadline) {
 	m_setFixedHeadline = isFixedHeadline;
 }
