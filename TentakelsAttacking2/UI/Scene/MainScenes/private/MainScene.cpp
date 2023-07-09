@@ -235,6 +235,7 @@ void MainScene::Initialize() {
 			SetAcceptButton();
 		});
 	m_origin->SetPlaceholderText(appContext.languageManager.Text("scene_main_scene_id_placeholder_text"));
+	m_origin->SetShouldClearByFocus(true);
 	m_elements.push_back(m_origin);
 
 	text = std::make_shared<Text>(
@@ -264,6 +265,7 @@ void MainScene::Initialize() {
 		this->UpdateActiveDestination();
 		});
 	m_destination->SetPlaceholderText(appContext.languageManager.Text("scene_main_scene_id_placeholder_text"));
+	m_destination->SetShouldClearByFocus(true);
 	m_elements.push_back(m_destination);
 
 	m_destinationX = std::make_shared<InputLine<int>>(
@@ -281,6 +283,7 @@ void MainScene::Initialize() {
 		SetAcceptButton();
 		});
 	m_destinationX->SetPlaceholderText("X");
+	m_destinationX->SetShouldClearByFocus(true);
 	m_elements.push_back(m_destinationX);
 
 	m_destinationY = std::make_shared<InputLine<int>>(
@@ -298,6 +301,7 @@ void MainScene::Initialize() {
 		SetAcceptButton();
 		});
 	m_destinationY->SetPlaceholderText("Y");
+	m_destinationY->SetShouldClearByFocus(true);
 	m_elements.push_back(m_destinationY);
 
 	text = std::make_shared<Text>(
@@ -326,6 +330,7 @@ void MainScene::Initialize() {
 		SetAcceptButton();
 		});
 	m_shipCount->SetPlaceholderText(appContext.languageManager.Text("scene_main_scene_ship_count_placeholder_text"));
+	m_shipCount->SetShouldClearByFocus(true);
 	m_elements.push_back(m_shipCount);
 
 	m_acceptBtn = std::make_shared<ClassicButton>(
