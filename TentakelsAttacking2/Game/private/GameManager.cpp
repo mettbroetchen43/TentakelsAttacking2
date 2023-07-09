@@ -313,7 +313,7 @@ bool GameManager::ValidateAddFleetInput(SendFleetInstructionEvent const* event) 
 		message(messageText, "input in origin", "origin");
 	}
 	if (event->GetDestination() <= 0) {
-		if ((event->GetDestinationX() <= 0) || (event->GetDestinationY() <= 0)) {
+		if ((event->GetDestinationX() < 0) || (event->GetDestinationY() < 0)) {
 			message(messageText, "input in destination", "destination");
 		}
 	}
@@ -328,8 +328,8 @@ bool GameManager::ValidateAddFleetInput(SendFleetInstructionEvent const* event) 
 
 	bool const doubleDestination{
 		event->GetDestination() > 0
-		&& (event->GetDestinationX() > 0
-			|| event->GetDestinationY() > 0) };
+		&& (event->GetDestinationX() >= 0
+			|| event->GetDestinationY() >= 0) };
 	if (doubleDestination) {
 		popup("to many inputs for destination");
 		return false;
