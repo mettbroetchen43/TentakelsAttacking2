@@ -117,7 +117,7 @@ private:
 	/**
 	 * tries to return a space object fom a ID
 	 */
-	[[nodiscard]] SpaceObject_ty_c GetSpaceObjectFromID(unsigned int ID) const;
+	[[nodiscard]] SpaceObject_ty GetSpaceObjectFromID(unsigned int ID) const;
 
 public:
 	/**

@@ -18,7 +18,6 @@
 #include "Player.h"
 #include <cassert>
 
-
 void MainScene::Initialize() {
 
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
@@ -550,7 +549,7 @@ void MainScene::HandleGalaxyDragLineInput(DragLineFleetInstructionEvent const* e
 	SelectFocusElementEvent const focusEvent{ m_shipCount.get() };
 	AppContext::GetInstance().eventManager.InvokeEvent(focusEvent);
 }
-SpaceObject_ty_c MainScene::GetSpaceObjectFromID(unsigned int ID) const {
+SpaceObject_ty MainScene::GetSpaceObjectFromID(unsigned int ID) const {
 	auto const& planetData{ m_galaxy->GetGalaxy()->GetPlanets() };
 	for (auto const& planet : planetData) {
 		if (planet->GetID() == ID) {
