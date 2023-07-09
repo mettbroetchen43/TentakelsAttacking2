@@ -41,7 +41,7 @@ public:
 	/**
 	 * returns if the this focusable got focused last focus change.
 	 */
-	[nodiscard] bool GotFocused() const;
+	[[nodiscard]] bool GotFocused() const;
 	/**
 	 * returns if this element has an nested focus.
 	 */
