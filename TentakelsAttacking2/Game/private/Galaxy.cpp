@@ -867,17 +867,17 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_origin_id_text", event->GetOrigin()));
 		return { nullptr, nullptr, nullptr, false };
 	}
-	if (!IsValidSpaceObjectID(event->GetDestination())) {
-
+	// destination is 0 by default if no destination ID exists
+	if (event->GetDestination() == 0) {
 		bool const validCoordinates{
-				(event->GetDestinationX() > 0
+				(event->GetDestinationX() >= 0
 			and event->GetDestinationX() <= m_size.x)
-			and (event->GetDestinationY() > 0
+			and (event->GetDestinationY() >= 0
 			and event->GetDestinationY() <= m_size.y)
 		};
 		bool const coordinateInput{
-				event->GetDestinationX() > 0
-			and event->GetDestinationY() > 0
+				event->GetDestinationX() >= 0
+			and event->GetDestinationY() >= 0
 		};
 
 		if (!validCoordinates && coordinateInput) {
@@ -887,10 +887,11 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 			);
 			return { nullptr, nullptr, nullptr, false };
 		}
-		else if (!coordinateInput) {
-			popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_destination_id_text", event->GetDestination()));
-			return { nullptr, nullptr, nullptr, false };
-		}
+	}
+	else if (!IsValidSpaceObjectID(event->GetDestination())) {
+		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_destination_id_text", event->GetDestination()));
+		return { nullptr, nullptr, nullptr, false };
+
 	}
 
 	// get origin and set new fleet
