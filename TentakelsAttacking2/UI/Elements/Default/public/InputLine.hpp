@@ -19,6 +19,8 @@ template <class T>
 class InputLine final : public UIElement, public Focusable {
 protected:
 	bool m_isEnabled{ true }; ///< contains if the input line is enabled
+	bool m_shouldClearByFocus{ false }; ///< contains if the input lines clears by getting focussed and new input
+	bool m_isClearNextInput{ false }; ///< contains if the input line clears b< the next input once
 	unsigned int m_charLimit; ///< contains the max about of chars in the input line
 	std::string m_value; ///< contains the current value
 	std::string m_oldValue; ///< contains the old value
@@ -125,6 +127,11 @@ public:
 			int const key{ GetCharPressed() };
 
 			if (key <= 0) { break; }
+
+			if (m_isClearNextInput or (m_shouldClearByFocus and GotFocused())) {
+				Clear();
+				m_isClearNextInput = false;
+			}
 
 			if (!IsValidKey(key)) { continue; }
 
@@ -291,6 +298,25 @@ public:
 		m_onValueChanced = onValueChanged;
 	}
 
+	/**
+	 * sets if the input line clears itself when it gets focused and an input happens.
+	 */
+	void SetShouldClearByFocus(bool isShouldClearByFocus) {
+		m_shouldClearByFocus = isShouldClearByFocus;
+	}
+	/**
+	 * returns if the input line clears itself when it gets focused and an input happens.
+	 */
+	[[nodiscard]] bool IsShouldClearByFocus() const {
+		return m_shouldClearByFocus;
+	}
+	/**
+	 * clears the input line by next input
+	 */
+	void ClearByNextInput() {
+		m_isClearNextInput = true;
+	}
+	
 	/**
 	 * returns if the input line is enabled.
 	 */
