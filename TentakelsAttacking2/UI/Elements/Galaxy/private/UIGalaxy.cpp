@@ -31,13 +31,13 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 				static_cast<float>(p->GetPos().x),
 				static_cast<float>(p->GetPos().y),
 				}, appContext),
-			m_resolution,
-			GetRelativePosition({
-				static_cast<float>(p->GetPos().x),
-				static_cast<float>(p->GetPos().y),
-				}, appContext),
-			p.get()
-			);
+				m_resolution,
+				GetRelativePosition({
+					static_cast<float>(p->GetPos().x),
+					static_cast<float>(p->GetPos().y),
+					}, appContext),
+					p.get()
+					);
 		if (p->IsDestroyed()) {
 			planet->SetEnabled(false);
 			planet->SetColor(DARKGRAY);
@@ -62,13 +62,13 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 				static_cast<float>(t->GetPos().x),
 				static_cast<float>(t->GetPos().y),
 				}, appContext),
-			m_resolution,
-			GetRelativePosition({
-				static_cast<float>(t->GetPos().x),
-				static_cast<float>(t->GetPos().y),
-				}, appContext),
-			t.get()
-		);
+				m_resolution,
+				GetRelativePosition({
+					static_cast<float>(t->GetPos().x),
+					static_cast<float>(t->GetPos().y),
+					}, appContext),
+					t.get()
+					);
 		point->SetOnClick([this](UIGalaxyElement* point) {
 			this->SelectUIGalaxyElement(point);
 			});
@@ -110,10 +110,10 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext_ty_c appContext) const {
 	Vector2 const newPos{
 		(m_collider.x/*+ m_resolution.x * 0.05f*/) / m_resolution.x,
-		(m_collider.y/* + m_resolution.y * 0.05f */ ) / m_resolution.y,
+		(m_collider.y/* + m_resolution.y * 0.05f */) / m_resolution.y,
 	};
 	Vector2 const newSize{
-		(m_collider.width /* - m_resolution.x * 0.1f*/ ) / m_resolution.x,
+		(m_collider.width /* - m_resolution.x * 0.1f*/) / m_resolution.x,
 		(m_collider.height/* - m_resolution.y * 0.1f */) / m_resolution.y,
 	};
 	if (m_isShowGalaxy) {
@@ -177,7 +177,7 @@ void UIGalaxy::ClampsPositionAndSize() {
 		? m_absoluteSize.x
 		: m_collider.x + m_collider.width - m_absoluteSize.width;
 
-	m_absoluteSize.y = m_absoluteSize.y < m_collider.y 
+	m_absoluteSize.y = m_absoluteSize.y < m_collider.y
 		? m_absoluteSize.y
 		: m_collider.y;
 
@@ -202,30 +202,30 @@ void UIGalaxy::MoveByKey(Direction direction, float speed) {
 	float percent;
 
 	switch (direction) {
-		case Direction::UP:
-			deferens = m_absoluteSize.height - m_collider.height;
-			offset = m_collider.y - m_absoluteSize.y;
-			percent = offset / deferens * 100 + speed;
-			Slide(percent, false);
-			break;
-		case Direction::DOWN:
-			deferens = m_absoluteSize.height - m_collider.height;
-			offset = m_collider.y - m_absoluteSize.y;
-			percent = offset / deferens * 100 - speed;
-			Slide(percent, false);
-			break;
-		case Direction::LEFT:
-			deferens = m_absoluteSize.width - m_collider.width;
-			offset = m_collider.x - m_absoluteSize.x;
-			percent = offset / deferens * 100 + speed;
-			Slide(percent, true);
-			break;
-		case Direction::RIGHT:
-			deferens = m_absoluteSize.width - m_collider.width;
-			offset = m_collider.x - m_absoluteSize.x;
-			percent = offset / deferens * 100 - speed;
-			Slide(percent, true);
-			break;
+	case Direction::UP:
+		deferens = m_absoluteSize.height - m_collider.height;
+		offset = m_collider.y - m_absoluteSize.y;
+		percent = offset / deferens * 100 + speed;
+		Slide(percent, false);
+		break;
+	case Direction::DOWN:
+		deferens = m_absoluteSize.height - m_collider.height;
+		offset = m_collider.y - m_absoluteSize.y;
+		percent = offset / deferens * 100 - speed;
+		Slide(percent, false);
+		break;
+	case Direction::LEFT:
+		deferens = m_absoluteSize.width - m_collider.width;
+		offset = m_collider.x - m_absoluteSize.x;
+		percent = offset / deferens * 100 + speed;
+		Slide(percent, true);
+		break;
+	case Direction::RIGHT:
+		deferens = m_absoluteSize.width - m_collider.width;
+		offset = m_collider.x - m_absoluteSize.x;
+		percent = offset / deferens * 100 - speed;
+		Slide(percent, true);
+		break;
 	}
 	ClampsPositionAndSize();
 	UpdateUIGalaxyElementPosition();
@@ -255,7 +255,7 @@ Vector2 UIGalaxy::GetCurrentScaleReference() const {
 }
 
 bool UIGalaxy::IsCollidingObjectPoint(Vector2 point) const {
-	if (!CheckCollisionPointRec(point, m_collider)) { return false; }
+	// don't check if point is in galaxy collider because the oter planets get displayed on the edge of the collider
 	for (auto const& p : m_uiPlanets) {
 		auto const& collider{ p->GetCollider() };
 		if (CheckCollisionPointRec(point, collider)) {
@@ -278,14 +278,14 @@ bool UIGalaxy::IsCollidingObjectPoint(Vector2 point) const {
 }
 unsigned int UIGalaxy::GetIDFromPoint(Vector2 point) const {
 	Vector2 absolutePoint{ m_resolution.x * point.x, m_resolution.y * point.y };
-	if (!CheckCollisionPointRec(absolutePoint, m_collider)) { return 0; }
+	// don't check if point is in galaxy collider because the oter planets get displayed on the edge of the collider 
 
 	for (auto const& p : m_uiPlanets) {
 		if (CheckCollisionPointRec(absolutePoint, p->GetCollider())) {
 			return p->GetID();
 		}
 	}
-	for (auto const& tp : m_uiTargetPoints){
+	for (auto const& tp : m_uiTargetPoints) {
 		if (CheckCollisionPointRec(absolutePoint, tp->GetCollider())) {
 			return tp->GetID();
 		}
@@ -299,7 +299,7 @@ unsigned int UIGalaxy::GetIDFromPoint(Vector2 point) const {
 }
 vec2pos_ty UIGalaxy::GetCoordinatesFromPoint(Vector2 point) const {
 	Vector2 const absolutePoint{ m_resolution.x * point.x, m_resolution.y * point.y };
-	if (!CheckCollisionPointRec(absolutePoint, m_collider)) { return { 0, 0 }; }
+	if (!CheckCollisionPointRec(absolutePoint, m_collider)) { return { -1, -1 }; }
 
 	auto const galaxySize{ m_currentGalaxy->GetSize() };
 	Vector2 pos{
@@ -310,7 +310,6 @@ vec2pos_ty UIGalaxy::GetCoordinatesFromPoint(Vector2 point) const {
 		m_absoluteSize.width / m_resolution.x,
 		m_absoluteSize.height / m_resolution.y
 	};
-	//auto const relative= GetElementPositionReversed(pos, size, point);
 	auto const relative = GetElementPositionReversed({
 			m_absoluteSize.x,
 			m_absoluteSize.y
@@ -319,7 +318,7 @@ vec2pos_ty UIGalaxy::GetCoordinatesFromPoint(Vector2 point) const {
 			m_absoluteSize.height
 		},
 		absolutePoint);
-	return { 
+	return {
 		static_cast<int>(relative.x * galaxySize.x) ,
 		static_cast<int>(relative.y * galaxySize.y)
 	};
@@ -328,13 +327,13 @@ vec2pos_ty UIGalaxy::GetCoordinatesFromPoint(Vector2 point) const {
 void UIGalaxy::HandleDragLineResult(Vector2 start, Vector2 end) {
 	auto const originID{ GetIDFromPoint(start) };
 	auto const destID{ GetIDFromPoint(end) };
-	vec2pos_ty destCo{ 0, 0 };
+	vec2pos_ty destCo{ -1, -1 };
 	if (destID <= 0) {
 		destCo = GetCoordinatesFromPoint(end);
 	}
 
 	m_updateLineDrag = false;
-	
+
 	DragLineFleetInstructionEvent const event{
 		originID,
 		destID,
@@ -459,11 +458,11 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 		if (!m_updateLineDrag) {
 			// zoom
 			if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
-			float const mouseWheel{ GetMouseWheelMove() };
-			if (mouseWheel != 0.0f) {
-				Zoom(mouseWheel > 0.0f, 5);
+				float const mouseWheel{ GetMouseWheelMove() };
+				if (mouseWheel != 0.0f) {
+					Zoom(mouseWheel > 0.0f, 5);
+				}
 			}
-		}
 
 			// move by keys
 			if (IsKeyDown(KEY_UP)) { MoveByKey(Direction::UP, 2.0f); }
@@ -473,11 +472,11 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 		}
 
 		// move by mouse
-		if (CheckCollisionPointRec(mousePosition, m_collider) and IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			if (m_isAcceptingInput and IsCollidingObjectPoint(mousePosition)) {
 				m_updateLineDrag = true;
 			}
-			else {
+			else if (CheckCollisionPointRec(mousePosition, m_collider)) {
 				m_isScrollingByMouse = true;
 			}
 		}
@@ -560,7 +559,7 @@ void UIGalaxy::Render(AppContext_ty_c appContext) {
 		m_lineDrag->Render(appContext);
 	}
 
-	/* 
+	/*
 	DrawRectangleLinesEx(
 		m_absoluteSize,
 		1.0f,
@@ -606,7 +605,7 @@ Galaxy_ty_raw UIGalaxy::GetGalaxy() const {
 }
 
 void UIGalaxy::OnEvent(Event const& event) {
-	
+
 	if (auto const* galaxyEvent = dynamic_cast<SendGalaxyPointerEvent const*>(&event)) {
 		Initialize(galaxyEvent);
 		return;

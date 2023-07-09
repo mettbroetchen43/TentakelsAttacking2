@@ -52,6 +52,7 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		textHeight,
 		subTitle
 		);
+	textSubTitle->LineBreaks(true);
 	m_elements.push_back(textSubTitle);
 }
 void PopUp::LateUpdate() {

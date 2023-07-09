@@ -14,6 +14,7 @@ protected:
 	Color m_backgroundColor{ BLACK }; ///< contains the background of the cell
 	float m_textSize; ///< contains the text size the text is rendered with
 	Vector2 m_textPosition; ///< contains the absolute text position 
+	Color m_textColor{ WHITE }; ///< contains the color a text is redered with
 
 public:
 	/**
@@ -68,6 +69,15 @@ public:
 	 * returns if the point in inside the cell collider.
 	 */
 	[[nodiscard]] bool IsColliding(Vector2 point) const;
+
+	/**
+	 * sets the render color for text. color cells will ignore this
+	 */
+	void SetTextColor(Color color);
+	/**
+	 * returns the current text color.
+	 */
+	[[nodiscard]] Color GetTextColor() const;
 
 	/**
 	 * use this if the cell is clicked.

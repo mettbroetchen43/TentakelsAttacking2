@@ -34,6 +34,13 @@ bool AbstractTableCell::IsColliding(Vector2 point) const {
 	return CheckCollisionPointRec(point, m_collider);
 }
 
+void AbstractTableCell::SetTextColor(Color color) {
+	m_textColor = color;
+}
+Color AbstractTableCell::GetTextColor() const {
+	return m_textColor;
+}
+
 void AbstractTableCell::Render(AppContext_ty_c) {
 
 	DrawRectangleRec(

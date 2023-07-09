@@ -81,7 +81,7 @@ std::vector<std::string>  BreakTextInVector(std::string const& toBreak, float fo
 	auto getTextLength = [fontSize](std::string const& text)->float {
 		Vector2 textSize = MeasureTextEx(
 			*(AppContext::GetInstance().assetManager.GetFont()),
-			text.data(),
+			text.c_str(),
 			fontSize,
 			0.0f
 		);
@@ -95,15 +95,17 @@ std::vector<std::string>  BreakTextInVector(std::string const& toBreak, float fo
 
 	while (true) {
 		rhs = toBreak.find_first_of(' ', rhs + 1);
+
+
 		if (rhs == std::string::npos) {
 			toReturn.push_back(toBreak.substr(lhs, rhs - lhs));
 			break;
 		}
 
-		std::string line{ toBreak.c_str() + lhs, rhs - lhs };
+		std::string line{ toBreak.c_str() + lhs, rhs + 1 - lhs };
 		auto const textLength{ getTextLength(line) };
 
-		if (textLength > length) {
+		if (textLength >= length) {
 			rhs = toBreak.find_last_of(' ', rhs - 1);
 			if (rhs == std::string::npos) {
 				rhs = toBreak.find_first_of(' ');
@@ -364,4 +366,64 @@ std::vector<float> GetHorizontalAlignedOffset(std::vector<std::string> text, Rec
 	}
 
 	return toReturn;
+}
+
+void DrawTextWithOutline(std::string const& text, Vector2 position, float size, Color color, bool background) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	// background text
+	if (Colors::NeedBackground(color) and background) {
+		DrawTextEx(
+			*(appContext.assetManager.GetFont()),
+			text.c_str(),
+			{
+				position.x - 1,
+				position.y - 1,
+			},
+			size,
+			0.0f,
+			TEXT_WHITE
+		);
+		DrawTextEx(
+			*(appContext.assetManager.GetFont()),
+			text.c_str(),
+			{
+				position.x + 1,
+				position.y - 1,
+			},
+			size,
+			0.0f,
+			TEXT_WHITE
+		);
+		DrawTextEx(
+			*(appContext.assetManager.GetFont()),
+			text.c_str(),
+			{
+				position.x - 1,
+				position.y + 1,
+			},
+			size,
+			0.0f,
+			TEXT_WHITE
+		);
+		DrawTextEx(
+			*(appContext.assetManager.GetFont()),
+			text.c_str(),
+			{
+				position.x + 1,
+				position.y + 1,
+			},
+			size,
+			0.0f,
+			TEXT_WHITE
+		);
+	}
+	// text
+	DrawTextEx(
+		*(appContext.assetManager.GetFont()),
+		text.c_str(),
+		position,
+		size,
+		0.0f,
+		color
+	);
 }

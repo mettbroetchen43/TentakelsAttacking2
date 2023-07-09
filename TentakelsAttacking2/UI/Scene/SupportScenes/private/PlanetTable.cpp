@@ -54,19 +54,29 @@ void PlanetTable::Initialization() {
 
 		// player name
 		std::string entry;
+		Color color;
 		if (p->IsDestroyed()) {
 			entry = appContext.languageManager.Text("ui_planet_table_player_name_destroyed");
+			color = WHITE;
 		}
 		else if (!p->IsDiscovered()) {
 			entry = appContext.languageManager.Text("ui_planet_table_player_name_not_discovered");
+			color = WHITE;
 		}
 		else {
-			entry = appContext.playerCollection.GetPlayerOrNpcByID(p->GetPlayer()->GetID()).GetName();
+			PlayerData const& player{ appContext.playerCollection.GetPlayerOrNpcByID(p->GetPlayer()->GetID()) };
+			entry = player.GetName();
+			color = player.color;
 		}
 		m_table->SetValue<std::string>(
 			addedCount,
 			1,
 			entry
+		);
+		m_table->SetSingleCellTextColor(
+			color, 
+			addedCount, 
+			1
 		);
 
 		if (p->IsDestroyed()) { continue; }
