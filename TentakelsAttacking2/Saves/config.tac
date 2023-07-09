@@ -42,16 +42,16 @@
         "target_fps": 60
     },
     "world": {
-        "dimension_x_current": 60,
+        "dimension_x_current": 182,
         "dimension_x_max": 300,
         "dimension_x_min": 60,
         "dimension_x_show_galaxy": 200,
-        "dimension_y_current": 20,
+        "dimension_y_current": 90,
         "dimension_y_max": 160,
         "dimension_y_min": 20,
         "dimension_y_show_galaxy": 150,
         "discover_range_factor": 3,
-        "planet_count_current": 99,
+        "planet_count_current": 58,
         "planet_count_max": 100,
         "planet_count_min": 20,
         "planet_count_show_galaxy": 25
