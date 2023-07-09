@@ -33,7 +33,6 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		GetElementTextHeight(m_size, 0.18f),
 		title
 		);
-	textTitle->RenderRectangle(true);
 	m_elements.push_back(textTitle);
 
 	float textHeight = GetElementTextHeight(m_size, 0.1f);
@@ -54,7 +53,6 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		subTitle
 		);
 	textSubTitle->LineBreaks(true);
-	textSubTitle->RenderRectangle(true);
 	m_elements.push_back(textSubTitle);
 }
 void PopUp::LateUpdate() {

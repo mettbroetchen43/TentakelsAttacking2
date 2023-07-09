@@ -105,8 +105,6 @@ std::vector<std::string>  BreakTextInVector(std::string const& toBreak, float fo
 		std::string line{ toBreak.c_str() + lhs, rhs + 1 - lhs };
 		auto const textLength{ getTextLength(line) };
 
-		Print("text length: " + std::to_string(textLength) + " | length: " + std::to_string(length), PrintType::DEBUG);
-
 		if (textLength >= length) {
 			rhs = toBreak.find_last_of(' ', rhs - 1);
 			if (rhs == std::string::npos) {
