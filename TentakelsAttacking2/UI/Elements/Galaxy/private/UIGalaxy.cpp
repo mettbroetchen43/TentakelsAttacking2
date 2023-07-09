@@ -299,7 +299,7 @@ unsigned int UIGalaxy::GetIDFromPoint(Vector2 point) const {
 }
 vec2pos_ty UIGalaxy::GetCoordinatesFromPoint(Vector2 point) const {
 	Vector2 const absolutePoint{ m_resolution.x * point.x, m_resolution.y * point.y };
-	if (!CheckCollisionPointRec(absolutePoint, m_collider)) { return { 0, 0 }; }
+	if (!CheckCollisionPointRec(absolutePoint, m_collider)) { return { -1, -1 }; }
 
 	auto const galaxySize{ m_currentGalaxy->GetSize() };
 	Vector2 pos{
@@ -310,7 +310,6 @@ vec2pos_ty UIGalaxy::GetCoordinatesFromPoint(Vector2 point) const {
 		m_absoluteSize.width / m_resolution.x,
 		m_absoluteSize.height / m_resolution.y
 	};
-	//auto const relative= GetElementPositionReversed(pos, size, point);
 	auto const relative = GetElementPositionReversed({
 			m_absoluteSize.x,
 			m_absoluteSize.y
@@ -328,7 +327,7 @@ vec2pos_ty UIGalaxy::GetCoordinatesFromPoint(Vector2 point) const {
 void UIGalaxy::HandleDragLineResult(Vector2 start, Vector2 end) {
 	auto const originID{ GetIDFromPoint(start) };
 	auto const destID{ GetIDFromPoint(end) };
-	vec2pos_ty destCo{ 0, 0 };
+	vec2pos_ty destCo{ -1, -1 };
 	if (destID <= 0) {
 		destCo = GetCoordinatesFromPoint(end);
 	}

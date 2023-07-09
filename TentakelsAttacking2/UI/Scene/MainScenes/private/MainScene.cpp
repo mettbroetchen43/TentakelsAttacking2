@@ -493,8 +493,8 @@ void MainScene::SendFleetInstruction() {
 	SendFleetInstructionEvent event{
 		static_cast<unsigned int>(m_origin->GetValue()),
 		static_cast<unsigned int>(m_destination->GetValue()),
- 		                          m_destinationX->IsEnabled() ? m_destinationX->GetValue() : 0,
-		                          m_destinationY->IsEnabled() ? m_destinationY->GetValue() : 0,
+ 		                          m_destinationX->IsEnabled() ? m_destinationX->GetValue() : -1,
+		                          m_destinationY->IsEnabled() ? m_destinationY->GetValue() : -1,
 		static_cast<size_t>(      m_shipCount->GetValue())
 	};
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
@@ -521,7 +521,7 @@ void MainScene::HandleGalaxyDragLineInput(DragLineFleetInstructionEvent const* e
 	if (event->GetDestID()   > 0) { m_destination->SetValue(event->GetDestID()  ); }
 	else {
 		auto const& co{ event->GetDestCoordinates() };
-		if (co.x > 0 and co.y > 0) {
+		if (co.x >= 0 and co.y >= 0) {
 			m_destinationX->SetValue(co.x);
 			m_destinationY->SetValue(co.y);
 		}
