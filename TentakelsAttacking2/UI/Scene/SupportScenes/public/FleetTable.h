@@ -21,7 +21,7 @@ private:
 	/**
 	 * returns the current position as a string.
 	 */
-	[[nodiscard]] std::string GetStringFromPosition(vec2pos_ty position) const;
+	[[nodiscard]] std::string GetStringFromPosition(vec2pos_ty position, bool const getCoordinates) const;
 
 public:
 	/**
