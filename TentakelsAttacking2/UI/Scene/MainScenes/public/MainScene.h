@@ -114,6 +114,10 @@ private:
 	 * handles the galaxy drag line input
 	 */
 	void HandleGalaxyDragLineInput(DragLineFleetInstructionEvent const* event);
+	/**
+	 * tries to return a space object fom a ID
+	 */
+	[[nodiscard]] SpaceObject_ty GetSpaceObjectFromID(unsigned int ID) const;
 
 public:
 	/**

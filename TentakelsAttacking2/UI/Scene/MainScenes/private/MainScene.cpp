@@ -15,8 +15,8 @@
 #include "Text.h"
 #include "InputLine.hpp"
 #include "HPrint.h"
+#include "Player.h"
 #include <cassert>
-
 
 void MainScene::Initialize() {
 
@@ -235,6 +235,7 @@ void MainScene::Initialize() {
 			SetAcceptButton();
 		});
 	m_origin->SetPlaceholderText(appContext.languageManager.Text("scene_main_scene_id_placeholder_text"));
+	m_origin->SetShouldClearByFocus(true);
 	m_elements.push_back(m_origin);
 
 	text = std::make_shared<Text>(
@@ -264,6 +265,7 @@ void MainScene::Initialize() {
 		this->UpdateActiveDestination();
 		});
 	m_destination->SetPlaceholderText(appContext.languageManager.Text("scene_main_scene_id_placeholder_text"));
+	m_destination->SetShouldClearByFocus(true);
 	m_elements.push_back(m_destination);
 
 	m_destinationX = std::make_shared<InputLine<int>>(
@@ -281,6 +283,7 @@ void MainScene::Initialize() {
 		SetAcceptButton();
 		});
 	m_destinationX->SetPlaceholderText("X");
+	m_destinationX->SetShouldClearByFocus(true);
 	m_elements.push_back(m_destinationX);
 
 	m_destinationY = std::make_shared<InputLine<int>>(
@@ -298,6 +301,7 @@ void MainScene::Initialize() {
 		SetAcceptButton();
 		});
 	m_destinationY->SetPlaceholderText("Y");
+	m_destinationY->SetShouldClearByFocus(true);
 	m_elements.push_back(m_destinationY);
 
 	text = std::make_shared<Text>(
@@ -326,6 +330,7 @@ void MainScene::Initialize() {
 		SetAcceptButton();
 		});
 	m_shipCount->SetPlaceholderText(appContext.languageManager.Text("scene_main_scene_ship_count_placeholder_text"));
+	m_shipCount->SetShouldClearByFocus(true);
 	m_elements.push_back(m_shipCount);
 
 	m_acceptBtn = std::make_shared<ClassicButton>(
@@ -527,8 +532,44 @@ void MainScene::HandleGalaxyDragLineInput(DragLineFleetInstructionEvent const* e
 		}
 	}
 
+	if (auto const& spaceObject = GetSpaceObjectFromID(event->GetOriginID())) {
+		if (spaceObject->GetPlayer()->GetID() == m_currentPlayer.ID) {
+			m_shipCount->SetValue(static_cast<int>(spaceObject->GetShipCount()));
+			m_shipCount->ClearByNextInput();
+		}
+		else {
+			m_shipCount->Clear();
+		}
+	}
+	else {
+		m_shipCount->Clear();
+	}
+
+
 	SelectFocusElementEvent const focusEvent{ m_shipCount.get() };
 	AppContext::GetInstance().eventManager.InvokeEvent(focusEvent);
+}
+SpaceObject_ty MainScene::GetSpaceObjectFromID(unsigned int ID) const {
+	auto const& planetData{ m_galaxy->GetGalaxy()->GetPlanets() };
+	for (auto const& planet : planetData) {
+		if (planet->GetID() == ID) {
+			return planet;
+		}
+	}
+	auto const& fleetData{ m_galaxy->GetGalaxy()->GetFleets() };
+	for (auto const& fleet : fleetData) {
+		if (fleet->GetID() == ID) {
+			return fleet;
+		}
+	}
+	auto const& targetData{ m_galaxy->GetGalaxy()->GetTargetPoints() };
+	for (auto const& target : targetData) {
+		if (target->GetID() == ID) {
+			return target;
+		}
+	}
+
+	return nullptr;
 }
 
 MainScene::MainScene(Vector2 resolution)

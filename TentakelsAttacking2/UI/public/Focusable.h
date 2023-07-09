@@ -13,6 +13,7 @@ class Focusable {
 private:
 	unsigned int m_focusID; ///< contains the unique (per layer) id
 	bool m_isFocus{ false }; ///< contains if this focusable is currently in focus
+	bool m_wasLastFocus{ false }; ///< contains if this focussable was focused last time
 
 protected:
 	bool m_isNestedFocus{ false }; ///< contains if there is a nested focus
@@ -37,6 +38,10 @@ public:
 	 * sets if this element is in focus.
 	 */
 	void SetFocus(bool focus);
+	/**
+	 * returns if the this focusable got focused last focus change.
+	 */
+	[[nodiscard]] bool GotFocused() const;
 	/**
 	 * returns if this element has an nested focus.
 	 */
