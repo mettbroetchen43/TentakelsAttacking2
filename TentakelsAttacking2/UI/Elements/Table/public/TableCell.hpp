@@ -17,7 +17,8 @@ private:
 	T m_value; ///< contains the value
 	std::string m_stringValue; ///< contains the value as string
 	std::function<void(TableCell*, T, T)> m_updated{ [](TableCell*, T, T) {} }; ///< conains a lambda that provides that the value has chanced
-	
+	Color m_color{ WHITE }; ///< contains the color a text is redered with
+
 	/**
 	 * Sets the value as string.
 	 */
@@ -98,7 +99,7 @@ public:
 			m_textPosition,
 			m_textSize,
 			0.0f,
-			WHITE
+			m_color
 		);
 	}
 
@@ -109,6 +110,18 @@ public:
 		m_textSize = m_collider.height / 1.5f;
 		float const margin{ (m_collider.height - m_textSize) / 2 };
 		m_textPosition = { m_collider.x + m_collider.width * 0.05f ,m_collider.y + margin };
+	}
+	/**
+	 * sets the render color für text. color cells will ignore this
+	 */
+	void SetColor(Color color) {
+		m_color = color;
+	}
+	/**
+	 * returns the current text color.
+	 */
+	[[nodiscard]] Color GetColor() const {
+		return m_color;
 	}
 	/**
 	 * returns the current value.
