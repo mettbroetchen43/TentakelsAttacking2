@@ -38,7 +38,7 @@ void UIPlanet::UpdateHoverText() {
 		hover = { AppContext::GetInstance().languageManager.Text("ui_planet_hover", text_1, text_2)};
 	}
 	else {
-		hover = { position };
+		hover = { m_currentPlayer.GetName() + " | " + position };
 	}
 	m_hover.SetText(hover);
 }

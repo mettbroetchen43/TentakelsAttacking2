@@ -9,6 +9,7 @@
 #include "Focusable.h"
 #include "HLogicAlias.hpp"
 #include "HUIAlias.hpp"
+#include "HPlayerData.h"
 #include <functional>
 #include <memory>
 #include <vector>
@@ -191,6 +192,11 @@ public:
 	 * calls the cells to resize.
 	 */
 	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+
+	/**
+	 * filters the fleets for current player.
+	 */
+	void FilterByCurrentPlayer(PlayerData player);
 
 	/**
 	 * sets if the galaxy is enabled.

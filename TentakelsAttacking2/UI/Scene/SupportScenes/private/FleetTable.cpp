@@ -10,7 +10,7 @@
 #include "Galaxy.h"
 #include "Player.h"
 
-void FleetAndTargetPointTable::Initialization() {
+void FleetAndTargetPointTable::Initialization(PlayerData currentPlayer) {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	auto const fleets{ m_galaxy->GetFleets() };
 	auto const targetPoints{ m_galaxy->GetTargetPoints() };
@@ -67,8 +67,6 @@ void FleetAndTargetPointTable::Initialization() {
 				pos
 			);
 
-			// todo return when the player isnt the current player.
-
 			// count
 			m_table->SetValue<int>(
 				i + startFleets,
@@ -79,7 +77,10 @@ void FleetAndTargetPointTable::Initialization() {
 			// destination
 			auto const destination{ fleet->GetTarget() };
 			std::string dest;
-			if (destination->IsPlanet()) {
+			if (fleet->GetPlayer()->GetID() != currentPlayer.ID) {
+				dest = "---";
+			}
+			else if (destination->IsPlanet()) {
 				dest = appContext.languageManager.Text("ui_fleet_table_dest_planet", destination->GetID());
 			}
 			else if (destination->IsFleet()) {
@@ -96,11 +97,13 @@ void FleetAndTargetPointTable::Initialization() {
 				3,
 				dest
 			);
-			m_table->SetSingleCellTextColor(
-				appContext.playerCollection.GetPlayerOrNpcByID(destination->GetPlayer()->GetID()).color,
-				i + startFleets,
-				3
-			);
+			if (fleet->GetPlayer()->GetID() == currentPlayer.ID) {
+				m_table->SetSingleCellTextColor(
+					appContext.playerCollection.GetPlayerOrNpcByID(destination->GetPlayer()->GetID()).color,
+					i + startFleets,
+					3
+				);
+			}
 		}
 	}
 	else {
@@ -177,10 +180,10 @@ std::string FleetAndTargetPointTable::GetStringFromPosition(vec2pos_ty position,
 	return stream.str();
 }
 
-FleetAndTargetPointTable::FleetAndTargetPointTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy_ty_raw galaxy)
-	: Scene{ pos, size, alignment, resolution }, m_galaxy{ galaxy } {
+FleetAndTargetPointTable::FleetAndTargetPointTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy_ty_raw galaxy, PlayerData currentPlayer)
+	: Scene{ pos, size, alignment, resolution } , m_galaxy{ galaxy } {
 
-	Initialization();
+	Initialization(currentPlayer);
 }
 
 void FleetAndTargetPointTable::SetActive(bool active, AppContext_ty_c appContext) {

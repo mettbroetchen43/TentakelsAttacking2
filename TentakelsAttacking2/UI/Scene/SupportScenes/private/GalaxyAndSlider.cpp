@@ -164,6 +164,10 @@ Galaxy_ty_raw GalaxyScene::GetGalaxy() const {
 	return m_galaxy->GetGalaxy();
 }
 
+void GalaxyScene::FilterByCurrentPlayer(PlayerData player) {
+	m_galaxy->FilterByCurrentPlayer(player);
+}
+
 void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	if (!IsActive()) { return; }
 

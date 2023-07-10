@@ -22,6 +22,7 @@ struct HFightResult;
 class Galaxy final {
 private:
 	bool m_validGalaxy{ true }; ///< specifies if the generation in valid and the galaxy is able to use
+	bool m_isFiltered{ false }; ///< returnsa if the galaxy was getting filtered
 	std::vector<SpaceObject_ty> m_objects; ///< contains all space object for updating 
 	std::vector<Planet_ty> m_planets; ///< contains all planets 
 	std::vector<Fleet_ty> m_fleets; ///< contains all fleets
@@ -206,6 +207,14 @@ public:
 	[[nodiscard]] bool IsValidSpaceObjectID(unsigned int ID) const;
 
 	/**
+	 * sets if the galaxy was filtered.
+	 */
+	void SetFiltered(bool isFiltered);
+	/**
+	 * returns if the galaxy is filtered
+	 */
+	[[nodiscard]] bool IsFiltrered() const;
+	/**
 	 * returns the size of the galaxy.
 	 */
 	[[nodiscard]] vec2pos_ty GetSize() const;
@@ -238,6 +247,10 @@ public:
 	 * adds a new fleet to the galaxy for the provided player.
 	 */
 	[[nodiscard]] HFleetResult AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
+	/**
+	 * updates the discover by player
+	 */
+	void SetDiscoverByPlayer(unsigned int currentPlayerID);
 	/**
 	 * filters the galaxy for relevant data for the provided player.
 	 */

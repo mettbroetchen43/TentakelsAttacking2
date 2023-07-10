@@ -42,8 +42,10 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 			planet->SetEnabled(false);
 			planet->SetColor(DARKGRAY);
 		}
-		else if (not p->IsDiscovered() and not event->IsShowGalaxy()) {
-			planet->SetColor(GRAY);
+		else if (not p->GetPlayer()->IsHumanPlayer()) {
+			if (not p->IsDiscovered() and not event->IsShowGalaxy()) {
+				planet->SetColor(GRAY);
+			}
 		}
 		planet->SetOnClick([this](UIGalaxyElement* planet) {
 			this->SelectUIGalaxyElement(planet);
@@ -63,12 +65,12 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 				static_cast<float>(t->GetPos().y),
 				}, appContext),
 				m_resolution,
-				GetRelativePosition({
+			GetRelativePosition({
 					static_cast<float>(t->GetPos().x),
 					static_cast<float>(t->GetPos().y),
 					}, appContext),
-					t.get()
-					);
+				t.get()
+				);
 		point->SetOnClick([this](UIGalaxyElement* point) {
 			this->SelectUIGalaxyElement(point);
 			});
@@ -587,6 +589,12 @@ void UIGalaxy::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	for (auto const& e : m_uiGalaxyElements) {
 		e->Resize(resolution, appContext);
 		e->UpdatePosition(m_absoluteSize);
+	}
+}
+
+void UIGalaxy::FilterByCurrentPlayer(PlayerData player) {
+	for (auto const& f : m_uiFleets) {
+		f->SetDisplayedAsPoint(f->GetPlayer().ID != player.ID);
 	}
 }
 
