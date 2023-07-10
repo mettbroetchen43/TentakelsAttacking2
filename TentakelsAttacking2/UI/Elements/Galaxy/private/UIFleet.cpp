@@ -52,6 +52,10 @@ bool UIFleet::IsColliding(Vector2 const& mousePosition) const {
     return CheckCollisionPointLine(mousePosition, start, end, 5);
 }
 
+PlayerData UIFleet::GetPlayer() const {
+    return m_player;
+}
+
 void UIFleet::UpdateHoverText() {
     std::string const position{ "X: " + std::to_string(m_fleet->GetPos().x) + ", Y: " + std::to_string(m_fleet->GetPos().y) };
     std::string const text_1{ std::to_string(m_fleet->GetID()) + " | " + position + " |" };

@@ -592,6 +592,12 @@ void UIGalaxy::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	}
 }
 
+void UIGalaxy::FilterByCurrentPlayer(PlayerData player) {
+	for (auto const& f : m_uiFleets) {
+		f->SetDisplayedAsPoint(f->GetPlayer().ID != player.ID);
+	}
+}
+
 void UIGalaxy::SetEnabled(bool isEnabled) {
 	m_isEnabled = isEnabled;
 }

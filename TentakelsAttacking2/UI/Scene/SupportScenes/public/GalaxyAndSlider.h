@@ -6,6 +6,7 @@
 #pragma once
 #include "Scene.h"
 #include "HLogicAlias.hpp"
+#include "HPlayerData.h"
 #include <vector>
 
 
@@ -68,6 +69,11 @@ public:
 	 * return the current ui galaxy.
 	 */
 	[[nodiscard]] Galaxy_ty_raw GetGalaxy() const;
+
+	/**
+	 * filter fleets by current player.
+	 */
+	void FilterByCurrentPlayer(PlayerData player);
 
 	/**
 	 * updates the scene.

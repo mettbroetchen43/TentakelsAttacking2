@@ -377,6 +377,7 @@ void MainScene::InitializeGalaxy() {
 		false,
 		true
 	);
+	m_galaxy->FilterByCurrentPlayer(m_currentPlayer);
 	m_elements.push_back(m_galaxy);
 }
 void MainScene::InitializePlanetTable() {

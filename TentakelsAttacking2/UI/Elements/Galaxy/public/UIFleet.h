@@ -34,6 +34,10 @@ public:
 	 * checks if a point is colliding with the line.
 	 */
 	[[nodiscard]] bool IsColliding(Vector2 const& mousePosition) const;
+	/**
+	 * returns the player of the uifleet.
+	 */
+	[[nodiscard]] PlayerData GetPlayer() const;
 
 	/**
 	 * updates the hover text.
