@@ -814,6 +814,13 @@ bool Galaxy::IsValidSpaceObjectID(unsigned int ID) const {
 	return false;
 }
 
+void Galaxy::SetFiltered(bool isFiltered) {
+	m_isFiltered = isFiltered;
+}
+bool Galaxy::IsFiltrered() const {
+	return m_isFiltered;
+}
+
 vec2pos_ty Galaxy::GetSize() const {
 	return m_size;
 }
@@ -912,20 +919,37 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 }
 
 void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
-	auto const newStart{ std::remove_if(m_fleets.begin(), m_fleets.end(),
-		[currentPlayerID](Fleet_ty_c fleet) { return fleet->GetPlayer()->GetID() != currentPlayerID; }) };
+	if (m_isFiltered) { return; }
+	// discover all spaceobjects with player
+	for (auto const& object : m_objects) {
+		if (object->GetPlayer()->GetID() == currentPlayerID) {
+			object->SetDiscovered(true);
+			if (object->IsTargetPoint() and object->GetShipCount() == 0) { continue; }
+			// discover all spaceobjects nearby spaceobjects with player
+			for (auto const& object_i : m_objects) {
+				if (object_i->IsInDiscoverRange(object)) {
+					if (object_i->IsTargetPoint() and object_i->GetShipCount() == 0) { continue; }
+					object_i->SetDiscovered(true);
+				}
+			}
+		}
+	}
+
+	m_isFiltered = true;
+
+
+	// filter fleets and target points inly by discovered
+	auto const newStart{std::remove_if(m_fleets.begin(), m_fleets.end(),
+		[currentPlayerID](Fleet_ty_c fleet) { return not fleet->IsDiscovered(); }) };
 	m_fleets.erase(newStart, m_fleets.end());
 
-	auto const newStart2{ std::remove_if(m_objects.begin(), m_objects.end(),
-		[currentPlayerID](SpaceObject_ty_c object) { return object->IsFleet() and object->GetPlayer()->GetID() != currentPlayerID; }) };
-	m_objects.erase(newStart2, m_objects.end());
-
 	auto const newStart3{ std::remove_if(m_targetPoints.begin(), m_targetPoints.end(),
-		[currentPlayerID](TargetPoint_ty_c targetPoint) { return targetPoint->GetPlayer()->GetID() != currentPlayerID; }) };
+		[currentPlayerID](TargetPoint_ty_c targetPoint) { return not targetPoint->IsDiscovered(); }) };
 	m_targetPoints.erase(newStart3, m_targetPoints.end());
 
+	// filter spaceobjects by discovered and is not a planet
 	auto const newStart4{ std::remove_if(m_objects.begin(), m_objects.end(),
-		[currentPlayerID](SpaceObject_ty_c object) {return object->IsTargetPoint() and object->GetPlayer()->GetID() != currentPlayerID; }) };
+		[currentPlayerID](SpaceObject_ty_c object) {return not object->IsPlanet() and not object->IsDiscovered(); }) };
 	m_objects.erase(newStart4, m_objects.end());
 }
 
