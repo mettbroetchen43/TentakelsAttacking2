@@ -53,7 +53,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		});
 	m_elements.push_back(m_continueBtn);
 
-	appContext.eventManager.InvokeEvent(GetShowGalaxyPointerEvent{ });
+	appContext.eventManager.InvokeEvent(GetGalaxyPointerEvent{ });
 
 	btnPosY += btnOffset;
 	++focusID;
