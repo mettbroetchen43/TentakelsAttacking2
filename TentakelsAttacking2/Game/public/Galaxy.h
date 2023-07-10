@@ -248,6 +248,10 @@ public:
 	 */
 	[[nodiscard]] HFleetResult AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
+	 * updates the discover by player
+	 */
+	void SetDiscoverByPlayer(unsigned int currentPlayerID);
+	/**
 	 * filters the galaxy for relevant data for the provided player.
 	 */
 	void FilterByPlayer(unsigned int currentPlayerID);

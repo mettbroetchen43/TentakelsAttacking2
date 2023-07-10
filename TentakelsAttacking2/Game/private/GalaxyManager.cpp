@@ -18,6 +18,8 @@ void GalaxyManager::FilterCurrentGalaxy() {
 	Player_ty currentPlayer{ nullptr };
 	bool const valid{ m_gameManager->GetCurrentPlayer(currentPlayer) };
 	if (not valid) { return; }
+	m_mainGalaxy->SetDiscoverByPlayer(currentPlayer->GetID());
+	m_currentGalaxy->SetDiscoverByPlayer(currentPlayer->GetID());
 	m_currentGalaxy->FilterByPlayer(currentPlayer->GetID());
 }
 
@@ -100,7 +102,7 @@ bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, Player_ty c
 
 	auto const result {m_mainGalaxy->AddFleet(event, currentPlayer)};
 	if (not result.valid) {
-		Print("Not able to add Fleet to main Galaxy", PrintType::ERROR);
+		Print("Not able to add Fleet to main Galaxy", PrintType::INFO);
 
 		ReturnFleetInstructionEvent const returnEvent{ result.valid };
 		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
