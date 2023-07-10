@@ -9,7 +9,7 @@
 
 UIFleet::UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd,
     Fleet_ty_raw_c fleet, std::function<bool(Vector2 const&)> isInGalaxyCollider)
-    : UIElement{ start, { 0.0f,0.0f }, Alignment::MID_MID, resolution }, m_ID{ ID }, m_player{ player },
+    : UIElement{ start, { 0.005f,0.01f }, Alignment::MID_MID, resolution }, m_ID{ ID }, m_player{ player },
     m_relativeStart{ relativeStart }, m_relativeEnd{ relativeEnd }, m_fleet { fleet }, m_isInGalaxyCollider{ isInGalaxyCollider },
     m_line{
         start,
@@ -33,6 +33,10 @@ unsigned int UIFleet::GetID() const {
 }
 bool UIFleet::IsColliding(Vector2 const& mousePosition) const {
     if (not m_isInGalaxyCollider(mousePosition)) { return false; }
+
+    if (m_isDisplayAsPoint) {
+        return CheckCollisionPointRec(mousePosition, m_collider);
+    }
 
     auto const& lineStart{ m_line.GetStart() };
     auto const& lineEnd{ m_line.GetEnd() };
@@ -69,6 +73,13 @@ void UIFleet::UpdatePositions(Rectangle newCollider) {
     m_line.Update();
 }
 
+void UIFleet::SetDisplayedAsPoint(bool isDisplayedAsPoint) {
+    m_isDisplayAsPoint = isDisplayedAsPoint;
+}
+bool UIFleet::IsDisplayAsPoint() const {
+    return m_isDisplayAsPoint;
+}
+
 void UIFleet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
     UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -78,6 +89,15 @@ void UIFleet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appCo
     }
 }
 void UIFleet::Render(AppContext_ty_c appContext) {
+    if (m_isDisplayAsPoint) {
+        DrawCircle(
+            static_cast<int>(m_collider.x + m_collider.width / 2),
+            static_cast<int>(m_collider.y + m_collider.height / 2),
+            m_collider.width / 2,
+            m_player.color
+        );
+        return;
+    }
     m_line.Render(appContext);
 }
 void UIFleet::Resize(Vector2 resolution, AppContext_ty_c appContext) {

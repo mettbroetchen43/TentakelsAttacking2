@@ -65,12 +65,12 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 				static_cast<float>(t->GetPos().y),
 				}, appContext),
 				m_resolution,
-				GetRelativePosition({
+			GetRelativePosition({
 					static_cast<float>(t->GetPos().x),
 					static_cast<float>(t->GetPos().y),
 					}, appContext),
-					t.get()
-					);
+				t.get()
+				);
 		point->SetOnClick([this](UIGalaxyElement* point) {
 			this->SelectUIGalaxyElement(point);
 			});

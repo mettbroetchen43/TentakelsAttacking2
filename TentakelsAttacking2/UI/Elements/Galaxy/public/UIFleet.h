@@ -20,6 +20,7 @@ private:
 	Vector2 m_relativeStart; ///< contains teh relative start of the line according to the galaxy
 	Vector2 m_relativeEnd; ///< contains teh relative end of the line according to the galaxy
 	std::function<bool(Vector2 const&)> m_isInGalaxyCollider; ///< returns if a point is in the galaxy collider
+	bool m_isDisplayAsPoint{ false }; ///< contains if the fleet gets displayed as point insted of a line
 
 public:
 	UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd,
@@ -43,6 +44,15 @@ public:
 	 * updates the start and end positions
 	 */
 	void UpdatePositions(Rectangle newCollider);
+
+	/**
+	 * sets if the fleet gets displayed as point.
+	 */
+	void SetDisplayedAsPoint(bool isDisplayedAsPoint);
+	/**
+	 * returns if the fleet gets displayed as point.
+	 */
+	[[nodiscard]] bool IsDisplayAsPoint() const;
 
 	/**
 	 * calls the UIElement to Update.
