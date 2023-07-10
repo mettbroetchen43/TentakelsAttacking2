@@ -42,8 +42,10 @@ void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 			planet->SetEnabled(false);
 			planet->SetColor(DARKGRAY);
 		}
-		else if (not p->IsDiscovered() and not event->IsShowGalaxy()) {
-			planet->SetColor(GRAY);
+		else if (not p->GetPlayer()->IsHumanPlayer()) {
+			if (not p->IsDiscovered() and not event->IsShowGalaxy()) {
+				planet->SetColor(GRAY);
+			}
 		}
 		planet->SetOnClick([this](UIGalaxyElement* planet) {
 			this->SelectUIGalaxyElement(planet);
