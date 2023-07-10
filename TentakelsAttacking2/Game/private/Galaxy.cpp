@@ -220,7 +220,7 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 	// check origin id
 	if (event->GetOrigin() > m_planets.size()) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_input_origin_planet_high_text"));
-		Print("ID to high for a planet: " + event->GetOrigin(), PrintType::INFO);
+		Print("ID to high for a planet: " + std::to_string(event->GetOrigin()), PrintType::INFO);
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -295,7 +295,7 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 	// check if origin ID is existing
 	if (not IsValidFleet(event->GetOrigin())) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_fleet_text", event->GetOrigin()));
-		Print("id not valid for a fleet: " + event->GetOrigin(), PrintType::INFO);
+		Print("id not valid for a fleet: " + std::to_string(event->GetOrigin()), PrintType::INFO);
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -352,7 +352,9 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 	// redirect fleet
 	if (origin->GetShipCount() == event->GetShipCount()) {
 		origin->SetTarget(destination);
-		Print("new target for fleet: " + destination->GetID(), PrintType::INFO);
+		std::stringstream ss;
+		ss << "new target for fleet: " << destination->GetID();
+		Print(ss.str(), PrintType::INFO);
 		return { origin, nullptr, destination, true };
 	}
 
@@ -388,7 +390,7 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 	// check if origin ID is existing
 	if (not IsValidTargetPoint(event->GetOrigin())) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_target_point_text", event->GetOrigin()));
-		Print("id not valid for a target point: " + event->GetOrigin(), PrintType::INFO);
+		Print("id not valid for a target point: " + std::to_string(event->GetOrigin()), PrintType::INFO);
 		return { nullptr, nullptr, nullptr, false };
 	}
 
