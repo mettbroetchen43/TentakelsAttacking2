@@ -412,7 +412,8 @@ void MainScene::InitializeFleetTable() {
 		GetElementSize(0.85f, 0.78f),
 		Alignment::BOTTOM_LEFT,
 		m_resolution,
-		m_galaxy->GetGalaxy()
+		m_galaxy->GetGalaxy(),
+		m_currentPlayer
 	);
 	m_elements.push_back(m_fleetTable);
 }

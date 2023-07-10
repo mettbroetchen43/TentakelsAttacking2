@@ -5,6 +5,7 @@
 
 #include "Scene.h"
 #include "HLogicAlias.hpp"
+#include "HPlayerData.h"
 #pragma once
 
 
@@ -16,7 +17,7 @@ private:
 	/**
 	 * initializes the table from the current galaxy.
 	 */
-	void Initialization();
+	void Initialization(PlayerData currentPlayer);
 
 	/**
 	 * returns the current position as a string.
@@ -27,7 +28,7 @@ public:
 	/**
 	 * ctor and calls to initialize
 	 */
-	FleetAndTargetPointTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy_ty_raw galaxy);
+	FleetAndTargetPointTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy_ty_raw galaxy, PlayerData currentPlayer);
 	/**
 	 * sets if the scene is currently active.
 	 * calls set focus active.
