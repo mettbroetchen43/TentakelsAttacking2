@@ -64,6 +64,12 @@ bool SpaceObject::IsInFightRange(SpaceObject_ty_c object) const {
 	return IsInRange(object.get(), this, range);
 }
 
+void SpaceObject::SetDiscovered(bool isDiscovered) {
+	m_isDiscovered = isDiscovered;
+}
+bool SpaceObject::IsDiscovered() const {
+	return m_isDiscovered;
+}
 
 SpaceObject& SpaceObject::operator+=(size_t ships) {
 	m_ships += ships;

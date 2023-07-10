@@ -14,7 +14,6 @@ private:
 	using vec2pos = vec2pos_ty; ///< the type of the position
 	bool m_isHomePlanet{ }; ///< contains if this planet is a home planet
 	bool m_isDestroyed{ false }; ///< contains if the planet is destroyed
-	bool m_isDiscovered{ false }; ///< contains if any player has discovered this planet
 	int m_planetNumber; ///< contains the planet number
 	size_t m_maxShips; ///< contains the max amount of ships the planet can hold by non human players
 	size_t m_production; ///< contains the production hat gets add every round
@@ -61,14 +60,6 @@ public:
 	 * returns if the planet is destroyed.
 	 */
 	[[nodiscard]] bool IsDestroyed() const;
-	/**
-	 * set if the planet is discovered.
-	 */
-	void SetDiscovered(bool isDescovered);
-	/**
-	 * returns if the planet is discovered from any player.
-	 */
-	[[nodiscard]] bool IsDiscovered() const;
 
 	/**
 	 * products ships.

@@ -19,6 +19,7 @@ protected:
 	size_t m_ships; ///< contains the current amount of ships
 	vec2pos_ty m_position; ///< contains the absolute position within the galaxy
 	Player_ty m_player; ///< contains a pointer to a player who owns the object
+	bool m_isDiscovered{ false }; ///< contains if the current player has discovered this object
 
 	[[nodiscard]] static bool IsInRange(SpaceObject_ty_raw first, SpaceObject_ty_raw second, int range);
 
@@ -98,6 +99,15 @@ public:
 	 * returns if the provided SpaceObject is in fight range of this.
 	 */
 	[[nodiscard]] bool IsInFightRange(SpaceObject_ty_c object) const;
+
+	/**
+	 * set if the planet is discovered.
+	 */
+	void SetDiscovered(bool isDescovered);
+	/**
+	 * returns if the planet is discovered from any player.
+	 */
+	[[nodiscard]] bool IsDiscovered() const;
 
 	/**
 	 * adds and returns the ship count of an object and a number.

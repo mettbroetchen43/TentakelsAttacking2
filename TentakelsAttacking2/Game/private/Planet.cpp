@@ -60,14 +60,6 @@ int Planet::GetPlanetNumber() const{
 	return m_planetNumber;
 }
 
-void Planet::SetDiscovered(bool isDiscovered) {
-	m_isDiscovered = isDiscovered;
-}
-
-bool Planet::IsDiscovered() const {
-	return m_isDiscovered;
-}
-
 void Planet::Update(Galaxy_ty_raw) {
 	m_ships += m_production;
 	if (not m_player->IsHumanPlayer() and m_ships > m_maxShips) {
