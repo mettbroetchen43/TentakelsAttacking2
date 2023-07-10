@@ -63,8 +63,9 @@ void UIFleet::UpdateHoverText() {
     m_hover.SetText(AppContext::GetInstance().languageManager.Text("ui_fleet_hover", text_1, text_2));
 }
 void UIFleet::UpdatePositions(Rectangle newCollider) {
+    // update line
     Vector2 const start{
-        (newCollider.x + newCollider.width  * m_relativeStart.x) / m_resolution.x,
+        (newCollider.x + newCollider.width * m_relativeStart.x) / m_resolution.x,
         (newCollider.y + newCollider.height * m_relativeStart.y) / m_resolution.y
     };
     Vector2 const end{
@@ -75,6 +76,12 @@ void UIFleet::UpdatePositions(Rectangle newCollider) {
     m_line.SetStart(start);
     m_line.SetEnd(end);
     m_line.Update();
+
+    // update collider
+    auto collider{ GetCollider() };
+    collider.x = newCollider.x + newCollider.width * m_relativeStart.x;
+    collider.y = newCollider.y + newCollider.height * m_relativeStart.y;
+    SetCollider(collider);
 }
 
 void UIFleet::SetDisplayedAsPoint(bool isDisplayedAsPoint) {
