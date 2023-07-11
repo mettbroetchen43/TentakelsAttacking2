@@ -56,7 +56,6 @@ void Galaxy::InitializePlanets(size_t planetCount,
 	int const currentPlanet{ GenerateHomePlanets(players) };
 	if (m_validGalaxy) {
 		GenerateOtherPlanets(planetCount, currentPlanet, neutralPlayer);
-		//UpdatePlanetDiscovered();
 	}
 }
 int Galaxy::GenerateHomePlanets(std::vector<Player_ty> players) {
@@ -160,27 +159,6 @@ bool Galaxy::IsValidNewPlanet(Planet_ty newPlanet,
 	}
 
 	return validPlanet;
-}
-
-
-void Galaxy::UpdatePlanetDiscovered() {
-	for (auto const& p : m_planets) {
-		p->SetDiscovered(p->GetPlayer()->IsHumanPlayer());
-	}
-
-	for (auto const& p_p : m_planets) {
-		if (not p_p->IsDiscovered()) { continue; }
-		if (not p_p->GetPlayer()->IsHumanPlayer()) { continue; }
-
-		for (auto const& p_n : m_planets) {
-			if (p_n->IsDiscovered()) { continue; }
-			if (p_p->GetID() == p_n->GetID()) { continue; }
-
-			if (p_p->IsInDiscoverRange(p_n)) {
-				p_n->SetDiscovered(true);
-			}
-		}
-	}
 }
 
 // Fleet
@@ -1181,7 +1159,6 @@ UpdateResult_ty Galaxy::Update() {
 	std::vector<HFightResult> fightResults{ SimulateFight() };
 	CheckDeleteFleetsWithoutShips(); // Check after fight so all fleets that lost there ships gets deleted.
 	CheckDeleteTargetPoints();
-	//UpdatePlanetDiscovered();
 
 	return { mergeResults, fightResults };
 }
