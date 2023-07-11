@@ -25,27 +25,42 @@ void HLanguageManager::InitializeAvailableLanguages() {
 	} };
 
 	if (not DirectoryExists(directory.c_str())) {
-		Print("directory \"" + directory + "\" not found -> no language available", PrintType::ERROR);
+		Print(
+			"directory \"{}\" not found -> no language available",
+			PrintType::ERROR,
+			directory
+		);
 		return;
 	}
 	for (auto const& entry : std::filesystem::directory_iterator(directory)) {
 		std::filesystem::path file{ entry.path().filename()};
 		if (not file.has_extension()) {
-			Print("\"" + file.string() + "\" has no extension", PrintType::ERROR);
+			Print(
+				"language file \"{}\" has no extension",
+				PrintType::ERROR,
+				file.string()
+			);
 			continue;
 		}
 		if (file.extension() != ".tal") {
-			Print("\"" + file.string() + "\" has wrong datatype", PrintType::ERROR);
+			Print(
+				"file \"{}\" has wrong datatype",
+				PrintType::ERROR,
+				file.string()
+			);
 			continue;
 		}
 		auto const& fileName{ file.replace_extension()};
 		if (contains(fileName.string())) {
-			Print("multiple language \"" + fileName.string() + "\"", PrintType::ERROR);
+			Print(
+				"language \"{}\" loaded multiple times",
+				PrintType::ERROR,
+				fileName.string()
+			);
 			continue;
 		}
 		m_availableLanguages.push_back(fileName.string());
 	}
-
 }
 
 void HLanguageManager::ChanceLanguage(std::string const& language) {
@@ -66,7 +81,11 @@ void HLanguageManager::ChanceLanguage(std::string const& language) {
 		if (language != m_default_language) {
 			bool const validDefaultLoad{ LoadLanguage(m_default_language) };
 			if (validDefaultLoad) {
-				Print("fallback to default language: \"" + m_default_language + "\"", PrintType::INFO);
+				Print(
+					"fallback to default language: \"{}\"",
+					PrintType::ERROR,
+					m_default_language
+				);
 				handleUpdateLanguage();
 				return;
 			}
@@ -82,13 +101,21 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 		if (l == language) { found = true; break; }
 	}
 	if (not found) {
-		Print("language \"" + language + "\" is not available", PrintType::ERROR);
+		Print(
+			"language \"{}\" is not available",
+			PrintType::ERROR,
+			language
+		);
 		return false;
 	}
 
 	std::string const directory{ "Assets/Languages" };
 	if (not DirectoryExists(directory.c_str())) {
-		Print("directory \"" + directory + "\" not existing. unable to load provided language", PrintType::ERROR);
+		Print(
+			"directory \"{}\" not existing. unable to load provided language",
+			PrintType::ERROR,
+			directory
+		);
 		return false;
 	}
 
@@ -96,7 +123,11 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 	std::ifstream in;
 	in.open(directory + "/" + language + ".tal");
 	if (not in.is_open()) {
-		Print("not able to open language. \"" + language + "\"", PrintType::ERROR);
+		Print(
+			"not able tp open language: \"{}\"",
+			PrintType::ERROR,
+			language
+		);
 		return false;
 	}
 
@@ -104,9 +135,14 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 		in >> m_current_language;
 	}
 	catch (nlohmann::json::parse_error const& e) {
-		std::stringstream ss;
-		ss << "not able to parse \"" << language << "\" | Message:" << e.what() << " | byte: " << e.byte << " | ID: " << e.id;
-		Print(ss.str(), PrintType::ERROR);
+		Print(
+			"not able tp parse \"{}\" -> message: {} -> byte: {} -> id: {}",
+			PrintType::ERROR,
+			language,
+			e.what(),
+			e.byte,
+			e.id
+		);
 		in.close();
 		return false;
 	}
@@ -115,7 +151,11 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 
 	AppContext::GetInstance().constants.global.currentLanguageName = language;
 
-	Print("language loaded: \"" + language + "\"", PrintType::INFO);
+	Print(
+		"language loaded: \"{}\"",
+		PrintType::ERROR,
+		language
+	);
 	return true;
 }
 
@@ -129,7 +169,11 @@ std::string HLanguageManager::RawText(std::string const& key) const {
 		return m_missing_language_text;
 	}
 	else if (not m_current_language.contains(key)) {
-		Print("current language does not contain \"" + key + "\"", PrintType::ERROR);
+		Print(
+			"current language does not contain \"{}\"",
+			PrintType::ERROR,
+			key
+		);
 		return m_default_text;
 	}
 	else {
