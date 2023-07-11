@@ -20,7 +20,7 @@ on:
 
 jobs:
   job:
-    name: ${{ github.workflow }}-${{ matrix.os }}-${{ matrix.build }}
+    name: ${{ matrix.build }}-${{ matrix.os }}-${{ github.workflow }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
