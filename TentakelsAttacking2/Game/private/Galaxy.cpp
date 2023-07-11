@@ -1188,5 +1188,10 @@ UpdateResult_ty Galaxy::Update() {
 	);
 	CheckDeleteTargetPoints();
 
+	Print(
+		PrintType::ONLY_DEBUG,
+		"update finished"
+	);
+
 	return { mergeResults, fightResults };
 }
