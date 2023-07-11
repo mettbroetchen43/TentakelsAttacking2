@@ -78,7 +78,7 @@ void TestScene::HandleNextNumber(bool left) {
 		Print(
 			"type: {} | number: {} | time: {}",
 			PrintType::DEBUG,
-			CountingNumber::ASYMPTOTIC,
+			static_cast<int>(CountingNumber::ASYMPTOTIC),
 			number,
 			time
 		);
@@ -89,7 +89,7 @@ void TestScene::HandleNextNumber(bool left) {
 		Print(
 			"type: {} | number: {} | time: {}",
 			PrintType::DEBUG,
-			CountingNumber::LINEAR,
+			static_cast<int>(CountingNumber::LINEAR),
 			number,
 			time
 		);
@@ -113,7 +113,7 @@ void TestScene::TestLambda(CountingNumber::Type type, int start, int current, do
 	Print(
 		"type: {} | start: {} | current: {} | time: {}",
 		PrintType::DEBUG,
-		type,
+		static_cast<int>(type),
 		start,
 		current,
 		time
