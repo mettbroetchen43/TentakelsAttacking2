@@ -85,8 +85,8 @@ std::string CWindow::GetStringFromResolution(Resolution resolution) const {
 	case Resolution::LAST:
 	default:
 		Print(
-			"invalid resolution selected {}",
 			PrintType::ERROR,
+			"invalid resolution selected {}",
 			static_cast<int>(resolution)
 		);
 		return "invalid resolution";
@@ -148,8 +148,8 @@ std::pair<int, int> CWindow::GetIntFromResolution(Resolution resolution) const {
 	case Resolution::LAST:
 	default:
 		Print(
-			"invalid resolution selected {}",
 			PrintType::ERROR,
+			"invalid resolution selected {}",
 			static_cast<int>(resolution)
 		);
 		return { 100,100 };

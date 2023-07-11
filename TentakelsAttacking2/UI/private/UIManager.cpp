@@ -34,8 +34,8 @@ void UIManager::CheckAndSetNewResolution() {
 	bool const validResolution{ m_appContext.constants.window.IsPossibleResolution(m_nextResolution) };
 	if (!validResolution) { 
 		Print(
-			"invalid resolution for this screen -> {}",
 			PrintType::ERROR,
+			"invalid resolution for this screen -> {}",
 			m_appContext.constants.window.GetStringFromResolution(m_nextResolution)
 		);
 		return;
@@ -122,8 +122,8 @@ void UIManager::SetWindowPosition() {
 void UIManager::SetTargetFPS(SetTargetFPSEvent const* event) {
 	::SetTargetFPS(static_cast<int>(event->GetFPS()));
 	Print(
-		"fps set -> {}",
 		PrintType::INFO,
+		"fps set -> {}",
 		event->GetFPS()
 	);
 }
@@ -149,7 +149,7 @@ UIManager::UIManager()
 
 	m_appContext.eventManager.AddListener(this);
 
-	Print("UIManager", PrintType::INITIALIZE);
+	Print(PrintType::INITIALIZE, "UIManager");
 }
 
 UIManager::~UIManager() {
@@ -180,8 +180,8 @@ void UIManager::StartUI() {
 
 		if (!m_appContext.constants.window.IsPossibleResolution(m_nextResolution)) {
 			Print(
-				"invalid resolution: {} -> resolution set to: {}",
 				PrintType::ERROR,
+				"invalid resolution: {} -> resolution set to: {}",
 				m_appContext.constants.window.GetStringFromResolution(m_nextResolution),
 				m_appContext.constants.window.GetStringFromResolution(Resolution::SCREEN)
 			);
@@ -193,7 +193,7 @@ void UIManager::StartUI() {
 		m_sceneManager.SetResolution(m_resolution);
 	}
 
-	Print("\"UI\" started", PrintType::INFO);
+	Print(PrintType::INFO, "\"UI\" started");
 }
 
 void UIManager::StartUILoop() {
@@ -208,7 +208,7 @@ void UIManager::StartUILoop() {
 		SetWindowPosition();
 	}
 
-	Print("\"UI Loop\" started", PrintType::INFO);
+	Print(PrintType::INFO, "\"UI Loop\" started");
 
 	UILoop();
 }

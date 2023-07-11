@@ -12,8 +12,10 @@ bool TargetPoint::IsTargetPoint() const {
 }
 
 void TargetPoint::Update(Galaxy_ty_raw) {
-    /*
-        nothing to update here.
-        only implemented because the Space Object requires it.
-    */
+    Print(
+        PrintType::ONLY_DEBUG,
+        "update target point -> id: {} -> ships: {} -> nothing happens",
+        m_ID,
+        m_ships
+    );
 }

@@ -55,10 +55,6 @@ private:
 	 * returns a bool.
 	 */
 	[[nodiscard]] bool IsValidNewPlanet(Planet_ty newPlanet, AppContext_ty_c appContext) const;
-	/**
-	 * updates all planets if they are discovered or not.
-	 */
-	void UpdatePlanetDiscovered();
 
 	// Fleet
 	/**

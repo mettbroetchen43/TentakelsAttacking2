@@ -76,10 +76,10 @@ void GalaxyManager::GenerateShowGalaxy() {
 	else if (m_showGalaxy) {
 		SendGalaxyPointerEvent const event{ m_showGalaxy.get(), true };
 		appContext.eventManager.InvokeEvent(event);
-		Print("Could not generated ShowGalaxy -> Use old Galaxy", PrintType::EXPECTED_ERROR);
+		Print(PrintType::EXPECTED_ERROR, "Could not generated ShowGalaxy -> Use old Galaxy");
 	}
 	else {
-		Print("Could not generated ShowGalaxy -> No Galaxy", PrintType::ERROR);
+		Print(PrintType::EXPECTED_ERROR, "Could not generated ShowGalaxy -> No Galaxy");
 	}
 }
 
@@ -102,7 +102,7 @@ bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, Player_ty c
 
 	auto const result {m_mainGalaxy->AddFleet(event, currentPlayer)};
 	if (not result.valid) {
-		Print("Not able to add Fleet to main Galaxy", PrintType::ONLY_DEBUG);
+		Print(PrintType::ONLY_DEBUG, "Not able to add Fleet to main Galaxy");
 
 		ReturnFleetInstructionEvent const returnEvent{ result.valid };
 		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);

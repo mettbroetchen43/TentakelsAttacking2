@@ -31,12 +31,6 @@ jobs:
           - os: windows-latest
             triplet: x64-windows
             preset: ninja-multi-vcpkg
-          - os: windows-latest
-            triplet: x64-windows
-            preset: ninja-multi-vcpkg
-          - os: ubuntu-22.04
-            triplet: x64-linux
-            preset: ninja
           - os: ubuntu-22.04
             triplet: x64-linux
             preset: ninja

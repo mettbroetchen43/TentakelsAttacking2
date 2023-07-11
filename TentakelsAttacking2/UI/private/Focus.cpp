@@ -358,7 +358,7 @@ Focus::Focus() {
 	AppContext_ty appContext{ AppContext::GetInstance() };
 	appContext.eventManager.AddListener(this);
 
-	Print("Focus", PrintType::INITIALIZE);
+	Print(PrintType::INITIALIZE, "Focus");
 }
 
 void Focus::Clear() {

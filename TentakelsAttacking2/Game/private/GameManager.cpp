@@ -225,7 +225,6 @@ void GameManager::NextRound(bool valid) {
 	// events and so on first
 	Update();
 
-
 	m_currentRoundPlayers = m_players;
 	ShuffleCurrentRoundPlayer();
 
@@ -356,7 +355,7 @@ GameManager::GameManager()
 	}
 	m_npcs[PlayerType::NEUTRAL] = std::make_shared<Player>(100, PlayerType::NEUTRAL);
 
-	Print("GameManager", PrintType::INITIALIZE);
+	Print(PrintType::INITIALIZE, "GameManager");
 }
 
 void GameManager::Update() {

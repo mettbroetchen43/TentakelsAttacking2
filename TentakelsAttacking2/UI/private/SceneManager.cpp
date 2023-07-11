@@ -81,8 +81,8 @@ void SceneManager::SwitchScene(AppContext_ty_c appContext) {
 	m_currentSceneType = m_nextSceneType;
 
 	Print(
-		"scene switched to -> {}",
 		PrintType::INFO,
+		"scene switched to -> {}",
 		GetStringBySceneType(m_currentSceneType)
 	);
 }
@@ -100,7 +100,7 @@ SceneType SceneManager::GetContinueSceneType() const {
 SceneManager::SceneManager(UIManager* uiManager)
 	: m_uiManager{ uiManager }, m_popUpManager{ uiManager->GetResolution() } {
 	AppContext::GetInstance().eventManager.AddListener(this);
-	Print("SceneManager", PrintType::INITIALIZE);
+	Print(PrintType::INITIALIZE, "SceneManager");
 }
 
 void SceneManager::CheckAndUpdate(Vector2 const& mousePosition,
