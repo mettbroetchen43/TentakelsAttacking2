@@ -109,7 +109,7 @@ jobs:
         run: |
           cmake --build build --config Release
         working-directory: "${{ github.workspace }}"
-        if: ${{ matrox.os == 'ubuntu-22.04' }}
+        if: ${{ matrix.os == 'ubuntu-22.04' }}
       
       - name: Build in Debug
         run: |
