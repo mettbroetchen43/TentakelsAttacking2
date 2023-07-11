@@ -543,7 +543,7 @@ void Galaxy::DeleteFleet(std::vector<Fleet_ty> const& fleets) {
 	for (auto const& fleet : fleets) {
 		Print(
 			PrintType::ONLY_DEBUG,
-			"delete fleet -> id: {}, -> player: {} -> ships: {}",
+			"delete fleet -> id: {} -> player: {} -> ships: {}",
 			fleet->GetID(),
 			fleet->GetPlayer()->GetID(),
 			fleet->GetShipCount()
@@ -564,7 +564,7 @@ void Galaxy::DeleteFleet(Fleet_ty fleet) {
 
 	Print(
 		PrintType::ONLY_DEBUG,
-		"delete fleet -> id: {}, -> player: {} -> ships: {}",
+		"delete fleet -> id: {} -> player: {} -> ships: {}",
 		fleet->GetID(),
 		fleet->GetPlayer()->GetID(),
 		fleet->GetShipCount()
@@ -1221,47 +1221,47 @@ void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
 UpdateResult_ty Galaxy::Update() {
 	Print(
 		PrintType::ONLY_DEBUG,
-		"update space objects"
+		"-> update space objects"
 	);
 	for (auto& o : m_objects) {
 		o->Update(this);
 	}
 	Print(
 		PrintType::ONLY_DEBUG,
-		"merge arriving friendly fleets"
+		"-> merge arriving friendly fleets"
 	);
 	std::vector<HMergeResult> mergeResults{ CheckArrivingFriendlyFleets() };
 	Print(
 		PrintType::ONLY_DEBUG,
-		"merge friendly fleets with other fleets"
+		"-> merge friendly fleets with other fleets"
 	);
 	std::vector<HMergeResult> singleMergeResult{ CheckMergingFriendlyFleets() };
 	std::copy(singleMergeResult.begin(), singleMergeResult.end(), std::back_inserter(mergeResults));
 
 	Print(
 		PrintType::ONLY_DEBUG,
-		"delete fleets without ships bevor fights"
+		"-> delete fleets without ships bevor fights"
 	);
 	CheckDeleteFleetsWithoutShips(); // Check bevor Fight so there will be no fight without ships
 	Print(
 		PrintType::ONLY_DEBUG,
-		"simulate fights"
+		"-> simulate fights"
 	);
 	std::vector<HFightResult> fightResults{ SimulateFight() };
 	Print(
 		PrintType::ONLY_DEBUG,
-		"delete fleets without ships after fights"
+		"-> delete fleets without ships after fights"
 	);
 	CheckDeleteFleetsWithoutShips(); // Check after fight so all fleets that lost there ships gets deleted.
 	Print(
 		PrintType::ONLY_DEBUG,
-		"delete target points out ships"
+		"-> delete target points out ships"
 	);
 	CheckDeleteTargetPoints();
 
 	Print(
 		PrintType::ONLY_DEBUG,
-		"update finished"
+		"-> update finished"
 	);
 
 	return { mergeResults, fightResults };
