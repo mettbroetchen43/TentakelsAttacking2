@@ -540,6 +540,16 @@ void Galaxy::DeleteFleet(std::vector<Fleet_ty> const& fleets) {
 		return false;
 	} };
 
+	for (auto const& fleet : fleets) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"delete fleet -> id: {}, -> player: {} -> ships: {}",
+			fleet->GetID(),
+			fleet->GetPlayer()->GetID(),
+			fleet->GetShipCount()
+		);
+	}
+
 	auto const newStart1{ std::remove_if(m_fleets.begin(), m_fleets.end(), containsFleet) };
 	m_fleets.erase(newStart1, m_fleets.end());
 
@@ -551,6 +561,14 @@ void Galaxy::DeleteFleet(Fleet_ty fleet) {
 		[fleet](Fleet_ty_c currentFleet) { return fleet->GetID() == currentFleet->GetID(); }));
 	m_objects.erase(std::remove_if(m_objects.begin(), m_objects.end(),
 		[fleet](SpaceObject_ty const& object) { return fleet->GetID() == object->GetID(); }));
+
+	Print(
+		PrintType::ONLY_DEBUG,
+		"delete fleet -> id: {}, -> player: {} -> ships: {}",
+		fleet->GetID(),
+		fleet->GetPlayer()->GetID(),
+		fleet->GetShipCount()
+	);
 }
 
 // Target Point
