@@ -105,10 +105,17 @@ jobs:
         if: ${{ matrix.os != 'ubuntu-22.04' }}
 
       # Build the whole project with Ninja (which is spawn by CMake).
-      - name: Build
+      - name: Build in Release
         run: |
           cmake --build build --config Release
         working-directory: "${{ github.workspace }}"
+        if: ${{ matrox.os == 'ubuntu-22.04' }}
+      
+      - name: Build in Debug
+        run: |
+          cmake --build build --config Debug
+        working-directory: "${{ github.workspace }}"
+        if: ${{ matrix.os != 'ubuntu-22.04' }}
 
       - name: Show content of workspace at its completion
         run: find $RUNNER_WORKSPACE
