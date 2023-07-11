@@ -864,10 +864,25 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetFleet() {
 HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 	if (defender->GetShipCount() == 0 or
 		attacker->GetShipCount() == 0) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"fight without ships -> defender id: {} -> ships: {} -> attacker id: {} -> ships: {}",
+			defender->GetID(),
+			defender->GetShipCount(),
+			attacker->GetID(),
+			attacker->GetShipCount()
+		);
 		return { { nullptr, nullptr },{nullptr,nullptr },{ },false };
 	}
 
 	if (defender->GetPlayer() == attacker->GetPlayer()) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"fight with same player -> defender id: {} -> attacker id: {} -> player id: {}",
+			defender->GetID(),
+			attacker->GetID(),
+			defender->GetPlayer()->GetID()
+		);
 		return { { nullptr, nullptr },{nullptr,nullptr },{ },false };
 	}
 
@@ -892,6 +907,14 @@ HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 		*defender -= attackerCount;
 		rounds.emplace_back(defender->GetShipCount(), attacker->GetShipCount());
 	}
+	Print(
+		PrintType::ONLY_DEBUG,
+		"fight -> defender id: {} -> attacker id: {} -> defender ships: {} -> attacker ships: {}",
+		defender->GetID(),
+		attacker->GetID(),
+		defender->GetShipCount(),
+		attacker->GetShipCount()
+	);
 	return { {defender->GetPlayer(), attacker->GetPlayer()},{defender, attacker}, rounds, true };
 }
 int Galaxy::Salve(SpaceObject_ty obj) const {
