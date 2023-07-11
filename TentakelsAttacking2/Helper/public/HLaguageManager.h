@@ -60,14 +60,20 @@ inline std::string HLanguageManager::ReplacePlaceholders(std::string_view text, 
 		return vformat(text, make_format_args(args...));	
 	}
 	catch (format_error const&) {
-		std::string t{ text.substr() };
-		Print("wrong format. appears mostly when arguments not matching: " + t, PrintType::ERROR);
+		Print(
+			"wrong format for language text. appears mostly when arguments not matching the provided string -> \"{}\"",
+			PrintType::ERROR,
+			text
+		);
 		assert(false and "wrong format");
 		return m_wrong_format_text;
 	}
 	catch (std::bad_alloc const&) {
-		std::string t{ text.substr() };
-		Print("bad alloc: " + t, PrintType::ERROR);
+		Print(
+			"bad alloc while language text -> \"{}\"",
+			PrintType::ERROR,
+			text
+		)
 		assert(false and "bad alloc");
 		return m_wrong_format_text;
 	}
