@@ -706,6 +706,14 @@ std::vector<HMergeResult> Galaxy::CheckMergingFriendlyFleets() {
 		UpdateFleetTargets(origins, match.second->GetTarget());
 		toDelete.push_back(match.second);
 		mergeResult.emplace_back(match.first->GetPlayer(), match.second, match.first, shipCount);
+		Print(
+			PrintType::ONLY_DEBUG,
+			"fleets merging -> player: {} -> f1 id: {} -> f2 id: {} -> ships: {}",
+			match.first->GetPlayer()->GetID(),
+			match.first->GetID(),
+			match.second->GetID(),
+			shipCount
+		);
 	}
 
 	DeleteFleet(toDelete);
