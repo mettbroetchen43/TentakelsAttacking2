@@ -441,7 +441,6 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 		Print(
 			"ship count on origin target point to low -> current: {} -> requested: {}",
 			PrintType::ONLY_DEBUG,
-			PrintType::ONLY_DEBUG,
 			origin->GetShipCount(),
 			event->GetShipCount()
 		);
