@@ -8,6 +8,9 @@
 
 
 void Print(std::string const& message, PrintType printType) {
+#ifndef _DEBUG
+	if (printType == PrintType::ONLY_DEBUG) { return; }
+#endif // _DEBUG
 
 	std::string const typeS   { GetPrintTypeString(printType) };
 	std::string const toExport{ typeS + " " + message + '\n'  };

@@ -102,7 +102,7 @@ bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, Player_ty c
 
 	auto const result {m_mainGalaxy->AddFleet(event, currentPlayer)};
 	if (not result.valid) {
-		Print("Not able to add Fleet to main Galaxy", PrintType::INFO);
+		Print("Not able to add Fleet to main Galaxy", PrintType::ONLY_DEBUG);
 
 		ReturnFleetInstructionEvent const returnEvent{ result.valid };
 		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);

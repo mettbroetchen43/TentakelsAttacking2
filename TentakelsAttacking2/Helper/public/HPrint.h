@@ -25,6 +25,7 @@ enum class PrintType {
 	ERROR,
 	INITIALIZE,
 	BUILD,
+	ONLY_DEBUG,
 	DEBUG,
 };
 static PrintType longestType{PrintType::EXPECTED_ERROR};
@@ -45,6 +46,8 @@ static PrintType longestType{PrintType::EXPECTED_ERROR};
 		return "[INITIALIZE]";
 	case PrintType::BUILD:
 		return "[BUILD]";
+	case PrintType::ONLY_DEBUG:
+		return "[ONLY_DEBUG]";
 	case PrintType::DEBUG:
 		return "[DEBUG]";
 	}
@@ -76,6 +79,11 @@ void Print(std::string const& message, PrintType printType);
 
 template<typename ...Args>
 inline void Print(std::string const& message, PrintType printType, Args const & ...args) {
+#ifndef _DEBUG
+	if (printType == PrintType::ONLY_DEBUG) { return; }
+#endif // _DEBUG
+
+
 #ifdef USE_FMT_FORMAT
 	using namespace fmt;
 #else

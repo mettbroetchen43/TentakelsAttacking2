@@ -222,7 +222,7 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_input_origin_planet_high_text"));
 		Print(
 			"ID to high for a planet: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			event->GetOrigin()
 		);
 		return { nullptr, nullptr, nullptr, false };
@@ -232,14 +232,14 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 	auto const originPlanet{ GetPlanetByID(static_cast<unsigned int>(event->GetOrigin())) };
 	if (originPlanet->GetPlayer() != currentPlayer) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_your_origin_planet_text"));
-		Print("origin planet does not belong to current player", PrintType::INFO);
+		Print("origin planet does not belong to current player", PrintType::ONLY_DEBUG);
 		return { nullptr, nullptr, nullptr, false };
 	}
 	if (originPlanet->GetShipCount() < event->GetShipCount()) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_enough_ships_on_planet_text", event->GetOrigin()));
 		Print(
 			"ship count on origin planet too low -> current: {} -> requested: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			originPlanet->GetShipCount(),
 			event->GetShipCount()
 		);
@@ -259,7 +259,7 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 			popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_are_same_planets_text"));
 			Print(
 				"origin and destination if are the same -> origin: {} -> destination: {}",
-				PrintType::INFO,
+				PrintType::ONLY_DEBUG,
 				originPlanet->GetID(),
 				destination->GetID()
 			);
@@ -269,7 +269,7 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
 		if (not destination->IsDiscovered()) {
 			popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_destination_blocked_text"));
-			Print("choosen destination is blocked", PrintType::INFO);
+			Print("choosen destination is blocked", PrintType::ONLY_DEBUG);
 			return { nullptr, nullptr, nullptr, false };
 		}
 	}
@@ -278,7 +278,7 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 		*fleet += event->GetShipCount();
 		Print(
 			"moved ships in existing fleet -> origin: {} -> fleet: {} -> ships: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			originPlanet->GetID(),
 			fleet->GetID(),
 			event->GetShipCount()
@@ -301,7 +301,7 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 	// remove fleet ships from origin planet
 	*originPlanet -= *fleet;
 	
-	Print("generated a new fleet", PrintType::INFO);
+	Print("generated a new fleet", PrintType::ONLY_DEBUG);
 
 	return { originPlanet, fleet, destination, true };
 }
@@ -311,7 +311,7 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_fleet_text", event->GetOrigin()));
 		Print(
 			"id not valid for a fleet: ",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			event->GetOrigin()
 		);
 		return { nullptr, nullptr, nullptr, false };
@@ -321,14 +321,14 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 	auto const& origin{ GetFleetByID(event->GetOrigin()) };
 	if (origin->GetPlayer() != currentPlayer) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_your_origin_fleet_text"));
-		Print("the origin fleet does not belong to the current player", PrintType::INFO);
+		Print("the origin fleet does not belong to the current player", PrintType::ONLY_DEBUG);
 		return { nullptr, nullptr, nullptr, false };
 	}
 	if (origin->GetShipCount() < event->GetShipCount()) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_enough_ships_in_fleet_text", event->GetOrigin()));
 		Print(
 			"ship count on origin fleet too low -> current: {} -> requested: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			origin->GetShipCount(),
 			event->GetShipCount()
 		);
@@ -347,7 +347,7 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
 		if (not destination->IsDiscovered()) {
 			popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_destination_blocked_text"));
-			Print("choosen destination is blocked", PrintType::INFO);
+			Print("choosen destination is blocked", PrintType::ONLY_DEBUG);
 			return { nullptr, nullptr, nullptr, false };
 		}
 	}
@@ -358,7 +358,7 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 		*destination += event->GetShipCount();
 		Print(
 			"moved ships directly -> origin: {} -> destination: {} -> ships: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			origin->GetID(),
 			destination->GetID(),
 			event->GetShipCount()
@@ -370,7 +370,7 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 		*fleet += event->GetShipCount();
 		Print(
 			"moved ships in existing fleet -> origin: {} -> fleet: {} -> ships: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			origin->GetID(),
 			fleet->GetID(),
 			event->GetShipCount()
@@ -383,7 +383,7 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 		origin->SetTarget(destination);
 		Print(
 			"new target for fleet: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			destination->GetID()
 		);
 		return { origin, nullptr, destination, true };
@@ -402,7 +402,7 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 		auto const result{ TryGetTarget(fleet.get(), fleet->GetTarget()) };
 		if (not result.first) { // not valid
 			popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_fleet_round_robin_text"));
-			Print("new fleet would generate a round robin", PrintType::INFO);
+			Print("new fleet would generate a round robin", PrintType::ONLY_DEBUG);
 			return { nullptr, nullptr, nullptr, false };
 		}
 	}
@@ -413,7 +413,7 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 	// remove fleet ships from origin planet
 	*origin -= *fleet;
 
-	Print("generated a new fleet", PrintType::INFO);
+	Print("generated a new fleet", PrintType::ONLY_DEBUG);
 
 	return { origin, fleet, destination, true };
 }
@@ -423,7 +423,7 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_target_point_text", event->GetOrigin()));
 		Print(
 			"id not valid for a target point: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			event->GetOrigin()
 		);
 		return { nullptr, nullptr, nullptr, false };
@@ -433,14 +433,14 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 	auto const& origin{ GetTargetPointByID(event->GetOrigin()) };
 	if (origin->GetPlayer() != currentPlayer) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_your_origin_target_point_text"));
-		Print("the origin target point does not belong to the current player", PrintType::INFO);
+		Print("the origin target point does not belong to the current player", PrintType::ONLY_DEBUG);
 		return { nullptr, nullptr, nullptr, false };
 	}
 	if (origin->GetShipCount() < event->GetShipCount()) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_enough_ships_at_target_point_text", event->GetOrigin()));
 		Print(
 			"ship count on origin target point to low -> current: {} -> requested: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			origin->GetShipCount(),
 			event->GetShipCount()
 		);
@@ -458,7 +458,7 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 	if (destination->GetPlayer() != currentPlayer and not destination->IsPlanet()) {
 		if (not destination->IsDiscovered()) {
 			popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_destination_blocked_text"));
-			Print("choosen destination is blocked", PrintType::INFO);
+			Print("choosen destination is blocked", PrintType::ONLY_DEBUG);
 			return { nullptr, nullptr, nullptr, false };
 		}
 	}
@@ -468,7 +468,7 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 		*destination += event->GetShipCount();
 		Print(
 			"moved ships directly -> origin: {} -> destination: {} -> ships: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			origin->GetID(),
 			destination->GetID(),
 			event->GetShipCount()
@@ -480,7 +480,7 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 		*destination += event->GetShipCount();
 		Print(
 			"moved ships in existing fleet -> origin: {} -> fleet: {} -> ships: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			origin->GetID(),
 			fleet->GetID(),
 			event->GetShipCount()
@@ -503,7 +503,7 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 	// manage ships
 	*origin -= *fleet;
 
-	Print("generated a new fleet", PrintType::INFO);
+	Print("generated a new fleet", PrintType::ONLY_DEBUG);
 
 	return { origin, fleet, destination, true };
 }
@@ -972,7 +972,7 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_origin_id_text", event->GetOrigin()));
 		Print(
 			"origin is not available: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			event->GetOrigin()
 		);
 		return { nullptr, nullptr, nullptr, false };
@@ -997,7 +997,7 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 			);
 			Print(
 				"destination coordinates out of map -> destination x: {} -> destination y: {}",
-				PrintType::INFO,
+				PrintType::ONLY_DEBUG,
 				event->GetDestinationX(),
 				event->GetDestinationY()
 			);
@@ -1008,7 +1008,7 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_destination_id_text", event->GetDestination()));
 		Print(
 			"destination id not available: {}",
-			PrintType::INFO,
+			PrintType::ONLY_DEBUG,
 			event->GetDestination()
 		);
 		return { nullptr, nullptr, nullptr, false };
@@ -1029,7 +1029,7 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 
 	popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_cant_recognize_origin_text", event->GetOrigin()));
 	Print("not able to recognize fleet input -> origin: {} -> destination: {} -> destination x: {} -> destination y: {} -> ships: {}",
-		PrintType::INFO,
+		PrintType::ERROR,
 		event->GetOrigin(),
 		event->GetDestination(),
 		event->GetDestinationX(),
