@@ -634,6 +634,12 @@ void Galaxy::CheckDeleteTargetPoints() {
 void Galaxy::UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty target) {
 	for (auto const& fleet : fleets) {
 		fleet->SetTarget(target);
+		Print(
+			PrintType::ONLY_DEBUG,
+			"redirect fleet -> id: {} -> target: {}",
+			fleet->GetID(),
+			target->GetID()
+		);
 	}
 }
 
@@ -650,6 +656,14 @@ std::vector<HMergeResult> Galaxy::CheckArrivingFriendlyFleets() {
 			UpdateFleetTargets(origins, target);
 			toDelete.push_back(fleet);
 			mergeResult.emplace_back(fleet->GetPlayer(), fleet, fleet->GetTarget(), shipCount);
+
+			Print(
+				PrintType::ONLY_DEBUG,
+				"fleet arrived -> id: {} -> target: {} -> ships: {}",
+				fleet->GetID(),
+				target->GetID(),
+				fleet->GetShipCount()
+			);
 		}
 	}
 	DeleteFleet(toDelete);

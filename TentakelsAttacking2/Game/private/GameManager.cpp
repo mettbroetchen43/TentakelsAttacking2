@@ -225,7 +225,6 @@ void GameManager::NextRound(bool valid) {
 	// events and so on first
 	Update();
 
-
 	m_currentRoundPlayers = m_players;
 	ShuffleCurrentRoundPlayer();
 
