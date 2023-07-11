@@ -5,38 +5,41 @@
 
 #include "HPrint.h"
 #include "HErrorLog.h"
-#include <iostream>
 
-void Print(std::string const& message, PrintType printType) {
-	std::string toPrint{ '[' };
-	bool logError{ false };
+[[nodiscard]] static std::string GetPrintTypeString(PrintType printType) {
 	switch (printType) {
 		default:
 		case PrintType::INFO:
-			toPrint += "INFO";
-			break;
+			return "[INFO]";
 		case PrintType::EXPECTED_ERROR:
-			toPrint += "EXPECTED_ERROR";
-			logError = true;
-			break;
+			return "[EXPECTED_ERROR]";
 		case PrintType::ERROR:
-			toPrint += "ERROR";
-			logError = true;
-			break;
+			return "[ERROR]";
 		case PrintType::INITIALIZE:
-			toPrint += "INITIALIZE";
-			break;
+			return "[INITIALIZE]";
 		case PrintType::BUILD:
-			toPrint += "BUILD";
-			break;
+			return "[BUILD]";
 		case PrintType::DEBUG:
-			toPrint += "DEBUG";
+			return "[DEBUG]";
+	}
+}
+
+static void TryExport(std::string const& message, PrintType printType) {
+	switch (printType) {
+		case PrintType::EXPECTED_ERROR:
+		case PrintType::ERROR:
+			LogError(message);
+			break;
+		default:
 			break;
 	}
+}
 
-	toPrint += "] " + message + '\n';
-	if (logError) {
-		LogError(toPrint);
-	}
-	std::cout << toPrint;
+void Print(std::string const& message, PrintType printType) {
+
+	std::string const typeS   { GetPrintTypeString(printType) };
+	std::string const toExport{ typeS + " " + message + '\n'  };
+
+	TryExport(toExport, printType);
+	std::cout << std::setw(GetPrintTypeString(longestType).size()) << typeS << ' ' << message << '\n';
 }
