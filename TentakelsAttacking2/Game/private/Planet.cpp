@@ -65,4 +65,11 @@ void Planet::Update(Galaxy_ty_raw) {
 	if (not m_player->IsHumanPlayer() and m_ships > m_maxShips) {
 		m_ships = m_maxShips;
 	}
+	Print(
+		PrintType::ONLY_DEBUG,
+		"planet produced -> id: {} -> is human: {} -> ships: {}",
+		m_ID,
+		m_player->IsHumanPlayer(),
+		m_ships
+	);
 }
