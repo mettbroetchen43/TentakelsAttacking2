@@ -152,7 +152,7 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 	AppContext::GetInstance().constants.global.currentLanguageName = language;
 
 	Print(
-		PrintType::ERROR,
+		PrintType::INFO,
 		"language loaded: \"{}\"",
 		language
 	);
