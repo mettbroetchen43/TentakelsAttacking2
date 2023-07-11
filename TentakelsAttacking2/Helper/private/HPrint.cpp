@@ -4,36 +4,8 @@
 //
 
 #include "HPrint.h"
-#include "HErrorLog.h"
 
-[[nodiscard]] static std::string GetPrintTypeString(PrintType printType) {
-	switch (printType) {
-		default:
-		case PrintType::INFO:
-			return "[INFO]";
-		case PrintType::EXPECTED_ERROR:
-			return "[EXPECTED_ERROR]";
-		case PrintType::ERROR:
-			return "[ERROR]";
-		case PrintType::INITIALIZE:
-			return "[INITIALIZE]";
-		case PrintType::BUILD:
-			return "[BUILD]";
-		case PrintType::DEBUG:
-			return "[DEBUG]";
-	}
-}
 
-static void TryExport(std::string const& message, PrintType printType) {
-	switch (printType) {
-		case PrintType::EXPECTED_ERROR:
-		case PrintType::ERROR:
-			LogError(message);
-			break;
-		default:
-			break;
-	}
-}
 
 void Print(std::string const& message, PrintType printType) {
 

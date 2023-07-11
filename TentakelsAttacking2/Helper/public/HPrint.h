@@ -3,6 +3,8 @@
 // 28.10.2022
 //
 
+#include "HErrorLog.h"
+
 #pragma once
 #include <string>
 #include <iostream>
@@ -30,11 +32,36 @@ static PrintType longestType{PrintType::EXPECTED_ERROR};
 /**
  * returns the provided print type as string.
  */
-[[nodiscard]] static std::string GetPrintTypeString(PrintType printType);
+[[nodiscard]] static inline std::string GetPrintTypeString(PrintType printType) {
+	switch (printType) {
+	default:
+	case PrintType::INFO:
+		return "[INFO]";
+	case PrintType::EXPECTED_ERROR:
+		return "[EXPECTED_ERROR]";
+	case PrintType::ERROR:
+		return "[ERROR]";
+	case PrintType::INITIALIZE:
+		return "[INITIALIZE]";
+	case PrintType::BUILD:
+		return "[BUILD]";
+	case PrintType::DEBUG:
+		return "[DEBUG]";
+	}
+}
 /**
  * exports the message when according to the print type.
  */
-static void TryExport(std::string const& message, PrintType printType);
+static inline void TryExport(std::string const& message, PrintType printType) {
+	switch (printType) {
+	case PrintType::EXPECTED_ERROR:
+	case PrintType::ERROR:
+		LogError(message);
+		break;
+	default:
+		break;
+	}
+}
 
 /**
  * print to the console with a print type tag and additional values.
@@ -63,7 +90,7 @@ inline void Print(std::string const& message, PrintType printType, Args const & 
 
 	}
 	catch (format_error const&) {
-		Print("format while printing", PrintType::ERROR);
+		Print("format while printing with arguments", PrintType::ERROR);
 		std::cout << std::setw(GetPrintTypeString(longestType).size()) << typeS << ' ' << message << '\n';
 		TryExport(toExport, printType);
 	}
