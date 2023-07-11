@@ -75,16 +75,24 @@ void TestScene::HandleNextNumber(bool left) {
 	if (left) {
 		auto const [number, time] {GetNextNumberAndTime()};
 		m_second->CountTo(CountingNumber::ASYMPTOTIC, number, time);
-		std::stringstream ss;
-		ss << "type: " << CountingNumber::ASYMPTOTIC << " | number: " << number << " | time: " << time;
-		Print(ss.str(), PrintType::DEBUG);
+		Print(
+			"type: {} | number: {} | time: {}",
+			PrintType::DEBUG,
+			static_cast<int>(CountingNumber::ASYMPTOTIC),
+			number,
+			time
+		);
 	}
 	else {
 		auto const [number, time] {GetNextNumberAndTime()};
 		m_first->CountTo(CountingNumber::LINEAR, number, time);
-		std::stringstream ss;
-		ss << "type: " << CountingNumber::LINEAR << " | number: " << number << " | time: " << time;
-		Print(ss.str(), PrintType::DEBUG);
+		Print(
+			"type: {} | number: {} | time: {}",
+			PrintType::DEBUG,
+			static_cast<int>(CountingNumber::LINEAR),
+			number,
+			time
+		);
 	}
 }
 
@@ -102,9 +110,14 @@ void TestScene::SetActive(bool active, AppContext_ty_c appContext) {
 
 void TestScene::TestLambda(CountingNumber::Type type, int start, int current, double time) {
 	if (type == CountingNumber::LINEAR) { return; }
-	std::stringstream ss;
-	ss << "type: " << type << " | start: " << start << " | current: " << current << " | time: " << time;
-	Print(ss.str(), PrintType::DEBUG);
+	Print(
+		"type: {} | start: {} | current: {} | time: {}",
+		PrintType::DEBUG,
+		static_cast<int>(type),
+		start,
+		current,
+		time
+	);
 }
 
 void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {

@@ -220,7 +220,11 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 	// check origin id
 	if (event->GetOrigin() > m_planets.size()) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_input_origin_planet_high_text"));
-		Print("ID to high for a planet: " + std::to_string(event->GetOrigin()), PrintType::INFO);
+		Print(
+			"ID to high for a planet: {}",
+			PrintType::INFO,
+			event->GetOrigin()
+		);
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -233,9 +237,12 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 	}
 	if (originPlanet->GetShipCount() < event->GetShipCount()) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_enough_ships_on_planet_text", event->GetOrigin()));
-		std::stringstream ss;
-		ss << "ship count on origin planet to low | current: " << originPlanet->GetShipCount() << " | requested: " << event->GetShipCount();
-		Print(ss.str(), PrintType::INFO);
+		Print(
+			"ship count on origin planet too low -> current: {} -> requested: {}",
+			PrintType::INFO,
+			originPlanet->GetShipCount(),
+			event->GetShipCount()
+		);
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -250,9 +257,12 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 	if (destination->IsPlanet()) {
 		if (destination->GetID() == originPlanet->GetID()) {
 			popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_are_same_planets_text"));
-			std::stringstream ss;
-			ss << "origin and destination id are the same | origin: " << originPlanet->GetID() << " | destination: " << destination->GetID();
-			Print(ss.str(), PrintType::INFO);
+			Print(
+				"origin and destination if are the same -> origin: {} -> destination: {}",
+				PrintType::INFO,
+				originPlanet->GetID(),
+				destination->GetID()
+			);
 			return { nullptr, nullptr, nullptr, false };
 		}
 	}
@@ -266,9 +276,13 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 	if (auto const fleet = TryGetExistingFleetByOriginAndDestination(originPlanet, destination)) {
 		*originPlanet -= event->GetShipCount();
 		*fleet += event->GetShipCount();
-		std::stringstream ss;
-		ss << "moved ships in existing fleet | origin: " << originPlanet->GetID() << " | fleet: " << fleet->GetID() << " | ships: " << event->GetShipCount();
-		Print(ss.str(), PrintType::INFO);
+		Print(
+			"moved ships in existing fleet -> origin: {} -> fleet: {} -> ships: {}",
+			PrintType::INFO,
+			originPlanet->GetID(),
+			fleet->GetID(),
+			event->GetShipCount()
+		);
 		return { originPlanet, fleet, nullptr, true };
 	}
 
@@ -295,7 +309,11 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 	// check if origin ID is existing
 	if (not IsValidFleet(event->GetOrigin())) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_fleet_text", event->GetOrigin()));
-		Print("id not valid for a fleet: " + std::to_string(event->GetOrigin()), PrintType::INFO);
+		Print(
+			"id not valid for a fleet: ",
+			PrintType::INFO,
+			event->GetOrigin()
+		);
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -308,9 +326,12 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 	}
 	if (origin->GetShipCount() < event->GetShipCount()) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_enough_ships_in_fleet_text", event->GetOrigin()));
-		std::stringstream ss;
-		ss << "ship count on origin fleet to low | current: " << origin->GetShipCount() << " | requested: " << event->GetShipCount();
-		Print(ss.str(), PrintType::INFO);
+		Print(
+			"ship count on origin fleet too low -> current: {} -> requested: {}",
+			PrintType::INFO,
+			origin->GetShipCount(),
+			event->GetShipCount()
+		);
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -335,26 +356,36 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 	if (destination->GetPos() == origin->GetPos()) {
 		*origin -= event->GetShipCount();
 		*destination += event->GetShipCount();
-		std::stringstream ss;
-		ss << "moved ships directly | origin: " << origin->GetID() << " | dest: " << destination->GetID() << " | ships: " << event->GetShipCount();
-		Print(ss.str(), PrintType::INFO);
+		Print(
+			"moved ships directly -> origin: {} -> destination: {} -> ships: {}",
+			PrintType::INFO,
+			origin->GetID(),
+			destination->GetID(),
+			event->GetShipCount()
+		);
 		return { origin, nullptr, destination, true };
 	}
 	if (auto const fleet{ TryGetExistingFleetByOriginAndDestination(origin, destination) }) {
 		*origin -= event->GetShipCount();
 		*fleet += event->GetShipCount();
-		std::stringstream ss;
-		ss << "moved ships in existing fleet | origin: " << origin->GetID() << " | fleet: " << fleet->GetID() << " | ships: " << event->GetShipCount();
-		Print(ss.str(), PrintType::INFO);
+		Print(
+			"moved ships in existing fleet -> origin: {} -> fleet: {} -> ships: {}",
+			PrintType::INFO,
+			origin->GetID(),
+			fleet->GetID(),
+			event->GetShipCount()
+		);
 		return { origin, fleet, nullptr, true };
 	}
 
 	// redirect fleet
 	if (origin->GetShipCount() == event->GetShipCount()) {
 		origin->SetTarget(destination);
-		std::stringstream ss;
-		ss << "new target for fleet: " << destination->GetID();
-		Print(ss.str(), PrintType::INFO);
+		Print(
+			"new target for fleet: {}",
+			PrintType::INFO,
+			destination->GetID()
+		);
 		return { origin, nullptr, destination, true };
 	}
 
@@ -390,7 +421,11 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 	// check if origin ID is existing
 	if (not IsValidTargetPoint(event->GetOrigin())) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_target_point_text", event->GetOrigin()));
-		Print("id not valid for a target point: " + std::to_string(event->GetOrigin()), PrintType::INFO);
+		Print(
+			"id not valid for a target point: {}",
+			PrintType::INFO,
+			event->GetOrigin()
+		);
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -403,9 +438,12 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 	}
 	if (origin->GetShipCount() < event->GetShipCount()) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_enough_ships_at_target_point_text", event->GetOrigin()));
-		std::stringstream ss;
-		ss << "ship count on origin target point to low | current: " << origin->GetShipCount() << " | requested: " << event->GetShipCount();
-		Print(ss.str(), PrintType::INFO);
+		Print(
+			"ship count on origin target point to low -> current: {} -> requested: {}",
+			PrintType::INFO,
+			origin->GetShipCount(),
+			event->GetShipCount()
+		);
 		return { nullptr, nullptr, nullptr, false };
 	}
 
@@ -428,17 +466,25 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 	if (origin->GetPos() == destination->GetPos()) {
 		*origin -= event->GetShipCount();
 		*destination += event->GetShipCount();
-		std::stringstream ss;
-		ss << "moved ships directly | origin: " << origin->GetID() << " | dest: " << destination->GetID() << " | ships: " << event->GetShipCount();
-		Print(ss.str(), PrintType::INFO);
+		Print(
+			"moved ships directly -> origin: {} -> destination: {} -> ships: {}",
+			PrintType::INFO,
+			origin->GetID(),
+			destination->GetID(),
+			event->GetShipCount()
+		);
 		return { origin, nullptr, destination, true };
 	}
 	if (auto const& fleet = TryGetExistingFleetByOriginAndDestination(origin, destination)) {
 		*origin -= event->GetShipCount();
 		*destination += event->GetShipCount();
-		std::stringstream ss;
-		ss << "moved ships in existing fleet | origin: " << origin->GetID() << " | fleet: " << fleet->GetID() << " | ships: " << event->GetShipCount();
-		Print(ss.str(), PrintType::INFO);
+		Print(
+			"moved ships in existing fleet -> origin: {} -> fleet: {} -> ships: {}",
+			PrintType::INFO,
+			origin->GetID(),
+			fleet->GetID(),
+			event->GetShipCount()
+		);
 		return { origin, nullptr, destination, true };
 	}
 
@@ -924,7 +970,11 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 	// valid ID?
 	if (!IsValidSpaceObjectID(event->GetOrigin())) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_origin_id_text", event->GetOrigin()));
-		Print("origin ID not available: " + event->GetOrigin(), PrintType::INFO);
+		Print(
+			"origin is not available: {}",
+			PrintType::INFO,
+			event->GetOrigin()
+		);
 		return { nullptr, nullptr, nullptr, false };
 	}
 	// destination is 0 by default if no destination ID exists
@@ -945,17 +995,23 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 				"logic_galaxy_destination_coordinate_outside_of_map_text",
 				event->GetDestinationX(), event->GetDestinationY())
 			);
-			std::stringstream ss;
-			ss << "destination coordinates outsize of map: " << event->GetDestinationX() + " | " << event->GetDestinationY();
-			Print(ss.str(), PrintType::INFO);
+			Print(
+				"destination coordinates out of map -> destination x: {} -> destination y: {}",
+				PrintType::INFO,
+				event->GetDestinationX(),
+				event->GetDestinationY()
+			);
 			return { nullptr, nullptr, nullptr, false };
 		}
 	}
 	else if (!IsValidSpaceObjectID(event->GetDestination())) {
 		popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_not_existing_destination_id_text", event->GetDestination()));
-		Print("destination ID not available" + event->GetDestination(), PrintType::INFO);
+		Print(
+			"destination id not available: {}",
+			PrintType::INFO,
+			event->GetDestination()
+		);
 		return { nullptr, nullptr, nullptr, false };
-
 	}
 
 	// get origin and set new fleet
@@ -972,10 +1028,14 @@ HFleetResult Galaxy::AddFleet(SendFleetInstructionEvent const* event, Player_ty 
 	}
 
 	popup(AppContext::GetInstance().languageManager.Text("logic_galaxy_cant_recognize_origin_text", event->GetOrigin()));
-	std::stringstream ss;
-	ss << "not able to recognize origin input | origin: " << event->GetOrigin() << " | destination: " << event->GetDestination() 
-		<< " | destination x: " << event->GetDestinationX() << " | destination y: " << event->GetDestinationY();
-	Print(ss.str(), PrintType::ERROR);
+	Print("not able to recognize fleet input -> origin: {} -> destination: {} -> destination x: {} -> destination y: {} -> ships: {}",
+		PrintType::INFO,
+		event->GetOrigin(),
+		event->GetDestination(),
+		event->GetDestinationX(),
+		event->GetDestinationY(),
+		event->GetShipCount()
+	);
 	return { nullptr, nullptr, nullptr, false };
 }
 

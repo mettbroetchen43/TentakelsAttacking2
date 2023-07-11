@@ -12,21 +12,41 @@
 #include <cassert>
 
 // string defaults
-static std::string const defaultValuePrefix{ " -> using default value -> overwrite config by save" };
+static std::string const defaultValuePrefix{ "-> using default value -> overwrite config by save" };
 static int loadEntryCount{ 0 }; 
 // print
 auto const printMissingSection{ [](ConfigTypes section) {
-	Print("section \"" + CToS(section) + "\" in config missing" + defaultValuePrefix + "s", PrintType::ERROR);
+	Print(
+		"section \"{}\" in config missing {}",
+		PrintType::ERROR,
+		CToS(section),
+		defaultValuePrefix
+	);
 } };
 auto const printMissingEntry{ [](ConfigTypes entry) {
-	Print("entry \"" + CToS(entry) + "\" in config missing" + defaultValuePrefix , PrintType::ERROR);
+	Print(
+		"entry \"{}\" in config missing {}",
+		PrintType::ERROR,
+		CToS(entry),
+		defaultValuePrefix
+	);
 } };
 auto const printNotMatchingCount{ [](ConfigTypes section, int expected, size_t provided) {
-	std::string values{" -> expected: " + std::to_string(expected) + " -> provided: " + std::to_string(provided)};
-	Print("section \"" + CToS(section) + "\" entry count in config is not matching" + values, PrintType::ERROR);
+	Print(
+		"section \"{}\" entry count in config is not matching -> expected: \"{}\" -> provided: \"{}\"",
+		PrintType::ERROR,
+		CToS(section),
+		expected,
+		provided
+		);
 } };
 auto const printWrongDatatype{ [](ConfigTypes entry) {
-	Print("entry \"" + CToS(entry) + "\" in config has wrong datatype" + defaultValuePrefix, PrintType::ERROR);
+	Print(
+		"entry \"{}\" in config has wrong datatype {}",
+		PrintType::ERROR,
+		CToS(entry),
+		defaultValuePrefix
+		);
 } };
 
 // check
@@ -161,19 +181,32 @@ void LoadConfig() {
 	// from json
 	// config
 	if (isNull(load, ConfigTypes::CONFIFG)) { 
-		Print("provided config is null" + defaultValuePrefix + "s", PrintType::ERROR);
+		Print(
+			"provided config is null {}",
+			PrintType::ERROR,
+			defaultValuePrefix
+		);
 		return;
 	}
 	if (not isMatchingSize(load, ConfigTypes::CONFIFG, constants.global.configSectionCount)) {
-		Print("config section count is not matching", PrintType::ERROR);
+		Print(
+			"config section count is not matching {} -> expected: {} -> provided: {}",
+			PrintType::ERROR,
+			defaultValuePrefix,
+			constants.global.configSectionCount,
+			load.size()
+		);
 	};
 	// version
 	if (nlohmann::json version; loadSection(load, version, ConfigTypes::VERSION, constants.global.configVersionCount)) {
 		if (std::string versionConfig; loadString(version, versionConfig, ConfigTypes::VERSION_CONFIG)) {
 			if (versionConfig != constants.global.configVersion) {
-				Print("config version in config in not matching -> expected: " +
-					constants.global.configVersion + " -> provided: " + versionConfig + " -> overwrite config by save",
-					PrintType::ERROR);
+				Print(
+					"config version in config is not matching -> expected: {} -> provided: {} -> overwrite config by save",
+					PrintType::ERROR,
+					constants.global.configVersion,
+					versionConfig
+				);
 			}
 		}
 		else {
@@ -181,9 +214,12 @@ void LoadConfig() {
 		}
 		if (std::string versionGame; loadString(version, versionGame, ConfigTypes::VERSION_GAME)) {
 			if (versionGame != constants.global.gameVersion) {
-				Print("game version in config in not matching -> expected: " +
-					constants.global.gameVersion + " -> provided: " + versionGame + "->overwrite config by save",
-					PrintType::ERROR);
+				Print(
+					"game version in config is not matching -> expected: {} -> provided: {} -> overwrite by save",
+					PrintType::ERROR,
+					constants.global.gameVersion,
+					versionGame
+				);
 			}
 		}
 		else {
@@ -259,8 +295,12 @@ void LoadConfig() {
 	AppContext_ty_c appContext = AppContext::GetInstance();
 	assert(loadEntryCount == appContext.constants.GetConfigValueCount());
 	if (int count = appContext.constants.GetConfigValueCount();  loadEntryCount != count) {
-		std::string values{ " -> expected: " + std::to_string(count) + " -> provided: " + std::to_string(loadEntryCount) };
-		Print("Entry count in config is not matching" + values, PrintType::ERROR);
+		Print(
+			"Entry count in config is not matching -> expected: {} -> provided: {}",
+			PrintType::ERROR,
+			count,
+			loadEntryCount
+		);
 	} else {
 		Print("Entry count in config is matching", PrintType::INFO);
 	}
