@@ -24,8 +24,18 @@ void UpdateEvaluationScene::TestPrint(SendUpdateEvaluation const* event) const {
 
 	Print("------------------ | Merge Results |------------------", PrintType::DEBUG);
 	for (auto const& e : event->GetMergeResults()) {
-		Print(appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer()->GetID()).GetName(), PrintType::DEBUG);
-		Print(std::to_string(e.GetOrigin()->GetID()) + " -> " + std::to_string(e.GetDestination()->GetID()) + " | " + std::to_string(e.GetCount()), PrintType::DEBUG);
+		Print(
+			"{}",
+			PrintType::DEBUG,
+			appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer()->GetID()).GetName()
+		);
+		Print(
+			"origin: {} -> destination: {} -> count: {}",
+			PrintType::DEBUG,
+			e.GetOrigin()->GetID(),
+			e.GetDestination()->GetID(),
+			e.GetCount()
+		);
 		Print("------------------------------------------------------", PrintType::DEBUG);
 	}
 
@@ -33,13 +43,26 @@ void UpdateEvaluationScene::TestPrint(SendUpdateEvaluation const* event) const {
 	for (auto const& e : event->GetFightResults()) {
 		if (not e.IsValid()) { Print("invalid update Evaluation", PrintType::DEBUG);  continue; }
 
-		Print(std::to_string(e.GetSpaceObjects().first->GetID()) + " | " + std::to_string(e.GetSpaceObjects().second->GetID()), PrintType::DEBUG);
-		Print(appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer().first->GetID()).GetName()
-			+ " | " +
-			appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer().second->GetID()).GetName(), PrintType::DEBUG);
+		Print(
+			"{} vs.{}",
+			PrintType::DEBUG,
+			e.GetSpaceObjects().first->GetID(),
+			e.GetSpaceObjects().second->GetID()
+		);
+		Print(
+			"{} vs. {}",
+			PrintType::DEBUG,
+			appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer().first->GetID()).GetName(),
+			appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer().second->GetID()).GetName()
+		);
 
 		for (auto const& r : e.GetRounds()) {
-			Print(std::to_string(r.first) + " | " + std::to_string(r.second), PrintType::DEBUG);
+			Print(
+				"{} | {}",
+				PrintType::DEBUG,
+				r.first,
+				r.second
+			);
 		}
 		Print("------------------------------------------------------", PrintType::DEBUG);
 	}
