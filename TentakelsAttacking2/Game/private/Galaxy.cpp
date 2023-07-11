@@ -301,7 +301,15 @@ HFleetResult Galaxy::AddFleetFromPlanet(SendFleetInstructionEvent const* event, 
 	// remove fleet ships from origin planet
 	*originPlanet -= *fleet;
 	
-	Print("generated a new fleet", PrintType::ONLY_DEBUG);
+	Print(
+		"generated a new fleet -> id: {} -> player: {} -> position: {} -> target: {} -> ships: {}",
+		PrintType::ONLY_DEBUG,
+		fleet->GetID(),
+		fleet->GetPlayer()->GetID(),
+		fleet->GetPos().ToString(),
+		fleet->GetTarget()->GetID(),
+		fleet->GetShipCount()
+	);
 
 	return { originPlanet, fleet, destination, true };
 }
@@ -413,7 +421,15 @@ HFleetResult Galaxy::AddFleetFromFleet(SendFleetInstructionEvent const* event, P
 	// remove fleet ships from origin planet
 	*origin -= *fleet;
 
-	Print("generated a new fleet", PrintType::ONLY_DEBUG);
+	Print(
+		"generated a new fleet -> id: {} -> player: {} -> position: {} -> target: {} -> ships: {}",
+		PrintType::ONLY_DEBUG,
+		fleet->GetID(),
+		fleet->GetPlayer()->GetID(),
+		fleet->GetPos().ToString(),
+		fleet->GetTarget()->GetID(),
+		fleet->GetShipCount()
+	);
 
 	return { origin, fleet, destination, true };
 }
@@ -503,7 +519,15 @@ HFleetResult Galaxy::AddFleetFromTargetPoint(SendFleetInstructionEvent const* ev
 	// manage ships
 	*origin -= *fleet;
 
-	Print("generated a new fleet", PrintType::ONLY_DEBUG);
+	Print(
+		"generated a new fleet -> id: {} -> player: {} -> position: {} -> target: {} -> ships: {}",
+		PrintType::ONLY_DEBUG,
+		fleet->GetID(),
+		fleet->GetPlayer()->GetID(),
+		fleet->GetPos().ToString(),
+		fleet->GetTarget()->GetID(),
+		fleet->GetShipCount()
+	);
 
 	return { origin, fleet, destination, true };
 }
