@@ -25,8 +25,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:    [ubuntu-22.04, ubuntu-22.04, windows-latest, windows-latest]
-        build: [true,         false,        true,           false         ] 
+        os:    [ubuntu-22.04, windows-latest]
+        build: [true, false] 
         include:
           - os: windows-latest
             triplet: x64-windows
