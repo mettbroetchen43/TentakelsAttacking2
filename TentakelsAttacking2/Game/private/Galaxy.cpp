@@ -629,6 +629,14 @@ void Galaxy::CheckDeleteTargetPoints() {
 		if (t->GetShipCount() > 0) { continue; }
 		auto const& origins{ GetFleetsOfTarget(t) };
 		if (origins.size() > 0) { continue; }
+		Print(
+			PrintType::ONLY_DEBUG,
+			"delete target point -> id: {} -> ships: {} -> origin count: {}",
+			t->GetID(),
+			t->GetShipCount(),
+			origins.size()
+		);
+
 		toDelete.push_back(t);
 	}
 	// delete
