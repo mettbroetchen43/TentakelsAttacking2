@@ -73,7 +73,7 @@ inline std::string HLanguageManager::ReplacePlaceholders(std::string_view text, 
 			"bad alloc while language text -> \"{}\"",
 			PrintType::ERROR,
 			text
-		)
+		);
 		assert(false and "bad alloc");
 		return m_wrong_format_text;
 	}
