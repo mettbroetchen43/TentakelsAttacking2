@@ -90,4 +90,11 @@ void Fleet::Update(Galaxy_ty_raw galaxy) {
 
     generatePosition();
     m_position = filterPosition();
+
+    Print(
+        PrintType::ONLY_DEBUG,
+        "fleet moved -> id: {} -> pos: {}",
+        m_ID,
+        m_position.ToString()
+    );
 }
