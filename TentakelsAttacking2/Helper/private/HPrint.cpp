@@ -7,7 +7,7 @@
 
 
 
-void Print(std::string const& message, PrintType printType) {
+void Print(PrintType printType, std::string const& message) {
 #ifndef _DEBUG
 	if (printType == PrintType::ONLY_DEBUG) { return; }
 #endif // _DEBUG

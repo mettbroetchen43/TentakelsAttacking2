@@ -10,7 +10,7 @@
 PopUpManager::PopUpManager(Vector2 resolution)
 	: m_appContext{ &(AppContext::GetInstance()) }, m_resolution{ resolution } {
 	m_appContext->eventManager.AddListener(this);
-	Print("PopUpManager", PrintType::INITIALIZE);
+	Print(PrintType::INITIALIZE, "PopUpManager");
 }
 
 PopUpManager::~PopUpManager() {

@@ -20,53 +20,53 @@ void UpdateEvaluationScene::TestPrint(SendUpdateEvaluation const* event) const {
 
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
-	Print("--------------------| Evaluation |--------------------", PrintType::DEBUG);
+	Print(PrintType::DEBUG, "--------------------| Evaluation |--------------------");
 
-	Print("------------------ | Merge Results |------------------", PrintType::DEBUG);
+	Print(PrintType::DEBUG, "------------------ | Merge Results |------------------");
 	for (auto const& e : event->GetMergeResults()) {
 		Print(
-			"{}",
 			PrintType::DEBUG,
+			"{}",
 			appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer()->GetID()).GetName()
 		);
 		Print(
-			"origin: {} -> destination: {} -> count: {}",
 			PrintType::DEBUG,
+			"origin: {} -> destination: {} -> count: {}",
 			e.GetOrigin()->GetID(),
 			e.GetDestination()->GetID(),
 			e.GetCount()
 		);
-		Print("------------------------------------------------------", PrintType::DEBUG);
+		Print(PrintType::DEBUG, "------------------------------------------------------");
 	}
 
-	Print("------------------ | Fight Results |------------------", PrintType::DEBUG);
+	Print(PrintType::DEBUG,"------------------ | Fight Results |------------------");
 	for (auto const& e : event->GetFightResults()) {
-		if (not e.IsValid()) { Print("invalid update Evaluation", PrintType::DEBUG);  continue; }
+		if (not e.IsValid()) { Print(PrintType::DEBUG, "invalid update Evaluation");  continue; }
 
 		Print(
-			"{} vs.{}",
 			PrintType::DEBUG,
+			"{} vs.{}",
 			e.GetSpaceObjects().first->GetID(),
 			e.GetSpaceObjects().second->GetID()
 		);
 		Print(
-			"{} vs. {}",
 			PrintType::DEBUG,
+			"{} vs. {}",
 			appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer().first->GetID()).GetName(),
 			appContext.playerCollection.GetPlayerOrNpcByID(e.GetPlayer().second->GetID()).GetName()
 		);
 
 		for (auto const& r : e.GetRounds()) {
 			Print(
-				"{} | {}",
 				PrintType::DEBUG,
+				"{} | {}",
 				r.first,
 				r.second
 			);
 		}
-		Print("------------------------------------------------------", PrintType::DEBUG);
+		Print(PrintType::DEBUG, "------------------------------------------------------");
 	}
-	Print("------------------------------------------------------", PrintType::DEBUG);
+	Print(PrintType::DEBUG, "------------------------------------------------------");
 }
 
 void UpdateEvaluationScene::DisplayMergeResult() {

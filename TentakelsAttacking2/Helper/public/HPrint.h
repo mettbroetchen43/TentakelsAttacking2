@@ -71,14 +71,14 @@ static inline void TryExport(std::string const& message, PrintType printType) {
  * values must match with the provided `{}` inside the string.
  */
 template<typename... Args>
-void Print(std::string const& message, PrintType printType, Args const&... args);
+void Print(PrintType printType, std::string const& message, Args const&... args);
 /**
  * print to the console with a print type tag.
  */
-void Print(std::string const& message, PrintType printType);
+void Print(PrintType printType, std::string const& message);
 
 template<typename ...Args>
-inline void Print(std::string const& message, PrintType printType, Args const & ...args) {
+inline void Print(PrintType printType, std::string const& message, Args const & ...args) {
 #ifndef _DEBUG
 	if (printType == PrintType::ONLY_DEBUG) { return; }
 #endif // _DEBUG
@@ -98,12 +98,12 @@ inline void Print(std::string const& message, PrintType printType, Args const & 
 
 	}
 	catch (format_error const&) {
-		Print("format while printing with arguments", PrintType::ERROR);
+		Print(PrintType::ERROR, "format while printing with arguments");
 		std::cout << std::setw(GetPrintTypeString(longestType).size()) << typeS << ' ' << message << '\n';
 		TryExport(toExport, printType);
 	}
 	catch (std::bad_alloc const&) {
-		Print("bad alloc while printing with arguments", PrintType::ERROR);
+		Print(PrintType::ERROR, "bad alloc while printing with arguments");
 		std::cout << std::setw(GetPrintTypeString(longestType).size()) << typeS << ' ' << message << '\n';
 		TryExport(toExport, printType);
 	}

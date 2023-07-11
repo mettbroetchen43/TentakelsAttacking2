@@ -76,8 +76,8 @@ void TestScene::HandleNextNumber(bool left) {
 		auto const [number, time] {GetNextNumberAndTime()};
 		m_second->CountTo(CountingNumber::ASYMPTOTIC, number, time);
 		Print(
-			"type: {} | number: {} | time: {}",
 			PrintType::DEBUG,
+			"type: {} | number: {} | time: {}",
 			static_cast<int>(CountingNumber::ASYMPTOTIC),
 			number,
 			time
@@ -87,8 +87,8 @@ void TestScene::HandleNextNumber(bool left) {
 		auto const [number, time] {GetNextNumberAndTime()};
 		m_first->CountTo(CountingNumber::LINEAR, number, time);
 		Print(
-			"type: {} | number: {} | time: {}",
 			PrintType::DEBUG,
+			"type: {} | number: {} | time: {}",
 			static_cast<int>(CountingNumber::LINEAR),
 			number,
 			time
@@ -111,8 +111,8 @@ void TestScene::SetActive(bool active, AppContext_ty_c appContext) {
 void TestScene::TestLambda(CountingNumber::Type type, int start, int current, double time) {
 	if (type == CountingNumber::LINEAR) { return; }
 	Print(
-		"type: {} | start: {} | current: {} | time: {}",
 		PrintType::DEBUG,
+		"type: {} | start: {} | current: {} | time: {}",
 		static_cast<int>(type),
 		start,
 		current,

@@ -10,7 +10,7 @@
 
 void HLanguageManager::InitializeLanguage() {
 	ChanceLanguage(AppContext::GetInstance().constants.global.currentLanguageName);
-	Print("Language", PrintType::INITIALIZE);
+	Print(PrintType::INITIALIZE, "Language");
 }
 void HLanguageManager::InitializeAvailableLanguages() {
 	std::string const directory{ "Assets/Languages" };
@@ -26,8 +26,8 @@ void HLanguageManager::InitializeAvailableLanguages() {
 
 	if (not DirectoryExists(directory.c_str())) {
 		Print(
-			"directory \"{}\" not found -> no language available",
 			PrintType::ERROR,
+			"directory \"{}\" not found -> no language available",
 			directory
 		);
 		return;
@@ -36,16 +36,16 @@ void HLanguageManager::InitializeAvailableLanguages() {
 		std::filesystem::path file{ entry.path().filename()};
 		if (not file.has_extension()) {
 			Print(
-				"language file \"{}\" has no extension",
 				PrintType::ERROR,
+				"language file \"{}\" has no extension",
 				file.string()
 			);
 			continue;
 		}
 		if (file.extension() != ".tal") {
 			Print(
-				"file \"{}\" has wrong datatype",
 				PrintType::ERROR,
+				"file \"{}\" has wrong datatype",
 				file.string()
 			);
 			continue;
@@ -53,8 +53,8 @@ void HLanguageManager::InitializeAvailableLanguages() {
 		auto const& fileName{ file.replace_extension()};
 		if (contains(fileName.string())) {
 			Print(
-				"language \"{}\" loaded multiple times",
 				PrintType::ERROR,
+				"language \"{}\" loaded multiple times",
 				fileName.string()
 			);
 			continue;
@@ -74,7 +74,7 @@ void HLanguageManager::ChanceLanguage(std::string const& language) {
 
 	if (not validLoad) {
 		if (not m_current_language.empty()) {
-			Print("not able to load new language -> fallback to old language", PrintType::INFO);
+			Print(PrintType::INFO, "not able to load new language -> fallback to old language");
 			handleUpdateLanguage();
 			return;
 		}
@@ -82,8 +82,8 @@ void HLanguageManager::ChanceLanguage(std::string const& language) {
 			bool const validDefaultLoad{ LoadLanguage(m_default_language) };
 			if (validDefaultLoad) {
 				Print(
-					"fallback to default language: \"{}\"",
 					PrintType::ERROR,
+					"fallback to default language: \"{}\"",
 					m_default_language
 				);
 				handleUpdateLanguage();
@@ -91,7 +91,7 @@ void HLanguageManager::ChanceLanguage(std::string const& language) {
 			}
 			m_current_language.clear();
 			appContext.constants.global.currentLanguageName = "";
-			Print("not able to load any language.", PrintType::ERROR);
+			Print(PrintType::ERROR, "not able to load any language.");
 		}
 	}
 }
@@ -102,8 +102,8 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 	}
 	if (not found) {
 		Print(
-			"language \"{}\" is not available",
 			PrintType::ERROR,
+			"language \"{}\" is not available",
 			language
 		);
 		return false;
@@ -112,8 +112,8 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 	std::string const directory{ "Assets/Languages" };
 	if (not DirectoryExists(directory.c_str())) {
 		Print(
-			"directory \"{}\" not existing. unable to load provided language",
 			PrintType::ERROR,
+			"directory \"{}\" not existing. unable to load provided language",
 			directory
 		);
 		return false;
@@ -124,8 +124,8 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 	in.open(directory + "/" + language + ".tal");
 	if (not in.is_open()) {
 		Print(
-			"not able tp open language: \"{}\"",
 			PrintType::ERROR,
+			"not able tp open language: \"{}\"",
 			language
 		);
 		return false;
@@ -136,8 +136,8 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 	}
 	catch (nlohmann::json::parse_error const& e) {
 		Print(
-			"not able tp parse \"{}\" -> message: {} -> byte: {} -> id: {}",
 			PrintType::ERROR,
+			"not able tp parse \"{}\" -> message: {} -> byte: {} -> id: {}",
 			language,
 			e.what(),
 			e.byte,
@@ -152,8 +152,8 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 	AppContext::GetInstance().constants.global.currentLanguageName = language;
 
 	Print(
-		"language loaded: \"{}\"",
 		PrintType::ERROR,
+		"language loaded: \"{}\"",
 		language
 	);
 	return true;
@@ -161,17 +161,17 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 
 std::string HLanguageManager::RawText(std::string const& key) const {
 	if (m_current_language == nullptr) {
-		Print("No Current Language loaded", PrintType::ERROR);
+		Print(PrintType::ERROR, "No Current Language loaded");
 		return m_missing_language_text;
 	}
 	else if (m_current_language.is_null()) {
-		Print("current Language is null", PrintType::ERROR);
+		Print(PrintType::ERROR, "current Language is null");
 		return m_missing_language_text;
 	}
 	else if (not m_current_language.contains(key)) {
 		Print(
-			"current language does not contain \"{}\"",
 			PrintType::ERROR,
+			"current language does not contain \"{}\"",
 			key
 		);
 		return m_default_text;
@@ -185,7 +185,7 @@ std::string HLanguageManager::ReplacePlaceholders(std::string const& text) const
 }
 
 HLanguageManager::HLanguageManager() {
-	Print("LanguageManager", PrintType::INITIALIZE);
+	Print(PrintType::INITIALIZE, "LanguageManager");
 }
 void HLanguageManager::Initialize() {
 	InitializeAvailableLanguages();

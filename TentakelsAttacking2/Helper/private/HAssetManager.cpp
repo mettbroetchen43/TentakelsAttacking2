@@ -17,8 +17,8 @@ void AssetManager::LoadTitle() {
 	std::string const filename{ "Assets/Text/title.txt" };
 	if (!std::filesystem::exists(filename)) {
 		Print(
-			"title does not exists -> {}",
 			PrintType::ERROR,
+			"title does not exists -> {}",
 			filename
 		);
 		return;
@@ -28,8 +28,8 @@ void AssetManager::LoadTitle() {
 
 	if (!newFile.is_open()) {
 		Print(
-			"can't open title",
 			PrintType::ERROR,
+			"can't open title -> {}",
 			filename
 		);
 		return;
@@ -46,8 +46,8 @@ void AssetManager::LoadFont() {
 
 	if (!std::filesystem::exists(filename)) {
 		Print(
-			"font does not exist -> {}",
 			PrintType::ERROR,
+			"font does not exist -> {}",
 			filename
 		);
 		return;
@@ -63,8 +63,8 @@ void AssetManager::LoadFiles() {
 
 		if (!std::filesystem::exists(filename)) {
 			Print(
-				"Assets does not exist -> {}",
 				PrintType::ERROR,
+				"Assets does not exist -> {}",
 				filename
 			);
 			continue;

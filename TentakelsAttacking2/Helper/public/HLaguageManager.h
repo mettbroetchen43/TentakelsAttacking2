@@ -61,8 +61,8 @@ inline std::string HLanguageManager::ReplacePlaceholders(std::string_view text, 
 	}
 	catch (format_error const&) {
 		Print(
-			"wrong format for language text. appears mostly when arguments not matching the provided string -> \"{}\"",
 			PrintType::ERROR,
+			"wrong format for language text. appears mostly when arguments not matching the provided string -> \"{}\"",
 			text
 		);
 		assert(false and "wrong format");
@@ -70,8 +70,8 @@ inline std::string HLanguageManager::ReplacePlaceholders(std::string_view text, 
 	}
 	catch (std::bad_alloc const&) {
 		Print(
-			"bad alloc while language text -> \"{}\"",
 			PrintType::ERROR,
+			"bad alloc while language text -> \"{}\"",
 			text
 		);
 		assert(false and "bad alloc");

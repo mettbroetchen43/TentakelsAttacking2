@@ -356,7 +356,7 @@ GameManager::GameManager()
 	}
 	m_npcs[PlayerType::NEUTRAL] = std::make_shared<Player>(100, PlayerType::NEUTRAL);
 
-	Print("GameManager", PrintType::INITIALIZE);
+	Print(PrintType::INITIALIZE, "GameManager");
 }
 
 void GameManager::Update() {

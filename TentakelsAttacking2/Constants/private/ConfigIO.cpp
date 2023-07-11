@@ -17,24 +17,24 @@ static int loadEntryCount{ 0 };
 // print
 auto const printMissingSection{ [](ConfigTypes section) {
 	Print(
-		"section \"{}\" in config missing {}",
 		PrintType::ERROR,
+		"section \"{}\" in config missing {}",
 		CToS(section),
 		defaultValuePrefix
 	);
 } };
 auto const printMissingEntry{ [](ConfigTypes entry) {
 	Print(
-		"entry \"{}\" in config missing {}",
 		PrintType::ERROR,
+		"entry \"{}\" in config missing {}",
 		CToS(entry),
 		defaultValuePrefix
 	);
 } };
 auto const printNotMatchingCount{ [](ConfigTypes section, int expected, size_t provided) {
 	Print(
-		"section \"{}\" entry count in config is not matching -> expected: \"{}\" -> provided: \"{}\"",
 		PrintType::ERROR,
+		"section \"{}\" entry count in config is not matching -> expected: \"{}\" -> provided: \"{}\"",
 		CToS(section),
 		expected,
 		provided
@@ -42,8 +42,8 @@ auto const printNotMatchingCount{ [](ConfigTypes section, int expected, size_t p
 } };
 auto const printWrongDatatype{ [](ConfigTypes entry) {
 	Print(
-		"entry \"{}\" in config has wrong datatype {}",
 		PrintType::ERROR,
+		"entry \"{}\" in config has wrong datatype {}",
 		CToS(entry),
 		defaultValuePrefix
 		);
@@ -163,14 +163,14 @@ void LoadConfig() {
 	std::ifstream file;
 
 	if (!std::filesystem::exists(constants.files.configFile())) {
-		Print("no config existing", PrintType::EXPECTED_ERROR);
+		Print(PrintType::EXPECTED_ERROR, "no config existing");
 		SaveConfig();
 		return;
 	}
 
 	file.open(constants.files.configFile());
 	if (!file.is_open()) {
-		Print( "cant open config", PrintType::INFO);
+		Print(PrintType::INFO, "cant open config");
 		return;
 	}
 
@@ -182,16 +182,16 @@ void LoadConfig() {
 	// config
 	if (isNull(load, ConfigTypes::CONFIFG)) { 
 		Print(
-			"provided config is null {}",
 			PrintType::ERROR,
+			"provided config is null {}",
 			defaultValuePrefix
 		);
 		return;
 	}
 	if (not isMatchingSize(load, ConfigTypes::CONFIFG, constants.global.configSectionCount)) {
 		Print(
-			"config section count is not matching {} -> expected: {} -> provided: {}",
 			PrintType::ERROR,
+			"config section count is not matching {} -> expected: {} -> provided: {}",
 			defaultValuePrefix,
 			constants.global.configSectionCount,
 			load.size()
@@ -202,32 +202,32 @@ void LoadConfig() {
 		if (std::string versionConfig; loadString(version, versionConfig, ConfigTypes::VERSION_CONFIG)) {
 			if (versionConfig != constants.global.configVersion) {
 				Print(
-					"config version in config is not matching -> expected: {} -> provided: {} -> overwrite config by save",
 					PrintType::ERROR,
+					"config version in config is not matching -> expected: {} -> provided: {} -> overwrite config by save",
 					constants.global.configVersion,
 					versionConfig
 				);
 			}
 		}
 		else {
-			Print("unable to check if config version is matching", PrintType::ERROR);
+			Print(PrintType::ERROR, "unable to check if config version is matching");
 		}
 		if (std::string versionGame; loadString(version, versionGame, ConfigTypes::VERSION_GAME)) {
 			if (versionGame != constants.global.gameVersion) {
 				Print(
-					"game version in config is not matching -> expected: {} -> provided: {} -> overwrite by save",
 					PrintType::ERROR,
+					"game version in config is not matching -> expected: {} -> provided: {} -> overwrite by save",
 					constants.global.gameVersion,
 					versionGame
 				);
 			}
 		}
 		else {
-			Print("unable to check if config version is matching", PrintType::ERROR);
+			Print(PrintType::ERROR, "unable to check if config version is matching");
 		}
 	}
 	else {
-		Print("not able to check if config and game versions match", PrintType::ERROR);
+		Print(PrintType::ERROR, "not able to check if config and game versions match");
 	}
 	// fight
 	if (nlohmann::json fight; loadSection(load, fight, ConfigTypes::FIGHT, constants.fight.configEntryCount)) {
@@ -296,23 +296,23 @@ void LoadConfig() {
 	assert(loadEntryCount == appContext.constants.GetConfigValueCount());
 	if (int count = appContext.constants.GetConfigValueCount();  loadEntryCount != count) {
 		Print(
-			"Entry count in config is not matching -> expected: {} -> provided: {}",
 			PrintType::ERROR,
+			"Entry count in config is not matching -> expected: {} -> provided: {}",
 			count,
 			loadEntryCount
 		);
 	} else {
-		Print("Entry count in config is matching", PrintType::INFO);
+		Print(PrintType::INFO, "Entry count in config is matching");
 	}
 
 #ifdef _DEBUG
 	constants.window.startingModeFullScreen = false;
-	Print("set full screen to false", PrintType::DEBUG);
+	Print(PrintType::DEBUG, "set full screen to false");
 	constants.window.current_resolution = Resolution::HD;
-	Print("set resolution ro HD", PrintType::DEBUG);
+	Print(PrintType::DEBUG, "set resolution ro HD");
 #endif // _DEBUG
 
-	Print("config loaded", PrintType::INFO);
+	Print(PrintType::INFO, "config loaded");
 }
 void SaveConfig() {
 	
@@ -382,13 +382,13 @@ void SaveConfig() {
 	std::ofstream file{ };
 
 	if (!std::filesystem::exists(constants.files.savesDir)) {
-		Print("saves dir does not exists", PrintType::EXPECTED_ERROR);
+		Print(PrintType::EXPECTED_ERROR, "saves dir does not exists");
 		std::filesystem::create_directory(constants.files.savesDir);
-		Print("saves dir generated", PrintType::INFO);
+		Print(PrintType::INFO, "saves dir generated");
 	}
 
 	if (!std::filesystem::exists(constants.files.configFile())) {
-		Print("config generated", PrintType::INFO);
+		Print(PrintType::INFO, "config generated");
 	}
 
 	file.open(constants.files.configFile());
@@ -396,5 +396,5 @@ void SaveConfig() {
 	file << save.dump(4);
 	file.close();
 
-	Print("config saved", PrintType::INFO);
+	Print(PrintType::INFO, "config saved");
 }
