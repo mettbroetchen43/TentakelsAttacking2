@@ -1,11 +1,11 @@
-#include "CGameEvents.h"
 //
 // Purpur Tentakel
 // 12.07.2023
 //
 
+#include "CGameEvents.h"
 
-void CGameEvents::FlagType(HGameEventType const type, bool const active) {
+void CGameEvents::SetFlag(HGameEventType const type, bool const active) {
 	if (active) {
 		events |= type;
 	}

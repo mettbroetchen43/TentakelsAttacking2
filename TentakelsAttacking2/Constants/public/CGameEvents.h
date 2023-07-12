@@ -20,6 +20,6 @@ struct CGameEvents {
 		HGameEventType::ENGINE_PROBLEM,
 	};
 
-	void FlagType(HGameEventType const type, bool const active);
+	void SetFlag(HGameEventType const type, bool const active);
 	[[nodiscard]] bool IsFlag(HGameEventType const type) const;
 };

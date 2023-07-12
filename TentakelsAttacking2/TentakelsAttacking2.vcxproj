@@ -154,6 +154,7 @@
     <ClInclude Include="Constants\public\CConstants.h" />
     <ClInclude Include="Constants\public\CFight.hpp" />
     <ClInclude Include="Constants\public\CFiles.hpp" />
+    <ClInclude Include="Constants\public\CGameEvents.h" />
     <ClInclude Include="Constants\public\ConfigIO.h" />
     <ClInclude Include="Constants\public\CPlanet.hpp" />
     <ClInclude Include="Constants\public\CPlayer.hpp" />
@@ -273,6 +274,7 @@
     <ClCompile Include="Constants\private\CWindow.cpp" />
     <ClCompile Include="Constants\private\CConstants.cpp" />
     <ClCompile Include="Constants\public\CFleet.hpp" />
+    <ClCompile Include="Constants\private\CGameEvents.cpp" />
     <ClCompile Include="Helper\private\HFightResult.cpp" />
     <ClCompile Include="Helper\private\HConfigEnum.cpp" />
     <ClCompile Include="Helper\private\HMergeResult.cpp" />
