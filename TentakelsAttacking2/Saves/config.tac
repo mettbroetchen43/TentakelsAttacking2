@@ -35,7 +35,8 @@
     },
     "player": {
         "player_count_max": 7,
-        "player_count_min": 2
+        "player_count_min": 2,
+        "player_shuffle": false
     },
     "sound": {
         "volume_master": 50.0,
@@ -46,8 +47,8 @@
         "version_game": "v0.1.4"
     },
     "window": {
-        "full_screen_start_bool": false,
-        "resolution_as_enum": 5,
+        "full_screen_start_bool": true,
+        "resolution_as_enum": 17,
         "target_fps": 60
     },
     "world": {

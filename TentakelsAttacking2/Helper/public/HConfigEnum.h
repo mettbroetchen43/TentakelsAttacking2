@@ -46,6 +46,7 @@ enum class ConfigTypes {
 	PLAYER,
 	PLAYER_COUNT_MAX,
 	PLAYER_COUNT_MIN,
+	Player_SHUFFLE,
 
 	SOUND,
 	VOLUME_MASTER,

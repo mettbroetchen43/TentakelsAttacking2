@@ -270,8 +270,9 @@ void LoadConfig() {
 	}
 	// player
 	if (nlohmann::json player; loadSection(load, player, ConfigTypes::PLAYER, constants.player.configEntryCount)) {
-		if (int out; loadInt(player, out, ConfigTypes::PLAYER_COUNT_MAX)) { constants.player.maxPlayerCount = out; }
-		if (int out; loadInt(player, out, ConfigTypes::PLAYER_COUNT_MIN)) { constants.player.minPlayerCount = out; }
+		if (int  out;  loadInt(player, out, ConfigTypes::PLAYER_COUNT_MAX)) { constants.player.maxPlayerCount = out; }
+		if (int  out;  loadInt(player, out, ConfigTypes::PLAYER_COUNT_MIN)) { constants.player.minPlayerCount = out; }
+		if (bool out; loadBool(player, out, ConfigTypes::Player_SHUFFLE))   { constants.player.shuffle= out;         }
 	}
 	// sound
 	if (nlohmann::json sound; loadSection(load, sound, ConfigTypes::SOUND, constants.sound.configEntryCount)) {
@@ -367,6 +368,7 @@ void SaveConfig() {
 	save[CToS(ConfigTypes::PLAYER)] = {
 		{ CToS(ConfigTypes::PLAYER_COUNT_MAX), constants.player.maxPlayerCount },
 		{ CToS(ConfigTypes::PLAYER_COUNT_MIN), constants.player.minPlayerCount },
+		{ CToS(ConfigTypes::Player_SHUFFLE),   constants.player.shuffle        },
 	};
 	save[CToS(ConfigTypes::SOUND)] = {
 		{ CToS(ConfigTypes::VOLUME_MASTER),    constants.sound.masterVolume },
