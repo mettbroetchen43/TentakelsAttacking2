@@ -97,12 +97,14 @@ GameEventSettings::GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 
 
 void GameEventSettings::SetRandom() {
 	Random& random{ Random::GetInstance() };
-	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	AppContext_ty appContext{ AppContext::GetInstance() };
 
-	for (auto& c : m_checkBoxes) {
+	assert(m_checkBoxes.size() == m_text.size());
+
+	for (int i = 1; i < m_checkBoxes.size(); ++i) { // 0 is the global checkbox
 		bool r = random.random(2) == 1;
-		if (c->IsChecked() != r) {
-			c->SetChecked(r);
-		}
+		appContext.constants.gameEvents.SetFlag(m_text.at(i).first, r);
+		m_checkBoxes.at(i)->SetChecked(appContext.constants.gameEvents.IsFlag(m_text.at(i).first));
 	}
+	m_checkBoxes.at(0)->SetChecked(appContext.constants.gameEvents.IsFlag(HGameEventType::GLOBAL));
 }
