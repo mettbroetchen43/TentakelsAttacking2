@@ -4,6 +4,8 @@
 //
 
 #pragma once
+#include <cstdint>
+#include <type_traits>
 
 /**
  * provides the Types of all game events.
