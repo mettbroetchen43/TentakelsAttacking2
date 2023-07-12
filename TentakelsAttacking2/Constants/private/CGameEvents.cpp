@@ -5,6 +5,7 @@
 
 #include "CGameEvents.h"
 
+
 void CGameEvents::SetFlag(HGameEventType const type, bool const active) {
 	if (active) {
 		events |= type;
