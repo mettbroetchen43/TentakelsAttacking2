@@ -9,7 +9,6 @@
 #include "EventListener.hpp"
 #include "UIEvents.hpp"
 #include "GenerelEvents.hpp"
-#include "HGameEventTypes.hpp"
 #include <vector>
 #include <random>
 #include <memory>
@@ -119,14 +118,6 @@ private:
 	 * PopUp automatically calls the provided function
 	 */
 	void ValidateNextTurn();
-
-
-	// events
-	/**
-	 * updates if the game events are enabled.
-	 * calls the ui via event to update.
-	 */
-	void SetGameEventActive(UpdateCheckGameEvent const* event);
 
 	// fleet
 	/**

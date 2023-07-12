@@ -335,9 +335,6 @@ GameManager::GameManager()
 	: m_galaxyManager{ this } {
 
 	AppContext::GetInstance().eventManager.AddListener(this);
-	for (auto e : settableGameEventTypes) {
-		m_gameEvents[e] = true;
-	}
 	m_npcs[PlayerType::NEUTRAL] = std::make_shared<Player>(100, PlayerType::NEUTRAL);
 
 	Print(PrintType::INITIALIZE, "GameManager");
