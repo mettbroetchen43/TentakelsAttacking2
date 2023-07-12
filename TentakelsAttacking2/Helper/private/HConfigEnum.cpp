@@ -10,6 +10,23 @@ std::string CToS(ConfigTypes type) {
 		case ConfigTypes::CONFIFG:
 			return "config";
 	
+		case ConfigTypes::GAME_EVENTS:
+			return "game_events";
+		case ConfigTypes::PIRATES:
+			return "pirates";
+		case ConfigTypes::REVOLTS:
+			return "revolts";
+		case ConfigTypes::RENEGADE_SHIPS:
+			return "renegade_ships";
+		case ConfigTypes::BLACK_HOLE:
+			return "black_hole";
+		case ConfigTypes::SUPERNOVA:
+			return "supernova";
+		case ConfigTypes::ENGINE_PROBLEM:
+			return "engine_problems";
+		case ConfigTypes::GLOBAL_EVENT_CHANCE:
+			return "global_event_chance";
+
 		case ConfigTypes::FIGHT:
 			return "fight";
 		case ConfigTypes::HIT_CHANCE:
