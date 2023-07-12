@@ -15,6 +15,7 @@
 #include "Line.h"
 #include "AppContext.h"
 #include "UIEvents.hpp"
+#include "GenerelEvents.hpp"
 
 void SettingsScene::Initialize(SceneType continueScene) {
 
