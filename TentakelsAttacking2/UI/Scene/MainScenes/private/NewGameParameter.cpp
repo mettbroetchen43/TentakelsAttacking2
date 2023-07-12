@@ -13,6 +13,7 @@
 #include "SceneType.h"
 #include "GameEventSettings.h"
 #include "SliderAndInputLine.h"
+#include "GenerelEvents.hpp"
 
 enum class SliderType {
 	PLANET_COUNT,

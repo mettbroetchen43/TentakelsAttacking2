@@ -9,7 +9,6 @@
 #include "EventListener.hpp"
 #include "UIEvents.hpp"
 #include "GenerelEvents.hpp"
-#include "HGameEventTypes.hpp"
 #include <vector>
 #include <random>
 #include <memory>
@@ -24,8 +23,6 @@ private:
 	std::unordered_map<PlayerType, Player_ty> m_npcs{ }; ///< contains all npcs to separate them from the player
 	std::vector<Player_ty> m_players{ }; ///< contains all player -> this is the main player vector
 	std::vector<Player_ty> m_currentRoundPlayers{ }; ///< contains the remaining player of the current round
-	
-	std::unordered_map<HGameEventType, bool> m_gameEvents{ }; ///< contains whether the game Events are active or not
 	
 	friend GalaxyManager; ///< need access because of "callbacks"
 	GalaxyManager m_galaxyManager; ///< contains all galaxy related stuff
@@ -121,14 +118,6 @@ private:
 	 * PopUp automatically calls the provided function
 	 */
 	void ValidateNextTurn();
-
-
-	// events
-	/**
-	 * updates if the game events are enabled.
-	 * calls the ui via event to update.
-	 */
-	void SetGameEventActive(UpdateCheckGameEvent const* event);
 
 	// fleet
 	/**

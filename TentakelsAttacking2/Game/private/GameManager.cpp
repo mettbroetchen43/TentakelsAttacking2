@@ -276,21 +276,6 @@ void GameManager::ValidateNextTurn() {
 	}
 }
 
-// events
-void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
-	if (event->GetType() == HGameEventType::GLOBAL) {
-		for (auto e : settableGameEventTypes) {
-			m_gameEvents[e] = event->GetIsChecked();
-		}
-	}
-	else {
-		m_gameEvents[event->GetType()] = event->GetIsChecked();
-	}
-
-	UpdateCheckGameEventsUI const updateEvent{ &m_gameEvents };
-	AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
-}
-
 // Fleet
 void GameManager::AddFleet(SendFleetInstructionEvent const* event) {
 
@@ -350,9 +335,6 @@ GameManager::GameManager()
 	: m_galaxyManager{ this } {
 
 	AppContext::GetInstance().eventManager.AddListener(this);
-	for (auto e : settableGameEventTypes) {
-		m_gameEvents[e] = true;
-	}
 	m_npcs[PlayerType::NEUTRAL] = std::make_shared<Player>(100, PlayerType::NEUTRAL);
 
 	Print(PrintType::INITIALIZE, "GameManager");
@@ -388,17 +370,6 @@ void GameManager::OnEvent(Event const& event) {
 	if (auto const* playerEvent = dynamic_cast<LoadCurrentPlayerEvent const*>(&event)) {
 		SendCurrentPlayerID();
 		SendNextPlayerID();
-		return;
-	}
-
-	// Events
-	if (auto const* GameEvent = dynamic_cast<UpdateCheckGameEvent const*>(&event)) {
-		SetGameEventActive(GameEvent);
-		return;
-	}
-	if (auto const* GameEvent = dynamic_cast<InitialCheckGameEventDataEvent const*>(&event)) {
-		UpdateCheckGameEventsUI const updateEvent{ &m_gameEvents };
-		AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
 		return;
 	}
 

@@ -5,17 +5,25 @@
 
 #pragma once
 #include "Scene.h"
-#include "EventListener.hpp"
-#include "GenerelEvents.hpp"
-
-enum class GameEventTypes;
+#include "AppContext.h"
+#include "HGameEventTypes.hpp"
 
 /**
  * provides a scene where the game events can be set.
  */
-class GameEventSettings : public Scene, public EventListener {
+class GameEventSettings : public Scene {
 private:
 	std::vector<CheckBox_ty> m_checkBoxes; ///< contains all check boxes
+
+	std::array<std::pair<HGameEventType, std::string>, 7> m_text{{
+		{ HGameEventType::GLOBAL,         AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_global")          },
+		{ HGameEventType::PIRATES,        AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_pirates")         },
+		{ HGameEventType::REVOLTS,        AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_revolts")         },
+		{ HGameEventType::RENEGADE_SHIPS, AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_renegade_ships")  },
+		{ HGameEventType::BLACK_HOLE,     AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_black_hole")      },
+		{ HGameEventType::SUPERNOVA,      AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_supernova")       },
+		{ HGameEventType::ENGINE_PROBLEM, AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_engine_problems") }
+	}};
 
 	/**
 	 * initializes all ui elements.
@@ -26,18 +34,8 @@ private:
 	/**
 	 * sets the checkbox checkt with the provided id via event.
 	 */
-	void SetChecked(unsigned int ID, bool isCecked);
+	void SetChecked(unsigned int index, bool isCecked);
 
-	/**
-	 * sets the checkboxes when logic calls it via event.
-	 * calls set global checkbox.
-	 */
-	void UpdateElements(UpdateCheckGameEventsUI const* event);
-	/**
-	 * calculates if the global checkbox should be set.
-	 * updates the checkbox.
-	 */
-	void SetGlobalCheckbox();
 
 public:
 	/**
@@ -47,16 +45,6 @@ public:
  	 */
 	GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
 		Vector2 resolution);
-	/**
-	 * dtor.
-	 * removes an event listener.
-	 */
-	~GameEventSettings();
-
-	/**
-	 * receives all events and calls the member functions.
-	 */
-	void OnEvent(Event const& event);
 
 	/**
 	 * sets random values for every checkbox except for the global checkbox.

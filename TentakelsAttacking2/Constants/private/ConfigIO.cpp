@@ -235,6 +235,16 @@ void LoadConfig() {
 		if (int out;     loadInt(fight, out, ConfigTypes::FLEET_FIGHT_RANGE)) { constants.fight.fleetFightRange = out; }
 	}
 	// fleet
+	if (nlohmann::json events; loadSection(load, events, ConfigTypes::GAME_EVENTS, constants.gameEvents.configEntryCount)) {
+		if (bool  out;  loadBool(events, out, ConfigTypes::PIRATES))             { constants.gameEvents.SetFlag(HGameEventType::PIRATES,        out); }
+		if (bool  out;  loadBool(events, out, ConfigTypes::REVOLTS))             { constants.gameEvents.SetFlag(HGameEventType::REVOLTS,        out); }
+		if (bool  out;  loadBool(events, out, ConfigTypes::RENEGADE_SHIPS))      { constants.gameEvents.SetFlag(HGameEventType::RENEGADE_SHIPS, out); }
+		if (bool  out;  loadBool(events, out, ConfigTypes::BLACK_HOLE))          { constants.gameEvents.SetFlag(HGameEventType::BLACK_HOLE,     out); }
+		if (bool  out;  loadBool(events, out, ConfigTypes::SUPERNOVA))           { constants.gameEvents.SetFlag(HGameEventType::SUPERNOVA,      out); }
+		if (bool  out;  loadBool(events, out, ConfigTypes::ENGINE_PROBLEM))      { constants.gameEvents.SetFlag(HGameEventType::ENGINE_PROBLEM, out); }
+		if (float out; loadFloat(events, out, ConfigTypes::GLOBAL_EVENT_CHANCE)) { constants.gameEvents.globalEventChance = out; }
+	}
+	// game events
 	if (nlohmann::json fleet; loadSection(load, fleet, ConfigTypes::FLEET, constants.fleet.configEntryCount)) {
 		if (int out; loadInt(fleet, out, ConfigTypes::FLEET_SPEED_CURRENT)) { constants.fleet.currentFleetSpeed = out; }
 		if (int out; loadInt(fleet, out, ConfigTypes::FLEET_SPEED_MAX))     { constants.fleet.maxFleetSpeed     = out; }
@@ -320,6 +330,15 @@ void SaveConfig() {
 	auto const& constants{ AppContext::GetInstance().constants };
 	nlohmann::json save;
 	
+	save[CToS(ConfigTypes::GAME_EVENTS)] = {
+		{ CToS(ConfigTypes::PIRATES),             constants.gameEvents.IsFlag(HGameEventType::PIRATES)        },
+		{ CToS(ConfigTypes::REVOLTS),             constants.gameEvents.IsFlag(HGameEventType::REVOLTS)        },
+		{ CToS(ConfigTypes::RENEGADE_SHIPS),      constants.gameEvents.IsFlag(HGameEventType::RENEGADE_SHIPS) },
+		{ CToS(ConfigTypes::BLACK_HOLE),          constants.gameEvents.IsFlag(HGameEventType::BLACK_HOLE)     },
+		{ CToS(ConfigTypes::SUPERNOVA),           constants.gameEvents.IsFlag(HGameEventType::SUPERNOVA)      },
+		{ CToS(ConfigTypes::ENGINE_PROBLEM),      constants.gameEvents.IsFlag(HGameEventType::ENGINE_PROBLEM) },
+		{ CToS(ConfigTypes::GLOBAL_EVENT_CHANCE), constants.gameEvents.globalEventChance                      },
+	};
 	save[CToS(ConfigTypes::FIGHT)] = {
 		{ CToS(ConfigTypes::HIT_CHANCE),        constants.fight.hitChance       },
 		{ CToS(ConfigTypes::FLEET_FIGHT_RANGE), constants.fight.fleetFightRange },
