@@ -184,7 +184,7 @@ void GameManager::CheckPlayerCount() const {
 	appContext.eventManager.InvokeEvent(event);
 }
 void GameManager::ShuffleCurrentRoundPlayer() {
-	if (AppContext::GetInstance().constants.player.shuffle){ return; }
+	if (not AppContext::GetInstance().constants.player.shuffle){ return; }
 
 	std::shuffle(m_currentRoundPlayers.begin(), m_currentRoundPlayers.end(), m_random);
 	
