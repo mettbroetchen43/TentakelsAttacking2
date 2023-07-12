@@ -320,6 +320,15 @@ void SaveConfig() {
 	auto const& constants{ AppContext::GetInstance().constants };
 	nlohmann::json save;
 	
+	save[CToS(ConfigTypes::GAME_EVENTS)] = {
+		{ CToS(ConfigTypes::PIRATES),             constants.gameEvents.IsFlag(HGameEventType::PIRATES)        },
+		{ CToS(ConfigTypes::REVOLTS),             constants.gameEvents.IsFlag(HGameEventType::REVOLTS)        },
+		{ CToS(ConfigTypes::RENEGADE_SHIPS),      constants.gameEvents.IsFlag(HGameEventType::RENEGADE_SHIPS) },
+		{ CToS(ConfigTypes::BLACK_HOLE),          constants.gameEvents.IsFlag(HGameEventType::BLACK_HOLE)     },
+		{ CToS(ConfigTypes::SUPERNOVA),           constants.gameEvents.IsFlag(HGameEventType::SUPERNOVA)      },
+		{ CToS(ConfigTypes::ENGINE_PROBLEM),      constants.gameEvents.IsFlag(HGameEventType::ENGINE_PROBLEM) },
+		{ CToS(ConfigTypes::GLOBAL_EVENT_CHANCE), constants.gameEvents.globalEventChance                      },
+	};
 	save[CToS(ConfigTypes::FIGHT)] = {
 		{ CToS(ConfigTypes::HIT_CHANCE),        constants.fight.hitChance       },
 		{ CToS(ConfigTypes::FLEET_FIGHT_RANGE), constants.fight.fleetFightRange },

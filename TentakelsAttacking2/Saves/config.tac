@@ -8,6 +8,15 @@
         "fleet_speed_max": 20,
         "fleet_speed_min": 1
     },
+    "game_events": {
+        "black_hole": true,
+        "engine_problems": true,
+        "global_event_chance": 25.0,
+        "pirates": true,
+        "renegade_ships": true,
+        "revolts": true,
+        "supernova": true
+    },
     "global": {
         "current_language_name": "german",
         "game_rounds_current": 79,

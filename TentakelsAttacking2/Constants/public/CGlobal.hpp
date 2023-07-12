@@ -12,7 +12,7 @@
 struct CGlobal final {
 	static inline int const configEntryCount{ 4 }; ///< config load checks if the count is idetical to the loaded entry count
 	static inline int const configVersionCount{ 2 }; ///< config load checks if the count is idetical to the loaded version count
-	static inline int const configSectionCount{ 9 }; ///< config load checks if the count is idetical to the loaded section count
+	static inline int const configSectionCount{ 10 }; ///< config load checks if the count is idetical to the loaded section count
 
 	std::string currentLanguageName{ "english" }; ///< contains the current language name (override by config)
 
