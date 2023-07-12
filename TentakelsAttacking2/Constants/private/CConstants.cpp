@@ -10,6 +10,7 @@ int Constants::GetConfigValueCount() const {
         global.configVersionCount +
         fight.configEntryCount +
         fleet.configEntryCount +
+        gameEvents.configEntryCount +
         global.configEntryCount +
         planet.configEntryCount +
         player.configEntryCount +

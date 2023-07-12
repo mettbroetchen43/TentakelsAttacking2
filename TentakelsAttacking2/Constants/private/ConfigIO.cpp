@@ -235,6 +235,16 @@ void LoadConfig() {
 		if (int out;     loadInt(fight, out, ConfigTypes::FLEET_FIGHT_RANGE)) { constants.fight.fleetFightRange = out; }
 	}
 	// fleet
+	if (nlohmann::json events; loadSection(load, events, ConfigTypes::GAME_EVENTS, constants.gameEvents.configEntryCount)) {
+		if (bool  out;  loadBool(events, out, ConfigTypes::PIRATES))             { constants.gameEvents.SetFlag(HGameEventType::PIRATES,        out); }
+		if (bool  out;  loadBool(events, out, ConfigTypes::REVOLTS))             { constants.gameEvents.SetFlag(HGameEventType::REVOLTS,        out); }
+		if (bool  out;  loadBool(events, out, ConfigTypes::RENEGADE_SHIPS))      { constants.gameEvents.SetFlag(HGameEventType::RENEGADE_SHIPS, out); }
+		if (bool  out;  loadBool(events, out, ConfigTypes::BLACK_HOLE))          { constants.gameEvents.SetFlag(HGameEventType::BLACK_HOLE,     out); }
+		if (bool  out;  loadBool(events, out, ConfigTypes::SUPERNOVA))           { constants.gameEvents.SetFlag(HGameEventType::SUPERNOVA,      out); }
+		if (bool  out;  loadBool(events, out, ConfigTypes::ENGINE_PROBLEM))      { constants.gameEvents.SetFlag(HGameEventType::ENGINE_PROBLEM, out); }
+		if (float out; loadFloat(events, out, ConfigTypes::GLOBAL_EVENT_CHANCE)) { constants.gameEvents.globalEventChance = out; }
+	}
+	// game events
 	if (nlohmann::json fleet; loadSection(load, fleet, ConfigTypes::FLEET, constants.fleet.configEntryCount)) {
 		if (int out; loadInt(fleet, out, ConfigTypes::FLEET_SPEED_CURRENT)) { constants.fleet.currentFleetSpeed = out; }
 		if (int out; loadInt(fleet, out, ConfigTypes::FLEET_SPEED_MAX))     { constants.fleet.maxFleetSpeed     = out; }
