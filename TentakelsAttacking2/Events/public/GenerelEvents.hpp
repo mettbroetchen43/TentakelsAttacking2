@@ -12,8 +12,6 @@
 #include <string>
 #include <unordered_map>
 
-enum class HGameEventType;
-
 /**
  * general event to provide player name and color.
  */
@@ -215,48 +213,6 @@ public:
  * use this to trigger the logic to start the game.
  */
 class StartGameEvent final : public Event { };
-
-/**
- * use this to trigger the logic to updating the game events.
- * returns a UpdateCheckGameEventsUI.
- */
-class UpdateCheckGameEvent final : public Event {
-private:
-	HGameEventType m_type;
-	bool m_isChecked;
-
-public:
-	UpdateCheckGameEvent(HGameEventType type, bool isChecked)
-		: m_type{ type }, m_isChecked{ isChecked } { }
-
-	[[nodiscard]] HGameEventType GetType() const {
-		return m_type;
-	}
-	[[nodiscard]] bool GetIsChecked() const {
-		return m_isChecked;
-	}
-};
-/**
- * use this to trigger the ui to update the game events.
- */
-class UpdateCheckGameEventsUI final : public Event {
-private:
-	using Map = std::unordered_map<HGameEventType, bool>const*;
-	Map m_types;
-
-public:
-	UpdateCheckGameEventsUI(Map types)
-		: m_types{ types } { }
-
-	[[nodiscard]] Map GetTypes() const {
-		return m_types;
-	}
-};
-/**
- * use this to trigger the logic to return the current state of the game events.
- * returns a UpdateCheckGameEventsUI.
- */
-class InitialCheckGameEventDataEvent final : public Event { };
 
 /**
  * use this to trigger the constants to update the target last round.
