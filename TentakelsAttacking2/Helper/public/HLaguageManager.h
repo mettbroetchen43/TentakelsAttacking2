@@ -16,20 +16,22 @@
 
 class HLanguageManager final : public EventListener {
 private:
-	nlohmann::json m_current_language; ///< contains all text in a specific language
+	nlohmann::json m_default_language_json; ///< contains all text in english
+	nlohmann::json m_current_language_json; ///< contains all text in a specific language
 	static inline std::vector<std::string> m_availableLanguages; ///< contains all available languages
 	static inline std::string const m_wrong_format_text{ "wrong format" }; ///< contains the default string. this gets returnd when the format is wrong
 	static inline std::string const m_missing_language_text{ "no language loaded" }; ///< contains the default string. this gets returnd when no language is loaded
 	static inline std::string const m_default_text{ "text not found" }; ///< contains the default string. this gets returnd when key is not exsisting
 	static inline std::string const m_default_language{ "english" }; ///< contains the default language -> gets loaded when the provided language is not able to be loaded
+	static inline std::string const m_version_key{ "version" };  ///< contains the json key for the language version
 
 	void InitializeLanguage();
 	void InitializeAvailableLanguages();
 
 	void ChanceLanguage(std::string const& language);
-	[[nodiscard]] bool LoadLanguage(std::string const& language);
+	[[nodiscard]] bool LoadLanguage(std::string const& language, bool const defaultLanguage = false);
 
-	[[nodiscard]] std::string RawText(std::string const& key) const;
+	[[nodiscard]] std::pair<bool,std::string> RawText(std::string const& key, bool const defaultLanguage = false) const;
 
 	[[nodiscard]] std::string ReplacePlaceholders(std::string const& text) const;
 	template<typename... Args>
@@ -81,7 +83,7 @@ inline std::string HLanguageManager::ReplacePlaceholders(std::string_view text, 
 
 template<typename ...Args>
 inline std::string HLanguageManager::Text(std::string const& key, Args const & ...args) const {
-	std::string text{ RawText(key) };
+	auto [valid, text] { RawText(key) };
+	if (not valid) { text = RawText(key, true).second; }
 	return ReplacePlaceholders(text, args...);
 }
- 

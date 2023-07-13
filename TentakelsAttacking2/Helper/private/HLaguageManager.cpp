@@ -9,6 +9,14 @@
 #include <filesystem>
 
 void HLanguageManager::InitializeLanguage() {
+	bool const valid{ LoadLanguage(m_default_language, true) };
+	if (not valid) {
+		Print(
+			PrintType::ERROR,
+			"not able to load default language \"{}\" -> not able to show fallback text if the choosen language does not contain the key",
+			m_default_language
+		);
+	}
 	ChanceLanguage(AppContext::GetInstance().constants.global.currentLanguageName);
 	Print(PrintType::INITIALIZE, "Language");
 }
@@ -73,7 +81,7 @@ void HLanguageManager::ChanceLanguage(std::string const& language) {
 	bool const validLoad{ LoadLanguage(language) };
 
 	if (not validLoad) {
-		if (not m_current_language.empty()) {
+		if (not m_current_language_json.empty()) {
 			Print(PrintType::INFO, "not able to load new language -> fallback to old language");
 			handleUpdateLanguage();
 			return;
@@ -89,13 +97,13 @@ void HLanguageManager::ChanceLanguage(std::string const& language) {
 				handleUpdateLanguage();
 				return;
 			}
-			m_current_language.clear();
+			m_current_language_json.clear();
 			appContext.constants.global.currentLanguageName = "";
 			Print(PrintType::ERROR, "not able to load any language.");
 		}
 	}
 }
-bool HLanguageManager::LoadLanguage(std::string const& language) {
+bool HLanguageManager::LoadLanguage(std::string const& language, bool const defaultLanguage) {
 	bool found{ false };
 	for (auto const& l : m_availableLanguages) {
 		if (l == language) { found = true; break; }
@@ -132,7 +140,12 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 	}
 
 	try {
-		in >> m_current_language;
+		if (defaultLanguage){
+			in >> m_default_language_json;
+		}
+		else {
+			in >> m_current_language_json;
+		}
 	}
 	catch (nlohmann::json::parse_error const& e) {
 		Print(
@@ -149,35 +162,137 @@ bool HLanguageManager::LoadLanguage(std::string const& language) {
 
 	in.close();
 
-	AppContext::GetInstance().constants.global.currentLanguageName = language;
+	if (defaultLanguage){
+		Print(
+			PrintType::INITIALIZE,
+			"default language loaded -> \"{}\"",
+			language
+		);
+	}
+	else {
+		AppContext::GetInstance().constants.global.currentLanguageName = language;
+	
+		Print(
+			PrintType::INFO,
+			"current language loaded -> \"{}\"",
+			language
+		);
+	}
+	
+	nlohmann::json dummy{nullptr};
 
-	Print(
-		PrintType::INFO,
-		"language loaded: \"{}\"",
-		language
-	);
+	if (defaultLanguage){
+		dummy = m_default_language_json;
+	}
+	else {
+		dummy = m_current_language_json;
+	}
+
+	if (dummy == nullptr){
+		Print(
+			PrintType::ERROR,
+			"not able to check language version -> loaded language is nullptr -> \"{}\"",
+			language
+		);
+		return false;
+	}
+	else if (dummy.is_null()){
+		Print(
+			PrintType::ERROR,
+			"not able to check language version -> loaded language json in null -> \"{}\"",
+			language
+		);
+		return false;
+	}
+	else if (not dummy.contains(m_version_key)) {
+		Print(
+			PrintType::ERROR,
+			"not able to check language version -> language does not contain key \"{}\" -> \"{}\"",
+			m_version_key,
+			language
+		);
+		return false;
+	}
+	else {
+		auto const& version{ static_cast<std::string>(dummy[m_version_key]) };
+		if (version == AppContext::GetInstance().constants.global.languageVersion) {
+			if (defaultLanguage) {
+				Print(
+					PrintType::INITIALIZE,
+					"loaded version matches the expected version -> \"{}\" -> \"{}\"",
+					language,
+					version
+				);
+			}
+			else {
+				Print(
+					PrintType::INFO,
+					"loaded version matches the expected version -> \"{}\" -> \"{}\"",
+					language,
+					version
+				);
+			}
+		}
+		else {
+			if (defaultLanguage) {
+				Print (
+					PrintType::ERROR,
+					"versions of default language does not match -> language \"{}\" -> expected \"{}\" -> provided \"{}\" -> it is possible that not every text can be displayed",
+					language,
+					AppContext::GetInstance().constants.global.languageVersion,
+					version
+				);
+			}
+			else {
+				Print(
+					PrintType::ERROR,
+					"versions of current language does not match -> language \"{}\" -> expected -> \"{}\" -> provided \"{}\" -> it is possible that the default language tried to be displayed",
+					language,
+					AppContext::GetInstance().constants.global.languageVersion,
+					version
+				);
+			}
+		}
+	}
+
 	return true;
 }
 
-std::string HLanguageManager::RawText(std::string const& key) const {
-	if (m_current_language == nullptr) {
-		Print(PrintType::ERROR, "No Current Language loaded");
-		return m_missing_language_text;
+std::pair<bool,std::string> HLanguageManager::RawText(std::string const& key, bool const defaultLanguage) const {
+
+	nlohmann::json dummy {};
+	std::string dummyText {};
+	
+	if (defaultLanguage) { dummy = m_default_language_json; dummyText = "default"; }
+	else                 { dummy = m_current_language_json; dummyText = "current"; }
+
+	if (dummy  == nullptr) { 
+		Print(
+			PrintType::ERROR, 
+			"No {} language loaded",
+			dummyText	
+		);
+		return { false, m_missing_language_text };
 	}
-	else if (m_current_language.is_null()) {
-		Print(PrintType::ERROR, "current Language is null");
-		return m_missing_language_text;
-	}
-	else if (not m_current_language.contains(key)) {
+	else if (dummy.is_null()) {
 		Print(
 			PrintType::ERROR,
-			"current language does not contain \"{}\"",
+			"{} language is null",
+			dummyText
+		);
+		return { false, m_missing_language_text };
+	}
+	else if (not dummy.contains(key)) {
+		Print(
+			PrintType::ERROR,
+			"{} language does not contain \"{}\"",
+			dummyText,
 			key
 		);
-		return m_default_text;
+		return { false, m_default_text };
 	}
 	else {
-		return m_current_language[key];
+		return { true, dummy[key] };
 	}
 }
 std::string HLanguageManager::ReplacePlaceholders(std::string const& text) const {
@@ -196,7 +311,10 @@ std::vector<std::string> HLanguageManager::GetAvailableLanguages() const {
 	return m_availableLanguages;
 }
 std::string HLanguageManager::Text(std::string const& key) const {
-	return RawText(key);
+	auto [valid, text] { RawText(key) };
+
+	if (valid) { return text; }
+	else       { return RawText(key, true).second; }
 }
 
 void HLanguageManager::OnEvent(Event const& event) {
