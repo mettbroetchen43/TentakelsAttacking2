@@ -79,6 +79,8 @@ std::string CToS(ConfigTypes type) {
 			return "player_count_max";
 		case ConfigTypes::PLAYER_COUNT_MIN:
 			return "player_count_min";
+		case ConfigTypes::Player_SHUFFLE:
+			return "player_shuffle";
 
 		case ConfigTypes::SOUND:
 			return "sound";

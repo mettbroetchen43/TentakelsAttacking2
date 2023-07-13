@@ -13,6 +13,7 @@
 #include "SceneType.h"
 #include "GameEventSettings.h"
 #include "SliderAndInputLine.h"
+#include "CheckBox.h"
 #include "GenerelEvents.hpp"
 
 enum class SliderType {
@@ -52,7 +53,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 
 	// line
 	m_elements.push_back(std::make_shared<Line>(
-		GetElementPosition(0.5f,0.3f),
+		GetElementPosition(0.5f,0.28f),
 		GetElementPosition(0.5f,0.95f),
 		resolution,
 		2.0f,
@@ -71,13 +72,14 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 	m_elements.push_back(m_eventSettings);
 
 
-	          int ID = 100;
-	constexpr int IDOffset = 100;
-	constexpr float posX = 0.75f;
-	          float posY = 0.3f;
-	constexpr float offsetY = 0.1f;
-	constexpr float sizeX = 0.4f;
-	constexpr float sizeY = 0.05f;
+	int             ID = 100;
+	int   constexpr IDOffset = 100;
+	float constexpr posX = 0.75f;
+	float           posY = 0.28f;
+	float constexpr offsetY = 0.1f;
+	float constexpr sizeX = 0.4f;
+	float constexpr sizeY = 0.05f;
+
 	auto next = [&]() {
 		ID += IDOffset;
 		posY += offsetY;
@@ -226,6 +228,35 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		});
 	m_elements.push_back(lastRound);
 	m_slider.push_back(lastRound);
+
+	next();
+	// cb
+	auto shuffleCB = std::make_shared<CheckBox>(
+		ID,
+		GetElementPosition(0.55f, posY),
+		GetElementSize(0.0f,0.03f).y,
+		Alignment::TOP_LEFT,
+		m_resolution,
+		1
+	);
+	shuffleCB->SetChecked(appContext.constants.player.shuffle);
+	shuffleCB->SetOnCheck([](unsigned int, bool isChecked){
+		AppContext_ty appContext{AppContext::GetInstance() };
+		appContext.constants.player.shuffle = isChecked;
+	});
+	m_elements.push_back(shuffleCB);
+
+	auto shuffleCBText = std::make_shared<Text>(
+		GetElementPosition(0.55f + 0.03f, posY),
+		GetElementSize(0.5f, 0.04f),
+		Alignment::TOP_LEFT,
+		m_resolution,
+		Alignment::TOP_LEFT,
+		0.04f,
+		"shuffle player"
+	);
+	// shuffleCBText->RenderRectangle(true);
+	m_elements.push_back(shuffleCBText);
 
 	// btn
 	auto randomBtn = std::make_shared<ClassicButton>(

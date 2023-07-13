@@ -21,9 +21,9 @@ void SettingsScene::Initialize(SceneType continueScene) {
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
 
-	float       elementY{ 0.3f };
-	float const sliderOffset{ 0.04f };
-	float const elementOffset{ 0.12f };
+	float           elementY{ 0.275f };
+	float constexpr sliderOffset{ 0.04f };
+	float constexpr elementOffset{ 0.06f };
 
 	// title
 	m_elements.push_back(std::make_shared<Title>(
@@ -81,9 +81,11 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	// volumeText->RenderRectangle(true);
 	m_elements.push_back(volumeText);
 
+	elementY += sliderOffset;
+
 	m_volume = std::make_shared<SliderAndInputLine>(
 		100,
-		GetElementPosition(0.75f, elementY + sliderOffset),
+		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		m_resolution,
@@ -99,9 +101,11 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		});
 	m_elements.push_back(m_volume);
 
+	elementY += 0.05f;
+
 	auto muteCB = std::make_shared<CheckBox>(
 		102,
-		GetElementPosition(0.55f, elementY + sliderOffset + 0.05f),
+		GetElementPosition(0.55f, elementY),
 		GetElementSize(0.0f, 0.02f).y,
 		Alignment::TOP_LEFT,
 		m_resolution,
@@ -117,7 +121,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	m_elements.push_back(muteCB);
 
 	auto muteText = std::make_shared<Text>(
-		GetElementPosition(0.566f, elementY + sliderOffset + 0.05f),
+		GetElementPosition(0.566f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_LEFT,
 		m_resolution,
@@ -128,7 +132,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	// muteText->RenderRectangle(true);
 	m_elements.push_back(muteText);
 
-	elementY += elementOffset;
+	elementY += elementOffset - 0.03f;
 
 	// fleet speed
 	auto fleetSpeedText = std::make_shared<Text>(
@@ -143,9 +147,11 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	// lastRoundText->RenderRectangle(true);
 	m_elements.push_back(fleetSpeedText);
 
+	elementY += sliderOffset;
+
 	auto fleetSpeed = std::make_shared<SliderAndInputLine>(
 		200,
-		GetElementPosition(0.75f, elementY + sliderOffset),
+		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		m_resolution,
@@ -174,9 +180,11 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	// lastRoundText->RenderRectangle(true);
 	m_elements.push_back(lastRoundText);
 
+	elementY += sliderOffset;
+
 	auto lastRound = std::make_shared<SliderAndInputLine>(
 		300,
-		GetElementPosition(0.75f, elementY + sliderOffset),
+		GetElementPosition(0.75f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		m_resolution,
@@ -190,6 +198,36 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 		});
 	m_elements.push_back(lastRound);
+
+	elementY += elementOffset + 0.02f;
+
+	// cb
+	auto shuffleCB = std::make_shared<CheckBox>(
+		350,
+		GetElementPosition(0.55f, elementY),
+		GetElementSize(0.0f,0.03f).y,
+		Alignment::MID_LEFT,
+		m_resolution,
+		1
+	);
+	shuffleCB->SetChecked(appContext.constants.player.shuffle);
+	shuffleCB->SetOnCheck([](unsigned int, bool isChecked){
+		AppContext_ty appContext{AppContext::GetInstance() };
+		appContext.constants.player.shuffle = isChecked;
+	});
+	m_elements.push_back(shuffleCB);
+
+	auto shuffleCBText = std::make_shared<Text>(
+		GetElementPosition(0.58f, elementY),
+		GetElementSize(0.5f, 0.04f),
+		Alignment::MID_LEFT,
+		m_resolution,
+		Alignment::MID_LEFT,
+		0.04f,
+		"shuffle player"
+	);
+	// shuffleCBText->RenderRectangle(true);
+	m_elements.push_back(shuffleCBText);
 
 	elementY += elementOffset;
 
@@ -206,8 +244,10 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	// resolutionText->RenderRectangle(true);
 	m_elements.push_back(resolutionText);
 
+	elementY += 0.02f;
+
 	auto languageText = std::make_shared<Text>(
-		GetElementPosition(0.25f, elementY + 0.02f),
+		GetElementPosition(0.25f, elementY),
 		GetElementSize(0.4f, 0.05f),
 		Alignment::TOP_MID,
 		m_resolution,
@@ -269,7 +309,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 
 	// btn
 	auto finishBtn = std::make_shared<ClassicButton>(
-		500,
+		600,
 		GetElementPosition(0.55f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
@@ -281,7 +321,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 	m_resolutionDropDownBtn.first = { finishBtn, false };
 
 	auto fullScreenToggleBtn = std::make_shared<ClassicButton>(
-		501,
+		601,
 		GetElementPosition(0.95f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
