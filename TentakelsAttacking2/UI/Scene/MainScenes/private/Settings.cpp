@@ -201,6 +201,7 @@ void SettingsScene::Initialize(SceneType continueScene) {
 
 	elementY += elementOffset + 0.02f;
 
+	// cb
 	auto shuffleCB = std::make_shared<CheckBox>(
 		350,
 		GetElementPosition(0.55f, elementY),
