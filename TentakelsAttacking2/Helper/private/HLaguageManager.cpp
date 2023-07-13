@@ -258,25 +258,41 @@ bool HLanguageManager::LoadLanguage(std::string const& language, bool const defa
 	return true;
 }
 
-std::string HLanguageManager::RawText(std::string const& key) const {
-	if (m_current_language_json == nullptr) {
-		Print(PrintType::ERROR, "No Current Language loaded");
-		return m_missing_language_text;
+std::pair<bool,std::string> HLanguageManager::RawText(std::string const& key, bool const defaultLanguage) const {
+
+	nlohmann::json dummy {};
+	std::string dummyText {};
+	
+	if (defaultLanguage) { dummy = m_default_language_json; dummyText = "default"; }
+	else                 { dummy = m_current_language_json; dummyText = "current"; }
+
+	if (dummy  == nullptr) { 
+		Print(
+			PrintType::ERROR, 
+			"No {} language loaded",
+			dummyText	
+		);
+		return { false, m_missing_language_text };
 	}
-	else if (m_current_language_json.is_null()) {
-		Print(PrintType::ERROR, "current Language is null");
-		return m_missing_language_text;
-	}
-	else if (not m_current_language_json.contains(key)) {
+	else if (dummy.is_null()) {
 		Print(
 			PrintType::ERROR,
-			"current language does not contain \"{}\"",
+			"{} language is null",
+			dummyText
+		);
+		return { false, m_missing_language_text };
+	}
+	else if (not dummy.contains(key)) {
+		Print(
+			PrintType::ERROR,
+			"{} language does not contain \"{}\"",
+			dummyText,
 			key
 		);
-		return m_default_text;
+		return { false, m_default_text };
 	}
 	else {
-		return m_current_language_json[key];
+		return { true, dummy[key] };
 	}
 }
 std::string HLanguageManager::ReplacePlaceholders(std::string const& text) const {
@@ -295,7 +311,10 @@ std::vector<std::string> HLanguageManager::GetAvailableLanguages() const {
 	return m_availableLanguages;
 }
 std::string HLanguageManager::Text(std::string const& key) const {
-	return RawText(key);
+	auto [valid, text] { RawText(key) };
+
+	if (valid) { return text; }
+	else       { return RawText(key, true).second; }
 }
 
 void HLanguageManager::OnEvent(Event const& event) {

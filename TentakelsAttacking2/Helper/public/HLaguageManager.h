@@ -31,7 +31,7 @@ private:
 	void ChanceLanguage(std::string const& language);
 	[[nodiscard]] bool LoadLanguage(std::string const& language, bool const defaultLanguage = false);
 
-	[[nodiscard]] std::string RawText(std::string const& key) const;
+	[[nodiscard]] std::pair<bool,std::string> RawText(std::string const& key, bool const defaultLanguage = false) const;
 
 	[[nodiscard]] std::string ReplacePlaceholders(std::string const& text) const;
 	template<typename... Args>
@@ -83,7 +83,7 @@ inline std::string HLanguageManager::ReplacePlaceholders(std::string_view text, 
 
 template<typename ...Args>
 inline std::string HLanguageManager::Text(std::string const& key, Args const & ...args) const {
-	std::string text{ RawText(key) };
+	auto [valid, text] { RawText(key) };
+	if (not valid) { text = RawText(key, true).second; }
 	return ReplacePlaceholders(text, args...);
 }
- 
