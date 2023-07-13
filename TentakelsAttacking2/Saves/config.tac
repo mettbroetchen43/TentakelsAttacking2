@@ -4,7 +4,7 @@
         "hit_chance": 0.30000001192092896
     },
     "fleet": {
-        "fleet_speed_current": 5,
+        "fleet_speed_current": 7,
         "fleet_speed_max": 20,
         "fleet_speed_min": 1
     },
@@ -36,7 +36,7 @@
     "player": {
         "player_count_max": 7,
         "player_count_min": 2,
-        "player_shuffle": false
+        "player_shuffle": true
     },
     "sound": {
         "volume_master": 50.0,
@@ -48,7 +48,7 @@
     },
     "window": {
         "full_screen_start_bool": false,
-        "resolution_as_enum": 5,
+        "resolution_as_enum": 4,
         "target_fps": 60
     },
     "world": {

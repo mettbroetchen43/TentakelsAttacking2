@@ -219,7 +219,7 @@ bool HLanguageManager::LoadLanguage(std::string const& language, bool const defa
 			if (defaultLanguage) {
 				Print(
 					PrintType::INITIALIZE,
-					"loaded version matches the expected version -> \"{}\" -> \"{}\"",
+					"loaded language version matches the expected version -> \"{}\" -> \"{}\"",
 					language,
 					version
 				);
@@ -227,7 +227,7 @@ bool HLanguageManager::LoadLanguage(std::string const& language, bool const defa
 			else {
 				Print(
 					PrintType::INFO,
-					"loaded version matches the expected version -> \"{}\" -> \"{}\"",
+					"loaded language version matches the expected version -> \"{}\" -> \"{}\"",
 					language,
 					version
 				);

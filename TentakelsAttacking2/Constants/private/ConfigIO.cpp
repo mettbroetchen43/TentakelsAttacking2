@@ -208,6 +208,13 @@ void LoadConfig() {
 					versionConfig
 				);
 			}
+			else {
+				Print(
+					PrintType::INFO,
+					"config versions matching -> version: {}",
+					versionConfig
+				);
+			}
 		}
 		else {
 			Print(PrintType::ERROR, "unable to check if config version is matching");
@@ -218,6 +225,13 @@ void LoadConfig() {
 					PrintType::ERROR,
 					"game version in config is not matching -> expected: {} -> provided: {} -> overwrite by save",
 					constants.global.gameVersion,
+					versionGame
+				);
+			}
+			else {
+				Print(
+					PrintType::INFO,
+					"game versions matching -> version: {}",
 					versionGame
 				);
 			}
@@ -308,12 +322,16 @@ void LoadConfig() {
 	if (int count = appContext.constants.GetConfigValueCount();  loadEntryCount != count) {
 		Print(
 			PrintType::ERROR,
-			"Entry count in config is not matching -> expected: {} -> provided: {}",
+			"Entry count in config is not matching -> expected: {} -> provided: {} -> some values will use the default value",
 			count,
 			loadEntryCount
 		);
 	} else {
-		Print(PrintType::INFO, "Entry count in config is matching");
+		Print(
+			PrintType::INFO,
+			"Entry count in config is matching -> count {}",
+			loadEntryCount
+		);
 	}
 
 #ifdef _DEBUG
