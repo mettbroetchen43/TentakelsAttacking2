@@ -40,13 +40,13 @@ void Fleet::Update(Galaxy_ty_raw galaxy) {
     if (not valid) { target = m_target; };
 
     int speed = AppContext::GetInstance().constants.fleet.currentFleetSpeed;
-    float constexpr dl = 0.001f;
-    int const x1{ m_position.x };
-    int const y1{ m_position.y };
-    int const x2{ target->GetPos().x };
-    int const y2{ target->GetPos().y };
-    int const dx = x2 - x1;
-    int const dy = y2 - y1;
+    float constexpr dl{ 0.001f };
+    int   const     x1{ m_position.x };
+    int   const     y1{ m_position.y };
+    int   const     x2{ target->GetPos().x };
+    int   const     y2{ target->GetPos().y };
+    int   const     dx{ x2 - x1 };
+    int   const     dy{ y2 - y1 };
     std::vector<vec2pos_ty> route;
 
     auto addPosition = [&](vec2pos_ty_ref_c new_) {

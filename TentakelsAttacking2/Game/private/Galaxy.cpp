@@ -659,13 +659,34 @@ void Galaxy::CheckDeleteTargetPoints() {
 // update
 void Galaxy::UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty target) {
 	for (auto const& fleet : fleets) {
-		fleet->SetTarget(target);
-		Print(
-			PrintType::ONLY_DEBUG,
-			"redirect fleet -> id: {} -> target: {}",
-			fleet->GetID(),
-			target->GetID()
-		);
+		if (fleet->GetPlayer() != target->GetPlayer()) {
+			auto targetPoint = std::make_shared<TargetPoint>(
+				GetNextID(),
+				fleet->GetPos(),
+				fleet->GetPlayer()
+			);
+			*targetPoint += *fleet;
+			auto origins{ GetFleetsOfTarget(fleet) };
+			UpdateFleetTargets(origins, targetPoint);
+			DeleteFleet(fleet);
+			m_objects.push_back(targetPoint);
+			m_targetPoints.push_back(targetPoint);
+			Print(
+				PrintType::ONLY_DEBUG,
+				"generated a target point for the fleet because player where not matching -> id {} -> position {}",
+				targetPoint->GetID(),
+				targetPoint->GetPos().ToString()
+			);
+		}
+		else {
+			fleet->SetTarget(target);
+			Print(
+				PrintType::ONLY_DEBUG,
+				"redirect fleet -> id: {} -> target: {}",
+				fleet->GetID(),
+				target->GetID()
+			);
+		}
 	}
 }
 
@@ -746,7 +767,7 @@ std::vector<HMergeResult> Galaxy::CheckMergingFriendlyFleets() {
 	return mergeResult;
 }
 void Galaxy::CheckDeleteFleetsWithoutShips() {
-	auto getFleets{ [&]() {
+	auto getFleets{ [this]() {
 		std::vector<Fleet_ty> fleets{ };
 		for (auto const& f : m_fleets) {
 			if (f->GetShipCount() == 0) {
