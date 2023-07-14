@@ -891,21 +891,22 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetPlanet() {
 	return results;
 }
 std::vector<HFightResult> Galaxy::SimulateFightFleetTargetPoint() {
-	std::vector<std::pair<SpaceObject_ty, SpaceObject_ty>> fights{ };
-	for (auto const& f : m_fleets) {
-		for (auto const& t : m_targetPoints) {
-			if (f->GetPos() == t->GetPos()) {
-				fights.emplace_back(t, f);
+	std::vector<HFightResult> results { };
+	
+	for (auto const& fleet : m_fleets) {
+		for (auto const& targetPoint : m_targetPoints) {
+			if (fleet->GetPos() == targetPoint->GetPos()) {
+				auto const& result{ Fight(targetPoint, fleet) };
+				if (result.IsValid()) {
+					results.push_back(result);
+
+					if (targetPoint->GetShipCount() == 0) {
+						targetPoint->SetPlayer(fleet->GetPlayer());
+						targetPoint->TransferShipsFrom(fleet.get());
+					}
+				}
 			}
 		}
-	}
-
-	std::vector<HFightResult> results{ };
-	for (auto const& [t, f] : fights) {
-		auto const result{ Fight(t, f) };
-		if (not result.IsValid()) { continue; }
-
-		results.push_back(result);
 	}
 
 	return results;
@@ -952,7 +953,8 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetFleet() {
 }
 
 HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
-	if (defender->GetShipCount() == 0 or
+	if ((defender->GetShipCount() == 0 and
+		not defender->IsTargetPoint()) or
 		attacker->GetShipCount() == 0) {
 		Print(
 			PrintType::ONLY_DEBUG,
