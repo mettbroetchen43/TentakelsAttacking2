@@ -861,30 +861,30 @@ std::vector<HFightResult> Galaxy::SimulateFight() {
 	singleResult = { SimulateFightFleetFleet() };
 	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 
+	// planet Fleet
+
+	// TargetPoint Fleet
+
+	// planet TargetPoint
+
 	return results;
 }
 
 std::vector<HFightResult> Galaxy::SimulateFightFleetPlanet() {
-	std::vector<std::pair<SpaceObject_ty, SpaceObject_ty>> fights{ };
-	for (auto const& f : m_fleets) {
-		for (auto const& p : m_planets) {
-			if (f->GetPos() == p->GetPos()) {
-				fights.emplace_back(p, f);
+	std::vector<HFightResult> results { };
+	for (auto const& fleet : m_fleets) {
+		for (auto const& planet : m_planets) {
+			if (fleet->GetPos() == planet->GetPos()) {
+				auto const result{ Fight(planet, fleet) };
+				if (result.IsValid()) {
+					results.push_back(result);
+					
+					if (planet->GetShipCount() == 0) {
+						planet->SetPlayer(fleet->GetPlayer());
+						planet->TransferShipsFrom(fleet.get());
+					}
+				}
 			}
-		}
-	}
-
-	std::vector<HFightResult> results{ };
-	for (auto const& [p, f] : fights) {
-		auto const result{ Fight(p, f) };
-		if (not result.IsValid()) { continue; }
-
-		results.push_back(result);
-
-		if (p->GetShipCount() == 0) {
-			p->SetPlayer(f->GetPlayer());
-			*p += *f;
-			f->SetShipCount(0);
 		}
 	}
 
@@ -962,7 +962,7 @@ HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 			attacker->GetID(),
 			attacker->GetShipCount()
 		);
-		return { { nullptr, nullptr },{nullptr,nullptr },{ },false };
+		return { { nullptr, nullptr }, {nullptr,nullptr }, { }, false };
 	}
 
 	if (defender->GetPlayer() == attacker->GetPlayer()) {
@@ -973,7 +973,7 @@ HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 			attacker->GetID(),
 			defender->GetPlayer()->GetID()
 		);
-		return { { nullptr, nullptr },{nullptr,nullptr },{ },false };
+		return { { nullptr, nullptr }, {nullptr,nullptr }, { }, false };
 	}
 
 	HFightResult::rounds_ty rounds{ };
@@ -1005,7 +1005,7 @@ HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 		defender->GetShipCount(),
 		attacker->GetShipCount()
 	);
-	return { {defender->GetPlayer(), attacker->GetPlayer()},{defender, attacker}, rounds, true };
+	return { {defender->GetPlayer(), attacker->GetPlayer()}, {defender, attacker}, rounds, true };
 }
 int Galaxy::Salve(SpaceObject_ty obj) const {
 	float const hitChace{ AppContext::GetInstance().constants.fight.hitChance * 100 };
