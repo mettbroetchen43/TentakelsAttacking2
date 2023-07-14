@@ -591,8 +591,7 @@ TargetPoint_ty Galaxy::GetTargetPointByID(unsigned int const ID) const {
 	throw std::runtime_error("no Target Point with ID " + std::to_string(ID));
 }
 
-SpaceObject_ty Galaxy::GetOrGenerateDestination(unsigned int ID,
-	int X, int Y, Player_ty currentPlayer) {
+SpaceObject_ty Galaxy::GetOrGenerateDestination(unsigned int ID, int X, int Y, Player_ty currentPlayer) {
 
 	for (auto& object : m_objects) {
 
