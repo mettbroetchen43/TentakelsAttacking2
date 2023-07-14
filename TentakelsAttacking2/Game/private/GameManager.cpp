@@ -246,7 +246,7 @@ void GameManager::NextRound(bool valid) {
 	if (not GetCurrentPlayer(player)) {
 		Print(
 			PrintType::ONLY_DEBUG,
-			"next round started -> cant get current player"
+			"next round started -> can't get current player"
 		);
 	}
 	else {
@@ -274,7 +274,7 @@ void GameManager::NextTurn(bool valid) {
 	if (not GetCurrentPlayer(player)) {
 		Print(
 			PrintType::ONLY_DEBUG,
-			"next turn started -> cant get current player"
+			"next turn started -> can't get current player"
 		);
 	}
 	else{
@@ -366,6 +366,20 @@ void GameManager::StartGame() {
 	ShuffleCurrentRoundPlayer();
 	SendCurrentPlayerID();
 	SendNextPlayerID();
+
+	Player_ty player { };
+	if (not GetCurrentPlayer(player)) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"game started -> can't get current player"
+		);
+	}
+
+	Print(
+		PrintType::ONLY_DEBUG,
+		"game started -> player {}",
+		player->GetID()
+	);
 }
 
 GameManager::GameManager()
