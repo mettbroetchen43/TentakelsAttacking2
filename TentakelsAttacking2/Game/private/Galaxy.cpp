@@ -629,6 +629,7 @@ void Galaxy::CheckDeleteTargetPoints() {
 		if (t->GetShipCount() > 0) { continue; }
 		auto const& origins{ GetFleetsOfTarget(t) };
 		if (origins.size() > 0) { continue; }
+		toDelete.push_back(t);
 		Print(
 			PrintType::ONLY_DEBUG,
 			"delete target point -> id: {} -> ships: {} -> origin count: {}",
@@ -636,8 +637,6 @@ void Galaxy::CheckDeleteTargetPoints() {
 			t->GetShipCount(),
 			origins.size()
 		);
-
-		toDelete.push_back(t);
 	}
 	// delete
 	auto const containsTargetPoint{ [toDelete](SpaceObject_ty d_t)->bool {
@@ -1303,9 +1302,6 @@ void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
 // update
 UpdateResult_ty Galaxy::Update() {
 	/*		
-		- flotten ohne schiffe löschen
-		  - flotten redirecten
-		
 		- kämpfe
 		  - flotte gegen planet
 		  - flotte gegen target point
@@ -1313,11 +1309,6 @@ UpdateResult_ty Galaxy::Update() {
 		  - optional
 			- planet gegen flotte
 			- target point gegen flotte
-		
-		- flotten ohne schiffe löschen
-		  - flotten redirecten
-		
-		- target points, die kein ziel sind und keine schiffe haben löschen.
 	*/
 
 	Print(
