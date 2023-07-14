@@ -886,6 +886,12 @@ std::vector<HFightResult> Galaxy::SimulateFight() {
 	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 	
 	// planet TargetPoint
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fight planet against target point"
+	);
+	singleResult = { SimulateFightPlanetTargetPoint() };
+	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 
 	return results;
 }
@@ -1040,10 +1046,32 @@ std::vector<HFightResult> Galaxy::SimulateFightTargetPointTargetPoint() {
 
 	return results;
 }
+std::vector<HFightResult> Galaxy::SimulateFightPlanetTargetPoint() {
+	std::vector<HFightResult> results { };
 
+	if (not AppContext::GetInstance().constants.fight.isFightPlanetTargetPoint) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"-> -> -> fights planet : target point are disabled -> no simulation"
+		);
+		return results;
+	}
+
+	for (auto const& planet : m_planets) {
+		for (auto const& targetPoint : m_targetPoints) {
+			if (planet->IsInFightRange(targetPoint)) {
+				auto const& result{ Fight(planet, targetPoint) };
+				if (result.IsValid()) {
+					results.push_back(result);
+				}
+			}
+		}
+	}
+
+	return results;
+}
 HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
-	if ((defender->GetShipCount() == 0 and
-		not defender->IsTargetPoint()) or
+	if (defender->GetShipCount() == 0 or
 		attacker->GetShipCount() == 0) {
 		Print(
 			PrintType::ONLY_DEBUG,

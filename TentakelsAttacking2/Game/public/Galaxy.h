@@ -179,6 +179,10 @@ private:
 	 */
 	[[nodiscard]] std::vector<HFightResult> SimulateFightTargetPointTargetPoint();
 	/**
+	 * simulates the fight between a target point and a target point.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightPlanetTargetPoint();
+	/**
 	 * simulates a single fight.
 	 */
 	[[nodiscard]] HFightResult Fight(SpaceObject_ty defender, SpaceObject_ty attacker);
