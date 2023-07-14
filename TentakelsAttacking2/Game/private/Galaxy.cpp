@@ -629,6 +629,7 @@ void Galaxy::CheckDeleteTargetPoints() {
 		if (t->GetShipCount() > 0) { continue; }
 		auto const& origins{ GetFleetsOfTarget(t) };
 		if (origins.size() > 0) { continue; }
+		toDelete.push_back(t);
 		Print(
 			PrintType::ONLY_DEBUG,
 			"delete target point -> id: {} -> ships: {} -> origin count: {}",
@@ -636,8 +637,6 @@ void Galaxy::CheckDeleteTargetPoints() {
 			t->GetShipCount(),
 			origins.size()
 		);
-
-		toDelete.push_back(t);
 	}
 	// delete
 	auto const containsTargetPoint{ [toDelete](SpaceObject_ty d_t)->bool {
@@ -657,218 +656,420 @@ void Galaxy::CheckDeleteTargetPoints() {
 }
 
 // update
-void Galaxy::UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty target) {
-	for (auto const& fleet : fleets) {
-		fleet->SetTarget(target);
-		Print(
-			PrintType::ONLY_DEBUG,
-			"redirect fleet -> id: {} -> target: {}",
-			fleet->GetID(),
-			target->GetID()
-		);
+std::vector<Fleet_ty> Galaxy::UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty currentFleet, SpaceObject_ty target) {
+	std::vector<Fleet_ty> emptyFleets { };
+	for (auto const& fleet: fleets) {
+		if (fleet->GetPlayer() == currentFleet->GetPlayer()) {
+			fleet->SetTarget(target);
+			Print(
+				PrintType::ONLY_DEBUG,
+				"redirect fleet -> id: {} -> old target: {} -> new target: {}",
+				fleet->GetID(),
+				currentFleet->GetID(),
+				target->GetID()
+			);
+		}
+		else {
+			auto targetPoint = std::make_shared<TargetPoint>(
+				GetNextID(),
+				fleet->GetPos(),
+				fleet->GetPlayer()
+			);
+			targetPoint->TransferShipsFrom(fleet.get());
+			m_objects.push_back(targetPoint);
+			m_targetPoints.push_back(targetPoint);
+			emptyFleets.push_back(fleet);
+			Print(
+				PrintType::ONLY_DEBUG,
+				"created a new target point for fleet -> fleet id: {} -> target point id: {} -> fleet ships: {} -> target point ships: {}",
+				fleet->GetID(),
+				targetPoint->GetID(),
+				fleet->GetShipCount(),
+				targetPoint->GetShipCount()
+			);
+
+			auto origins{ GetFleetsOfTarget(fleet) };
+			auto results{ UpdateFleetTargets(origins, fleet, targetPoint) };
+			if (results.size() > 0) {
+				for (auto const& result : results) {
+					emptyFleets.push_back(result);
+				}
+			}
+		}
 	}
+	return emptyFleets;
+	/*for (auto const& fleet : fleets) {
+		if (fleet->GetPlayer() != target->GetPlayer()) {
+			auto targetPoint = std::make_shared<TargetPoint>(
+				GetNextID(),
+				fleet->GetPos(),
+				fleet->GetPlayer()
+			);
+			*targetPoint += *fleet;
+			auto origins{ GetFleetsOfTarget(fleet) };
+			UpdateFleetTargets(origins, targetPoint);
+			DeleteFleet(fleet);
+			m_objects.push_back(targetPoint);
+			m_targetPoints.push_back(targetPoint);
+			Print(
+				PrintType::ONLY_DEBUG,
+				"generated a target point for the fleet because player where not matching -> id {} -> position {}",
+				targetPoint->GetID(),
+				targetPoint->GetPos().ToString()
+			);
+		}
+		else {
+			fleet->SetTarget(target);
+			Print(
+				PrintType::ONLY_DEBUG,
+				"redirect fleet -> id: {} -> target: {}",
+				fleet->GetID(),
+				target->GetID()
+			);
+		}
+	}
+	*/
 }
 
 std::vector<HMergeResult> Galaxy::CheckArrivingFriendlyFleets() {
-	std::vector<Fleet_ty> toDelete{ };
 	std::vector<HMergeResult> mergeResult{ };
 	for (auto const& fleet : m_fleets) {
-		bool const friendly{ fleet->GetTarget()->GetPlayer() == fleet->GetPlayer() };
-		if (friendly and fleet->IsArrived()) {
-			auto const& target = fleet->GetTarget();
+
+		if (fleet->GetShipCount() == 0) { continue; } // no ships to transfer
+
+		// arriving directly at the far target where the fleet is flying to at the update
+		if (fleet->IsFarFriendly() and fleet->IsFarArrived()) {
+			auto [valid, target]{ TryGetTarget(fleet.get(), fleet->GetTarget()) };
+
+			if (valid) { 
+				auto const shipCount{ fleet->GetShipCount() };
+				target->TransferShipsFrom(fleet.get());
+				mergeResult.emplace_back(fleet->GetPlayer(), fleet, fleet->GetTarget(), shipCount);
+
+				Print(
+					PrintType::ONLY_DEBUG,
+					"fleet arrived far -> id: {} -> target: {} -> ships: {}",
+					fleet->GetID(),
+					target->GetID(),
+					shipCount
+				);
+			}
+			else {
+				Print(
+					PrintType::ONLY_DEBUG,
+					"far fleet target was not valid while arriving at far target -> fleet id {}",
+					fleet->GetID()
+				);	
+			}
+		}
+		// arriving at the direct target of the fleet
+		else if (fleet->IsFriendly() and fleet->IsArrived()) {
+
+			auto       target{ fleet->GetTarget() };
 			auto const shipCount{ fleet->GetShipCount() };
-			*target += *fleet;
-			auto const origins{ GetFleetsOfTarget(fleet) };
-			UpdateFleetTargets(origins, target);
-			toDelete.push_back(fleet);
+			target->TransferShipsFrom(fleet.get());
 			mergeResult.emplace_back(fleet->GetPlayer(), fleet, fleet->GetTarget(), shipCount);
 
 			Print(
 				PrintType::ONLY_DEBUG,
-				"fleet arrived -> id: {} -> target: {} -> ships: {}",
+				"fleet arrived direct -> id: {} -> target: {} -> ships: {}",
 				fleet->GetID(),
 				target->GetID(),
-				fleet->GetShipCount()
+				shipCount
 			);
 		}
 	}
-	DeleteFleet(toDelete);
 	return mergeResult;
 }
 std::vector<HMergeResult> Galaxy::CheckMergingFriendlyFleets() {
-	std::vector<std::pair<Fleet_ty_c, Fleet_ty_c>> same{ };
-	auto const containsSame{ [&](Fleet_ty_c first, Fleet_ty_c second) {
-		for (auto const& s : same) {
-			if (s.first == first and s.second == second) { return true; }
-			else if (s.first == second and s.second == first) { return true; }
-		}
-		return false;
-	} };
+	std::vector<HMergeResult> mergeResult{ };
 
-	// find mergeable fleets
-	for (int first = 0; first < m_fleets.size(); ++first) {
-		for (int second = first + 1; second < m_fleets.size(); ++second) {
-			auto const fleet1{ m_fleets.at(first) };
-			auto const fleet2{ m_fleets.at(second) };
+	for (auto const& fleet_lhs : m_fleets) {
+		for (auto const& fleet_rhs : m_fleets) {
+			if (   fleet_lhs->GetID()        == fleet_rhs->GetID()
+				or fleet_lhs->GetShipCount() == 0
+				or fleet_rhs->GetShipCount() == 0 ) 
+			{ continue; }
+			
+			auto [valid_lhs, target_lhs] { fleet_lhs->  GetFairTarget()         };
+			if   (not valid_lhs)         { target_lhs = fleet_lhs->GetTarget(); }
+			auto [valid_rhs, target_rhs] { fleet_rhs->  GetFairTarget()         };
+			if   (not valid_rhs)         { target_rhs = fleet_rhs->GetTarget(); }
 
-			bool const mergable{
-				fleet1->GetPlayer() == fleet2->GetPlayer()
-				and fleet1->GetPos() == fleet2->GetPos()
+			bool const mergable {
+				    fleet_lhs->GetPlayer() == fleet_rhs->GetPlayer()
+				and target_lhs->GetID()    == target_rhs->GetID()
+				and fleet_lhs->IsInFightRange(fleet_rhs)
 			};
-			if (mergable and not containsSame(fleet1, fleet2)) {
-				same.emplace_back(fleet1, fleet2);
+
+			if (mergable){
+				fleet_lhs->TransferShipsFrom(fleet_rhs.get());
+
+				Print(
+					PrintType::ONLY_DEBUG,
+					"fleets merged -> fleet lhs id: {} -> fleet rhs id: {} -> ships lhs: {} -> ships rhs: {}",
+					fleet_lhs->GetID(),
+					fleet_rhs->GetID(),
+					fleet_lhs->GetShipCount(),
+					fleet_rhs->GetShipCount()
+				);
 			}
 		}
 	}
-	if (same.size() == 0) { return { }; } // no found
 
-	// merge fleets
-	std::vector<Fleet_ty> toDelete{ };
-	std::vector<HMergeResult> mergeResult{ };
-	for (auto const& match : same) {
-		auto const shipCount{ match.second->GetShipCount() };
-		*match.first += *match.second;
-		auto const& origins{ GetFleetsOfTarget(match.second) };
-		UpdateFleetTargets(origins, match.second->GetTarget());
-		toDelete.push_back(match.second);
-		mergeResult.emplace_back(match.first->GetPlayer(), match.second, match.first, shipCount);
-		Print(
-			PrintType::ONLY_DEBUG,
-			"fleets merging -> player: {} -> f1 id: {} -> f2 id: {} -> ships: {}",
-			match.first->GetPlayer()->GetID(),
-			match.first->GetID(),
-			match.second->GetID(),
-			shipCount
-		);
-	}
-
-	DeleteFleet(toDelete);
 	return mergeResult;
 }
 void Galaxy::CheckDeleteFleetsWithoutShips() {
-	auto getFleets{ [&]() {
-		std::vector<Fleet_ty> fleets{ };
-		for (auto const& f : m_fleets) {
-			if (f->GetShipCount() == 0) {
-				fleets.push_back(f);
+	std::vector<Fleet_ty> toDelete { };
+	for (auto const& fleet : m_fleets) {
+		if (fleet->GetShipCount() != 0) { continue; }
+
+		auto const& origins{ GetFleetsOfTarget(fleet) };
+		auto results{UpdateFleetTargets(origins, fleet, fleet->GetTarget())};
+		if (results.size() > 0) {
+			for (auto const& result : results) {
+				toDelete.push_back(result);
 			}
 		}
-		return fleets;
-	} };
 
-	auto const& fleets{ getFleets() };
-	if (fleets.size() == 0) { return; }
-
-	for (auto const& f : fleets) {
-		auto const& origins{ GetFleetsOfTarget(f) };
-		UpdateFleetTargets(origins, f->GetTarget());
+		toDelete.push_back(fleet);
 	}
-
-	DeleteFleet(fleets);
+	DeleteFleet(toDelete);
 }
 
 std::vector<HFightResult> Galaxy::SimulateFight() {
 	// Fleet Planet
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fights fleet against planet"
+	);
 	std::vector<HFightResult> results{ SimulateFightFleetPlanet() };
 
 	// Fleet TargetPoint
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fights fleet against target point"
+	);
 	std::vector<HFightResult> singleResult{SimulateFightFleetTargetPoint()};
 	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 
 	// Fleet Fleet
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fights fleet against fleet"
+	);
 	singleResult = { SimulateFightFleetFleet() };
+	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
+
+	// planet Fleet
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fight planet against fleet"
+	);
+	singleResult = { SimulateFightPlanetFleet() };
+	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
+
+	// TargetPoint Fleet
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fight target point against fleet"
+	);
+	singleResult = { SimulateFightTargetPointFleet() };
+	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
+
+	// TargetPoint TargetPoint
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fight target point against target point"
+	);
+	singleResult = { SimulateFightTargetPointTargetPoint() };
+	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
+	
+	// planet TargetPoint
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fight planet against target point"
+	);
+	singleResult = { SimulateFightPlanetTargetPoint() };
 	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 
 	return results;
 }
-
 std::vector<HFightResult> Galaxy::SimulateFightFleetPlanet() {
-	std::vector<std::pair<SpaceObject_ty, SpaceObject_ty>> fights{ };
-	for (auto const& f : m_fleets) {
-		for (auto const& p : m_planets) {
-			if (f->GetPos() == p->GetPos()) {
-				fights.emplace_back(p, f);
+	std::vector<HFightResult> results { };
+	for (auto const& fleet : m_fleets) {
+		for (auto const& planet : m_planets) {
+			if (fleet->GetPos() == planet->GetPos()) {
+				auto const result{ Fight(planet, fleet) };
+				if (result.IsValid()) {
+					results.push_back(result);
+					
+					if (planet->GetShipCount() == 0) {
+						planet->SetPlayer(fleet->GetPlayer());
+						planet->TransferShipsFrom(fleet.get());
+					}
+				}
 			}
-		}
-	}
-
-	std::vector<HFightResult> results{ };
-	for (auto const& [p, f] : fights) {
-		auto const result{ Fight(p, f) };
-		if (not result.IsValid()) { continue; }
-
-		results.push_back(result);
-
-		if (p->GetShipCount() == 0) {
-			p->SetPlayer(f->GetPlayer());
-			*p += *f;
-			f->SetShipCount(0);
 		}
 	}
 
 	return results;
 }
 std::vector<HFightResult> Galaxy::SimulateFightFleetTargetPoint() {
-	std::vector<std::pair<SpaceObject_ty, SpaceObject_ty>> fights{ };
-	for (auto const& f : m_fleets) {
-		for (auto const& t : m_targetPoints) {
-			if (f->GetPos() == t->GetPos()) {
-				fights.emplace_back(t, f);
-			}
-		}
-	}
+	std::vector<HFightResult> results { };
+	
+	for (auto const& fleet : m_fleets) {
+		for (auto const& targetPoint : m_targetPoints) {
+			if (fleet->GetPos() == targetPoint->GetPos()) {
+				auto const& result{ Fight(targetPoint, fleet) };
+				if (result.IsValid()) {
+					results.push_back(result);
 
-	std::vector<HFightResult> results{ };
-	for (auto const& [t, f] : fights) {
-		auto const result{ Fight(t, f) };
-		if (not result.IsValid()) { continue; }
-
-		results.push_back(result);
-	}
-
-	return results;
-}
-std::vector<HFightResult> Galaxy::SimulateFightFleetFleet() {
-	std::vector<std::pair<SpaceObject_ty, SpaceObject_ty>> fights{ };
-	auto contains{ [&](SpaceObject_ty_c f1, SpaceObject_ty_c f2) {
-		for (auto const& [o_f1, o_f2] : fights) {
-			if (o_f1->GetID() == f1->GetID() and o_f2->GetID() == f2->GetID()) { return true; };
-			if (o_f1->GetID() == f2->GetID() and o_f2->GetID() == f1->GetID()) { return true; };
-		}
-		return false;
-		}
-	};
-
-	for (auto const& f1 : m_fleets) {
-		for (auto const& f2 : m_fleets) {
-			if (f1->GetID() == f2->GetID()) { continue; }
-			if (f1->IsInFightRange(f2)) {
-				if (not contains(f1, f2)) {
-					fights.emplace_back(f1, f2);
+					if (targetPoint->GetShipCount() == 0) {
+						targetPoint->SetPlayer(fleet->GetPlayer());
+						targetPoint->TransferShipsFrom(fleet.get());
+					}
 				}
 			}
 		}
 	}
 
-	std::vector<HFightResult> results{ };
+	return results;
+}
+std::vector<HFightResult> Galaxy::SimulateFightFleetFleet() {
+	std::vector<HFightResult> results { };
 	Random& random{ Random::GetInstance() };
-	for (auto& [f1, f2] : fights) {
-		auto const shouldSwitch = random.random(2);
-		if (shouldSwitch) {
-			HFightResult result{ Fight(f2, f1) };
-			if (not result.IsValid()) { continue; }
-			results.push_back(result);
-		}
-		else {
-			HFightResult result{ Fight(f1, f2) };
-			if (not result.IsValid()) { continue; }
-			results.push_back(result);
+
+	for (auto const& fleet_lhs : m_fleets) {
+		for (auto const& fleet_rhs : m_fleets) {
+			if (fleet_lhs->GetID() == fleet_rhs->GetID()) { continue; }
+
+			if (fleet_lhs->IsInFightRange(fleet_rhs)) {
+				auto const isSwitch { random.random(2) };
+				HFightResult result { { nullptr, nullptr }, {nullptr,nullptr }, { }, false };
+				if (isSwitch) {
+					result = Fight(fleet_rhs, fleet_lhs);
+				}
+				else {
+					result = Fight(fleet_lhs, fleet_rhs);
+				}
+
+				if (result.IsValid()) {
+					results.push_back(result);
+				}
+			}
 		}
 	}
 
 	return results;
 }
+std::vector<HFightResult> Galaxy::SimulateFightPlanetFleet() {
+	std::vector<HFightResult> results { };
 
+	if (not AppContext::GetInstance().constants.fight.isFightPlanetFleet) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"-> -> -> fights planet : fleet are disabled -> no simulation"
+		);
+		return results;
+	}
+
+	for (auto const& planet : m_planets) {
+		for (auto const& fleet : m_fleets) {
+			if (planet->IsInFightRange(fleet)) {
+				auto const& result { Fight(planet, fleet) };
+				if (result.IsValid()) {
+					results.push_back(result);
+				}
+			}
+		}	
+	}
+
+	return results;
+}
+std::vector<HFightResult> Galaxy::SimulateFightTargetPointFleet() {
+	std::vector<HFightResult> results { };
+
+	if (not AppContext::GetInstance().constants.fight.isFightTargetPointFleet) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"-> -> -> fights target point : fleet are disabled -> no simulation"
+		);
+		return results;
+	}
+
+	for (auto const& targetPoint : m_targetPoints) {
+		for (auto const& fleet : m_fleets) {
+			if (targetPoint->IsInFightRange(fleet)) {
+				auto const& result{ Fight(targetPoint, fleet) };
+				if (result.IsValid()) {
+					results.push_back(result);
+				}
+			}
+		}
+	}
+
+	return results;
+}
+std::vector<HFightResult> Galaxy::SimulateFightTargetPointTargetPoint() {
+	std::vector<HFightResult> results { };
+
+	if (not AppContext::GetInstance().constants.fight.isFightTargetPointTargetPoint) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"-> -> -> fights target point : target point are disabled -> no simulation"
+		);
+		return results;
+	}
+
+	Random& random{ Random::GetInstance() };
+	for (auto const& targetPoint_lhs : m_targetPoints) {
+		for (auto const& targetPoint_rhs : m_targetPoints) {
+			if (targetPoint_lhs->GetID() == targetPoint_rhs->GetID()) { continue; }
+
+			if (targetPoint_lhs->IsInFightRange(targetPoint_rhs)) {
+				auto const isSwitch { random.random(2) };
+				HFightResult result { { nullptr, nullptr }, {nullptr,nullptr }, { }, false };
+				if (isSwitch) {
+					result = Fight(targetPoint_rhs, targetPoint_lhs);
+				}
+				else {
+					result = Fight(targetPoint_lhs, targetPoint_rhs);
+				}
+
+				if (result.IsValid()) {
+					results.push_back(result);
+				}
+			}
+		}
+	}
+
+	return results;
+}
+std::vector<HFightResult> Galaxy::SimulateFightPlanetTargetPoint() {
+	std::vector<HFightResult> results { };
+
+	if (not AppContext::GetInstance().constants.fight.isFightPlanetTargetPoint) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"-> -> -> fights planet : target point are disabled -> no simulation"
+		);
+		return results;
+	}
+
+	for (auto const& planet : m_planets) {
+		for (auto const& targetPoint : m_targetPoints) {
+			if (planet->IsInFightRange(targetPoint)) {
+				auto const& result{ Fight(planet, targetPoint) };
+				if (result.IsValid()) {
+					results.push_back(result);
+				}
+			}
+		}
+	}
+
+	return results;
+}
 HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 	if (defender->GetShipCount() == 0 or
 		attacker->GetShipCount() == 0) {
@@ -880,7 +1081,7 @@ HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 			attacker->GetID(),
 			attacker->GetShipCount()
 		);
-		return { { nullptr, nullptr },{nullptr,nullptr },{ },false };
+		return { { nullptr, nullptr }, {nullptr,nullptr }, { }, false } ;
 	}
 
 	if (defender->GetPlayer() == attacker->GetPlayer()) {
@@ -891,7 +1092,7 @@ HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 			attacker->GetID(),
 			defender->GetPlayer()->GetID()
 		);
-		return { { nullptr, nullptr },{nullptr,nullptr },{ },false };
+		return { { nullptr, nullptr }, {nullptr,nullptr }, { }, false };
 	}
 
 	HFightResult::rounds_ty rounds{ };
@@ -923,7 +1124,7 @@ HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 		defender->GetShipCount(),
 		attacker->GetShipCount()
 	);
-	return { {defender->GetPlayer(), attacker->GetPlayer()},{defender, attacker}, rounds, true };
+	return { {defender->GetPlayer(), attacker->GetPlayer()}, {defender, attacker}, rounds, true };
 }
 int Galaxy::Salve(SpaceObject_ty obj) const {
 	float const hitChace{ AppContext::GetInstance().constants.fight.hitChance * 100 };
@@ -988,7 +1189,7 @@ bool Galaxy::IsValidSpaceObjectID(unsigned int ID) const {
 void Galaxy::SetFiltered(bool isFiltered) {
 	m_isFiltered = isFiltered;
 }
-bool Galaxy::IsFiltrered() const {
+bool Galaxy::IsFiltered() const {
 	return m_isFiltered;
 }
 
@@ -1219,6 +1420,20 @@ void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
 
 // update
 UpdateResult_ty Galaxy::Update() {
+	/*		
+		- kämpfe
+		  - flotte gegen planet
+		  - flotte gegen target point
+		  - flotten, die sich zufällig treffen
+		  - optional
+			- planet gegen flotte
+			- target point gegen flotte
+	*/
+
+	Print(
+		PrintType::ONLY_DEBUG,
+		"start update logic"
+	);
 	Print(
 		PrintType::ONLY_DEBUG,
 		"-> update space objects"
@@ -1233,7 +1448,7 @@ UpdateResult_ty Galaxy::Update() {
 	std::vector<HMergeResult> mergeResults{ CheckArrivingFriendlyFleets() };
 	Print(
 		PrintType::ONLY_DEBUG,
-		"-> merge friendly fleets with other fleets"
+		"-> merge friendly fleets with other friendly fleets"
 	);
 	std::vector<HMergeResult> singleMergeResult{ CheckMergingFriendlyFleets() };
 	std::copy(singleMergeResult.begin(), singleMergeResult.end(), std::back_inserter(mergeResults));
@@ -1261,7 +1476,7 @@ UpdateResult_ty Galaxy::Update() {
 
 	Print(
 		PrintType::ONLY_DEBUG,
-		"-> update finished"
+		"update logic finished"
 	);
 
 	return { mergeResults, fightResults };

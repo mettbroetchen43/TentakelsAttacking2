@@ -71,14 +71,13 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 	m_eventSettings->SetActive(true, appContext);
 	m_elements.push_back(m_eventSettings);
 
-
-	int             ID = 100;
+	int             ID       = 100;
 	int   constexpr IDOffset = 100;
-	float constexpr posX = 0.75f;
-	float           posY = 0.28f;
-	float constexpr offsetY = 0.1f;
-	float constexpr sizeX = 0.4f;
-	float constexpr sizeY = 0.05f;
+	float constexpr posX     = 0.75f;
+	float           posY     = 0.28f;
+	float constexpr offsetY  = 0.1f;
+	float constexpr sizeX    = 0.4f;
+	float constexpr sizeY    = 0.05f;
 
 	auto next = [&]() {
 		ID += IDOffset;

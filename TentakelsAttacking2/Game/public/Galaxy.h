@@ -132,7 +132,7 @@ private:
 	/**
 	 * updates the targets of the provided fleets.
 	 */
-	void UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty target);
+	[[nodiscard]] std::vector<Fleet_ty> UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty currentFleet, SpaceObject_ty target);
 
 	/**
 	 * checks if any fleet is arrived.
@@ -166,6 +166,22 @@ private:
 	 * simulates the fight between 2 fleets.
 	 */
 	[[nodiscard]] std::vector<HFightResult> SimulateFightFleetFleet();
+	/**
+	 * simulates the fight between a planet and a fleet.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightPlanetFleet();
+	/**
+	 * simulates the fight between a target point and a fleet.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightTargetPointFleet();
+	/**
+	 * simulates the fight between a target point and a target point.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightTargetPointTargetPoint();
+	/**
+	 * simulates the fight between a target point and a target point.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightPlanetTargetPoint();
 	/**
 	 * simulates a single fight.
 	 */
@@ -209,7 +225,7 @@ public:
 	/**
 	 * returns if the galaxy is filtered
 	 */
-	[[nodiscard]] bool IsFiltrered() const;
+	[[nodiscard]] bool IsFiltered() const;
 	/**
 	 * returns the size of the galaxy.
 	 */

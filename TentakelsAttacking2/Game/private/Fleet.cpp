@@ -25,12 +25,31 @@ bool Fleet::IsFleet() const {
 SpaceObject_ty Fleet::GetTarget() const {
     return m_target;
 }
+std::pair<bool, SpaceObject_ty> Fleet::GetFairTarget() const {
+    return TryGetTarget(this, m_target);
+}
 void Fleet::SetTarget(SpaceObject_ty target) {
     m_target = target;
 }
 
 bool Fleet::IsArrived() const {
     return m_position == m_target->GetPos();
+}
+bool Fleet::IsFarArrived() const {
+    auto [valid, dummy] { TryGetTarget(this, m_target) };
+    if (not valid) { return false; }
+
+    return m_position == dummy->GetPos();
+}
+
+bool Fleet::IsFriendly() const {
+    return m_player == m_target->GetPlayer();
+}
+bool Fleet::IsFarFriendly() const {
+    auto [valid, target] { TryGetTarget(this, m_target) };
+    if (not valid) { return false; }
+
+    return m_player == target->GetPlayer();
 }
 
 
@@ -40,13 +59,13 @@ void Fleet::Update(Galaxy_ty_raw galaxy) {
     if (not valid) { target = m_target; };
 
     int speed = AppContext::GetInstance().constants.fleet.currentFleetSpeed;
-    float constexpr dl = 0.001f;
-    int const x1{ m_position.x };
-    int const y1{ m_position.y };
-    int const x2{ target->GetPos().x };
-    int const y2{ target->GetPos().y };
-    int const dx = x2 - x1;
-    int const dy = y2 - y1;
+    float constexpr dl{ 0.001f };
+    int   const     x1{ m_position.x };
+    int   const     y1{ m_position.y };
+    int   const     x2{ target->GetPos().x };
+    int   const     y2{ target->GetPos().y };
+    int   const     dx{ x2 - x1 };
+    int   const     dy{ y2 - y1 };
     std::vector<vec2pos_ty> route;
 
     auto addPosition = [&](vec2pos_ty_ref_c new_) {

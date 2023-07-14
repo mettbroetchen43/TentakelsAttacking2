@@ -17,6 +17,11 @@ SpaceObject::SpaceObject(unsigned int ID, vec2pos_ty position, Player_ty player)
 SpaceObject::SpaceObject(unsigned int ID, vec2pos_ty position, size_t ships, Player_ty player)
 	: m_ID{ID}, m_position{position}, m_player{player}, m_ships{ships} {}
 
+void SpaceObject::TransferShipsFrom(SpaceObject* origin) {
+	m_ships += origin->GetShipCount();
+	origin->SetShipCount(0);
+}
+
 unsigned int SpaceObject::GetID() const {
 	return m_ID;
 }
