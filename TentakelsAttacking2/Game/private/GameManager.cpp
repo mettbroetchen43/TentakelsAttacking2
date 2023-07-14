@@ -449,7 +449,8 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* gameEvent = dynamic_cast<GetUpdateEvaluation const*> (&event)) {
-		AppContext::GetInstance().eventManager.InvokeEvent(SendUpdateEvaluation{ m_lastUpdateResults.first ,m_lastUpdateResults.second});
+		AppContext::GetInstance().eventManager.InvokeEvent(SendUpdateEvaluation{ 
+			m_lastUpdateResults.first ,m_lastUpdateResults.second});
 		return;
 	}
 
