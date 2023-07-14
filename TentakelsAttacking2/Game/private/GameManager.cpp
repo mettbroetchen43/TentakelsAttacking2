@@ -242,6 +242,21 @@ void GameManager::NextRound(bool valid) {
 
 	++appContext.constants.global.currentRound;
 
+	Player_ty player { } ;
+	if (not GetCurrentPlayer(player)) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"next round started -> can't get current player"
+		);
+	}
+	else {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"next round started -> player {}",
+			player->GetID()
+		);
+	}
+
 	appContext.eventManager.InvokeEvent(ShowNextRoundEvent());
 }
 void GameManager::NextTurn(bool valid) {
@@ -254,6 +269,21 @@ void GameManager::NextTurn(bool valid) {
 
 	SendCurrentPlayerID();
 	SendNextPlayerID();
+
+	Player_ty player { };
+	if (not GetCurrentPlayer(player)) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"next turn started -> can't get current player"
+		);
+	}
+	else{
+		Print(
+			PrintType::ONLY_DEBUG,
+			"next turn started -> player {}",
+			player->GetID()
+		);
+	}
 
 	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextTurnEvent());
 }
@@ -336,6 +366,20 @@ void GameManager::StartGame() {
 	ShuffleCurrentRoundPlayer();
 	SendCurrentPlayerID();
 	SendNextPlayerID();
+
+	Player_ty player { };
+	if (not GetCurrentPlayer(player)) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"game started -> can't get current player"
+		);
+	}
+
+	Print(
+		PrintType::ONLY_DEBUG,
+		"game started -> player {}",
+		player->GetID()
+	);
 }
 
 GameManager::GameManager()
@@ -405,7 +449,8 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* gameEvent = dynamic_cast<GetUpdateEvaluation const*> (&event)) {
-		AppContext::GetInstance().eventManager.InvokeEvent(SendUpdateEvaluation{ m_lastUpdateResults.first ,m_lastUpdateResults.second});
+		AppContext::GetInstance().eventManager.InvokeEvent(SendUpdateEvaluation{ 
+			m_lastUpdateResults.first ,m_lastUpdateResults.second});
 		return;
 	}
 
