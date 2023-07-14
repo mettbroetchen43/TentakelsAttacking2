@@ -790,13 +790,25 @@ void Galaxy::CheckDeleteFleetsWithoutShips() {
 
 std::vector<HFightResult> Galaxy::SimulateFight() {
 	// Fleet Planet
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fights fleet against planet"
+	);
 	std::vector<HFightResult> results{ SimulateFightFleetPlanet() };
 
 	// Fleet TargetPoint
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fights fleet against target point"
+	);
 	std::vector<HFightResult> singleResult{SimulateFightFleetTargetPoint()};
 	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 
 	// Fleet Fleet
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fights fleet against fleet"
+	);
 	singleResult = { SimulateFightFleetFleet() };
 	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 
