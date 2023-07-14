@@ -32,6 +32,22 @@ void Fleet::SetTarget(SpaceObject_ty target) {
 bool Fleet::IsArrived() const {
     return m_position == m_target->GetPos();
 }
+bool Fleet::IsFarArrived() const {
+    auto [valid, dummy] { TryGetTarget(this, m_target) };
+    if (not valid) { return false; }
+
+    return m_position == dummy->GetPos();
+}
+
+bool Fleet::IsFriendly() const {
+    return m_player == m_target->GetPlayer();
+}
+bool Fleet::IsFarFriendly() const {
+    auto [valid, target] { TryGetTarget(this, m_target) };
+    if (not valid) { return false; }
+
+    return m_player == target->GetPlayer();
+}
 
 
 void Fleet::Update(Galaxy_ty_raw galaxy) {

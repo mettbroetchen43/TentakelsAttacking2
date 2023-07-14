@@ -40,6 +40,12 @@ public:
 	virtual ~SpaceObject() = default;
 
 	/**
+	 * trans fairs all ships from the provided origin to this space object.
+	 * the origin has no langer any ships.
+	 */
+	void TransferShipsFrom(SpaceObject* origin);
+
+	/**
 	 * updates the SpaceObject.
  	 */
 	virtual void Update(Galaxy_ty_raw galaxy) = 0; 

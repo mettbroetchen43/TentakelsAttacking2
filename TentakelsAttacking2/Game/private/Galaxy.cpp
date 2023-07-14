@@ -691,29 +691,53 @@ void Galaxy::UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty tar
 }
 
 std::vector<HMergeResult> Galaxy::CheckArrivingFriendlyFleets() {
-	std::vector<Fleet_ty> toDelete{ };
 	std::vector<HMergeResult> mergeResult{ };
 	for (auto const& fleet : m_fleets) {
-		bool const friendly{ fleet->GetTarget()->GetPlayer() == fleet->GetPlayer() };
-		if (friendly and fleet->IsArrived()) {
-			auto const& target = fleet->GetTarget();
+
+		if (fleet->GetShipCount() == 0) { continue; } // no ships to transfer
+
+		// arriving directly at the far target where the fleet is flying to at the update
+		if (fleet->IsFarFriendly() and fleet->IsFarArrived()) {
+			auto [valid, target]{ TryGetTarget(fleet.get(), fleet->GetTarget()) };
+
+			if (valid) { 
+				auto const shipCount{ fleet->GetShipCount() };
+				target->TransferShipsFrom(fleet.get());
+				mergeResult.emplace_back(fleet->GetPlayer(), fleet, fleet->GetTarget(), shipCount);
+
+				Print(
+					PrintType::ONLY_DEBUG,
+					"fleet arrived far -> id: {} -> target: {} -> ships: {}",
+					fleet->GetID(),
+					target->GetID(),
+					shipCount
+				);
+			}
+			else {
+				Print(
+					PrintType::ONLY_DEBUG,
+					"far fleet target was not valid while arriving at far target -> fleet id {}",
+					fleet->GetID()
+				);	
+			}
+		}
+		// arriving at the direct target of the fleet
+		else if (fleet->IsFriendly() and fleet->IsArrived()) {
+
+			auto       target{ fleet->GetTarget() };
 			auto const shipCount{ fleet->GetShipCount() };
-			*target += *fleet;
-			auto const origins{ GetFleetsOfTarget(fleet) };
-			UpdateFleetTargets(origins, target);
-			toDelete.push_back(fleet);
+			target->TransferShipsFrom(fleet.get());
 			mergeResult.emplace_back(fleet->GetPlayer(), fleet, fleet->GetTarget(), shipCount);
 
 			Print(
 				PrintType::ONLY_DEBUG,
-				"fleet arrived -> id: {} -> target: {} -> ships: {}",
+				"fleet arrived direct -> id: {} -> target: {} -> ships: {}",
 				fleet->GetID(),
 				target->GetID(),
-				fleet->GetShipCount()
+				shipCount
 			);
 		}
 	}
-	DeleteFleet(toDelete);
 	return mergeResult;
 }
 std::vector<HMergeResult> Galaxy::CheckMergingFriendlyFleets() {
@@ -1252,6 +1276,38 @@ void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
 
 // update
 UpdateResult_ty Galaxy::Update() {
+	/*
+		-space objects updaten
+		  - planeten produktion
+		  - flotten bewegen
+		  - target points nix (macht aber nen schönen debug print, dass es nix tut LUL)
+		
+		- merging
+		  - flotte mit planet (flotte angekommen)
+		  - flotte mit target point (flotte angekommen)
+		  - flotte mit gleichen ziel und gleicher position
+		
+		- flotten ohne schiffe löschen
+		  - flotten redirecten
+		
+		- kämpfe
+		  - flotte gegen planet
+		  - flotte gegen target point
+		  - flotten, die sich zufällig treffen
+		  - optional
+			- planet gegen flotte
+			- target point gegen flotte
+		
+		- flotten ohne schiffe löschen
+		  - flotten redirecten
+		
+		- target points, die kein ziel sind und keine schiffe haben löschen.
+	*/
+
+	Print(
+		PrintType::ONLY_DEBUG,
+		"start update logic"
+	);
 	Print(
 		PrintType::ONLY_DEBUG,
 		"-> update space objects"
@@ -1294,7 +1350,7 @@ UpdateResult_ty Galaxy::Update() {
 
 	Print(
 		PrintType::ONLY_DEBUG,
-		"-> update finished"
+		"update logic finished"
 	);
 
 	return { mergeResults, fightResults };
