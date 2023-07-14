@@ -912,40 +912,27 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetTargetPoint() {
 	return results;
 }
 std::vector<HFightResult> Galaxy::SimulateFightFleetFleet() {
-	std::vector<std::pair<SpaceObject_ty, SpaceObject_ty>> fights{ };
-	auto contains{ [&](SpaceObject_ty_c f1, SpaceObject_ty_c f2) {
-		for (auto const& [o_f1, o_f2] : fights) {
-			if (o_f1->GetID() == f1->GetID() and o_f2->GetID() == f2->GetID()) { return true; };
-			if (o_f1->GetID() == f2->GetID() and o_f2->GetID() == f1->GetID()) { return true; };
-		}
-		return false;
-		}
-	};
+	std::vector<HFightResult> results { };
+	Random& random{ Random::GetInstance() };
 
-	for (auto const& f1 : m_fleets) {
-		for (auto const& f2 : m_fleets) {
-			if (f1->GetID() == f2->GetID()) { continue; }
-			if (f1->IsInFightRange(f2)) {
-				if (not contains(f1, f2)) {
-					fights.emplace_back(f1, f2);
+	for (auto const& fleet_lhs : m_fleets) {
+		for (auto const& fleet_rhs : m_fleets) {
+			if (fleet_lhs->GetID() == fleet_rhs->GetID()) { continue; }
+
+			if (fleet_lhs->IsInFightRange(fleet_rhs)) {
+				auto const isSwitch { random.random(2) };
+				HFightResult result { { nullptr, nullptr }, {nullptr,nullptr }, { }, false };
+				if (isSwitch) {
+					result = Fight(fleet_rhs, fleet_lhs);
+				}
+				else {
+					result = Fight(fleet_lhs, fleet_rhs);
+				}
+
+				if (result.IsValid()) {
+					results.push_back(result);
 				}
 			}
-		}
-	}
-
-	std::vector<HFightResult> results{ };
-	Random& random{ Random::GetInstance() };
-	for (auto& [f1, f2] : fights) {
-		auto const shouldSwitch = random.random(2);
-		if (shouldSwitch) {
-			HFightResult result{ Fight(f2, f1) };
-			if (not result.IsValid()) { continue; }
-			results.push_back(result);
-		}
-		else {
-			HFightResult result{ Fight(f1, f2) };
-			if (not result.IsValid()) { continue; }
-			results.push_back(result);
 		}
 	}
 
@@ -964,7 +951,7 @@ HFightResult Galaxy::Fight(SpaceObject_ty defender, SpaceObject_ty attacker) {
 			attacker->GetID(),
 			attacker->GetShipCount()
 		);
-		return { { nullptr, nullptr }, {nullptr,nullptr }, { }, false };
+		return { { nullptr, nullptr }, {nullptr,nullptr }, { }, false } ;
 	}
 
 	if (defender->GetPlayer() == attacker->GetPlayer()) {
