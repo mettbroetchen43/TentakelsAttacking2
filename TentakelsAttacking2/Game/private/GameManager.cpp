@@ -242,6 +242,21 @@ void GameManager::NextRound(bool valid) {
 
 	++appContext.constants.global.currentRound;
 
+	Player_ty player { } ;
+	if (not GetCurrentPlayer(player)) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"next round started -> cant get current player"
+		);
+	}
+	else {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"next round started -> player {}",
+			player->GetID()
+		);
+	}
+
 	appContext.eventManager.InvokeEvent(ShowNextRoundEvent());
 }
 void GameManager::NextTurn(bool valid) {
@@ -254,6 +269,21 @@ void GameManager::NextTurn(bool valid) {
 
 	SendCurrentPlayerID();
 	SendNextPlayerID();
+
+	Player_ty player { };
+	if (not GetCurrentPlayer(player)) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"next turn started -> cant get current player"
+		);
+	}
+	else{
+		Print(
+			PrintType::ONLY_DEBUG,
+			"next turn started -> player {}",
+			player->GetID()
+		);
+	}
 
 	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextTurnEvent());
 }
