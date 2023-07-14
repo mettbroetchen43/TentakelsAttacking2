@@ -132,7 +132,7 @@ private:
 	/**
 	 * updates the targets of the provided fleets.
 	 */
-	void UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty target);
+	[[nodiscard]] std::vector<Fleet_ty> UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty currentFleet, SpaceObject_ty target);
 
 	/**
 	 * checks if any fleet is arrived.
