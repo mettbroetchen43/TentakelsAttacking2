@@ -4,7 +4,7 @@
         "hit_chance": 0.30000001192092896
     },
     "fleet": {
-        "fleet_speed_current": 7,
+        "fleet_speed_current": 11,
         "fleet_speed_max": 20,
         "fleet_speed_min": 1
     },

@@ -25,6 +25,9 @@ bool Fleet::IsFleet() const {
 SpaceObject_ty Fleet::GetTarget() const {
     return m_target;
 }
+std::pair<bool, SpaceObject_ty> Fleet::GetFairTarget() const {
+    return TryGetTarget(this, m_target);
+}
 void Fleet::SetTarget(SpaceObject_ty target) {
     m_target = target;
 }

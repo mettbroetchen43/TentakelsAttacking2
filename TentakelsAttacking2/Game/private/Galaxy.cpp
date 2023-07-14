@@ -741,53 +741,41 @@ std::vector<HMergeResult> Galaxy::CheckArrivingFriendlyFleets() {
 	return mergeResult;
 }
 std::vector<HMergeResult> Galaxy::CheckMergingFriendlyFleets() {
-	std::vector<std::pair<Fleet_ty_c, Fleet_ty_c>> same{ };
-	auto const containsSame{ [&](Fleet_ty_c first, Fleet_ty_c second) {
-		for (auto const& s : same) {
-			if (s.first == first and s.second == second) { return true; }
-			else if (s.first == second and s.second == first) { return true; }
-		}
-		return false;
-	} };
+	std::vector<HMergeResult> mergeResult{ };
 
-	// find mergeable fleets
-	for (int first = 0; first < m_fleets.size(); ++first) {
-		for (int second = first + 1; second < m_fleets.size(); ++second) {
-			auto const fleet1{ m_fleets.at(first) };
-			auto const fleet2{ m_fleets.at(second) };
+	for (auto const& fleet_lhs : m_fleets) {
+		for (auto const& fleet_rhs : m_fleets) {
+			if (   fleet_lhs->GetID()        == fleet_rhs->GetID()
+				or fleet_lhs->GetShipCount() == 0
+				or fleet_rhs->GetShipCount() == 0 ) 
+			{ continue; }
+			
+			auto [valid_lhs, target_lhs] { fleet_lhs->  GetFairTarget()         };
+			if   (not valid_lhs)         { target_lhs = fleet_lhs->GetTarget(); }
+			auto [valid_rhs, target_rhs] { fleet_rhs->  GetFairTarget()         };
+			if   (not valid_rhs)         { target_rhs = fleet_rhs->GetTarget(); }
 
-			bool const mergable{
-				fleet1->GetPlayer() == fleet2->GetPlayer()
-				and fleet1->GetPos() == fleet2->GetPos()
+			bool const mergable {
+				    fleet_lhs->GetPlayer() == fleet_rhs->GetPlayer()
+				and target_lhs->GetID()    == target_rhs->GetID()
+				and fleet_lhs->IsInFightRange(fleet_rhs)
 			};
-			if (mergable and not containsSame(fleet1, fleet2)) {
-				same.emplace_back(fleet1, fleet2);
+
+			if (mergable){
+				fleet_lhs->TransferShipsFrom(fleet_rhs.get());
+
+				Print(
+					PrintType::ONLY_DEBUG,
+					"fleets merged -> fleet lhs id: {} -> fleet rhs id: {} -> ships lhs: {} -> ships rhs: {}",
+					fleet_lhs->GetID(),
+					fleet_rhs->GetID(),
+					fleet_lhs->GetShipCount(),
+					fleet_lhs->GetShipCount()
+				);
 			}
 		}
 	}
-	if (same.size() == 0) { return { }; } // no found
 
-	// merge fleets
-	std::vector<Fleet_ty> toDelete{ };
-	std::vector<HMergeResult> mergeResult{ };
-	for (auto const& match : same) {
-		auto const shipCount{ match.second->GetShipCount() };
-		*match.first += *match.second;
-		auto const& origins{ GetFleetsOfTarget(match.second) };
-		UpdateFleetTargets(origins, match.second->GetTarget());
-		toDelete.push_back(match.second);
-		mergeResult.emplace_back(match.first->GetPlayer(), match.second, match.first, shipCount);
-		Print(
-			PrintType::ONLY_DEBUG,
-			"fleets merging -> player: {} -> f1 id: {} -> f2 id: {} -> ships: {}",
-			match.first->GetPlayer()->GetID(),
-			match.first->GetID(),
-			match.second->GetID(),
-			shipCount
-		);
-	}
-
-	DeleteFleet(toDelete);
 	return mergeResult;
 }
 void Galaxy::CheckDeleteFleetsWithoutShips() {
@@ -1277,14 +1265,7 @@ void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
 // update
 UpdateResult_ty Galaxy::Update() {
 	/*
-		-space objects updaten
-		  - planeten produktion
-		  - flotten bewegen
-		  - target points nix (macht aber nen schönen debug print, dass es nix tut LUL)
-		
 		- merging
-		  - flotte mit planet (flotte angekommen)
-		  - flotte mit target point (flotte angekommen)
 		  - flotte mit gleichen ziel und gleicher position
 		
 		- flotten ohne schiffe löschen

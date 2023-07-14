@@ -28,9 +28,13 @@ public:
 	[[nodiscard]] bool IsFleet() const override;
 
 	/**
-	 * returns the target of the fleet.
+	 * returns the direct target of the fleet.
 	 */
 	[[nodiscard]] SpaceObject_ty GetTarget() const;
+	/**
+	 * returns the actual target of the fleet.
+	 */
+	[[nodiscard]] std::pair<bool, SpaceObject_ty> GetFairTarget() const;
 	/**
 	 * sets a new target.
 	 */
