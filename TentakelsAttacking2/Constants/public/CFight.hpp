@@ -12,4 +12,5 @@ struct CFight final {
 
 	bool isFightPlanetFleet{ true }; ///< contains if a planet will attack a nearbay fleet automaticly.
 	bool isFightTargetPointFleet{ true }; ///< contains if a target point will attack a nearby fleet automaticly.
+	bool isFightTargetPointTargetPoint{ true }; ///< contauns if a target point will attack a nearby target point automaticly. 
 };

@@ -877,11 +877,18 @@ std::vector<HFightResult> Galaxy::SimulateFight() {
 	singleResult = { SimulateFightTargetPointFleet() };
 	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 
+	// TargetPoint TargetPoint
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fight target point against target point"
+	);
+	singleResult = { SimulateFightTargetPointTargetPoint() };
+	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
+	
 	// planet TargetPoint
 
 	return results;
 }
-
 std::vector<HFightResult> Galaxy::SimulateFightFleetPlanet() {
 	std::vector<HFightResult> results { };
 	for (auto const& fleet : m_fleets) {
@@ -956,7 +963,7 @@ std::vector<HFightResult> Galaxy::SimulateFightPlanetFleet() {
 	if (not AppContext::GetInstance().constants.fight.isFightPlanetFleet) {
 		Print(
 			PrintType::ONLY_DEBUG,
-			"-> -> -> fights planet fleet are disabled -> no simulation"
+			"-> -> -> fights planet : fleet are disabled -> no simulation"
 		);
 		return results;
 	}
@@ -980,7 +987,7 @@ std::vector<HFightResult> Galaxy::SimulateFightTargetPointFleet() {
 	if (not AppContext::GetInstance().constants.fight.isFightTargetPointFleet) {
 		Print(
 			PrintType::ONLY_DEBUG,
-			"-> -> -> fights target point fleet are disabled -> no simulation"
+			"-> -> -> fights target point : fleet are disabled -> no simulation"
 		);
 		return results;
 	}
@@ -989,6 +996,41 @@ std::vector<HFightResult> Galaxy::SimulateFightTargetPointFleet() {
 		for (auto const& fleet : m_fleets) {
 			if (targetPoint->IsInFightRange(fleet)) {
 				auto const& result{ Fight(targetPoint, fleet) };
+				if (result.IsValid()) {
+					results.push_back(result);
+				}
+			}
+		}
+	}
+
+	return results;
+}
+std::vector<HFightResult> Galaxy::SimulateFightTargetPointTargetPoint() {
+	std::vector<HFightResult> results { };
+
+	if (not AppContext::GetInstance().constants.fight.isFightTargetPointTargetPoint) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"-> -> -> fights target point : target point are disabled -> no simulation"
+		);
+		return results;
+	}
+
+	Random& random{ Random::GetInstance() };
+	for (auto const& targetPoint_lhs : m_targetPoints) {
+		for (auto const& targetPoint_rhs : m_targetPoints) {
+			if (targetPoint_lhs->GetID() == targetPoint_rhs->GetID()) { continue; }
+
+			if (targetPoint_lhs->IsInFightRange(targetPoint_rhs)) {
+				auto const isSwitch { random.random(2) };
+				HFightResult result { { nullptr, nullptr }, {nullptr,nullptr }, { }, false };
+				if (isSwitch) {
+					result = Fight(targetPoint_rhs, targetPoint_lhs);
+				}
+				else {
+					result = Fight(targetPoint_lhs, targetPoint_rhs);
+				}
+
 				if (result.IsValid()) {
 					results.push_back(result);
 				}
