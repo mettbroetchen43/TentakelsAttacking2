@@ -213,9 +213,6 @@ void UIManager::StartUILoop() {
 	UILoop();
 }
 
-
-
-
 void UIManager::OnEvent(Event const& event) {
 	if(auto const* CloseEvent = dynamic_cast<CloseWindowEvent const*>(&event)) {
 		m_closeWindow = true;

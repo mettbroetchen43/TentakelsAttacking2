@@ -862,6 +862,12 @@ std::vector<HFightResult> Galaxy::SimulateFight() {
 	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 
 	// planet Fleet
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fight planet against fleet"
+	);
+	singleResult = { SimulateFightPlanetFleet() };
+	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 
 	// TargetPoint Fleet
 
@@ -934,6 +940,30 @@ std::vector<HFightResult> Galaxy::SimulateFightFleetFleet() {
 				}
 			}
 		}
+	}
+
+	return results;
+}
+std::vector<HFightResult> Galaxy::SimulateFightPlanetFleet() {
+	std::vector<HFightResult> results { };
+
+	if (not AppContext::GetInstance().constants.fight.isFightPlanetFleet) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"-> -> -> fights planet fleet are disabled -> no simulation"
+		);
+		return results;
+	}
+
+	for (auto const& planet : m_planets) {
+		for (auto const& fleet : m_fleets) {
+			if (planet->IsInFightRange(fleet)) {
+				auto const& result { Fight(planet, fleet) };
+				if (result.IsValid()) {
+					results.push_back(result);
+				}
+			}
+		}	
 	}
 
 	return results;
@@ -1291,10 +1321,10 @@ void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
 // update
 UpdateResult_ty Galaxy::Update() {
 	/*		
-		- kï¿½mpfe
+		- kämpfe
 		  - flotte gegen planet
 		  - flotte gegen target point
-		  - flotten, die sich zufï¿½llig treffen
+		  - flotten, die sich zufällig treffen
 		  - optional
 			- planet gegen flotte
 			- target point gegen flotte
