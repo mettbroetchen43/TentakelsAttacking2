@@ -11,4 +11,5 @@ struct CFight final {
 	int fleetFightRange{ 4 }; ///< contains the range 2 fleets will fight. get ovberwritten by config.
 
 	bool isFightPlanetFleet{ true }; ///< contains if a planet will attack a nearbay fleet automaticly.
+	bool isFightTargetPointFleet{ true }; ///< contains if a target point will attack a nearby fleet automaticly.
 };

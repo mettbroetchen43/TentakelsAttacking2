@@ -870,6 +870,12 @@ std::vector<HFightResult> Galaxy::SimulateFight() {
 	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 
 	// TargetPoint Fleet
+	Print(
+		PrintType::ONLY_DEBUG,
+		"-> -> fight target point against fleet"
+	);
+	singleResult = { SimulateFightTargetPointFleet() };
+	std::copy(singleResult.begin(), singleResult.end(), std::back_inserter(results));
 
 	// planet TargetPoint
 
@@ -964,6 +970,30 @@ std::vector<HFightResult> Galaxy::SimulateFightPlanetFleet() {
 				}
 			}
 		}	
+	}
+
+	return results;
+}
+std::vector<HFightResult> Galaxy::SimulateFightTargetPointFleet() {
+	std::vector<HFightResult> results { };
+
+	if (not AppContext::GetInstance().constants.fight.isFightTargetPointFleet) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"-> -> -> fights target point fleet are disabled -> no simulation"
+		);
+		return results;
+	}
+
+	for (auto const& targetPoint : m_targetPoints) {
+		for (auto const& fleet : m_fleets) {
+			if (targetPoint->IsInFightRange(fleet)) {
+				auto const& result{ Fight(targetPoint, fleet) };
+				if (result.IsValid()) {
+					results.push_back(result);
+				}
+			}
+		}
 	}
 
 	return results;
