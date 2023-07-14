@@ -209,7 +209,7 @@ public:
 	/**
 	 * returns if the galaxy is filtered
 	 */
-	[[nodiscard]] bool IsFiltrered() const;
+	[[nodiscard]] bool IsFiltered() const;
 	/**
 	 * returns the size of the galaxy.
 	 */

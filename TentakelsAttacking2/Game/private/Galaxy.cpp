@@ -1059,7 +1059,7 @@ bool Galaxy::IsValidSpaceObjectID(unsigned int ID) const {
 void Galaxy::SetFiltered(bool isFiltered) {
 	m_isFiltered = isFiltered;
 }
-bool Galaxy::IsFiltrered() const {
+bool Galaxy::IsFiltered() const {
 	return m_isFiltered;
 }
 
@@ -1291,10 +1291,10 @@ void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
 // update
 UpdateResult_ty Galaxy::Update() {
 	/*		
-		- kämpfe
+		- kï¿½mpfe
 		  - flotte gegen planet
 		  - flotte gegen target point
-		  - flotten, die sich zufällig treffen
+		  - flotten, die sich zufï¿½llig treffen
 		  - optional
 			- planet gegen flotte
 			- target point gegen flotte

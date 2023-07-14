@@ -92,7 +92,7 @@ void GalaxyManager::CopyGalaxies(CopyGalaxyType copyType) {
 }
 
 Galaxy* GalaxyManager::GetGalaxy() {
-	if (m_currentGalaxy and not m_currentGalaxy->IsFiltrered()) {
+	if (m_currentGalaxy and not m_currentGalaxy->IsFiltered()) {
 		FilterCurrentGalaxy();
 	}
 	return m_currentGalaxy.get();
