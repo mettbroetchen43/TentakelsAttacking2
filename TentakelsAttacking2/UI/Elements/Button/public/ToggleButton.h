@@ -35,6 +35,10 @@ public:
 	 */
 	[[nodiscard]] Rectangle GetCollider() const override;
 	/**
+	 * sets weather the button is enabled or not.
+	 */
+	void SetEnabled(bool enabled) override;
+	/**
 	 * returns if the current elements is enabled.
 	 */
 	[[nodiscard]] bool IsEnabled() const override;

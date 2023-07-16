@@ -98,7 +98,7 @@ public:
 	/**
 	 * sets weather the button is enabled or not.
 	 */
-	void SetEnabled(bool enabled);
+	virtual void SetEnabled(bool enabled);
 	/**
 	 * returns if the button is enabled.
 	 */

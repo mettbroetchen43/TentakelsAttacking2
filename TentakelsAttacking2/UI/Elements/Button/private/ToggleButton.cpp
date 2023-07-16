@@ -8,10 +8,21 @@
 #include "AppContext.h"
 
 void ToggleButton::UpdateState() {
-	if (   m_state == State::ENABLED
-		or m_state == State::PRESSED ) { 
-		m_state = m_isToggled ? State::PRESSED : State::ENABLED;
+	if (m_state == State::DISABLED) { return; }
+
+	if (IsFocused() and IsConfirmInputDown() or 
+		CheckCollisionPointRec(GetMousePosition(), m_collider)) {
+		m_state = State::PRESSED;
+		return;
 	}
+	
+	if (CheckCollisionPointRec(GetMousePosition(), m_collider)) {
+		m_state = State::HOVER;
+		return;
+	}
+
+	m_state = m_isToggled ? State::PRESSED : State::ENABLED;
+
 }
 
 ToggleButton::ToggleButton(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
@@ -22,7 +33,6 @@ void ToggleButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c 
 
 	switch (m_state){
 		case State::DISABLED: {
-
 			bool play{ false };
 			
 			if (CheckCollisionPointRec(mousePosition, m_collider) and
@@ -54,39 +64,44 @@ void ToggleButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c 
 			if (CheckCollisionPointRec(mousePosition, m_collider)) {
 				m_state = State::HOVER;
 			}
+			if (IsFocused() and IsConfirmInputPressed()) {
+				m_state = State::PRESSED;
+			}
 			break;
 		}
 
 		case State::PRESSED: {
 			if (CheckCollisionPointRec(mousePosition, m_collider)) {
-				if (IsMouseButtonUp(MouseButton::MOUSE_BUTTON_LEFT and
-					IsConfirmInputUp())){
-					m_state = State::HOVER;
+				if (IsMouseButtonUp(MouseButton::MOUSE_BUTTON_LEFT) and
+					not IsConfirmInputDown()) {
+					m_state = m_isToggled ? State::PRESSED : State::ENABLED;
 				}
 				if (IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
 					m_isToggled = not m_isToggled;
 					m_onToggle(m_isToggled);
-					if (not IsConfirmInputDown()) {
-						m_state = State::HOVER;
+					if (IsConfirmInputUp()) {
+						m_state = m_isToggled ? State::PRESSED : State::ENABLED;
 					}
 				}
 				if (IsFocused() and IsConfirmInputReleased()) {
 					m_isToggled = not m_isToggled;
 					m_onToggle(m_isToggled);
-					if (not IsMouseButtonDown(MouseButton::MOUSE_BUTTON_LEFT)) {
-						m_state = State::HOVER;
+					if (IsMouseButtonUp(MouseButton::MOUSE_BUTTON_LEFT)) {
+						m_state = m_isToggled ? State::PRESSED : State::ENABLED;
 					}
 				}
-			} 
+			}
 			else {
 				if (IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
-					if (not IsConfirmInputDown()) {
-						m_state = State::HOVER;
+					if (IsConfirmInputUp()) {
+						m_state = m_isToggled ? State::PRESSED : State::ENABLED;
 					}
 				}
 				if (IsFocused() and IsConfirmInputReleased()) {
-					if (not IsMouseButtonDown(MouseButton::MOUSE_BUTTON_LEFT)) {
-						m_state = State::HOVER;
+					m_isToggled = not m_isToggled;
+					m_onToggle(m_isToggled);
+					if (IsMouseButtonUp(MouseButton::MOUSE_BUTTON_LEFT)) {
+						m_state = m_isToggled ? State::PRESSED : State::ENABLED;
 					}
 				}
 			}
@@ -102,6 +117,10 @@ void ToggleButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c 
 
 Rectangle ToggleButton::GetCollider() const {
 	return m_collider;
+}
+void ToggleButton::SetEnabled(bool enabled) {
+	Button::SetEnabled(enabled);
+	UpdateState();
 }
 bool ToggleButton::IsEnabled() const {
 	return m_state != State::DISABLED;
