@@ -28,7 +28,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		resolution,
 		appContext.languageManager.Text("scene_main_menu_new_game_btn"),
 		SoundType::ACCEPTED
-		);
+	);
 	newGameBtn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(
 			SwitchSceneEvent(SceneType::NEW_GAME_PLAYER));
@@ -151,8 +151,12 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		resolution,
 		appContext.languageManager.Text("scene_main_menu_quit_btn"),
 		SoundType::ACCEPTED
-		);
-	quitBtn->SetOnClick([]() {AppContext::GetInstance().eventManager.InvokeEvent(CloseWindowEvent());});
+	);
+	quitBtn->SetOnClick(
+		[]() {
+			AppContext::GetInstance().eventManager.InvokeEvent(QuitGameEvent{ });
+		}
+	);
 	m_elements.push_back(quitBtn);
 
 	auto galaxy = std::make_shared<GalaxyScene>(
@@ -198,4 +202,3 @@ MainMenu::MainMenu(Vector2 resolution)
 
 	Initialize(resolution, appContext);
 }
-
