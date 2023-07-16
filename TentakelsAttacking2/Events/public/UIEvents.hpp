@@ -273,8 +273,8 @@ private:
 	std::string m_subTitle;
 
 public:
-	PopUpEvent(std::string const& title, std::string const& subTile)
-		:m_title{ title }, m_subTitle{ subTile } {}
+	PopUpEvent(std::string const& title, std::string const& subTitle)
+		:m_title{ title }, m_subTitle{ subTitle } {}
 
 	[[nodiscard]] std::string const& GetTitle() const {
 		return m_title;
@@ -291,9 +291,9 @@ class ShowMessagePopUpEvent final : public PopUpEvent {
 private:
 	std::function<void()> m_callback;
 public:
-	ShowMessagePopUpEvent(std::string const& title, std::string const& subTile,
+	ShowMessagePopUpEvent(std::string const& title, std::string const& subTitle,
 		std::function<void()> callback)
-		:PopUpEvent{ title, subTile }, m_callback{ callback } { }
+		:PopUpEvent{ title, subTitle }, m_callback{ callback } { }
 
 	[[nodiscard]] std::function<void()> GetCallback() const {
 		return m_callback;
@@ -349,8 +349,8 @@ private:
 	std::function<void(bool)> m_callback;
 
 public:
-	ShowValidatePopUp(std::string const& title, std::string const& subTile, std::function<void(bool)> callback)
-		:PopUpEvent{ title, subTile }, m_callback{ callback } { }
+	ShowValidatePopUp(std::string const& title, std::string const& subTitle, std::function<void(bool)> callback)
+		:PopUpEvent{ title, subTitle }, m_callback{ callback } { }
 
 	[[nodiscard]] std::function<void(bool)> GetCallback() const {
 		return m_callback;
