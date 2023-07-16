@@ -367,6 +367,8 @@ void GameManager::StartGame() {
 	SendCurrentPlayerID();
 	SendNextPlayerID();
 
+	AppContext::GetInstance().constants.global.currentRound = 0;
+
 	Player_ty player { };
 	if (not GetCurrentPlayer(player)) {
 		Print(
