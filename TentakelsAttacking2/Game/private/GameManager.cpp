@@ -363,6 +363,21 @@ bool GameManager::ValidateAddFleetInput(SendFleetInstructionEvent const* event) 
 void GameManager::StartGame() {
 	AppContext_ty appContext{ AppContext::GetInstance() };
 
+	if (appContext.constants.global.isGameRunning) {
+		ShowValidatePopUp  const event {
+			"game still running",
+			"there is currently a game running\ndo you want to overwrite the current game?",
+			[this](bool valid){
+				if (valid){
+					this->StopGame();
+					this->StartGame();
+				}
+			}
+		};
+		appContext.eventManager.InvokeEvent(event);
+		return;
+	}
+
 	m_currentRoundPlayers = m_players;
 
 	ShuffleCurrentRoundPlayer();
