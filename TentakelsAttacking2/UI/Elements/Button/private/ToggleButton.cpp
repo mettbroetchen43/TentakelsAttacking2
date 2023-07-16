@@ -49,13 +49,20 @@ void ToggleButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c 
 		case State::HOVER: {
 			if (not CheckCollisionPointRec(mousePosition, m_collider)) {
 				m_state = m_isToggled ? State::PRESSED : State::ENABLED;
-				break;
+				PlaySoundEvent const event{ SoundType::HOVER_STD };
+				appContext.eventManager.InvokeEvent(event);
 			}
-			if (IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
-				m_state = State::PRESSED;
-			}
-			else if (IsFocused() and IsConfirmInputPressed()){
-				m_state = State::PRESSED;
+			else {
+				if (IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
+					m_state = State::PRESSED;
+					PlaySoundEvent const event{ SoundType::CLICKED_PRESS_STD };
+					appContext.eventManager.InvokeEvent(event);
+				}
+				else if (IsFocused() and IsConfirmInputPressed()){
+					m_state = State::PRESSED;
+					PlaySoundEvent const event{ SoundType::CLICKED_PRESS_STD };
+					appContext.eventManager.InvokeEvent(event);
+				}
 			}
 			break;
 		}
@@ -63,35 +70,51 @@ void ToggleButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c 
 		case State::ENABLED: {
 			if (CheckCollisionPointRec(mousePosition, m_collider)) {
 				m_state = State::HOVER;
+				PlaySoundEvent const event{ SoundType::HOVER_STD };
+				appContext.eventManager.InvokeEvent(event);
 			}
 			if (IsFocused() and IsConfirmInputPressed()) {
 				m_state = State::PRESSED;
+				PlaySoundEvent const event{ SoundType::CLICKED_PRESS_STD };
+				appContext.eventManager.InvokeEvent(event);
 			}
 			break;
 		}
 
 		case State::PRESSED: {
 			if (CheckCollisionPointRec(mousePosition, m_collider)) {
+				if (IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT) or IsConfirmInputPressed()){
+					PlaySoundEvent const event{ SoundType::CLICKED_PRESS_STD };
+					appContext.eventManager.InvokeEvent(event);
+				}
 				if (IsMouseButtonUp(MouseButton::MOUSE_BUTTON_LEFT) and
 					not IsConfirmInputDown()) {
-					m_state = m_isToggled ? State::PRESSED : State::ENABLED;
+					m_state = m_isToggled ? State::PRESSED : State::HOVER;
 				}
 				if (IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
 					m_isToggled = not m_isToggled;
 					m_onToggle(m_isToggled);
 					if (IsConfirmInputUp()) {
-						m_state = m_isToggled ? State::PRESSED : State::ENABLED;
+						m_state = m_isToggled ? State::PRESSED : State::HOVER;
 					}
+					PlaySoundEvent const event{ m_sound };
+					appContext.eventManager.InvokeEvent(event);
 				}
 				if (IsFocused() and IsConfirmInputReleased()) {
 					m_isToggled = not m_isToggled;
 					m_onToggle(m_isToggled);
 					if (IsMouseButtonUp(MouseButton::MOUSE_BUTTON_LEFT)) {
-						m_state = m_isToggled ? State::PRESSED : State::ENABLED;
+						m_state = m_isToggled ? State::PRESSED : State::HOVER;
 					}
+					PlaySoundEvent const event{ m_sound };
+					appContext.eventManager.InvokeEvent(event);
 				}
 			}
 			else {
+				if (IsConfirmInputPressed()) {
+					PlaySoundEvent const event{ SoundType::CLICKED_PRESS_STD };
+					appContext.eventManager.InvokeEvent(event);
+				}
 				if (IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
 					if (IsConfirmInputUp()) {
 						m_state = m_isToggled ? State::PRESSED : State::ENABLED;
@@ -103,6 +126,8 @@ void ToggleButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c 
 					if (IsMouseButtonUp(MouseButton::MOUSE_BUTTON_LEFT)) {
 						m_state = m_isToggled ? State::PRESSED : State::ENABLED;
 					}
+					PlaySoundEvent const event{ m_sound };
+					appContext.eventManager.InvokeEvent(event);
 				}
 			}
 			break;
