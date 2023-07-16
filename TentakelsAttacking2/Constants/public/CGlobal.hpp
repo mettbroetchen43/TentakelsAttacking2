@@ -34,6 +34,7 @@ struct CGlobal final {
 	// game bools
 	bool isGameRunning{ false }; ///< contains if a game is currently running.
 	bool isGamePaused{ true }; ///< contains if current game is paused
+	bool isGameSaved{ true }; ///< contains if the game is currently saved -> automatic saves will not be included
 
 	// input bools
 	bool acceptInputTriggered{ false }; ///< contains if the aaccept input was triggerd in this tick
