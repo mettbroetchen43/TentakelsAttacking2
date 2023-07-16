@@ -38,7 +38,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 	btnPosY += btnOffset;
 	++focusID;
 
-	m_continueBtn = std::make_shared<ClassicButton>(
+	auto continueBtn = std::make_shared<ClassicButton>(
 		focusID,
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
@@ -47,11 +47,14 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		appContext.languageManager.Text("scene_main_menu_continue_btn"),
 		SoundType::ACCEPTED
 	);
-	m_continueBtn->SetOnClick([]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::MAIN));
-		});
-	m_elements.push_back(m_continueBtn);
+	continueBtn->SetEnabled(appContext.constants.global.isGameRunning);
+	continueBtn->SetOnClick([]() {
+			ResumeGameEvent const event{ };
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		}
+	);
+
+	m_elements.push_back(continueBtn);
 
 	appContext.eventManager.InvokeEvent(GetGalaxyPointerEvent{ });
 
@@ -192,24 +195,7 @@ MainMenu::MainMenu(Vector2 resolution)
 	: Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution } {
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
-	appContext.eventManager.AddListener(this);
 
 	Initialize(resolution, appContext);
 }
 
-MainMenu::~MainMenu() {
-	AppContext::GetInstance().eventManager.RemoveListener(this);
-}
-
-void MainMenu::OnEvent(Event const& event) {
-	if (auto const* galaxyEvent = dynamic_cast<SendGalaxyPointerEvent const*>(&event)) {
-		if (galaxyEvent->IsShowGalaxy()) { return; }
-
-		if (galaxyEvent->GetGalaxy() == nullptr) {
-			m_continueBtn->SetEnabled(false);
-		}
-		else {
-			m_continueBtn->SetEnabled(true);
-		}
-	}
-}
