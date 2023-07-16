@@ -361,13 +361,17 @@ bool GameManager::ValidateAddFleetInput(SendFleetInstructionEvent const* event) 
 
 // game
 void GameManager::StartGame() {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+
 	m_currentRoundPlayers = m_players;
 
 	ShuffleCurrentRoundPlayer();
 	SendCurrentPlayerID();
 	SendNextPlayerID();
 
-	AppContext::GetInstance().constants.global.currentRound = 0;
+	appContext.constants.global.currentRound = 0;
+	appContext.constants.global.isGameRunning = true;
+	appContext.constants.global.isGamePaused = false;
 
 	Player_ty player { };
 	if (not GetCurrentPlayer(player)) {
@@ -381,6 +385,38 @@ void GameManager::StartGame() {
 		PrintType::ONLY_DEBUG,
 		"game started -> player {}",
 		player->GetID()
+	);
+}
+void GameManager::StopGame() {
+	AppContext_ty appConstants{ AppContext::GetInstance() };
+	appConstants.constants.global.isGameRunning = false;
+	appConstants.constants.global.isGamePaused = true;
+	Print(
+		PrintType::ONLY_DEBUG,
+		"game stopped and paused"
+	);
+}
+void GameManager::PauseGame() {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	appContext.constants.global.isGamePaused = true;
+	Print(
+		PrintType::ONLY_DEBUG,
+		"game paused"
+	);
+}
+void GameManager::ResumeGame() {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	if (not appContext.constants.global.isGameRunning){
+		Print(
+			PrintType::ONLY_DEBUG,
+			"not able to resume to game because its no game running"
+		);
+		return;
+	}
+	appContext.constants.global.isGamePaused = false;
+	Print(
+		PrintType::ONLY_DEBUG,
+		"resumed to game"
 	);
 }
 

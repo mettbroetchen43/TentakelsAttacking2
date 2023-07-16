@@ -137,6 +137,19 @@ private:
 	 * initializes a new game after every this is set up
 	 */
 	void StartGame();
+	/**
+	 * stops the current game
+	 */
+	void StopGame();
+	/**
+	 * pauses the current game
+	 */
+	void PauseGame();
+	/**
+	 * resumes to the curent game.
+	 * only works if a game is running. 
+	 */
+	void ResumeGame();
 
 public:
 	/**
