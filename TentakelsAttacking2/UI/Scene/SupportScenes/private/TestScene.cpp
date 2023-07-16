@@ -11,8 +11,6 @@
 #include "ToggleButton.h"
 #include "Table.h"
 
-
-
 void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 
 	auto firstBtn = std::make_shared<ToggleButton>(
