@@ -38,7 +38,7 @@ void ToggleButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c 
 
 		case State::HOVER: {
 			if (not CheckCollisionPointRec(mousePosition, m_collider)) {
-				m_state = m_isToggled ? State::PRESSED : State::HOVER;
+				m_state = m_isToggled ? State::PRESSED : State::ENABLED;
 				break;
 			}
 			if (IsMouseButtonPressed(MouseButton::MOUSE_BUTTON_LEFT)) {
@@ -59,6 +59,10 @@ void ToggleButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c 
 
 		case State::PRESSED: {
 			if (CheckCollisionPointRec(mousePosition, m_collider)) {
+				if (IsMouseButtonUp(MouseButton::MOUSE_BUTTON_LEFT and
+					IsConfirmInputUp())){
+					m_state = State::HOVER;
+				}
 				if (IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
 					m_isToggled = not m_isToggled;
 					m_onToggle(m_isToggled);
