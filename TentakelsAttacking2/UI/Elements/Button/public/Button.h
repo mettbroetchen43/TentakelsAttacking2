@@ -66,7 +66,7 @@ public:
 	/**
 	 * complete logic og the button.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
+	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the button.
 	 */
