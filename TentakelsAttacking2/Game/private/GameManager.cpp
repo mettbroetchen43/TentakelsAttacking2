@@ -230,6 +230,7 @@ void GameManager::NextRound(bool valid) {
 	if (!valid) { return; }
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
+	appContext.constants.global.isGameSaved = false;
 	// events and so on first
 	Update();
 
@@ -262,11 +263,15 @@ void GameManager::NextRound(bool valid) {
 }
 void GameManager::NextTurn(bool valid) {
 
+
 	if (!valid) { return; }
 
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	appContext.constants.global.isGameSaved = false;
 	m_currentRoundPlayers.pop_back();
 
 	m_galaxyManager.CopyGalaxies(CopyGalaxyType::COPY_START);
+
 
 	SendCurrentPlayerID();
 	SendNextPlayerID();
@@ -364,7 +369,7 @@ bool GameManager::ValidateAddFleetInput(SendFleetInstructionEvent const* event) 
 void GameManager::StartGame() {
 	AppContext_ty appContext{ AppContext::GetInstance() };
 
-	if (appContext.constants.global.isGameRunning) {
+	if (appContext.constants.global.isGameRunning and not appContext.constants.global.isGameSaved) {
 		ShowValidatePopUp  const event {
 			"game still running",
 			"there is currently a game running\ndo you want to overwrite the current game?",
@@ -385,9 +390,10 @@ void GameManager::StartGame() {
 	SendCurrentPlayerID();
 	SendNextPlayerID();
 
-	appContext.constants.global.currentRound = 0;
-	appContext.constants.global.isGameRunning = true;
-	appContext.constants.global.isGamePaused = false;
+	appContext.constants.global.currentRound  = 0    ;
+	appContext.constants.global.isGameRunning = true ;
+	appContext.constants.global.isGamePaused  = false;
+	appContext.constants.global.isGameSaved   = false;
 
 	Player_ty player { };
 	if (not GetCurrentPlayer(player)) {
@@ -443,6 +449,32 @@ void GameManager::ResumeGame() {
 		"resumed to game"
 	);
 	SwitchSceneEvent const event{ SceneType::MAIN };
+	appContext.eventManager.InvokeEvent(event);
+}
+void GameManager::QuitGame() {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	Print(
+		PrintType::DEBUG,
+		"current game is saved -> {}",
+		appContext.constants.global.isGameSaved
+	);
+	if (not appContext.constants.global.isGameSaved){
+		ShowValidatePopUp const event{
+			"not saved",
+			"the current game is not saved\nquit anyway?",
+			[this](bool valid){
+				if (valid){
+					AppContext_ty appContext{ AppContext::GetInstance() };
+					appContext.constants.global.isGameSaved = true;
+					this->QuitGame();
+				}
+			}
+		};
+		appContext.eventManager.InvokeEvent(event);
+		return;
+	}
+
+	CloseWindowEvent const event{ };
 	appContext.eventManager.InvokeEvent(event);
 }
 
@@ -518,6 +550,10 @@ void GameManager::OnEvent(Event const& event) {
 	}
 	if (auto const* gameEvent = dynamic_cast<ResumeGameEvent const*> (&event)) {
 		ResumeGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<QuitGameEvent const*> (&event)) {
+		QuitGame();
 		return;
 	}
 	if (auto const* gameEvent = dynamic_cast<TriggerNextTurnEvent const*> (&event)) {

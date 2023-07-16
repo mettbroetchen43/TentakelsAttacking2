@@ -150,6 +150,10 @@ private:
 	 * only works if a game is running. 
 	 */
 	void ResumeGame();
+	/**
+	 * quits the game if the game is saved.
+	 */
+	void QuitGame();
 
 public:
 	/**
