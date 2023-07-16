@@ -34,6 +34,10 @@ public:
 	 * return current collider of the button.
 	 */
 	[[nodiscard]] Rectangle GetCollider() const override;
+	/**
+	 * returns if the current elements is enabled.
+	 */
+	[[nodiscard]] bool IsEnabled() const override;
 
 	/**
 	 * returns if the button is current toggled.
