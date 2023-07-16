@@ -17,7 +17,7 @@
 #include "UIEvents.hpp"
 #include "GenerelEvents.hpp"
 
-void SettingsScene::Initialize(SceneType continueScene) {
+void SettingsScene::Initialize() {
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
 
@@ -344,13 +344,10 @@ void SettingsScene::Initialize(SceneType continueScene) {
 		appContext.languageManager.Text("scene_settings_continue_btn"),
 		SoundType::ACCEPTED
 	);
-	if (continueScene == SceneType::NONE) { continueBtn->SetEnabled(false); }
-
-	continueBtn->SetOnClick([continueScene]() {
-		if (continueScene == SceneType::NONE) { return; }
-		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(continueScene)
-		);
+	//continueBtn->SetEnabled(appContext.constants.global.isGameRunning); 
+	continueBtn->SetOnClick([]() {
+			ResumeGameEvent const event{ };
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
 		}
 	);
 	m_languageDropDownBtn.second = { continueBtn, continueBtn->IsEnabled() };
@@ -392,12 +389,12 @@ int SettingsScene::GetIndexFromResolution(Resolution resolution) const {
 	throw std::runtime_error("resolution not existing");
 }
 
-SettingsScene::SettingsScene(Vector2 resolution, SceneType continueScene)
+SettingsScene::SettingsScene(Vector2 resolution)
 	:Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
 	AppContext_ty appContext{ AppContext::GetInstance() };
 	m_rawResolutionEntries = appContext.constants.window.GetAllResolutionsAsString();
 	appContext.eventManager.AddListener(this);
-	Initialize(continueScene);
+	Initialize();
 }
 
 SettingsScene::~SettingsScene() {
