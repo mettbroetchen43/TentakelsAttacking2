@@ -9,6 +9,7 @@
 #include "HPrint.h"
 #include "CopyGalaxyType.hpp"
 #include "HLogicAlias.hpp"
+#include "SceneType.h"
 #include <cassert>
 #include <algorithm>
 #include <stdexcept>
@@ -401,6 +402,8 @@ void GameManager::StartGame() {
 		"game started -> player {}",
 		player->GetID()
 	);
+	SwitchSceneEvent const event{ SceneType::MAIN };
+	appContext.eventManager.InvokeEvent(event);
 }
 void GameManager::StopGame() {
 	AppContext_ty appConstants{ AppContext::GetInstance() };
@@ -422,6 +425,12 @@ void GameManager::PauseGame() {
 void GameManager::ResumeGame() {
 	AppContext_ty appContext{ AppContext::GetInstance() };
 	if (not appContext.constants.global.isGameRunning){
+		ShowMessagePopUpEvent const event {
+			"no game",
+			"there is no current game running to resume to",
+			[](){}
+		};
+		appContext.eventManager.InvokeEvent(event);
 		Print(
 			PrintType::ONLY_DEBUG,
 			"not able to resume to game because its no game running"
@@ -433,6 +442,8 @@ void GameManager::ResumeGame() {
 		PrintType::ONLY_DEBUG,
 		"resumed to game"
 	);
+	SwitchSceneEvent const event{ SceneType::MAIN };
+	appContext.eventManager.InvokeEvent(event);
 }
 
 GameManager::GameManager()
@@ -495,6 +506,18 @@ void GameManager::OnEvent(Event const& event) {
 	// Game
 	if (auto const* gameEvent = dynamic_cast<StartGameEvent const*> (&event)) {
 		StartGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<StopGameEvent const*> (&event)) {
+		StopGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<PauseGameEvent const*> (&event)) {
+		PauseGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<ResumeGameEvent const*> (&event)) {
+		ResumeGame();
 		return;
 	}
 	if (auto const* gameEvent = dynamic_cast<TriggerNextTurnEvent const*> (&event)) {
