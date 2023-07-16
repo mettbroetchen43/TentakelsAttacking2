@@ -46,9 +46,15 @@ void MainScene::Initialize() {
 		SoundType::CLICKED_RELEASE_STD
 		);
 	settingsBtn->SetOnClick([]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::SETTINGS));
-		});
+		AppContext_ty_c appContext{ AppContext::GetInstance() };
+		
+		PauseGameEvent const gameEvent{ };
+		appContext.eventManager.InvokeEvent(gameEvent);
+
+		SwitchSceneEvent const sceneEvent{ SceneType::SETTINGS };
+		appContext.eventManager.InvokeEvent(sceneEvent);
+		}
+	);
 	m_elements.push_back(settingsBtn);
 
 
