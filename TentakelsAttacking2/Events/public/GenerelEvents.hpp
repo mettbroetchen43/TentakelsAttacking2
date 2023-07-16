@@ -225,6 +225,10 @@ class PauseGameEvent  final : public Event { };
  * use this to trigger the logic to resume the game.
  */
 class ResumeGameEvent final : public Event { };
+/**
+ * use this to trigger the logic to quit the game.
+ */
+class QuitGameEvent   final : public Event { };
 
 /**
  * use this to trigger the constants to update the target last round.
