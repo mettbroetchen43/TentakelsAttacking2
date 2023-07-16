@@ -366,6 +366,9 @@
     <ClInclude Include="Constants\public\CGameEvents.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Elements\Button\public\ToggleButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -645,6 +648,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Constants\private\CGameEvents.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\Button\private\ToggleButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

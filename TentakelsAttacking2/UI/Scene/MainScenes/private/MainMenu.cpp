@@ -83,7 +83,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 			}
 		}
 	);
-	saveGameBtn->SetEnabled(false);
 	m_elements.push_back(saveGameBtn);
 
 	btnPosY += btnOffset;

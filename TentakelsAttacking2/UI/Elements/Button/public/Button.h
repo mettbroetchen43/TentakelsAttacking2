@@ -66,7 +66,7 @@ public:
 	/**
 	 * complete logic og the button.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
+	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the button.
 	 */
@@ -98,7 +98,7 @@ public:
 	/**
 	 * sets weather the button is enabled or not.
 	 */
-	void SetEnabled(bool enabled);
+	virtual void SetEnabled(bool enabled);
 	/**
 	 * returns if the button is enabled.
 	 */
