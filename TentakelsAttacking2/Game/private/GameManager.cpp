@@ -9,6 +9,7 @@
 #include "HPrint.h"
 #include "CopyGalaxyType.hpp"
 #include "HLogicAlias.hpp"
+#include "SceneType.h"
 #include <cassert>
 #include <algorithm>
 #include <stdexcept>
@@ -229,6 +230,7 @@ void GameManager::NextRound(bool valid) {
 	if (!valid) { return; }
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
+	appContext.constants.global.isGameSaved = false;
 	// events and so on first
 	Update();
 
@@ -261,11 +263,15 @@ void GameManager::NextRound(bool valid) {
 }
 void GameManager::NextTurn(bool valid) {
 
+
 	if (!valid) { return; }
 
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	appContext.constants.global.isGameSaved = false;
 	m_currentRoundPlayers.pop_back();
 
 	m_galaxyManager.CopyGalaxies(CopyGalaxyType::COPY_START);
+
 
 	SendCurrentPlayerID();
 	SendNextPlayerID();
@@ -361,13 +367,33 @@ bool GameManager::ValidateAddFleetInput(SendFleetInstructionEvent const* event) 
 
 // game
 void GameManager::StartGame() {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+
+	if (appContext.constants.global.isGameRunning and not appContext.constants.global.isGameSaved) {
+		ShowValidatePopUp  const event {
+			appContext.languageManager.Text("ui_popup_game_still_running_title"),
+			appContext.languageManager.Text("ui_popup_game_still_running_subtitle", '\n'),
+			[this](bool valid){
+				if (valid){
+					this->StopGame();
+					this->StartGame();
+				}
+			}
+		};
+		appContext.eventManager.InvokeEvent(event);
+		return;
+	}
+
 	m_currentRoundPlayers = m_players;
 
 	ShuffleCurrentRoundPlayer();
 	SendCurrentPlayerID();
 	SendNextPlayerID();
 
-	AppContext::GetInstance().constants.global.currentRound = 0;
+	appContext.constants.global.currentRound  = 0    ;
+	appContext.constants.global.isGameRunning = true ;
+	appContext.constants.global.isGamePaused  = false;
+	appContext.constants.global.isGameSaved   = false;
 
 	Player_ty player { };
 	if (not GetCurrentPlayer(player)) {
@@ -382,6 +408,69 @@ void GameManager::StartGame() {
 		"game started -> player {}",
 		player->GetID()
 	);
+	SwitchSceneEvent const event{ SceneType::MAIN };
+	appContext.eventManager.InvokeEvent(event);
+}
+void GameManager::StopGame() {
+	AppContext_ty appConstants{ AppContext::GetInstance() };
+	appConstants.constants.global.isGameRunning = false;
+	appConstants.constants.global.isGamePaused = true;
+	Print(
+		PrintType::ONLY_DEBUG,
+		"game stopped and paused"
+	);
+}
+void GameManager::PauseGame() {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	appContext.constants.global.isGamePaused = true;
+	Print(
+		PrintType::ONLY_DEBUG,
+		"game paused"
+	);
+}
+void GameManager::ResumeGame() {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	if (not appContext.constants.global.isGameRunning){
+		ShowMessagePopUpEvent const event {
+			appContext.languageManager.Text("ui_popup_no_game_title"),
+			appContext.languageManager.Text("ui_popup_no_game_subtitle"),
+			[](){}
+		};
+		appContext.eventManager.InvokeEvent(event);
+		Print(
+			PrintType::ONLY_DEBUG,
+			"not able to resume to game because its no game running"
+		);
+		return;
+	}
+	appContext.constants.global.isGamePaused = false;
+	Print(
+		PrintType::ONLY_DEBUG,
+		"resumed to game"
+	);
+	SwitchSceneEvent const event{ SceneType::MAIN };
+	appContext.eventManager.InvokeEvent(event);
+}
+void GameManager::QuitGame() {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	if (not appContext.constants.global.isGameSaved){
+		ShowValidatePopUp const event{
+			appContext.languageManager.Text("ui_popup_not_saved_title"),
+			appContext.languageManager.Text("ui_popup_not_saved_subtitle", '\n'),
+			[this](bool valid){
+				if (valid){
+					AppContext_ty appContext{ AppContext::GetInstance() };
+					appContext.constants.global.isGameSaved = true;
+					this->QuitGame();
+				}
+			}
+		};
+		appContext.eventManager.InvokeEvent(event);
+		return;
+	}
+
+	CloseWindowEvent const event{ };
+	appContext.eventManager.InvokeEvent(event);
 }
 
 GameManager::GameManager()
@@ -444,6 +533,22 @@ void GameManager::OnEvent(Event const& event) {
 	// Game
 	if (auto const* gameEvent = dynamic_cast<StartGameEvent const*> (&event)) {
 		StartGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<StopGameEvent const*> (&event)) {
+		StopGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<PauseGameEvent const*> (&event)) {
+		PauseGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<ResumeGameEvent const*> (&event)) {
+		ResumeGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<QuitGameEvent const*> (&event)) {
+		QuitGame();
 		return;
 	}
 	if (auto const* gameEvent = dynamic_cast<TriggerNextTurnEvent const*> (&event)) {

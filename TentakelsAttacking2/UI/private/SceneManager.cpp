@@ -50,7 +50,7 @@ void SceneManager::InitializeNewScene(SceneType sceneType) {
 			return;
 		case SceneType::SETTINGS:
 			m_currentScene = std::make_shared<SettingsScene>(
-				m_uiManager->GetResolution(), GetContinueSceneType());
+				m_uiManager->GetResolution());
 			return;
 		case SceneType::CREDITS:
 			m_currentScene = std::make_shared<CreditsScene>(
@@ -85,16 +85,6 @@ void SceneManager::SwitchScene(AppContext_ty_c appContext) {
 		"scene switched to -> {}",
 		GetStringBySceneType(m_currentSceneType)
 	);
-}
-
-SceneType SceneManager::GetContinueSceneType() const {
-	
-	switch (m_currentSceneType) {
-		case SceneType::MAIN:
-			return SceneType::MAIN;
-		default:
-			return SceneType::NONE;
-	}
 }
 
 SceneManager::SceneManager(UIManager* uiManager)

@@ -28,7 +28,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		resolution,
 		appContext.languageManager.Text("scene_main_menu_new_game_btn"),
 		SoundType::ACCEPTED
-		);
+	);
 	newGameBtn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(
 			SwitchSceneEvent(SceneType::NEW_GAME_PLAYER));
@@ -38,7 +38,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 	btnPosY += btnOffset;
 	++focusID;
 
-	m_continueBtn = std::make_shared<ClassicButton>(
+	auto continueBtn = std::make_shared<ClassicButton>(
 		focusID,
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
@@ -47,11 +47,14 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		appContext.languageManager.Text("scene_main_menu_continue_btn"),
 		SoundType::ACCEPTED
 	);
-	m_continueBtn->SetOnClick([]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::MAIN));
-		});
-	m_elements.push_back(m_continueBtn);
+	continueBtn->SetEnabled(appContext.constants.global.isGameRunning);
+	continueBtn->SetOnClick([]() {
+			ResumeGameEvent const event{ };
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		}
+	);
+
+	m_elements.push_back(continueBtn);
 
 	appContext.eventManager.InvokeEvent(GetGalaxyPointerEvent{ });
 
@@ -68,9 +71,16 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		SoundType::ACCEPTED
 	);
 	saveGameBtn->SetOnClick([]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::TEST)
-		);
+			AppContext_ty appContext{ AppContext::GetInstance() };
+			if (not appContext.constants.global.isGameSaved) {
+				appContext.constants.global.isGameSaved = true;
+				ShowMessagePopUpEvent const event {
+					"debug save",
+					"set save bool to false\nwill be set later when a game was saved.",
+					[]() {}
+				};
+				appContext.eventManager.InvokeEvent(event);
+			}
 		}
 	);
 	saveGameBtn->SetEnabled(false);
@@ -89,9 +99,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		SoundType::ACCEPTED
 		);
 	loadGameBtn->SetOnClick([]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::TEST)
-			);
+			AppContext::GetInstance().eventManager.InvokeEvent(SwitchSceneEvent(SceneType::TEST));
 		}
 	);
 	loadGameBtn->SetEnabled(false);
@@ -148,8 +156,12 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		resolution,
 		appContext.languageManager.Text("scene_main_menu_quit_btn"),
 		SoundType::ACCEPTED
-		);
-	quitBtn->SetOnClick([]() {AppContext::GetInstance().eventManager.InvokeEvent(CloseWindowEvent());});
+	);
+	quitBtn->SetOnClick(
+		[]() {
+			AppContext::GetInstance().eventManager.InvokeEvent(QuitGameEvent{ });
+		}
+	);
 	m_elements.push_back(quitBtn);
 
 	auto galaxy = std::make_shared<GalaxyScene>(
@@ -192,24 +204,6 @@ MainMenu::MainMenu(Vector2 resolution)
 	: Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution } {
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
-	appContext.eventManager.AddListener(this);
 
 	Initialize(resolution, appContext);
-}
-
-MainMenu::~MainMenu() {
-	AppContext::GetInstance().eventManager.RemoveListener(this);
-}
-
-void MainMenu::OnEvent(Event const& event) {
-	if (auto const* galaxyEvent = dynamic_cast<SendGalaxyPointerEvent const*>(&event)) {
-		if (galaxyEvent->IsShowGalaxy()) { return; }
-
-		if (galaxyEvent->GetGalaxy() == nullptr) {
-			m_continueBtn->SetEnabled(false);
-		}
-		else {
-			m_continueBtn->SetEnabled(true);
-		}
-	}
 }

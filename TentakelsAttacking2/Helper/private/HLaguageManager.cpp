@@ -109,6 +109,7 @@ bool HLanguageManager::LoadLanguage(std::string const& language, bool const defa
 		if (l == language) { found = true; break; }
 	}
 	if (not found) {
+		assert(false and "language is not available");
 		Print(
 			PrintType::ERROR,
 			"language \"{}\" is not available",
@@ -119,6 +120,7 @@ bool HLanguageManager::LoadLanguage(std::string const& language, bool const defa
 
 	std::string const directory{ "Assets/Languages" };
 	if (not DirectoryExists(directory.c_str())) {
+		assert(false and "language directory missing");
 		Print(
 			PrintType::ERROR,
 			"directory \"{}\" not existing. unable to load provided language",
@@ -127,10 +129,10 @@ bool HLanguageManager::LoadLanguage(std::string const& language, bool const defa
 		return false;
 	}
 
-
 	std::ifstream in;
 	in.open(directory + "/" + language + ".tal");
 	if (not in.is_open()) {
+		assert(false and "not able to open language file");
 		Print(
 			PrintType::ERROR,
 			"not able tp open language: \"{}\"",
@@ -148,6 +150,7 @@ bool HLanguageManager::LoadLanguage(std::string const& language, bool const defa
 		}
 	}
 	catch (nlohmann::json::parse_error const& e) {
+		assert(false and "language parse error");
 		Print(
 			PrintType::ERROR,
 			"not able tp parse \"{}\" -> message: {} -> byte: {} -> id: {}",
@@ -189,6 +192,7 @@ bool HLanguageManager::LoadLanguage(std::string const& language, bool const defa
 	}
 
 	if (dummy == nullptr){
+		assert(dummy);
 		Print(
 			PrintType::ERROR,
 			"not able to check language version -> loaded language is nullptr -> \"{}\"",
@@ -197,6 +201,7 @@ bool HLanguageManager::LoadLanguage(std::string const& language, bool const defa
 		return false;
 	}
 	else if (dummy.is_null()){
+		assert(not dummy.is_null());
 		Print(
 			PrintType::ERROR,
 			"not able to check language version -> loaded language json in null -> \"{}\"",
@@ -205,6 +210,7 @@ bool HLanguageManager::LoadLanguage(std::string const& language, bool const defa
 		return false;
 	}
 	else if (not dummy.contains(m_version_key)) {
+		assert(dummy.contains(m_version_key));
 		Print(
 			PrintType::ERROR,
 			"not able to check language version -> language does not contain key \"{}\" -> \"{}\"",
