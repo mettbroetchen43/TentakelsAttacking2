@@ -212,7 +212,19 @@ public:
 /**
  * use this to trigger the logic to start the game.
  */
-class StartGameEvent final : public Event { };
+class StartGameEvent  final : public Event { };
+/**
+ * use this to trigger the logic to end the game.
+ */
+class StopGameEvent   final : public Event { };
+/**
+ * use this to trigger the logic to pause the game.
+ */
+class PauseGameEvent  final : public Event { };
+/**
+ * use this to trigger the logic to resume the game.
+ */
+class ResumeGameEvent final : public Event { };
 
 /**
  * use this to trigger the constants to update the target last round.
