@@ -110,3 +110,7 @@ void ToggleButton::SetToggleButton(bool isToggled) {
 	m_isToggled = isToggled;
 	UpdateState();
 }
+
+void ToggleButton::SetOnToggle(std::function<void(bool)> onToggle) {
+	m_onToggle = onToggle;
+}

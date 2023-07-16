@@ -47,4 +47,9 @@ public:
 	 * sets the toggle state of the button.
 	 */
 	void SetToggleButton(bool isToggled);
+
+	/**
+	 * sets the toggle callback
+	 */
+	void SetOnToggle(std::function<void(bool)> onToggle);
 };
