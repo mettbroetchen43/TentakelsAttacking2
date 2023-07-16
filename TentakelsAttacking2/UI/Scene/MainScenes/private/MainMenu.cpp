@@ -71,9 +71,16 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		SoundType::ACCEPTED
 	);
 	saveGameBtn->SetOnClick([]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::TEST)
-		);
+			AppContext_ty appContext{ AppContext::GetInstance() };
+			if (not appContext.constants.global.isGameSaved) {
+				appContext.constants.global.isGameSaved = true;
+				ShowMessagePopUpEvent const event {
+					"debug save",
+					"set save bool to false\nwill be set later when a game was saved.",
+					[]() {}
+				};
+				appContext.eventManager.InvokeEvent(event);
+			}
 		}
 	);
 	saveGameBtn->SetEnabled(false);
@@ -92,9 +99,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		SoundType::ACCEPTED
 		);
 	loadGameBtn->SetOnClick([]() {
-		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::TEST)
-			);
+			AppContext::GetInstance().eventManager.InvokeEvent(SwitchSceneEvent(SceneType::TEST));
 		}
 	);
 	loadGameBtn->SetEnabled(false);
