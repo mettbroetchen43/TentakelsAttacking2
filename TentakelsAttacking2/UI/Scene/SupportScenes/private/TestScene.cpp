@@ -24,6 +24,10 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		"first toggle",
 		SoundType::CLICKED_PRESS_STD
 	);
+	firstBtn->SetOnToggle([this](bool toggle) {
+			this->TestLambda(toggle);
+		}
+	);
 	m_elements.push_back(firstBtn);
 
 	// to get Back No testing
