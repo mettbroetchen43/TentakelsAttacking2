@@ -32,7 +32,7 @@ struct CGlobal final {
 	size_t currentRound{ 0 }; ///< contains the current round of the game
 
 	// game bools
-	bool m_isGameRunning{ false }; ///< contains if a game is currently running.
+	bool isGameRunning{ false }; ///< contains if a game is currently running.
 	bool isGamePaused{ true }; ///< contains if current game is paused
 
 	// input bools
