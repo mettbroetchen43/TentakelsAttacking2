@@ -67,15 +67,6 @@ void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c app
 }
 void TestScene::Render(AppContext_ty_c appContext) {
 	Scene::Render(appContext);
-	Rectangle draw(
-		m_resolution.x * 0.25f,
-		m_resolution.y * 0.25f,
-		m_resolution.x * 0.5f,
-		m_resolution.y * 0.5f
-	);
-	DrawRectangleLinesEx(
-		draw, 2.0f, WHITE
-	);
 }
 void TestScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	Scene::Resize(resolution, appContext);
