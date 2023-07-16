@@ -8,11 +8,23 @@
 #include "SceneType.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
+#include "ToggleButton.h"
 #include "Table.h"
 
 
 
 void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
+
+	auto firstBtn = std::make_shared<ToggleButton>(
+		1,
+		GetElementPosition(0.5f,0.2f),
+		GetElementSize(0.2f,0.1f),
+		Alignment::MID_MID,
+		m_resolution,
+		"first toggle",
+		SoundType::CLICKED_PRESS_STD
+	);
+	m_elements.push_back(firstBtn);
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
