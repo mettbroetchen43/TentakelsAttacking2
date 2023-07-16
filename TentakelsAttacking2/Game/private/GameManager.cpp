@@ -371,8 +371,8 @@ void GameManager::StartGame() {
 
 	if (appContext.constants.global.isGameRunning and not appContext.constants.global.isGameSaved) {
 		ShowValidatePopUp  const event {
-			"game still running",
-			"there is currently a game running\ndo you want to overwrite the current game?",
+			appContext.languageManager.Text("ui_popup_game_still_running_title"),
+			appContext.languageManager.Text("ui_popup_game_still_running_subtitle", '\n'),
 			[this](bool valid){
 				if (valid){
 					this->StopGame();
@@ -432,8 +432,8 @@ void GameManager::ResumeGame() {
 	AppContext_ty appContext{ AppContext::GetInstance() };
 	if (not appContext.constants.global.isGameRunning){
 		ShowMessagePopUpEvent const event {
-			"no game",
-			"there is no current game running to resume to",
+			appContext.languageManager.Text("ui_popup_no_game_title"),
+			appContext.languageManager.Text("ui_popup_no_game_subtitle"),
 			[](){}
 		};
 		appContext.eventManager.InvokeEvent(event);
@@ -453,15 +453,10 @@ void GameManager::ResumeGame() {
 }
 void GameManager::QuitGame() {
 	AppContext_ty appContext{ AppContext::GetInstance() };
-	Print(
-		PrintType::DEBUG,
-		"current game is saved -> {}",
-		appContext.constants.global.isGameSaved
-	);
 	if (not appContext.constants.global.isGameSaved){
 		ShowValidatePopUp const event{
-			"not saved",
-			"the current game is not saved\nquit anyway?",
+			appContext.languageManager.Text("ui_popup_not_saved_title"),
+			appContext.languageManager.Text("ui_popup_not_saved_subtitle", '\n'),
 			[this](bool valid){
 				if (valid){
 					AppContext_ty appContext{ AppContext::GetInstance() };
