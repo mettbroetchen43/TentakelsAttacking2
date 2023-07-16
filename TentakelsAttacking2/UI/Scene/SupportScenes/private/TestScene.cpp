@@ -28,6 +28,22 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 	);
 	m_elements.push_back(firstBtn);
 
+	auto secondBtn = std::make_shared<ToggleButton>(
+		2,
+		GetElementPosition(0.5f,0.5f),
+		GetElementSize(0.2f,0.1f),
+		Alignment::MID_MID,
+		m_resolution,
+		"second toggle",
+		SoundType::CLICKED_PRESS_STD
+	);
+	secondBtn->SetOnToggle([firstBtn](bool toggle) {
+			firstBtn->SetEnabled(toggle);
+		}
+	);
+	m_elements.push_back(secondBtn);
+
+
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
 		1000,
