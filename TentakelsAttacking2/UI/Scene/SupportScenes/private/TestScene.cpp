@@ -21,6 +21,7 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		m_resolution,
 		ExpandingButton::UP,
 		0.01f,
+		10.0f,
 		"main button"
 	);
 	m_elements.push_back(mainBtn);

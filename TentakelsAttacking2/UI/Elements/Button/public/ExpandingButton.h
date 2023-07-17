@@ -17,11 +17,18 @@ public:
 	};
 
 private:
+	struct Btn {
+		ClassicButton_ty btn;
+		bool enabled;
+		Vector2 pos;
+	};
+
 	bool m_isExpanded{ false }; ///< contains if the button is currently expanded
 	bool m_wasKeyInput{ false }; ///< contains if the button got a key input last time
 	float m_spacing; ///< contains the relative spacing between the buttons
+	float m_expandingSpeed; ///< contains the speed the button is expanding and collapsing
 	ToggleButton_ty m_mainButton; ///< contains the toggle button
-	std::vector<std::pair<ClassicButton_ty, bool>> m_buttons{ }; ///< contains the classic buttons
+	std::vector<Btn> m_buttons{ }; ///< contains the classic buttons
 	Direction m_direction; ///< contains the current expand direction
 
 	/**
@@ -42,12 +49,17 @@ private:
 	 */
 	void HandleCollapse();
 
+	/**
+	 * returns if any classic button is moving.
+	 */
+	[[nodiscard]] bool IsBtnMoving() const;
+
 public:
 	/**
 	 * initializes the toggle button.
 	 */
 	ExpandingButton(int focusID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		Direction direction, float spacing, std::string const& btnText);
+		Direction direction, float spacing,float expandigSpeed, std::string const& btnText);
 
 	/**
 	 * adds a new button.
