@@ -142,7 +142,8 @@ void Button::Render(AppContext_ty_c appContext) {
 		Vector2{ m_textPosition.x, m_textPosition.y },
 		static_cast<float>(m_textSize),
 		0,
-		WHITE);
+		WHITE
+	);
 }
 void Button::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	UIElement::Resize(resolution, appContext);

@@ -9,6 +9,7 @@
 #include "FleetTable.h"
 #include "AppContext.h"
 #include "ClassicButton.h"
+#include "ExpandingButton.h"
 #include "GenerelEvents.hpp"
 #include "HPlayerCollection.h"
 #include "Title.h"
@@ -36,16 +37,29 @@ void MainScene::Initialize() {
 	m_elements.push_back(title);
 
 	// Btn
-	auto settingsBtn = std::make_shared<ClassicButton>(
+	auto settingsBtn = std::make_shared<ExpandingButton>(
 		203,
 		GetElementPosition(0.975f, 0.02f),
 		GetElementSize(0.075f, 0.05f),
 		Alignment::TOP_RIGHT,
 		m_resolution,
-		appContext.languageManager.Text("scene_main_scene_settings_btn"),
+		ExpandingButton::DOWN,
+		0.005f,
+		10.0f,
+		appContext.languageManager.Text("helper_settings")
+	);
+	m_elements.push_back(settingsBtn);
+
+	auto gameSettingsBtn = std::make_shared<ClassicButton>(
+		204,
+		Vector2{ 0.0f, 0.0f },
+		Vector2{ 0.0f, 0.0f },
+		Alignment::DEFAULT,
+		m_resolution,
+		appContext.languageManager.Text("helper_game"),
 		SoundType::CLICKED_RELEASE_STD
 		);
-	settingsBtn->SetOnClick([]() {
+	gameSettingsBtn->SetOnClick([]() {
 		AppContext_ty_c appContext{ AppContext::GetInstance() };
 		
 		PauseGameEvent const gameEvent{ };
@@ -55,8 +69,19 @@ void MainScene::Initialize() {
 		appContext.eventManager.InvokeEvent(sceneEvent);
 		}
 	);
-	m_elements.push_back(settingsBtn);
+	settingsBtn->Add(gameSettingsBtn, true);
 
+	auto appSettingsBtn = std::make_shared<ClassicButton>(
+		205,
+		Vector2{ 0.0f,0.0f },
+		Vector2{ 0.0f,0.0f },
+		Alignment::DEFAULT,
+		m_resolution,
+		appContext.languageManager.Text("helper_app"),
+		SoundType::CLICKED_RELEASE_STD
+		);
+	settingsBtn->Add(appSettingsBtn, false);
+	settingsBtn->Update();
 
 	auto galaxyBtn = std::make_shared<ClassicButton>(
 		200,

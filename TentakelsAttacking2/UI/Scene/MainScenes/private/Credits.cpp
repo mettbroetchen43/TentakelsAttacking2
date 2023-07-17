@@ -47,7 +47,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		});
 	m_elements.push_back(backBTN);
 
-
 	// credits
 	auto creditsText = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.15f),
@@ -254,7 +253,7 @@ void CreditsScene::ToggleSpeedLevel() {
 		m_speedLevel = 1;
 	}
 
-	m_speedBTN->SetText(AppContext::GetInstance().languageManager.Text("scene_credits_speed_toggle", m_speedLevel, m_maxSpeedLevel));
+	m_speedBTN->SetText(AppContext::GetInstance().languageManager.Text("scene_credits_speed_toggle_btn", m_speedLevel, m_maxSpeedLevel));
 	
 	for (auto e : m_movingElements) {
 		e->MoveBySpeed(m_speed * m_speedLevel, 0.0f);

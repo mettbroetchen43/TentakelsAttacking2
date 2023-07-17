@@ -7,42 +7,58 @@
 #include "TestScene.h"
 #include "SceneType.h"
 #include "AppContext.h"
+#include "ExpandingButton.h"
 #include "ClassicButton.h"
-#include "ToggleButton.h"
 #include "Table.h"
 
 void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 
-	auto firstBtn = std::make_shared<ToggleButton>(
+	auto mainBtn = std::make_shared<ExpandingButton>(
 		1,
-		GetElementPosition(0.5f,0.2f),
+		GetElementPosition(0.1f,0.5f),
 		GetElementSize(0.2f,0.1f),
 		Alignment::MID_MID,
 		m_resolution,
-		"first toggle",
-		SoundType::CLICKED_PRESS_STD
+		ExpandingButton::RIGHT,
+		0.005f,
+		10.0f,
+		"main button"
 	);
-	firstBtn->SetOnToggle([this](bool toggle) {
-			this->TestLambda(toggle);
-		}
-	);
-	m_elements.push_back(firstBtn);
+	m_elements.push_back(mainBtn);
 
-	auto secondBtn = std::make_shared<ToggleButton>(
+	auto firstBtn = std::make_shared<ClassicButton>(
 		2,
-		GetElementPosition(0.5f,0.5f),
-		GetElementSize(0.2f,0.1f),
-		Alignment::MID_MID,
+		Vector2(0.0f,0.0f),
+		Vector2(0.0f,0.0f),
+		Alignment::DEFAULT,
 		m_resolution,
-		"second toggle",
-		SoundType::CLICKED_PRESS_STD
+		"first expanding",
+		SoundType::CLICKED_RELEASE_STD
 	);
-	secondBtn->SetOnToggle([firstBtn](bool toggle) {
-			firstBtn->SetEnabled(toggle);
-		}
-	);
-	m_elements.push_back(secondBtn);
+	mainBtn->Add(firstBtn, true);
 
+	auto secondBtn = std::make_shared<ClassicButton>(
+		3,
+		Vector2(0.0f,0.1f),
+		Vector2(0.0f,0.0f),
+		Alignment::DEFAULT,
+		m_resolution,
+		"second expanding",
+		SoundType::CLICKED_RELEASE_STD
+	);
+	mainBtn->Add(secondBtn, false);
+
+	auto thirdBtn = std::make_shared<ClassicButton>(
+		4,
+		Vector2(0.0f,0.2f),
+		Vector2(0.0f,0.0f),
+		Alignment::DEFAULT,
+		m_resolution,
+		"third expanding",
+		SoundType::CLICKED_RELEASE_STD
+	);
+	mainBtn->Add(thirdBtn, true);
+	mainBtn->Update();
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(

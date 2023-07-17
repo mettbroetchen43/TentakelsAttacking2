@@ -286,11 +286,11 @@ public:
 	}
 
 	/**
-	 * checks if there is a current movement.
-	 * moves the element if so.
+	 * updates the movement event if CheckAndUpdate is not called.
+	 * it is not recommended to call this and CheckAndUpdate.
 	 */
-	virtual void CheckAndUpdate(Vector2 const&, AppContext_ty_c) {
-		switch (m_moveType) {
+	void UpdateMove() {
+				switch (m_moveType) {
 			default:
 			case MoveType::NONE:
 				break;
@@ -304,6 +304,14 @@ public:
 				MoveSpeedLinear();
 				break;
 		}
+	}
+
+	/**
+	 * checks if there is a current movement.
+	 * calls the element to move
+	 */
+	virtual void CheckAndUpdate(Vector2 const&, AppContext_ty_c) {
+		UpdateMove();
 	}
 	/**
 	 * just virtual.

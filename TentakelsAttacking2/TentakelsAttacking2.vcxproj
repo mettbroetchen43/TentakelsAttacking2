@@ -199,6 +199,7 @@
     <ClInclude Include="Helper\public\HPlayerData.h" />
     <ClInclude Include="Helper\public\Vec2.hpp" />
     <ClInclude Include="Game\public\Player.h" />
+    <ClInclude Include="UI\Elements\Button\public\ExpandingButton.h" />
     <ClInclude Include="UI\Elements\Button\public\ToggleButton.h" />
     <ClInclude Include="UI\Elements\Default\public\CountingNumber.h" />
     <ClInclude Include="UI\Elements\Default\public\Hover.h" />
@@ -303,6 +304,7 @@
     <ClCompile Include="Helper\private\HPrint.cpp" />
     <ClCompile Include="Helper\private\HVector2Operator.cpp" />
     <ClCompile Include="UI\Elements\Button\private\ToggleButton.cpp" />
+    <ClCompile Include="UI\Elements\Button\private\ExpandingButton.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Hover.cpp" />
     <ClCompile Include="UI\Elements\Default\private\LineDrag.cpp" />
     <ClCompile Include="UI\Elements\Default\private\CountingNumber.cpp" />

@@ -11,7 +11,7 @@ class ToggleButton : public Button, public Focusable {
 private:
 	bool m_isToggled{ false }; ///< contains the button is currently toggled
 
-	std::function<void(bool)> m_onToggle{ [](bool) { } }; ///< contains the callback for the toggle
+	std::function<void(bool, bool)> m_onToggle{ [](bool, bool) { } }; ///< contains the callback for the toggle (toggled, keyinput)
 
 	/**
 	 * updates the button state.
@@ -55,5 +55,5 @@ public:
 	/**
 	 * sets the toggle callback
 	 */
-	void SetOnToggle(std::function<void(bool)> onToggle);
+	void SetOnToggle(std::function<void(bool, bool)> onToggle);
 };
