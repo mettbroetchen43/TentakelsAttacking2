@@ -51,11 +51,6 @@ void ExpandingButton::HandleExpand() {
 		btn->StopMoving();
 		btn->MoveToPositionAsymptotic(pos, m_expandingSpeed);
 	}
-
-	Print(
-		PrintType::DEBUG,
-		"expanding button is expanding. you just have to look closer"
-	);
 }
 void ExpandingButton::HandleCollapse() {
 	if (not m_isExpanded) { return; }
@@ -66,11 +61,6 @@ void ExpandingButton::HandleCollapse() {
 		btn->StopMoving();
 		btn->MoveToPositionAsymptotic(m_mainButton->GetPosition(), m_expandingSpeed);
 	}
-
-	Print(
-		PrintType::DEBUG,
-		"expanding button is collapsing. you just have to look closer"
-	);
 }
 
 bool ExpandingButton::IsBtnMoving() const {
@@ -141,17 +131,6 @@ void ExpandingButton::Update() {
 			}
 		}
 	};
-	/*switch (m_direction) {
-		case LEFT:
-		case UP:
-			break;
-		case RIGHT:
-			position.x += m_mainButton->GetSize().x;
-			break;
-		case DOWN:
-			position.y += m_mainButton->GetSize().y;
-			break;
-	}*/
 
 	for (int i = 0; i < m_buttons.size(); ++i) {
 		auto& btn{ m_buttons.at(i) };
@@ -226,12 +205,6 @@ void ExpandingButton::Render(AppContext_ty_c appContext) {
 			btn.btn->Render(appContext);
 		}
 	}
-
-	DrawRectangleLinesEx(
-		m_collider,
-		1.0f,
-		WHITE
-	);
 
 	m_mainButton->Render(appContext);
 }

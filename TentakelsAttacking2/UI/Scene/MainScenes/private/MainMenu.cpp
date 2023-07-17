@@ -101,7 +101,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 			AppContext::GetInstance().eventManager.InvokeEvent(SwitchSceneEvent(SceneType::TEST));
 		}
 	);
-	// loadGameBtn->SetEnabled(false);
+	loadGameBtn->SetEnabled(false);
 	m_elements.push_back(loadGameBtn);
 
 	btnPosY += btnOffset;
