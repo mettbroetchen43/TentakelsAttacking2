@@ -83,6 +83,10 @@ public:
 	 * call this after direction change and add or remove button.
 	 */
 	void Update();
+	/**
+	 * updates the collider so it is over all buttons
+	 */
+	void UpdateCollider();
 
 	/**
 	 */

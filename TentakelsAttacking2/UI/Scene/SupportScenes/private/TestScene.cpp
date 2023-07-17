@@ -15,12 +15,12 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 
 	auto mainBtn = std::make_shared<ExpandingButton>(
 		1,
-		GetElementPosition(0.5f,0.5f),
+		GetElementPosition(0.1f,0.5f),
 		GetElementSize(0.2f,0.1f),
 		Alignment::MID_MID,
 		m_resolution,
-		ExpandingButton::UP,
-		0.01f,
+		ExpandingButton::RIGHT,
+		0.005f,
 		10.0f,
 		"main button"
 	);

@@ -141,7 +141,7 @@ void ExpandingButton::Update() {
 			}
 		}
 	};
-	switch (m_direction) {
+	/*switch (m_direction) {
 		case LEFT:
 		case UP:
 			break;
@@ -151,7 +151,7 @@ void ExpandingButton::Update() {
 		case DOWN:
 			position.y += m_mainButton->GetSize().y;
 			break;
-	}
+	}*/
 
 	for (int i = 0; i < m_buttons.size(); ++i) {
 		auto& btn{ m_buttons.at(i) };
@@ -161,6 +161,43 @@ void ExpandingButton::Update() {
 		btn.pos = position;
 		btn.btn->SetPosition(m_isExpanded ? btn.pos : m_mainButton->GetPosition());
 	}
+
+	UpdateCollider();
+}
+void ExpandingButton::UpdateCollider() {
+	if (m_buttons.empty()){
+		SetCollider(m_mainButton->GetCollider());
+		return;
+	}
+
+	auto defaultCollider{ m_mainButton->GetCollider() };
+	Vector2 extraCollider{ m_spacing * m_resolution.x, m_spacing * m_resolution.y };
+	for (auto const& btn : m_buttons) {
+		extraCollider.x += m_spacing * m_resolution.x + btn.btn->GetCollider().width;
+		extraCollider.y += m_spacing * m_resolution.y + btn.btn->GetCollider().height;
+	}
+
+	switch (m_direction) {
+	case ExpandingButton::LEFT:
+		defaultCollider.x -= extraCollider.x;
+		defaultCollider.width += extraCollider.x;
+		break;
+
+	case ExpandingButton::DOWN:
+		defaultCollider.height += extraCollider.y;
+		break;
+
+	case ExpandingButton::RIGHT:
+		defaultCollider.width += extraCollider.x;
+		break;
+
+	case ExpandingButton::UP:
+		defaultCollider.y -= extraCollider.y;
+		defaultCollider.height += extraCollider.y;
+		break;
+	}
+
+	SetCollider(defaultCollider);
 }
 
 void ExpandingButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
@@ -189,6 +226,12 @@ void ExpandingButton::Render(AppContext_ty_c appContext) {
 			btn.btn->Render(appContext);
 		}
 	}
+
+	DrawRectangleLinesEx(
+		m_collider,
+		1.0f,
+		WHITE
+	);
 
 	m_mainButton->Render(appContext);
 }
