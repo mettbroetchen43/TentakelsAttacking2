@@ -3,12 +3,16 @@
 // 16.07.2023
 //
 
+#include "AppContext.h"
 #include "ExpandingButton.h"
 #include "ClassicButton.h"
 #include "ToggleButton.h"
+#include "UIEvents.hpp"
 #include "HPrint.h"
 
 void ExpandingButton::Initialize(int focusID, std::string const& btnText) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
 	m_mainButton = std::make_shared<ToggleButton>(
 		focusID,
 		m_pos,
@@ -22,6 +26,9 @@ void ExpandingButton::Initialize(int focusID, std::string const& btnText) {
 			this->HandleExpandChance(toggle);
 		}
 	);
+
+	NewFocusElementEvent const event{ m_mainButton.get() };
+	appContext.eventManager.InvokeEvent(event);
 }
 
 void ExpandingButton::HandleExpandChance(bool expanding) {
@@ -58,6 +65,19 @@ ExpandingButton::ExpandingButton(int focusID, Vector2 pos, Vector2 size, Alignme
 	: UIElement{ pos, size, alignment, resolution }, m_direction{ direction }, m_spacing{ spacing } {
 	
 	Initialize(focusID, btnText);
+}
+
+void ExpandingButton::Add(ClassicButton_ty btn) {
+	m_buttons.push_back(btn);
+}
+void ExpandingButton::Remove(ClassicButton_ty btn) {
+	std::erase_if(m_buttons, [btn](ClassicButton_ty current) { return btn == current; });
+}
+
+void ExpandingButton::Remove(int ind) {
+	if (ind >= m_buttons.size()) { throw std::runtime_error("index out of range"); }
+
+	m_buttons.erase(m_buttons.begin() + ind);
 }
 
 void ExpandingButton::SetDirection(Direction direction) {

@@ -13,7 +13,7 @@
 
 void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 
-	auto firstBtn = std::make_shared<ExpandingButton>(
+	auto mainBtn = std::make_shared<ExpandingButton>(
 		1,
 		GetElementPosition(0.5f,0.5f),
 		GetElementSize(0.2f,0.1f),
@@ -23,7 +23,40 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		0.01f,
 		"main button"
 	);
-	m_elements.push_back(firstBtn);
+	m_elements.push_back(mainBtn);
+
+	auto firstBtn = std::make_shared<ClassicButton>(
+		2,
+		Vector2(0.0f,0.0f),
+		Vector2(0.1f,0.1f),
+		Alignment::DEFAULT,
+		m_resolution,
+		"first expanding",
+		SoundType::CLICKED_RELEASE_STD
+	);
+	mainBtn->Add(firstBtn);
+
+	auto secondBtn = std::make_shared<ClassicButton>(
+		3,
+		Vector2(0.0f,0.1f),
+		Vector2(0.1f,0.1f),
+		Alignment::DEFAULT,
+		m_resolution,
+		"second expanding",
+		SoundType::CLICKED_RELEASE_STD
+	);
+	mainBtn->Add(secondBtn);
+
+	auto thirdBtn = std::make_shared<ClassicButton>(
+		4,
+		Vector2(0.0f,0.2f),
+		Vector2(0.1f,0.1f),
+		Alignment::DEFAULT,
+		m_resolution,
+		"third expanding",
+		SoundType::CLICKED_RELEASE_STD
+	);
+	mainBtn->Add(thirdBtn);
 
 
 	// to get Back No testing

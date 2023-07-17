@@ -42,9 +42,16 @@ private:
 	void HandleCollapse();
 
 public:
+	/**
+	 * initializes the toggle button.
+	 */
 	ExpandingButton(int focusID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		Direction direction, float spacing, std::string const& btnText);
 
+	/**
+	 * adds a new button.
+	 * need to call update after that.
+	 */
 	void Add(ClassicButton_ty btn);
 	void Remove(ClassicButton_ty btn);
 	void Remove(int ind);
