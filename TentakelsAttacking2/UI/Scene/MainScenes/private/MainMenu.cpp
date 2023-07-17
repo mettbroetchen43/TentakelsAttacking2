@@ -52,12 +52,12 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 
 
 
-	float constexpr btnPosX{ 0.23f };
-	float           btnPosY{ 0.115f };
-	float constexpr btnSizX{ 0.2f };
-	float constexpr btnSizY{ 0.1f };
+	float constexpr btnPosX  { 0.23f };
+	float           btnPosY  { 0.25f };
+	float constexpr btnSizX  { 0.2f  };
+	float constexpr btnSizY  { 0.1f  };
 	float constexpr btnOffset{ 0.13f };
-	int             focusID{ 1 };
+	int             focusID  { 1     };
 
 	auto const incFID{[&](){
 		++focusID;
@@ -132,11 +132,26 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 
 	incAll();
 
-	auto saveGameBtn = std::make_shared<ClassicButton>(
+	auto savesBtn = std::make_shared<ExpandingButton>(
 		focusID,
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
+		m_resolution,
+		ExpandingButton::RIGHT,
+		0.005f,
+		10.0f,
+		"saves"
+	);
+	m_elements.push_back(savesBtn);
+
+	incFID();
+
+	auto saveGameBtn = std::make_shared<ClassicButton>(
+		focusID,
+		Vector2{ 0.0f,0.0f },
+		Vector2{ 0.0f,0.0f },
+		Alignment::DEFAULT,
 		resolution,
 		appContext.languageManager.Text("scene_main_menu_save_btn"),
 		SoundType::ACCEPTED
@@ -154,15 +169,15 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 			}
 		}
 	);
-	m_elements.push_back(saveGameBtn);
+	savesBtn->Add(saveGameBtn, true);
 
-	incAll();
+	incFID();
 
 	auto loadGameBtn = std::make_shared<ClassicButton>(
 		focusID,
-		GetElementPosition(btnPosX, btnPosY),
-		GetElementSize(btnSizX, btnSizY),
-		Alignment::MID_RIGHT,
+		Vector2{ 0.0f,0.0f },
+		Vector2{ 0.0f,0.0f },
+		Alignment::DEFAULT,
 		resolution,
 		appContext.languageManager.Text("scene_main_menu_load_btn"),
 		SoundType::ACCEPTED
@@ -171,27 +186,57 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 			AppContext::GetInstance().eventManager.InvokeEvent(SwitchSceneEvent(SceneType::TEST));
 		}
 	);
-	loadGameBtn->SetEnabled(false);
-	m_elements.push_back(loadGameBtn);
+	bool constexpr lge{ false };
+	savesBtn->Add(loadGameBtn, lge);
+	savesBtn->Update();
 
 	incAll();
 
-	auto settingsBtn = std::make_shared<ClassicButton>(
+	auto settingsBtn = std::make_shared<ExpandingButton>(
 		focusID,
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
+		m_resolution,
+		ExpandingButton::RIGHT,
+		0.005f,
+		10.0f,
+		appContext.languageManager.Text("scene_main_menu_settings_btn")
+	);
+	m_elements.push_back(settingsBtn);
+
+	incFID();
+
+	auto gameSettingsBtn = std::make_shared<ClassicButton>(
+		focusID,
+		Vector2{ 0.0f,0.0f },
+		Vector2{ 0.0f,0.0f },
+		Alignment::DEFAULT,
 		resolution,
-		appContext.languageManager.Text("scene_main_menu_settings_btn"),
+		"game",
 		SoundType::CLICKED_RELEASE_STD
 		);
-	settingsBtn->SetOnClick([]() {
+	gameSettingsBtn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(
 			SwitchSceneEvent(SceneType::SETTINGS)
 			);
 		}
 	);
-	m_elements.push_back(settingsBtn);
+	settingsBtn->Add(gameSettingsBtn, true);
+
+	incFID();
+
+	auto appSettingsBtn = std::make_shared<ClassicButton>(
+		focusID,
+		Vector2{ 0.0f,0.0f },
+		Vector2{ 0.0f,0.0f },
+		Alignment::DEFAULT,
+		resolution,
+		"app",
+		SoundType::CLICKED_RELEASE_STD
+		);
+	settingsBtn->Add(appSettingsBtn, false);
+	settingsBtn->Update();
 
 	incAll();
 
