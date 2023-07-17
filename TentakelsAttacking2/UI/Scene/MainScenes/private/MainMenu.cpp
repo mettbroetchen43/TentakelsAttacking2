@@ -76,7 +76,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		ExpandingButton::RIGHT,
 		0.005f,
 		10.0f,
-		"game"
+		appContext.languageManager.Text("helper_app")
 	);
 	m_elements.push_back(gameBtn);
 
@@ -124,7 +124,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		Vector2{ 0.0f,0.0f },
 		Alignment::DEFAULT,
 		resolution,
-		"network",
+		appContext.languageManager.Text("helper_network"),
 		SoundType::ACCEPTED
 	);
 	gameBtn->Add(networkBtn, false);
@@ -141,7 +141,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		ExpandingButton::RIGHT,
 		0.005f,
 		10.0f,
-		"saves"
+		appContext.languageManager.Text("helper_saves")
 	);
 	m_elements.push_back(savesBtn);
 
@@ -201,7 +201,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		ExpandingButton::RIGHT,
 		0.005f,
 		10.0f,
-		appContext.languageManager.Text("scene_main_menu_settings_btn")
+		appContext.languageManager.Text("helper_settings")
 	);
 	m_elements.push_back(settingsBtn);
 
@@ -213,7 +213,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		Vector2{ 0.0f,0.0f },
 		Alignment::DEFAULT,
 		resolution,
-		"game",
+		appContext.languageManager.Text("helper_game"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	gameSettingsBtn->SetOnClick([]() {
@@ -232,7 +232,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		Vector2{ 0.0f,0.0f },
 		Alignment::DEFAULT,
 		resolution,
-		"app",
+		appContext.languageManager.Text("helper_app"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	settingsBtn->Add(appSettingsBtn, false);

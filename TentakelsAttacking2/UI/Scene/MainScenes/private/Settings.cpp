@@ -43,7 +43,7 @@ void SettingsScene::Initialize() {
 		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		appContext.languageManager.Text("scene_settings_settings_headline")
+		appContext.languageManager.Text("helper_settings")
 		);
 	// settingsText->RenderRectangle(true);
 	m_elements.push_back(settingsText);
@@ -344,7 +344,7 @@ void SettingsScene::Initialize() {
 		appContext.languageManager.Text("scene_settings_continue_btn"),
 		SoundType::ACCEPTED
 	);
-	//continueBtn->SetEnabled(appContext.constants.global.isGameRunning); 
+	continueBtn->SetEnabled(appContext.constants.global.isGameRunning); 
 	continueBtn->SetOnClick([]() {
 			ResumeGameEvent const event{ };
 			AppContext::GetInstance().eventManager.InvokeEvent(event);

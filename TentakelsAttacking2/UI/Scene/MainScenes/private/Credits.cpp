@@ -254,7 +254,7 @@ void CreditsScene::ToggleSpeedLevel() {
 		m_speedLevel = 1;
 	}
 
-	m_speedBTN->SetText(AppContext::GetInstance().languageManager.Text("scene_credits_speed_toggle", m_speedLevel, m_maxSpeedLevel));
+	m_speedBTN->SetText(AppContext::GetInstance().languageManager.Text("scene_credits_speed_toggle_btn", m_speedLevel, m_maxSpeedLevel));
 	
 	for (auto e : m_movingElements) {
 		e->MoveBySpeed(m_speed * m_speedLevel, 0.0f);
