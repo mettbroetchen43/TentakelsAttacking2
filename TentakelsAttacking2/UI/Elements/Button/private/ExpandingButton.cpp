@@ -71,13 +71,21 @@ ExpandingButton::ExpandingButton(int focusID, Vector2 pos, Vector2 size, Alignme
 
 void ExpandingButton::Add(ClassicButton_ty btn) {
 	m_buttons.push_back(btn);
+	NewFocusElementEvent const event{ btn.get() };
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 void ExpandingButton::Remove(ClassicButton_ty btn) {
+	DeleteFocusElementEvent const event{ btn.get() };
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+
 	std::erase_if(m_buttons, [btn](ClassicButton_ty current) { return btn == current; });
 }
-
 void ExpandingButton::Remove(int ind) {
 	if (ind >= m_buttons.size()) { throw std::runtime_error("index out of range"); }
+
+	auto const& btn{ m_buttons.at(ind) };
+	DeleteFocusElementEvent const event{ btn.get() };
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 
 	m_buttons.erase(m_buttons.begin() + ind);
 }
