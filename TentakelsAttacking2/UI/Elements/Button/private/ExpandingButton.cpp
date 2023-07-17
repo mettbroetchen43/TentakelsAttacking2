@@ -46,6 +46,10 @@ void ExpandingButton::HandleExpand() {
 
 	m_isExpanded = true;
 
+	for (auto const& [btn, enabled] : m_buttons){
+		btn->SetEnabled(enabled);
+	}
+
 	Print(
 		PrintType::DEBUG,
 		"expanding button is expanding. you just have to look closer"
@@ -55,6 +59,9 @@ void ExpandingButton::HandleCollapse() {
 	if (not m_isExpanded) { return; }
 
 	m_isExpanded = false;
+	for (auto const& [btn, _] : m_buttons){
+		btn->SetEnabled(false);
+	}
 
 	Print(
 		PrintType::DEBUG,
@@ -69,8 +76,8 @@ ExpandingButton::ExpandingButton(int focusID, Vector2 pos, Vector2 size, Alignme
 	Initialize(focusID, btnText);
 }
 
-void ExpandingButton::Add(ClassicButton_ty btn) {
-	m_buttons.push_back(btn);
+void ExpandingButton::Add(ClassicButton_ty btn, bool enabled) {
+	m_buttons.emplace_back(btn, enabled);
 	NewFocusElementEvent const event{ btn.get() };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
@@ -78,13 +85,13 @@ void ExpandingButton::Remove(ClassicButton_ty btn) {
 	DeleteFocusElementEvent const event{ btn.get() };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 
-	std::erase_if(m_buttons, [btn](ClassicButton_ty current) { return btn == current; });
+	std::erase_if(m_buttons, [btn](std::pair<ClassicButton_ty, bool> current) { return btn == current.first; });
 }
 void ExpandingButton::Remove(int ind) {
 	if (ind >= m_buttons.size()) { throw std::runtime_error("index out of range"); }
 
 	auto const& btn{ m_buttons.at(ind) };
-	DeleteFocusElementEvent const event{ btn.get() };
+	DeleteFocusElementEvent const event{ btn.first.get() };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 
 	m_buttons.erase(m_buttons.begin() + ind);
@@ -108,7 +115,7 @@ void ExpandingButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty
 
 	if (m_isExpanded) {
 		for (auto const& btn : m_buttons) {
-			btn->CheckAndUpdate(mousePosition, appContext);
+			btn.first->CheckAndUpdate(mousePosition, appContext);
 		}
 	}
 }
@@ -117,7 +124,7 @@ void ExpandingButton::Render(AppContext_ty_c appContext) {
 
 	if (m_isExpanded) {
 		for (auto const& btn : m_buttons) {
-			btn->Render(appContext);
+			btn.first->Render(appContext);
 		}
 	}
 }
@@ -125,6 +132,6 @@ void ExpandingButton::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	UIElement::Resize(resolution, appContext);
 
 	for (auto const& btn : m_buttons) {
-		btn->Resize(resolution,appContext);
+		btn.first->Resize(resolution,appContext);
 	}
 }

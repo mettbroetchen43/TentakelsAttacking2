@@ -21,7 +21,7 @@ private:
 	bool m_wasKeyInput{ false }; ///< contains if the button got a key input last time
 	float m_spacing; ///< contains the relative spacing between the buttons
 	ToggleButton_ty m_mainButton; ///< contains the toggle button
-	std::vector<ClassicButton_ty> m_buttons{ }; ///< contains the classic buttons
+	std::vector<std::pair<ClassicButton_ty, bool>> m_buttons{ }; ///< contains the classic buttons
 	Direction m_direction; ///< contains the current expand direction
 
 	/**
@@ -53,7 +53,7 @@ public:
 	 * adds a new button.
 	 * need to call update after that.
 	 */
-	void Add(ClassicButton_ty btn);
+	void Add(ClassicButton_ty btn, bool enabled);
 	void Remove(ClassicButton_ty btn);
 	void Remove(int ind);
 

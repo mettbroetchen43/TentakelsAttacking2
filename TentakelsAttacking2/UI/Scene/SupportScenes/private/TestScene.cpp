@@ -34,7 +34,7 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		"first expanding",
 		SoundType::CLICKED_RELEASE_STD
 	);
-	mainBtn->Add(firstBtn);
+	mainBtn->Add(firstBtn, true);
 
 	auto secondBtn = std::make_shared<ClassicButton>(
 		3,
@@ -45,7 +45,7 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		"second expanding",
 		SoundType::CLICKED_RELEASE_STD
 	);
-	mainBtn->Add(secondBtn);
+	mainBtn->Add(secondBtn, false);
 
 	auto thirdBtn = std::make_shared<ClassicButton>(
 		4,
@@ -56,7 +56,7 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		"third expanding",
 		SoundType::CLICKED_RELEASE_STD
 	);
-	mainBtn->Add(thirdBtn);
+	mainBtn->Add(thirdBtn, true);
 
 
 	// to get Back No testing
