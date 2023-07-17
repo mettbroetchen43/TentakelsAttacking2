@@ -59,7 +59,7 @@ public:
 	 * initializes the toggle button.
 	 */
 	ExpandingButton(int focusID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		Direction direction, float spacing,float expandigSpeed, std::string const& btnText);
+		Direction direction, float spacing, float expandigSpeed, std::string const& btnText);
 
 	/**
 	 * adds a new button.
