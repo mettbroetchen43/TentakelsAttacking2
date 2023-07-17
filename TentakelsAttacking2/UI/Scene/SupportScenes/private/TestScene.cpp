@@ -7,41 +7,23 @@
 #include "TestScene.h"
 #include "SceneType.h"
 #include "AppContext.h"
+#include "ExpandingButton.h"
 #include "ClassicButton.h"
-#include "ToggleButton.h"
 #include "Table.h"
 
 void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 
-	auto firstBtn = std::make_shared<ToggleButton>(
+	auto firstBtn = std::make_shared<ExpandingButton>(
 		1,
-		GetElementPosition(0.5f,0.2f),
-		GetElementSize(0.2f,0.1f),
-		Alignment::MID_MID,
-		m_resolution,
-		"first toggle",
-		SoundType::CLICKED_PRESS_STD
-	);
-	firstBtn->SetOnToggle([this](bool toggle) {
-			this->TestLambda(toggle);
-		}
-	);
-	m_elements.push_back(firstBtn);
-
-	auto secondBtn = std::make_shared<ToggleButton>(
-		2,
 		GetElementPosition(0.5f,0.5f),
 		GetElementSize(0.2f,0.1f),
 		Alignment::MID_MID,
 		m_resolution,
-		"second toggle",
-		SoundType::CLICKED_PRESS_STD
+		ExpandingButton::Direction::LEFT,
+		0.01f,
+		"main button"
 	);
-	secondBtn->SetOnToggle([firstBtn](bool toggle) {
-			firstBtn->SetEnabled(toggle);
-		}
-	);
-	m_elements.push_back(secondBtn);
+	m_elements.push_back(firstBtn);
 
 
 	// to get Back No testing

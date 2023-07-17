@@ -8,11 +8,25 @@
 #include "UIElement.hpp"
 
 class ExpandingButton : public UIElement {
+public:
+	enum Direction {
+		LEFT,
+		DOWN,
+		RIGHT,
+		UP
+	};
+
 private:
 	bool m_isExpanded{ false }; ///< contains if the button is currently expanded
 	float m_spacing; ///< contains the relative spacing between the buttons
 	ToggleButton_ty m_mainButton; ///< contains the toggle button
-	std::vector<ClassicButton_ty> m_buttons; ///< contains the classic buttons
+	std::vector<ClassicButton_ty> m_buttons{ }; ///< contains the classic buttons
+	Direction m_direction; ///< contains the current expand direction
+
+	/**
+	 * initializes the main button.
+	 */
+	void Initialize(int focusID, std::string const& btnText);
 
 	/**
 	 * calls collapse or expand.
@@ -28,6 +42,27 @@ private:
 	void HandleCollapse();
 
 public:
+	ExpandingButton(int focusID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+		Direction direction, float spacing, std::string const& btnText);
+
+	void Add(ClassicButton_ty btn);
+	void Remove(ClassicButton_ty btn);
+	void Remove(int ind);
+
+	/**
+	 * sets the current expand direction.
+	 */
+	void SetDirection(Direction direction);
+	/**
+	 * returns the current expand direction.
+	 */
+	[[nodiscard]] Direction GetDirection() const;
+
+	/**
+	 * updates the expand collider.
+	 * call this after direction change and add or remove button.
+	 */
+	void Update();
 
 	/**
 	 */

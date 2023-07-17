@@ -8,6 +8,22 @@
 #include "ToggleButton.h"
 #include "HPrint.h"
 
+void ExpandingButton::Initialize(int focusID, std::string const& btnText) {
+	m_mainButton = std::make_shared<ToggleButton>(
+		focusID,
+		m_pos,
+		m_size,
+		Alignment::DEFAULT,
+		m_resolution,
+		btnText,
+		SoundType::CLICKED_RELEASE_STD
+	);
+	m_mainButton->SetOnToggle([this](bool toggle){
+			this->HandleExpandChance(toggle);
+		}
+	);
+}
+
 void ExpandingButton::HandleExpandChance(bool expanding) {
 	if (expanding) {
 		HandleExpand();
@@ -16,7 +32,6 @@ void ExpandingButton::HandleExpandChance(bool expanding) {
 		HandleCollapse();
 	}
 }
-
 void ExpandingButton::HandleExpand() {
 	if (m_isExpanded) { return; }
 
@@ -38,13 +53,26 @@ void ExpandingButton::HandleCollapse() {
 	);
 }
 
+ExpandingButton::ExpandingButton(int focusID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	Direction direction, float spacing, std::string const& btnText)
+	: UIElement{ pos, size, alignment, resolution }, m_direction{ direction }, m_spacing{ spacing } {
+	
+	Initialize(focusID, btnText);
+}
+
+void ExpandingButton::SetDirection(Direction direction) {
+	m_direction = direction;
+}
+ExpandingButton::Direction ExpandingButton::GetDirection() const {
+	return m_direction;
+}
+
 void ExpandingButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	m_mainButton->CheckAndUpdate(mousePosition, appContext);
 	
-	if (not CheckCollisionPointRec(mousePosition, m_collider)) {
-		m_isExpanded = false;
-		m_mainButton->SetToggleButton(m_isExpanded);
+	if (not CheckCollisionPointRec(mousePosition, m_collider) and m_isExpanded) {
 		HandleCollapse();
+		m_mainButton->SetToggleButton(m_isExpanded);
 	}
 
 	if (m_isExpanded) {
@@ -53,7 +81,6 @@ void ExpandingButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty
 		}
 	}
 }
-
 void ExpandingButton::Render(AppContext_ty_c appContext) {
 	m_mainButton->Render(appContext);
 
