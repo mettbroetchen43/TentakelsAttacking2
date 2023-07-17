@@ -47,7 +47,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		});
 	m_elements.push_back(backBTN);
 
-
 	// credits
 	auto creditsText = std::make_shared<Text>(
 		GetElementPosition(0.5f, 0.15f),

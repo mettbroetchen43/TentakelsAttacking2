@@ -76,7 +76,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		ExpandingButton::RIGHT,
 		0.005f,
 		10.0f,
-		appContext.languageManager.Text("helper_app")
+		appContext.languageManager.Text("helper_game")
 	);
 	m_elements.push_back(gameBtn);
 

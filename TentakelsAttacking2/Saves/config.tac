@@ -18,7 +18,7 @@
         "supernova": true
     },
     "global": {
-        "current_language_name": "german",
+        "current_language_name": "english",
         "game_rounds_current": 50,
         "game_rounds_max": 100,
         "game_rounds_min": 20
@@ -48,7 +48,7 @@
     },
     "window": {
         "full_screen_start_bool": false,
-        "resolution_as_enum": 5,
+        "resolution_as_enum": 4,
         "target_fps": 60
     },
     "world": {
