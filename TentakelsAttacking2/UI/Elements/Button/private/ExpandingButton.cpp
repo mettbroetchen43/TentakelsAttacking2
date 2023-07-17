@@ -104,6 +104,51 @@ ExpandingButton::Direction ExpandingButton::GetDirection() const {
 	return m_direction;
 }
 
+void ExpandingButton::Update() {
+	auto position{ m_mainButton->GetPosition() };
+	auto const increse{ [&](bool first){
+			float const offset{ first ? 2 * m_spacing : m_spacing };
+
+			switch (m_direction)	 {
+				case ExpandingButton::LEFT:
+					position.x -= offset + m_mainButton->GetSize().x;
+					break;
+
+				case ExpandingButton::DOWN:
+					position.y += offset + m_mainButton->GetSize().y;
+					break;
+
+				case ExpandingButton::RIGHT:
+					position.x += offset + m_mainButton->GetSize().x;
+					break;
+
+				case ExpandingButton::UP:
+					position.y -= offset + m_mainButton->GetSize().y;
+					break;
+			}
+		}
+	};
+	switch (m_direction) {
+		case LEFT:
+		case UP:
+			break;
+		case RIGHT:
+			position.x += m_mainButton->GetSize().x;
+			break;
+		case DOWN:
+			position.y += m_mainButton->GetSize().y;
+			break;
+	}
+
+	for (int i = 0; i < m_buttons.size(); ++i) {
+		auto const& btn{ m_buttons.at(i) };
+		increse(i == 0);
+		btn.first->SetEnabled(m_isExpanded ? btn.second : false);
+		btn.first->SetSize(m_mainButton->GetSize());
+		btn.first->SetPosition(position);
+	}
+}
+
 void ExpandingButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	m_mainButton->CheckAndUpdate(mousePosition, appContext);
 	

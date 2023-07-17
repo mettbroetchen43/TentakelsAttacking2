@@ -19,7 +19,7 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		GetElementSize(0.2f,0.1f),
 		Alignment::MID_MID,
 		m_resolution,
-		ExpandingButton::Direction::LEFT,
+		ExpandingButton::UP,
 		0.01f,
 		"main button"
 	);
@@ -28,7 +28,7 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 	auto firstBtn = std::make_shared<ClassicButton>(
 		2,
 		Vector2(0.0f,0.0f),
-		Vector2(0.1f,0.1f),
+		Vector2(0.0f,0.0f),
 		Alignment::DEFAULT,
 		m_resolution,
 		"first expanding",
@@ -39,7 +39,7 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 	auto secondBtn = std::make_shared<ClassicButton>(
 		3,
 		Vector2(0.0f,0.1f),
-		Vector2(0.1f,0.1f),
+		Vector2(0.0f,0.0f),
 		Alignment::DEFAULT,
 		m_resolution,
 		"second expanding",
@@ -50,14 +50,14 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 	auto thirdBtn = std::make_shared<ClassicButton>(
 		4,
 		Vector2(0.0f,0.2f),
-		Vector2(0.1f,0.1f),
+		Vector2(0.0f,0.0f),
 		Alignment::DEFAULT,
 		m_resolution,
 		"third expanding",
 		SoundType::CLICKED_RELEASE_STD
 	);
 	mainBtn->Add(thirdBtn, true);
-
+	mainBtn->Update();
 
 	// to get Back No testing
 	auto backBtn = std::make_shared<ClassicButton>(
