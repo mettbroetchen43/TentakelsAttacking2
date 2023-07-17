@@ -9,6 +9,7 @@
 #include "ToggleButton.h"
 #include "UIEvents.hpp"
 #include "HPrint.h"
+#include "HInput.h"
 
 void ExpandingButton::Initialize(int focusID, std::string const& btnText) {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
@@ -22,8 +23,8 @@ void ExpandingButton::Initialize(int focusID, std::string const& btnText) {
 		btnText,
 		SoundType::CLICKED_RELEASE_STD
 	);
-	m_mainButton->SetOnToggle([this](bool toggle){
-			this->HandleExpandChance(toggle);
+	m_mainButton->SetOnToggle([this](bool toggle, bool keyInput){
+			this->HandleExpandChance(toggle, keyInput);
 		}
 	);
 
@@ -31,7 +32,8 @@ void ExpandingButton::Initialize(int focusID, std::string const& btnText) {
 	appContext.eventManager.InvokeEvent(event);
 }
 
-void ExpandingButton::HandleExpandChance(bool expanding) {
+void ExpandingButton::HandleExpandChance(bool expanding, bool keyInput) {
+	m_wasKeyInput = keyInput;
 	if (expanding) {
 		HandleExpand();
 	}
@@ -90,7 +92,8 @@ ExpandingButton::Direction ExpandingButton::GetDirection() const {
 void ExpandingButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	m_mainButton->CheckAndUpdate(mousePosition, appContext);
 	
-	if (not CheckCollisionPointRec(mousePosition, m_collider) and m_isExpanded) {
+	if (m_isExpanded and not m_wasKeyInput
+		and not CheckCollisionPointRec(mousePosition, m_collider)) {
 		HandleCollapse();
 		m_mainButton->SetToggleButton(m_isExpanded);
 	}

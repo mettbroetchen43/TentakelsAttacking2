@@ -93,7 +93,7 @@ void ToggleButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c 
 				}
 				if (IsMouseButtonReleased(MouseButton::MOUSE_BUTTON_LEFT)) {
 					m_isToggled = not m_isToggled;
-					m_onToggle(m_isToggled);
+					m_onToggle(m_isToggled, false);
 					if (IsConfirmInputUp()) {
 						m_state = m_isToggled ? State::PRESSED : State::HOVER;
 					}
@@ -102,7 +102,7 @@ void ToggleButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c 
 				}
 				if (IsFocused() and IsConfirmInputReleased()) {
 					m_isToggled = not m_isToggled;
-					m_onToggle(m_isToggled);
+					m_onToggle(m_isToggled, true);
 					if (IsMouseButtonUp(MouseButton::MOUSE_BUTTON_LEFT)) {
 						m_state = m_isToggled ? State::PRESSED : State::HOVER;
 					}
@@ -122,7 +122,7 @@ void ToggleButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c 
 				}
 				if (IsFocused() and IsConfirmInputReleased()) {
 					m_isToggled = not m_isToggled;
-					m_onToggle(m_isToggled);
+					m_onToggle(m_isToggled, true);
 					if (IsMouseButtonUp(MouseButton::MOUSE_BUTTON_LEFT)) {
 						m_state = m_isToggled ? State::PRESSED : State::ENABLED;
 					}
@@ -159,6 +159,6 @@ void ToggleButton::SetToggleButton(bool isToggled) {
 	UpdateState();
 }
 
-void ToggleButton::SetOnToggle(std::function<void(bool)> onToggle) {
+void ToggleButton::SetOnToggle(std::function<void(bool, bool)> onToggle) {
 	m_onToggle = onToggle;
 }
