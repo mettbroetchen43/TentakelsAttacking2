@@ -6,8 +6,6 @@
 #pragma once
 #include "Scene.h"
 
-class SliderAndInputLine;
-
 /**
  * provides a scenes, where the global settings can be set.
  */
