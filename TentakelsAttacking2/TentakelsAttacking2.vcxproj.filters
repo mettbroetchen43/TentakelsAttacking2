@@ -225,7 +225,7 @@
     <ClInclude Include="UI\Scene\MainScenes\public\NewGameParameter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UI\Scene\MainScenes\public\Settings.h">
+    <ClInclude Include="UI\Scene\SupportScenes\public\Settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="UI\Scene\MainScenes\public\Credits.h">
@@ -369,6 +369,15 @@
     <ClInclude Include="UI\Elements\Button\public\ToggleButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Elements\Button\public\ExpandingButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Scene\MainScenes\public\GameSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Scene\MainScenes\public\AppSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -509,7 +518,7 @@
     <ClCompile Include="UI\Scene\MainScenes\private\NewGameParameter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Scene\MainScenes\private\Settings.cpp">
+    <ClCompile Include="UI\Scene\SupportScenes\private\Settings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Scene\MainScenes\private\Credits.cpp">
@@ -651,6 +660,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="UI\Elements\Button\private\ToggleButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\Button\private\ExpandingButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Scene\MainScenes\private\AppSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
