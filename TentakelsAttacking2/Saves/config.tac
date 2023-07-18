@@ -47,8 +47,8 @@
         "volume_mute_bool": false
     },
     "version": {
-        "version_config": "v0.1.4.1",
-        "version_game": "v0.1.4"
+        "version_config": "v0.1.5.0",
+        "version_game": "v0.1.5"
     },
     "window": {
         "full_screen_bool": false,
