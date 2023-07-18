@@ -668,6 +668,9 @@
     <ClCompile Include="UI\Scene\MainScenes\private\AppSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UI\Scene\MainScenes\public\GameSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\Text\title.txt" />
