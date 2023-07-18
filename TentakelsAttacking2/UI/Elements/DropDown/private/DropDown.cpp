@@ -246,6 +246,13 @@ bool DropDown::SetCurrentElementByString(std::string const& element) {
 
 void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
+	if (not IsEnabled()) {
+		if (m_isFoldouts) { 
+			ToggleFoldedOut();
+		}
+		return;
+	}
+
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
 	bool const hover{
@@ -340,6 +347,17 @@ void DropDown::Render(AppContext_ty_c appContext) {
 		}
 
 		EndScissorMode();
+	}
+
+	if (not IsEnabled()){
+		DrawRectangleRec(
+			m_collider,
+			GREY_50
+		);
+		DrawRectangleRec(
+			m_arrowCollider,
+			GREY_50
+		);
 	}
 }
 void DropDown::Resize(Vector2 resolution, AppContext_ty_c appContext) {
