@@ -29,7 +29,7 @@ void UIManager::CheckAndSetToggleFullScreen(bool first) {
 		::ToggleFullscreen();
 	}
 	if(!first) {
-		auto& fullScreen{ AppContext::GetInstance().constants.window.startingModeFullScreen };
+		auto& fullScreen{ AppContext::GetInstance().constants.window.isFullScreen };
 		fullScreen = !fullScreen;
 		m_sceneManager.Resize(m_resolution, m_appContext);
 	}
@@ -210,7 +210,7 @@ void UIManager::StartUILoop() {
 	m_appContext.eventManager.InvokeEvent(event);
 
 
-	if(m_appContext.constants.window.startingModeFullScreen) {
+	if(m_appContext.constants.window.isFullScreen) {
 		CheckAndSetToggleFullScreen(true);
 	} else {
 		SetWindowPosition();

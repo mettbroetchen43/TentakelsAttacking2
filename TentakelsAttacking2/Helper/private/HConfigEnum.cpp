@@ -100,8 +100,8 @@ std::string CToS(ConfigTypes type) {
 			return "window";
 		case ConfigTypes::RESOLUTION_AS_ENUM:
 			return "resolution_as_enum";
-		case ConfigTypes::FULL_SCREEN_START_BOOL:
-			return "full_screen_start_bool";
+		case ConfigTypes::FULL_SCREEN_BOOL:
+			return "full_screen_bool";
 		case ConfigTypes::TARGET_FPS:
 			return "target_fps";
 

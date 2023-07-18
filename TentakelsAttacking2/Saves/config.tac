@@ -18,7 +18,7 @@
         "supernova": true
     },
     "global": {
-        "current_language_name": "german",
+        "current_language_name": "english",
         "game_rounds_current": 50,
         "game_rounds_max": 100,
         "game_rounds_min": 20
@@ -36,10 +36,10 @@
     "player": {
         "player_count_max": 7,
         "player_count_min": 2,
-        "player_shuffle": true
+        "player_shuffle": false
     },
     "sound": {
-        "volume_master": 56.0,
+        "volume_master": 50.0,
         "volume_mute_bool": false
     },
     "version": {
@@ -47,7 +47,7 @@
         "version_game": "v0.1.4"
     },
     "window": {
-        "full_screen_start_bool": true,
+        "full_screen_bool": false,
         "resolution_as_enum": 5,
         "target_fps": 60
     },
