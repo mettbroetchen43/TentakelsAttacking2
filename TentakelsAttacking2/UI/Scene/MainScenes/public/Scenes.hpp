@@ -12,7 +12,7 @@
 #include "NewGameParameter.h"
 #include "ValidateGalaxy.h"
 #include "MainScene.h"
-#include "Settings.h"
+#include "GameSettings.h"
 #include "AppSettings.h"
 #include "Credits.h"
 #include "UpdateEvaluation.h"

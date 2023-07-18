@@ -65,7 +65,7 @@ void SceneManager::InitializeNewScene(SceneType sceneType) {
 			return;
 
 		case SceneType::GAME_SETTINGS:
-			m_currentScene = std::make_shared<SettingsScene>(
+			m_currentScene = std::make_shared<GameSettingsScene>(
 			m_uiManager->GetResolution()
 			);
 			return;
