@@ -70,7 +70,7 @@ void AppSettingsScene::Initialize() {
 	
 	incPosB();
 
-	auto fullScreenCB = std::make_shared<CheckBox>(
+	m_toggleFullScreenCBM = std::make_shared<CheckBox>(
 		id,
 		GetElementPosition(lx, y),
 		GetElementSize(0.0f, height).y,
@@ -78,12 +78,12 @@ void AppSettingsScene::Initialize() {
 		m_resolution,
 		1
 	);
-	fullScreenCB->SetChecked(appContext.constants.window.startingModeFullScreen);
-	fullScreenCB->SetOnCheck([](unsigned int, bool) {
+	m_toggleFullScreenCBM->SetChecked(appContext.constants.window.startingModeFullScreen);
+	m_toggleFullScreenCBM->SetOnCheck([](unsigned int, bool) {
 			ToggleFullscreenEvent const event{ };
 			AppContext::GetInstance().eventManager.InvokeEvent(event);
 		} );
-	m_elements.push_back(fullScreenCB);
+	m_elements.push_back(m_toggleFullScreenCBM);
 
 	incFIDS();
 
@@ -194,7 +194,7 @@ void AppSettingsScene::Initialize() {
 	incPosS();
 
 	// sixth
-	auto resolutionDropDown = std::make_shared<DropDown>(
+	m_resolutionDropDown = std::make_shared<DropDown>(
 		GetElementPosition(lx, y),
 		GetElementSize(width, height),
 		a,
@@ -204,12 +204,13 @@ void AppSettingsScene::Initialize() {
 		id + 1,
 		GetStringsFromResolutionEntries()
 	);
-	resolutionDropDown->SetCurrentElementByID(GetIndexFromResolution(appContext.constants.window.current_resolution) + 1);
-	resolutionDropDown->SetOnSave([this](unsigned int ID) {
+	m_resolutionDropDown->SetEnabled(not appContext.constants.window.startingModeFullScreen);
+	m_resolutionDropDown->SetCurrentElementByID(GetIndexFromResolution(appContext.constants.window.current_resolution) + 1);
+	m_resolutionDropDown->SetOnSave([this](unsigned int ID) {
 		SetNewResolutionEvent const event{ this->m_rawResolutionEntries[ID - 1].first };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	});
-	m_elements.push_back(resolutionDropDown);
+	m_elements.push_back(m_resolutionDropDown);
 
 	incFIDB();
 
@@ -270,6 +271,8 @@ AppSettingsScene::~AppSettingsScene() {
 
 void AppSettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	SettingsScene::CheckAndUpdate(mousePosition, appContext);
+	m_toggleFullScreenCBM->SetChecked(appContext.constants.window.startingModeFullScreen);
+	m_resolutionDropDown->SetEnabled(not appContext.constants.window.startingModeFullScreen);
 }
 void AppSettingsScene::Render(AppContext_ty_c appContext) {
 	SettingsScene::Render(appContext);

@@ -11,8 +11,9 @@ class AppSettingsScene final : public SettingsScene, public EventListener {
 private:
 	std::vector<std::pair<Resolution, std::string>> m_rawResolutionEntries; ///< contains die raw resolution information
 	std::shared_ptr<SliderAndInputLine> m_volume; ///< contains the volume slider
-	DropDown_ty m_resolutionDropDown{ nullptr }; ///< contains the resoltuion drop down
-	DropDown_ty m_languageDropDown{ nullptr }; ///< contains the language drop down
+	DropDown_ty m_languageDropDown; ///< contains the language drop down
+	DropDown_ty m_resolutionDropDown; ///< contains the language drop down
+	CheckBox_ty m_toggleFullScreenCBM; ///< contains the full screen toggle check box
 	
 	/**
 	 * initializes all ui elements.
