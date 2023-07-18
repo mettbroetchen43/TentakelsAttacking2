@@ -49,13 +49,10 @@ void GameSettingsScene::Initialize() {
 	float     constexpr height { 0.05f   };
 	float     constexpr offset { height  + 0.005f };
 	float     constexpr offsetS{ heightS + 0.005f };
-	[[maybe_unused]]
-	float     constexpr rxwoS  { rx + heightS     };
+	// float     constexpr rxwoS  { rx + heightS     };
 	float     constexpr rxwo   { rx + height      };
-	[[maybe_unused]]
-	float     constexpr lxwoS  { lx + heightS     };
-	[[maybe_unused]]
-	float     constexpr lxwo   { lx + height      };
+	// float     constexpr lxwoS  { lx + heightS     };
+	// float     constexpr lxwo   { lx + height      };
 	Alignment constexpr a      { Alignment::MID_LEFT };
 
 	// increase

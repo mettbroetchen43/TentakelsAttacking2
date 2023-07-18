@@ -36,10 +36,8 @@ void AppSettingsScene::Initialize() {
 	float     constexpr offset { height  + 0.005f };
 	float     constexpr offsetS{ heightS + 0.015f };
 	float     constexpr rxwoS  { rx + heightS     };
-	[[maybe_unused]] 
-	float     constexpr rxwo   { rx + height      };
-	[[maybe_unused]] 
-	float     constexpr lxwoS  { lx + heightS     };
+	// float     constexpr rxwo   { rx + height      };
+	// float     constexpr lxwoS  { lx + heightS     };
 	float     constexpr lxwo   { lx + height      };
 	Alignment constexpr a     { Alignment::MID_LEFT };
 
