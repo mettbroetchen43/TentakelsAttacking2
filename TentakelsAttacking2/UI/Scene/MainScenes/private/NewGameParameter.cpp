@@ -228,35 +228,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 	m_elements.push_back(lastRound);
 	m_slider.push_back(lastRound);
 
-	next();
-	// cb
-	auto shuffleCB = std::make_shared<CheckBox>(
-		ID,
-		GetElementPosition(0.55f, posY),
-		GetElementSize(0.0f,0.03f).y,
-		Alignment::TOP_LEFT,
-		m_resolution,
-		1
-	);
-	shuffleCB->SetChecked(appContext.constants.player.shuffle);
-	shuffleCB->SetOnCheck([](unsigned int, bool isChecked){
-		AppContext_ty appContext{AppContext::GetInstance() };
-		appContext.constants.player.shuffle = isChecked;
-	});
-	m_elements.push_back(shuffleCB);
-
-	auto shuffleCBText = std::make_shared<Text>(
-		GetElementPosition(0.55f + 0.03f, posY),
-		GetElementSize(0.5f, 0.04f),
-		Alignment::TOP_LEFT,
-		m_resolution,
-		Alignment::TOP_LEFT,
-		0.04f,
-		"shuffle player"
-	);
-	// shuffleCBText->RenderRectangle(true);
-	m_elements.push_back(shuffleCBText);
-
 	// btn
 	auto randomBtn = std::make_shared<ClassicButton>(
 		1002,
