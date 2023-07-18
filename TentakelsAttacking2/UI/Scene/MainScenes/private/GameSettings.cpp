@@ -44,13 +44,16 @@ void GameSettingsScene::Initialize() {
 	float               y      { 0.32f   };
 	// float     constexpr lx     { 0.05f   };
 	float     constexpr rx     { 0.55f   };
+	float     constexpr rx2    { 0.75f   };
 	float     constexpr width  { 0.40f   };
 	float     constexpr heightS{ 0.025f  };
 	float     constexpr height { 0.05f   };
 	float     constexpr offset { height  + 0.005f };
 	float     constexpr offsetS{ heightS + 0.005f };
-	// float     constexpr rxwoS  { rx + heightS     };
+	float     constexpr rxwoS  { rx + heightS     };
+	float     constexpr rx2woS { rx2 + heightS    };
 	float     constexpr rxwo   { rx + height      };
+	// float     constexpr rx2wo  { rx2 + height     };
 	// float     constexpr lxwoS  { lx + heightS     };
 	// float     constexpr lxwo   { lx + height      };
 	Alignment constexpr a      { Alignment::MID_LEFT };
@@ -178,6 +181,136 @@ void GameSettingsScene::Initialize() {
 		appContext.languageManager.Text("helper_shuffle_players")
 	);
 	m_elements.push_back(shuffleCBText);
+
+	incPosB();
+	incPosS();
+
+	auto fightTx = std::make_shared<Text>(
+		GetElementPosition(rx, y),
+		GetElementSize(width, height),
+		a,
+		m_resolution,
+		a,
+		height,
+		appContext.languageManager.Text("ui_game_settings_fights", ':')
+	);
+	m_elements.push_back(fightTx);
+
+	incPosB();
+
+	auto fightPlanetFleetCB = std::make_shared<CheckBox>(
+		id,
+		GetElementPosition(rx, y),
+		GetElementSize(0.0f,heightS).y,
+		Alignment::MID_LEFT,
+		m_resolution,
+		1
+	);
+	fightPlanetFleetCB->SetChecked(appContext.constants.fight.isFightPlanetFleet);
+	fightPlanetFleetCB->SetOnCheck([](unsigned int, bool isChecked){
+		AppContext_ty appContext{AppContext::GetInstance() };
+		appContext.constants.fight.isFightPlanetFleet = isChecked;
+	});
+	m_elements.push_back(fightPlanetFleetCB);
+
+	incFIDS();
+
+	auto fightPlanetFleetCBText = std::make_shared<Text>(
+		GetElementPosition(rxwoS, y),
+		GetElementSize(width, heightS),
+		a,
+		m_resolution,
+		a,
+		heightS,
+		appContext.languageManager.Text("ui_game_settings_fight_planet_fleet", ':')
+	);
+	m_elements.push_back(fightPlanetFleetCBText);
+
+	auto fightPlanetTargetPointCB = std::make_shared<CheckBox>(
+		id,
+		GetElementPosition(rx2, y),
+		GetElementSize(0.0f,heightS).y,
+		Alignment::MID_LEFT,
+		m_resolution,
+		1
+	);
+	fightPlanetTargetPointCB->SetChecked(appContext.constants.fight.isFightPlanetTargetPoint);
+	fightPlanetTargetPointCB->SetOnCheck([](unsigned int, bool isChecked){
+		AppContext_ty appContext{AppContext::GetInstance() };
+		appContext.constants.fight.isFightPlanetTargetPoint = isChecked;
+	});
+	m_elements.push_back(fightPlanetTargetPointCB);
+
+	incFIDS();
+
+	auto fightPlanetTargetPointCBText = std::make_shared<Text>(
+		GetElementPosition(rx2woS, y),
+		GetElementSize(width, heightS),
+		a,
+		m_resolution,
+		a,
+		heightS,
+		appContext.languageManager.Text("ui_game_settings_planet_target_point", ':')
+	);
+	m_elements.push_back(fightPlanetTargetPointCBText);
+
+	incPosS();
+
+	auto fightTargetPointFleetCB = std::make_shared<CheckBox>(
+		id,
+		GetElementPosition(rx, y),
+		GetElementSize(0.0f,heightS).y,
+		Alignment::MID_LEFT,
+		m_resolution,
+		1
+	);
+	fightTargetPointFleetCB->SetChecked(appContext.constants.fight.isFightTargetPointFleet);
+	fightTargetPointFleetCB->SetOnCheck([](unsigned int, bool isChecked){
+		AppContext_ty appContext{AppContext::GetInstance() };
+		appContext.constants.fight.isFightTargetPointFleet = isChecked;
+	});
+	m_elements.push_back(fightTargetPointFleetCB);
+
+	incFIDS();
+
+	auto fightTargetPointFleetCBText = std::make_shared<Text>(
+		GetElementPosition(rxwoS, y),
+		GetElementSize(width, heightS),
+		a,
+		m_resolution,
+		a,
+		heightS,
+		appContext.languageManager.Text("ui_game_settings_target_point_fleet",':')
+	);
+	m_elements.push_back(fightTargetPointFleetCBText);
+
+	auto fightTargetPointTargetPointCB = std::make_shared<CheckBox>(
+		id,
+		GetElementPosition(rx2, y),
+		GetElementSize(0.0f,heightS).y,
+		Alignment::MID_LEFT,
+		m_resolution,
+		1
+	);
+	fightTargetPointTargetPointCB->SetChecked(appContext.constants.fight.isFightTargetPointTargetPoint);
+	fightTargetPointTargetPointCB->SetOnCheck([](unsigned int, bool isChecked){
+		AppContext_ty appContext{AppContext::GetInstance() };
+		appContext.constants.fight.isFightTargetPointTargetPoint = isChecked;
+	});
+	m_elements.push_back(fightTargetPointTargetPointCB);
+
+	incFIDS();
+
+	auto fightTargetPointTargetPointCBText = std::make_shared<Text>(
+		GetElementPosition(rx2woS, y),
+		GetElementSize(width, heightS),
+		a,
+		m_resolution,
+		a,
+		heightS,
+		appContext.languageManager.Text("ui_game_settings_target_point_target_point", ':')
+	);
+	m_elements.push_back(fightTargetPointTargetPointCBText);
 }
 
 GameSettingsScene::GameSettingsScene(Vector2 resolution)

@@ -33,6 +33,14 @@ std::string CToS(ConfigTypes type) {
 			return "hit_chance";
 		case ConfigTypes::FLEET_FIGHT_RANGE:
 			return "fleet_fight_range";
+		case ConfigTypes::FIGHT_PLANET_FLEET:
+			return "fight_planet_fleet";
+		case ConfigTypes::FIGHT_TARGET_POINT_FLEET:
+			return "fight_target_point_fleet";
+		case ConfigTypes::FIGHT_TARGET_POINT_TARGET_POINT:
+			return "fight_target_point_target_point";
+		case ConfigTypes::FIGHT_PLANET_TARGET_POINT:
+			return "fight_planet_target_point";
 
 		case ConfigTypes::FLEET:
 			return "fleet";
