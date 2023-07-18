@@ -13,5 +13,6 @@
 #include "ValidateGalaxy.h"
 #include "MainScene.h"
 #include "Settings.h"
+#include "AppSettings.h"
 #include "Credits.h"
 #include "UpdateEvaluation.h"
