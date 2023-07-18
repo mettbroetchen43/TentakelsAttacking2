@@ -279,12 +279,13 @@ void AppSettingsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 void AppSettingsScene::OnEvent(Event const& event) {
 	if (auto const* LanguageEvent = dynamic_cast<UpdateLanguageInUIEvent const*>(&event)) {
 		m_languageDropDown->SetCurrentElementByString(LanguageEvent->GetLanguage());
+		AppContext_ty_c appContext{ AppContext::GetInstance() };
 		ShowMessagePopUpEvent const mEvent{
-			"new language",
-			"language {} loaded. it will be displayed when new loaded.",
+			appContext.languageManager.Text("helper_new_language"),
+			appContext.languageManager.Text("ui_popup_new_language_text", LanguageEvent->GetLanguage()),
 			[]() {}
 		};
-		AppContext::GetInstance().eventManager.InvokeEvent(mEvent);
+		appContext.eventManager.InvokeEvent(mEvent);
 		return;
 	}
 }

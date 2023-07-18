@@ -22,7 +22,7 @@
         "supernova": true
     },
     "global": {
-        "current_language_name": "english",
+        "current_language_name": "german",
         "game_rounds_current": 50,
         "game_rounds_max": 100,
         "game_rounds_min": 20
