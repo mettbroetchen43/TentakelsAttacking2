@@ -1,5 +1,9 @@
 {
     "fight": {
+        "fight_planet_fleet": true,
+        "fight_planet_target_point": true,
+        "fight_target_point_fleet": true,
+        "fight_target_point_target_point": true,
         "fleet_fight_range": 4,
         "hit_chance": 0.30000001192092896
     },

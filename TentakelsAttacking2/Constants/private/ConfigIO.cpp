@@ -359,8 +359,12 @@ void SaveConfig() {
 		{ CToS(ConfigTypes::GLOBAL_EVENT_CHANCE), constants.gameEvents.globalEventChance                      },
 	};
 	save[CToS(ConfigTypes::FIGHT)] = {
-		{ CToS(ConfigTypes::HIT_CHANCE),        constants.fight.hitChance       },
-		{ CToS(ConfigTypes::FLEET_FIGHT_RANGE), constants.fight.fleetFightRange },
+		{ CToS(ConfigTypes::HIT_CHANCE),                      constants.fight.hitChance                     },
+		{ CToS(ConfigTypes::FLEET_FIGHT_RANGE),               constants.fight.fleetFightRange               },
+		{ CToS(ConfigTypes::FIGHT_PLANET_FLEET),              constants.fight.isFightPlanetFleet            },
+		{ CToS(ConfigTypes::FIGHT_PLANET_TARGET_POINT),       constants.fight.isFightPlanetTargetPoint      },
+		{ CToS(ConfigTypes::FIGHT_TARGET_POINT_FLEET),        constants.fight.isFightTargetPointFleet       },
+		{ CToS(ConfigTypes::FIGHT_TARGET_POINT_TARGET_POINT), constants.fight.isFightTargetPointTargetPoint },
 	};
 	save[CToS(ConfigTypes::FLEET)] = {
 		{ CToS(ConfigTypes::FLEET_SPEED_CURRENT), constants.fleet.currentFleetSpeed },
