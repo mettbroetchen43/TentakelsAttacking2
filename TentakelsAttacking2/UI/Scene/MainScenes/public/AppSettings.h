@@ -7,6 +7,8 @@
 #include "Settings.h"
 #include "EventListener.hpp"
 
+class SliderAndInputLine;
+
 class AppSettingsScene final : public SettingsScene, public EventListener {
 private:
 	std::vector<std::pair<Resolution, std::string>> m_rawResolutionEntries; ///< contains die raw resolution information
