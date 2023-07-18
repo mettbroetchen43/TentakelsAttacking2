@@ -245,8 +245,12 @@ void LoadConfig() {
 	}
 	// fight
 	if (nlohmann::json fight; loadSection(load, fight, ConfigTypes::FIGHT, constants.fight.configEntryCount)) {
-		if (float out; loadFloat(fight, out, ConfigTypes::HIT_CHANCE))        { constants.fight.hitChance =       out; }
-		if (int out;     loadInt(fight, out, ConfigTypes::FLEET_FIGHT_RANGE)) { constants.fight.fleetFightRange = out; }
+		if (float out; loadFloat(fight, out, ConfigTypes::HIT_CHANCE))                      { constants.fight.hitChance                     = out; }
+		if (int   out;   loadInt(fight, out, ConfigTypes::FLEET_FIGHT_RANGE))               { constants.fight.fleetFightRange               = out; }
+		if (bool  out;  loadBool(fight, out, ConfigTypes::FIGHT_PLANET_FLEET))              { constants.fight.isFightPlanetFleet            = out; }
+		if (bool  out;  loadBool(fight, out, ConfigTypes::FIGHT_PLANET_TARGET_POINT))       { constants.fight.isFightPlanetTargetPoint      = out; }
+		if (bool  out;  loadBool(fight, out, ConfigTypes::FIGHT_TARGET_POINT_FLEET))        { constants.fight.isFightTargetPointFleet       = out; }
+		if (bool  out;  loadBool(fight, out, ConfigTypes::FIGHT_TARGET_POINT_TARGET_POINT)) { constants.fight.isFightTargetPointTargetPoint = out; }
 	}
 	// fleet
 	if (nlohmann::json events; loadSection(load, events, ConfigTypes::GAME_EVENTS, constants.gameEvents.configEntryCount)) {
