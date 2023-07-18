@@ -102,6 +102,9 @@ void HLanguageManager::ChanceLanguage(std::string const& language) {
 			Print(PrintType::ERROR, "not able to load any language.");
 		}
 	}
+	else {
+		handleUpdateLanguage();
+	}
 }
 bool HLanguageManager::LoadLanguage(std::string const& language, bool const defaultLanguage) {
 	bool found{ false };
