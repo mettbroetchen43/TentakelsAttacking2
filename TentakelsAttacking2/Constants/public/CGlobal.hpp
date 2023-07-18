@@ -19,7 +19,7 @@ struct CGlobal final {
 	static inline std::string const languageVersion{ "v0.1.5.0" }; ///< contains the language version string
 	static inline std::string const configVersion{ "v0.1.5.0" }; ///< contains the config version string
 	// gameVersion will be extracted with regex in the GitHub CI. Don't chance the following line. see CMakeList.txt
-	static inline std::string const gameVersion{ "v0.1.4" }; ///< current gameVersion string
+	static inline std::string const gameVersion{ "v0.1.5" }; ///< current gameVersion string
 	static inline std::string const copyRight{ "(c) Purpur Tentakel" }; ///< copy right string
 
 	// language string
