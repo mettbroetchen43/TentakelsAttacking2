@@ -29,12 +29,17 @@ private:
 	HoverRender m_hover;
 	Vector2 m_resolution; ///< contains the current resolution of the window
 	bool m_closeWindow{ false }; ///< contains if the game will quit at the end of the tick
+	bool m_toggleFullScreen{ false }; ///< contains if the next frame fill toggle fullscreen
 	Resolution m_nextResolution; ///< contains the resolution of the next frame
 
 	/**
+	 * sets a bool so that the next frame will toggle full screen.
+	 */
+	void ToggleFullScreen();
+	/**
 	 * Toggles between full screen and window mode.
 	 */
-	void ToggleFullScreen(bool first = false);
+	void CheckAndSetToggleFullScreen(bool first = false);
 
 	/**
 	 * converts and updates the resolution in Window mode.
