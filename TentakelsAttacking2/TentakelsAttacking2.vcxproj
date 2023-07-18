@@ -339,7 +339,7 @@
     <ClCompile Include="UI\private\HoverRender.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\NewGameParameter.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\AppSettings.cpp" />
-    <ClCompile Include="UI\Scene\MainScenes\public\GameSettings.cpp" />
+    <ClCompile Include="UI\Scene\MainScenes\private\GameSettings.cpp" />
     <ClCompile Include="UI\Scene\SupportScenes\private\Settings.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\Credits.cpp" />
     <ClCompile Include="UI\Scene\MainScenes\private\ValidateGalaxy.cpp" />
