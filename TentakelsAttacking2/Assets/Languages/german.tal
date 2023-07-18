@@ -190,5 +190,10 @@
     "helper_network": "Netzwerk",
     "helper_game_settings": "Spieleinstellungen",
     "helper_shuffle_players": "Spieler mischen",
-    "helper_app_settings": "Programmeinstellungen"
+    "helper_app_settings": "Programmeinstellungen",
+    "ui_game_settings_fights": "K\u00e4mpfe{0}",
+    "ui_game_settings_fight_planet_fleet": "Planet {0} Flotte",
+    "ui_game_settings_planet_target_point": "Planet {0} Zielpunkt",
+    "ui_game_settings_target_point_fleet": "Zielpunkt {0} Flotte",
+    "ui_game_settings_target_point_target_point": "Zielpunkt {0} Zielpunkt"
 }

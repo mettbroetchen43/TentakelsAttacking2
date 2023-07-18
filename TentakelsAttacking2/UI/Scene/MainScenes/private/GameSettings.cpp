@@ -192,7 +192,7 @@ void GameSettingsScene::Initialize() {
 		m_resolution,
 		a,
 		height,
-		"fights:"
+		appContext.languageManager.Text("ui_game_settings_fights", ':')
 	);
 	m_elements.push_back(fightTx);
 
@@ -222,7 +222,7 @@ void GameSettingsScene::Initialize() {
 		m_resolution,
 		a,
 		heightS,
-		"planet : fleet"
+		appContext.languageManager.Text("ui_game_settings_fight_planet_fleet", ':')
 	);
 	m_elements.push_back(fightPlanetFleetCBText);
 
@@ -250,7 +250,7 @@ void GameSettingsScene::Initialize() {
 		m_resolution,
 		a,
 		heightS,
-		"planet : target point"
+		appContext.languageManager.Text("ui_game_settings_planet_target_point", ':')
 	);
 	m_elements.push_back(fightPlanetTargetPointCBText);
 
@@ -280,7 +280,7 @@ void GameSettingsScene::Initialize() {
 		m_resolution,
 		a,
 		heightS,
-		"target point : fleet"
+		appContext.languageManager.Text("ui_game_settings_target_point_fleet",':')
 	);
 	m_elements.push_back(fightTargetPointFleetCBText);
 
@@ -308,7 +308,7 @@ void GameSettingsScene::Initialize() {
 		m_resolution,
 		a,
 		heightS,
-		"target point : target point"
+		appContext.languageManager.Text("ui_game_settings_target_point_target_point", ':')
 	);
 	m_elements.push_back(fightTargetPointTargetPointCBText);
 }
