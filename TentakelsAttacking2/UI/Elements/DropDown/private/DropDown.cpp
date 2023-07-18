@@ -55,7 +55,13 @@ void DropDown::OnElementClick(unsigned int ID) {
 void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
 	m_currentElement = element;
 
-	m_currentElementText = element->GetText();
+	SetText();
+
+	m_onSave(element->GetID());
+}
+
+void DropDown::SetText() {
+	m_currentElementText = m_currentElement->GetText();
 	StripString(m_currentElementText);
 	m_fontSize = GetElementTextHeight(
 		m_size,
@@ -72,8 +78,6 @@ void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
 		m_collider.x + 5.0f,
 		m_collider.y + (m_collider.height - m_fontSize) / 2
 	};
-
-	m_onSave(element->GetID());
 }
 
 void DropDown::ToggleFoldedOut() {
@@ -161,7 +165,7 @@ void DropDown::CheckIfScrolling() {
 void DropDown::UpdateCollider() {
 
 	UIElement::UpdateCollider();
-	SetCurrentElement(m_currentElement);
+	SetText();
 
 	m_arrowCollider = {
 		m_collider.x + m_collider.width,
