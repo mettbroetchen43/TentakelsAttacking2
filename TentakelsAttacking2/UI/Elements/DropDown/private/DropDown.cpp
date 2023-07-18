@@ -55,7 +55,13 @@ void DropDown::OnElementClick(unsigned int ID) {
 void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
 	m_currentElement = element;
 
-	m_currentElementText = element->GetText();
+	SetText();
+
+	m_onSave(element->GetID());
+}
+
+void DropDown::SetText() {
+	m_currentElementText = m_currentElement->GetText();
 	StripString(m_currentElementText);
 	m_fontSize = GetElementTextHeight(
 		m_size,
@@ -72,8 +78,6 @@ void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
 		m_collider.x + 5.0f,
 		m_collider.y + (m_collider.height - m_fontSize) / 2
 	};
-
-	m_onSave(element->GetID());
 }
 
 void DropDown::ToggleFoldedOut() {
@@ -161,7 +165,7 @@ void DropDown::CheckIfScrolling() {
 void DropDown::UpdateCollider() {
 
 	UIElement::UpdateCollider();
-	SetCurrentElement(m_currentElement);
+	SetText();
 
 	m_arrowCollider = {
 		m_collider.x + m_collider.width,
@@ -241,6 +245,13 @@ bool DropDown::SetCurrentElementByString(std::string const& element) {
 }
 
 void DropDown::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
+
+	if (not IsEnabled()) {
+		if (m_isFoldouts) { 
+			ToggleFoldedOut();
+		}
+		return;
+	}
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
@@ -336,6 +347,17 @@ void DropDown::Render(AppContext_ty_c appContext) {
 		}
 
 		EndScissorMode();
+	}
+
+	if (not IsEnabled()){
+		DrawRectangleRec(
+			m_collider,
+			GREY_50
+		);
+		DrawRectangleRec(
+			m_arrowCollider,
+			GREY_50
+		);
 	}
 }
 void DropDown::Resize(Vector2 resolution, AppContext_ty_c appContext) {

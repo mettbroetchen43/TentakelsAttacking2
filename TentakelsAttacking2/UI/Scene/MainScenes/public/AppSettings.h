@@ -1,26 +1,22 @@
 //
 // Purpur Tentakel
-// 01.11.2022
+// 18.07.2023
 //
 
 #pragma once
-#include "Scene.h"
+#include "Settings.h"
 #include "EventListener.hpp"
 
 class SliderAndInputLine;
 
-/**
- * provides a scenes, where the global settings can be set.
- */
-class SettingsScene final : public Scene, public EventListener {
+class AppSettingsScene final : public SettingsScene, public EventListener {
 private:
-	using DropDownButton_ty = std::pair<ClassicButton_ty, bool>;
-	std::shared_ptr<SliderAndInputLine> m_volume; ///< contains the volume slider
 	std::vector<std::pair<Resolution, std::string>> m_rawResolutionEntries; ///< contains die raw resolution information
-	std::pair<DropDownButton_ty, DropDownButton_ty> m_resolutionDropDownBtn; ///< contains the two buttons that are hidden by the resolution drop down
-	DropDown_ty m_resolutionDropDown{ nullptr }; ///< contains the resoltuion drop down
-	std::pair<DropDownButton_ty, DropDownButton_ty> m_languageDropDownBtn; ///< contains the two buttons that are hidden by the language drop down
-	DropDown_ty m_languageDropDown{ nullptr }; ///< contains the language drop down
+	std::shared_ptr<SliderAndInputLine> m_volume; ///< contains the volume slider
+	DropDown_ty m_languageDropDown; ///< contains the language drop down
+	DropDown_ty m_resolutionDropDown; ///< contains the language drop down
+	CheckBox_ty m_toggleFullScreenCBM; ///< contains the full screen toggle check box
+	
 	/**
 	 * initializes all ui elements.
 	 * connects the actions.
@@ -37,12 +33,9 @@ private:
 	int GetIndexFromResolution(Resolution resolution) const;
 
 public:
-	/**
-	 * ctor.
-	 * only initialization.
-	 */
-	SettingsScene(Vector2 resolution);
-	~SettingsScene();
+
+	AppSettingsScene(Vector2 resolution);
+	~AppSettingsScene();
 
 	/**
 	 * updates all elements in elements.

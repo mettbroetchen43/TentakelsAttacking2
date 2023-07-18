@@ -18,47 +18,74 @@ void SceneManager::InitializeNewScene(SceneType sceneType) {
 	switch (sceneType) {
 		case SceneType::TEST:
 			m_currentScene = std::make_shared<TestScene>(
-				m_uiManager->GetResolution( ));
+				m_uiManager->GetResolution( )
+			);
 			return;
+
 		case SceneType::LOGO:
 			m_currentScene= std::make_shared<LogoScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::INTRO:
 			m_currentScene = std::make_shared<Intro>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::MAIN_MENU:
 			m_currentScene = std::make_shared<MainMenu>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::NEW_GAME_PLAYER:
 			m_currentScene = std::make_shared<NewGamePlayerScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::NEW_GAME_PARAMETER:
 			m_currentScene = std::make_shared<NewGameParameterScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::VALIDATE_GALAXY:
 			m_currentScene = std::make_shared<ValidateGalaxyScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::MAIN:
 			m_currentScene = std::make_shared<MainScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
-		case SceneType::SETTINGS:
-			m_currentScene = std::make_shared<SettingsScene>(
-				m_uiManager->GetResolution());
+
+		case SceneType::GAME_SETTINGS:
+			m_currentScene = std::make_shared<GameSettingsScene>(
+			m_uiManager->GetResolution()
+			);
 			return;
+
+		case SceneType::APP_SETTINGS:
+			m_currentScene = std::make_shared<AppSettingsScene>(
+				m_uiManager->GetResolution()
+			);
+			return;
+
 		case SceneType::CREDITS:
 			m_currentScene = std::make_shared<CreditsScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::UPDATE_EVALUATION:
 			m_currentScene = std::make_shared<UpdateEvaluationScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
 	}
 }

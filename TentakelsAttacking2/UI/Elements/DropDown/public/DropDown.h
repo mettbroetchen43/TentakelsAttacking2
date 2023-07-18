@@ -48,6 +48,11 @@ private:
 	void SetCurrentElement(std::shared_ptr<DropDownElement> element);
 
 	/**
+	 * sets the current text
+	 */
+	void SetText();
+
+	/**
 	 * toggles the drop down menu.
 	 */
 	void ToggleFoldedOut();

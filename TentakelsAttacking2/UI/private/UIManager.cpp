@@ -11,7 +11,14 @@
 Focus& UIManager::GetFocus() {
 	return m_focus;
 }
-void UIManager::ToggleFullScreen(bool first) {
+void UIManager::ToggleFullScreen() {
+	m_toggleFullScreen = true;
+}
+void UIManager::CheckAndSetToggleFullScreen(bool first) {
+
+	if (not m_toggleFullScreen) { return; }
+	else { m_toggleFullScreen = false; }
+
 	if (IsWindowFullscreen()) {
 		::ToggleFullscreen();
 		SetWindowSize(false);
@@ -22,7 +29,7 @@ void UIManager::ToggleFullScreen(bool first) {
 		::ToggleFullscreen();
 	}
 	if(!first) {
-		auto& fullScreen{ AppContext::GetInstance().constants.window.startingModeFullScreen };
+		auto& fullScreen{ AppContext::GetInstance().constants.window.isFullScreen };
 		fullScreen = !fullScreen;
 		m_sceneManager.Resize(m_resolution, m_appContext);
 	}
@@ -131,6 +138,7 @@ void UIManager::SetTargetFPS(SetTargetFPSEvent const* event) {
 void UIManager::UILoop() {
 	while(!WindowShouldClose()) {
 		m_appContext.constants.global.acceptInputTriggered = false;
+		CheckAndSetToggleFullScreen();
 		CheckAndSetNewResolution();
 		CheckAndUpdate();
 		Render();
@@ -202,8 +210,8 @@ void UIManager::StartUILoop() {
 	m_appContext.eventManager.InvokeEvent(event);
 
 
-	if(m_appContext.constants.window.startingModeFullScreen) {
-		ToggleFullScreen(true);
+	if(m_appContext.constants.window.isFullScreen) {
+		CheckAndSetToggleFullScreen(true);
 	} else {
 		SetWindowPosition();
 	}

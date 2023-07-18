@@ -218,7 +218,7 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		);
 	gameSettingsBtn->SetOnClick([]() {
 		AppContext::GetInstance().eventManager.InvokeEvent(
-			SwitchSceneEvent(SceneType::SETTINGS)
+			SwitchSceneEvent(SceneType::GAME_SETTINGS)
 			);
 		}
 	);
@@ -235,7 +235,12 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		appContext.languageManager.Text("helper_app"),
 		SoundType::CLICKED_RELEASE_STD
 		);
-	settingsBtn->Add(appSettingsBtn, false);
+	appSettingsBtn->SetOnClick([](){
+			SwitchSceneEvent const event{ SceneType::APP_SETTINGS };
+			AppContext::GetInstance().eventManager.InvokeEvent(event);
+		}
+	);
+	settingsBtn->Add(appSettingsBtn, true);
 	settingsBtn->Update();
 
 	incAll();
