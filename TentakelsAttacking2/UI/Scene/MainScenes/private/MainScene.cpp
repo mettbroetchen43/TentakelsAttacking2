@@ -65,7 +65,7 @@ void MainScene::Initialize() {
 		PauseGameEvent const gameEvent{ };
 		appContext.eventManager.InvokeEvent(gameEvent);
 
-		SwitchSceneEvent const sceneEvent{ SceneType::SETTINGS };
+		SwitchSceneEvent const sceneEvent{ SceneType::GAME_SETTINGS };
 		appContext.eventManager.InvokeEvent(sceneEvent);
 		}
 	);
