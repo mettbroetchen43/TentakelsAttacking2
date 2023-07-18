@@ -48,7 +48,6 @@ void ExpandingButton::HandleExpand() {
 
 	for (auto const& [btn, enabled, pos] : m_buttons){
 		btn->SetEnabled(enabled);
-		btn->StopMoving();
 		btn->MoveToPositionAsymptotic(pos, m_expandingSpeed);
 	}
 }
@@ -58,7 +57,6 @@ void ExpandingButton::HandleCollapse() {
 	m_isExpanded = false;
 	for (auto const& [btn, _, __] : m_buttons){
 		btn->SetEnabled(false);
-		btn->StopMoving();
 		btn->MoveToPositionAsymptotic(m_mainButton->GetPosition(), m_expandingSpeed);
 	}
 }

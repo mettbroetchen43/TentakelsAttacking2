@@ -258,6 +258,7 @@ public:
 	 * result ia a linear movement in one direction.
 	 */
 	virtual void MoveToPositionLinear(Vector2 position, float relativeSpeed) {
+		StopMoving();
 		m_moveType = MoveType::POINT_LINEAR;
 		m_startingPosition = m_pos;
 		m_targetPosition = GetAlignedPosition(m_alignment, position, m_size);
@@ -268,6 +269,7 @@ public:
 	 * result is an asymptotic movement in one direction.
 	 */
 	virtual void MoveToPositionAsymptotic(Vector2 position, float relativeSpeed) {
+		StopMoving();
 		m_moveType = MoveType::POINT_ASYNPTOTIC;
 		m_startingPosition = m_pos;
 		m_targetPosition = GetAlignedPosition(m_alignment, position, m_size);
