@@ -80,7 +80,17 @@ void MainScene::Initialize() {
 		appContext.languageManager.Text("helper_app"),
 		SoundType::CLICKED_RELEASE_STD
 		);
-	settingsBtn->Add(appSettingsBtn, false);
+	appSettingsBtn->SetOnClick([]() {
+		AppContext_ty_c appContext{ AppContext::GetInstance() };
+		
+		PauseGameEvent const gameEvent{ };
+		appContext.eventManager.InvokeEvent(gameEvent);
+
+		SwitchSceneEvent const sceneEvent{ SceneType::APP_SETTINGS };
+		appContext.eventManager.InvokeEvent(sceneEvent);
+		}
+	);
+	settingsBtn->Add(appSettingsBtn, true);
 	settingsBtn->Update();
 
 	auto galaxyBtn = std::make_shared<ClassicButton>(

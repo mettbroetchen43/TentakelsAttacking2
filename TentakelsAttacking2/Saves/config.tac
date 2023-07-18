@@ -36,7 +36,7 @@
     "player": {
         "player_count_max": 7,
         "player_count_min": 2,
-        "player_shuffle": false
+        "player_shuffle": true
     },
     "sound": {
         "volume_master": 50.0,
