@@ -21,7 +21,7 @@ void AppSettingsScene::Initialize() {
 		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		"App Settings"
+		appContext.languageManager.Text("helper_app_settings")
 	);
 	m_elements.push_back(settingsText);
 
@@ -94,7 +94,7 @@ void AppSettingsScene::Initialize() {
 		m_resolution,
 		a,
 		height,
-		"full screen"
+		appContext.languageManager.Text("scene_app_settings_fullscreen")
 	);
 	m_elements.push_back(fullScreenText);
 
@@ -231,11 +231,6 @@ void AppSettingsScene::Initialize() {
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	});
 	m_elements.push_back(languageDropDown);
-
-	incFIDB();
-	incPosB();
-
-	// seventh
 }
 
 std::vector<std::string> AppSettingsScene::GetStringsFromResolutionEntries() const {

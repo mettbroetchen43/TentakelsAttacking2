@@ -23,7 +23,7 @@ void GameSettingsScene::Initialize() {
 		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		"Game Settings"
+		appContext.languageManager.Text("helper_game_settings")
 	);
 	m_elements.push_back(settingsText);
 
@@ -42,7 +42,7 @@ void GameSettingsScene::Initialize() {
 	// constants
 	int                 id     { 1       };
 	float               y      { 0.32f   };
-	float     constexpr lx     { 0.05f   };
+	// float     constexpr lx     { 0.05f   };
 	float     constexpr rx     { 0.55f   };
 	float     constexpr width  { 0.40f   };
 	float     constexpr heightS{ 0.025f  };
@@ -175,7 +175,7 @@ void GameSettingsScene::Initialize() {
 		m_resolution,
 		a,
 		height,
-		"shuffle player"
+		appContext.languageManager.Text("helper_shuffle_players")
 	);
 	m_elements.push_back(shuffleCBText);
 }

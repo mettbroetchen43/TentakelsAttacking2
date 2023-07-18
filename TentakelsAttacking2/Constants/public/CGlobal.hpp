@@ -16,7 +16,7 @@ struct CGlobal final {
 	static inline int const configSectionCount{ 10 }; ///< config load checks if the count is idetical to the loaded section count
 
 	// versions
-	static inline std::string const languageVersion{"v0.1.4.3"}; ///< contains the language version string
+	static inline std::string const languageVersion{"v0.1.4.4"}; ///< contains the language version string
 	static inline std::string const configVersion{ "v0.1.4.0" }; ///< contains the config version string
 	// gameVersion will be extracted with regex in the GitHub CI. Don't chance the following line. see CMakeList.txt
 	static inline std::string const gameVersion{ "v0.1.4" }; ///< current gameVersion string
