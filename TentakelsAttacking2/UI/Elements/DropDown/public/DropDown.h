@@ -46,6 +46,7 @@ private:
 	 * sets the current element and current element text.
 	 */
 	void SetCurrentElement(std::shared_ptr<DropDownElement> element);
+	void SetCurrentElementOutUpdate(std::shared_ptr<DropDownElement> element);
 
 	/**
 	 * sets the current text

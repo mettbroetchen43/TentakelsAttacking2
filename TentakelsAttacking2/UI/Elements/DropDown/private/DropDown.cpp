@@ -43,13 +43,14 @@ void DropDown::Initialize(std::vector<std::string> const& elements, unsigned int
 		y += height;
 
 		if (i == 0) {
-			SetCurrentElement(entry);
+			SetCurrentElementOutUpdate(entry);
 		}
 	}
 }
 
 void DropDown::OnElementClick(unsigned int ID) {
 	SetCurrentElementByID(ID);
+	m_onSave(ID);
 }
 
 void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
@@ -58,6 +59,11 @@ void DropDown::SetCurrentElement(std::shared_ptr<DropDownElement> element) {
 	SetText();
 
 	m_onSave(element->GetID());
+}
+void DropDown::SetCurrentElementOutUpdate(std::shared_ptr<DropDownElement> element) {
+	m_currentElement = element;
+
+	SetText();
 }
 
 void DropDown::SetText() {
@@ -224,7 +230,7 @@ bool DropDown::SetCurrentElementByID(unsigned int ID) {
 
 	for (auto const& e : m_dropDownElements) {
 		if (e->GetID() == ID) {
-			SetCurrentElement(e);
+			SetCurrentElementOutUpdate(e);
 			if (m_isFoldouts) {
 				ToggleFoldedOut();
 			}
@@ -237,7 +243,7 @@ bool DropDown::SetCurrentElementByString(std::string const& element) {
 
 	for (auto const& e : m_dropDownElements) {
 		if (e->GetText() == element) {
-			SetCurrentElement(e);
+			SetCurrentElementOutUpdate(e);
 			return true;
 		}
 	}

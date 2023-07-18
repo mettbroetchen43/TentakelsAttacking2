@@ -214,7 +214,7 @@ void AppSettingsScene::Initialize() {
 
 	incFIDB();
 
-	auto languageDropDown = std::make_shared<DropDown>(
+	m_languageDropDown = std::make_shared<DropDown>(
 		GetElementPosition(rx, y),
 		GetElementSize(width, height),
 		a,
@@ -224,13 +224,13 @@ void AppSettingsScene::Initialize() {
 		id + 1,
 		appContext.languageManager.GetAvailableLanguages()
 	);
-	languageDropDown->SetCurrentElementByString(appContext.constants.global.currentLanguageName);
-	languageDropDown->SetOnSave([](unsigned int ID) {
+	m_languageDropDown->SetCurrentElementByString(appContext.constants.global.currentLanguageName);
+	m_languageDropDown->SetOnSave([](unsigned int ID) {
 		auto const language{ AppContext::GetInstance().languageManager.GetAvailableLanguages().at(ID - 1) };
 		auto const event{ ChangeLanguageEvent(language) };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	});
-	m_elements.push_back(languageDropDown);
+	m_elements.push_back(m_languageDropDown);
 }
 
 std::vector<std::string> AppSettingsScene::GetStringsFromResolutionEntries() const {
@@ -279,6 +279,12 @@ void AppSettingsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 void AppSettingsScene::OnEvent(Event const& event) {
 	if (auto const* LanguageEvent = dynamic_cast<UpdateLanguageInUIEvent const*>(&event)) {
 		m_languageDropDown->SetCurrentElementByString(LanguageEvent->GetLanguage());
+		ShowMessagePopUpEvent const mEvent{
+			"new language",
+			"language {} loaded. it will be displayed when new loaded.",
+			[]() {}
+		};
+		AppContext::GetInstance().eventManager.InvokeEvent(mEvent);
 		return;
 	}
 }
