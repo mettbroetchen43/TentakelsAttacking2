@@ -15,7 +15,7 @@
 static std::string const defaultValuePrefix{ "-> using default value -> overwrite config by save" };
 static int loadEntryCount{ 0 }; 
 // print
-auto const printMissingSection{ [](ConfigTypes section) {
+auto static const printMissingSection{ [](ConfigTypes section) {
 	Print(
 		PrintType::ERROR,
 		"section \"{}\" in config missing {}",
@@ -23,7 +23,7 @@ auto const printMissingSection{ [](ConfigTypes section) {
 		defaultValuePrefix
 	);
 } };
-auto const printMissingEntry{ [](ConfigTypes entry) {
+auto static const printMissingEntry{ [](ConfigTypes entry) {
 	Print(
 		PrintType::ERROR,
 		"entry \"{}\" in config missing {}",
@@ -31,7 +31,7 @@ auto const printMissingEntry{ [](ConfigTypes entry) {
 		defaultValuePrefix
 	);
 } };
-auto const printNotMatchingCount{ [](ConfigTypes section, int expected, size_t provided) {
+auto static const printNotMatchingCount{ [](ConfigTypes section, int expected, size_t provided) {
 	Print(
 		PrintType::ERROR,
 		"section \"{}\" entry count in config is not matching -> expected: \"{}\" -> provided: \"{}\"",
@@ -40,7 +40,7 @@ auto const printNotMatchingCount{ [](ConfigTypes section, int expected, size_t p
 		provided
 		);
 } };
-auto const printWrongDatatype{ [](ConfigTypes entry) {
+auto static const printWrongDatatype{ [](ConfigTypes entry) {
 	Print(
 		PrintType::ERROR,
 		"entry \"{}\" in config has wrong datatype {}",
@@ -50,7 +50,7 @@ auto const printWrongDatatype{ [](ConfigTypes entry) {
 } };
 
 // check
-auto const isNull{ [](nlohmann::json const& son, ConfigTypes type) ->bool {
+auto static const isNull{ [](nlohmann::json const& son, ConfigTypes type) ->bool {
 	assert(not son.is_null());
 	if (son.is_array()) {
 		printMissingSection(type);
@@ -58,7 +58,7 @@ auto const isNull{ [](nlohmann::json const& son, ConfigTypes type) ->bool {
 	}
 	return false;
 } };
-auto const isExistingSection{ [](nlohmann::json const& son, ConfigTypes type) ->bool {
+auto static const isExistingSection{ [](nlohmann::json const& son, ConfigTypes type) ->bool {
 	assert(son.contains(CToS(type)));
 	if (not son.contains(CToS(type))) {
 		printMissingSection(type);
@@ -66,7 +66,7 @@ auto const isExistingSection{ [](nlohmann::json const& son, ConfigTypes type) ->
 	}
 	return true;
 } };
-auto const isExistingEntry{ [](nlohmann::json const& son, ConfigTypes type) ->bool {
+auto static const isExistingEntry{ [](nlohmann::json const& son, ConfigTypes type) ->bool {
 	assert(son.contains(CToS(type)));
 	if (not son.contains(CToS(type))) {
 		printMissingEntry(type);
@@ -74,7 +74,7 @@ auto const isExistingEntry{ [](nlohmann::json const& son, ConfigTypes type) ->bo
 	}
 	return true;
 } };
-auto const isMatchingSize{ [](nlohmann::json const& son, ConfigTypes section, int count) ->bool {
+auto static const isMatchingSize{ [](nlohmann::json const& son, ConfigTypes section, int count) ->bool {
 	assert(son.size() == count);
 	if (son.size() != count) {
 		printNotMatchingCount(section, count, son.size());
@@ -84,7 +84,7 @@ auto const isMatchingSize{ [](nlohmann::json const& son, ConfigTypes section, in
 } };
 
 // load
-auto const loadSection{ [](nlohmann::json const& son, nlohmann::json& out, ConfigTypes section, int count)->bool {
+auto static const loadSection{ [](nlohmann::json const& son, nlohmann::json& out, ConfigTypes section, int count)->bool {
 	if (not isExistingSection(son, section)) {
 		return false;
 	}
@@ -95,7 +95,7 @@ auto const loadSection{ [](nlohmann::json const& son, nlohmann::json& out, Confi
 
 	return true;
 } };
-auto const loadString{ [](nlohmann::json const& son, std::string& out, ConfigTypes entry) -> bool  {
+auto static const loadString{ [](nlohmann::json const& son, std::string& out, ConfigTypes entry) -> bool  {
 	++loadEntryCount;
 	if (not isExistingEntry(son, entry)) {
 		return false;
@@ -110,7 +110,7 @@ auto const loadString{ [](nlohmann::json const& son, std::string& out, ConfigTyp
 	son.at(CToS(entry)).get_to(out);
 	return true;
 } };
-auto const loadInt{ [](nlohmann::json const& son, int& out, ConfigTypes entry) -> bool {
+auto static const loadInt{ [](nlohmann::json const& son, int& out, ConfigTypes entry) -> bool {
 	++loadEntryCount;
 	if (not isExistingEntry(son, entry)) {
 		return false;
@@ -125,7 +125,7 @@ auto const loadInt{ [](nlohmann::json const& son, int& out, ConfigTypes entry) -
 	son.at(CToS(entry)).get_to(out);
 	return true;
 } };
-auto const loadFloat{ [](nlohmann::json const& son, float& out, ConfigTypes entry) -> bool {
+auto static const loadFloat{ [](nlohmann::json const& son, float& out, ConfigTypes entry) -> bool {
 	++loadEntryCount;
 	if (not isExistingEntry(son, entry)) {
 		return false;
@@ -140,7 +140,7 @@ auto const loadFloat{ [](nlohmann::json const& son, float& out, ConfigTypes entr
 	son.at(CToS(entry)).get_to(out);
 	return true;
 } };
-auto const loadBool{ [](nlohmann::json const& son, bool& out, ConfigTypes entry) -> bool {
+auto static const loadBool{ [](nlohmann::json const& son, bool& out, ConfigTypes entry) -> bool {
 	++loadEntryCount;
 	if (not isExistingEntry(son, entry)) {
 		return false;
