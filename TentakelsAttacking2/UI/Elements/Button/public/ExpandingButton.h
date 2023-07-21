@@ -25,6 +25,9 @@ private:
 
 	bool m_isExpanded{ false }; ///< contains if the button is currently expanded
 	bool m_wasKeyInput{ false }; ///< contains if the button got a key input last time
+	bool m_delayedCollapse{ false }; ///< contains if the button will collapse delayed
+	double m_collapseStartTime{ 0.0f }; ///< contains the start time of the delayed collapse
+	double m_delayedCollapseTime{ 1.0f }; ///< contains the delay time of the delayed collapse
 	float m_spacing; ///< contains the relative spacing between the buttons
 	float m_expandingSpeed; ///< contains the speed the button is expanding and collapsing
 	ToggleButton_ty m_mainButton; ///< contains the toggle button

@@ -191,8 +191,16 @@ void ExpandingButton::UpdateCollider() {
 void ExpandingButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	m_mainButton->CheckAndUpdate(mousePosition, appContext);
 	
-	if (m_isExpanded and not m_wasKeyInput
+	if (m_isExpanded and not m_wasKeyInput and not m_delayedCollapse
 		and not CheckCollisionPointRec(mousePosition, m_collider)) {
+		m_delayedCollapse = true;
+		m_collapseStartTime = GetTime();
+	}
+	else if (m_delayedCollapse and CheckCollisionPointRec(mousePosition, m_collider)) {
+		m_delayedCollapse = false;
+	}
+	else if ( m_delayedCollapse and (GetTime() > m_collapseStartTime + m_delayedCollapseTime)) {
+		m_delayedCollapse = false;
 		HandleCollapse();
 		m_mainButton->SetToggleButton(m_isExpanded);
 	}
