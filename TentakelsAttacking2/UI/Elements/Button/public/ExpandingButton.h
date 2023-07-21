@@ -79,6 +79,17 @@ public:
 	void Remove(int ind);
 
 	/**
+	 * returns the time the button waits until it will collapse while moving the mouse out of the collider.
+	 * does not apply when the button was entered with key input. 
+	 */
+	[[nodiscard]] double GetDelayedCollapseTime() const;
+	/**
+	 * sets the time the button waits until it will collapse while moving the mouse out of the collider.
+	 * does not apply when the button was entered with key input. 
+	 */
+	void SetDelayedCollapseTime(double time);
+
+	/**
 	 * sets the current expand direction.
 	 */
 	void SetDirection(Direction direction);

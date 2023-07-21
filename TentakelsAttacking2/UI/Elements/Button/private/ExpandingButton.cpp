@@ -98,6 +98,13 @@ void ExpandingButton::Remove(int ind) {
 	m_buttons.erase(m_buttons.begin() + ind);
 }
 
+double ExpandingButton::GetDelayedCollapseTime() const {
+	return m_delayedCollapseTime;
+}
+void ExpandingButton::SetDelayedCollapseTime(double time) {
+	m_delayedCollapseTime = time;
+}
+
 void ExpandingButton::SetDirection(Direction direction) {
 	m_direction = direction;
 }
