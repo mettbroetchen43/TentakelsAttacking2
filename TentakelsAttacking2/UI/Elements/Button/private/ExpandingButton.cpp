@@ -230,7 +230,8 @@ void ExpandingButton::Render(AppContext_ty_c appContext) {
 		}
 	}
 
-	DrawRectangleLinesEx(m_collider, 2.0f, WHITE);
+	// Debug
+	// DrawRectangleLinesEx(m_collider, 2.0f, WHITE);
 
 	m_mainButton->Render(appContext);
 }
