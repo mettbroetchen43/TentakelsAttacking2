@@ -17,16 +17,11 @@
 // help Lambdas
 static auto popup = [](std::string const& text) {
 	ShowMessagePopUpEvent const popupEvent{
-		"Invalid Input",
+		AppContext::GetInstance().languageManager.Text("logic_galaxy_invalid_input_headline"),
 		text,
 		[]() {}
 	};
 	AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
-};
-static auto message = [](std::string& messageText, std::string const& first, std::string const& second) {
-	if (messageText.size() <= 0) { messageText = first; return; }
-
-	messageText += ", " + second;
 };
 
 // player
@@ -78,13 +73,31 @@ bool GameManager::GetNextPlayer(Player_ty& nextPlayer) const {
 }
 
 void GameManager::AddPlayer(AddPlayerEvent const* event) {
+
+	auto name { event->GetName() };
+	auto color{ event->GetColor() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
+	auto const l{ [&, name, color](bool valid) {
+			if (valid) {
+				StopGameEvent const eventRet{ };
+				AppContext::GetInstance().eventManager.InvokeEvent(eventRet);
+				AddPlayerEvent const eventPlay{ name, color };
+				this->AddPlayer(&eventPlay);
+			}
+		}
+	};
+	if (not CheckValidAddRemovePlayer(l)) { 
+		return;
+	}
+
 	if (!ValidAddPlayer()) {
 		ShowMessagePopUpEvent const UIEvent{
-			"Max Player",
-			"No more Player slots are available",
+			appContext.languageManager.Text("ui_popup_max_player_title"),
+			appContext.languageManager.Text("ui_popup_max_player_subtitle"),
 			[]() {}
 		};
-		AppContext::GetInstance().eventManager.InvokeEvent(UIEvent);
+		appContext.eventManager.InvokeEvent(UIEvent);
 		return;
 	}
 
@@ -97,20 +110,22 @@ void GameManager::AddPlayer(AddPlayerEvent const* event) {
 
 	AddPlayerUIEvent const AddEvent{
 		newID,
-		event->GetName(),
-		event->GetColor()
+		name,
+		color
 	};
-	AppContext::GetInstance().eventManager.InvokeEvent(AddEvent);
+	appContext.eventManager.InvokeEvent(AddEvent);
 }
 void GameManager::EditPlayer(EditPlayerEvent const* event) const {
 
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
 	if (!IsExistingPlayerID(event->GetID())) {
 		ShowMessagePopUpEvent const UIEvent{
-			"Invalid ID",
-			"ID " + std::to_string(event->GetID()) + " is not existing",
+			appContext.languageManager.Text("helper_invalid_id"),
+			appContext.languageManager.Text("ui_popup_invalid_id_subtitle", event->GetID()),
 			[]() {}
 		};
-		AppContext::GetInstance().eventManager.InvokeEvent(UIEvent);
+		appContext.eventManager.InvokeEvent(UIEvent);
 		return;
 	}
 
@@ -119,9 +134,25 @@ void GameManager::EditPlayer(EditPlayerEvent const* event) const {
 		event->GetName(),
 		event->GetColor()
 	};
-	AppContext::GetInstance().eventManager.InvokeEvent(editEvent);
+	appContext.eventManager.InvokeEvent(editEvent);
 }
 void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
+
+	auto id{ event->GetID() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
+	auto const l{ [&, id](bool valid) {
+			if (valid) {
+				StopGameEvent const eventRet{ };
+				AppContext::GetInstance().eventManager.InvokeEvent(eventRet);
+				DeletePlayerEvent const eventPlay{ id };
+				this->DeletePlayer(&eventPlay);
+			}
+		}
+	};
+	if (not CheckValidAddRemovePlayer(l)) { 
+		return;
+	}
 
 	Player_ty toDelete{ nullptr };
 	for (auto& p : m_players) {
@@ -133,8 +164,8 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 
 	if (!toDelete) {
 		ShowMessagePopUpEvent const messageEvent{
-			"Invalid ID",
-			"ID " + std::to_string(event->GetID()) + " is not existing",
+			appContext.languageManager.Text("helper_invalid_id"),
+			appContext.languageManager.Text("ui_popup_invalid_id_subtitle", event->GetID()),
 			[]() {}
 		};
 		AppContext::GetInstance().eventManager.InvokeEvent(messageEvent);
@@ -149,6 +180,18 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(deleteEvent);
 }
 void GameManager::ResetPlayer() {
+	auto const l{ [&](bool valid) {
+			if (valid) {
+				StopGameEvent const eventRet{ };
+				AppContext::GetInstance().eventManager.InvokeEvent(eventRet);
+				this->ResetPlayer();
+			}
+		}
+	};
+	if (not CheckValidAddRemovePlayer(l)) { 
+		return;
+	}
+
 	m_players.clear();
 
 	ResetPlayerUIEvent const event{ };
@@ -161,8 +204,8 @@ void GameManager::CheckPlayerCount() const {
 
 	if (m_players.size() < appContext.constants.player.minPlayerCount) {
 		ShowMessagePopUpEvent const event{
-			"Player Count",
-			"Not enough players.\n current min. Player Count: " + std::to_string(appContext.constants.player.minPlayerCount),
+			appContext.languageManager.Text("ui_popup_player_count_title"),
+			appContext.languageManager.Text("ui_popup_player_count_min_subtitle", '\n', appContext.constants.player.minPlayerCount),
 			[]() {}
 		};
 		appContext.eventManager.InvokeEvent(event);
@@ -170,8 +213,8 @@ void GameManager::CheckPlayerCount() const {
 	}
 	else if (m_players.size() > appContext.constants.player.maxPlayerCount) {
 		ShowMessagePopUpEvent const event{
-			"Player Count",
-			"Too many players.\n current max Player Count: " + std::to_string(appContext.constants.player.maxPlayerCount),
+			appContext.languageManager.Text("ui_popup_player_count_title"),
+			appContext.languageManager.Text("ui_popup_player_count_max_subtitle", '\n', appContext.constants.player.maxPlayerCount),
 			[]() {}
 		};
 		appContext.eventManager.InvokeEvent(event);
@@ -193,6 +236,20 @@ void GameManager::ShuffleCurrentRoundPlayer() {
 		PrintType::ONLY_DEBUG,
 		"player shuffled"
 	);
+}
+bool GameManager::CheckValidAddRemovePlayer(std::function<void(bool valid)> forPopup) const {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
+	if (appContext.constants.global.isGameRunning) {
+		ShowValidatePopUp const event{
+			appContext.languageManager.Text("ui_popup_game_still_running_title"),
+			appContext.languageManager.Text("ui_popup_game_still_running_subtitle"),
+			forPopup
+		};
+		appContext.eventManager.InvokeEvent(event);
+		return false;
+	}
+	return true;
 }
 
 void GameManager::SendCurrentPlayerID() {
@@ -322,33 +379,35 @@ void GameManager::ValidateNextTurn() {
 // Fleet
 void GameManager::AddFleet(SendFleetInstructionEvent const* event) {
 
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
 	if (!ValidateAddFleetInput(event)) { return; }
 
 	Player_ty currentPlayer{ nullptr };
-	if (!GetCurrentPlayer(currentPlayer)) { popup("No current player selected."); return; }
+	if (!GetCurrentPlayer(currentPlayer)) { popup(appContext.languageManager.Text("ui_popup_no_player_subtitle")); return; }
 
 	bool const isValidFleet{ m_galaxyManager.AddFleet(event, currentPlayer) };
 	ReturnFleetInstructionEvent const returnEvent{ isValidFleet };
-	AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
+	appContext.eventManager.InvokeEvent(returnEvent);
 }
 
 bool GameManager::ValidateAddFleetInput(SendFleetInstructionEvent const* event) {
 
 	std::string messageText;
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	if (event->GetOrigin() <= 0) {
-		message(messageText, "input in origin", "origin");
+		messageText = { appContext.languageManager.Text("ui_popup_add_fleet_origin_too_low") };
 	}
 	if (event->GetDestination() <= 0) {
 		if ((event->GetDestinationX() < 0) || (event->GetDestinationY() < 0)) {
-			message(messageText, "input in destination", "destination");
+			messageText = { appContext.languageManager.Text("ui_popup_add_fleet_destination_too_low") };
 		}
 	}
 	if (event->GetShipCount() <= 0) {
-		message(messageText, "input in ship count", "ship count");
+		messageText = { appContext.languageManager.Text("ui_popup_add_fleet_ship_count_too_low") };
 	}
 	if (!messageText.empty()) {
-		messageText += " to low.";
 		popup(messageText);
 		return false;
 	}
@@ -358,7 +417,7 @@ bool GameManager::ValidateAddFleetInput(SendFleetInstructionEvent const* event) 
 		&& (event->GetDestinationX() >= 0
 			|| event->GetDestinationY() >= 0) };
 	if (doubleDestination) {
-		popup("to many inputs for destination");
+		popup(appContext.languageManager.Text("ui_popup_add_fleet_to_many_destination_inputs"));
 		return false;
 	}
 

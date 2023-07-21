@@ -441,3 +441,8 @@ public:
 		return m_destCorrinates;
 	}
 };
+
+/**
+ * use this to refresh the new game player scene.
+ */
+class RefreshNewGamePlayerScene final : public Event { };
