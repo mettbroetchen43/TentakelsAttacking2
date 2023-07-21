@@ -69,7 +69,13 @@ public:
 	 * need to call update after that.
 	 */
 	void Add(ClassicButton_ty btn, bool enabled);
+	/**
+	 * removes a specific button.
+	 */
 	void Remove(ClassicButton_ty btn);
+	/**
+	 * removes a button by index.
+	 */
 	void Remove(int ind);
 
 	/**
