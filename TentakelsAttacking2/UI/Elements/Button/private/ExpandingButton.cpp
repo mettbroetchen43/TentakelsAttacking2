@@ -98,6 +98,13 @@ void ExpandingButton::Remove(int ind) {
 	m_buttons.erase(m_buttons.begin() + ind);
 }
 
+double ExpandingButton::GetDelayedCollapseTime() const {
+	return m_delayedCollapseTime;
+}
+void ExpandingButton::SetDelayedCollapseTime(double time) {
+	m_delayedCollapseTime = time;
+}
+
 void ExpandingButton::SetDirection(Direction direction) {
 	m_direction = direction;
 }
@@ -155,24 +162,35 @@ void ExpandingButton::UpdateCollider() {
 	}
 
 	switch (m_direction) {
-	case ExpandingButton::LEFT:
-		defaultCollider.x -= extraCollider.x;
-		defaultCollider.width += extraCollider.x;
-		break;
+		case ExpandingButton::LEFT:
+			defaultCollider.x -= extraCollider.x;
+			defaultCollider.width += extraCollider.x;
+			break;
 
-	case ExpandingButton::DOWN:
-		defaultCollider.height += extraCollider.y;
-		break;
+		case ExpandingButton::DOWN:
+			defaultCollider.height += extraCollider.y;
+			break;
 
-	case ExpandingButton::RIGHT:
-		defaultCollider.width += extraCollider.x;
-		break;
+		case ExpandingButton::RIGHT:
+			defaultCollider.width += extraCollider.x;
+			break;
 
-	case ExpandingButton::UP:
-		defaultCollider.y -= extraCollider.y;
-		defaultCollider.height += extraCollider.y;
-		break;
+		case ExpandingButton::UP:
+			defaultCollider.y -= extraCollider.y;
+			defaultCollider.height += extraCollider.y;
+			break;
 	}
+
+	Vector2 offset {
+		defaultCollider.width * 0.01f,
+		defaultCollider.height * 0.01f
+	};
+	offset.x = offset.x < 20.0f ? 20.0f : offset.x;
+	offset.y = offset.y < 20.0f ? 20.0f : offset.y;
+	defaultCollider.x -= offset.x / 2;
+	defaultCollider.y -= offset.y / 2;
+	defaultCollider.width += offset.x;
+	defaultCollider.height += offset.y;
 
 	SetCollider(defaultCollider);
 }
@@ -180,8 +198,16 @@ void ExpandingButton::UpdateCollider() {
 void ExpandingButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	m_mainButton->CheckAndUpdate(mousePosition, appContext);
 	
-	if (m_isExpanded and not m_wasKeyInput
+	if (m_isExpanded and not m_wasKeyInput and not m_delayedCollapse
 		and not CheckCollisionPointRec(mousePosition, m_collider)) {
+		m_delayedCollapse = true;
+		m_collapseStartTime = GetTime();
+	}
+	else if (m_delayedCollapse and CheckCollisionPointRec(mousePosition, m_collider)) {
+		m_delayedCollapse = false;
+	}
+	else if ( m_delayedCollapse and (GetTime() > m_collapseStartTime + m_delayedCollapseTime)) {
+		m_delayedCollapse = false;
 		HandleCollapse();
 		m_mainButton->SetToggleButton(m_isExpanded);
 	}
@@ -203,6 +229,9 @@ void ExpandingButton::Render(AppContext_ty_c appContext) {
 			btn.btn->Render(appContext);
 		}
 	}
+
+	// Debug
+	// DrawRectangleLinesEx(m_collider, 2.0f, WHITE);
 
 	m_mainButton->Render(appContext);
 }

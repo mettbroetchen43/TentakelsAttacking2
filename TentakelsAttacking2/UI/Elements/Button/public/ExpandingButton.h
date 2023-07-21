@@ -25,6 +25,9 @@ private:
 
 	bool m_isExpanded{ false }; ///< contains if the button is currently expanded
 	bool m_wasKeyInput{ false }; ///< contains if the button got a key input last time
+	bool m_delayedCollapse{ false }; ///< contains if the button will collapse delayed
+	double m_collapseStartTime{ 0.0f }; ///< contains the start time of the delayed collapse
+	double m_delayedCollapseTime{ 1.0f }; ///< contains the delay time of the delayed collapse
 	float m_spacing; ///< contains the relative spacing between the buttons
 	float m_expandingSpeed; ///< contains the speed the button is expanding and collapsing
 	ToggleButton_ty m_mainButton; ///< contains the toggle button
@@ -66,8 +69,25 @@ public:
 	 * need to call update after that.
 	 */
 	void Add(ClassicButton_ty btn, bool enabled);
+	/**
+	 * removes a specific button.
+	 */
 	void Remove(ClassicButton_ty btn);
+	/**
+	 * removes a button by index.
+	 */
 	void Remove(int ind);
+
+	/**
+	 * returns the time the button waits until it will collapse while moving the mouse out of the collider.
+	 * does not apply when the button was entered with key input. 
+	 */
+	[[nodiscard]] double GetDelayedCollapseTime() const;
+	/**
+	 * sets the time the button waits until it will collapse while moving the mouse out of the collider.
+	 * does not apply when the button was entered with key input. 
+	 */
+	void SetDelayedCollapseTime(double time);
 
 	/**
 	 * sets the current expand direction.
