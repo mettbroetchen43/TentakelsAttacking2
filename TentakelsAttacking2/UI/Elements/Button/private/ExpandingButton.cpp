@@ -155,24 +155,35 @@ void ExpandingButton::UpdateCollider() {
 	}
 
 	switch (m_direction) {
-	case ExpandingButton::LEFT:
-		defaultCollider.x -= extraCollider.x;
-		defaultCollider.width += extraCollider.x;
-		break;
+		case ExpandingButton::LEFT:
+			defaultCollider.x -= extraCollider.x;
+			defaultCollider.width += extraCollider.x;
+			break;
 
-	case ExpandingButton::DOWN:
-		defaultCollider.height += extraCollider.y;
-		break;
+		case ExpandingButton::DOWN:
+			defaultCollider.height += extraCollider.y;
+			break;
 
-	case ExpandingButton::RIGHT:
-		defaultCollider.width += extraCollider.x;
-		break;
+		case ExpandingButton::RIGHT:
+			defaultCollider.width += extraCollider.x;
+			break;
 
-	case ExpandingButton::UP:
-		defaultCollider.y -= extraCollider.y;
-		defaultCollider.height += extraCollider.y;
-		break;
+		case ExpandingButton::UP:
+			defaultCollider.y -= extraCollider.y;
+			defaultCollider.height += extraCollider.y;
+			break;
 	}
+
+	Vector2 offset {
+		defaultCollider.width * 0.01f,
+		defaultCollider.height * 0.01f
+	};
+	offset.x = offset.x < 20.0f ? 20.0f : offset.x;
+	offset.y = offset.y < 20.0f ? 20.0f : offset.y;
+	defaultCollider.x -= offset.x / 2;
+	defaultCollider.y -= offset.y / 2;
+	defaultCollider.width += offset.x;
+	defaultCollider.height += offset.y;
 
 	SetCollider(defaultCollider);
 }
@@ -203,6 +214,8 @@ void ExpandingButton::Render(AppContext_ty_c appContext) {
 			btn.btn->Render(appContext);
 		}
 	}
+
+	DrawRectangleLinesEx(m_collider, 2.0f, WHITE);
 
 	m_mainButton->Render(appContext);
 }
