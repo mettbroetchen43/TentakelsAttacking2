@@ -92,6 +92,11 @@ private:
 	 * use this an the round start to get some variation every round.
 	 */
 	void ShuffleCurrentRoundPlayer();
+	/**
+	 * checks if its currently valid to add or remove a player.
+	 * generates a popup if not.
+	 */
+	[[nodiscard]] bool CheckValidAddRemovePlayer(std::function<void(bool valid)> forPopup) const;
 
 	/** send the current player ID via an event
 	 *  will send 0 if no player is active

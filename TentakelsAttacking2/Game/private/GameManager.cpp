@@ -78,6 +78,23 @@ bool GameManager::GetNextPlayer(Player_ty& nextPlayer) const {
 }
 
 void GameManager::AddPlayer(AddPlayerEvent const* event) {
+
+	auto name { event->GetName() };
+	auto color{ event->GetColor() };
+
+	auto const l{ [&, name, color](bool valid) {
+			if (valid) {
+				StopGameEvent const eventRet{ };
+				AppContext::GetInstance().eventManager.InvokeEvent(eventRet);
+				AddPlayerEvent const eventPlay{ name, color };
+				this->AddPlayer(&eventPlay);
+			}
+		}
+	};
+	if (not CheckValidAddRemovePlayer(l)) { 
+		return;
+	}
+
 	if (!ValidAddPlayer()) {
 		ShowMessagePopUpEvent const UIEvent{
 			"Max Player",
@@ -97,8 +114,8 @@ void GameManager::AddPlayer(AddPlayerEvent const* event) {
 
 	AddPlayerUIEvent const AddEvent{
 		newID,
-		event->GetName(),
-		event->GetColor()
+		name,
+		color
 	};
 	AppContext::GetInstance().eventManager.InvokeEvent(AddEvent);
 }
@@ -122,6 +139,21 @@ void GameManager::EditPlayer(EditPlayerEvent const* event) const {
 	AppContext::GetInstance().eventManager.InvokeEvent(editEvent);
 }
 void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
+
+	auto id{ event->GetID() };
+
+	auto const l{ [&, id](bool valid) {
+			if (valid) {
+				StopGameEvent const eventRet{ };
+				AppContext::GetInstance().eventManager.InvokeEvent(eventRet);
+				DeletePlayerEvent const eventPlay{ id };
+				this->DeletePlayer(&eventPlay);
+			}
+		}
+	};
+	if (not CheckValidAddRemovePlayer(l)) { 
+		return;
+	}
 
 	Player_ty toDelete{ nullptr };
 	for (auto& p : m_players) {
@@ -149,6 +181,18 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(deleteEvent);
 }
 void GameManager::ResetPlayer() {
+	auto const l{ [&](bool valid) {
+			if (valid) {
+				StopGameEvent const eventRet{ };
+				AppContext::GetInstance().eventManager.InvokeEvent(eventRet);
+				this->ResetPlayer();
+			}
+		}
+	};
+	if (not CheckValidAddRemovePlayer(l)) { 
+		return;
+	}
+
 	m_players.clear();
 
 	ResetPlayerUIEvent const event{ };
@@ -193,6 +237,20 @@ void GameManager::ShuffleCurrentRoundPlayer() {
 		PrintType::ONLY_DEBUG,
 		"player shuffled"
 	);
+}
+bool GameManager::CheckValidAddRemovePlayer(std::function<void(bool valid)> forPopup) const {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
+	if (appContext.constants.global.isGameRunning) {
+		ShowValidatePopUp const event{
+			"Game is running",
+			"not able zu add or remove any player. Stop the current game?",
+			forPopup
+		};
+		appContext.eventManager.InvokeEvent(event);
+		return false;
+	}
+	return true;
 }
 
 void GameManager::SendCurrentPlayerID() {
