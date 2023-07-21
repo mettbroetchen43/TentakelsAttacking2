@@ -289,8 +289,6 @@ void NewGamePlayerScene::AddPlayer() {
 		m_colorPicker->GetColor()
 	};
 	appContext.eventManager.InvokeEvent(event);
-
-	UpdateSceneEntries(appContext);
 }
 void NewGamePlayerScene::UpdatePlayer(unsigned int ID, std::string const& name,
 	Color color, AppContext_ty_c appContext) {
@@ -334,8 +332,6 @@ void NewGamePlayerScene::DeletePlayer(unsigned int ID) {
 
 	DeletePlayerEvent const event{ ID };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
-
-	UpdateSceneEntries(appContext);
 }
 void NewGamePlayerScene::CheckPlayerCount() const {
 	ValidatePlayerCountEvent const event;
@@ -353,8 +349,6 @@ void NewGamePlayerScene::Reset() {
 
 	ResetPlayerEvent const event;
 	appContext.eventManager.InvokeEvent(event);
-
-	UpdateSceneEntries(appContext);
 }
 
 void NewGamePlayerScene::SetNextButton(AppContext_ty_c appContext) {
@@ -408,6 +402,10 @@ void NewGamePlayerScene::OnEvent(Event const& event) {
 
 	if (auto const* CountEvent = dynamic_cast<ValidatePlayerCountResultEvent const*>(&event)) {
 		NextScene(CountEvent->GetValid());
+		return;
+	}
+	if (auto const* RefreshEvent = dynamic_cast<RefreshNewGamePlayerScene const*>(&event)) {
+		UpdateSceneEntries(AppContext::GetInstance());
 		return;
 	}
 }

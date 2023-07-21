@@ -123,6 +123,8 @@ void PlayerCollection::AddPlayer(unsigned int ID,
 
 	m_playerData.emplace_back(ID, name, color);
 	SortPlayers();
+	RefreshNewGamePlayerScene const event{ };
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 void PlayerCollection::EditPlayer(unsigned int ID,
 	std::string name, Color color) {
@@ -141,6 +143,8 @@ void PlayerCollection::EditPlayer(unsigned int ID,
 	}
 
 	SortPlayers();
+	RefreshNewGamePlayerScene const event{ };
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 void PlayerCollection::DeletePlayer(unsigned int ID) {
 	auto const& toDelete{ GetPlayerByIDmut(ID) };
@@ -150,9 +154,13 @@ void PlayerCollection::DeletePlayer(unsigned int ID) {
 	), m_playerData.end());
 
 	SortPlayers();
+	RefreshNewGamePlayerScene const event{ };
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 void PlayerCollection::ResetPlayer(){
 	m_playerData.clear();
+	RefreshNewGamePlayerScene const event{ };
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
 Color PlayerCollection::GetPossibleColor() const {
