@@ -9,4 +9,4 @@
 #include "HLogicAlias.hpp"
 
 [[nodiscard]] std::pair<bool, SpaceObject_ty> TryGetTarget(
-	Fleet_ty_raw fleet, SpaceObject_ty const& target);
+	Fleet_ty_raw fleet, SpaceObject_ty_c target);

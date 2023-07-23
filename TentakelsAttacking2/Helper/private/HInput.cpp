@@ -22,7 +22,7 @@ bool IsConfirmInputPressed() {
 	return triggered;
 }
 bool IsConfirmInputReleased() {
-	bool const triggered{
+	bool const triggered {
 			 IsKeyReleased(KEY_SPACE)
 		or   IsKeyReleased(KEY_KP_ENTER)
 		or   IsKeyReleased(KEY_ENTER)

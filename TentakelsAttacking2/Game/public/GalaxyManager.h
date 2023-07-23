@@ -54,7 +54,7 @@ public:
 	/**
 	 * return the current galaxy raw pointer.
 	 */
-	[[nodiscard]] Galaxy* GetGalaxy() const;
+	[[nodiscard]] Galaxy* GetGalaxy();
 	/** 
 	 * add a new fleet to the Galaxies.
 	 */
@@ -63,5 +63,5 @@ public:
 	/**
 	 * updates the main galaxy
 	 */
-	[[nodiscard]] std::vector<HFightResult> Update();
+	[[nodiscard]] UpdateResult_ty Update();
 };

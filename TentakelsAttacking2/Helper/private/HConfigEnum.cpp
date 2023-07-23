@@ -10,10 +10,37 @@ std::string CToS(ConfigTypes type) {
 		case ConfigTypes::CONFIFG:
 			return "config";
 	
+		case ConfigTypes::GAME_EVENTS:
+			return "game_events";
+		case ConfigTypes::PIRATES:
+			return "pirates";
+		case ConfigTypes::REVOLTS:
+			return "revolts";
+		case ConfigTypes::RENEGADE_SHIPS:
+			return "renegade_ships";
+		case ConfigTypes::BLACK_HOLE:
+			return "black_hole";
+		case ConfigTypes::SUPERNOVA:
+			return "supernova";
+		case ConfigTypes::ENGINE_PROBLEM:
+			return "engine_problems";
+		case ConfigTypes::GLOBAL_EVENT_CHANCE:
+			return "global_event_chance";
+
 		case ConfigTypes::FIGHT:
 			return "fight";
 		case ConfigTypes::HIT_CHANCE:
 			return "hit_chance";
+		case ConfigTypes::FLEET_FIGHT_RANGE:
+			return "fleet_fight_range";
+		case ConfigTypes::FIGHT_PLANET_FLEET:
+			return "fight_planet_fleet";
+		case ConfigTypes::FIGHT_TARGET_POINT_FLEET:
+			return "fight_target_point_fleet";
+		case ConfigTypes::FIGHT_TARGET_POINT_TARGET_POINT:
+			return "fight_target_point_target_point";
+		case ConfigTypes::FIGHT_PLANET_TARGET_POINT:
+			return "fight_planet_target_point";
 
 		case ConfigTypes::FLEET:
 			return "fleet";
@@ -26,6 +53,8 @@ std::string CToS(ConfigTypes type) {
 	
 		case ConfigTypes::GLOBAL:
 			return "global";
+		case ConfigTypes::CURRENT_LANGUAGE_NAME:
+			return "current_language_name";
 		case ConfigTypes::GAME_ROUNDS_CURRENT:
 			return "game_rounds_current";
 		case ConfigTypes::GAME_ROUNDS_MAX:
@@ -58,6 +87,8 @@ std::string CToS(ConfigTypes type) {
 			return "player_count_max";
 		case ConfigTypes::PLAYER_COUNT_MIN:
 			return "player_count_min";
+		case ConfigTypes::Player_SHUFFLE:
+			return "player_shuffle";
 
 		case ConfigTypes::SOUND:
 			return "sound";
@@ -77,8 +108,8 @@ std::string CToS(ConfigTypes type) {
 			return "window";
 		case ConfigTypes::RESOLUTION_AS_ENUM:
 			return "resolution_as_enum";
-		case ConfigTypes::FULL_SCREEN_START_BOOL:
-			return "full_screen_start_bool";
+		case ConfigTypes::FULL_SCREEN_BOOL:
+			return "full_screen_bool";
 		case ConfigTypes::TARGET_FPS:
 			return "target_fps";
 
@@ -100,8 +131,8 @@ std::string CToS(ConfigTypes type) {
 			return "dimension_y_min";
 		case ConfigTypes::DIMENSION_Y_SHOW_GALAXY:
 			return "dimension_y_show_galaxy";
-		case ConfigTypes::DISCOVER_RANGE:
-			return "discover_range";
+		case ConfigTypes::DISCOVER_RANGE_FACTOR:
+			return "discover_range_factor";
 		case ConfigTypes::PLANET_COUNT_CURRENT:
 			return "planet_count_current";
 		case ConfigTypes::PLANET_COUNT_MAX:

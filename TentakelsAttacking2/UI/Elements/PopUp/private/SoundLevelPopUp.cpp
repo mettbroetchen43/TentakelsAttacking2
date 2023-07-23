@@ -55,7 +55,7 @@ void SoundLevelPopUp::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_LEFT,
 		0.025f,
-		"Mute"
+		appContext.languageManager.Text("ui_sound_level_popup_mute")
 		));
 
 	m_acceptBtn = std::make_shared<ClassicButton>(
@@ -64,7 +64,7 @@ void SoundLevelPopUp::Initialize(Vector2 resolution) {
 		GetElementSize(m_size, 0.2f, 0.15f),
 		Alignment::BOTTOM_MID,
 		resolution,
-		"Accept",
+		appContext.languageManager.Text("ui_sound_level_popup_accept_btn"),
 		SoundType::ACCEPTED
 		);
 	m_acceptBtn->SetOnClick([this]() {

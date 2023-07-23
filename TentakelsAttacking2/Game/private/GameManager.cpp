@@ -9,6 +9,7 @@
 #include "HPrint.h"
 #include "CopyGalaxyType.hpp"
 #include "HLogicAlias.hpp"
+#include "SceneType.h"
 #include <cassert>
 #include <algorithm>
 #include <stdexcept>
@@ -16,16 +17,11 @@
 // help Lambdas
 static auto popup = [](std::string const& text) {
 	ShowMessagePopUpEvent const popupEvent{
-		"Invalid Input",
+		AppContext::GetInstance().languageManager.Text("logic_galaxy_invalid_input_headline"),
 		text,
 		[]() {}
 	};
 	AppContext::GetInstance().eventManager.InvokeEvent(popupEvent);
-};
-static auto message = [](std::string& messageText, std::string const& first, std::string const& second) {
-	if (messageText.size() <= 0) { messageText = first; return; }
-
-	messageText += ", " + second;
 };
 
 // player
@@ -77,13 +73,31 @@ bool GameManager::GetNextPlayer(Player_ty& nextPlayer) const {
 }
 
 void GameManager::AddPlayer(AddPlayerEvent const* event) {
+
+	auto name { event->GetName() };
+	auto color{ event->GetColor() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
+	auto const l{ [&, name, color](bool valid) {
+			if (valid) {
+				StopGameEvent const eventRet{ };
+				AppContext::GetInstance().eventManager.InvokeEvent(eventRet);
+				AddPlayerEvent const eventPlay{ name, color };
+				this->AddPlayer(&eventPlay);
+			}
+		}
+	};
+	if (not CheckValidAddRemovePlayer(l)) { 
+		return;
+	}
+
 	if (!ValidAddPlayer()) {
 		ShowMessagePopUpEvent const UIEvent{
-			"Max Player",
-			"No more Player slots are available",
+			appContext.languageManager.Text("ui_popup_max_player_title"),
+			appContext.languageManager.Text("ui_popup_max_player_subtitle"),
 			[]() {}
 		};
-		AppContext::GetInstance().eventManager.InvokeEvent(UIEvent);
+		appContext.eventManager.InvokeEvent(UIEvent);
 		return;
 	}
 
@@ -96,20 +110,22 @@ void GameManager::AddPlayer(AddPlayerEvent const* event) {
 
 	AddPlayerUIEvent const AddEvent{
 		newID,
-		event->GetName(),
-		event->GetColor()
+		name,
+		color
 	};
-	AppContext::GetInstance().eventManager.InvokeEvent(AddEvent);
+	appContext.eventManager.InvokeEvent(AddEvent);
 }
 void GameManager::EditPlayer(EditPlayerEvent const* event) const {
 
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
 	if (!IsExistingPlayerID(event->GetID())) {
 		ShowMessagePopUpEvent const UIEvent{
-			"Invalid ID",
-			"ID " + std::to_string(event->GetID()) + " is not existing",
+			appContext.languageManager.Text("helper_invalid_id"),
+			appContext.languageManager.Text("ui_popup_invalid_id_subtitle", event->GetID()),
 			[]() {}
 		};
-		AppContext::GetInstance().eventManager.InvokeEvent(UIEvent);
+		appContext.eventManager.InvokeEvent(UIEvent);
 		return;
 	}
 
@@ -118,9 +134,25 @@ void GameManager::EditPlayer(EditPlayerEvent const* event) const {
 		event->GetName(),
 		event->GetColor()
 	};
-	AppContext::GetInstance().eventManager.InvokeEvent(editEvent);
+	appContext.eventManager.InvokeEvent(editEvent);
 }
 void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
+
+	auto id{ event->GetID() };
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
+	auto const l{ [&, id](bool valid) {
+			if (valid) {
+				StopGameEvent const eventRet{ };
+				AppContext::GetInstance().eventManager.InvokeEvent(eventRet);
+				DeletePlayerEvent const eventPlay{ id };
+				this->DeletePlayer(&eventPlay);
+			}
+		}
+	};
+	if (not CheckValidAddRemovePlayer(l)) { 
+		return;
+	}
 
 	Player_ty toDelete{ nullptr };
 	for (auto& p : m_players) {
@@ -132,8 +164,8 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 
 	if (!toDelete) {
 		ShowMessagePopUpEvent const messageEvent{
-			"Invalid ID",
-			"ID " + std::to_string(event->GetID()) + " is not existing",
+			appContext.languageManager.Text("helper_invalid_id"),
+			appContext.languageManager.Text("ui_popup_invalid_id_subtitle", event->GetID()),
 			[]() {}
 		};
 		AppContext::GetInstance().eventManager.InvokeEvent(messageEvent);
@@ -148,6 +180,18 @@ void GameManager::DeletePlayer(DeletePlayerEvent const* event) {
 	AppContext::GetInstance().eventManager.InvokeEvent(deleteEvent);
 }
 void GameManager::ResetPlayer() {
+	auto const l{ [&](bool valid) {
+			if (valid) {
+				StopGameEvent const eventRet{ };
+				AppContext::GetInstance().eventManager.InvokeEvent(eventRet);
+				this->ResetPlayer();
+			}
+		}
+	};
+	if (not CheckValidAddRemovePlayer(l)) { 
+		return;
+	}
+
 	m_players.clear();
 
 	ResetPlayerUIEvent const event{ };
@@ -160,8 +204,8 @@ void GameManager::CheckPlayerCount() const {
 
 	if (m_players.size() < appContext.constants.player.minPlayerCount) {
 		ShowMessagePopUpEvent const event{
-			"Player Count",
-			"Not enough players.\n current min. Player Count: " + std::to_string(appContext.constants.player.minPlayerCount),
+			appContext.languageManager.Text("ui_popup_player_count_title"),
+			appContext.languageManager.Text("ui_popup_player_count_min_subtitle", '\n', appContext.constants.player.minPlayerCount),
 			[]() {}
 		};
 		appContext.eventManager.InvokeEvent(event);
@@ -169,8 +213,8 @@ void GameManager::CheckPlayerCount() const {
 	}
 	else if (m_players.size() > appContext.constants.player.maxPlayerCount) {
 		ShowMessagePopUpEvent const event{
-			"Player Count",
-			"Too many players.\n current max Player Count: " + std::to_string(appContext.constants.player.maxPlayerCount),
+			appContext.languageManager.Text("ui_popup_player_count_title"),
+			appContext.languageManager.Text("ui_popup_player_count_max_subtitle", '\n', appContext.constants.player.maxPlayerCount),
 			[]() {}
 		};
 		appContext.eventManager.InvokeEvent(event);
@@ -184,7 +228,28 @@ void GameManager::CheckPlayerCount() const {
 	appContext.eventManager.InvokeEvent(event);
 }
 void GameManager::ShuffleCurrentRoundPlayer() {
+	if (not AppContext::GetInstance().constants.player.shuffle){ return; }
+
 	std::shuffle(m_currentRoundPlayers.begin(), m_currentRoundPlayers.end(), m_random);
+	
+	Print(
+		PrintType::ONLY_DEBUG,
+		"player shuffled"
+	);
+}
+bool GameManager::CheckValidAddRemovePlayer(std::function<void(bool valid)> forPopup) const {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
+	if (appContext.constants.global.isGameRunning) {
+		ShowValidatePopUp const event{
+			appContext.languageManager.Text("ui_popup_game_still_running_title"),
+			appContext.languageManager.Text("ui_popup_game_still_running_subtitle"),
+			forPopup
+		};
+		appContext.eventManager.InvokeEvent(event);
+		return false;
+	}
+	return true;
 }
 
 void GameManager::SendCurrentPlayerID() {
@@ -222,9 +287,9 @@ void GameManager::NextRound(bool valid) {
 	if (!valid) { return; }
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
+	appContext.constants.global.isGameSaved = false;
 	// events and so on first
 	Update();
-
 
 	m_currentRoundPlayers = m_players;
 	ShuffleCurrentRoundPlayer();
@@ -236,27 +301,63 @@ void GameManager::NextRound(bool valid) {
 
 	++appContext.constants.global.currentRound;
 
+	Player_ty player { } ;
+	if (not GetCurrentPlayer(player)) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"next round started -> can't get current player"
+		);
+	}
+	else {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"next round started -> player {}",
+			player->GetID()
+		);
+	}
+
 	appContext.eventManager.InvokeEvent(ShowNextRoundEvent());
 }
 void GameManager::NextTurn(bool valid) {
 
+
 	if (!valid) { return; }
 
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	appContext.constants.global.isGameSaved = false;
 	m_currentRoundPlayers.pop_back();
 
 	m_galaxyManager.CopyGalaxies(CopyGalaxyType::COPY_START);
 
+
 	SendCurrentPlayerID();
 	SendNextPlayerID();
+
+	Player_ty player { };
+	if (not GetCurrentPlayer(player)) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"next turn started -> can't get current player"
+		);
+	}
+	else{
+		Print(
+			PrintType::ONLY_DEBUG,
+			"next turn started -> player {}",
+			player->GetID()
+		);
+	}
 
 	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextTurnEvent());
 }
 void GameManager::ValidateNextTurn() {
 
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
 	if (m_currentRoundPlayers.size() <= 1) {
 		ShowValidatePopUp const event{
-			"next round?",
-			"your turn will be over.",
+			appContext.languageManager.Text("logic_game_manager_popup_next_round_title", "?"),
+			appContext.languageManager.Text("logic_game_manager_popup_next_round_text"),
 			[this](bool valid) {
 				this->NextRound(valid);
 			}
@@ -265,8 +366,8 @@ void GameManager::ValidateNextTurn() {
 	}
 	else {
 		ShowValidatePopUp const event{
-			"next player?",
-			"your turn will be over.",
+			appContext.languageManager.Text("logic_game_manager_popup_next_turn_title", "?"),
+			appContext.languageManager.Text("logic_game_manager_popup_next_turn_text"),
 			[this](bool valid) {
 				this->NextTurn(valid);
 			}
@@ -275,63 +376,48 @@ void GameManager::ValidateNextTurn() {
 	}
 }
 
-// events
-void GameManager::SetGameEventActive(UpdateCheckGameEvent const* event) {
-	if (event->GetType() == HGameEventType::GLOBAL) {
-		for (auto e : settableGameEventTypes) {
-			m_gameEvents[e] = event->GetIsChecked();
-		}
-	}
-	else {
-		m_gameEvents[event->GetType()] = event->GetIsChecked();
-	}
-
-	UpdateCheckGameEventsUI const updateEvent{ &m_gameEvents };
-	AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
-}
-
-// galaxy
-
 // Fleet
 void GameManager::AddFleet(SendFleetInstructionEvent const* event) {
+
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	if (!ValidateAddFleetInput(event)) { return; }
 
 	Player_ty currentPlayer{ nullptr };
-	if (!GetCurrentPlayer(currentPlayer)) { popup("No current player selected."); return; }
+	if (!GetCurrentPlayer(currentPlayer)) { popup(appContext.languageManager.Text("ui_popup_no_player_subtitle")); return; }
 
 	bool const isValidFleet{ m_galaxyManager.AddFleet(event, currentPlayer) };
 	ReturnFleetInstructionEvent const returnEvent{ isValidFleet };
-	AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
+	appContext.eventManager.InvokeEvent(returnEvent);
 }
 
 bool GameManager::ValidateAddFleetInput(SendFleetInstructionEvent const* event) {
 
 	std::string messageText;
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	if (event->GetOrigin() <= 0) {
-		message(messageText, "input in origin", "origin");
+		messageText = { appContext.languageManager.Text("ui_popup_add_fleet_origin_too_low") };
 	}
 	if (event->GetDestination() <= 0) {
-		if ((event->GetDestinationX() <= 0) || (event->GetDestinationY() <= 0)) {
-			message(messageText, "input in destination", "destination");
+		if ((event->GetDestinationX() < 0) || (event->GetDestinationY() < 0)) {
+			messageText = { appContext.languageManager.Text("ui_popup_add_fleet_destination_too_low") };
 		}
 	}
 	if (event->GetShipCount() <= 0) {
-		message(messageText, "input in ship count", "ship count");
+		messageText = { appContext.languageManager.Text("ui_popup_add_fleet_ship_count_too_low") };
 	}
 	if (!messageText.empty()) {
-		messageText += " to low.";
 		popup(messageText);
 		return false;
 	}
 
 	bool const doubleDestination{
 		event->GetDestination() > 0
-		&& (event->GetDestinationX() > 0
-			|| event->GetDestinationY() > 0) };
+		&& (event->GetDestinationX() >= 0
+			|| event->GetDestinationY() >= 0) };
 	if (doubleDestination) {
-		popup("to many inputs for destination");
+		popup(appContext.languageManager.Text("ui_popup_add_fleet_to_many_destination_inputs"));
 		return false;
 	}
 
@@ -340,27 +426,123 @@ bool GameManager::ValidateAddFleetInput(SendFleetInstructionEvent const* event) 
 
 // game
 void GameManager::StartGame() {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+
+	if (appContext.constants.global.isGameRunning and not appContext.constants.global.isGameSaved) {
+		ShowValidatePopUp  const event {
+			appContext.languageManager.Text("ui_popup_game_still_running_title"),
+			appContext.languageManager.Text("ui_popup_game_still_running_subtitle", '\n'),
+			[this](bool valid){
+				if (valid){
+					this->StopGame();
+					this->StartGame();
+				}
+			}
+		};
+		appContext.eventManager.InvokeEvent(event);
+		return;
+	}
+
 	m_currentRoundPlayers = m_players;
 
 	ShuffleCurrentRoundPlayer();
 	SendCurrentPlayerID();
 	SendNextPlayerID();
+
+	appContext.constants.global.currentRound  = 0    ;
+	appContext.constants.global.isGameRunning = true ;
+	appContext.constants.global.isGamePaused  = false;
+	appContext.constants.global.isGameSaved   = false;
+
+	Player_ty player { };
+	if (not GetCurrentPlayer(player)) {
+		Print(
+			PrintType::ONLY_DEBUG,
+			"game started -> can't get current player"
+		);
+	}
+
+	Print(
+		PrintType::ONLY_DEBUG,
+		"game started -> player {}",
+		player->GetID()
+	);
+	SwitchSceneEvent const event{ SceneType::MAIN };
+	appContext.eventManager.InvokeEvent(event);
+}
+void GameManager::StopGame() {
+	AppContext_ty appConstants{ AppContext::GetInstance() };
+	appConstants.constants.global.isGameRunning = false;
+	appConstants.constants.global.isGamePaused = true;
+	Print(
+		PrintType::ONLY_DEBUG,
+		"game stopped and paused"
+	);
+}
+void GameManager::PauseGame() {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	appContext.constants.global.isGamePaused = true;
+	Print(
+		PrintType::ONLY_DEBUG,
+		"game paused"
+	);
+}
+void GameManager::ResumeGame() {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	if (not appContext.constants.global.isGameRunning){
+		ShowMessagePopUpEvent const event {
+			appContext.languageManager.Text("ui_popup_no_game_title"),
+			appContext.languageManager.Text("ui_popup_no_game_subtitle"),
+			[](){}
+		};
+		appContext.eventManager.InvokeEvent(event);
+		Print(
+			PrintType::ONLY_DEBUG,
+			"not able to resume to game because its no game running"
+		);
+		return;
+	}
+	appContext.constants.global.isGamePaused = false;
+	Print(
+		PrintType::ONLY_DEBUG,
+		"resumed to game"
+	);
+	SwitchSceneEvent const event{ SceneType::MAIN };
+	appContext.eventManager.InvokeEvent(event);
+}
+void GameManager::QuitGame() {
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	if (not appContext.constants.global.isGameSaved){
+		ShowValidatePopUp const event{
+			appContext.languageManager.Text("ui_popup_not_saved_title"),
+			appContext.languageManager.Text("ui_popup_not_saved_subtitle", '\n'),
+			[this](bool valid){
+				if (valid){
+					AppContext_ty appContext{ AppContext::GetInstance() };
+					appContext.constants.global.isGameSaved = true;
+					this->QuitGame();
+				}
+			}
+		};
+		appContext.eventManager.InvokeEvent(event);
+		return;
+	}
+
+	CloseWindowEvent const event{ };
+	appContext.eventManager.InvokeEvent(event);
 }
 
 GameManager::GameManager()
 	: m_galaxyManager{ this } {
 
 	AppContext::GetInstance().eventManager.AddListener(this);
-	for (auto e : settableGameEventTypes) {
-		m_gameEvents[e] = true;
-	}
 	m_npcs[PlayerType::NEUTRAL] = std::make_shared<Player>(100, PlayerType::NEUTRAL);
 
-	Print("GameManager", PrintType::INITIALIZE);
+	Print(PrintType::INITIALIZE, "GameManager");
 }
 
 void GameManager::Update() {
-	m_lastFightResults = m_galaxyManager.Update();
+	m_lastUpdateResults = m_galaxyManager.Update();
 }
 
 void GameManager::OnEvent(Event const& event) {
@@ -392,17 +574,6 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 
-	// Events
-	if (auto const* GameEvent = dynamic_cast<UpdateCheckGameEvent const*>(&event)) {
-		SetGameEventActive(GameEvent);
-		return;
-	}
-	if (auto const* GameEvent = dynamic_cast<InitialCheckGameEventDataEvent const*>(&event)) {
-		UpdateCheckGameEventsUI const updateEvent{ &m_gameEvents };
-		AppContext::GetInstance().eventManager.InvokeEvent(updateEvent);
-		return;
-	}
-
 	// Galaxy
 	if (auto const* galaxyEvent = dynamic_cast<GenerateGalaxyEvent const*>(&event)) {
 		m_galaxyManager.GenerateGalaxy();
@@ -423,12 +594,29 @@ void GameManager::OnEvent(Event const& event) {
 		StartGame();
 		return;
 	}
+	if (auto const* gameEvent = dynamic_cast<StopGameEvent const*> (&event)) {
+		StopGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<PauseGameEvent const*> (&event)) {
+		PauseGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<ResumeGameEvent const*> (&event)) {
+		ResumeGame();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<QuitGameEvent const*> (&event)) {
+		QuitGame();
+		return;
+	}
 	if (auto const* gameEvent = dynamic_cast<TriggerNextTurnEvent const*> (&event)) {
 		ValidateNextTurn();
 		return;
 	}
 	if (auto const* gameEvent = dynamic_cast<GetUpdateEvaluation const*> (&event)) {
-		AppContext::GetInstance().eventManager.InvokeEvent(SendUpdateEvaluation{ m_lastFightResults });
+		AppContext::GetInstance().eventManager.InvokeEvent(SendUpdateEvaluation{ 
+			m_lastUpdateResults.first ,m_lastUpdateResults.second});
 		return;
 	}
 

@@ -51,4 +51,8 @@ public:
 	 * returns if the colors are the same.
 	 */
 	[[nodiscard]] static bool AreSame(Color lhs, Color rhs);
+	/**
+	 * returns if a color should have a background.
+	 */
+	[[nodiscard]] static bool NeedBackground(Color color);
 };

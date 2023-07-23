@@ -11,7 +11,14 @@
 Focus& UIManager::GetFocus() {
 	return m_focus;
 }
-void UIManager::ToggleFullScreen(bool first) {
+void UIManager::ToggleFullScreen() {
+	m_toggleFullScreen = true;
+}
+void UIManager::CheckAndSetToggleFullScreen(bool first) {
+
+	if (not m_toggleFullScreen) { return; }
+	else { m_toggleFullScreen = false; }
+
 	if (IsWindowFullscreen()) {
 		::ToggleFullscreen();
 		SetWindowSize(false);
@@ -22,7 +29,7 @@ void UIManager::ToggleFullScreen(bool first) {
 		::ToggleFullscreen();
 	}
 	if(!first) {
-		auto& fullScreen{ AppContext::GetInstance().constants.window.startingModeFullScreen };
+		auto& fullScreen{ AppContext::GetInstance().constants.window.isFullScreen };
 		fullScreen = !fullScreen;
 		m_sceneManager.Resize(m_resolution, m_appContext);
 	}
@@ -33,8 +40,11 @@ void UIManager::CheckAndSetNewResolution() {
 
 	bool const validResolution{ m_appContext.constants.window.IsPossibleResolution(m_nextResolution) };
 	if (!validResolution) { 
-		Print("Invalid resolution for this screen: " + m_appContext.constants.window.GetStringFromResolution(m_nextResolution),
-			PrintType::ERROR);
+		Print(
+			PrintType::ERROR,
+			"invalid resolution for this screen -> {}",
+			m_appContext.constants.window.GetStringFromResolution(m_nextResolution)
+		);
 		return;
 	}
 
@@ -118,12 +128,17 @@ void UIManager::SetWindowPosition() {
 
 void UIManager::SetTargetFPS(SetTargetFPSEvent const* event) {
 	::SetTargetFPS(static_cast<int>(event->GetFPS()));
-	Print("FPS Set: " + std::to_string(event->GetFPS()), PrintType::INFO);
+	Print(
+		PrintType::INFO,
+		"fps set -> {}",
+		event->GetFPS()
+	);
 }
 
 void UIManager::UILoop() {
 	while(!WindowShouldClose()) {
 		m_appContext.constants.global.acceptInputTriggered = false;
+		CheckAndSetToggleFullScreen();
 		CheckAndSetNewResolution();
 		CheckAndUpdate();
 		Render();
@@ -131,7 +146,6 @@ void UIManager::UILoop() {
 			break;
 		}
 	}
-	StopSoundMulti();
 	CloseWindow();
 }
 
@@ -143,7 +157,7 @@ UIManager::UIManager()
 
 	m_appContext.eventManager.AddListener(this);
 
-	Print("UIManager", PrintType::INITIALIZE);
+	Print(PrintType::INITIALIZE, "UIManager");
 }
 
 UIManager::~UIManager() {
@@ -165,19 +179,20 @@ void UIManager::StartUI() {
 		m_sceneManager.SetResolution(m_resolution);
 
 		ShowInitialSoundLevelPopUpEvent event{
-			"Sound Level",
-			"Set the Initial Sound Level"
+			m_appContext.languageManager.Text("ui_manager_initial_sound_popup_title"),
+			m_appContext.languageManager.Text("ui_manager_initial_sound_popup_text")
 		};
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	} else {
 		m_nextResolution = m_appContext.constants.window.current_resolution;
 
 		if (!m_appContext.constants.window.IsPossibleResolution(m_nextResolution)) {
-
-			Print("invalid resolution " + m_appContext.constants.window.GetStringFromResolution(m_nextResolution)
-				+ " - resolution set to: " + m_appContext.constants.window.GetStringFromResolution(Resolution::SCREEN),
-				PrintType::EXPECTED_ERROR);
-
+			Print(
+				PrintType::ERROR,
+				"invalid resolution: {} -> resolution set to: {}",
+				m_appContext.constants.window.GetStringFromResolution(m_nextResolution),
+				m_appContext.constants.window.GetStringFromResolution(Resolution::SCREEN)
+			);
 			m_nextResolution = Resolution::SCREEN;
 			m_appContext.constants.window.current_resolution = Resolution::SCREEN;
 		}
@@ -186,7 +201,7 @@ void UIManager::StartUI() {
 		m_sceneManager.SetResolution(m_resolution);
 	}
 
-	Print("\"UI\" started", PrintType::INFO);
+	Print(PrintType::INFO, "\"UI\" started");
 }
 
 void UIManager::StartUILoop() {
@@ -195,19 +210,16 @@ void UIManager::StartUILoop() {
 	m_appContext.eventManager.InvokeEvent(event);
 
 
-	if(m_appContext.constants.window.startingModeFullScreen) {
-		ToggleFullScreen(true);
+	if(m_appContext.constants.window.isFullScreen) {
+		CheckAndSetToggleFullScreen(true);
 	} else {
 		SetWindowPosition();
 	}
 
-	Print("\"UI Loop\" started", PrintType::INFO);
+	Print(PrintType::INFO, "\"UI Loop\" started");
 
 	UILoop();
 }
-
-
-
 
 void UIManager::OnEvent(Event const& event) {
 	if(auto const* CloseEvent = dynamic_cast<CloseWindowEvent const*>(&event)) {

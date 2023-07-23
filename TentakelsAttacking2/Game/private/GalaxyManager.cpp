@@ -18,6 +18,8 @@ void GalaxyManager::FilterCurrentGalaxy() {
 	Player_ty currentPlayer{ nullptr };
 	bool const valid{ m_gameManager->GetCurrentPlayer(currentPlayer) };
 	if (not valid) { return; }
+	m_mainGalaxy->SetDiscoverByPlayer(currentPlayer->GetID());
+	m_currentGalaxy->SetDiscoverByPlayer(currentPlayer->GetID());
 	m_currentGalaxy->FilterByPlayer(currentPlayer->GetID());
 }
 
@@ -45,8 +47,8 @@ void GalaxyManager::GenerateGalaxy() {
 	}
 	else {
 		ShowMessagePopUpEvent const event{
-			"Galaxy",
-			"Unable to generate the Galaxy.\nTo many Plantes.",
+			appContext.languageManager.Text("logic_galaxy_manager_unable_generate_galaxy_title"),
+			appContext.languageManager.Text("logic_galaxy_manager_unable_generate_galaxy_text", "\n"),
 			[]() {}
 		};
 		appContext.eventManager.InvokeEvent(event);
@@ -74,10 +76,10 @@ void GalaxyManager::GenerateShowGalaxy() {
 	else if (m_showGalaxy) {
 		SendGalaxyPointerEvent const event{ m_showGalaxy.get(), true };
 		appContext.eventManager.InvokeEvent(event);
-		Print("Could not generated ShowGalaxy -> Use old Galaxy", PrintType::EXPECTED_ERROR);
+		Print(PrintType::EXPECTED_ERROR, "Could not generated ShowGalaxy -> Use old Galaxy");
 	}
 	else {
-		Print("Could not generated ShowGalaxy -> No Galaxy", PrintType::ERROR);
+		Print(PrintType::EXPECTED_ERROR, "Could not generated ShowGalaxy -> No Galaxy");
 	}
 }
 
@@ -89,7 +91,10 @@ void GalaxyManager::CopyGalaxies(CopyGalaxyType copyType) {
 	FilterCurrentGalaxy();
 }
 
-Galaxy* GalaxyManager::GetGalaxy() const {
+Galaxy* GalaxyManager::GetGalaxy() {
+	if (m_currentGalaxy and not m_currentGalaxy->IsFiltered()) {
+		FilterCurrentGalaxy();
+	}
 	return m_currentGalaxy.get();
 }
 
@@ -97,7 +102,7 @@ bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, Player_ty c
 
 	auto const result {m_mainGalaxy->AddFleet(event, currentPlayer)};
 	if (not result.valid) {
-		Print("Not able to add Fleet to current Galaxy", PrintType::ERROR);
+		Print(PrintType::ONLY_DEBUG, "Not able to add Fleet to main Galaxy");
 
 		ReturnFleetInstructionEvent const returnEvent{ result.valid };
 		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
@@ -108,6 +113,6 @@ bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, Player_ty c
 	return true;
 }
 
-std::vector<HFightResult> GalaxyManager::Update() {
+UpdateResult_ty GalaxyManager::Update() {
 	return m_mainGalaxy->Update();
 }

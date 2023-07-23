@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.12...${CMAKE_VERSION})
 
 # extract version from CGlobal.hpp to have it in CMake project
 # expecting a line with the following format
-#	static inline const std::string version{ "v0.0.1" };
+#	static inline std::string const gameVersion{ "v0.1.0" };
 file(READ TentakelsAttacking2/Constants/public/CGlobal.hpp CGlobal_contents)
-string(REGEX MATCH "version\{[ ]*\"v([0-9]+\.[0-9]+\.[0-9]+)\"" _ "${CGlobal_contents}")
+string(REGEX MATCH "gameVersion\{[ ]*\"v([0-9]+\.[0-9]+\.[0-9]+)\"[ ]*\}\;" _ "${CGlobal_contents}")
 set(TA2_version ${CMAKE_MATCH_1})
 if ("${TA2_version}" STREQUAL "")
   message(FATAL_ERROR "Failed to extract version from CGlobal.hpp file")
@@ -62,6 +62,14 @@ if (NOT has_std_format)
   endif()
 endif()
 
+# find and link to nlohmann_json dependency
+find_package(nlohmann_json 3.11.2 CONFIG QUIET)
+if (NOT nlohmann_json_FOUND)
+  message(STATUS "nlohmann_json dependency not found, adding 'external/nlohmann_json' subdirectory to satisfy dependency")
+  add_subdirectory(external/nlohmann_json EXCLUDE_FROM_ALL)
+endif()
+target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
+
 # find and link to raylib dependency
 find_package(raylib CONFIG QUIET)
 if (NOT raylib_FOUND)
@@ -71,3 +79,4 @@ if (NOT raylib_FOUND)
   add_subdirectory(raylib EXCLUDE_FROM_ALL)
 endif()
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
+

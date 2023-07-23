@@ -18,47 +18,74 @@ void SceneManager::InitializeNewScene(SceneType sceneType) {
 	switch (sceneType) {
 		case SceneType::TEST:
 			m_currentScene = std::make_shared<TestScene>(
-				m_uiManager->GetResolution( ));
+				m_uiManager->GetResolution( )
+			);
 			return;
+
 		case SceneType::LOGO:
 			m_currentScene= std::make_shared<LogoScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::INTRO:
 			m_currentScene = std::make_shared<Intro>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::MAIN_MENU:
 			m_currentScene = std::make_shared<MainMenu>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::NEW_GAME_PLAYER:
 			m_currentScene = std::make_shared<NewGamePlayerScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::NEW_GAME_PARAMETER:
 			m_currentScene = std::make_shared<NewGameParameterScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::VALIDATE_GALAXY:
 			m_currentScene = std::make_shared<ValidateGalaxyScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::MAIN:
 			m_currentScene = std::make_shared<MainScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
-		case SceneType::SETTINGS:
-			m_currentScene = std::make_shared<SettingsScene>(
-				m_uiManager->GetResolution(), GetContinueSceneType());
+
+		case SceneType::GAME_SETTINGS:
+			m_currentScene = std::make_shared<GameSettingsScene>(
+			m_uiManager->GetResolution()
+			);
 			return;
+
+		case SceneType::APP_SETTINGS:
+			m_currentScene = std::make_shared<AppSettingsScene>(
+				m_uiManager->GetResolution()
+			);
+			return;
+
 		case SceneType::CREDITS:
 			m_currentScene = std::make_shared<CreditsScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
+
 		case SceneType::UPDATE_EVALUATION:
 			m_currentScene = std::make_shared<UpdateEvaluationScene>(
-				m_uiManager->GetResolution());
+				m_uiManager->GetResolution()
+			);
 			return;
 	}
 }
@@ -69,39 +96,28 @@ void SceneManager::SwitchScene(AppContext_ty_c appContext) {
 		return;
 	}
 
-	if (!m_first) {
-		ClearFocusEvent event;
-		appContext.eventManager.InvokeEvent(event);
-	}
-	else {
-		m_first = true;
-	}
+	ClearFocusEvent const closeEvent;
+	appContext.eventManager.InvokeEvent(closeEvent);
 
-	NewFocusLayerEvent event;
-	appContext.eventManager.InvokeEvent(event);
+	NewFocusLayerEvent const newLayerEvent;
+	appContext.eventManager.InvokeEvent(newLayerEvent);
 
 	InitializeNewScene(m_nextSceneType);
 
 	m_currentScene->SetActive(true, appContext);
 	m_currentSceneType = m_nextSceneType;
 
-	Print("Scene switched to " + GetStringBySceneType(m_currentSceneType), PrintType::INFO);
-}
-
-SceneType SceneManager::GetContinueSceneType() const {
-	
-	switch (m_currentSceneType) {
-		case SceneType::MAIN:
-			return SceneType::MAIN;
-		default:
-			return SceneType::NONE;
-	}
+	Print(
+		PrintType::INFO,
+		"scene switched to -> {}",
+		GetStringBySceneType(m_currentSceneType)
+	);
 }
 
 SceneManager::SceneManager(UIManager* uiManager)
 	: m_uiManager{ uiManager }, m_popUpManager{ uiManager->GetResolution() } {
 	AppContext::GetInstance().eventManager.AddListener(this);
-	Print("SceneManager", PrintType::INITIALIZE);
+	Print(PrintType::INITIALIZE, "SceneManager");
 }
 
 void SceneManager::CheckAndUpdate(Vector2 const& mousePosition,

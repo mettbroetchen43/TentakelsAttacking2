@@ -8,54 +8,115 @@
 #include "AppContext.h"
 #include "Galaxy.h"
 #include "UIPlanet.h"
+#include "UITargetPoint.h"
+#include "UIFleet.h"
 #include "HInput.h"
 #include "HFocusEvents.h"
 #include "Player.h"
+#include "LineDrag.h"
 
 void UIGalaxy::Initialize(SendGalaxyPointerEvent const* event) {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	Galaxy_ty_c_raw galaxy{ event->GetGalaxy() };
 
 	m_currentGalaxy = galaxy;
-
-	for (auto const& p  : galaxy->GetPlanets()) {
+	int currentFocusID{ 1 };
+	for (auto const& p : galaxy->GetPlanets()) {
+		currentFocusID = p->GetID();
 		auto planet = std::make_shared<UIPlanet>(
+			currentFocusID,
 			p->GetID(),
-			p->GetID(),
-			appContext.playerCollection.GetPlayerByIDOrDefaultPlayer(p->GetPlayer()->GetID()),
+			appContext.playerCollection.GetPlayerOrNpcByID(p->GetPlayer()->GetID()),
 			GetAbsolutePosition({
 				static_cast<float>(p->GetPos().x),
 				static_cast<float>(p->GetPos().y),
 				}, appContext),
-			m_resolution,
-			GetRelativePosition({
-				static_cast<float>(p->GetPos().x),
-				static_cast<float>(p->GetPos().y),
-				}, appContext)
-			);
+				m_resolution,
+				GetRelativePosition({
+					static_cast<float>(p->GetPos().x),
+					static_cast<float>(p->GetPos().y),
+					}, appContext),
+					p.get()
+					);
 		if (p->IsDestroyed()) {
 			planet->SetEnabled(false);
 			planet->SetColor(DARKGRAY);
 		}
-		else if (not p->IsDiscovered() and not event->IsShowGalaxy()) {
-			planet->SetColor(GRAY);
+		else if (not p->GetPlayer()->IsHumanPlayer()) {
+			if (not p->IsDiscovered() and not event->IsShowGalaxy()) {
+				planet->SetColor(GRAY);
+			}
 		}
-		planet->SetOnClick([this](UIPlanet* planet) {
-			this->SelectPlanet(planet);
+		planet->SetOnClick([this](UIGalaxyElement* planet) {
+			this->SelectUIGalaxyElement(planet);
 			});
 		planet->UpdatePosition(m_absoluteSize);
+		m_uiGalaxyElements.push_back(planet);
 		m_uiPlanets.push_back(planet);
+	}
+	for (auto const& t : galaxy->GetTargetPoints()) {
+		++currentFocusID;
+		auto point = std::make_shared<UITargetPoint>(
+			currentFocusID,
+			t->GetID(),
+			appContext.playerCollection.GetPlayerOrNpcByID(t->GetPlayer()->GetID()),
+			GetAbsolutePosition({
+				static_cast<float>(t->GetPos().x),
+				static_cast<float>(t->GetPos().y),
+				}, appContext),
+				m_resolution,
+			GetRelativePosition({
+					static_cast<float>(t->GetPos().x),
+					static_cast<float>(t->GetPos().y),
+					}, appContext),
+				t.get()
+				);
+		point->SetOnClick([this](UIGalaxyElement* point) {
+			this->SelectUIGalaxyElement(point);
+			});
+		point->UpdatePosition(m_absoluteSize);
+		m_uiTargetPoints.push_back(point);
+		m_uiGalaxyElements.push_back(point);
+	}
+	for (auto const& f : galaxy->GetFleets()) {
+		auto fleet = std::make_shared<UIFleet>(
+			f->GetID(),
+			appContext.playerCollection.GetPlayerOrNpcByID(f->GetPlayer()->GetID()),
+			GetAbsolutePosition({
+				static_cast<float>(f->GetPos().x),
+				static_cast<float>(f->GetPos().y)
+				}, appContext),
+			GetAbsolutePosition({
+				static_cast<float>(f->GetTarget()->GetPos().x),
+				static_cast<float>(f->GetTarget()->GetPos().y)
+				}, appContext),
+			m_resolution,
+			GetRelativePosition({
+				static_cast<float>(f->GetPos().x),
+				static_cast<float>(f->GetPos().y)
+				}, appContext
+			),
+			GetRelativePosition({
+				static_cast<float>(f->GetTarget()->GetPos().x),
+				static_cast<float>(f->GetTarget()->GetPos().y)
+				}, appContext),
+			f.get(),
+			[this](Vector2 const& mousePosition) {
+				return CheckCollisionPointRec(mousePosition, this->m_collider);
+			}
+		);
+		m_uiFleets.push_back(fleet);
 	}
 	m_onZoom(1.0f, GetCurrentScaleReference());
 }
 Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext_ty_c appContext) const {
 	Vector2 const newPos{
-		(m_collider.x + m_resolution.x * 0.05f) / m_resolution.x,
-		(m_collider.y + m_resolution.y * 0.05f) / m_resolution.y,
+		(m_collider.x/*+ m_resolution.x * 0.05f*/) / m_resolution.x,
+		(m_collider.y/* + m_resolution.y * 0.05f */) / m_resolution.y,
 	};
 	Vector2 const newSize{
-		(m_collider.width - m_resolution.x * 0.1f) / m_resolution.x,
-		(m_collider.height - m_resolution.y * 0.1f) / m_resolution.y,
+		(m_collider.width /* - m_resolution.x * 0.1f*/) / m_resolution.x,
+		(m_collider.height/* - m_resolution.y * 0.1f */) / m_resolution.y,
 	};
 	if (m_isShowGalaxy) {
 		return {
@@ -72,46 +133,41 @@ Vector2 UIGalaxy::GetAbsolutePosition(Vector2 pos, AppContext_ty_c appContext) c
 
 }
 Vector2 UIGalaxy::GetRelativePosition(Vector2 pos, AppContext_ty_c appContext) const {
-	Vector2 const newPos{
-		m_resolution.x * 0.045f / m_collider.width,
-		m_resolution.y * 0.045f / m_collider.height,
-	};
-	Vector2 const newSize{
-		(m_collider.width - m_resolution.x * 0.1f) / m_collider.width,
-		(m_collider.height - m_resolution.y * 0.1f) / m_collider.height,
-	};
 	if (m_isShowGalaxy) {
 		return {
-			newPos.x + pos.x / appContext.constants.world.showDimensionX * newSize.x,
-			newPos.x + pos.y / appContext.constants.world.showDimensionY * newSize.y,
+			pos.x / appContext.constants.world.showDimensionX,
+			pos.y / appContext.constants.world.showDimensionY,
 		};
 	}
 	else {
 		return {
-			newPos.x + pos.x / appContext.constants.world.currentDimensionX * newSize.x,
-			newPos.x + pos.y / appContext.constants.world.currentDimensionY * newSize.y,
+			pos.x / appContext.constants.world.currentDimensionX,
+			pos.y / appContext.constants.world.currentDimensionY,
 		};
 	}
 
 }
 
-bool UIGalaxy::IsPlanetInCollider(UIPlanet_ty planet) const {
-	Rectangle const planetCollider{ planet->GetCollider() };
+bool UIGalaxy::IsUIGalaxyElementInCollider(UIGalaxyElement_ty element) const {
+	Rectangle const elementCollider{ element->GetCollider() };
 
-	if (planetCollider.x < m_collider.x) { return false; }
-	if (planetCollider.y < m_collider.y) { return false; }
-	if (planetCollider.x + planetCollider.width > m_collider.x + m_collider.width) { return false; }
-	if (planetCollider.y + planetCollider.height > m_collider.y + m_collider.height) { return false; }
+	if (elementCollider.x + elementCollider.width <= m_collider.x) { return false; }
+	if (elementCollider.y + elementCollider.height <= m_collider.y) { return false; }
+	if (elementCollider.x >= m_collider.x + m_collider.width) { return false; }
+	if (elementCollider.y >= m_collider.y + m_collider.height) { return false; }
 
 	return true;
 }
-void UIGalaxy::UpdatePlanetPosition() {
-	for (auto const& p : m_uiPlanets) {
-		p->UpdatePosition(m_absoluteSize);
+void UIGalaxy::UpdateUIGalaxyElementPosition() {
+	for (auto const& e : m_uiGalaxyElements) {
+		e->UpdatePosition(m_absoluteSize);
+	}
+	for (auto const& f : m_uiFleets) {
+		f->UpdatePositions(m_absoluteSize);
 	}
 }
-void UIGalaxy::SelectPlanet(UIPlanet* planet) {
-	m_onPlanetClick(planet->GetID());
+void UIGalaxy::SelectUIGalaxyElement(UIGalaxyElement* planet) {
+	m_onUIGalaxyElementClick(planet->GetID());
 }
 
 void UIGalaxy::ClampsPositionAndSize() {
@@ -123,7 +179,7 @@ void UIGalaxy::ClampsPositionAndSize() {
 		? m_absoluteSize.x
 		: m_collider.x + m_collider.width - m_absoluteSize.width;
 
-	m_absoluteSize.y = m_absoluteSize.y < m_collider.y 
+	m_absoluteSize.y = m_absoluteSize.y < m_collider.y
 		? m_absoluteSize.y
 		: m_collider.y;
 
@@ -148,33 +204,33 @@ void UIGalaxy::MoveByKey(Direction direction, float speed) {
 	float percent;
 
 	switch (direction) {
-		case Direction::UP:
-			deferens = m_absoluteSize.height - m_collider.height;
-			offset = m_collider.y - m_absoluteSize.y;
-			percent = offset / deferens * 100 + speed;
-			Slide(percent, false);
-			break;
-		case Direction::DOWN:
-			deferens = m_absoluteSize.height - m_collider.height;
-			offset = m_collider.y - m_absoluteSize.y;
-			percent = offset / deferens * 100 - speed;
-			Slide(percent, false);
-			break;
-		case Direction::LEFT:
-			deferens = m_absoluteSize.width - m_collider.width;
-			offset = m_collider.x - m_absoluteSize.x;
-			percent = offset / deferens * 100 + speed;
-			Slide(percent, true);
-			break;
-		case Direction::RIGHT:
-			deferens = m_absoluteSize.width - m_collider.width;
-			offset = m_collider.x - m_absoluteSize.x;
-			percent = offset / deferens * 100 - speed;
-			Slide(percent, true);
-			break;
+	case Direction::UP:
+		deferens = m_absoluteSize.height - m_collider.height;
+		offset = m_collider.y - m_absoluteSize.y;
+		percent = offset / deferens * 100 + speed;
+		Slide(percent, false);
+		break;
+	case Direction::DOWN:
+		deferens = m_absoluteSize.height - m_collider.height;
+		offset = m_collider.y - m_absoluteSize.y;
+		percent = offset / deferens * 100 - speed;
+		Slide(percent, false);
+		break;
+	case Direction::LEFT:
+		deferens = m_absoluteSize.width - m_collider.width;
+		offset = m_collider.x - m_absoluteSize.x;
+		percent = offset / deferens * 100 + speed;
+		Slide(percent, true);
+		break;
+	case Direction::RIGHT:
+		deferens = m_absoluteSize.width - m_collider.width;
+		offset = m_collider.x - m_absoluteSize.x;
+		percent = offset / deferens * 100 - speed;
+		Slide(percent, true);
+		break;
 	}
 	ClampsPositionAndSize();
-	UpdatePlanetPosition();
+	UpdateUIGalaxyElementPosition();
 }
 void UIGalaxy::MoveByMouse(Vector2 mousePosition) {
 	if (m_lastMousePosition.x == 0.0f
@@ -190,7 +246,7 @@ void UIGalaxy::MoveByMouse(Vector2 mousePosition) {
 
 	ClampsPositionAndSize();
 	PrepForOnSlide();
-	UpdatePlanetPosition();
+	UpdateUIGalaxyElementPosition();
 }
 
 Vector2 UIGalaxy::GetCurrentScaleReference() const {
@@ -200,15 +256,111 @@ Vector2 UIGalaxy::GetCurrentScaleReference() const {
 	};
 }
 
+bool UIGalaxy::IsCollidingObjectPoint(Vector2 point) const {
+	// don't check if point is in galaxy collider because the oter planets get displayed on the edge of the collider
+	for (auto const& p : m_uiPlanets) {
+		auto const& collider{ p->GetCollider() };
+		if (CheckCollisionPointRec(point, collider)) {
+			return true;
+		}
+	}
+	for (auto const& tp : m_uiTargetPoints) {
+		auto const& collider{ tp->GetCollider() };
+		if (CheckCollisionPointRec(point, collider)) {
+			return true;
+		}
+	}
+	for (auto const& f : m_uiFleets) {
+		if (f->IsColliding(point)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+unsigned int UIGalaxy::GetIDFromPoint(Vector2 point) const {
+	Vector2 absolutePoint{ m_resolution.x * point.x, m_resolution.y * point.y };
+	// don't check if point is in galaxy collider because the oter planets get displayed on the edge of the collider 
+
+	for (auto const& p : m_uiPlanets) {
+		if (CheckCollisionPointRec(absolutePoint, p->GetCollider())) {
+			return p->GetID();
+		}
+	}
+	for (auto const& tp : m_uiTargetPoints) {
+		if (CheckCollisionPointRec(absolutePoint, tp->GetCollider())) {
+			return tp->GetID();
+		}
+	}
+	for (auto const& f : m_uiFleets) {
+		if (f->IsColliding(absolutePoint)) {
+			return f->GetID();
+		}
+	}
+	return 0;
+}
+vec2pos_ty UIGalaxy::GetCoordinatesFromPoint(Vector2 point) const {
+	Vector2 const absolutePoint{ m_resolution.x * point.x, m_resolution.y * point.y };
+	if (!CheckCollisionPointRec(absolutePoint, m_collider)) { return { -1, -1 }; }
+
+	auto const galaxySize{ m_currentGalaxy->GetSize() };
+	Vector2 pos{
+		m_absoluteSize.x / m_resolution.x,
+		m_absoluteSize.y / m_resolution.y
+	};
+	Vector2 size{
+		m_absoluteSize.width / m_resolution.x,
+		m_absoluteSize.height / m_resolution.y
+	};
+	auto const relative = GetElementPositionReversed({
+			m_absoluteSize.x,
+			m_absoluteSize.y
+		}, {
+			m_absoluteSize.width,
+			m_absoluteSize.height
+		},
+		absolutePoint);
+	return {
+		static_cast<int>(relative.x * galaxySize.x) ,
+		static_cast<int>(relative.y * galaxySize.y)
+	};
+}
+
+void UIGalaxy::HandleDragLineResult(Vector2 start, Vector2 end) {
+	auto const originID{ GetIDFromPoint(start) };
+	auto const destID{ GetIDFromPoint(end) };
+	vec2pos_ty destCo{ -1, -1 };
+	if (destID <= 0) {
+		destCo = GetCoordinatesFromPoint(end);
+	}
+
+	m_updateLineDrag = false;
+
+	DragLineFleetInstructionEvent const event{
+		originID,
+		destID,
+		destCo
+	};
+	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+
 UIGalaxy::UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution, bool isShowGalaxy)
+	Vector2 resolution, bool isShowGalaxy, bool isAcceptingInput)
 	:Focusable{ ID }, UIElement{ pos, size, alignment, resolution },
-	m_isShowGalaxy(isShowGalaxy) {
+	m_isShowGalaxy{ isShowGalaxy }, m_isAcceptingInput{ isAcceptingInput } {
 	m_absoluteSize = m_collider;
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
-
 	appContext.eventManager.AddListener(this);
+
+	m_lineDrag = std::make_shared<LineDrag>(
+		m_resolution,
+		2.0f,
+		WHITE,
+		[this](Vector2 start, Vector2 end) -> void {
+			this->HandleDragLineResult(start, end);
+		}
+	);
 
 	if (isShowGalaxy) {
 		GetShowGalaxyPointerEvent event;
@@ -272,7 +424,7 @@ void UIGalaxy::Zoom(bool zoomIn, int factor) {
 
 	m_onZoom(m_scaleFactor, GetCurrentScaleReference());
 	PrepForOnSlide();
-	UpdatePlanetPosition();
+	UpdateUIGalaxyElementPosition();
 }
 void UIGalaxy::Slide(float position, bool isHorizontal) {
 	if (isHorizontal) {
@@ -287,7 +439,7 @@ void UIGalaxy::Slide(float position, bool isHorizontal) {
 	}
 	ClampsPositionAndSize();
 	PrepForOnSlide();
-	UpdatePlanetPosition();
+	UpdateUIGalaxyElementPosition();
 }
 
 void UIGalaxy::SetOnZoom(std::function<void(float, Vector2)> onZoom) {
@@ -296,8 +448,8 @@ void UIGalaxy::SetOnZoom(std::function<void(float, Vector2)> onZoom) {
 void UIGalaxy::SetOnSlide(std::function<void(float, bool)> onSlide) {
 	m_onSlide = onSlide;
 }
-void UIGalaxy::SetOnPlanetClick(std::function<void(unsigned int)> onPlanetClick) {
-	m_onPlanetClick = onPlanetClick;
+void UIGalaxy::SetOnUIGalaxyElementClick(std::function<void(unsigned int)> onUIGalaxyElementClick) {
+	m_onUIGalaxyElementClick = onUIGalaxyElementClick;
 }
 
 void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
@@ -305,25 +457,36 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 	UIElement::CheckAndUpdate(mousePosition, appContext);
 
 	if (m_isScaling) {
-		if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
-			float const mouseWheel{ GetMouseWheelMove() };
-			if (mouseWheel != 0.0f) {
-				Zoom(mouseWheel > 0.0f, 5);
+		if (!m_updateLineDrag) {
+			// zoom
+			if (IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
+				float const mouseWheel{ GetMouseWheelMove() };
+				if (mouseWheel != 0.0f) {
+					Zoom(mouseWheel > 0.0f, 5);
+				}
 			}
+
+			// move by keys
+			if (IsKeyDown(KEY_UP)) { MoveByKey(Direction::UP, 2.0f); }
+			if (IsKeyDown(KEY_DOWN)) { MoveByKey(Direction::DOWN, 2.0f); }
+			if (IsKeyDown(KEY_LEFT)) { MoveByKey(Direction::LEFT, 1.5f); }
+			if (IsKeyDown(KEY_RIGHT)) { MoveByKey(Direction::RIGHT, 1.5f); }
 		}
 
-		if (IsKeyDown(KEY_UP)) { MoveByKey(Direction::UP, 2.0f); }
-		if (IsKeyDown(KEY_DOWN)) { MoveByKey(Direction::DOWN, 2.0f); }
-		if (IsKeyDown(KEY_LEFT)) { MoveByKey(Direction::LEFT, 1.5f); }
-		if (IsKeyDown(KEY_RIGHT)) { MoveByKey(Direction::RIGHT, 1.5f); }
-
-		if (CheckCollisionPointRec(mousePosition, m_collider)) {
-			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		// move by mouse
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			if (m_isAcceptingInput and IsCollidingObjectPoint(mousePosition)) {
+				m_updateLineDrag = true;
+			}
+			else if (CheckCollisionPointRec(mousePosition, m_collider)) {
 				m_isScrollingByMouse = true;
 			}
 		}
 		if (m_isScrollingByMouse) {
 			MoveByMouse(mousePosition);
+		}
+		if (m_updateLineDrag) {
+			m_lineDrag->CheckAndUpdate(mousePosition, appContext);
 		}
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 			m_lastMousePosition = { 0.0f, 0.0f };
@@ -332,26 +495,30 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 	}
 
 	if (m_isEnabled) {
-		for (auto const& p : m_uiPlanets) {
+		for (auto const& e : m_uiGalaxyElements) {
 
-			if (IsPlanetInCollider(p) != p->IsEnabled()) {
-				p->SetEnabled(IsPlanetInCollider(p));
-				if (!IsPlanetInCollider(p) && p->IsFocused()) {
+			if (IsUIGalaxyElementInCollider(e) != e->IsEnabled()) {
+				e->SetEnabled(IsUIGalaxyElementInCollider(e));
+				if (!IsUIGalaxyElementInCollider(e) && e->IsFocused()) {
 					SelectNextFocusElement();
 				}
 			}
 
-			if (IsPlanetInCollider(p)) {
-				p->CheckAndUpdate(mousePosition, appContext);
+			if (IsUIGalaxyElementInCollider(e)) {
+				e->CheckAndUpdate(mousePosition, appContext);
 			}
+
+		}
+		for (auto const& f : m_uiFleets) {
+			f->CheckAndUpdate(mousePosition, appContext);
 		}
 
 		if (IsFocused() && !IsNestedFocus()) {
 			if (IsConfirmInputPressed()) {
 				m_isNestedFocus = true;
 				AddFocusLayer();
-				for (auto const& p : m_uiPlanets) {
-					AddFocusElement(p.get());
+				for (auto const& e : m_uiGalaxyElements) {
+					AddFocusElement(e.get());
 				}
 			}
 		}
@@ -366,13 +533,51 @@ void UIGalaxy::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 	}
 }
 void UIGalaxy::Render(AppContext_ty_c appContext) {
+	BeginScissorMode(
+		static_cast<int>(m_collider.x),
+		static_cast<int>(m_collider.y),
+		static_cast<int>(m_collider.width),
+		static_cast<int>(m_collider.height)
+	);
+
+	for (auto const& f : m_uiFleets) {
+		f->Render(appContext);
+	}
+
+	EndScissorMode();
+
 	for (auto const& p : m_uiPlanets) {
-		if (IsPlanetInCollider(p)) {
+		if (IsUIGalaxyElementInCollider(p)) {
 			p->Render(appContext);
 		}
 	}
+	for (auto const& t : m_uiTargetPoints) {
+		if (IsUIGalaxyElementInCollider(t)) {
+			t->Render(appContext);
+		}
+	}
+
+	if (m_updateLineDrag) {
+		m_lineDrag->Render(appContext);
+	}
+
+	/*
+	DrawRectangleLinesEx(
+		m_absoluteSize,
+		1.0f,
+		WHITE
+	);
+	DrawRectangleLinesEx(
+		m_collider,
+		1.0f,
+		PURPLE
+	);
+	*/
 }
 void UIGalaxy::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+
+	UIElement::Resize(resolution, appContext);
+	m_lineDrag->Resize(resolution, appContext);
 
 	m_absoluteSize = {
 		m_absoluteSize.x / m_resolution.x * resolution.x,
@@ -381,11 +586,15 @@ void UIGalaxy::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 		m_absoluteSize.height / m_resolution.y * resolution.y,
 	};
 
-	UIElement::Resize(resolution, appContext);
+	for (auto const& e : m_uiGalaxyElements) {
+		e->Resize(resolution, appContext);
+		e->UpdatePosition(m_absoluteSize);
+	}
+}
 
-	for (auto const& p : m_uiPlanets) {
-		p->Resize(resolution, appContext);
-		p->UpdatePosition(m_absoluteSize);
+void UIGalaxy::FilterByCurrentPlayer(PlayerData player) {
+	for (auto const& f : m_uiFleets) {
+		f->SetDisplayedAsPoint(f->GetPlayer().ID != player.ID);
 	}
 }
 
@@ -404,7 +613,7 @@ Galaxy_ty_raw UIGalaxy::GetGalaxy() const {
 }
 
 void UIGalaxy::OnEvent(Event const& event) {
-	
+
 	if (auto const* galaxyEvent = dynamic_cast<SendGalaxyPointerEvent const*>(&event)) {
 		Initialize(galaxyEvent);
 		return;

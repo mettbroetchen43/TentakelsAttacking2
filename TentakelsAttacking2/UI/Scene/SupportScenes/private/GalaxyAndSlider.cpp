@@ -10,16 +10,17 @@
 #include "UIGalaxy.h"
 #include "ClassicButton.h"
 
-void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy) {
+void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy, bool isAcceptingInput) {
 
 	// Galaxy
 	m_galaxy = std::make_shared<UIGalaxy>(
 		1000,
 		GetElementPosition(1.0f, 0.0f),
-		GetElementSize(0.955f, 0.93f),
+		GetElementSize(0.95f, 0.92f),
 		Alignment::TOP_RIGHT,
 		resolution,
-		isShowGalaxy
+		isShowGalaxy,
+		isAcceptingInput
 		);
 	m_galaxy->SetOnZoom([this](float scaleFactor, Vector2 referenceScale) {
 		this->Zoom(scaleFactor, referenceScale);
@@ -136,10 +137,10 @@ void GalaxyScene::Slide(float position, bool isHorizontal) {
 }
 
 GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution, bool isShowGalaxy)
+	Vector2 resolution, bool isShowGalaxy, bool isAcceptingInput = false)
 	: Scene{ pos, size, alignment, resolution } {
 
-	Initialize(resolution, isShowGalaxy);
+	Initialize(resolution, isShowGalaxy, isAcceptingInput);
 }
 
 void GalaxyScene::SetIsScaling(bool isScaling) {
@@ -161,6 +162,10 @@ bool GalaxyScene::IsEnabled() const {
 
 Galaxy_ty_raw GalaxyScene::GetGalaxy() const {
 	return m_galaxy->GetGalaxy();
+}
+
+void GalaxyScene::FilterByCurrentPlayer(PlayerData player) {
+	m_galaxy->FilterByCurrentPlayer(player);
 }
 
 void GalaxyScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {

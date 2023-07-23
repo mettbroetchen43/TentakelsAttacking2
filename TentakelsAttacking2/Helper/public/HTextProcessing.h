@@ -65,3 +65,8 @@ void StripString(std::string& toStrip);
  */
 [[nodiscard]] std::vector<float> GetHorizontalAlignedOffset(std::vector<std::string> text,
 	Rectangle colider, float fontSize, Alignment alignment);
+
+/**
+ * draws the text with white shadow of need to
+ */
+void DrawTextWithOutline(std::string const& text, Vector2 position, float size, Color color, bool background);

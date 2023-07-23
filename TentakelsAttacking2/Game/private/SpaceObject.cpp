@@ -7,10 +7,20 @@
 #include "AppContext.h"
 #include <cassert>
 
+bool SpaceObject::IsInRange(SpaceObject_ty_raw first, SpaceObject_ty_raw second, int range) {
+	auto const actualRange{ (first->GetPos() - second->GetPos()).Length() };
+	return range >= actualRange;
+}
+
 SpaceObject::SpaceObject(unsigned int ID, vec2pos_ty position, Player_ty player)
 	: SpaceObject{ ID, position, 0, player } {}
 SpaceObject::SpaceObject(unsigned int ID, vec2pos_ty position, size_t ships, Player_ty player)
 	: m_ID{ID}, m_position{position}, m_player{player}, m_ships{ships} {}
+
+void SpaceObject::TransferShipsFrom(SpaceObject* origin) {
+	m_ships += origin->GetShipCount();
+	origin->SetShipCount(0);
+}
 
 unsigned int SpaceObject::GetID() const {
 	return m_ID;
@@ -48,20 +58,22 @@ bool SpaceObject::IsTargetPoint() const {
 	return false;
 }
 
-bool SpaceObject::IsInRange(SpaceObject_ty_c object) const {
-	auto const range = AppContext::GetInstance().constants.world.discoverRange;
-	auto const& objPos{ object->GetPos() };
+bool SpaceObject::IsInDiscoverRange(SpaceObject_ty_c object) const {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	auto const range = appContext.constants.world.discoverRangeFactor * 
+		appContext.constants.fleet.currentFleetSpeed;
+	return IsInRange(object.get(), this, range);
+}
+bool SpaceObject::IsInFightRange(SpaceObject_ty_c object) const {
+	auto const range = AppContext::GetInstance().constants.fight.fleetFightRange;
+	return IsInRange(object.get(), this, range);
+}
 
-	bool const validX{
-			m_position.x - range <= objPos.x
-		and m_position.x + range >= objPos.x
-	};
-	bool const validY{
-			m_position.y - range <= objPos.y
-		and m_position.y + range >= objPos.y
-	};
-
-	return validX and validY;
+void SpaceObject::SetDiscovered(bool isDiscovered) {
+	m_isDiscovered = isDiscovered;
+}
+bool SpaceObject::IsDiscovered() const {
+	return m_isDiscovered;
 }
 
 SpaceObject& SpaceObject::operator+=(size_t ships) {

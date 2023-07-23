@@ -28,6 +28,9 @@ void AppContext::LoadConfig() {
 	eventManager.InvokeEvent(event);
 
 }
+void AppContext::LoadLanguages() {
+	languageManager.Initialize();
+}
 void AppContext::SaveConfig() {
 	::SaveConfig();
 }
@@ -74,7 +77,7 @@ void AppContext::ValidateConfig() {
 	ValidateMinMax<int>(constants.fleet.minFleetSpeed, constants.fleet.maxFleetSpeed, "Min Fleet Movement", "Max Fleet Movement");
 	ValidateMinCurrentMax<int>(constants.fleet.minFleetSpeed, constants.fleet.currentFleetSpeed, constants.fleet.maxFleetSpeed);
 
-	Print("Config validated", PrintType::INFO);
+	Print(PrintType::INFO, "Config validated");
 }
 
 void AppContext::OnEvent(Event const& event) {
@@ -88,7 +91,16 @@ void AppContext::OnEvent(Event const& event) {
 AppContext::AppContext() {
 	eventManager.AddListener(&soundManager);
 	eventManager.AddListener(&playerCollection);
+	eventManager.AddListener(&languageManager);
 	eventManager.AddListener(this);
 
-	Print("AppContext initialized", PrintType::INFO);
+	Print(PrintType::INITIALIZE, "AppContext");
+}
+
+AppContext::~AppContext() {
+	eventManager.RemoveListener(&soundManager);
+	eventManager.RemoveListener(&playerCollection);
+	eventManager.RemoveListener(&languageManager);
+	eventManager.RemoveListener(this);
+	Print(PrintType::INFO, "AppContext deleted");
 }

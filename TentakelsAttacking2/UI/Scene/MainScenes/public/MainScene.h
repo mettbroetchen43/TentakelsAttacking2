@@ -7,7 +7,7 @@
 #include "Scene.h"
 #include "SceneType.h"
 #include "EventListener.hpp"
-#include "HPlayerData.hpp"
+#include "HPlayerData.h"
 #include <memory>
 
 class GalaxyScene;
@@ -35,8 +35,8 @@ private:
 	Text_ty m_nextPlayerName; ///< contains the next player name
 	Text_ty m_currentRound;  ///< contains the current round count
 	Text_ty m_currentTargetRound;  ///< contains the current target round count
-	PlayerData m_currentPlayer; ///< contains the data of the current player
-	PlayerData m_nextPlayer; ///< contains the data of the next player
+	PlayerData m_currentPlayer{ 0,"",WHITE }; ///< contains the data of the current player
+	PlayerData m_nextPlayer{ 0,"",WHITE }; ///< contains the data of the next player
 
 	InputLine_int_ty m_origin; ///< provides the origin planet ID
 	InputLine_int_ty m_destination; ///< provides the destination planet ID
@@ -75,12 +75,6 @@ private:
 	 * generates an popup.
 	 */
 	void NextTurn();
-	/**
-	 * updates player text and rounds.
-	 * initializes a new galaxy.
-	 * generates an popup.
-	 */
-	void NextRound();
 
 	/**
 	 * updates player text and color.
@@ -102,6 +96,10 @@ private:
 	 * sets the accept button active or inactive.
 	 */
 	void SetAcceptButton();
+	/**
+	 * enables or disables the destination x and y when the input in destination changes
+	 */
+	void UpdateActiveDestination();
 
 	/**
 	 * sends the ship instruction event.
@@ -111,6 +109,15 @@ private:
 	 * resets the input lines
 	 */
 	void ClearInputLines();
+
+	/**
+	 * handles the galaxy drag line input
+	 */
+	void HandleGalaxyDragLineInput(DragLineFleetInstructionEvent const* event);
+	/**
+	 * tries to return a space object fom a ID
+	 */
+	[[nodiscard]] SpaceObject_ty GetSpaceObjectFromID(unsigned int ID) const;
 
 public:
 	/**

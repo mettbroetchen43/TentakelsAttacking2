@@ -9,8 +9,6 @@
 #include "EventListener.hpp"
 #include "UIEvents.hpp"
 #include "GenerelEvents.hpp"
-#include "HGameEventTypes.hpp"
-#include "HFightResult.h"
 #include <vector>
 #include <random>
 #include <memory>
@@ -26,12 +24,10 @@ private:
 	std::vector<Player_ty> m_players{ }; ///< contains all player -> this is the main player vector
 	std::vector<Player_ty> m_currentRoundPlayers{ }; ///< contains the remaining player of the current round
 	
-	std::unordered_map<HGameEventType, bool> m_gameEvents{ }; ///< contains whether the game Events are active or not
-	
 	friend GalaxyManager; ///< need access because of "callbacks"
 	GalaxyManager m_galaxyManager; ///< contains all galaxy related stuff
 
-	std::vector<HFightResult> m_lastFightResults{ }; ///< contains the last update fight result
+	UpdateResult_ty m_lastUpdateResults{ }; ///< contains the last update result
 
 	// player
 	/**
@@ -96,6 +92,11 @@ private:
 	 * use this an the round start to get some variation every round.
 	 */
 	void ShuffleCurrentRoundPlayer();
+	/**
+	 * checks if its currently valid to add or remove a player.
+	 * generates a popup if not.
+	 */
+	[[nodiscard]] bool CheckValidAddRemovePlayer(std::function<void(bool valid)> forPopup) const;
 
 	/** send the current player ID via an event
 	 *  will send 0 if no player is active
@@ -123,14 +124,6 @@ private:
 	 */
 	void ValidateNextTurn();
 
-
-	// events
-	/**
-	 * updates if the game events are enabled.
-	 * calls the ui via event to update.
-	 */
-	void SetGameEventActive(UpdateCheckGameEvent const* event);
-
 	// fleet
 	/**
 	 * calls validation
@@ -149,6 +142,23 @@ private:
 	 * initializes a new game after every this is set up
 	 */
 	void StartGame();
+	/**
+	 * stops the current game
+	 */
+	void StopGame();
+	/**
+	 * pauses the current game
+	 */
+	void PauseGame();
+	/**
+	 * resumes to the curent game.
+	 * only works if a game is running. 
+	 */
+	void ResumeGame();
+	/**
+	 * quits the game if the game is saved.
+	 */
+	void QuitGame();
 
 public:
 	/**

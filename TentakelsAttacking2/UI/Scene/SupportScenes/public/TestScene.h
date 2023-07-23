@@ -4,7 +4,9 @@
 //
 
 #pragma once
-# include "Scene.h"
+#include "Scene.h"
+#include "HUIAlias.hpp"
+#include <array>
 
 /**
  * no doc here.
@@ -12,18 +14,16 @@
  */
 class TestScene : public Scene {
 private:
-	std::shared_ptr<Arrow> m_arrow;
-
 	void Initialize(AppContext_ty appContext);
 
 public:
 	TestScene(Vector2 resolution);
 	void SetActive(bool active, AppContext_ty_c appContext) override;
 
-	void TestLambda(unsigned int value);
+	void TestLambda(bool toggled);
+
+
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	void Render(AppContext_ty_c appContext) override;
 	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
-
-	void LineCallBack(Vector2 start, Vector2 end);
 };

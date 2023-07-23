@@ -1,27 +1,27 @@
 //
 // Purpur Tentakel
-// 01.11.2022
+// 18.07.2023
 //
 
 #pragma once
-#include "Scene.h"
+#include "Settings.h"
+#include "EventListener.hpp"
 
 class SliderAndInputLine;
 
-/**
- * provides a scenes, where the global settings can be set.
- */
-class SettingsScene final : public Scene {
+class AppSettingsScene final : public SettingsScene, public EventListener {
 private:
-	std::shared_ptr<SliderAndInputLine> m_volume; ///< contains the volume slider
 	std::vector<std::pair<Resolution, std::string>> m_rawResolutionEntries; ///< contains die raw resolution information
-	std::pair<ClassicButton_ty, ClassicButton_ty> m_dropDownBtn{ nullptr, nullptr }; ///< contains the two buttons that are hidden by the drop down
-	DropDown_ty m_dropDown{ nullptr };///< contains the drop down
+	std::shared_ptr<SliderAndInputLine> m_volume; ///< contains the volume slider
+	DropDown_ty m_languageDropDown; ///< contains the language drop down
+	DropDown_ty m_resolutionDropDown; ///< contains the language drop down
+	CheckBox_ty m_toggleFullScreenCBM; ///< contains the full screen toggle check box
+	
 	/**
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize(SceneType continueScene);
+	void Initialize();
 
 	/**
 	 * returns the strings out of the raw resolution data.
@@ -33,11 +33,9 @@ private:
 	int GetIndexFromResolution(Resolution resolution) const;
 
 public:
-	/**
-	 * ctor.
-	 * only initialization.
-	 */
-	SettingsScene(Vector2 resolution, SceneType continueScene);
+
+	AppSettingsScene(Vector2 resolution);
+	~AppSettingsScene();
 
 	/**
 	 * updates all elements in elements.
@@ -51,4 +49,6 @@ public:
 	 * resizes all elements in elements and elements out update.
 	 */
 	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+
+	void OnEvent(Event const& event) override;
 };

@@ -19,11 +19,13 @@ template <class T>
 class InputLine final : public UIElement, public Focusable {
 protected:
 	bool m_isEnabled{ true }; ///< contains if the input line is enabled
+	bool m_shouldClearByFocus{ false }; ///< contains if the input lines clears by getting focussed and new input
+	bool m_isClearNextInput{ false }; ///< contains if the input line clears by the next input once
+	bool m_alreadyCleared{ false }; ///< contains if the input line got already cleared
 	unsigned int m_charLimit; ///< contains the max about of chars in the input line
 	std::string m_value; ///< contains the current value
 	std::string m_oldValue; ///< contains the old value
 	std::string m_placeholderText; ///< contains the placeholder text -> gets showed when no value is provided
-	Texture* m_texture; ///< contains the background texture
 	double m_backspacePressTime{ 0.0 }; ///< contains the time since the last time backspace got pressed and still hold
 	std::function<void()> m_onEnter{ []() {} }; ///< contains the onEnter lambda gets called then enter is pressed
 	std::function<void()> m_onValueChanced{ []() {} }; ///< contains the lambda that gets calles when the value chances.
@@ -74,20 +76,12 @@ public:
 	 */
 	InputLine(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
 		Vector2 resolution, unsigned int charLimit)
-		: UIElement{ pos, size, alignment, resolution }, Focusable{ focusID }, m_charLimit{ charLimit } {
-		m_texture = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
-	}
+		: UIElement{ pos, size, alignment, resolution }, Focusable{ focusID }, m_charLimit{ charLimit } 
+	{ }
 	InputLine(InputLine const&) = default;
 	InputLine(InputLine&&) = default;
 	InputLine& operator= (InputLine const&) = default;
 	InputLine& operator= (InputLine&&) = default;
-
-	/**
-	 * returns if the input line is enabled.
-	 */
-	[[nodiscard]] virtual bool IsEnabled() const override {
-		return true;
-	}
 
 	/**
 	 * logic of the input line.
@@ -110,7 +104,7 @@ public:
 			appContext.eventManager.InvokeEvent(event);
 		}
 
-		if (!IsFocused()) { return; }
+		if (!IsFocused()) { m_alreadyCleared = false; return; }
 
 		bool const enter{ IsOnlyEnterConfirmInputPressed() };
 		if (enter) {
@@ -135,12 +129,23 @@ public:
 
 			if (key <= 0) { break; }
 
+			if (not m_alreadyCleared) {
+				if (m_shouldClearByFocus and GotFocused()) {
+					Clear();
+					m_alreadyCleared = true;
+				}
+			}
+			if (m_isClearNextInput) {
+				Clear();
+				m_isClearNextInput = false;
+			}
+
 			if (!IsValidKey(key)) { continue; }
 
 			if (!AddChar(key)) {
 				ShowMessagePopUpEvent const event{
-					"Max Input",
-					"Maximum number of input values reached",
+					appContext.languageManager.Text("ui_input_line_popup_max_input_title"),
+					appContext.languageManager.Text("ui_input_line_popup_max_input_text"),
 					[]() { }
 				};
 				appContext.eventManager.InvokeEvent(event);
@@ -157,20 +162,9 @@ public:
 		// Update here to make sure its after call of HasValueChanced();
 		m_oldValue = m_value;
 
-		Rectangle textureRec = {
-			0.0f,
-			0.0f,
-			static_cast<float>(m_texture->width),
-			static_cast<float>(m_texture->height)
-		};
-
-		DrawTexturePro(
-			*m_texture,
-			textureRec,
+		DrawRectangleRec(
 			m_collider,
-			Vector2(0.0f, 0.0f),
-			0.0f,
-			WHITE
+			GREY_100
 		);
 
 		if (m_isEnabled) {
@@ -311,6 +305,31 @@ public:
 		m_onValueChanced = onValueChanged;
 	}
 
+	/**
+	 * sets if the input line clears itself when it gets focused and an input happens.
+	 */
+	void SetShouldClearByFocus(bool isShouldClearByFocus) {
+		m_shouldClearByFocus = isShouldClearByFocus;
+	}
+	/**
+	 * returns if the input line clears itself when it gets focused and an input happens.
+	 */
+	[[nodiscard]] bool IsShouldClearByFocus() const {
+		return m_shouldClearByFocus;
+	}
+	/**
+	 * clears the input line by next input
+	 */
+	void ClearByNextInput() {
+		m_isClearNextInput = true;
+	}
+	
+	/**
+	 * returns if the input line is enabled.
+	 */
+	[[nodiscard]] bool IsEnabled() const override {
+		return m_isEnabled;
+	}
 	/**
 	 * sets if the input line is enabled.
 	 */

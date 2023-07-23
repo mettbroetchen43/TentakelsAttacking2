@@ -17,7 +17,7 @@ private:
 	T m_value; ///< contains the value
 	std::string m_stringValue; ///< contains the value as string
 	std::function<void(TableCell*, T, T)> m_updated{ [](TableCell*, T, T) {} }; ///< conains a lambda that provides that the value has chanced
-	
+
 	/**
 	 * Sets the value as string.
 	 */
@@ -54,7 +54,7 @@ public:
 		if (not IsEditable()) { return; }
 
 		ShowCellPopUpEvent<T> event{
-			"Edit Entry",
+			appContext.languageManager.Text("ui_table_cell_edit_entry_popup"),
 			m_value,
 			[this](T value) {this->UpdateValue(value); }
 		};
@@ -77,7 +77,7 @@ public:
 
 		if (shouldEdit) {
 			ShowCellPopUpEvent<T> event{
-				"Edit Entry",
+				appContext.languageManager.Text("ui_table_cell_edit_entry_popup"),
 				m_value,
 				[this](T value) {this->UpdateValue(value); }
 			};
@@ -98,7 +98,7 @@ public:
 			m_textPosition,
 			m_textSize,
 			0.0f,
-			WHITE
+			m_textColor
 		);
 	}
 

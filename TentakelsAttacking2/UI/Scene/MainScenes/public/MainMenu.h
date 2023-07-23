@@ -5,14 +5,12 @@
 
 #pragma once
 #include "Scene.h"
-#include "EventListener.hpp"
 
 /**
  * provides the main menu scene.
  */
-class MainMenu final : public Scene, public EventListener {
+class MainMenu final : public Scene{
 private:
-	ClassicButton_ty m_continueBtn; ///< contains the continue button
 	/**
 	 * initializes all ui elements.
 	 * connects the actions.
@@ -22,15 +20,6 @@ private:
 public:
 	/**
 	 * initialization.
-	 * adds scene as event listener
 	 */
 	MainMenu(Vector2 resolution);
-	/**
-	 * removes the scene as event listener.
-	 */
-	~MainMenu();
-	/**
-	 * collects the events.
-	 */
-	void OnEvent(Event const& event) override;
 };

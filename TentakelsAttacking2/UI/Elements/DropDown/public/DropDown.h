@@ -19,7 +19,7 @@ private:
 	bool m_isScrolling{ true }; ///< contains if the DropDown in able to scroll
 	std::vector<std::shared_ptr<DropDownElement>> m_dropDownElements; ///< contains all elements in the drop down
 
-	Texture const* m_arrowTexture; ///< contains the texture of the arrow that controls if the menu is droped down
+	Texture const* m_arrowTexture; ///< contains the texture of the arrow that controls if the menu is dropped down
 	Rectangle m_arrowTextureRec; ///< contains the dimensions onto the texture
 	Rectangle m_arrowCollider; ///< contains the absolute dimensions of the arrow
 
@@ -46,6 +46,12 @@ private:
 	 * sets the current element and current element text.
 	 */
 	void SetCurrentElement(std::shared_ptr<DropDownElement> element);
+	void SetCurrentElementOutUpdate(std::shared_ptr<DropDownElement> element);
+
+	/**
+	 * sets the current text
+	 */
+	void SetText();
 
 	/**
 	 * toggles the drop down menu.
@@ -104,6 +110,11 @@ public:
 	 * returns if the element was set.
 	 */
 	bool SetCurrentElementByID(unsigned int ID);
+	/**
+	 * sets the element of the provided string as current element.
+	 * returns if the element was set.
+	 */
+	bool SetCurrentElementByString(std::string const& element);
 
 
 	/**

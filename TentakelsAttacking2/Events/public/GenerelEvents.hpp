@@ -8,10 +8,9 @@
 #include "CustomRaylib.h"
 #include "HLogicAlias.hpp"
 #include "HFightResult.h"
+#include "HMergeResult.h"
 #include <string>
 #include <unordered_map>
-
-enum class HGameEventType;
 
 /**
  * general event to provide player name and color.
@@ -173,12 +172,16 @@ class GetUpdateEvaluation final : public Event { };
  */
 class SendUpdateEvaluation final : public Event {
 private:
+	std::vector<HMergeResult> m_mergeResults;
 	std::vector<HFightResult> m_fightResults;
 
 public:
-	SendUpdateEvaluation(std::vector<HFightResult> fightResult)
-		: m_fightResults{ fightResult } { }
+	SendUpdateEvaluation(std::vector<HMergeResult> mergeResult, std::vector<HFightResult> fightResult)
+		: m_mergeResults{ mergeResult }, m_fightResults { fightResult } { }
 
+	[[nodiscard]] std::vector<HMergeResult> GetMergeResults() const {
+		return m_mergeResults;
+	}
 	[[nodiscard]] std::vector<HFightResult> GetFightResults() const {
 		return m_fightResults;
 	}
@@ -209,49 +212,23 @@ public:
 /**
  * use this to trigger the logic to start the game.
  */
-class StartGameEvent final : public Event { };
-
+class StartGameEvent  final : public Event { };
 /**
- * use this to trigger the logic to updating the game events.
- * returns a UpdateCheckGameEventsUI.
+ * use this to trigger the logic to end the game.
  */
-class UpdateCheckGameEvent final : public Event {
-private:
-	HGameEventType m_type;
-	bool m_isChecked;
-
-public:
-	UpdateCheckGameEvent(HGameEventType type, bool isChecked)
-		: m_type{ type }, m_isChecked{ isChecked } { }
-
-	[[nodiscard]] HGameEventType GetType() const {
-		return m_type;
-	}
-	[[nodiscard]] bool GetIsChecked() const {
-		return m_isChecked;
-	}
-};
+class StopGameEvent   final : public Event { };
 /**
- * use this to trigger the ui to update the game events.
+ * use this to trigger the logic to pause the game.
  */
-class UpdateCheckGameEventsUI final : public Event {
-private:
-	using Map = std::unordered_map<HGameEventType, bool>const*;
-	Map m_types;
-
-public:
-	UpdateCheckGameEventsUI(Map types)
-		: m_types{ types } { }
-
-	[[nodiscard]] Map GetTypes() const {
-		return m_types;
-	}
-};
+class PauseGameEvent  final : public Event { };
 /**
- * use this to trigger the logic to return the current state of the game events.
- * returns a UpdateCheckGameEventsUI.
+ * use this to trigger the logic to resume the game.
  */
-class InitialCheckGameEventDataEvent final : public Event { };
+class ResumeGameEvent final : public Event { };
+/**
+ * use this to trigger the logic to quit the game.
+ */
+class QuitGameEvent   final : public Event { };
 
 /**
  * use this to trigger the constants to update the target last round.

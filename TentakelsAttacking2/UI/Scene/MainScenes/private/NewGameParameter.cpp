@@ -13,6 +13,8 @@
 #include "SceneType.h"
 #include "GameEventSettings.h"
 #include "SliderAndInputLine.h"
+#include "CheckBox.h"
+#include "GenerelEvents.hpp"
 
 enum class SliderType {
 	PLANET_COUNT,
@@ -44,14 +46,14 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_MID,
 		0.07f,
-		"Parameter"
+		appContext.languageManager.Text("scene_new_game_parameter_parameter_headline")
 	);
 	// parameterText->RenderRectangle(true);
 	m_elements.push_back(parameterText);
 
 	// line
 	m_elements.push_back(std::make_shared<Line>(
-		GetElementPosition(0.5f,0.3f),
+		GetElementPosition(0.5f,0.28f),
 		GetElementPosition(0.5f,0.95f),
 		resolution,
 		2.0f,
@@ -69,14 +71,14 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 	m_eventSettings->SetActive(true, appContext);
 	m_elements.push_back(m_eventSettings);
 
+	int             ID       = 100;
+	int   constexpr IDOffset = 100;
+	float constexpr posX     = 0.75f;
+	float           posY     = 0.28f;
+	float constexpr offsetY  = 0.1f;
+	float constexpr sizeX    = 0.4f;
+	float constexpr sizeY    = 0.05f;
 
-	          int ID = 100;
-	constexpr int IDOffset = 100;
-	constexpr float posX = 0.75f;
-	          float posY = 0.3f;
-	constexpr float offsetY = 0.1f;
-	constexpr float sizeX = 0.4f;
-	constexpr float sizeY = 0.05f;
 	auto next = [&]() {
 		ID += IDOffset;
 		posY += offsetY;
@@ -90,7 +92,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Planet Count:"
+		appContext.languageManager.Text("scene_new_game_parameter_planet_count_subheadline", ":")
 	));
 
 	auto planetCount = std::make_shared<SliderAndInputLine>(
@@ -119,7 +121,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Galaxy Width:"
+		appContext.languageManager.Text("scene_new_game_parameter_galaxy_width_subheadline", ":")
 	));
 
 	auto galaxyWidth = std::make_shared<SliderAndInputLine>(
@@ -148,7 +150,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Galaxy Height:"
+		appContext.languageManager.Text("scene_new_game_parameter_galaxy_height_subheadline", ":")
 	));
 
 	auto galaxyHeight = std::make_shared<SliderAndInputLine>(
@@ -177,7 +179,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"Fleet Speed:"
+		appContext.languageManager.Text("scene_new_game_parameter_fleet_speed_subheadline", ":")
 	));
 
 	auto fleetSpeed = std::make_shared<SliderAndInputLine>(
@@ -206,7 +208,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
-		"ca. Last Round:"
+		appContext.languageManager.Text("scene_new_game_parameter_last_round_subheadline", ":")
 	));
 
 	auto lastRound = std::make_shared<SliderAndInputLine>(
@@ -233,7 +235,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
 		resolution,
-		"Random",
+		appContext.languageManager.Text("scene_new_game_parameter_random_btn"),
 		SoundType::CLICKED_RELEASE_STD
 	);
 	randomBtn->SetOnClick([this]() {
@@ -247,7 +249,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
 		resolution,
-		"Back",
+		appContext.languageManager.Text("scene_new_game_parameter_back_btn"),
 		SoundType::CLICKED_RELEASE_STD
 	);
 	backBtn->SetOnClick([]() {
@@ -263,7 +265,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
 		resolution,
-		"Next",
+		appContext.languageManager.Text("scene_new_game_parameter_next_btn"),
 		SoundType::ACCEPTED
 	);
 	nextBtn->SetOnClick([]() {

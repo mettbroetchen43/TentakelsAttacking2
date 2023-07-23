@@ -17,11 +17,9 @@
  */
 class AssetManager final {
 private:
-	using FileArray = std::array<std::string, 11>; ///< the datatype for the files
+	using FileArray = std::array<std::string, 9>; ///< the datatype for the files
 	FileArray m_files{ ///< contains all asset file strings
 		"btn_f_default.png",
-		"grey.png",
-		"grey_50.png",
 		"exclamation_mark.png",
 		"question_mark.png",
 		"check.png",

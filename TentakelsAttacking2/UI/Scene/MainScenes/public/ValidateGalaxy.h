@@ -40,10 +40,6 @@ private:
 	 * calls to initialize it.
 	 */
 	void NewGalaxy();
-	/**
-	 * starts the game.
-	 */
-	void StartGame() const;
 
 public:
 	/**

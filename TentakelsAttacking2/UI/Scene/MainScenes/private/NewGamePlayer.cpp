@@ -35,7 +35,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		resolution,
 		Alignment::TOP_LEFT,
 		0.05f,
-		"Add Player:"
+		appContext.languageManager.Text("scene_new_game_player_add_player_headline", ":")
 		);
 	m_elements.push_back(addPlayerText);
 
@@ -47,7 +47,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		resolution,
 		20
 		);
-	inputLine->SetPlaceholderText("Player Name");
+	inputLine->SetPlaceholderText(appContext.languageManager.Text("scene_new_game_player_player_name_placeholder"));
 	inputLine->SetOnEnter([this]() {
 		this->AddPlayer();
 		});
@@ -75,7 +75,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_RIGHT,
 		resolution,
-		"Reset",
+		appContext.languageManager.Text("scene_new_game_player_reset_btn"),
 		SoundType::ACCEPTED
 		);
 	resetBTN->SetOnClick([this]() {
@@ -89,7 +89,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_LEFT,
 		resolution,
-		"Back",
+		appContext.languageManager.Text("scene_new_game_player_back_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
 	backBtn->SetOnClick([]() {
@@ -115,7 +115,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		resolution,
 		Alignment::TOP_LEFT,
 		0.05f,
-		"Current Player:"
+		appContext.languageManager.Text("scene_new_game_player_current_player_headline", ":")
 		);
 	m_elements.push_back(currentPlayerText);
 
@@ -126,7 +126,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
-		"current min player count: " + std::to_string(appContext.constants.player.minPlayerCount)
+		appContext.languageManager.Text("scene_new_game_player_min_player_count_subtext", ":", appContext.constants.player.minPlayerCount)
 		);
 	m_elements.push_back(currentPlayerCount);
 
@@ -143,7 +143,11 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		);
 	table->SetRowEditable(0, false);
 	table->SetColumnEditable(0, false);
-	table->SetHeadlineValues<std::string>({ "ID", "Name", "Color" });
+	table->SetHeadlineValues<std::string>({
+		appContext.languageManager.Text("scene_new_game_player_table_headline_id"),
+		appContext.languageManager.Text("scene_new_game_player_table_headline_name"),
+		appContext.languageManager.Text("scene_new_game_player_table_headline_color"),
+		});
 
 	table->SetUpdateSpecificCell<std::string>(
 		[this](AbstractTableCell const* cell, std::string oldValue, std::string newValue) {
@@ -166,7 +170,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_LEFT,
 		resolution,
-		"Add Player",
+		appContext.languageManager.Text("scene_new_game_player_add_player_btn"),
 		SoundType::ACCEPTED
 		);
 	addPlayerBtn->SetOnClick([this]() {
@@ -180,7 +184,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_RIGHT,
 		resolution,
-		"Next",
+		appContext.languageManager.Text("scene_new_game_player_next_btn"),
 		SoundType::ACCEPTED
 		);
 	m_nextBTN->SetOnClick([this]() {
@@ -254,7 +258,7 @@ void NewGamePlayerScene::UpdateSceneEntries(AppContext_ty_c appContext) {
 	int index{ 1 };
 	for (auto& p : PlayerData) {
 		m_table->SetValue<int>        (index, 0, p.ID);
-		m_table->SetValue<std::string>(index, 1, p.name);
+		m_table->SetValue<std::string>(index, 1, p.GetName());
 		m_table->SetValue<Color>      (index, 2, p.color);
 
 		m_table->SetSingleEditable(index, 1, true);
@@ -285,8 +289,6 @@ void NewGamePlayerScene::AddPlayer() {
 		m_colorPicker->GetColor()
 	};
 	appContext.eventManager.InvokeEvent(event);
-
-	UpdateSceneEntries(appContext);
 }
 void NewGamePlayerScene::UpdatePlayer(unsigned int ID, std::string const& name,
 	Color color, AppContext_ty_c appContext) {
@@ -320,7 +322,7 @@ void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell const*,
 
 	UpdatePlayer(
 		playerData.ID,
-		playerData.name,
+		playerData.GetName(),
 		newValue,
 		appContext
 	);
@@ -330,8 +332,6 @@ void NewGamePlayerScene::DeletePlayer(unsigned int ID) {
 
 	DeletePlayerEvent const event{ ID };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
-
-	UpdateSceneEntries(appContext);
 }
 void NewGamePlayerScene::CheckPlayerCount() const {
 	ValidatePlayerCountEvent const event;
@@ -349,8 +349,6 @@ void NewGamePlayerScene::Reset() {
 
 	ResetPlayerEvent const event;
 	appContext.eventManager.InvokeEvent(event);
-
-	UpdateSceneEntries(appContext);
 }
 
 void NewGamePlayerScene::SetNextButton(AppContext_ty_c appContext) {
@@ -404,6 +402,10 @@ void NewGamePlayerScene::OnEvent(Event const& event) {
 
 	if (auto const* CountEvent = dynamic_cast<ValidatePlayerCountResultEvent const*>(&event)) {
 		NextScene(CountEvent->GetValid());
+		return;
+	}
+	if (auto const* RefreshEvent = dynamic_cast<RefreshNewGamePlayerScene const*>(&event)) {
+		UpdateSceneEntries(AppContext::GetInstance());
 		return;
 	}
 }

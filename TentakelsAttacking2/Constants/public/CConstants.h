@@ -14,12 +14,14 @@
 #include "CFleet.hpp"
 #include "CWindow.h"
 #include "CFight.hpp"
+#include "CGameEvents.h"
 
 /**
  * contains all constants.
  */
 struct Constants final {
 	// config related
+	CGameEvents gameEvents; ///< contains the game events constants
 	CFight fight; ///< contains the fight constants
 	CFleet fleet; ///< contains the fleet constants
 	CGlobal global; ///< contains the global constants

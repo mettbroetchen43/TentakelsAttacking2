@@ -22,6 +22,7 @@ struct HFightResult;
 class Galaxy final {
 private:
 	bool m_validGalaxy{ true }; ///< specifies if the generation in valid and the galaxy is able to use
+	bool m_isFiltered{ false }; ///< returnsa if the galaxy was getting filtered
 	std::vector<SpaceObject_ty> m_objects; ///< contains all space object for updating 
 	std::vector<Planet_ty> m_planets; ///< contains all planets 
 	std::vector<Fleet_ty> m_fleets; ///< contains all fleets
@@ -54,10 +55,6 @@ private:
 	 * returns a bool.
 	 */
 	[[nodiscard]] bool IsValidNewPlanet(Planet_ty newPlanet, AppContext_ty_c appContext) const;
-	/**
-	 * updates all planets if they are discovered or not.
-	 */
-	void UpdatePlanetDiscovered();
 
 	// Fleet
 	/**
@@ -135,18 +132,18 @@ private:
 	/**
 	 * updates the targets of the provided fleets.
 	 */
-	void UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty target);
+	[[nodiscard]] std::vector<Fleet_ty> UpdateFleetTargets(std::vector<Fleet_ty> fleets, SpaceObject_ty currentFleet, SpaceObject_ty target);
 
 	/**
 	 * checks if any fleet is arrived.
 	 * calls the other fleets to gets a new target.
 	 */
-	void CheckArrivingFriendlyFleets();
+	[[nodiscard]] std::vector<HMergeResult> CheckArrivingFriendlyFleets();
 	/**
 	 * checks if any fleets from one player are at the same spot.
 	 * class the other fleets zo gets a new target.
 	 */
-	void CheckMergingFriendlyFleets();
+	[[nodiscard]] std::vector<HMergeResult> CheckMergingFriendlyFleets();
 	/**
 	 * Checks if there is a Fleet without ships.
 	 * if it is so the fleets gets deleted and the other fleets gets redirected. 
@@ -169,6 +166,22 @@ private:
 	 * simulates the fight between 2 fleets.
 	 */
 	[[nodiscard]] std::vector<HFightResult> SimulateFightFleetFleet();
+	/**
+	 * simulates the fight between a planet and a fleet.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightPlanetFleet();
+	/**
+	 * simulates the fight between a target point and a fleet.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightTargetPointFleet();
+	/**
+	 * simulates the fight between a target point and a target point.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightTargetPointTargetPoint();
+	/**
+	 * simulates the fight between a target point and a target point.
+	 */
+	[[nodiscard]] std::vector<HFightResult> SimulateFightPlanetTargetPoint();
 	/**
 	 * simulates a single fight.
 	 */
@@ -206,6 +219,14 @@ public:
 	[[nodiscard]] bool IsValidSpaceObjectID(unsigned int ID) const;
 
 	/**
+	 * sets if the galaxy was filtered.
+	 */
+	void SetFiltered(bool isFiltered);
+	/**
+	 * returns if the galaxy is filtered
+	 */
+	[[nodiscard]] bool IsFiltered() const;
+	/**
 	 * returns the size of the galaxy.
 	 */
 	[[nodiscard]] vec2pos_ty GetSize() const;
@@ -239,6 +260,10 @@ public:
 	 */
 	[[nodiscard]] HFleetResult AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	/**
+	 * updates the discover by player
+	 */
+	void SetDiscoverByPlayer(unsigned int currentPlayerID);
+	/**
 	 * filters the galaxy for relevant data for the provided player.
 	 */
 	void FilterByPlayer(unsigned int currentPlayerID);
@@ -252,5 +277,5 @@ public:
 	/**
 	 * updates the Galaxy.
 	 */
-	[[nodiscard]] std::vector<HFightResult> Update();
+	[[nodiscard]] UpdateResult_ty Update();
 };

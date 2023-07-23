@@ -12,7 +12,7 @@ using AppContext_ty =   AppContext&;
 using AppContext_ty_c = AppContext const&;
 
 // Elements
-	// Button
+// Button
 class ClassicButton;
 using ClassicButton_ty =   std::shared_ptr<ClassicButton>;
 using ClassicButton_ty_c = std::shared_ptr<ClassicButton> const&;
@@ -21,7 +21,11 @@ class SliderButton;
 using SliderButton_ty =   std::shared_ptr<SliderButton>;
 using SliderButton_ty_c = std::shared_ptr<SliderButton> const&;
 
-	// Color Picker
+class ToggleButton;
+using ToggleButton_ty =   std::shared_ptr<ToggleButton>;
+using ToggleButton_ty_c = std::shared_ptr<ToggleButton> const&;
+
+// Color Picker
 class ColorPicker;
 using ColorPicker_ty =   std::shared_ptr<ColorPicker>;
 using ColorPicker_ty_c = std::shared_ptr<ColorPicker> const&;
@@ -29,7 +33,7 @@ using ColorPicker_ty_c = std::shared_ptr<ColorPicker> const&;
 class ColorPickerCell;
 using ColorPickerCell_ty =   std::shared_ptr<ColorPickerCell>;
 using ColorPickerCell_ty_c = std::shared_ptr<ColorPickerCell> const&;
-	// Default
+// Default
 class Arrow;
 using Arrow_ty =   std::shared_ptr<Arrow>;
 using Arrow_ty_c = std::shared_ptr<Arrow> const&;
@@ -57,6 +61,10 @@ class Line;
 using Line_ty =   std::shared_ptr<Line>;
 using Line_ty_c = std::shared_ptr<Line> const&;
 
+class LineDrag;
+using LineDrag_ty =   std::shared_ptr<LineDrag>;
+using LineDrag_ty_c = std::shared_ptr<LineDrag> const&;
+
 class Picture;
 using Picture_ty =   std::shared_ptr<Picture>;
 using Picture_ty_c = std::shared_ptr<Picture> const&;
@@ -68,6 +76,10 @@ using Slider_ty_c = std::shared_ptr<Slider> const&;
 class Text;
 using Text_ty =   std::shared_ptr<Text>;
 using Text_ty_c = std::shared_ptr<Text> const&;
+
+class CountingNumber;
+using CountingNumber_ty =   std::shared_ptr<CountingNumber>;
+using CountingNumber_ty_c = std::shared_ptr<CountingNumber> const&;
 
 class Title;
 using Title_ty =   std::shared_ptr<Title>;
@@ -87,9 +99,21 @@ class UIGalaxy;
 using UIGalaxy_ty =   std::shared_ptr<UIGalaxy>;
 using UIGalaxy_ty_c = std::shared_ptr<UIGalaxy> const&;
 
+class UIGalaxyElement;
+using UIGalaxyElement_ty =   std::shared_ptr<UIGalaxyElement>;
+using UIGalaxyElement_ty_c = std::shared_ptr<UIGalaxyElement> const&;
+
 class UIPlanet;
 using UIPlanet_ty =   std::shared_ptr<UIPlanet>;
 using UIPlanet_ty_c = std::shared_ptr<UIPlanet> const&;
+
+class UITargetPoint;
+using UITargetPoint_ty =   std::shared_ptr<UITargetPoint>;
+using UITargetPoint_ty_c = std::shared_ptr<UITargetPoint> const&;
+
+class UIFleet;
+using UIFleet_ty =   std::shared_ptr<UIFleet>;
+using UIFleet_ty_c = std::shared_ptr<UIFleet> const&;
 
 // Table
 class AbstractTableCell;

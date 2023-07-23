@@ -5,6 +5,7 @@
 
 #pragma once
 #include "HSoundManager.h"
+#include "HLaguageManager.h"
 #include "EventManager.hpp"
 #include "HAssetManager.h"
 #include "HPlayerCollection.h"
@@ -26,6 +27,7 @@ struct AppContext final : public EventListener {
 public:
 	SoundManager soundManager; ///< loads and manage all sounds
 	AssetManager assetManager; ///< loads and manage all assets
+	HLanguageManager languageManager; /// loads and manages all language things
 	EventManager eventManager; ///< manage the EventListener and invokes events
 	PlayerCollection playerCollection; ///< contains non logic info's about player
 	Colors colors; ///< contains all colors and check valid color
@@ -37,6 +39,11 @@ public:
 	 * returns an instance.
 	 */
 	[[nodiscard]] static AppContext_ty GetInstance();
+
+	/**
+	 * loads the languages.
+	 */
+	void LoadLanguages();
 
 	/**
 	 * loads config.
@@ -138,4 +145,9 @@ private:
 	 * is the only place were an instance can be created.
 	 */
 	AppContext();
+
+	/**
+	 * just vor debugging
+	 */
+	~AppContext();
 };

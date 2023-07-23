@@ -207,7 +207,7 @@ public:
 	 */
 	template<typename T>
 	void SetValue(int row, int column, T input) {
-		if (not IsValidIndex(row, column)) { Print("Index out of range", PrintType::ERROR), throw std::out_of_range("index"); }
+		if (not IsValidIndex(row, column)) { Print(PrintType::ERROR, "Index out of range"), throw std::out_of_range("index"); }
 
 		auto const oldCell{ m_cells.at(row).at(column) };
 		if (IsNestedFocus()) {
@@ -235,7 +235,7 @@ public:
 	 */
 	template <typename T>
 	[[nodiscard]] T GetValue(int row, int column) const {
-		if (not IsValidIndex(row, column)) { Print("index out of range", PrintType::ERROR); throw std::out_of_range("index"); }
+		if (not IsValidIndex(row, column)) { Print(PrintType::ERROR, "index out of range"); throw std::out_of_range("index"); }
 
 		std::any const value{ m_cells.at(row).at(column)->GetValue() };
 		return std::any_cast<T>(value);
@@ -244,7 +244,7 @@ public:
 	 * return the current value of a cell as string.
 	 */
 	[[nodiscard]] std::string GetValueAsString(int row, int column) const {
-		if (not IsValidIndex(row, column)) { Print("index out of range", PrintType::ERROR); throw std::out_of_range("index"); }
+		if (not IsValidIndex(row, column)) { Print(PrintType::ERROR, "index out of range"); throw std::out_of_range("index"); }
 
 		return m_cells.at(row).at(column)->GetValueAsString();
 	}
@@ -303,7 +303,7 @@ public:
 	template <typename T>
 	void AddSpecificRow(int row, T defaultValue) {
 		if (row == m_cells.size()) { /* nothing */ }
-		else if (!IsValidRow(row)) { Print("invalid row index", PrintType::ERROR), throw std::out_of_range("row-index"); }
+		else if (!IsValidRow(row)) { Print(PrintType::ERROR, "invalid row index"), throw std::out_of_range("row-index"); }
 
 		auto line{ std::vector<AbstractTableCell_ty>() };
 
@@ -334,17 +334,17 @@ public:
 	 * calls AddSpecificRow.
 	 */
 	template <typename T>
-	void AddLastRow(T defalutValue) {
-		AddSpecificRow<T>(static_cast<int>(m_cells.size()), defalutValue);
+	void AddLastRow(T defaultValue) {
+		AddSpecificRow<T>(static_cast<int>(m_cells.size()), defaultValue);
 	}
 	/**
 	 * adds a specific column.
 	 */
 	template <typename T>
-	void AddSpecificColumn(int column, T defalutValue) {
-		if (m_cells.size() == 0) { Print("no rows available in the table", PrintType::ERROR), throw std::out_of_range("no rows"); }
+	void AddSpecificColumn(int column, T defaultValue) {
+		if (m_cells.size() == 0) { Print(PrintType::ERROR, "no rows available in the table"), throw std::out_of_range("no rows"); }
 		else if (column == m_cells.at(0).size()) { /* nothing */ }
-		else if (!IsValidColumn(column)) { Print("column-index out of range", PrintType::ERROR), throw std::out_of_range("column index"); }
+		else if (!IsValidColumn(column)) { Print(PrintType::ERROR, "column-index out of range"), throw std::out_of_range("column index"); }
 
 		for (int i = 0; i < m_rowCount; ++i) {
 			auto row = m_cells.at(i);
@@ -354,7 +354,7 @@ public:
 				Alignment::TOP_LEFT,
 				m_resolution,
 				0,
-				defalutValue,
+				defaultValue,
 				[this](AbstractTableCell const* cell, T oldValue, T newValue)
 				{this->CellUpdated<T>(cell, oldValue, newValue); }
 			);
@@ -372,7 +372,7 @@ public:
 	 */
 	template <typename T>
 	void AddLastColumn(T defaultValue) {
-		if (m_cells.size() == 0) { Print("no rows in table", PrintType::ERROR), throw std::out_of_range("no rows"); }
+		if (m_cells.size() == 0) { Print(PrintType::ERROR, "no rows in table"), throw std::out_of_range("no rows"); }
 		AddSpecificColumn<T>(static_cast<int>(m_cells.at(0).size()), defaultValue);
 	}
 
@@ -452,6 +452,30 @@ public:
 	 */
 	[[nodiscard]] bool IsColumnEditable(int column) const;
 
+	/**
+	 * sets the text color of a specific cell.
+	 * color cells will ignore this.
+	 */
+	void SetSingleCellTextColor(Color color, int row, int column);
+	/**
+	 * returns the color of a specific cell.
+	 */
+	[[nodiscard]] Color GetSingleCellTextColor(int row, int column) const;
+	/**
+	 * sets the text color of all cells.
+	 * color cells will ignore this.
+	 */
+	void SetAllCellTextColor(Color color);
+	/**
+	 * sets the text color of a row of cells.
+	 * color cells will ignore this.
+	 */
+	void SetRowCellTextColor(Color color, int row);
+	/**
+	 * sets the text color of a column of cells.
+	 * color cells will ignore this.
+	 */
+	void SetColumnCellTextColor(Color color, int column);
 	/**
 	 * sets if the first row is fixed while scrolling.
 	 */

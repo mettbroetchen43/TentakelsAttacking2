@@ -19,7 +19,6 @@ Planet::Planet(unsigned int ID, vec2pos position, Player_ty player,
 	m_planetNumber{ planetNumber } {
 
 	AppContext const & appContext{ AppContext::GetInstance() };
-	m_maxShips = appContext.constants.planet.maxShips;
 
 	if (m_isHomePlanet) {
 		m_production = appContext.constants.planet.homeworldProduction;
@@ -34,6 +33,8 @@ Planet::Planet(unsigned int ID, vec2pos position, Player_ty player,
 		m_production = r + appContext.constants.planet.minProduction;
 		m_ships = m_production * appContext.constants.planet.startingGlobalShipsMultiplicator;
 	}
+
+	m_maxShips = appContext.constants.planet.maxShipsFactor * m_production;
 }
 
 bool Planet::IsHomePlanet() const {
@@ -59,17 +60,16 @@ int Planet::GetPlanetNumber() const{
 	return m_planetNumber;
 }
 
-void Planet::SetDiscovered(bool isDiscovered) {
-	m_isDiscovered = isDiscovered;
-}
-
-bool Planet::IsDiscovered() const {
-	return m_isDiscovered;
-}
-
 void Planet::Update(Galaxy_ty_raw) {
 	m_ships += m_production;
 	if (not m_player->IsHumanPlayer() and m_ships > m_maxShips) {
 		m_ships = m_maxShips;
 	}
+	Print(
+		PrintType::ONLY_DEBUG,
+		"planet produced -> id: {} -> is human: {} -> ships: {}",
+		m_ID,
+		m_player->IsHumanPlayer(),
+		m_ships
+	);
 }

@@ -15,7 +15,11 @@ void SoundManager::LoadSounds() {
 		auto const filename{ "Assets/Sounds/" + m_files[i] };
 
 		if (!std::filesystem::exists(filename)) {
-			Print("Sound does not exists -> " + filename, PrintType::ERROR);
+			Print(
+				PrintType::ERROR,
+				"sound does not exist -> \"{}\"",
+				filename
+			);
 			return;
 		}
 
@@ -26,7 +30,11 @@ void SoundManager::LoadSounds() {
 	std::string const files{ "Assets/Sounds/TextSounds" };
 
 	if (!std::filesystem::exists(files)) {
-		Print("Textsounds does not exists -> " + files, PrintType::ERROR);
+		Print(
+			PrintType::ERROR,
+			"text sounds does not exist -> \"{}\"",
+			files
+		);
 		return;
 	}
 
@@ -42,7 +50,7 @@ void SoundManager::PlaySound(SoundType soundType) const {
 		return;
 	}
 
-	::PlaySoundMulti(m_sounds.at(soundType));
+	::PlaySound(m_sounds.at(soundType));
 }
 void SoundManager::PlayTextSound() const {
 	Random& random{ Random::GetInstance() };

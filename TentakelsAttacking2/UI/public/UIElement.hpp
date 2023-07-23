@@ -258,6 +258,7 @@ public:
 	 * result ia a linear movement in one direction.
 	 */
 	virtual void MoveToPositionLinear(Vector2 position, float relativeSpeed) {
+		StopMoving();
 		m_moveType = MoveType::POINT_LINEAR;
 		m_startingPosition = m_pos;
 		m_targetPosition = GetAlignedPosition(m_alignment, position, m_size);
@@ -268,6 +269,7 @@ public:
 	 * result is an asymptotic movement in one direction.
 	 */
 	virtual void MoveToPositionAsymptotic(Vector2 position, float relativeSpeed) {
+		StopMoving();
 		m_moveType = MoveType::POINT_ASYNPTOTIC;
 		m_startingPosition = m_pos;
 		m_targetPosition = GetAlignedPosition(m_alignment, position, m_size);
@@ -286,11 +288,11 @@ public:
 	}
 
 	/**
-	 * checks if there is a current movement.
-	 * moves the element if so.
+	 * updates the movement event if CheckAndUpdate is not called.
+	 * it is not recommended to call this and CheckAndUpdate.
 	 */
-	virtual void CheckAndUpdate(Vector2 const&, AppContext_ty_c) {
-		switch (m_moveType) {
+	void UpdateMove() {
+				switch (m_moveType) {
 			default:
 			case MoveType::NONE:
 				break;
@@ -304,6 +306,14 @@ public:
 				MoveSpeedLinear();
 				break;
 		}
+	}
+
+	/**
+	 * checks if there is a current movement.
+	 * calls the element to move
+	 */
+	virtual void CheckAndUpdate(Vector2 const&, AppContext_ty_c) {
+		UpdateMove();
 	}
 	/**
 	 * just virtual.

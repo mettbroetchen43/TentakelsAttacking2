@@ -8,6 +8,8 @@
 #include "EventListener.hpp"
 #include "Focusable.h"
 #include "HLogicAlias.hpp"
+#include "HUIAlias.hpp"
+#include "HPlayerData.h"
 #include <functional>
 #include <memory>
 #include <vector>
@@ -31,14 +33,24 @@ private:
 	bool m_isScaling{ true }; ///< contains if the galaxy should be able to scale itself
 	bool m_isScrollingByMouse{ false }; ///< contains if its currently scrolling by mouse wheel
 	bool m_isShowGalaxy{ false }; ///< contains if the galaxy is only for show off
+	bool m_isAcceptingInput{ false }; ///< contains if the user can enter game related input
+	
 	float m_scaleFactor{ 1.0f }; ///< contains the scale factor of the galaxy
 	Vector2 m_lastMousePosition{ 0.0f,0.0f }; ///< contains the position of the mouse from last tick while the galaxy is moved by mouse
 	Rectangle m_absoluteSize; ///< contains the absolute size of the collider in px
 	Galaxy_ty_raw m_currentGalaxy{ nullptr }; ///< contains a pointer of the current logic galaxy
+	
+	std::vector<UIGalaxyElement_ty> m_uiGalaxyElements; ///< contains the UI Galaxy Elements that are generated from the logic galaxy
 	std::vector<UIPlanet_ty> m_uiPlanets; ///< contains the UI planets that are generated from the logic galaxy
+	std::vector<UITargetPoint_ty> m_uiTargetPoints; ///< contains the UI Target Points that are generated from the logic galaxy
+	std::vector<UIFleet_ty> m_uiFleets; ///< contains the UI Fleets that are generated from the logic galaxy.
+	
 	std::function<void(float, Vector2)> m_onZoom{ [](float, Vector2) {} }; ///< contains onZoom -> gets called if the galaxy gets zoomed
 	std::function<void(float, bool)> m_onSlide{ [](float, bool) {} }; ///< contains onSlide -> gets called if the galaxy gets slided
-	std::function<void(unsigned int)> m_onPlanetClick{ [](unsigned int) {} }; ///< contains onPlanetClick -> gets called if a planet gets clicked
+	std::function<void(unsigned int)> m_onUIGalaxyElementClick{ [](unsigned int) {} }; ///< contains onUIGalaxyElementClick -> gets called if a UIGalaxyElement gets clicked
+
+	bool m_updateLineDrag{ false }; ///< contains if the m_lineDrag should be updated
+	LineDrag_ty m_lineDrag; ///< contains the line for drag and drop fleet operation
 
 	/**
 	 * initializes all elements of the galaxy.
@@ -56,15 +68,15 @@ private:
 	/**
 	 * returns if the provided planet is still inside of the galaxy collider
 	 */
-	[[nodiscard]] bool IsPlanetInCollider(UIPlanet_ty planet) const;
+	[[nodiscard]] bool IsUIGalaxyElementInCollider(UIGalaxyElement_ty element) const;
 	/**
 	 * updates all button positions with the absolute size.
 	 */
-	void UpdatePlanetPosition();
+	void UpdateUIGalaxyElementPosition();
 	/**
 	 * calls onPlanetClick with the planet that gets provided.
 	 */
-	void SelectPlanet(UIPlanet* planet);
+	void SelectUIGalaxyElement(UIGalaxyElement* planet);
 
 	/**
 	 * claps the absolute position and size so it gets never smaller that the collider.
@@ -89,6 +101,24 @@ private:
 	 */
 	[[nodiscard]] Vector2 GetCurrentScaleReference() const;
 
+	/**
+	 * checks if a UISpaceObject is colliding with the provided point.
+	 * return the colliding object if there is one.
+	 */
+	[[nodiscard]] bool IsCollidingObjectPoint(Vector2 point) const;
+	/**
+	 * return the ID from the object at the location of the relative point.
+	 */
+	[[nodiscard]] unsigned int GetIDFromPoint(Vector2 point) const;
+	/**
+	 * returns the coordinates within the galaxy at the location of the relative point
+	 */
+	[[nodiscard]] vec2pos_ty GetCoordinatesFromPoint(Vector2 point) const;
+	/**
+	 * handles the drag line result
+	 */
+	void HandleDragLineResult(Vector2 start, Vector2 end);
+
 public:
 	/**
 	 * ctor.
@@ -96,7 +126,7 @@ public:
 	 * calls logic galaxy via event.
 	 */
 	UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution, bool isShowGalaxy = false);
+		Vector2 resolution, bool isShowGalaxy, bool isActeptingInput);
 	/**
 	 * removed the event listener.
 	 */
@@ -115,6 +145,7 @@ public:
 	 * returns the current scale factor of  the galaxy.
 	 */
 	[[nodiscard]] float GetScaleFactor() const;
+
 	/**
 	 * zooms the galaxy in or out.
 	 * the factor defines how fast it is zooming.
@@ -144,7 +175,7 @@ public:
 	 * gets called if a planet is clicked.
 	 * contains the planet id.
 	 */
-	void SetOnPlanetClick(std::function<void(unsigned int)> onPlanetClick);
+	void SetOnUIGalaxyElementClick(std::function<void(unsigned int)> onPlanetClick);
 
 	/**
 	 * logic of the galaxy.
@@ -161,6 +192,11 @@ public:
 	 * calls the cells to resize.
 	 */
 	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+
+	/**
+	 * filters the fleets for current player.
+	 */
+	void FilterByCurrentPlayer(PlayerData player);
 
 	/**
 	 * sets if the galaxy is enabled.

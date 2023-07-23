@@ -19,7 +19,11 @@ bool Focusable::IsFocused() const {
 	return m_isFocus;
 }
 void Focusable::SetFocus(bool focus) {
+	m_wasLastFocus = m_isFocus;
 	m_isFocus = focus;
+}
+bool Focusable::GotFocused() const {
+	return not m_wasLastFocus and m_isFocus;
 }
 bool Focusable::IsNestedFocus() const {
 	return m_isNestedFocus;

@@ -16,14 +16,22 @@ void AssetManager::LoadTitle() {
 
 	std::string const filename{ "Assets/Text/title.txt" };
 	if (!std::filesystem::exists(filename)) {
-		Print("title does not exists -> " + filename, PrintType::ERROR);
+		Print(
+			PrintType::ERROR,
+			"title does not exists -> {}",
+			filename
+		);
 		return;
 	}
 
 	newFile.open(filename, std::ios::in);
 
 	if (!newFile.is_open()) {
-		Print("cant open title -> " + filename, PrintType::ERROR);
+		Print(
+			PrintType::ERROR,
+			"can't open title -> {}",
+			filename
+		);
 		return;
 	}
 
@@ -37,7 +45,11 @@ void AssetManager::LoadFont() {
 	std::string const filename{ "Assets/Fonts/default_font.ttf" };
 
 	if (!std::filesystem::exists(filename)) {
-		Print("font does not exists -> " + filename, PrintType::ERROR);
+		Print(
+			PrintType::ERROR,
+			"font does not exist -> {}",
+			filename
+		);
 		return;
 	}
 
@@ -50,7 +62,11 @@ void AssetManager::LoadFiles() {
 		auto const filename{ "Assets/Pictures/" + m_files.at(i) };
 
 		if (!std::filesystem::exists(filename)) {
-			Print("Asset does not exists -> " + filename, PrintType::ERROR);
+			Print(
+				PrintType::ERROR,
+				"Assets does not exist -> {}",
+				filename
+			);
 			continue;
 		}
 

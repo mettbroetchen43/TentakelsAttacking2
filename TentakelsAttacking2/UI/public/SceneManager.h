@@ -19,7 +19,6 @@ class UIManager;
  */
 class SceneManager final : public EventListener {
 private:
-	bool m_first{ true }; ///< contains if the first scene gets loaded
 	UIManager* m_uiManager; ///< contains a pointer of the UIManager
 	PopUpManager m_popUpManager; ///< contains the PopUpManager
 
@@ -38,10 +37,6 @@ private:
 	 * override current scene type.
 	 */
 	void SwitchScene(AppContext_ty_c appContext);
-	/**
-	 * returns the continue scene type to be able to return to the previous loaded scene.
-	 */
-	[[nodiscard]] SceneType GetContinueSceneType() const;
 
 public:
 	/**

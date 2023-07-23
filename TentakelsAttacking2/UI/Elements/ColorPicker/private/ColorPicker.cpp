@@ -86,7 +86,6 @@ ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
 	Alignment alignment, Vector2 resolution, bool isPopUp)
 	: Focusable{ ID }, UIElement{ pos, size, alignment, resolution }, m_isPopUp{ isPopUp } {
 
-	m_backGround = AppContext::GetInstance().assetManager.GetTexture(AssetType::GREY);
 	Initialize(resolution);
 }
 ColorPicker::~ColorPicker() {
@@ -214,18 +213,9 @@ void ColorPicker::Render(AppContext_ty_c appContext) {
 	// update here to make sure all CheckAndUpdate() is done
 	m_previousColorCell = m_currentColorCell;
 
-	DrawTexturePro(
-		*m_backGround,
-		Rectangle(
-			0.0f,
-			0.0f,
-			static_cast<float>(m_backGround->width),
-			static_cast<float>(m_backGround->height)
-		),
+	DrawRectangleRec(
 		m_collider,
-		Vector2(0.0f, 0.0f),
-		0.0f,
-		WHITE
+		GREY_100
 	);
 
 	DrawRectangleLinesEx(

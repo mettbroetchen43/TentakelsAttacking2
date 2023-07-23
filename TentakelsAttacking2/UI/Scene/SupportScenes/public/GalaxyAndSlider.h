@@ -6,6 +6,7 @@
 #pragma once
 #include "Scene.h"
 #include "HLogicAlias.hpp"
+#include "HPlayerData.h"
 #include <vector>
 
 
@@ -27,7 +28,7 @@ private:
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize(Vector2 resolution, bool isShowGalaxy);
+	void Initialize(Vector2 resolution, bool isShowGalaxy, bool isAcceptingInput);
 	/**
 	 * updates the slider and scale lines.
 	 */
@@ -43,7 +44,7 @@ public:
 	 * only initialization.
 	 */
 	GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution, bool isShowGalaxy = false);
+		Vector2 resolution, bool isShowGalaxy, bool isAcceptingInput);
 
 	/**
 	 * loop that setting through to the galaxy.
@@ -70,6 +71,11 @@ public:
 	[[nodiscard]] Galaxy_ty_raw GetGalaxy() const;
 
 	/**
+	 * filter fleets by current player.
+	 */
+	void FilterByCurrentPlayer(PlayerData player);
+
+	/**
 	 * updates the scene.
 	 * updates the scale buttons only if scaling.
 	 * updates the slider only if the galaxy is actually scaled.
@@ -83,7 +89,7 @@ public:
 	void Render(AppContext_ty_c appContext) override;
 	/**
 	 * resize the scene.
-	 * resize the scale buttons, scale lines and buttons seperated.
+	 * resize the scale buttons, scale lines and buttons separated.
 	 * 
 	 */
 	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;

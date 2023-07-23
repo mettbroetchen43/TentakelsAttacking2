@@ -17,16 +17,17 @@ int main() {
 	InitWindow(100, 100, "");
 	AppContext_ty appContext{ AppContext::GetInstance() };
 #ifdef _DEBUG
-	Print("Debug", PrintType::BUILD);
+	Print(PrintType::BUILD, "Debug");
 #else
-	Print("Release", PrintType::BUILD);
+	Print(PrintType::BUILD, "Release");
 #endif // _DEBUG
 
-	Print(appContext.constants.global.gameVersion, PrintType::BUILD);
+	Print(PrintType::BUILD, appContext.constants.global.gameVersion);
 
 	UIManager uiManager;
 
 	appContext.LoadConfig();
+	appContext.LoadLanguages();
 
 	uiManager.StartUI();
 
