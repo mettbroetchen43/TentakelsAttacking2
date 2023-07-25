@@ -115,6 +115,10 @@ class UIFleet;
 using UIFleet_ty =   std::shared_ptr<UIFleet>;
 using UIFleet_ty_c = std::shared_ptr<UIFleet> const&;
 
+class CountRing;
+using CountRing_ty   = std::shared_ptr<CountRing>;
+using CountRing_ty_c = std::shared_ptr<CountRing> const&;
+
 // Table
 class AbstractTableCell;
 using AbstractTableCell_ty =   std::shared_ptr<AbstractTableCell>;

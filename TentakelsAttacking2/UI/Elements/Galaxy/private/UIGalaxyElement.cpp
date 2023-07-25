@@ -5,6 +5,7 @@
 
 #include "UIGalaxyElement.h"
 #include "HColors.h"
+#include "ShipCountRing.h"
 
 UIGalaxyElement::UIGalaxyElement(unsigned int focusID, unsigned int ID, Vector2 size, PlayerData player, Vector2 pos,
 	Vector2 resolution, Vector2 colliderPos)
@@ -25,6 +26,7 @@ void UIGalaxyElement::UpdatePosition(Rectangle newCollider) {
 		(newCollider.y + newCollider.height * m_colliderPos.y) / m_resolution.y
 	};
 	SetPosition(newPos);
+	m_ring->SetPosition(m_pos);
 }
 
 void UIGalaxyElement::SetOnClick(std::function<void(UIGalaxyElement*)> onClick) {
@@ -69,5 +71,6 @@ Rectangle UIGalaxyElement::GetCollider() const {
 void UIGalaxyElement::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 
 	m_hover.Resize(resolution, appContext);
+	m_ring->Resize(resolution, appContext);
 	UIElement::Resize(resolution, appContext);
 }

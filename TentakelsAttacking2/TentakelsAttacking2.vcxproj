@@ -204,6 +204,7 @@
     <ClInclude Include="UI\Elements\Default\public\CountingNumber.h" />
     <ClInclude Include="UI\Elements\Default\public\Hover.h" />
     <ClInclude Include="UI\Elements\Default\public\LineDrag.h" />
+    <ClInclude Include="UI\Elements\Galaxy\public\ShipCountRing.h" />
     <ClInclude Include="UI\Elements\Galaxy\public\UIFleet.h" />
     <ClInclude Include="UI\Elements\Galaxy\public\UIGalaxyElement.h" />
     <ClInclude Include="UI\Elements\Galaxy\public\UITargetPoint.h" />
@@ -313,6 +314,7 @@
     <ClCompile Include="UI\Elements\Galaxy\private\UIGalaxyElement.cpp" />
     <ClCompile Include="UI\Elements\Galaxy\private\UITargetPoint.cpp" />
     <ClCompile Include="UI\Elements\Galaxy\private\UIFleet.cpp" />
+    <ClCompile Include="UI\Elements\Galaxy\private\ShipCountRing.cpp" />
     <ClCompile Include="UI\Elements\PopUp\private\FightResultPopup.cpp" />
     <ClCompile Include="UI\Elements\Table\private\Table.cpp" />
     <ClCompile Include="UI\Elements\Default\private\Text.cpp" />

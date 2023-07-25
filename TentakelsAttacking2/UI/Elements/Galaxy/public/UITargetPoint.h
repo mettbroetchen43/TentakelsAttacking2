@@ -6,6 +6,7 @@
 #pragma once
 #include "UIGalaxyElement.h"
 #include "HLogicAlias.hpp"
+#include "ShipCountRing.h"
 
 /**
  * provides a Ui representation if the logic Planet.
@@ -32,6 +33,10 @@ public:
 	 * planet logic.
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
+	/**
+	 * Renders the ring of the Element.
+	 */
+	void RenderRing(AppContext_ty_c appContext) override;
 	/**
 	 * renders the planet.
 	 */

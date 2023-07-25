@@ -378,6 +378,9 @@
     <ClInclude Include="UI\Scene\MainScenes\public\AppSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UI\Elements\Galaxy\public\ShipCountRing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Helper\private\HRandom.cpp">
@@ -668,7 +671,10 @@
     <ClCompile Include="UI\Scene\MainScenes\private\AppSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UI\Scene\MainScenes\public\GameSettings.cpp">
+    <ClCompile Include="UI\Scene\MainScenes\private\GameSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Elements\Galaxy\private\ShipCountRing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

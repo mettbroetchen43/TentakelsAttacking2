@@ -6,6 +6,8 @@
 #include "UIFleet.h"
 #include "Fleet.h"
 #include "AppContext.h"
+#include "ShipCountRing.h"
+#include "UIGalaxyElement.h"
 
 UIFleet::UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd,
     Fleet_ty_raw_c fleet, std::function<bool(Vector2 const&)> isInGalaxyCollider)
@@ -25,6 +27,24 @@ UIFleet::UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end,
         Vector2(0.01f,0.01f),
         resolution
     } {
+
+    m_ring = std::make_shared<CountRing>(
+        Vector2{ 
+            m_pos.x - m_size.x / 2,
+            m_pos.y - m_size.y / 2
+        },
+        m_size,
+        Alignment::MID_MID,
+        m_resolution,
+        m_size.x,
+        m_size.x * 3.0f,
+        static_cast<int>(m_fleet->GetShipCount()),
+        UIGalaxyElement::s_maxShipCount
+    );
+    Color color{ m_player.color };
+	color.a = UIGalaxyElement::s_ringColorAlpha;
+	m_ring->SetRingColor(color);
+
     UpdateHoverText();
 }
 
@@ -82,6 +102,7 @@ void UIFleet::UpdatePositions(Rectangle newCollider) {
     collider.x = newCollider.x + newCollider.width * m_relativeStart.x;
     collider.y = newCollider.y + newCollider.height * m_relativeStart.y;
     SetCollider(collider);
+    m_ring->SetPosition(m_pos);
 }
 
 void UIFleet::SetDisplayedAsPoint(bool isDisplayedAsPoint) {
@@ -93,6 +114,7 @@ bool UIFleet::IsDisplayAsPoint() const {
 
 void UIFleet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
     UIElement::CheckAndUpdate(mousePosition, appContext);
+    m_ring->CheckAndUpdate(mousePosition, appContext);
 
     if (IsColliding(mousePosition)) {
         UpdateHoverText();
@@ -100,6 +122,7 @@ void UIFleet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appCo
     }
 }
 void UIFleet::Render(AppContext_ty_c appContext) {
+
     if (m_isDisplayAsPoint) {
         DrawCircle(
             static_cast<int>(m_collider.x + m_collider.width / 2),
@@ -109,10 +132,15 @@ void UIFleet::Render(AppContext_ty_c appContext) {
         );
         return;
     }
+
     m_line.Render(appContext);
+}
+void UIFleet::RenderRing(AppContext_ty_c appContext) {
+    m_ring->Render(appContext);
 }
 void UIFleet::Resize(Vector2 resolution, AppContext_ty_c appContext) {
     UIElement::Resize(resolution, appContext);
     m_line.Resize(resolution, appContext);
     m_hover.Resize(resolution, appContext);
+    m_ring->Resize(resolution, appContext);
 }

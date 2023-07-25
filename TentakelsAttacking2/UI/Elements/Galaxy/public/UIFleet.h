@@ -21,6 +21,7 @@ private:
 	Vector2 m_relativeEnd; ///< contains teh relative end of the line according to the galaxy
 	std::function<bool(Vector2 const&)> m_isInGalaxyCollider; ///< returns if a point is in the galaxy collider
 	bool m_isDisplayAsPoint{ false }; ///< contains if the fleet gets displayed as point insted of a line
+	CountRing_ty m_ring{ nullptr }; ///< contains the ring that indicates how many ships are on the planet
 
 public:
 	UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd,
@@ -67,6 +68,10 @@ public:
 	 * renders the line.
 	 */
 	void Render(AppContext_ty_c appContext) override;
+	/**
+	 * Renders the ring of the Element.
+	 */
+	void RenderRing(AppContext_ty_c appContext);
 	/**
 	 * calls UIElement to Resize.
 	 * Resizes the line.

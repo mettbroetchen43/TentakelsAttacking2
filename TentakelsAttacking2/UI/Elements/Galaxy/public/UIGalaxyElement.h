@@ -10,6 +10,10 @@
 #include "Hover.h"
 
 class UIGalaxyElement : public UIElement, public Focusable {
+public:
+	static constexpr int s_maxShipCount{ 300 }; ///< containts the maximum ship count the Count ring is refering to
+	static constexpr int s_ringColorAlpha{ 100 }; ///< contains the alpha of the ring color
+
 protected:
 	unsigned int m_ID; ///< contains the unique SpaceObject ID witch is also the SpaceObject "name"
 	std::string m_stringID; ///< contains the ID as string
@@ -20,6 +24,7 @@ protected:
 	std::function<void(UIGalaxyElement*)> m_onClick{ [](UIGalaxyElement*) {} }; ///< contains on click that gets called when the planet is clicked
 	Hover m_hover; ///< contains the hover element
 	bool m_renderHover{ false }; ///< contains if the hover text should be rendered
+	CountRing_ty m_ring{ nullptr }; ///< contains the ring that indicates the ship count.
 
 public:
 	/**
@@ -92,6 +97,10 @@ public:
 	 * planet logic.
 	 */
 	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override = 0;
+	/**
+	 * Renders the ring of the Element.
+	 */
+	virtual void RenderRing(AppContext_ty_c appContext) = 0;
 	/**
 	 * renders the planet.
 	 */

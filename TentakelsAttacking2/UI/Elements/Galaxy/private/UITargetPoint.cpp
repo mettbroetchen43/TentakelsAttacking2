@@ -12,6 +12,20 @@
 UITargetPoint::UITargetPoint(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos,
 	Vector2 resolution, Vector2 colliderPos, TargetPoint_ty_raw_c targetPoint)
 	: UIGalaxyElement{ focusID, ID,{ 0.005f,0.01f },  player, pos, resolution, colliderPos }, m_targetPoint{ targetPoint } {
+	
+	m_ring = std::make_shared<CountRing>(
+		m_pos,
+		m_size,
+		Alignment::DEFAULT,
+		m_resolution,
+		m_size.x / 2.0f,
+		m_size.x * 1.5f,
+		static_cast<int>(targetPoint->GetShipCount()),
+		s_maxShipCount
+	);
+	Color color{ m_currentPlayer.color };
+	color.a = s_ringColorAlpha;
+	m_ring->SetRingColor(color);
 	UpdateHoverText();
 }
 
@@ -25,6 +39,7 @@ void UITargetPoint::UpdateHoverText() {
 void UITargetPoint::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
+	m_ring->CheckAndUpdate(mousePosition, appContext);
 
 	if (CheckCollisionPointRec(mousePosition, m_collider)) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
@@ -47,7 +62,14 @@ void UITargetPoint::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c
 		m_onClick(this);
 	}
 }
-void UITargetPoint::Render(AppContext_ty_c) {
+void UITargetPoint::RenderRing(AppContext_ty_c appContext) {
+	if (m_targetPoint->IsDiscovered()) {
+		m_ring->Render(appContext);
+	}
+}
+void UITargetPoint::Render(AppContext_ty_c appContext) {
+
+
 	DrawCircle(
 		static_cast<int>(m_collider.x + m_collider.width / 2),
 		static_cast<int>(m_collider.y + m_collider.height / 2),
