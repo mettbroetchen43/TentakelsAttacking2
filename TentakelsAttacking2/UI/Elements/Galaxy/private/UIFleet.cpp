@@ -34,7 +34,7 @@ UIFleet::UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end,
             m_pos.y - m_size.y / 2
         },
         m_size,
-        Alignment::DEFAULT,
+        Alignment::MID_MID,
         m_resolution,
         m_size.x,
         m_size.x * 3.0f,
