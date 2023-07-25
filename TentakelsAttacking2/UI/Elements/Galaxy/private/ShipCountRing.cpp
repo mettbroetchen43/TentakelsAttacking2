@@ -7,8 +7,9 @@
 
 void CountRing::CalculateRing() {
     float diff{ m_relativeMaxRingSize - m_relativeDotSize };
-    float factor{ static_cast<float>(m_maxCount) / m_currentCount };
+    float factor{ static_cast<float>(m_currentCount) / m_maxCount };
     diff *= factor;
+    if (diff < 0.001f) { diff = 0.001f; }
     diff += m_relativeDotSize;
     diff *= m_resolution.x;
     m_absoluteRingSize = { diff };
@@ -19,18 +20,13 @@ CountRing::CountRing(Vector2 pos, Vector2 size, Alignment alignment, Vector2 res
     : UIElement{ pos, size, alignment, resolution }, m_relativeDotSize{ dotSize }, m_relativeMaxRingSize{ ringSize },
     m_currentCount{ currentCount }, m_maxCount{ maxCount } {
     
-    m_absolutePos = {
-        m_collider.x,
-        m_collider.y
-    };
-    m_absoluteDotSize = { m_relativeDotSize * m_resolution.x };
-    CalculateRing();
+    Update();
 }
 
 void CountRing::Update() {
     m_absolutePos = {
-        m_collider.x,
-        m_collider.y
+        m_collider.x + m_collider.width / 2,
+        m_collider.y + m_collider.height / 2
     };
     m_absoluteDotSize = { m_relativeDotSize * m_resolution.x };
     CalculateRing();
@@ -69,6 +65,8 @@ void CountRing::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c app
     UIElement::CheckAndUpdate(mousePosition, appContext);
 }
 void CountRing::Render(AppContext_ty_c) {
+    if (m_currentCount == 0) { return; }
+
     DrawCircleV(
         m_absolutePos,
         m_absoluteRingSize,

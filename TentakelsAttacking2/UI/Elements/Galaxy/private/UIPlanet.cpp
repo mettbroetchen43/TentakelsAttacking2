@@ -7,6 +7,7 @@
 #include "HInput.h"
 #include "AppContext.h"
 #include "Planet.h"
+#include "ShipCountRing.h"
 
 UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution,
 	Vector2 colliderPos, Planet_ty_raw_c planet)
@@ -24,6 +25,20 @@ UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vec
 		(m_collider.width  - textSize.x) / 2,
 		(m_collider.height - textSize.y) / 2
 	};
+
+  	m_ring = std::make_shared<CountRing>(
+		m_pos,
+		m_size,
+		Alignment::DEFAULT,
+		m_resolution,
+		m_size.x / 2.0f,
+		m_size.x * 1.5f,
+		static_cast<int>(m_planet->GetShipCount()),
+		s_maxShipCount
+	);
+	Color color{ m_currentPlayer.color };
+	color.a = s_ringColorAlpha;
+	m_ring->SetRingColor(color);
 
 	UpdateHoverText();
 }
@@ -46,6 +61,7 @@ void UIPlanet::UpdateHoverText() {
 void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
 	UIElement::CheckAndUpdate(mousePosition, appContext);
+	m_ring->CheckAndUpdate(mousePosition, appContext);
 
 	if (CheckCollisionPointRec(mousePosition, m_collider)) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
@@ -69,6 +85,11 @@ void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 	}
 }
 void UIPlanet::Render(AppContext_ty_c appContext) {
+
+	if (m_planet->IsDiscovered()) {
+		m_ring->Render(appContext);
+	}
+
 	DrawCircle(
 		static_cast<int>(m_collider.x + m_collider.width / 2),
 		static_cast<int>(m_collider.y + m_collider.height / 2),
