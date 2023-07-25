@@ -84,11 +84,12 @@ void UIPlanet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appC
 		m_onClick(this);
 	}
 }
-void UIPlanet::Render(AppContext_ty_c appContext) {
-
+void UIPlanet::RenderRing(AppContext_ty_c appContext) {
 	if (m_planet->IsDiscovered()) {
 		m_ring->Render(appContext);
 	}
+}
+void UIPlanet::Render(AppContext_ty_c appContext) {
 
 	DrawCircle(
 		static_cast<int>(m_collider.x + m_collider.width / 2),

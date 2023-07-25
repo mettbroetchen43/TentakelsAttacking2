@@ -34,6 +34,10 @@ public:
 	 */
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
+	 * Renders the ring of the Element.
+	 */
+	void RenderRing(AppContext_ty_c appContext) override;
+	/**
 	 * renders the planet.
 	 */
 	void Render(AppContext_ty_c appContext) override;

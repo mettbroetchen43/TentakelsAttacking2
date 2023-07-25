@@ -62,11 +62,13 @@ void UITargetPoint::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c
 		m_onClick(this);
 	}
 }
-void UITargetPoint::Render(AppContext_ty_c appContext) {
-
+void UITargetPoint::RenderRing(AppContext_ty_c appContext) {
 	if (m_targetPoint->IsDiscovered()) {
 		m_ring->Render(appContext);
 	}
+}
+void UITargetPoint::Render(AppContext_ty_c appContext) {
+
 
 	DrawCircle(
 		static_cast<int>(m_collider.x + m_collider.width / 2),

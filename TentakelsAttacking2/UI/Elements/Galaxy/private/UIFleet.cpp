@@ -122,7 +122,6 @@ void UIFleet::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appCo
     }
 }
 void UIFleet::Render(AppContext_ty_c appContext) {
-    m_ring->Render(appContext);
 
     if (m_isDisplayAsPoint) {
         DrawCircle(
@@ -135,6 +134,9 @@ void UIFleet::Render(AppContext_ty_c appContext) {
     }
 
     m_line.Render(appContext);
+}
+void UIFleet::RenderRing(AppContext_ty_c appContext) {
+    m_ring->Render(appContext);
 }
 void UIFleet::Resize(Vector2 resolution, AppContext_ty_c appContext) {
     UIElement::Resize(resolution, appContext);

@@ -98,6 +98,10 @@ public:
 	 */
 	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override = 0;
 	/**
+	 * Renders the ring of the Element.
+	 */
+	virtual void RenderRing(AppContext_ty_c appContext) = 0;
+	/**
 	 * renders the planet.
 	 */
 	virtual void Render(AppContext_ty_c appContext) override = 0;

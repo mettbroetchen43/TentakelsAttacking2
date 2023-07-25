@@ -69,6 +69,10 @@ public:
 	 */
 	void Render(AppContext_ty_c appContext) override;
 	/**
+	 * Renders the ring of the Element.
+	 */
+	void RenderRing(AppContext_ty_c appContext);
+	/**
 	 * calls UIElement to Resize.
 	 * Resizes the line.
 	 */
