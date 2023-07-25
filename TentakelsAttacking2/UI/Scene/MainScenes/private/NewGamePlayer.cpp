@@ -331,7 +331,7 @@ void NewGamePlayerScene::DeletePlayer(unsigned int ID) {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	DeletePlayerEvent const event{ ID };
-	AppContext::GetInstance().eventManager.InvokeEvent(event);
+	appContext.eventManager.InvokeEvent(event);
 }
 void NewGamePlayerScene::CheckPlayerCount() const {
 	ValidatePlayerCountEvent const event;

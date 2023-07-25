@@ -5,6 +5,49 @@
 
 #include "ShipCountRing.h"
 
+void CountRing::CalculateRing() {
+    float diff{ m_relativeMaxRingSize - m_relativeDotSize };
+    float factor{ static_cast<float>(m_maxCount) / m_currentCount };
+    diff *= factor;
+    diff += m_relativeDotSize;
+    diff *= m_resolution.x;
+    m_absoluteRingSize = { diff };
+}
+
+CountRing::CountRing(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, float dotSize, float ringSize,
+    int currentCount, int maxCount)
+    : UIElement{ pos, size, alignment, resolution }, m_relativeDotSize{ dotSize }, m_relativeMaxRingSize{ ringSize },
+    m_currentCount{ currentCount }, m_maxCount{ maxCount } {
+    
+    m_absolutePos = {
+        m_collider.x,
+        m_collider.y
+    };
+    m_absoluteDotSize = { m_relativeDotSize * m_resolution.x };
+    CalculateRing();
+}
+
+void CountRing::Update() {
+    m_absolutePos = {
+        m_collider.x,
+        m_collider.y
+    };
+    m_absoluteDotSize = { m_relativeDotSize * m_resolution.x };
+    CalculateRing();
+}
+
+int CountRing::GetMaxCount() const {
+    return m_maxCount;
+}
+void CountRing::SetMaxCount(int maxCount) {
+    m_maxCount = maxCount;
+}
+int CountRing::GetCurrentCount() const {
+    return m_currentCount;
+}
+void CountRing::SetCurrentCount(int currentCount) {
+    m_currentCount = currentCount;
+}
 Color CountRing::GetDotColor() const {
     return m_dotColor;
 }
@@ -16,4 +59,29 @@ Color CountRing::GetRingColor() const {
 }
 void CountRing::SetRingColor(Color color) {
     m_ringColor = color;
+}
+void CountRing::SetPosition(Vector2 newPos) {
+    UIElement::SetPosition(newPos);
+    Update();
+}
+
+void CountRing::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
+    UIElement::CheckAndUpdate(mousePosition, appContext);
+}
+void CountRing::Render(AppContext_ty_c) {
+    DrawCircleV(
+        m_absolutePos,
+        m_absoluteRingSize,
+        m_ringColor
+    );
+
+    DrawCircleV(
+        m_absolutePos,
+        m_absoluteDotSize,
+        m_dotColor
+    );
+}
+void CountRing::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+    UIElement::Resize(resolution, appContext);
+    Update();
 }
