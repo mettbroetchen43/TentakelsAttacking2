@@ -13,7 +13,6 @@
 # and reproducible build locally (on your development machine) and remotely (on build agents).
 name: TentakelsAttacking
 on: 
-  push: # all pushes
   workflow_dispatch: # started manually
   pull_request:
     branches: [ master ] # PRs against the master branch
