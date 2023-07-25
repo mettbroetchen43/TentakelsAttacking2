@@ -23,7 +23,7 @@ With the buttons in the main scene you can switch between the display of the Gal
 - libraries:
     - raylib 4.2
     - nlohmann-json
-- include directories: every directory that is names "public"
+- include directories: every directory that is named "public"
 
 If you have installed vcpgk you can install the libraries with it.
 If you don't have vcpgk installed you find a tutorial here: https://vcpkg.io/en/getting-started.html
