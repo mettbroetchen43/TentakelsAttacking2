@@ -13,7 +13,6 @@
 # and reproducible build locally (on your development machine) and remotely (on build agents).
 name: TentakelsAttacking
 on: 
-  push: # all pushes
   workflow_dispatch: # started manually
   pull_request:
     branches: [ master ] # PRs against the master branch
@@ -100,17 +99,10 @@ jobs:
         if: ${{ matrix.os != 'ubuntu-22.04' }}
 
       # Build the whole project with Ninja (which is spawn by CMake).
-      - name: Build in Release
+      - name: Build ${{matrix.os}} / ${{matrix.build}}
         run: |
-          cmake --build build --config Release
+          cmake --build build --config ${{matrix.build}}
         working-directory: "${{ github.workspace }}"
-        if: ${{ matrix.build == 'Release' }}
-      
-      - name: Build in Debug
-        run: |
-          cmake --build build --config Debug
-        working-directory: "${{ github.workspace }}"
-        if: ${{ matrix.build == 'Debug' }}
 
       - name: Show content of workspace at its completion
         run: find $RUNNER_WORKSPACE
