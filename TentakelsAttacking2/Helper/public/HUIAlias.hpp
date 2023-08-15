@@ -11,6 +11,10 @@ struct AppContext;
 using AppContext_ty =   AppContext&;
 using AppContext_ty_c = AppContext const&;
 
+struct Vector2;
+using Resolution_ty   = Vector2&;
+using Resolution_ty_c = Vector2 const&;
+
 // Elements
 // Button
 class ClassicButton;
