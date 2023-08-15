@@ -51,7 +51,7 @@
         "version_game": "v0.1.5"
     },
     "window": {
-        "full_screen_bool": false,
+        "full_screen_bool": true,
         "resolution_as_enum": 17,
         "target_fps": 60
     },
