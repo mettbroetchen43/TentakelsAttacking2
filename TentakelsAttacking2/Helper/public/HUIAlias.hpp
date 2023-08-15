@@ -15,6 +15,10 @@ struct Vector2;
 using Resolution_ty   = Vector2&;
 using Resolution_ty_c = Vector2 const&;
 
+struct CWindow;
+using Window_ty   = CWindow&;
+using Window_ty_c = CWindow const&;
+
 // Elements
 // Button
 class ClassicButton;
