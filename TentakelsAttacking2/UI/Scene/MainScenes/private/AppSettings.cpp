@@ -79,8 +79,8 @@ void AppSettingsScene::Initialize() {
 		1
 	);
 	m_toggleFullScreenCBM->SetChecked(appContext.constants.window.isFullScreen);
-	m_toggleFullScreenCBM->SetOnCheck([](unsigned int, bool) {
-			ToggleFullscreenEvent const event{ };
+	m_toggleFullScreenCBM->SetOnCheck([](unsigned int, bool isChecked) {
+			ToggleFullscreenEvent const event{ isChecked };
 			AppContext::GetInstance().eventManager.InvokeEvent(event);
 		} );
 	m_elements.push_back(m_toggleFullScreenCBM);

@@ -11,13 +11,13 @@
 Focus& UIManager::GetFocus() {
 	return m_focus;
 }
-void UIManager::ToggleFullScreen() {
-	m_toggleFullScreen = true;
+void UIManager::SetFullScreen() {
+	m_isNextFullScreen = true;
 }
 void UIManager::CheckAndSetToggleFullScreen(bool first) {
 
-	if (not m_toggleFullScreen) { return; }
-	else { m_toggleFullScreen = false; }
+	if (not m_isNextFullScreen) { return; }
+	else { m_isNextFullScreen = false; }
 
 	if (IsWindowFullscreen()) {
 		::ToggleFullscreen();
@@ -65,7 +65,7 @@ void UIManager::CheckAndUpdate() {
 	}
 
 	if(IsToggleFullscreenInput()) {
-		ToggleFullScreen();
+		SetFullScreen();
 	}
 
 	Vector2 const mousePosition{ GetMousePosition() };
@@ -234,7 +234,7 @@ void UIManager::OnEvent(Event const& event) {
 	}
 
 	if(auto const* ToggleEvent = dynamic_cast<ToggleFullscreenEvent const*>(&event)) {
-		ToggleFullScreen();
+		m_isNextFullScreen = ToggleEvent->IsNextFullscreen();
 		return;
 	}
 
