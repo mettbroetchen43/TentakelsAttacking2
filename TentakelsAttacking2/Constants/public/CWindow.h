@@ -15,7 +15,7 @@ struct CWindow final {
 
 	Resolution currentResolutionEnum{ Resolution::LAST }; ///< contains the current resolution Enum (override by config)
 	Vector2 currentResolutionVec{ 800.0f, 600.0f }; ///< contains the current resolution Vector
-	Vec2<int> nativeResolution{ 800, 600 }; ///< contains the native resolution of the the screen
+	Vec2<int> nativeResolutionVec{ 800, 600 }; ///< contains the native resolution of the the screen
 
 	bool isFullScreen{ true }; ///< defines if the game is starting in fullscreen mode (override by config)
 

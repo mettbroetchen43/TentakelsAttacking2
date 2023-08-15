@@ -152,3 +152,7 @@ void SceneManager::OnEvent(Event const& event) {
 		return;
 	}
 }
+
+bool SceneManager::IsValidCurrentScene() const {
+	return m_currentScene != nullptr;
+}

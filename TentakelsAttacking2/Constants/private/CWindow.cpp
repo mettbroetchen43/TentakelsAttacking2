@@ -10,8 +10,8 @@
 bool CWindow::IsPossibleResolution(Resolution toProve) const {
 	auto const value{ GetIntFromResolution(toProve) };
 
-	if (nativeResolution.x < value.x) { return false; }
-	if (nativeResolution.y < value.y) { return false; }
+	if (nativeResolutionVec.x < value.x) { return false; }
+	if (nativeResolutionVec.y < value.y) { return false; }
 	return true;
 }
 
@@ -74,7 +74,7 @@ std::string CWindow::GetStringFromResolution(Resolution resolution) const {
 		return "VGA 4:3 (640 x 480)";
 
 	case Resolution::NATIVE:
-		return "Native (" + std::to_string(nativeResolution.x) + " x " + std::to_string(nativeResolution.y) + ")";
+		return "Native (" + std::to_string(nativeResolutionVec.x) + " x " + std::to_string(nativeResolutionVec.y) + ")";
 	case Resolution::SCREEN: {
 		auto const value{ GetIntFromResolution(resolution) };
 		return "Screen (" + std::to_string(value.x) + " x " + std::to_string(value.y) + ")";
@@ -136,7 +136,7 @@ Vec2<int> CWindow::GetIntFromResolution(Resolution resolution) const {
 
 
 	case Resolution::NATIVE:
-		return nativeResolution;
+		return nativeResolutionVec;
 	case Resolution::SCREEN: {
 		int const screen{ GetCurrentMonitor() };
 		int const height{ GetMonitorHeight(screen) };

@@ -69,4 +69,9 @@ public:
 	 */
 	void OnEvent(Event const& event);
 
+	/**
+	 * returns if there is a valid current scene.
+	 */
+	[[nodiscard]] bool IsValidCurrentScene() const;
+
 };

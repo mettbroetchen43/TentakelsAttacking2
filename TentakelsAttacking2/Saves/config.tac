@@ -52,7 +52,7 @@
     },
     "window": {
         "full_screen_bool": false,
-        "resolution_as_enum": 17,
+        "resolution_as_enum": 5,
         "target_fps": 60
     },
     "world": {

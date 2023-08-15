@@ -38,7 +38,7 @@ private:
 	/**
 	 * Toggles between full screen and window mode.
 	 */
-	void CheckAndSetToggleFullScreen(bool first = false);
+	void CheckAndSetToggleFullScreen();
 
 	/**
 	 * converts and updates the resolution in Window mode.
@@ -62,9 +62,14 @@ private:
 	void Render();
 
 	/**
+	 * sets the window size to the native screen size.
+	 * does not update anything because the current size need to be set after toggle.
+	 */
+	void SetNativeWindowSize();
+	/**
 	 * sets the current window size from the config to raylib.
 	 */
-	void SetWindowSize(bool fullscreen);
+	void SetWindowSize();
 	/**
 	 * sets the pint ow position if in window mode.
 	 */

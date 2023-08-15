@@ -14,33 +14,31 @@ Focus& UIManager::GetFocus() {
 void UIManager::SetFullScreen() {
 	m_isNextFullScreen = true;
 }
-void UIManager::CheckAndSetToggleFullScreen(bool first) {
+void UIManager::CheckAndSetToggleFullScreen() {
 	Window_ty window{ m_appContext.constants.window };
 
-	if (not m_isNextFullScreen) { return; }
-	else { m_isNextFullScreen = false; }
+	if (window.isFullScreen == m_isNextFullScreen) { return; }
+	window.isFullScreen = m_isNextFullScreen;
 
-	if (IsWindowFullscreen()) {
+	if (window.isFullScreen) {
+		SetNativeWindowSize();
 		::ToggleFullscreen();
-		SetWindowSize(false);
-		SetWindowPosition();
+		SetWindowSize();
 	}
 	else {
-		SetWindowSize(true);
+		SetNativeWindowSize();
 		::ToggleFullscreen();
+		SetWindowSize();
+		SetWindowPosition();
 	}
-	if(!first) {
-		auto& fullScreen{ AppContext::GetInstance().constants.window.isFullScreen };
-		fullScreen = !fullScreen;
-		m_sceneManager.Resize(window.currentResolutionVec, m_appContext);
-	}
+	m_sceneManager.Resize(window.currentResolutionVec, m_appContext);
 }
 
 void UIManager::CheckAndSetNewResolution() {
 	Window_ty window{ m_appContext.constants.window };
-	if(m_nextResolution == m_appContext.constants.window.currentResolutionEnum) { return; }
+	if(m_nextResolution == window.currentResolutionEnum) { return; }
 
-	bool const validResolution{ m_appContext.constants.window.IsPossibleResolution(m_nextResolution) };
+	bool const validResolution{ window.IsPossibleResolution(m_nextResolution) };
 	if (!validResolution) { 
 		Print(
 			PrintType::ERROR,
@@ -50,14 +48,12 @@ void UIManager::CheckAndSetNewResolution() {
 		return;
 	}
 
-	m_appContext.constants.window.currentResolutionEnum = m_nextResolution;
-
-	if (IsWindowFullscreen()) { return; }
-
-	SetWindowSize(false);
+	SetWindowSize();
 	SetWindowPosition();
 
-	m_sceneManager.Resize(window.currentResolutionVec, m_appContext);
+	if(m_sceneManager.IsValidCurrentScene()){
+		m_sceneManager.Resize(window.currentResolutionVec, m_appContext);
+	}
 }
 
 void UIManager::CheckAndUpdate() {
@@ -99,24 +95,27 @@ void UIManager::Render() {
 	EndDrawing();
 }
 
-void UIManager::SetWindowSize(bool full_screen) {
+void UIManager::SetNativeWindowSize() {
+	Window_ty_c window{ m_appContext.constants.window };
+	Vec2<int> values{ window.nativeResolutionVec };
+
+	::SetWindowSize(values.x, values.y);
+}
+
+void UIManager::SetWindowSize() {
 	Window_ty window{ m_appContext.constants.window };
-	Vec2<int> values{ 0, 0 };
-	if (full_screen) {
-		values = m_appContext.constants.window.GetIntFromResolution(Resolution::SCREEN);
-	}
-	else {
-		values = m_appContext.constants.window.GetIntFromResolution(m_nextResolution);
-	}
+	if (window.currentResolutionEnum == m_nextResolution) { return; }
+	window.currentResolutionEnum = m_nextResolution;
+
+	Vec2<int> values{ window.GetIntFromResolution(m_nextResolution) };
 
 	window.currentResolutionVec = { static_cast<float>(values.x), static_cast<float>(values.y) };
-
 	::SetWindowSize(values.x, values.y);
 }
 
 void UIManager::SetWindowPosition() {
 	Window_ty_c window{ m_appContext.constants.window };
-	if(IsWindowFullscreen()) { return; }
+	if(window.isFullScreen) { return; }
 
 	int const screen{ GetCurrentMonitor() };
 	int const screenHeight{ GetMonitorHeight(screen) };
@@ -126,7 +125,7 @@ void UIManager::SetWindowPosition() {
 	int differenceHeight{ (screenHeight - static_cast<int>(window.currentResolutionVec.y)) / 2 };
 
 	if(differenceWidth < 0) { differenceWidth = 0; }
-	if(differenceHeight < 0) { differenceHeight = 10; }
+	if(differenceHeight < 0) { differenceHeight = 0; }
 
 	::SetWindowPosition(differenceWidth, differenceHeight);
 }
@@ -173,15 +172,12 @@ void UIManager::StartUI() {
 
 	SetWindowTitle(("Tentakels Attacking " + m_appContext.constants.global.gameVersion).c_str());
 	Window_ty window{ m_appContext.constants.window };
+	window.nativeResolutionVec = window.GetIntFromResolution(Resolution::SCREEN);
+
 	if(m_appContext.constants.window.currentResolutionEnum == Resolution::LAST) {
 
 		m_nextResolution = Resolution::SCREEN;
-		m_appContext.constants.window.currentResolutionEnum = Resolution::SCREEN;
-
-		SetWindowSize(false);
-		SetWindowPosition();
-
-		m_sceneManager.SetResolution(window.currentResolutionVec);
+		m_isNextFullScreen = true;
 
 		ShowInitialSoundLevelPopUpEvent event{
 			m_appContext.languageManager.Text("ui_manager_initial_sound_popup_title"),
@@ -189,9 +185,10 @@ void UIManager::StartUI() {
 		};
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	} else {
-		m_nextResolution = m_appContext.constants.window.currentResolutionEnum;
+		m_nextResolution = window.currentResolutionEnum;
+		window.currentResolutionEnum = Resolution::LAST;
 
-		if (!m_appContext.constants.window.IsPossibleResolution(m_nextResolution)) {
+		if (!window.IsPossibleResolution(m_nextResolution)) {
 			Print(
 				PrintType::ERROR,
 				"invalid resolution: {} -> resolution set to: {}",
@@ -199,13 +196,11 @@ void UIManager::StartUI() {
 				m_appContext.constants.window.GetStringFromResolution(Resolution::SCREEN)
 			);
 			m_nextResolution = Resolution::SCREEN;
-			m_appContext.constants.window.currentResolutionEnum = Resolution::SCREEN;
 		}
-
-		SetWindowSize(false);
-		m_sceneManager.SetResolution(window.currentResolutionVec);
 	}
 
+	CheckAndSetToggleFullScreen();
+	CheckAndSetNewResolution();
 	Print(PrintType::INFO, "\"UI\" started");
 }
 
@@ -213,15 +208,6 @@ void UIManager::StartUILoop() {
 
 	SwitchSceneEvent event{ SceneType::LOGO };
 	m_appContext.eventManager.InvokeEvent(event);
-
-	Window_ty window{ m_appContext.constants.window };
-	window.nativeResolution = window.GetIntFromResolution(Resolution::SCREEN);
-
-	if(window.isFullScreen) {
-		CheckAndSetToggleFullScreen(true);
-	} else {
-		SetWindowPosition();
-	}
 
 	Print(PrintType::INFO, "\"UI Loop\" started");
 
