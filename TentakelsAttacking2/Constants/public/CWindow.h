@@ -6,6 +6,7 @@
 #pragma once
 #include "HResolution.hpp"
 #include "CustomRaylib.h"
+#include "Vec2.hpp"
 #include <vector>
 #include <string>
 
@@ -13,7 +14,7 @@ struct CWindow final {
 	static inline int const configEntryCount{ 3 }; ///< config load checks if the count is idetical to the loaded entry count
 
 	Resolution current_resolution{ Resolution::LAST }; ///< contains the current resolution in window mode (override by config)
-	Vector2 nativeResolution{ 800.0f, 600.0f }; ///< contains the native resolution of the the screen
+	Vec2<int> nativeResolution{ 800.0f, 600.0f }; ///< contains the native resolution of the the screen
 
 	bool isFullScreen{ true }; ///< defines if the game is starting in fullscreen mode (override by config)
 
@@ -34,5 +35,5 @@ struct CWindow final {
 	/**
 	 * returns the provided resolution as int.
 	 */
-	[[nodiscard]] std::pair<int, int> GetIntFromResolution(Resolution resolution) const;
+	[[nodiscard]] Vec2<int> GetIntFromResolution(Resolution resolution) const;
 };

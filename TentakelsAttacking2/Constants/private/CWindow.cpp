@@ -10,8 +10,8 @@
 bool CWindow::IsPossibleResolution(Resolution toProve) const {
 	auto const value{ GetIntFromResolution(toProve) };
 
-	if (nativeResolution.x < value.first) { return false; }
-	if (nativeResolution.y < value.second) { return false; }
+	if (nativeResolution.x < value.x) { return false; }
+	if (nativeResolution.y < value.y) { return false; }
 	return true;
 }
 
@@ -77,7 +77,7 @@ std::string CWindow::GetStringFromResolution(Resolution resolution) const {
 		return "Native (" + std::to_string(nativeResolution.x) + " x " + std::to_string(nativeResolution.y) + ")";
 	case Resolution::SCREEN: {
 		auto const value{ GetIntFromResolution(resolution) };
-		return "Screen (" + std::to_string(value.first) + " x " + std::to_string(value.second) + ")";
+		return "Screen (" + std::to_string(value.x) + " x " + std::to_string(value.y) + ")";
 	}
 	case Resolution::LAST:
 	default:
@@ -90,7 +90,7 @@ std::string CWindow::GetStringFromResolution(Resolution resolution) const {
 	}
 }
 
-std::pair<int, int> CWindow::GetIntFromResolution(Resolution resolution) const {
+Vec2<int> CWindow::GetIntFromResolution(Resolution resolution) const {
 
 	switch (resolution) {
 
@@ -136,10 +136,7 @@ std::pair<int, int> CWindow::GetIntFromResolution(Resolution resolution) const {
 
 
 	case Resolution::NATIVE:
-		return { 
-			static_cast<int>(nativeResolution.x),
-			static_cast<int>(nativeResolution.y)
-		};
+		return nativeResolution;
 	case Resolution::SCREEN: {
 		int const screen{ GetCurrentMonitor() };
 		int const height{ GetMonitorHeight(screen) };

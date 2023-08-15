@@ -97,7 +97,7 @@ void UIManager::Render() {
 }
 
 void UIManager::SetWindowSize(bool full_screen) {
-	std::pair<int, int> values;
+	Vec2<int> values{ 0, 0 };
 	if (full_screen) {
 		values = m_appContext.constants.window.GetIntFromResolution(Resolution::SCREEN);
 	}
@@ -105,9 +105,9 @@ void UIManager::SetWindowSize(bool full_screen) {
 		values = m_appContext.constants.window.GetIntFromResolution(m_nextResolution);
 	}
 
-	m_resolution = { static_cast<float>(values.first), static_cast<float>(values.second) };
+	m_resolution = { static_cast<float>(values.x), static_cast<float>(values.y) };
 
-	::SetWindowSize(values.first, values.second);
+	::SetWindowSize(values.x, values.y);
 }
 
 void UIManager::SetWindowPosition() {
@@ -209,8 +209,10 @@ void UIManager::StartUILoop() {
 	SwitchSceneEvent event{ SceneType::LOGO };
 	m_appContext.eventManager.InvokeEvent(event);
 
+	Window_ty window{ m_appContext.constants.window };
+	window.nativeResolution = window.GetIntFromResolution(Resolution::SCREEN);
 
-	if(m_appContext.constants.window.isFullScreen) {
+	if(window.isFullScreen) {
 		CheckAndSetToggleFullScreen(true);
 	} else {
 		SetWindowPosition();
