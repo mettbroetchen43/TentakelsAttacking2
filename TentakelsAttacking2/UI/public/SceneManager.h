@@ -19,7 +19,6 @@ class UIManager;
  */
 class SceneManager final : public EventListener {
 private:
-	UIManager* m_uiManager; ///< contains a pointer of the UIManager
 	PopUpManager m_popUpManager; ///< contains the PopUpManager
 
 	SceneType m_currentSceneType{ SceneType::NONE }; ///< contains the current / loaded SceneType
@@ -43,7 +42,7 @@ public:
 	 * ctor.
 	 * only initialization.
 	 */
-	SceneManager(UIManager* uiManager);
+	SceneManager();
 
 	/**
 	 * calls switch scene.
@@ -61,8 +60,6 @@ public:
 	 * calls the popup manager to resize the popups.
 	 */
 	void Resize(Vector2 resolution, AppContext_ty_c appContext);
-
-	void SetResolution(Vector2 resolution);
 
 	/**
 	 * receives all events and calls the member functions.

@@ -139,6 +139,11 @@ public:
 	 */
 	void OnEvent(Event const& event) override;
 
+	/**
+	 * returns the current resolution.
+	 */
+	[[nodiscard]] Vector2 GetResolution() const;
+
 private:
 	/**
 	 * private Constructor so that the member function GetInstance()

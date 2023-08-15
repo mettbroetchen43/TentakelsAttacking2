@@ -154,7 +154,7 @@ void UIManager::UILoop() {
 }
 
 UIManager::UIManager()
-	: m_appContext(AppContext::GetInstance()), m_sceneManager(this),
+	: m_appContext(AppContext::GetInstance()), m_sceneManager(),
 	m_nextResolution(Resolution::LAST) {
 
 	SetExitKey(KeyboardKey::KEY_NULL);

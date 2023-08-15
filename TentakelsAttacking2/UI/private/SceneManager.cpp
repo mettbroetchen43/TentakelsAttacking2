@@ -115,8 +115,7 @@ void SceneManager::SwitchScene(AppContext_ty_c appContext) {
 	);
 }
 
-SceneManager::SceneManager(UIManager* uiManager)
-	: m_uiManager{ uiManager }, m_popUpManager{ AppContext::GetInstance().constants.window.currentResolutionVec } {
+SceneManager::SceneManager() {
 	AppContext::GetInstance().eventManager.AddListener(this);
 	Print(PrintType::INITIALIZE, "SceneManager");
 }
@@ -139,10 +138,6 @@ void SceneManager::Resize(Vector2 resolution, AppContext_ty_c appContext) {
 	m_currentScene->Resize(resolution, appContext);
 
 	m_popUpManager.Resize(resolution, appContext);
-}
-
-void SceneManager::SetResolution(Vector2 resolution) {
-	m_popUpManager.Resize(resolution, AppContext::GetInstance());
 }
 
 void SceneManager::OnEvent(Event const& event) {
