@@ -27,7 +27,6 @@ private:
 	SceneManager m_sceneManager; ///< contains the scene manager.
 	GameManager m_gameManager; ///< contains the game logic
 	HoverRender m_hover;
-	Vector2 m_resolution; ///< contains the current resolution of the window
 	bool m_closeWindow{ false }; ///< contains if the game will quit at the end of the tick
 	bool m_isNextFullScreen{ false }; ///< contains if the next frame fill toggle fullscreen
 	Resolution m_nextResolution; ///< contains the resolution of the next frame
@@ -112,10 +111,6 @@ public:
 	 * receives all events and calls the member functions.
 	 */
 	void OnEvent(Event const& event);
-	/**
-	 * return the current resolution.
-	 */
-	[[nodiscard]] Vector2 GetResolution() const;
 	/**
 	 * returns an reference if the current focus instance.
 	 */

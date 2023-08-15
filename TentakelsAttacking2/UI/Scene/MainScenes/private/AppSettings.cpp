@@ -205,7 +205,7 @@ void AppSettingsScene::Initialize() {
 		GetStringsFromResolutionEntries()
 	);
 	m_resolutionDropDown->SetEnabled(not appContext.constants.window.isFullScreen);
-	m_resolutionDropDown->SetCurrentElementByID(GetIndexFromResolution(appContext.constants.window.current_resolution) + 1);
+	m_resolutionDropDown->SetCurrentElementByID(GetIndexFromResolution(appContext.constants.window.currentResolutionEnum) + 1);
 	m_resolutionDropDown->SetOnSave([this](unsigned int ID) {
 		SetNewResolutionEvent const event{ this->m_rawResolutionEntries[ID - 1].first };
 		AppContext::GetInstance().eventManager.InvokeEvent(event);

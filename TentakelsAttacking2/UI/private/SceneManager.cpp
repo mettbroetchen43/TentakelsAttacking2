@@ -15,76 +15,77 @@
 
 
 void SceneManager::InitializeNewScene(SceneType sceneType) {
+	Window_ty_c window{ AppContext::GetInstance().constants.window };
 	switch (sceneType) {
 		case SceneType::TEST:
 			m_currentScene = std::make_shared<TestScene>(
-				m_uiManager->GetResolution( )
+				window.currentResolutionVec
 			);
 			return;
 
 		case SceneType::LOGO:
 			m_currentScene= std::make_shared<LogoScene>(
-				m_uiManager->GetResolution()
+				window.currentResolutionVec
 			);
 			return;
 
 		case SceneType::INTRO:
 			m_currentScene = std::make_shared<Intro>(
-				m_uiManager->GetResolution()
+				window.currentResolutionVec
 			);
 			return;
 
 		case SceneType::MAIN_MENU:
 			m_currentScene = std::make_shared<MainMenu>(
-				m_uiManager->GetResolution()
+				window.currentResolutionVec
 			);
 			return;
 
 		case SceneType::NEW_GAME_PLAYER:
 			m_currentScene = std::make_shared<NewGamePlayerScene>(
-				m_uiManager->GetResolution()
+				window.currentResolutionVec
 			);
 			return;
 
 		case SceneType::NEW_GAME_PARAMETER:
 			m_currentScene = std::make_shared<NewGameParameterScene>(
-				m_uiManager->GetResolution()
+				window.currentResolutionVec
 			);
 			return;
 
 		case SceneType::VALIDATE_GALAXY:
 			m_currentScene = std::make_shared<ValidateGalaxyScene>(
-				m_uiManager->GetResolution()
+				window.currentResolutionVec
 			);
 			return;
 
 		case SceneType::MAIN:
 			m_currentScene = std::make_shared<MainScene>(
-				m_uiManager->GetResolution()
+				window.currentResolutionVec
 			);
 			return;
 
 		case SceneType::GAME_SETTINGS:
 			m_currentScene = std::make_shared<GameSettingsScene>(
-			m_uiManager->GetResolution()
+				window.currentResolutionVec
 			);
 			return;
 
 		case SceneType::APP_SETTINGS:
 			m_currentScene = std::make_shared<AppSettingsScene>(
-				m_uiManager->GetResolution()
+				window.currentResolutionVec
 			);
 			return;
 
 		case SceneType::CREDITS:
 			m_currentScene = std::make_shared<CreditsScene>(
-				m_uiManager->GetResolution()
+				window.currentResolutionVec
 			);
 			return;
 
 		case SceneType::UPDATE_EVALUATION:
 			m_currentScene = std::make_shared<UpdateEvaluationScene>(
-				m_uiManager->GetResolution()
+				window.currentResolutionVec
 			);
 			return;
 	}
@@ -115,7 +116,7 @@ void SceneManager::SwitchScene(AppContext_ty_c appContext) {
 }
 
 SceneManager::SceneManager(UIManager* uiManager)
-	: m_uiManager{ uiManager }, m_popUpManager{ uiManager->GetResolution() } {
+	: m_uiManager{ uiManager }, m_popUpManager{ AppContext::GetInstance().constants.window.currentResolutionVec } {
 	AppContext::GetInstance().eventManager.AddListener(this);
 	Print(PrintType::INITIALIZE, "SceneManager");
 }
