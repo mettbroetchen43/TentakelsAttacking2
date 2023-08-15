@@ -67,7 +67,7 @@ void UITargetPoint::RenderRing(AppContext_ty_c appContext) {
 		m_ring->Render(appContext);
 	}
 }
-void UITargetPoint::Render(AppContext_ty_c appContext) {
+void UITargetPoint::Render(AppContext_ty_c) {
 
 
 	DrawCircle(
