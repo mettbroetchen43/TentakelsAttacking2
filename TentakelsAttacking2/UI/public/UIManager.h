@@ -69,7 +69,7 @@ private:
 	/**
 	 * sets the current window size from the config to raylib.
 	 */
-	void SetWindowSize();
+	void SetWindowSize(bool force = false);
 	/**
 	 * sets the pint ow position if in window mode.
 	 */

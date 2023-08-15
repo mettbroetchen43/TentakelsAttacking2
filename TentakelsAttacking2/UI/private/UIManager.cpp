@@ -23,12 +23,12 @@ void UIManager::CheckAndSetToggleFullScreen() {
 	if (window.isFullScreen) {
 		SetNativeWindowSize();
 		::ToggleFullscreen();
-		SetWindowSize();
+		SetWindowSize(true);
 	}
 	else {
 		SetNativeWindowSize();
 		::ToggleFullscreen();
-		SetWindowSize();
+		SetWindowSize(true);
 		SetWindowPosition();
 	}
 	m_sceneManager.Resize(window.currentResolutionVec, m_appContext);
@@ -102,9 +102,9 @@ void UIManager::SetNativeWindowSize() {
 	::SetWindowSize(values.x, values.y);
 }
 
-void UIManager::SetWindowSize() {
+void UIManager::SetWindowSize(bool const force) {
 	Window_ty window{ m_appContext.constants.window };
-	if (window.currentResolutionEnum == m_nextResolution) { return; }
+	if (window.currentResolutionEnum == m_nextResolution and not force) { return; }
 	window.currentResolutionEnum = m_nextResolution;
 
 	Vec2<int> values{ window.GetIntFromResolution(m_nextResolution) };

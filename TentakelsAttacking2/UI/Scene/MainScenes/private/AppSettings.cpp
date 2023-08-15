@@ -267,7 +267,7 @@ AppSettingsScene::~AppSettingsScene() {
 void AppSettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	SettingsScene::CheckAndUpdate(mousePosition, appContext);
 	m_toggleFullScreenCBM->SetChecked(appContext.constants.window.isFullScreen);
-	m_resolutionDropDown->SetEnabled(not appContext.constants.window.isFullScreen);
+	// m_resolutionDropDown->SetEnabled(not appContext.constants.window.isFullScreen);
 }
 void AppSettingsScene::Render(AppContext_ty_c appContext) {
 	SettingsScene::Render(appContext);
