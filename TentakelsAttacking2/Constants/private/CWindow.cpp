@@ -8,14 +8,10 @@
 #include <CustomRaylib.h>
 
 bool CWindow::IsPossibleResolution(Resolution toProve) const {
-	int const screen{ GetCurrentMonitor() };
-	int const height{ GetMonitorHeight(screen) };
-	int const width{ GetMonitorWidth(screen) };
-
 	auto const value{ GetIntFromResolution(toProve) };
 
-	if (width < value.first) { return false; }
-	if (height < value.second) { return false; }
+	if (nativeResolution.x < value.first) { return false; }
+	if (nativeResolution.y < value.second) { return false; }
 	return true;
 }
 
@@ -77,7 +73,8 @@ std::string CWindow::GetStringFromResolution(Resolution resolution) const {
 	case Resolution::VGA:
 		return "VGA 4:3 (640 x 480)";
 
-
+	case Resolution::NATIVE:
+		return "Native (" + std::to_string(nativeResolution.x) + " x " + std::to_string(nativeResolution.y) + ")";
 	case Resolution::SCREEN: {
 		auto const value{ GetIntFromResolution(resolution) };
 		return "Screen (" + std::to_string(value.first) + " x " + std::to_string(value.second) + ")";
@@ -138,6 +135,11 @@ std::pair<int, int> CWindow::GetIntFromResolution(Resolution resolution) const {
 		return { 640, 480 };
 
 
+	case Resolution::NATIVE:
+		return { 
+			static_cast<int>(nativeResolution.x),
+			static_cast<int>(nativeResolution.y)
+		};
 	case Resolution::SCREEN: {
 		int const screen{ GetCurrentMonitor() };
 		int const height{ GetMonitorHeight(screen) };

@@ -30,5 +30,6 @@ enum class Resolution {
 	VGA,
 
 	SCREEN,
+	NATIVE,
 	LAST,
 };
