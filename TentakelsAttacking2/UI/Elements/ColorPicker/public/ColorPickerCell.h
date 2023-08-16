@@ -31,7 +31,7 @@ public:
 	 * only initialize.
 	 */
 	ColorPickerCell(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution, Color color, ColorPicker* colorPicker);
+		Color color, ColorPicker* colorPicker);
 
 	/**
 	 * returns the current color.

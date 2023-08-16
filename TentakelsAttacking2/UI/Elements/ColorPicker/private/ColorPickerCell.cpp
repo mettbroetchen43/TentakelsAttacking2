@@ -14,16 +14,15 @@ void ColorPickerCell::SetColor() const {
 	m_colorPicker->SetColor(m_color);
 }
 
-ColorPickerCell::ColorPickerCell(unsigned int ID, Vector2 pos, Vector2 size, 
-	Alignment alignment, Vector2 resolution, Color color, ColorPicker* colorPicker)
-	: Focusable{ ID }, UIElement{ pos, size, alignment, resolution },
+ColorPickerCell::ColorPickerCell(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, Color color, ColorPicker* colorPicker)
+	: Focusable{ ID }, UIElement{ pos, size, alignment },
 	m_color{ color }, m_colorPicker{ colorPicker },
 	m_hover{
 		0.05f,
 		AppContext::GetInstance().colors.AsString(color),
 		WHITE,
-		{0.01f,0.01f},
-		resolution }
+		{0.01f,0.01f}
+	}
 		{
 
 	if (IsBlankCell()) {
