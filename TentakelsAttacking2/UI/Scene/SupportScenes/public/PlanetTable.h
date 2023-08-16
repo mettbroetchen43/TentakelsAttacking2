@@ -22,8 +22,7 @@ public:
 	/**
 	 * ctor and calls to initialize
 	 */
-	PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		Galaxy_ty_raw galaxy);
+	PlanetTable(Vector2 pos, Vector2 size, Alignment alignment,	Galaxy_ty_raw galaxy);
 
 	/**
 	 * sets if the scene is currently active.
