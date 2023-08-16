@@ -30,8 +30,7 @@ void MainScene::Initialize() {
 		GetElementPosition(0.31f, 0.0f),
 		GetElementSize(0.55f, 0.2f),
 		Alignment::TOP_MID,
-		false,
-		AppContext::GetInstance()
+		false
 		);
 	m_elements.push_back(title);
 

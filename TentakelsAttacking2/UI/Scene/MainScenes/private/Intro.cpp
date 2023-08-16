@@ -19,8 +19,7 @@ void Intro::Initialize( ) {
 		GetElementPosition(0.5f, 0.1f),
 		GetElementSize(0.9f, 0.3f),
 		Alignment::TOP_MID,
-		true,
-		appContext
+		true
 		);
 	m_elements.push_back(m_title);
 

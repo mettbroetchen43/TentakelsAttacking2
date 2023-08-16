@@ -19,8 +19,7 @@ void SettingsScene::Initialize() {
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
 		Alignment::TOP_MID,
-		false,
-		appContext
+		false
 		));
 
 	// line

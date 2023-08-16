@@ -32,8 +32,7 @@ void MainMenu::Initialize() {
 		GetElementPosition(0.625f, 0.025f),
 		GetElementSize(0.7f, 0.2f),
 		Alignment::TOP_MID,
-		false,
-		appContext
+		false
 		);
 	m_elements.push_back(title);
 

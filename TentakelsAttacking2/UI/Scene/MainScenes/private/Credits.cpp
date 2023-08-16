@@ -71,8 +71,7 @@ void CreditsScene::Initialize() {
 		GetElementPosition(0.5f, 0.5f),
 		GetElementSize(0.9f, 0.4f),
 		Alignment::MID_MID,
-		true,
-		appContext
+		true
 		);
 	AddMovingElement(m_title);
 
