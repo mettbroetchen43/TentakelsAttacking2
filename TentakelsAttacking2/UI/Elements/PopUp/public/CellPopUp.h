@@ -17,9 +17,11 @@ protected:
 	/**
 	 * initializes all ui elements.
 	 */
-	virtual void Initialize(AppContext_ty_c appContext, Vector2 resolution);
-	[[nodiscard]] ClassicButton_ty InitializeAcceptButton(
-		AppContext_ty_c appContext, Vector2 resolution);
+	virtual void Initialize();
+	/**
+	 * initializes the accept button.
+	 */
+	[[nodiscard]] ClassicButton_ty InitializeAcceptButton();
 
 	/**
 	 * sets the should close bool to true so this popup will close at the end of the tick.
@@ -43,13 +45,12 @@ public:
 	 * ctor.
 	 * only initialisation.
 	 */
-	CellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	CellPopUp(Vector2 pos, Vector2 size, Alignment alignment,
 		std::string const& title, AssetType infoTexture);
 
 	/**
 	 * cell popup logic.
 	 * gets extended by child classes.
 	 */
-	virtual void CheckAndUpdate(Vector2 const& mousePosition,
-		AppContext_ty_c appContext) override;
+	virtual void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 };
