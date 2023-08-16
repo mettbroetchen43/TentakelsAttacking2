@@ -31,7 +31,6 @@ void FightResultPopup::Initialize() {
 		GetElementPosition(m_pos, m_size, 0.6f, Y),
 		GetElementSize(m_size, 0.7f, textSize * 1.2f),
 		Alignment::MID_MID,
-		m_resolution,
 		Alignment::MID_MID,
 		textSize * 1.2f,
 		fightText
@@ -46,7 +45,6 @@ void FightResultPopup::Initialize() {
 		GetElementPosition(m_pos, m_size, leftX, Y),
 		GetElementSize(m_size, 0.5f,textSize),
 		Alignment::MID_MID,
-		m_resolution,
 		Alignment::MID_MID,
 		textSize,
 		player.GetName()
@@ -60,7 +58,6 @@ void FightResultPopup::Initialize() {
 		GetElementPosition(m_pos, m_size, rightX, Y),
 		GetElementSize(m_size, 0.5f, textSize),
 		Alignment::MID_MID,
-		m_resolution,
 		Alignment::MID_MID,
 		textSize,
 		player.GetName()
@@ -77,7 +74,6 @@ void FightResultPopup::Initialize() {
 		GetElementPosition(m_pos, m_size, leftX, Y),
 		GetElementSize(m_size, 0.5f, textSize * 1.5f),
 		Alignment::MID_MID,
-		m_resolution,
 		Alignment::MID_MID,
 		textSize * 1.5f,
 		static_cast<int>(firstNumber)
@@ -92,7 +88,6 @@ void FightResultPopup::Initialize() {
 		GetElementPosition(m_pos, m_size, rightX, Y),
 		GetElementSize(m_size, 0.5f, textSize * 1.5f),
 		Alignment::MID_MID,
-		m_resolution,
 		Alignment::MID_MID,
 		textSize * 1.5f,
 		static_cast<int>(firstNumber)
@@ -109,7 +104,6 @@ void FightResultPopup::Initialize() {
 		GetElementPosition(m_pos, m_size, 0.5f, Y),
 		GetElementSize(m_size, 0.8f, textSize * 1.5f),
 		Alignment::MID_MID,
-		m_resolution,
 		Alignment::MID_MID,
 		textSize * 1.5f,
 		""
@@ -122,7 +116,6 @@ void FightResultPopup::Initialize() {
 		GetElementPosition(m_pos, m_size, 0.5f, 0.95f),
 		GetElementSize(m_size, 0.2f, 0.15f),
 		Alignment::BOTTOM_MID,
-		m_resolution,
 		appContext.languageManager.Text("helper_skip_big"),
 		SoundType::CLICKED_RELEASE_STD
 	);
@@ -184,9 +177,9 @@ void FightResultPopup::HandleButton() {
 	m_callback();
 }
 
-FightResultPopup::FightResultPopup(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+FightResultPopup::FightResultPopup(Vector2 pos, Vector2 size, Alignment alignment,
 	HFightResult const result, callback_ty callback)
-	: PopUp{ pos, size, alignment, resolution, AppContext::GetInstance().languageManager.Text("helper_fight_big"),
+	: PopUp{ pos, size, alignment, AppContext::GetInstance().languageManager.Text("helper_fight_big"),
 		s_emptyString, AssetType::EXCLAMATION_MARK}, m_result{result}, m_callback{callback} {
 
 	Initialize();
