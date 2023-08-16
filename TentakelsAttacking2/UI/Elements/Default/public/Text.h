@@ -53,9 +53,8 @@ public:
 	 * ctor.
 	 * calls to generate to render.
 	 */
-	Text(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		Alignment textAlignment, float textHeight,
-		std::string text);
+	Text(Vector2 pos, Vector2 size, Alignment alignment,
+		Alignment textAlignment, float textHeight, std::string text);
 
 	/**
 	 * text logic.
@@ -70,7 +69,7 @@ public:
 	 * resizes the text.
 	 * creates a not render string.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext);
+	void Resize(AppContext_ty_c appContext) override;
 
 	/**
 	 * updates the text position and the collider.

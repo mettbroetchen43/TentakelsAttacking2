@@ -46,10 +46,9 @@ void Text::UpdateCollider() {
 	CreateToRender();
 }
 
-Text::Text(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	Alignment textAlignment, float textHeight,
-	std::string text)
-	: UIElement{ pos, size, alignment, resolution }, m_textSize{ textHeight * resolution.y },
+Text::Text(Vector2 pos, Vector2 size, Alignment alignment,
+	Alignment textAlignment, float textHeight, std::string text)
+	: UIElement{ pos, size, alignment }, m_textSize{ textHeight * AppContext::GetInstance().GetResolution().y },
 	m_text{ text }, m_textHeight{ textHeight }, m_textAlignment{ textAlignment } {
 
 	CreateToRender();
@@ -78,8 +77,9 @@ void Text::Render([[maybe_unused]] AppContext_ty_c appContext) {
 		);
 	}
 }
-void Text::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	UIElement::Resize(resolution, appContext);
+void Text::Resize(AppContext_ty_c appContext) {
+	Resolution_ty_c resolution{ appContext.GetResolution() };
+	UIElement::Resize(appContext);
 	m_textSize = m_textHeight * resolution.y;
 	CreateToRender();
 }
