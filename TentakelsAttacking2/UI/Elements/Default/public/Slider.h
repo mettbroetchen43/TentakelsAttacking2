@@ -59,12 +59,8 @@ public:
 	 * loads texture.
 	 * initialize button.
 	 */
-	Slider(Vector2 pos,Vector2 size, Alignment alignment, Vector2 resolution,
+	Slider(Vector2 pos,Vector2 size, Alignment alignment,
 		bool isHorizontal, float absoluteDimension);
-	Slider(Slider const&) = default;
-	Slider(Slider&&) = default;
-	Slider& operator=(Slider const&) = default;
-	Slider& operator= (Slider&&) = default;
 
 	/**
 	 * logic of the slider.
@@ -80,7 +76,7 @@ public:
 	 * resizes the slider.
 	 * calls the button to resize.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
  
 	/**
 	 * sets the onSlide lambda that gets called when the slider gets slide.
