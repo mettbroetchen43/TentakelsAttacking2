@@ -34,7 +34,7 @@ private:
 
 public:
 
-	AppSettingsScene(Vector2 resolution);
+	AppSettingsScene();
 	~AppSettingsScene();
 
 	/**
@@ -48,7 +48,7 @@ public:
 	/**
 	 * resizes all elements in elements and elements out update.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 
 	void OnEvent(Event const& event) override;
 };
