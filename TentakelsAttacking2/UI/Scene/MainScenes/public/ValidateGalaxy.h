@@ -46,5 +46,5 @@ public:
 	 * ctor.
 	 * only initialization.
 	 */
-	ValidateGalaxyScene(Vector2 resolution);
+	ValidateGalaxyScene();
 };
