@@ -10,7 +10,7 @@
 #include "UIGalaxy.h"
 #include "ClassicButton.h"
 
-void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy, bool isAcceptingInput) {
+void GalaxyScene::Initialize(bool isShowGalaxy, bool isAcceptingInput) {
 
 	// Galaxy
 	m_galaxy = std::make_shared<UIGalaxy>(
@@ -18,7 +18,6 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy, bool isAccep
 		GetElementPosition(1.0f, 0.0f),
 		GetElementSize(0.95f, 0.92f),
 		Alignment::TOP_RIGHT,
-		resolution,
 		isShowGalaxy,
 		isAcceptingInput
 		);
@@ -35,7 +34,6 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy, bool isAccep
 		GetElementPosition(0.00f, 0.46f),
 		GetElementSize(0.03f, 0.5f),
 		Alignment::MID_LEFT,
-		resolution,
 		false,
 		m_galaxy->GetScaleFactor()
 		);
@@ -48,7 +46,6 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy, bool isAccep
 		GetElementPosition(0.5175f, 1.0f),
 		GetElementSize(0.5f, 0.05f),
 		Alignment::BOTTOM_MID,
-		resolution,
 		true,
 		m_galaxy->GetScaleFactor()
 		);
@@ -63,7 +60,6 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy, bool isAccep
 		GetElementPosition(0.091f, 0.95f),
 		GetElementSize(0.05f, 0.05f),
 		Alignment::TOP_LEFT,
-		resolution,
 		"+",
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -77,7 +73,6 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy, bool isAccep
 		GetElementPosition(0.041f, 0.95f),
 		GetElementSize(0.05f, 0.05f),
 		Alignment::TOP_LEFT,
-		resolution,
 		"-",
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -90,7 +85,6 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy, bool isAccep
 	m_scaleLineX = std::make_shared<Line>(
 		GetElementPosition(0.041f, 0.94f),
 		GetElementPosition(0.241f, 0.94f),
-		resolution,
 		2.0f,
 		WHITE
 	);
@@ -98,7 +92,6 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy, bool isAccep
 	m_scaleLineY = std::make_shared<Line>(
 		GetElementPosition(0.036f, 0.73f),
 		GetElementPosition(0.036f, 0.93f),
-		resolution,
 		2.0f,
 		WHITE
 		);
@@ -108,12 +101,13 @@ void GalaxyScene::Initialize(Vector2 resolution, bool isShowGalaxy, bool isAccep
 
 void GalaxyScene::Zoom(float scaleFactor, Vector2 referenceScale) {
 
+	Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 	m_verticalSlider->SetAbsoluteDimension(scaleFactor);
 	m_horizontalSlider->SetAbsoluteDimension(scaleFactor);
 
 	auto const startX{ m_scaleLineX->GetStart() };
 	auto       endX  { m_scaleLineX->GetEnd() };
-	auto const sizeX{ referenceScale.x / m_resolution.x };
+	auto const sizeX{ referenceScale.x / resolution.x };
 
 	endX.x = startX.x + sizeX;
 	m_scaleLineX->SetEnd(endX);
@@ -121,7 +115,7 @@ void GalaxyScene::Zoom(float scaleFactor, Vector2 referenceScale) {
 
 	auto       startY{ m_scaleLineY->GetStart() };
 	auto const endY  { m_scaleLineY->GetEnd() };
-	auto const sizeY { referenceScale.y / m_resolution.y };
+	auto const sizeY { referenceScale.y / resolution.y };
 
 	startY.y = endY.y - sizeY;
 	m_scaleLineY->SetStart(startY);
@@ -136,11 +130,10 @@ void GalaxyScene::Slide(float position, bool isHorizontal) {
 	}
 }
 
-GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution, bool isShowGalaxy, bool isAcceptingInput = false)
-	: Scene{ pos, size, alignment, resolution } {
+GalaxyScene::GalaxyScene(Vector2 pos, Vector2 size, Alignment alignment, bool isShowGalaxy, bool isAcceptingInput)
+	: Scene{ pos, size, alignment } {
 
-	Initialize(resolution, isShowGalaxy, isAcceptingInput);
+	Initialize(isShowGalaxy, isAcceptingInput);
 }
 
 void GalaxyScene::SetIsScaling(bool isScaling) {
@@ -200,14 +193,14 @@ void GalaxyScene::Render(AppContext_ty_c appContext) {
 		m_scaleLineY->Render(appContext);
 	}
 }
-void GalaxyScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+void GalaxyScene::Resize(AppContext_ty_c appContext) {
 
-	Scene::Resize(resolution, appContext);
+	Scene::Resize(appContext);
 
-	m_verticalSlider->Resize(resolution, appContext);
-	m_horizontalSlider->Resize(resolution, appContext);
-	m_zoomInBtn->Resize(resolution, appContext);
-	m_zoomOutBtn->Resize(resolution, appContext);
-	m_scaleLineX->Resize(resolution, appContext);
-	m_scaleLineY->Resize(resolution, appContext);
+	m_verticalSlider->Resize(appContext);
+	m_horizontalSlider->Resize(appContext);
+	m_zoomInBtn->Resize(appContext);
+	m_zoomOutBtn->Resize(appContext);
+	m_scaleLineX->Resize(appContext);
+	m_scaleLineY->Resize(appContext);
 }
