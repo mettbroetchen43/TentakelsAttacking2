@@ -74,14 +74,8 @@ public:
 	 * ctor.
 	 * loads texture.
 	 */
-	InputLine(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution, unsigned int charLimit)
-		: UIElement{ pos, size, alignment, resolution }, Focusable{ focusID }, m_charLimit{ charLimit } 
-	{ }
-	InputLine(InputLine const&) = default;
-	InputLine(InputLine&&) = default;
-	InputLine& operator= (InputLine const&) = default;
-	InputLine& operator= (InputLine&&) = default;
+	InputLine(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment, unsigned int charLimit)
+		: UIElement{ pos, size, alignment }, Focusable{ focusID }, m_charLimit{ charLimit }  { }
 
 	/**
 	 * logic of the input line.
