@@ -24,7 +24,7 @@ private:
 	CountRing_ty m_ring{ nullptr }; ///< contains the ring that indicates how many ships are on the planet
 
 public:
-	UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd,
+	UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end, Vector2 relativeStart, Vector2 relativeEnd,
 		Fleet_ty_raw_c fleet, std::function<bool(Vector2 const&)> isInGalaxyCollider);
 	
 	/**
@@ -76,5 +76,5 @@ public:
 	 * calls UIElement to Resize.
 	 * Resizes the line.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 };
