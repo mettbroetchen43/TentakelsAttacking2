@@ -231,8 +231,8 @@ void PopUpManager::Render(AppContext_ty_c appContext) {
 		p->Render(appContext);
 	}
 }
-void PopUpManager::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+void PopUpManager::Resize(AppContext_ty_c appContext) {
 	for (auto& e : m_popUps) {
-		e->Resize(resolution, appContext);
+		e->Resize(appContext);
 	}
 }

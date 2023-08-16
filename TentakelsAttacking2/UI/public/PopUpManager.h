@@ -118,5 +118,5 @@ public:
 	/**
 	 * calls all popups to update.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext);
+	void Resize(AppContext_ty_c appContext);
 };
