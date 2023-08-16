@@ -43,12 +43,7 @@ public:
 	 * ctor.
 	 * only initialization.
 	 */
-	Scene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution);
-	Scene(Scene const&) = default;
-	Scene(Scene&&) = default;
-	Scene& operator= (Scene const&) = default;
-	Scene& operator= (Scene&&) = default;
-	~Scene() = default;
+	Scene(Vector2 pos, Vector2 size, Alignment alignment);
 
 	/**
 	 * returns if the scene is currently active.
@@ -82,7 +77,7 @@ public:
 	/**
 	 * resizes all elements in elements and elements out update.
 	 */
-	virtual void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	virtual void Resize(AppContext_ty_c appContext) override;
 
 	/**
 	 * moves the scene and all its elements by a certain speed to a certain direction.

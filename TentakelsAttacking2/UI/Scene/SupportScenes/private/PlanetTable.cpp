@@ -20,7 +20,6 @@ void PlanetTable::Initialization() {
 		GetElementPosition(0.0f, 0.0f),
 		GetElementSize(1.0f, 1.0f),
 		Alignment::TOP_LEFT,
-		m_resolution,
 		1000,
 		discoveredCount + 1,
 		4,
@@ -98,9 +97,8 @@ void PlanetTable::Initialization() {
 	}
 }
 
-PlanetTable::PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-	Galaxy_ty_raw galaxy)
-	: Scene{ pos, size, alignment, resolution }, m_galaxy{ galaxy } {
+PlanetTable::PlanetTable(Vector2 pos, Vector2 size, Alignment alignment, Galaxy_ty_raw galaxy)
+	: Scene{ pos, size, alignment }, m_galaxy{ galaxy } {
 	
 	Initialization();
 }

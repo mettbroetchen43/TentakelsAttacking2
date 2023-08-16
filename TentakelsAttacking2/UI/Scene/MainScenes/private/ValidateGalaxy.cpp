@@ -20,7 +20,6 @@ void ValidateGalaxyScene::Initialize() {
 		GetElementPosition(0.5f, 0.01f),
 		GetElementSize(0.4f, 0.07f),
 		Alignment::TOP_MID,
-		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
 		appContext.languageManager.Text("scene_validate_galaxy_text", ":")
@@ -32,7 +31,6 @@ void ValidateGalaxyScene::Initialize() {
 		GetElementPosition(0.1f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
-		m_resolution,
 		appContext.languageManager.Text("scene_validate_galaxy_back_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -46,7 +44,6 @@ void ValidateGalaxyScene::Initialize() {
 		GetElementPosition(0.5f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
-		m_resolution,
 		appContext.languageManager.Text("scene_validate_galaxy_regenerate_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -60,7 +57,6 @@ void ValidateGalaxyScene::Initialize() {
 		GetElementPosition(0.9f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
-		m_resolution,
 		appContext.languageManager.Text("scene_validate_galaxy_next_btn"),
 		SoundType::ACCEPTED
 		);
@@ -85,7 +81,6 @@ void ValidateGalaxyScene::InitializePlayerLegend() {
 			GetElementPosition(X, Y),
 			GetElementSize(width, height),
 			Alignment::TOP_RIGHT,
-			m_resolution,
 			Alignment::TOP_RIGHT,
 			height,
 			player.GetName()
@@ -105,7 +100,6 @@ void ValidateGalaxyScene::InitializeGalaxy() {
 		GetElementPosition(0.05f, 0.465f),
 		GetElementSize(0.75f, 0.75f),
 		Alignment::MID_LEFT,
-		m_resolution,
 		false,
 		false
 		);
@@ -126,8 +120,8 @@ void ValidateGalaxyScene::NewGalaxy() {
 	InitializeGalaxy();
 }
 
-ValidateGalaxyScene::ValidateGalaxyScene(Vector2 resolution)
-	: Scene{ {0.0f,0.0f}, {1.0f,1.0f}, Alignment::DEFAULT, resolution } {
+ValidateGalaxyScene::ValidateGalaxyScene()
+	: Scene{ {0.0f,0.0f}, {1.0f,1.0f}, Alignment::DEFAULT } {
 
 	Initialize();
 	InitializeGalaxy();

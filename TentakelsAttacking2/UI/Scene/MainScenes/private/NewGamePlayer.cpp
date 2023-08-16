@@ -15,16 +15,14 @@
 #include "HFocusEvents.h"
 #include <cassert>
 
-void NewGamePlayerScene::Initialize(Vector2 resolution,
-	AppContext_ty appContext) {
+void NewGamePlayerScene::Initialize() {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	auto title = std::make_shared<Title>(
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
 		Alignment::TOP_MID,
-		resolution,
-		false,
-		appContext
+		false
 		);
 	m_elements.push_back(title);
 
@@ -32,7 +30,6 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.1f, 0.28f),
 		GetElementSize(0.25f, 0.05f),
 		Alignment::TOP_LEFT,
-		resolution,
 		Alignment::TOP_LEFT,
 		0.05f,
 		appContext.languageManager.Text("scene_new_game_player_add_player_headline", ":")
@@ -44,7 +41,6 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.1f, 0.35f),
 		GetElementSize(0.35f, 0.05f),
 		Alignment::TOP_LEFT,
-		resolution,
 		20
 		);
 	inputLine->SetPlaceholderText(appContext.languageManager.Text("scene_new_game_player_player_name_placeholder"));
@@ -58,8 +54,7 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		2,
 		GetElementPosition(0.1f, 0.45f),
 		GetElementSize(0.35f, 0.35f),
-		Alignment::TOP_LEFT,
-		resolution
+		Alignment::TOP_LEFT
 		);
 	colorPicker->SetColor(appContext.playerCollection.GetPossibleColor());
 	colorPicker->SetOnEnter([this]() {
@@ -74,7 +69,6 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.45f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_RIGHT,
-		resolution,
 		appContext.languageManager.Text("scene_new_game_player_reset_btn"),
 		SoundType::ACCEPTED
 		);
@@ -88,7 +82,6 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.1f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_LEFT,
-		resolution,
 		appContext.languageManager.Text("scene_new_game_player_back_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -102,7 +95,6 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 	auto line = std::make_shared<Line>(
 		GetElementPosition(0.5f, 0.25f),
 		GetElementPosition(0.5f, 0.95f),
-		resolution,
 		2.0f,
 		WHITE
 		);
@@ -112,7 +104,6 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.55f, 0.28f),
 		GetElementSize(0.25f, 0.05f),
 		Alignment::TOP_LEFT,
-		resolution,
 		Alignment::TOP_LEFT,
 		0.05f,
 		appContext.languageManager.Text("scene_new_game_player_current_player_headline", ":")
@@ -123,7 +114,6 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.55f, 0.33f),
 		GetElementSize(0.25f, 0.05f),
 		Alignment::TOP_LEFT,
-		resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
 		appContext.languageManager.Text("scene_new_game_player_min_player_count_subtext", ":", appContext.constants.player.minPlayerCount)
@@ -134,7 +124,6 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.9f, 0.35f),
 		GetElementSize(0.35f, 0.45f),
 		Alignment::TOP_RIGHT,
-		resolution,
 		5,
 		static_cast<int>(appContext.constants.player.maxPlayerCount + 1),
 		3,
@@ -169,7 +158,6 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.55f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_LEFT,
-		resolution,
 		appContext.languageManager.Text("scene_new_game_player_add_player_btn"),
 		SoundType::ACCEPTED
 		);
@@ -183,7 +171,6 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		GetElementPosition(0.9f, 0.85f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::TOP_RIGHT,
-		resolution,
 		appContext.languageManager.Text("scene_new_game_player_next_btn"),
 		SoundType::ACCEPTED
 		);
@@ -192,11 +179,11 @@ void NewGamePlayerScene::Initialize(Vector2 resolution,
 		});
 	m_elements.push_back(m_nextBTN);
 
-	InitializePlayerButtons(appContext);
+	InitializePlayerButtons();
 }
 
-void NewGamePlayerScene::InitializePlayerButtons(AppContext_ty appContext) {
-
+void NewGamePlayerScene::InitializePlayerButtons() {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	size_t const maxPlayerCount{ appContext.constants.player.maxPlayerCount };
 	size_t const currentPlayerCount{ appContext.playerCollection.GetPlayerCount() };
 	float const rowHeight{ 0.45f / (maxPlayerCount + 1) };
@@ -208,7 +195,6 @@ void NewGamePlayerScene::InitializePlayerButtons(AppContext_ty appContext) {
 			GetElementPosition(0.905f, initialY + rowHeight * i + 0.005f),
 			GetElementSize(rowHeight * 0.7f, rowHeight - 0.01f),
 			Alignment::TOP_LEFT,
-			m_resolution,
 			"X",
 			SoundType::CLICKED_RELEASE_STD
 			);
@@ -223,8 +209,7 @@ void NewGamePlayerScene::InitializePlayerButtons(AppContext_ty appContext) {
 	}
 }
 
-void NewGamePlayerScene::CheckForNestedFocus(Vector2 const& mousePosition,
-	[[maybe_unused]] AppContext_ty_c appContext) const {
+void NewGamePlayerScene::CheckForNestedFocus(Vector2 const& mousePosition) const {
 	if (!IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 		return;
 	}
@@ -240,7 +225,8 @@ void NewGamePlayerScene::CheckForNestedFocus(Vector2 const& mousePosition,
 	}
 }
 
-void NewGamePlayerScene::UpdateSceneEntries(AppContext_ty_c appContext) {
+void NewGamePlayerScene::UpdateSceneEntries() {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	m_colorPicker->SetColor(appContext.playerCollection.GetPossibleColor());
 
 	m_inputLine->Clear();
@@ -290,9 +276,8 @@ void NewGamePlayerScene::AddPlayer() {
 	};
 	appContext.eventManager.InvokeEvent(event);
 }
-void NewGamePlayerScene::UpdatePlayer(unsigned int ID, std::string const& name,
-	Color color, AppContext_ty_c appContext) {
-
+void NewGamePlayerScene::UpdatePlayer(unsigned int ID, std::string const& name, Color color) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	EditPlayerEvent const event{
 		ID,
 		name,
@@ -300,10 +285,9 @@ void NewGamePlayerScene::UpdatePlayer(unsigned int ID, std::string const& name,
 	};
 	appContext.eventManager.InvokeEvent(event);
 
-	UpdateSceneEntries(appContext);
+	UpdateSceneEntries();
 }
-void NewGamePlayerScene::UpdatePlayerName(AbstractTableCell const*,
-	std::string oldValue, std::string newValue) {
+void NewGamePlayerScene::UpdatePlayerName(AbstractTableCell const*, std::string oldValue, std::string newValue) {
 
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	PlayerData const playerData{ appContext.playerCollection.GetPlayerByName(oldValue) };
@@ -311,20 +295,17 @@ void NewGamePlayerScene::UpdatePlayerName(AbstractTableCell const*,
 	UpdatePlayer(
 		playerData.ID,
 		newValue,
-		playerData.color,
-		appContext
+		playerData.color
 	);
 }
-void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell const*,
-	Color oldValue, Color newValue){
+void NewGamePlayerScene::UpdatePlayerColor(AbstractTableCell const*, Color oldValue, Color newValue){
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	PlayerData const playerData{ appContext.playerCollection.GetPlayerByColor(oldValue) };
 
 	UpdatePlayer(
 		playerData.ID,
 		playerData.GetName(),
-		newValue,
-		appContext
+		newValue
 	);
 }
 void NewGamePlayerScene::DeletePlayer(unsigned int ID) {
@@ -351,7 +332,8 @@ void NewGamePlayerScene::Reset() {
 	appContext.eventManager.InvokeEvent(event);
 }
 
-void NewGamePlayerScene::SetNextButton(AppContext_ty_c appContext) {
+void NewGamePlayerScene::SetNextButton() {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	size_t const playerCount{ appContext.playerCollection.GetPlayerData().size() };
 	bool const validPlayerCount{
 			playerCount >= appContext.constants.player.minPlayerCount
@@ -363,24 +345,23 @@ void NewGamePlayerScene::SetNextButton(AppContext_ty_c appContext) {
 	}
 }
 
-NewGamePlayerScene::NewGamePlayerScene(Vector2 resolution)
-	: Scene{ {0.0f,0.0f}, {1.0f,1.0f}, Alignment::DEFAULT, resolution } {
+NewGamePlayerScene::NewGamePlayerScene()
+	: Scene{ {0.0f,0.0f}, {1.0f,1.0f}, Alignment::DEFAULT } {
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
-	Initialize(resolution, appContext);
-	UpdateSceneEntries(appContext);
+	Initialize();
+	UpdateSceneEntries();
 	appContext.eventManager.AddListener(this);
 }
 NewGamePlayerScene::~NewGamePlayerScene() {
 	AppContext::GetInstance().eventManager.RemoveListener(this);
 }
 
-void NewGamePlayerScene::CheckAndUpdate(Vector2 const& mousePosition,
-	AppContext_ty_c appContext) {
+void NewGamePlayerScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
-	CheckForNestedFocus(mousePosition, appContext);
+	CheckForNestedFocus(mousePosition);
 
-	SetNextButton(appContext);
+	SetNextButton();
 
 	for (auto& e : m_elements) {
 		e->CheckAndUpdate(mousePosition, appContext);
@@ -391,10 +372,9 @@ void NewGamePlayerScene::Render(AppContext_ty_c appContext) {
 		e->Render(appContext);
 	}
 }
-void NewGamePlayerScene::Resize(Vector2 resolution,
-	AppContext_ty_c appContext) {
+void NewGamePlayerScene::Resize(AppContext_ty_c appContext) {
 	for (auto& e : m_elements) {
-		e->Resize(resolution, appContext);
+		e->Resize(appContext);
 	}
 }
 
@@ -405,7 +385,7 @@ void NewGamePlayerScene::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* RefreshEvent = dynamic_cast<RefreshNewGamePlayerScene const*>(&event)) {
-		UpdateSceneEntries(AppContext::GetInstance());
+		UpdateSceneEntries();
 		return;
 	}
 }

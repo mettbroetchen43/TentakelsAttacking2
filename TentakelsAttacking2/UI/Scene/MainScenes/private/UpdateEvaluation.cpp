@@ -164,8 +164,8 @@ void UpdateEvaluationScene::HandleNextPopup() {
 	++m_currentIndex;
 }
 
-UpdateEvaluationScene::UpdateEvaluationScene(Vector2 resolution)
-	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution) {
+UpdateEvaluationScene::UpdateEvaluationScene()
+	: Scene({ 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT) {
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
 	appContext.eventManager.AddListener(this);

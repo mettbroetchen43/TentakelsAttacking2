@@ -22,15 +22,13 @@ private:
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize(std::string const& headline, 
-		creditEntries const& entries, bool containsLink);
+	void Initialize(std::string const& headline, creditEntries const& entries, bool containsLink);
 
 public:
 	/**
 	 * ctor.
 	 * only initialization.
  	 */
-	CreditTableScene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		std::string const& headline, creditEntries const& entries,
-		bool containsLink = false);
+	CreditTableScene(Vector2 pos, Vector2 size, Alignment alignment, std::string const& headline,
+		creditEntries const& entries, bool containsLink = false);
 };

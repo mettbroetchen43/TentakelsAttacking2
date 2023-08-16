@@ -88,7 +88,6 @@ void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
 		Vector2(0.5f, 0.5f),
 		Vector2(0.5f, 0.5f),
 		Alignment::MID_MID,
-		AppContext::GetInstance().GetResolution(),
 		event->GetTitle(),
 		const_cast<std::string&>(event->GetSubTitle()),
 		AssetType::EXCLAMATION_MARK,
@@ -103,7 +102,6 @@ void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerPopUpEvent const* event)
 		Vector2(0.5f, 0.5f),
 		Vector2(0.5f, 0.5f),
 		Alignment::MID_MID,
-		AppContext::GetInstance().GetResolution(),
 		event->GetTitle(),
 		AssetType::QUESTION_MARK,
 		event->GetOnClick()
@@ -116,7 +114,6 @@ void PopUpManager::NewValidatePopUp(ShowValidatePopUp const* event) {
 		Vector2(0.5f, 0.5f),
 		Vector2(0.5f, 0.5f),
 		Alignment::MID_MID,
-		AppContext::GetInstance().GetResolution(),
 		event->GetTitle(),
 		const_cast<std::string&>(event->GetSubTitle()),
 		AssetType::QUESTION_MARK,
@@ -133,7 +130,6 @@ void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
 		Vector2(0.5f, 0.5f),
 		Vector2(0.7f, 0.7f),
 		Alignment::MID_MID,
-		appContext.GetResolution(),
 		event->GetTitle(),
 		AssetType::LOGO,
 		event->GetCurrentValue(),
@@ -150,7 +146,6 @@ void PopUpManager::NewSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* eve
 		Vector2(0.5f,0.5f),
 		Vector2(0.5f,0.5f),
 		Alignment::MID_MID,
-		appContext.GetResolution(),
 		event->GetTitle(),
 		const_cast<std::string&>(event->GetSubTitle())
 		)
@@ -165,7 +160,6 @@ void PopUpManager::NewFightResultPopUp(ShowFightResultEvent const* event) {
 		Vector2(0.5f, 0.5f),
 		Vector2(0.8f, 0.8f),
 		Alignment::MID_MID,
-		appContext.GetResolution(),
 		event->GetResult(),
 		event->GetCallback()
 		)
@@ -231,8 +225,8 @@ void PopUpManager::Render(AppContext_ty_c appContext) {
 		p->Render(appContext);
 	}
 }
-void PopUpManager::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+void PopUpManager::Resize(AppContext_ty_c appContext) {
 	for (auto& e : m_popUps) {
-		e->Resize(resolution, appContext);
+		e->Resize(appContext);
 	}
 }

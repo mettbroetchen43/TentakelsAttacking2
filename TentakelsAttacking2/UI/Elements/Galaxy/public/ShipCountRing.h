@@ -25,8 +25,8 @@ private:
 
 public:
 
-	CountRing(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, float innerSize, float ringSize,
-		int currentCount, int maxCount);
+	CountRing(Vector2 pos, Vector2 size, Alignment alignment, 
+		float innerSize, float ringSize, int currentCount, int maxCount);
 
 	/**
 	 * calls the Ring to set ne new values.
@@ -80,5 +80,5 @@ public:
 	/**
 	 * Calls the UIElement top resize and calls Update for the ring.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 };

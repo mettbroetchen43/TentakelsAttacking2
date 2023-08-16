@@ -26,7 +26,6 @@ void DropDown::Initialize(std::vector<std::string> const& elements, unsigned int
 			Vector2(x, y),
 			Vector2(width, height),
 			Alignment::DEFAULT,
-			m_resolution,
 			startFocusID,
 			static_cast<unsigned int>(i + 1),
 			elements.at(i),
@@ -67,11 +66,12 @@ void DropDown::SetCurrentElementOutUpdate(std::shared_ptr<DropDownElement> eleme
 }
 
 void DropDown::SetText() {
+	Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 	m_currentElementText = m_currentElement->GetText();
 	StripString(m_currentElementText);
 	m_fontSize = GetElementTextHeight(
 		m_size,
-		m_resolution.y
+		resolution.y
 	);
 	m_currentElementText = GetPrintableTextInCollider(
 		m_currentElementText,
@@ -170,6 +170,7 @@ void DropDown::CheckIfScrolling() {
 
 void DropDown::UpdateCollider() {
 
+	Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 	UIElement::UpdateCollider();
 	SetText();
 
@@ -184,15 +185,15 @@ void DropDown::UpdateCollider() {
 		m_collider.x,
 		m_collider.y + m_collider.height,
 		m_collider.width,
-		m_resolution.y * m_dropDownHeight
+		resolution.y * m_dropDownHeight
 	};
 }
 
-DropDown::DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, float dropDownHeight,
+DropDown::DropDown(Vector2 pos, Vector2 size, Alignment alignment, float dropDownHeight,
 	unsigned int focusID, unsigned int startElementFocusID, std::vector<std::string> const& elements)
-	: UIElement{ pos, size, alignment, resolution }, Focusable{ focusID }, m_dropDownHeight{ dropDownHeight } {
+	: UIElement{ pos, size, alignment }, Focusable{ focusID }, m_dropDownHeight{ dropDownHeight } {
 
-
+	Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 
 	m_arrowTexture = AppContext::GetInstance().assetManager.GetTexture(AssetType::ARROW_UP);
 	m_arrowTextureRec = {
@@ -212,7 +213,7 @@ DropDown::DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resol
 	m_collider.x,
 	m_collider.y + m_collider.height,
 	m_collider.width - m_arrowCollider.width,
-	m_resolution.y * m_dropDownHeight
+	resolution.y * m_dropDownHeight
 	};
 
 	m_collider.width -= m_arrowCollider.width;
@@ -366,13 +367,13 @@ void DropDown::Render(AppContext_ty_c appContext) {
 		);
 	}
 }
-void DropDown::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+void DropDown::Resize(AppContext_ty_c appContext) {
 
-	UIElement::Resize(resolution, appContext);
+	UIElement::Resize(appContext);
 
 
 	for (auto const& element : m_dropDownElements) {
-		element->Resize(resolution, appContext);
+		element->Resize(appContext);
 	}
 }
 

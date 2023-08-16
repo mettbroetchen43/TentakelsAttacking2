@@ -36,7 +36,7 @@ enum class TextAlignment {
  * recalculates the position witch the size and alignment.
  */
 Rectangle GetAlignedCollider(Vector2& pos, Vector2 size,
-	Alignment allignment, Vector2 resolution);
+	Alignment allignment);
 /**
  * recalculates the provided position witch the provided collider and alignment.
  */

@@ -97,8 +97,8 @@ public:
 	 * ctor.
 	 * only initialization.
 	 */
-	DropDown(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, float dropDownSize,
-			 unsigned int focusID, unsigned int startElementFocusID, std::vector<std::string> const& elements);
+	DropDown(Vector2 pos, Vector2 size, Alignment alignment, 
+		float dropDownSize, unsigned int focusID, unsigned int startElementFocusID, std::vector<std::string> const& elements);
 
 
 	/**
@@ -129,7 +129,7 @@ public:
 	/**
 	 * resizes itself and alle elements it contains.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 
 	/**
 	 * returns if the element is currently enabled.

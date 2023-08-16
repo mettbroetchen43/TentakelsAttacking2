@@ -12,14 +12,13 @@
 #include "CheckBox.h"
 #include "HFocusEvents.h"
 
-void SoundLevelPopUp::Initialize(Vector2 resolution) {
+void SoundLevelPopUp::Initialize() {
 	AppContext_ty_c appContext = AppContext::GetInstance();
 	
 	m_slider = std::make_shared<Slider>(
 		GetElementPosition(m_pos, m_size, 0.5f, 0.65f),
 		GetElementSize(m_size, 0.7f, 0.1f),
 		Alignment::BOTTOM_MID,
-		resolution,
 		true,
 		10.0f
 		);
@@ -35,7 +34,6 @@ void SoundLevelPopUp::Initialize(Vector2 resolution) {
 		GetElementPosition(m_pos, m_size, 0.15f, 0.66f),
 		GetElementSize(m_size, 0.0f, 0.04f).y,
 		Alignment::TOP_LEFT,
-		resolution,
 		1
 		);
 	m_checkBox->SetChecked(appContext.constants.sound.muteVolume);
@@ -52,7 +50,6 @@ void SoundLevelPopUp::Initialize(Vector2 resolution) {
 		GetElementPosition(m_pos, m_size, 0.18f, 0.655f),
 		GetElementSize(m_size, 0.2f, 0.3f),
 		Alignment::TOP_LEFT,
-		resolution,
 		Alignment::TOP_LEFT,
 		0.025f,
 		appContext.languageManager.Text("ui_sound_level_popup_mute")
@@ -63,7 +60,6 @@ void SoundLevelPopUp::Initialize(Vector2 resolution) {
 		GetElementPosition(m_pos, m_size, 0.5f, 0.95f),
 		GetElementSize(m_size, 0.2f, 0.15f),
 		Alignment::BOTTOM_MID,
-		resolution,
 		appContext.languageManager.Text("ui_sound_level_popup_accept_btn"),
 		SoundType::ACCEPTED
 		);
@@ -75,12 +71,11 @@ void SoundLevelPopUp::Initialize(Vector2 resolution) {
 	m_elements.push_back(m_acceptBtn);
 }
 
-SoundLevelPopUp::SoundLevelPopUp(Vector2 pos, Vector2 size,
-	Alignment alignment, Vector2 resolution, std::string const& title,
-	std::string& subTitle)
-	:PopUp{ pos, size, alignment, resolution, title, subTitle, AssetType::QUESTION_MARK } {
+SoundLevelPopUp::SoundLevelPopUp(Vector2 pos, Vector2 size, Alignment alignment,
+	std::string const& title, std::string& subTitle)
+	:PopUp{ pos, size, alignment, title, subTitle, AssetType::QUESTION_MARK } {
 
-	Initialize(resolution);
+	Initialize();
 }
 
 void SoundLevelPopUp::Render(AppContext_ty_c appContext) {

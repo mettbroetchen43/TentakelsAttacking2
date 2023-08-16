@@ -18,7 +18,6 @@ void AppSettingsScene::Initialize() {
 		GetElementPosition(0.5f, 0.2f),
 		GetElementSize(0.3f, 0.1f),
 		Alignment::TOP_MID,
-		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
 		appContext.languageManager.Text("helper_app_settings")
@@ -61,7 +60,6 @@ void AppSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		a,
 		height,
 		appContext.languageManager.Text("scene_settings_volume_subheadline", ":")
@@ -75,7 +73,6 @@ void AppSettingsScene::Initialize() {
 		GetElementPosition(lx, y),
 		GetElementSize(0.0f, height).y,
 		a,
-		m_resolution,
 		1
 	);
 	m_toggleFullScreenCBM->SetChecked(appContext.constants.window.isFullScreen);
@@ -91,7 +88,6 @@ void AppSettingsScene::Initialize() {
 		GetElementPosition(lxwo, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		a,
 		height,
 		appContext.languageManager.Text("scene_app_settings_fullscreen")
@@ -104,7 +100,6 @@ void AppSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		0,
 		100,
 		static_cast<int>(appContext.constants.sound.masterVolume)
@@ -127,7 +122,6 @@ void AppSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(0.0f, heightS).y,
 		a,
-		m_resolution,
 		1
 	);
 	muteCB->SetChecked(appContext.constants.sound.muteVolume);
@@ -145,7 +139,6 @@ void AppSettingsScene::Initialize() {
 		GetElementPosition(rxwoS, y),
 		GetElementSize(width, heightS),
 		a,
-		m_resolution,
 		a,
 		heightS,
 		appContext.languageManager.Text("scene_settings_mute")
@@ -159,7 +152,6 @@ void AppSettingsScene::Initialize() {
 		GetElementPosition(lx, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		a,
 		height,
 		appContext.languageManager.Text("scene_settings_resolution_subheadline", ":")
@@ -170,7 +162,6 @@ void AppSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		a,
 		height,
 		appContext.languageManager.Text("scene_settings_language_subheadline", ":")
@@ -184,7 +175,6 @@ void AppSettingsScene::Initialize() {
 		GetElementPosition(lx, y),
 		GetElementSize(width, heightS),
 		a,
-		m_resolution,
 		a,
 		heightS,
 		appContext.languageManager.Text("scene_settings_resolution_subtext")
@@ -198,7 +188,6 @@ void AppSettingsScene::Initialize() {
 		GetElementPosition(lx, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		0.25f,
 		id,
 		id + 1,
@@ -218,7 +207,6 @@ void AppSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		0.25f,
 		id,
 		id + 1,
@@ -251,8 +239,8 @@ int AppSettingsScene::GetIndexFromResolution(Resolution resolution) const {
 	throw std::runtime_error("resolution not existing");
 }
 
-AppSettingsScene::AppSettingsScene(Vector2 resolution)
-	: SettingsScene{ resolution } {
+AppSettingsScene::AppSettingsScene()
+	: SettingsScene{ } {
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
 	m_rawResolutionEntries = appContext.constants.window.GetAllResolutionsAsString();
@@ -272,8 +260,8 @@ void AppSettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_t
 void AppSettingsScene::Render(AppContext_ty_c appContext) {
 	SettingsScene::Render(appContext);
 }
-void AppSettingsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	SettingsScene::Resize(resolution, appContext);
+void AppSettingsScene::Resize(AppContext_ty_c appContext) {
+	SettingsScene::Resize(appContext);
 }
 
 void AppSettingsScene::OnEvent(Event const& event) {

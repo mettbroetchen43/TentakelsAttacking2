@@ -18,8 +18,7 @@ private:
 	/**
 	 * initialize all ui elements.
 	 */
-	void Initialize(AppContext_ty_c appContext,
-		Vector2 resolution, Color currentColor);
+	void Initialize(Color currentColor);
 	/**
 	 * gets the new color from the color picker and calls the onClick.
 	 * set should close afterword's.
@@ -31,7 +30,6 @@ public:
 	 * ctor.
 	 * only initialisation.
 	 */
-	ColorCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		std::string const& title, AssetType infoTexture, Color currentColor,
-		std::function<void(Color)> onClick);
+	ColorCellPopUp(Vector2 pos, Vector2 size, Alignment alignment,
+		std::string const& title, AssetType infoTexture, Color currentColor, std::function<void(Color)> onClick);
 };

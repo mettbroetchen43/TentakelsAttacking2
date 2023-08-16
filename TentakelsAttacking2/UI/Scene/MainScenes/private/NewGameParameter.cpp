@@ -24,7 +24,7 @@ enum class SliderType {
 	TARGET_ROUND,
 };
 
-void NewGameParameterScene::Initialize(Vector2 resolution) {
+void NewGameParameterScene::Initialize() {
 	AppContext_ty appContext{ AppContext::GetInstance() };
 
 	// title
@@ -32,9 +32,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
 		Alignment::TOP_MID,
-		resolution,
-		false,
-		appContext
+		false
 	));
 
 
@@ -43,7 +41,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.2f),
 		GetElementSize(0.3f, 0.1f),
 		Alignment::TOP_MID,
-		resolution,
 		Alignment::TOP_MID,
 		0.07f,
 		appContext.languageManager.Text("scene_new_game_parameter_parameter_headline")
@@ -55,7 +52,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 	m_elements.push_back(std::make_shared<Line>(
 		GetElementPosition(0.5f,0.28f),
 		GetElementPosition(0.5f,0.95f),
-		resolution,
 		2.0f,
 		WHITE
 		));
@@ -65,8 +61,7 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		1,
 		GetElementPosition(0.25f, 0.3f),
 		GetElementSize(0.25f, 0.5f),
-		Alignment::TOP_MID,
-		resolution
+		Alignment::TOP_MID
 	);
 	m_eventSettings->SetActive(true, appContext);
 	m_elements.push_back(m_eventSettings);
@@ -89,7 +84,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(posX, posY),
 		GetElementSize(sizeX, sizeY),
 		Alignment::TOP_MID,
-		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
 		appContext.languageManager.Text("scene_new_game_parameter_planet_count_subheadline", ":")
@@ -100,7 +94,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(posX, posY + 0.04f),
 		GetElementSize(sizeX, sizeY),
 		Alignment::TOP_MID,
-		resolution,
 		static_cast<int>(appContext.constants.world.minPlanetCount),
 		static_cast<int>(appContext.constants.world.maxPlanetCount),
 		static_cast<int>(appContext.constants.world.currentPlanetCount)
@@ -118,7 +111,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(posX, posY),
 		GetElementSize(sizeX, sizeY),
 		Alignment::TOP_MID,
-		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
 		appContext.languageManager.Text("scene_new_game_parameter_galaxy_width_subheadline", ":")
@@ -129,7 +121,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(posX, posY + 0.04f),
 		GetElementSize(sizeX, sizeY),
 		Alignment::TOP_MID,
-		resolution,
 		static_cast<int>(appContext.constants.world.minDimensionX),
 		static_cast<int>(appContext.constants.world.maxDimensionX),
 		static_cast<int>(appContext.constants.world.currentDimensionX)
@@ -147,7 +138,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(posX, posY),
 		GetElementSize(sizeX, sizeY),
 		Alignment::TOP_MID,
-		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
 		appContext.languageManager.Text("scene_new_game_parameter_galaxy_height_subheadline", ":")
@@ -158,7 +148,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(posX, posY + 0.04f),
 		GetElementSize(sizeX, sizeY),
 		Alignment::TOP_MID,
-		resolution,
 		static_cast<int>(appContext.constants.world.minDimensionY),
 		static_cast<int>(appContext.constants.world.maxDimensionY),
 		static_cast<int>(appContext.constants.world.currentDimensionY)
@@ -176,7 +165,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(posX, posY),
 		GetElementSize(sizeX, sizeY),
 		Alignment::TOP_MID,
-		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
 		appContext.languageManager.Text("scene_new_game_parameter_fleet_speed_subheadline", ":")
@@ -187,7 +175,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(posX, posY + 0.04f),
 		GetElementSize(sizeX, sizeY),
 		Alignment::TOP_MID,
-		resolution,
 		static_cast<int>(appContext.constants.fleet.minFleetSpeed),
 		static_cast<int>(appContext.constants.fleet.maxFleetSpeed),
 		static_cast<int>(appContext.constants.fleet.currentFleetSpeed)
@@ -205,7 +192,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(posX, posY),
 		GetElementSize(sizeX, sizeY),
 		Alignment::TOP_MID,
-		resolution,
 		Alignment::TOP_LEFT,
 		0.04f,
 		appContext.languageManager.Text("scene_new_game_parameter_last_round_subheadline", ":")
@@ -216,7 +202,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(posX, posY + 0.04f),
 		GetElementSize(sizeX, sizeY),
 		Alignment::TOP_MID,
-		resolution,
 		static_cast<int>(appContext.constants.global.minRounds),
 		static_cast<int>(appContext.constants.global.maxRounds),
 		static_cast<int>(appContext.constants.global.currentTargetRound)
@@ -234,7 +219,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.625f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
-		resolution,
 		appContext.languageManager.Text("scene_new_game_parameter_random_btn"),
 		SoundType::CLICKED_RELEASE_STD
 	);
@@ -248,7 +232,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.25f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
-		resolution,
 		appContext.languageManager.Text("scene_new_game_parameter_back_btn"),
 		SoundType::CLICKED_RELEASE_STD
 	);
@@ -264,7 +247,6 @@ void NewGameParameterScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.85f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
-		resolution,
 		appContext.languageManager.Text("scene_new_game_parameter_next_btn"),
 		SoundType::ACCEPTED
 	);
@@ -307,9 +289,9 @@ void NewGameParameterScene::NextScene() const {
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 
-NewGameParameterScene::NewGameParameterScene(Vector2 resolution)
-	: Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
-	Initialize(resolution);
+NewGameParameterScene::NewGameParameterScene()
+	: Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT } {
+	Initialize();
 	AppContext::GetInstance().eventManager.AddListener(this);
 }
 

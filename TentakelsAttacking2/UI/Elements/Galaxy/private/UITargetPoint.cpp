@@ -10,14 +10,13 @@
 #include "HInput.h"
 
 UITargetPoint::UITargetPoint(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos,
-	Vector2 resolution, Vector2 colliderPos, TargetPoint_ty_raw_c targetPoint)
-	: UIGalaxyElement{ focusID, ID,{ 0.005f,0.01f },  player, pos, resolution, colliderPos }, m_targetPoint{ targetPoint } {
+	Vector2 colliderPos, TargetPoint_ty_raw_c targetPoint)
+	: UIGalaxyElement{ focusID, ID,{ 0.005f,0.01f },  player, pos, colliderPos }, m_targetPoint{ targetPoint } {
 	
 	m_ring = std::make_shared<CountRing>(
 		m_pos,
 		m_size,
 		Alignment::DEFAULT,
-		m_resolution,
 		m_size.x / 2.0f,
 		m_size.x * 1.5f,
 		static_cast<int>(targetPoint->GetShipCount()),

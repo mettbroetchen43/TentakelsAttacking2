@@ -4,8 +4,11 @@
 //
 
 #include "Alignment.h"
+#include "HUIAlias.hpp"
+#include "AppContext.h"
 
-Rectangle GetAlignedCollider(Vector2& pos, Vector2 size, Alignment alignment, Vector2 resolution) {
+Rectangle GetAlignedCollider(Vector2& pos, Vector2 size, Alignment alignment) {
+	Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 	switch (alignment) {
 		case Alignment::TOP_LEFT:
 		case Alignment::DEFAULT:

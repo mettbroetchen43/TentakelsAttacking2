@@ -24,7 +24,7 @@ public:
 	 * ctor.
 	 * only initialisation.
 	 */
-	Line(Vector2 start, Vector2 end, Vector2 resolution, float thick, Color color);
+	Line(Vector2 start, Vector2 end, float thick, Color color);
 
 	/**
 	 * renders the line.

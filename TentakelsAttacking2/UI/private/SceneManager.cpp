@@ -15,78 +15,53 @@
 
 
 void SceneManager::InitializeNewScene(SceneType sceneType) {
-	Window_ty_c window{ AppContext::GetInstance().constants.window };
 	switch (sceneType) {
 		case SceneType::TEST:
-			m_currentScene = std::make_shared<TestScene>(
-				window.currentResolutionVec
-			);
+			m_currentScene = std::make_shared<TestScene>();
 			return;
 
 		case SceneType::LOGO:
-			m_currentScene= std::make_shared<LogoScene>(
-				window.currentResolutionVec
-			);
+			m_currentScene= std::make_shared<LogoScene>();
 			return;
 
 		case SceneType::INTRO:
-			m_currentScene = std::make_shared<Intro>(
-				window.currentResolutionVec
-			);
+			m_currentScene = std::make_shared<Intro>();
 			return;
 
 		case SceneType::MAIN_MENU:
-			m_currentScene = std::make_shared<MainMenu>(
-				window.currentResolutionVec
-			);
+			m_currentScene = std::make_shared<MainMenu>();
 			return;
 
 		case SceneType::NEW_GAME_PLAYER:
-			m_currentScene = std::make_shared<NewGamePlayerScene>(
-				window.currentResolutionVec
-			);
+			m_currentScene = std::make_shared<NewGamePlayerScene>();
 			return;
 
 		case SceneType::NEW_GAME_PARAMETER:
-			m_currentScene = std::make_shared<NewGameParameterScene>(
-				window.currentResolutionVec
-			);
+			m_currentScene = std::make_shared<NewGameParameterScene>();
 			return;
 
 		case SceneType::VALIDATE_GALAXY:
-			m_currentScene = std::make_shared<ValidateGalaxyScene>(
-				window.currentResolutionVec
-			);
+			m_currentScene = std::make_shared<ValidateGalaxyScene>();
 			return;
 
 		case SceneType::MAIN:
-			m_currentScene = std::make_shared<MainScene>(
-				window.currentResolutionVec
-			);
+			m_currentScene = std::make_shared<MainScene>();
 			return;
 
 		case SceneType::GAME_SETTINGS:
-			m_currentScene = std::make_shared<GameSettingsScene>(
-				window.currentResolutionVec
-			);
+			m_currentScene = std::make_shared<GameSettingsScene>();
 			return;
 
 		case SceneType::APP_SETTINGS:
-			m_currentScene = std::make_shared<AppSettingsScene>(
-				window.currentResolutionVec
-			);
+			m_currentScene = std::make_shared<AppSettingsScene>();
 			return;
 
 		case SceneType::CREDITS:
-			m_currentScene = std::make_shared<CreditsScene>(
-				window.currentResolutionVec
-			);
+			m_currentScene = std::make_shared<CreditsScene>();
 			return;
 
 		case SceneType::UPDATE_EVALUATION:
-			m_currentScene = std::make_shared<UpdateEvaluationScene>(
-				window.currentResolutionVec
-			);
+			m_currentScene = std::make_shared<UpdateEvaluationScene>();
 			return;
 	}
 }
@@ -134,10 +109,10 @@ void SceneManager::Render(AppContext_ty_c appContext) {
 	m_currentScene->Render(appContext);
 	m_popUpManager.Render(appContext);
 }
-void SceneManager::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	m_currentScene->Resize(resolution, appContext);
+void SceneManager::Resize(AppContext_ty_c appContext) {
+	m_currentScene->Resize(appContext);
 
-	m_popUpManager.Resize(resolution, appContext);
+	m_popUpManager.Resize(appContext);
 }
 
 void SceneManager::OnEvent(Event const& event) {

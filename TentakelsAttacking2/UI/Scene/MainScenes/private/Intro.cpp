@@ -19,9 +19,7 @@ void Intro::Initialize( ) {
 		GetElementPosition(0.5f, 0.1f),
 		GetElementSize(0.9f, 0.3f),
 		Alignment::TOP_MID,
-		m_resolution,
-		true,
-		appContext
+		true
 		);
 	m_elements.push_back(m_title);
 
@@ -30,7 +28,6 @@ void Intro::Initialize( ) {
 		GetElementPosition(0.5f, 1.2f),
 		GetElementSize(0.3f, 0.2f),
 		Alignment::MID_MID,
-		m_resolution,
 		appContext.languageManager.Text("scene_intro_start_btn"),
 		SoundType::ACCEPTED
 		);
@@ -41,7 +38,6 @@ void Intro::Initialize( ) {
 		GetElementPosition(0.99f, 0.97f),
 		GetElementSize(0.2f, 0.03f),
 		Alignment::BOTTOM_RIGHT,
-		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		appContext.languageManager.Text("scene_intro_skip", "[ESC]")
@@ -55,8 +51,8 @@ void Intro::Initialize( ) {
 	});
 }
 
-Intro::Intro(Vector2 resolution)
-	:Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution } {
+Intro::Intro()
+	:Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT } {
 	Initialize();
 }
 
@@ -89,9 +85,9 @@ void Intro::Render(AppContext_ty_c appContext) {
 		e->Render(appContext);
 	}
 }
-void Intro::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+void Intro::Resize(AppContext_ty_c appContext) {
 	for (auto& e : m_elements) {
-		e->Resize(resolution, appContext);
+		e->Resize(appContext);
 	}
 }
 

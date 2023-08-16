@@ -84,7 +84,6 @@ public:
 			Vector2(0.5f, 0.5f),
 			Vector2(0.7f, 0.7f),
 			Alignment::MID_MID,
-			appContext.GetResolution(),
 			event->GetTitle(),
 			AssetType::LOGO,
 			event->GetCurrentValue(),
@@ -118,5 +117,5 @@ public:
 	/**
 	 * calls all popups to update.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext);
+	void Resize(AppContext_ty_c appContext);
 };

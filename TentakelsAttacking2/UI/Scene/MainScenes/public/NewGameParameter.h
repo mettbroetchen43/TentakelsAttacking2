@@ -24,7 +24,7 @@ private:
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize(Vector2 resolution); 
+	void Initialize(); 
 
 	/**
 	 * sets the value of the slider by there id.
@@ -45,7 +45,7 @@ public:
 	 * ctor.
 	 * adds an event listener.
 	 */
-	NewGameParameterScene(Vector2 resolution);
+	NewGameParameterScene();
 	/**
 	 * dtor.
 	 * removes an event listener.

@@ -12,13 +12,11 @@
 #include "Table.h"
 
 void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
-
 	auto mainBtn = std::make_shared<ExpandingButton>(
 		1,
 		GetElementPosition(0.1f,0.5f),
 		GetElementSize(0.2f,0.1f),
 		Alignment::MID_MID,
-		m_resolution,
 		ExpandingButton::RIGHT,
 		0.005f,
 		10.0f,
@@ -31,7 +29,6 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		Vector2(0.0f,0.0f),
 		Vector2(0.0f,0.0f),
 		Alignment::DEFAULT,
-		m_resolution,
 		"first expanding",
 		SoundType::CLICKED_RELEASE_STD
 	);
@@ -42,7 +39,6 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		Vector2(0.0f,0.1f),
 		Vector2(0.0f,0.0f),
 		Alignment::DEFAULT,
-		m_resolution,
 		"second expanding",
 		SoundType::CLICKED_RELEASE_STD
 	);
@@ -53,7 +49,6 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		Vector2(0.0f,0.2f),
 		Vector2(0.0f,0.0f),
 		Alignment::DEFAULT,
-		m_resolution,
 		"third expanding",
 		SoundType::CLICKED_RELEASE_STD
 	);
@@ -66,7 +61,6 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 		GetElementPosition(0.05f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
-		m_resolution,
 		"Back",
 		SoundType::CLICKED_PRESS_STD
 	);
@@ -77,8 +71,8 @@ void TestScene::Initialize([[maybe_unused]] AppContext_ty appContext) {
 	m_elements.push_back(backBtn);
 }
 
-TestScene::TestScene(Vector2 resolution)
-	: Scene{ {0.5f, 0.5f}, {1.0f, 1.0f}, Alignment::MID_MID, resolution } {
+TestScene::TestScene()
+	: Scene{ {0.5f, 0.5f}, {1.0f, 1.0f}, Alignment::MID_MID } {
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
 	Initialize(appContext);
@@ -102,6 +96,6 @@ void TestScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c app
 void TestScene::Render(AppContext_ty_c appContext) {
 	Scene::Render(appContext);
 }
-void TestScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	Scene::Resize(resolution, appContext);
+void TestScene::Resize(AppContext_ty_c appContext) {
+	Scene::Resize(appContext);
 }

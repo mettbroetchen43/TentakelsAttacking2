@@ -26,7 +26,7 @@ private:
 	/**
 	 * initializes the cells. 
 	 */
-	void Initialize(Vector2 resolution);
+	void Initialize();
 	/**
 	 * disables the cells if the colors are already used.
 	 */
@@ -48,8 +48,7 @@ public:
 	 * ctor.
 	 * only initialisation.
  	 */
-	ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
-		Alignment alignment, Vector2 resolution, bool isPopUp = false);
+	ColorPicker(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, bool isPopUp = false);
 	/**
 	 * deletes a focus layer if nested focus.
 	 */
@@ -114,7 +113,7 @@ public:
 	 * resizes the color picker.
 	 * calls all cells to resize.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 
 	/**
 	 * returns the current collider.

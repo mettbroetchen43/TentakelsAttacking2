@@ -125,8 +125,7 @@ public:
 	 * add an event listener.
 	 * calls logic galaxy via event.
 	 */
-	UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution, bool isShowGalaxy, bool isActeptingInput);
+	UIGalaxy(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, bool isShowGalaxy, bool isActeptingInput);
 	/**
 	 * removed the event listener.
 	 */
@@ -191,7 +190,7 @@ public:
 	 * resizes the galaxy.
 	 * calls the cells to resize.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 
 	/**
 	 * filters the fleets for current player.

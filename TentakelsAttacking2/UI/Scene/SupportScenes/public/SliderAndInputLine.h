@@ -29,7 +29,7 @@ private:
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize(unsigned int focusID, Vector2 resolution);
+	void Initialize(unsigned int focusID);
 	/**
 	 * saves the value.
 	 * sets the slider.
@@ -64,8 +64,8 @@ public:
 	 * ctor.
 	 * only initialization.
 	 */
-	SliderAndInputLine(unsigned int focusID, Vector2 pos, Vector2 size, 
-		Alignment alignment, Vector2 resolution, int minValue, int maxValue, int currentValue);
+	SliderAndInputLine(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment, 
+		int minValue, int maxValue, int currentValue);
 
 	/**
 	 * scene logic.

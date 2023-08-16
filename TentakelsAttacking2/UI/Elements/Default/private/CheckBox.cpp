@@ -24,15 +24,15 @@ void CheckBox::Check(AppContext_ty_c appContext) {
 }
 
 
-CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height,
-	Alignment alignment, Vector2 resolution, unsigned int checkBoxID)
-	: UIElement{ pos, { 0.0f, height }, alignment, resolution }, Focusable{ focusID },
+CheckBox::CheckBox(unsigned int focusID, Vector2 pos, float height, Alignment alignment, unsigned int checkBoxID)
+	: UIElement{ pos, { 0.0f, height }, alignment }, Focusable{ focusID },
 	m_ID{ checkBoxID } {
 
+	AppContext_ty appContext{ AppContext::GetInstance() };
+	Resolution_ty_c resolution{ appContext.GetResolution() };
 	m_size.x = resolution.y / resolution.x * m_size.y;
 	UpdateCollider();
 
-	AppContext_ty appContext{ AppContext::GetInstance() };
 	m_texture = appContext.assetManager.GetTexture(AssetType::CHECK);
 	m_textureRec = {
 		0.0f,
@@ -140,9 +140,10 @@ void CheckBox::Render([[maybe_unused]] AppContext_ty_c appContext) {
 	}
 }
 
-void CheckBox::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+void CheckBox::Resize(AppContext_ty_c appContext) {
 
+	Resolution_ty_c resolution{ appContext.GetResolution() };
 	m_size.x = resolution.y / resolution.x * m_size.y;
 
-	UIElement::Resize(resolution, appContext);
+	UIElement::Resize(appContext);
 }

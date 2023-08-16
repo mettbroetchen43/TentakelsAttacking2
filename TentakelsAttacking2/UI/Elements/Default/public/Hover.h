@@ -26,7 +26,7 @@ public:
 	/**
 	 * ctor
 	 */
-	Hover(float height, std::string text, Color color, Vector2 hoverOffset, Vector2 resolution);
+	Hover(float height, std::string text, Color color, Vector2 hoverOffset);
 
 	/**
 	 * calculates the collider for drawing so it can not go out of screen.
@@ -58,7 +58,5 @@ public:
 	/**
 	 * resizes the argument
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
-
-
+	void Resize(AppContext_ty_c appContext) override;
 };

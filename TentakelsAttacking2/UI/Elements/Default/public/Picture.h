@@ -22,7 +22,7 @@ public:
 	 * ctor.
 	 * scales the size to fit if it should be.
 	 */
-	Picture(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	Picture(Vector2 pos, Vector2 size, Alignment alignment,
 		AssetType assetType, bool scaleToFit = true);
 
 	/**

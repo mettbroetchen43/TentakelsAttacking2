@@ -14,14 +14,15 @@ namespace {
 	std::string subTitle{ "" };
 }
 
-void CellPopUp::Initialize([[maybe_unused]] AppContext_ty_c appContext,
-	Vector2 resolution) {
+void CellPopUp::Initialize() {
+
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+
 	auto cancelBtn = std::make_shared<ClassicButton>(
 		2,
 		GetElementPosition(m_pos, m_size, 0.1f, 0.95f),
 		GetElementSize(m_size, 0.3f, 0.2f),
 		Alignment::BOTTOM_LEFT,
-		resolution,
 		appContext.languageManager.Text("ui_cell_popup_cancel_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -34,15 +35,15 @@ void CellPopUp::Initialize([[maybe_unused]] AppContext_ty_c appContext,
 
 	m_elements.push_back(cancelBtn);
 }
-ClassicButton_ty CellPopUp::InitializeAcceptButton(
-	[[maybe_unused]] AppContext_ty_c appContext, Vector2 resolution) {
+ClassicButton_ty CellPopUp::InitializeAcceptButton() {
+
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	auto acceptBtn = std::make_shared<ClassicButton>(
 		1,
 		GetElementPosition(m_pos, m_size, 0.9f, 0.95f),
 		GetElementSize(m_size, 0.3f, 0.2f),
 		Alignment::BOTTOM_RIGHT,
-		resolution,
 		appContext.languageManager.Text("ui_cell_popup_accept_btn"),
 		SoundType::ACCEPTED
 		);
@@ -80,11 +81,11 @@ void CellPopUp::Close(AppContext_ty_c appContext) {
 	}
 }
 
-CellPopUp::CellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+CellPopUp::CellPopUp(Vector2 pos, Vector2 size, Alignment alignment,
 	std::string const& title, AssetType infoTexture)
-	: PopUp{ pos, size, alignment, resolution, title, subTitle, infoTexture } {
+	: PopUp{ pos, size, alignment, title, subTitle, infoTexture } {
 	
-	Initialize(AppContext::GetInstance(), resolution);
+	Initialize();
 }
 
 void CellPopUp::CheckAndUpdate(Vector2 const& mousePosition,
