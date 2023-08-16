@@ -13,7 +13,7 @@
 #include "CreditTable.h"
 #include "AppContext.h"
 
-void CreditsScene::Initialize(Vector2 resolution) {
+void CreditsScene::Initialize() {
 	AppContext_ty appContext{ AppContext::GetInstance() };
 
 	// not moving btn
@@ -22,7 +22,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.95f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
-		resolution,
 		appContext.languageManager.Text("scene_credits_speed_toggle_btn", m_speedLevel, m_maxSpeedLevel),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -37,7 +36,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.05f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_LEFT,
-		resolution,
 		appContext.languageManager.Text("scene_credits_back_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -52,7 +50,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.15f),
 		GetElementSize(0.5f, 0.15f),
 		Alignment::MID_MID,
-		resolution,
 		Alignment::MID_MID,
 		0.15f,
 		appContext.languageManager.Text("scene_credits_credits_title")
@@ -63,7 +60,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	auto creditsLine = std::make_shared<Line>(
 		GetElementPosition(0.35f, 0.21f),
 		GetElementPosition(0.65f, 0.21f),
-		resolution,
 		3.0f,
 		WHITE
 		);
@@ -75,7 +71,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, 0.5f),
 		GetElementSize(0.9f, 0.4f),
 		Alignment::MID_MID,
-		resolution,
 		true,
 		appContext
 		);
@@ -84,7 +79,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	m_titleLine = std::make_shared<Line>(
 		GetElementPosition(0.05f, 0.5f),
 		GetElementPosition(0.95f, 0.5f),
-		resolution,
 		5.0f,
 		WHITE
 	);
@@ -103,7 +97,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
-		resolution,
 		AssetType::LOGO
 		);
 	AddMovingElement(logo);
@@ -113,7 +106,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(1.0f, height),
 		Alignment::TOP_MID,
-		resolution,
 		Alignment::TOP_MID,
 		0.08f,
 		appContext.languageManager.Text("scene_credits_subtitle", "Purpur Tentakel")
@@ -121,48 +113,12 @@ void CreditsScene::Initialize(Vector2 resolution) {
 	// logoText->RenderRectangle(true);
 	AddMovingElement(logoText);
 
-	// credits vector
-	// lib
-	using creditEntries = std::vector<std::vector<std::string>>;
-	creditEntries libVec = {
-		{"raylib", "", "www.raylib.com", "https://www.raylib.com"},
-		{"random lib", "", "www.github.com/mgerhold", "https://www.github.com/mgerhold"},
-	};
-	// inspiration
-	creditEntries inspirationVec = {
-		{"my Dad"},
-		{"coder2k"},
-	};
-	// tester
-	creditEntries testerVec = {
-		{"Kiki3578"},
-		{"TODO"},
-	};
-	// special thanks
-	creditEntries specialThanksVec = {
-		{"coder2k"},
-		{"r00tifant"},
-		{"Clemens"},
-		{"CrazyNightowl01"},
-		{"NECROMENZER"},
-		{"german coding commuinty on twitch"},
-		{"the discord of coder2k"},
-		{"TODO: more to come"},
-	};
-	// contact
-	creditEntries contactVec = {
-		{"discord", "", "www.discord.gg/JG5fsFZqEE", "https://www.discord.gg/JG5fsFZqEE"},
-		{"twitch", "", "www.twitch.tv/codingPurpurTentakel", "https://www.twitch.tv/codingpurpurtentakel"},
-		{"gitHub", "", "www.github.com/PurpurTentakel97", "https://www.github.com/PurpurTentakel97"},
-	};
-
 	// credits table
 	setHeight(0.5f, 0.5f);
 	auto libTable = std::make_shared<CreditTableScene>(
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
-		resolution,
 		appContext.languageManager.Text("scene_credits_libraries_headline"),
 		libVec,
 		true
@@ -175,7 +131,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
-		resolution,
 		appContext.languageManager.Text("scene_credits_inspiration_headline"),
 		inspirationVec
 		);
@@ -187,7 +142,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
-		resolution,
 		appContext.languageManager.Text("scene_credits_testers_headline"),
 		testerVec
 		);
@@ -199,7 +153,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
-		resolution,
 		appContext.languageManager.Text("scene_credits_special_thanks_headline"),
 		specialThanksVec
 		);
@@ -211,7 +164,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.5f, height),
 		Alignment::TOP_MID,
-		resolution,
 		appContext.languageManager.Text("scene_credits_contact_headline"),
 		contactVec,
 		true
@@ -227,7 +179,6 @@ void CreditsScene::Initialize(Vector2 resolution) {
 		GetElementPosition(0.5f, Y),
 		GetElementSize(0.15f, height),
 		Alignment::TOP_MID,
-		resolution,
 		appContext.languageManager.Text("scene_credits_end_btn"),
 		SoundType::ACCEPTED
 		);
@@ -261,7 +212,8 @@ void CreditsScene::ToggleSpeedLevel() {
 
 }
 void CreditsScene::CheckCreditsFinished() {
-	float const shouldY{ (m_resolution.y * 0.75f) - (m_endBTN->GetCollider().height / 2) };
+	Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
+	float const shouldY{ (resolution.y * 0.75f) - (m_endBTN->GetCollider().height / 2) };
 	float const btnY{ m_endBTN->GetCollider().y };
 	if (btnY <= shouldY) {
 		for (auto& e : m_movingElements) {
@@ -270,9 +222,9 @@ void CreditsScene::CheckCreditsFinished() {
 	}
 }
 
-CreditsScene::CreditsScene(Vector2 resolution)
-	:Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
-	Initialize(resolution);
+CreditsScene::CreditsScene()
+	:Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT } {
+	Initialize();
 }
 
 void CreditsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
@@ -294,7 +246,6 @@ void CreditsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c 
 		m_moving = !m_moving;
 	}*/
 }
-void CreditsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	m_resolution = resolution;
-	Scene::Resize(resolution, appContext);
+void CreditsScene::Resize(AppContext_ty_c appContext) {
+	Scene::Resize(appContext);
 }
