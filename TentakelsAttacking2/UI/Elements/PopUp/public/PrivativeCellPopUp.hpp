@@ -19,8 +19,9 @@ private:
 	/**
 	 * initializes all ui elements.
 	 */
-	void Initialize(AppContext_ty_c appContext,
-		Vector2 resolution, T currentValue) {
+	void Initialize(T currentValue) {
+
+		AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 		auto acceptBtn = InitializeAcceptButton(appContext, resolution);
 		acceptBtn->SetOnClick([this]() {
@@ -32,7 +33,6 @@ private:
 			GetElementPosition(m_pos, m_size, 0.5f, 0.55f),
 			GetElementSize(m_size, 0.9f, 0.2f),
 			Alignment::MID_MID,
-			resolution,
 			50
 			);
 
@@ -62,12 +62,11 @@ public:
 	 * ctor.
 	 * only initialization.
 	 */
-	PrivativeCellPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		std::string const& title, AssetType infoTexture,
-		T currentValue, std::function<void(T)> onClick)
-		: CellPopUp{ pos, size, alignment, resolution, title, infoTexture },
+	PrivativeCellPopUp(Vector2 pos, Vector2 size, Alignment alignment,
+		std::string const& title, AssetType infoTexture, T currentValue, std::function<void(T)> onClick)
+		: CellPopUp{ pos, size, alignment, title, infoTexture },
 		m_onClick{ onClick } {
 
-		Initialize(AppContext::GetInstance(), resolution, currentValue);
+		Initialize(currentValue);
 	}
 };
