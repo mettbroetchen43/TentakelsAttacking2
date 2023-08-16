@@ -25,23 +25,22 @@ private:
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize(Vector2 resolution, AppContext_ty appContext);
+	void Initialize();
 	/**
 	 * initializes remove player button.
 	 * connects the actions.
 	 */
-	void InitializePlayerButtons(AppContext_ty appContext);
+	void InitializePlayerButtons();
 	/**
 	 * checks  if the element has an nested focus and if the mouse position is outside the curtain collider.
 	 * if so, a focus layer gets deleted and the nested focus gets set to false.
 	 */
-	void CheckForNestedFocus(Vector2 const& mousePosition,
-		AppContext_ty_c appContext) const;
+	void CheckForNestedFocus(Vector2 const& mousePosition) const;
 
 	/**
 	 * updates the scene elements when a player gets added / edit / deleted.
 	 */
-	void UpdateSceneEntries(AppContext_ty_c appContext);
+	void UpdateSceneEntries();
 
 	/**
 	 * adds a new player via event.
@@ -52,20 +51,17 @@ private:
 	 * updates a player via event.
 	 * calls the scene elements to update.
 	 */
-	void UpdatePlayer(unsigned int ID, std::string const& name,
-		Color color, AppContext_ty_c appContext);
+	void UpdatePlayer(unsigned int ID, std::string const& name, Color color);
 	/**
 	 * updates a player name.
 	 * calls the update player.
 	 */
-	void UpdatePlayerName(AbstractTableCell const* cell,
-		std::string oldValue, std::string newValue);
+	void UpdatePlayerName(AbstractTableCell const* cell, std::string oldValue, std::string newValue);
 	/**
 	 * updates a player color.
 	 * calls the update player.
 	 */
-	void UpdatePlayerColor(AbstractTableCell const* cell,
-		Color oldValue, Color newValue);
+	void UpdatePlayerColor(AbstractTableCell const* cell, Color oldValue, Color newValue);
 	/**
 	 * deletes an player via event.
 	 */
@@ -88,14 +84,14 @@ private:
 	/**
 	 * sets the next scene button enables or disabled whether the player count is valid.
 	 */
-	void SetNextButton(AppContext_ty_c appContext);
+	void SetNextButton();
 
 public:
 	/**
 	 * ctor.
 	 * add an event listener.
 	 */
-	NewGamePlayerScene(Vector2 resolution);
+	NewGamePlayerScene();
 	/**
 	 * dtor.
 	 * removes an event listener.
@@ -105,8 +101,7 @@ public:
 	/**
 	 * updates the scene.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition,
-		AppContext_ty_c appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	/**
 	 * renders the scene.
 	 */
@@ -114,7 +109,7 @@ public:
 	/**
 	 * resize the scene.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 
 	/**
 	 * receives all events and calls the member functions.
