@@ -81,7 +81,8 @@ void Title::MeasureTitleLength() {
 		m_maxCharCount += s.size();
 	}
 }
-void Title::SetCollider(AppContext_ty_c appContext, Vector2 const& resolution) {
+void Title::SetCollider(AppContext_ty_c appContext) {
+	Resolution_ty_c resolution{ appContext.GetResolution() };
 	m_fontSize = resolution.y * m_size.y / m_title->size();
 
 	std::string title{ "" };
@@ -118,13 +119,13 @@ void Title::TitleFinish(AppContext_ty_c appContext) {
 	appContext.eventManager.InvokeEvent(event);
 }
 
-Title::Title(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, bool drawTitle,
-	AppContext_ty appContext)
-	: UIElement{ pos, size, alignment, resolution }, m_titleFinish{ !drawTitle } {
+Title::Title(Vector2 pos, Vector2 size, Alignment alignment, bool drawTitle)
+	: UIElement{ pos, size, alignment}, m_titleFinish{ !drawTitle } {
 
+	AppContext_ty appContext{ AppContext::GetInstance() };
 	m_title = appContext.assetManager.GetTitle();
 	MeasureTitleLength();
-	SetCollider(appContext, resolution);
+	SetCollider(appContext);
 }
 
 void Title::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
@@ -151,10 +152,10 @@ void Title::Render(AppContext_ty_c appContext) {
 		RenderTitle(appContext);
 	}
 }
-void Title::Resize(Vector2 resolution,AppContext_ty_c appContext) {
+void Title::Resize(AppContext_ty_c appContext) {
 
-	SetCollider(appContext, resolution);
-	UIElement::Resize(resolution, appContext);
+	SetCollider(appContext);
+	UIElement::Resize(appContext);
 }
 
 bool Title::HasFinishedTitle() const {
