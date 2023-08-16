@@ -4,31 +4,34 @@
 //
 
 #include "ShipCountRing.h"
+#include "AppContext.h"
 
 void CountRing::CalculateRing() {
+    Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
     float diff{ m_relativeMaxRingSize - m_relativeDotSize };
     float factor{ static_cast<float>(m_currentCount) / m_maxCount };
     diff *= factor;
     if (diff < 0.001f) { diff = 0.001f; }
     diff += m_relativeDotSize;
-    diff *= m_resolution.x;
+    diff *= resolution.x;
     m_absoluteRingSize = { diff };
 }
 
-CountRing::CountRing(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, float dotSize, float ringSize,
-    int currentCount, int maxCount)
-    : UIElement{ pos, size, alignment, resolution }, m_relativeDotSize{ dotSize }, m_relativeMaxRingSize{ ringSize },
+CountRing::CountRing(Vector2 pos, Vector2 size, Alignment alignment,
+    float dotSize, float ringSize, int currentCount, int maxCount)
+    : UIElement{ pos, size, alignment }, m_relativeDotSize{ dotSize }, m_relativeMaxRingSize{ ringSize },
     m_currentCount{ currentCount }, m_maxCount{ maxCount } {
     
     Update();
 }
 
 void CountRing::Update() {
+    Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
     m_absolutePos = {
         m_collider.x + m_collider.width / 2,
         m_collider.y + m_collider.height / 2
     };
-    m_absoluteDotSize = { m_relativeDotSize * m_resolution.x };
+    m_absoluteDotSize = { m_relativeDotSize * resolution.x };
     CalculateRing();
 }
 
@@ -79,7 +82,7 @@ void CountRing::Render(AppContext_ty_c) {
         m_dotColor
     );
 }
-void CountRing::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-    UIElement::Resize(resolution, appContext);
+void CountRing::Resize(AppContext_ty_c appContext) {
+    UIElement::Resize(appContext);
     Update();
 }
