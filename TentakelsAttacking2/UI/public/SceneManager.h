@@ -59,7 +59,7 @@ public:
 	 * calls current scene to resize.
 	 * calls the popup manager to resize the popups.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext);
+	void Resize(AppContext_ty_c appContext);
 
 	/**
 	 * receives all events and calls the member functions.
