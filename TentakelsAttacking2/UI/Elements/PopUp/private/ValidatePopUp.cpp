@@ -19,7 +19,6 @@ void ValidatePopUp::Initialize() {
 		GetElementPosition(m_pos, m_size, 0.33f, 0.9f),
 		GetElementSize(m_size, 0.2f, 0.15f),
 		Alignment::BOTTOM_MID,
-		m_resolution,
 		appContext.languageManager.Text("ui_validate_popup_accept_btn"),
 		SoundType::ACCEPTED
 		);
@@ -35,7 +34,6 @@ void ValidatePopUp::Initialize() {
 		GetElementPosition(m_pos, m_size, 0.66f, 0.9f),
 		GetElementSize(m_size, 0.2f, 0.15f),
 		Alignment::BOTTOM_MID,
-		m_resolution,
 		appContext.languageManager.Text("ui_validate_popup_cancel_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -52,9 +50,9 @@ void ValidatePopUp::Close() {
 	m_shouldClose = true;
 }
 
-ValidatePopUp::ValidatePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+ValidatePopUp::ValidatePopUp(Vector2 pos, Vector2 size, Alignment alignment,
 	std::string const& title, std::string& subTitle, AssetType infoTexture, std::function<void(bool)> callback)
-	: PopUp{ pos, size, alignment, resolution, title, subTitle, infoTexture }, m_callback{ callback } {
+	: PopUp{ pos, size, alignment, title, subTitle, infoTexture }, m_callback{ callback } {
 
 	Initialize();
 

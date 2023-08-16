@@ -28,7 +28,7 @@ public:
 	 * ctor.
 	 * only initialization.
 	 */
-	ValidatePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	ValidatePopUp(Vector2 pos, Vector2 size, Alignment alignment,
 		std::string const& title, std::string& subTitle, AssetType infoTexture, std::function<void(bool)> callback);
 
 	/**
