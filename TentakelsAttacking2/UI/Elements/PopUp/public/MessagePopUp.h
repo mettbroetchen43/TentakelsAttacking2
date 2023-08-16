@@ -18,19 +18,18 @@ private:
 	/**
 	 * initializes all ui elements.
 	 */
-	void Initialize(Vector2 resolution);
+	void Initialize();
 
 public:
 	/**
 	 * ctor
 	 * only initialization.
 	 */
-	MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	MessagePopUp(Vector2 pos, Vector2 size, Alignment alignment,
 		std::string const& title, std::string& subTitle, AssetType infoTexture, std::function<void()> callback);
 
 	/**
 	 * popup logic.
 	 */
-	void CheckAndUpdate(Vector2 const& mousePosition,
-		AppContext_ty_c appContext) override;
+	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 };
