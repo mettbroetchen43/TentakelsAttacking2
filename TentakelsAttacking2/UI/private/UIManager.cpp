@@ -31,7 +31,7 @@ void UIManager::CheckAndSetToggleFullScreen() {
 		SetWindowSize(true);
 		SetWindowPosition();
 	}
-	m_sceneManager.Resize(window.currentResolutionVec, m_appContext);
+	m_sceneManager.Resize(m_appContext);
 }
 
 void UIManager::CheckAndSetNewResolution() {
@@ -52,7 +52,7 @@ void UIManager::CheckAndSetNewResolution() {
 	SetWindowPosition();
 
 	if(m_sceneManager.IsValidCurrentScene()){
-		m_sceneManager.Resize(window.currentResolutionVec, m_appContext);
+		m_sceneManager.Resize(m_appContext);
 	}
 }
 
