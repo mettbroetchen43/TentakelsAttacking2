@@ -15,7 +15,6 @@
 
 
 void SceneManager::InitializeNewScene(SceneType sceneType) {
-	Window_ty_c window{ AppContext::GetInstance().constants.window };
 	switch (sceneType) {
 		case SceneType::TEST:
 			m_currentScene = std::make_shared<TestScene>();
