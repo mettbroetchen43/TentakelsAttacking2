@@ -7,6 +7,7 @@
 #include "AppContext.h"
 
 void Button::SetTextSizeAndPosition(AppContext_ty_c appContext) {
+	Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 	m_textSize = m_collider.height / 2;
 	Vector2 textSize{ MeasureTextEx(
 		*(appContext.assetManager.GetFont()),
@@ -27,8 +28,8 @@ void Button::SetTextSizeAndPosition(AppContext_ty_c appContext) {
 			0.0f);
 	}
 
-	m_textPosition.x = m_resolution.x * m_pos.x + (m_resolution.x * m_size.x / 2 - textSize.x / 2);
-	m_textPosition.y = m_resolution.y * m_pos.y + (m_resolution.y * m_size.y / 2 - m_textSize / 2);
+	m_textPosition.x = resolution.x * m_pos.x + (resolution.x * m_size.x / 2 - textSize.x / 2);
+	m_textPosition.y = resolution.y * m_pos.y + (resolution.y * m_size.y / 2 - m_textSize / 2);
 }
 
 bool Button::IsSameState(State state) const {
@@ -43,9 +44,9 @@ void Button::UpdateCollider() {
 	SetTextSizeAndPosition(AppContext::GetInstance());
 }
 
-Button::Button(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+Button::Button(Vector2 pos, Vector2 size, Alignment alignment,
 	std::string const& text, SoundType releaseSound)
-	: UIElement{ pos, size, alignment, resolution }, m_text{ text }, m_sound{ releaseSound } {
+	: UIElement{ pos, size, alignment }, m_text{ text }, m_sound{ releaseSound } {
 	
 	m_texture = AppContext::GetInstance().assetManager.GetTexture(AssetType::BUTTON_DEFAULT);
 	m_textureRec = {
@@ -59,7 +60,7 @@ Button::Button(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolutio
 }
 
 Button::Button()
-	: UIElement{ {0.0f,0.0f}, {0.0f,0.0f}, Alignment::TOP_LEFT, {0.0f,0.0f} },
+	: UIElement{ {0.0f,0.0f}, {0.0f,0.0f}, Alignment::TOP_LEFT },
 	m_sound{ SoundType::CLICKED_RELEASE_STD }, m_textPosition{ 0.0f,0.0f },
 	m_texture{ nullptr }, m_textureRec{ 0.0f,0.0f,0.0f,0.0f } {}
 
@@ -145,8 +146,8 @@ void Button::Render(AppContext_ty_c appContext) {
 		WHITE
 	);
 }
-void Button::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	UIElement::Resize(resolution, appContext);
+void Button::Resize(AppContext_ty_c appContext) {
+	UIElement::Resize(appContext);
 	SetTextSizeAndPosition(appContext);
 }
 

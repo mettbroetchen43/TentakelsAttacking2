@@ -55,13 +55,9 @@ public:
 	 * ctor.
 	 * initialize and calls text calculating.
 	 */
-	Button(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	Button(Vector2 pos, Vector2 size, Alignment alignment,
 		std::string const& text, SoundType releaseSound);
 	Button();
-	Button(Button const&) = default;
-	Button(Button&& old) = default;
-	Button& operator= (Button const&) = default;
-	Button& operator= (Button&&) = default;
 
 	/**
 	 * complete logic og the button.
@@ -75,7 +71,7 @@ public:
 	 * calls resize from UIElement.
 	 * resizes the text.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 
 	/**
 	 * sets the onClick lambda that is called when the button gets released.
