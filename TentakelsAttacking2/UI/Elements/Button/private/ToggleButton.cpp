@@ -26,8 +26,8 @@ void ToggleButton::UpdateState() {
 }
 
 ToggleButton::ToggleButton(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution, std::string const& text, SoundType releaseSound)
-	: Button{ pos, size, alignment, resolution, text, releaseSound }, Focusable{ focusID } { }
+	std::string const& text, SoundType releaseSound)
+	: Button{ pos, size, alignment, text, releaseSound }, Focusable{ focusID } { }
 
 void ToggleButton::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 
