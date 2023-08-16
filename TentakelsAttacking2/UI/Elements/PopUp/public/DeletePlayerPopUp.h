@@ -19,8 +19,7 @@ private:
 	/**
 	 * initializes all ui elements.
 	 */
-	void Initialize(AppContext_ty_c appContext,
-		Vector2 resolution) override;
+	void Initialize() override;
 	/**
 	 * gets the id from the input line and calls onClick.
 	 * sets should close afterword's.
@@ -33,6 +32,5 @@ public:
 	 * only initialisation.
 	 */
 	DeletePlayerPopUp(Vector2 pos, Vector2 size, Alignment alignemnt,
-		Vector2 resolution, std::string const& title, AssetType inpuTexture,
-		std::function<void(unsigned int)> onClick);
+		std::string const& title, AssetType inpuTexture, std::function<void(unsigned int)> onClick);
 };
