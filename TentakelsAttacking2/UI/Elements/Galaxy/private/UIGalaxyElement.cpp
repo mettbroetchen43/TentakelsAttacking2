@@ -6,24 +6,24 @@
 #include "UIGalaxyElement.h"
 #include "HColors.h"
 #include "ShipCountRing.h"
+#include "AppContext.h"
 
-UIGalaxyElement::UIGalaxyElement(unsigned int focusID, unsigned int ID, Vector2 size, PlayerData player, Vector2 pos,
-	Vector2 resolution, Vector2 colliderPos)
-	: Focusable{ focusID }, UIElement{ pos, size, Alignment::MID_MID, resolution }
+UIGalaxyElement::UIGalaxyElement(unsigned int focusID, unsigned int ID, Vector2 size, PlayerData player, Vector2 pos, Vector2 colliderPos)
+	: Focusable{ focusID }, UIElement{ pos, size, Alignment::MID_MID }
 	, m_ID{ ID }, m_currentPlayer{ player }, m_colliderPos{ colliderPos }, m_color{ player.color }, m_stringID {
 	std::to_string(ID) },
 	m_hover{
 		0.03f,
 		"",
 		player.color,
-		Vector2(0.01f,0.01f),
-		resolution
+		Vector2(0.01f,0.01f)
 	} { }
 
 void UIGalaxyElement::UpdatePosition(Rectangle newCollider) {
+	Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 	Vector2 const newPos{
-		(newCollider.x + newCollider.width  * m_colliderPos.x) / m_resolution.x,
-		(newCollider.y + newCollider.height * m_colliderPos.y) / m_resolution.y
+		(newCollider.x + newCollider.width  * m_colliderPos.x) / resolution.x,
+		(newCollider.y + newCollider.height * m_colliderPos.y) / resolution.y
 	};
 	SetPosition(newPos);
 	m_ring->SetPosition(m_pos);
@@ -68,9 +68,9 @@ void UIGalaxyElement::SetEnabled(bool isEnabled) {
 Rectangle UIGalaxyElement::GetCollider() const {
 	return UIElement::GetCollider();
 }
-void UIGalaxyElement::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+void UIGalaxyElement::Resize(AppContext_ty_c appContext) {
 
-	m_hover.Resize(resolution, appContext);
-	m_ring->Resize(resolution, appContext);
-	UIElement::Resize(resolution, appContext);
+	m_hover.Resize(appContext);
+	m_ring->Resize(appContext);
+	UIElement::Resize(appContext);
 }
