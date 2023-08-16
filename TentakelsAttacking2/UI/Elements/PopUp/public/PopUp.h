@@ -22,8 +22,7 @@ protected:
 	/**
 	 * initializes all zu elements.
 	 */
-	void Initialize(std::string const& title, std::string& subTitle,
-		AssetType infoTexture, Vector2 resolution);
+	void Initialize(std::string const& title, std::string& subTitle, AssetType infoTexture);
 	/**
 	 * checks if first enter ist still down.
 	 */
@@ -39,7 +38,7 @@ public:
 	 * ctor.
 	 * only initialisation.
 	 */
-	PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, 
+	PopUp(Vector2 pos, Vector2 size, Alignment alignment, 
 		std::string const& title, std::string& subTitle, AssetType infoTexture);
 	/**
 	 * virtual dtor.
@@ -60,5 +59,5 @@ public:
 	 * resizes the popup.
 	 * calls the elements to resize
 	 */
-	virtual void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	virtual void Resize(AppContext_ty_c appContext) override;
 };
