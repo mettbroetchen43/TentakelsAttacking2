@@ -19,7 +19,6 @@ void ExpandingButton::Initialize(int focusID, std::string const& btnText) {
 		m_pos,
 		m_size,
 		Alignment::DEFAULT,
-		m_resolution,
 		btnText,
 		SoundType::CLICKED_RELEASE_STD
 	);

@@ -11,6 +11,7 @@
 #include "HVector2Operator.h"
 #include "CustomRaylib.h"
 #include "HUIAlias.hpp"
+#include "AppContext.h"
 #include <cmath>
 #include <numbers>
 
