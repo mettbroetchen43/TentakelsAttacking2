@@ -30,7 +30,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.31f, 0.0f),
 		GetElementSize(0.55f, 0.2f),
 		Alignment::TOP_MID,
-		m_resolution,
 		false,
 		AppContext::GetInstance()
 		);
@@ -42,7 +41,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.975f, 0.02f),
 		GetElementSize(0.075f, 0.05f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		ExpandingButton::DOWN,
 		0.005f,
 		10.0f,
@@ -55,7 +53,6 @@ void MainScene::Initialize() {
 		Vector2{ 0.0f, 0.0f },
 		Vector2{ 0.0f, 0.0f },
 		Alignment::DEFAULT,
-		m_resolution,
 		appContext.languageManager.Text("helper_game"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -76,7 +73,6 @@ void MainScene::Initialize() {
 		Vector2{ 0.0f,0.0f },
 		Vector2{ 0.0f,0.0f },
 		Alignment::DEFAULT,
-		m_resolution,
 		appContext.languageManager.Text("helper_app"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -97,7 +93,6 @@ void MainScene::Initialize() {
 		Vector2{ 0.0f,0.0f },
 		Vector2{ 0.0f,0.0f },
 		Alignment::DEFAULT,
-		m_resolution,
 		appContext.languageManager.Text("scene_settings_main_menu_btn"),
 		SoundType::CLICKED_RELEASE_STD
 	);
@@ -119,7 +114,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.7f, 0.02f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		appContext.languageManager.Text("scene_main_scene_galaxy_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -133,7 +127,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.8f, 0.02f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		appContext.languageManager.Text("scene_main_scene_planet_table_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -147,7 +140,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.9f, 0.02f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		appContext.languageManager.Text("scene_main_scene_fleet_point_table_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -161,7 +153,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.99f, 0.95f),
 		GetElementSize(0.1f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
-		m_resolution,
 		appContext.languageManager.Text("scene_main_scene_next_player_btn"),
 		SoundType::ACCEPTED
 		);
@@ -175,7 +166,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.7f, 0.08f),
 		GetElementSize(0.1f, 0.02f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		Alignment::TOP_RIGHT,
 		0.02f,
 		appContext.languageManager.Text("scene_main_scene_current_player_text", ":")
@@ -187,7 +177,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.71f, 0.08f),
 		GetElementSize(0.2f, 0.02f),
 		Alignment::TOP_LEFT,
-		m_resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
 		"" 
@@ -200,7 +189,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.7f, 0.1f),
 		GetElementSize(0.1f, 0.02f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		Alignment::TOP_RIGHT,
 		0.02f,
 		appContext.languageManager.Text("scene_main_scene_current_round_text", ":")
@@ -212,7 +200,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.71f, 0.1f),
 		GetElementSize(0.2f, 0.02f),
 		Alignment::TOP_LEFT,
-		m_resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
 		std::to_string(appContext.constants.global.currentRound)
@@ -225,7 +212,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.7f, 0.12f),
 		GetElementSize(0.1f, 0.02f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		Alignment::TOP_RIGHT,
 		0.02f,
 		appContext.languageManager.Text("scene_main_scene_target_round_text", ":")
@@ -237,7 +223,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.71f, 0.12f),
 		GetElementSize(0.2f, 0.02f),
 		Alignment::TOP_LEFT,
-		m_resolution,
 		Alignment::TOP_LEFT,
 		0.02f,
 		std::to_string(appContext.constants.global.currentTargetRound)
@@ -250,7 +235,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.9f, 0.98f),
 		GetElementSize(0.1f, 0.02f),
 		Alignment::BOTTOM_RIGHT,
-		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.02f,
 		appContext.languageManager.Text("scene_main_scene_next_player_text", ":")
@@ -262,7 +246,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.91f, 0.98f),
 		GetElementSize(0.25f, 0.02f),
 		Alignment::BOTTOM_LEFT,
-		m_resolution,
 		Alignment::BOTTOM_LEFT,
 		0.02f,
 		""
@@ -275,7 +258,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.99f, 0.3f),
 		GetElementSize(0.2f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
-		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		appContext.languageManager.Text("scene_main_scene_origin_text", ":")
@@ -287,7 +269,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.99f, 0.3f),
 		GetElementSize(0.08f, 0.04f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		3
 	);
 	m_origin->SetOnEnter([this]() {
@@ -304,7 +285,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.99f, 0.37f),
 		GetElementSize(0.2f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
-		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		appContext.languageManager.Text("scene_main_scene_destination_text", ":")
@@ -316,7 +296,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.99f, 0.37f),
 		GetElementSize(0.08f, 0.04f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		3
 		);
 	m_destination->SetOnEnter([this]() {
@@ -335,7 +314,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.949f, 0.42f),
 		GetElementSize(0.039f, 0.04f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		3
 		);
 	m_destinationX->SetOnEnter([this]() {
@@ -353,7 +331,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.99f, 0.42f),
 		GetElementSize(0.039f, 0.04f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		3
 		);
 	m_destinationY->SetOnEnter([this]() {
@@ -370,7 +347,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.99f, 0.5f),
 		GetElementSize(0.2f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
-		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		appContext.languageManager.Text("scene_main_scene_ship_count_text", ":")
@@ -382,7 +358,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.99f, 0.5f),
 		GetElementSize(0.08f, 0.04f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		4
 		);
 	m_shipCount->SetOnEnter([this]() {
@@ -400,7 +375,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.99f, 0.57f),
 		GetElementSize(0.04f, 0.04f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		"+",
 		SoundType::ACCEPTED
 		);
@@ -414,7 +388,6 @@ void MainScene::Initialize() {
 		GetElementPosition(0.95f, 0.57f),
 		GetElementSize(0.04f, 0.04f),
 		Alignment::TOP_RIGHT,
-		m_resolution,
 		"X",
 		SoundType::ACCEPTED
 		);
@@ -435,7 +408,6 @@ void MainScene::InitializeGalaxy() {
 		GetElementPosition(0.01f, 0.99f),
 		GetElementSize(0.8f, 0.8f),
 		Alignment::BOTTOM_LEFT,
-		m_resolution,
 		false,
 		true
 	);
@@ -455,7 +427,6 @@ void MainScene::InitializePlanetTable() {
 		GetElementPosition(0.01f, 0.95f),
 		GetElementSize(0.85f, 0.78f),
 		Alignment::BOTTOM_LEFT,
-		m_resolution,
 		m_galaxy->GetGalaxy()
 		);
 	m_elements.push_back(m_planetTable);
@@ -473,7 +444,6 @@ void MainScene::InitializeFleetTable() {
 		GetElementPosition(0.01f, 0.95f),
 		GetElementSize(0.85f, 0.78f),
 		Alignment::BOTTOM_LEFT,
-		m_resolution,
 		m_galaxy->GetGalaxy(),
 		m_currentPlayer
 	);
@@ -636,8 +606,8 @@ SpaceObject_ty MainScene::GetSpaceObjectFromID(unsigned int ID) const {
 	return nullptr;
 }
 
-MainScene::MainScene(Vector2 resolution)
-	: Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
+MainScene::MainScene()
+	: Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT } {
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
 	appContext.eventManager.AddListener(this);
