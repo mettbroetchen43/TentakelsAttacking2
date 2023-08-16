@@ -29,7 +29,7 @@ public:
 	 * ctor.
 	 * only initialization.
 	 */
-	LogoScene(Vector2 resolution);
+	LogoScene();
 
 	/**
 	 * returns if not active.
@@ -45,5 +45,5 @@ public:
 	 * returns if not active.
 	 * calls all elements to resize.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 };
