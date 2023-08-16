@@ -17,7 +17,7 @@ private:
 	void Initialize(AppContext_ty appContext);
 
 public:
-	TestScene(Vector2 resolution);
+	TestScene();
 	void SetActive(bool active, AppContext_ty_c appContext) override;
 
 	void TestLambda(bool toggled);
@@ -25,5 +25,5 @@ public:
 
 	void CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) override;
 	void Render(AppContext_ty_c appContext) override;
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 };
