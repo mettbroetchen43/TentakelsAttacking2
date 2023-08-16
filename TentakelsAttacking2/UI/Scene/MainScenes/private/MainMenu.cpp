@@ -13,13 +13,13 @@
 #include "Text.h"
 #include <memory>
 
-void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
+void MainMenu::Initialize() {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	auto galaxy = std::make_shared<GalaxyScene>(
 		GetElementPosition(0.95f, 0.95f),
 		GetElementSize(0.7f, 0.7f),
 		Alignment::BOTTOM_RIGHT,
-		resolution,
 		true,
 		false
 		);
@@ -32,7 +32,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementPosition(0.625f, 0.025f),
 		GetElementSize(0.7f, 0.2f),
 		Alignment::TOP_MID,
-		resolution,
 		false,
 		appContext
 		);
@@ -42,7 +41,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementPosition(0.99f, 0.98f),
 		GetElementSize(0.1f, 0.1f),
 		Alignment::BOTTOM_RIGHT,
-		resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.02f,
 		appContext.constants.global.gameVersion + '\n' 
@@ -72,7 +70,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementPosition(btnPosX,btnPosY),
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
-		m_resolution,
 		ExpandingButton::RIGHT,
 		0.005f,
 		10.0f,
@@ -87,7 +84,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		Vector2{ 0.0f,0.0f },
 		Vector2{ 0.0f,0.0f },
 		Alignment::DEFAULT,
-		resolution,
 		appContext.languageManager.Text("scene_main_menu_continue_btn"),
 		SoundType::ACCEPTED
 	);
@@ -106,7 +102,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		Vector2{ 0.0f,0.0f },
 		Vector2{ 0.0f,0.0f },
 		Alignment::DEFAULT,
-		resolution,
 		appContext.languageManager.Text("scene_main_menu_new_game_btn"),
 		SoundType::ACCEPTED
 	);
@@ -123,7 +118,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		Vector2{ 0.0f,0.0f },
 		Vector2{ 0.0f,0.0f },
 		Alignment::DEFAULT,
-		resolution,
 		appContext.languageManager.Text("helper_network"),
 		SoundType::ACCEPTED
 	);
@@ -137,7 +131,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
-		m_resolution,
 		ExpandingButton::RIGHT,
 		0.005f,
 		10.0f,
@@ -152,7 +145,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		Vector2{ 0.0f,0.0f },
 		Vector2{ 0.0f,0.0f },
 		Alignment::DEFAULT,
-		resolution,
 		appContext.languageManager.Text("scene_main_menu_save_btn"),
 		SoundType::ACCEPTED
 	);
@@ -178,7 +170,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		Vector2{ 0.0f,0.0f },
 		Vector2{ 0.0f,0.0f },
 		Alignment::DEFAULT,
-		resolution,
 		appContext.languageManager.Text("scene_main_menu_load_btn"),
 		SoundType::ACCEPTED
 		);
@@ -197,7 +188,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
-		m_resolution,
 		ExpandingButton::RIGHT,
 		0.005f,
 		10.0f,
@@ -212,7 +202,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		Vector2{ 0.0f,0.0f },
 		Vector2{ 0.0f,0.0f },
 		Alignment::DEFAULT,
-		resolution,
 		appContext.languageManager.Text("helper_game"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -231,7 +220,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		Vector2{ 0.0f,0.0f },
 		Vector2{ 0.0f,0.0f },
 		Alignment::DEFAULT,
-		resolution,
 		appContext.languageManager.Text("helper_app"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -250,7 +238,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
-		resolution,
 		appContext.languageManager.Text("scene_main_menu_credits_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -269,7 +256,6 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 		GetElementPosition(btnPosX, btnPosY),
 		GetElementSize(btnSizX, btnSizY),
 		Alignment::MID_RIGHT,
-		resolution,
 		appContext.languageManager.Text("scene_main_menu_quit_btn"),
 		SoundType::ACCEPTED
 	);
@@ -283,10 +269,8 @@ void MainMenu::Initialize(Vector2 resolution, AppContext_ty appContext) {
 
 }
 
-MainMenu::MainMenu(Vector2 resolution)
-	: Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution } {
+MainMenu::MainMenu()
+	: Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT } {
 
-	AppContext_ty appContext{ AppContext::GetInstance() };
-
-	Initialize(resolution, appContext);
+	Initialize();
 }
