@@ -199,7 +199,7 @@ public:
 	 * ctor.
 	 * initializes the table with empty cells.
 	 */
-	Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
+	Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int focusID,
 		int rowCount, int columnCount, Vector2 minCellSize, float scrollSpeed);
 
 	/**
@@ -218,7 +218,6 @@ public:
 			oldCell->GetPosition(),
 			oldCell->GetSize(),
 			oldCell->GetAlignment(),
-			m_resolution,
 			oldCell->GetFocusID(),
 			input,
 			[this](AbstractTableCell const* cell, T oldValue, T newValue)
@@ -313,7 +312,6 @@ public:
 				Vector2(0.0f, 0.0f),
 				Vector2(0.1f, 0.1f),
 				Alignment::TOP_LEFT,
-				m_resolution,
 				0,
 				defaultValue,
 				[this](AbstractTableCell const* cell, T oldValue, T newValue)
@@ -352,7 +350,6 @@ public:
 				Vector2(0.0f, 0.0f),
 				Vector2(0.1f, 0.1f),
 				Alignment::TOP_LEFT,
-				m_resolution,
 				0,
 				defaultValue,
 				[this](AbstractTableCell const* cell, T oldValue, T newValue)
