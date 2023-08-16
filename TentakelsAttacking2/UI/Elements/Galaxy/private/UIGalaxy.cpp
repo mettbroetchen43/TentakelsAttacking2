@@ -595,7 +595,7 @@ void UIGalaxy::Resize(AppContext_ty_c appContext) {
 	};
 
 	for (auto const& e : m_uiGalaxyElements) {
-		e->Resize(resolution, appContext);
+		e->Resize(appContext);
 		e->UpdatePosition(m_absoluteSize);
 	}
 }
