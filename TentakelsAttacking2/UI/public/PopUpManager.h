@@ -84,7 +84,6 @@ public:
 			Vector2(0.5f, 0.5f),
 			Vector2(0.7f, 0.7f),
 			Alignment::MID_MID,
-			appContext.GetResolution(),
 			event->GetTitle(),
 			AssetType::LOGO,
 			event->GetCurrentValue(),
