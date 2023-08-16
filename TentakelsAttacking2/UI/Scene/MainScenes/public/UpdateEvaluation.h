@@ -49,7 +49,7 @@ public:
 	/**
 	 * adds the event listener to the event system.
 	 */
-	UpdateEvaluationScene(Vector2 resolution);
+	UpdateEvaluationScene();
 	/**
 	 * removes the event listener from the event system.
 	 */
