@@ -5,8 +5,8 @@
 
 #include "Line.h"
 
-Line::Line(Vector2 start, Vector2 end, Vector2 resolution, float thick, Color color)
-	: UIElement{ start, end - start, Alignment::DEFAULT, resolution }, m_thick{ thick }, m_color{ color }, m_start{ start }, m_end{ end } { }
+Line::Line(Vector2 start, Vector2 end, float thick, Color color)
+	: UIElement{ start, end - start, Alignment::DEFAULT }, m_thick{ thick }, m_color{ color }, m_start{ start }, m_end{ end } { }
 
 void Line::Render(AppContext_ty_c) {
 	DrawLineEx(
@@ -59,4 +59,3 @@ Color Line::GetColor() const{
 void Line::SetColor(Color color) {
 	m_color = color;
 }
-
