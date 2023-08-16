@@ -7,11 +7,10 @@
 #include "AppContext.h"
 #include "HInput.h"
 
-ClassicButton::ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size,
-	Alignment alignment, Vector2 resolution, std::string const& text,
-	SoundType releaseSound)
+ClassicButton::ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
+	std::string const& text, SoundType releaseSound)
 	: Focusable{ focusID },
-	Button{ pos, size, alignment, resolution, text, releaseSound } { }
+	Button{ pos, size, alignment, text, releaseSound } { }
 
 [[nodiscard]] bool ClassicButton::IsEnabled() const{
 	return m_state != State::DISABLED;
