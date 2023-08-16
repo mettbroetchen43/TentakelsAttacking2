@@ -23,7 +23,7 @@ private:
 
 		AppContext_ty_c appContext{ AppContext::GetInstance() };
 
-		auto acceptBtn = InitializeAcceptButton(appContext, resolution);
+		auto acceptBtn = InitializeAcceptButton();
 		acceptBtn->SetOnClick([this]() {
 			this->SetValue();
 			});
