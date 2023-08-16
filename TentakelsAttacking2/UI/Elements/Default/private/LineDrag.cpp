@@ -4,6 +4,11 @@
 //
 
 #include "LineDrag.h"
+#include "AppContext.h"
+
+LineDrag::LineDrag(float thick, Color color, std::function<void(Vector2, Vector2)> callback)
+		: UIElement{ {0.0f,0.0f}, {0.0f,0.0f}, Alignment::DEFAULT },
+		m_start{ 0.0f,0.0f }, m_end{ 0.0f,0.0f }, m_thick{ thick }, m_color{ color }, m_callback{ callback } { }
 
 Vector2 LineDrag::GetStart() const {
 	return m_start;
@@ -30,7 +35,8 @@ void LineDrag::ClearCallback() {
 	m_callback = [](Vector2, Vector2) {};
 }
 
-void LineDrag::CheckAndUpdate(Vector2 const& mousePosition, AppContext const&) {
+void LineDrag::CheckAndUpdate(Vector2 const& mousePosition, AppContext const& appContext) {
+	Resolution_ty_c resolution{ appContext.GetResolution() };
 	if (m_render) {
 		if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
 			m_render = false;
@@ -38,8 +44,8 @@ void LineDrag::CheckAndUpdate(Vector2 const& mousePosition, AppContext const&) {
 		}
 		else {
 			m_end = {
-				mousePosition.x / m_resolution.x,
-				mousePosition.y / m_resolution.y
+				mousePosition.x / resolution.x,
+				mousePosition.y / resolution.y
 			};
 			SetSize(m_end - m_start);
 		}
@@ -48,8 +54,8 @@ void LineDrag::CheckAndUpdate(Vector2 const& mousePosition, AppContext const&) {
 		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 			m_render = true;
 			m_start = {
-				mousePosition.x / m_resolution.x,
-				mousePosition.y / m_resolution.y
+				mousePosition.x / resolution.x,
+				mousePosition.y / resolution.y
 			};
 			m_end = m_start;
 			SetPosition(m_start);
