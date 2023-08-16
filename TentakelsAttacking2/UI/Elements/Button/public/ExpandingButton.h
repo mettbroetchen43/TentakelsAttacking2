@@ -61,7 +61,7 @@ public:
 	/**
 	 * initializes the toggle button.
 	 */
-	ExpandingButton(int focusID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	ExpandingButton(int focusID, Vector2 pos, Vector2 size, Alignment alignment,
 		Direction direction, float spacing, float expandigSpeed, std::string const& btnText);
 
 	/**
@@ -118,5 +118,5 @@ public:
 	/**
 	 * calls main button and button vector to resize.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c) override;
+	void Resize(AppContext_ty_c) override;
 };
