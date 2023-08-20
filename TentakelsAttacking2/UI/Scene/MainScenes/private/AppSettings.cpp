@@ -193,7 +193,6 @@ void AppSettingsScene::Initialize() {
 		id + 1,
 		GetStringsFromResolutionEntries()
 	);
-	m_resolutionDropDown->SetEnabled(not appContext.constants.window.isFullScreen);
 	m_resolutionDropDown->SetCurrentElementByID(GetIndexFromResolution(appContext.constants.window.currentResolutionEnum) + 1);
 	m_resolutionDropDown->SetOnSave([this](unsigned int ID) {
 		SetNewResolutionEvent const event{ this->m_rawResolutionEntries[ID - 1].first };
@@ -255,7 +254,6 @@ AppSettingsScene::~AppSettingsScene() {
 void AppSettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appContext) {
 	SettingsScene::CheckAndUpdate(mousePosition, appContext);
 	m_toggleFullScreenCBM->SetChecked(appContext.constants.window.isFullScreen);
-	// m_resolutionDropDown->SetEnabled(not appContext.constants.window.isFullScreen);
 }
 void AppSettingsScene::Render(AppContext_ty_c appContext) {
 	SettingsScene::Render(appContext);
