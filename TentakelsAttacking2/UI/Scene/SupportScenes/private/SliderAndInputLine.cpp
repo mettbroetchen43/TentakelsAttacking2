@@ -9,13 +9,12 @@
 #include "HRandom.h"
 #include <iostream>
 
-void SliderAndInputLine::Initialize(unsigned int focusID, Vector2 resolution) {
+void SliderAndInputLine::Initialize(unsigned int focusID) {
 	m_inputLine = std::make_shared<InputLine<int>>(
 		focusID,
 		GetElementPosition(0.77f, 0.0f),
 		GetElementSize(0.13f, 1.0f),
 		Alignment::TOP_LEFT,
-		resolution,
 		5
 		);
 	m_inputLine->SetOnEnter([this]() {
@@ -34,7 +33,6 @@ void SliderAndInputLine::Initialize(unsigned int focusID, Vector2 resolution) {
 		GetElementPosition(0.9f, 0.0f),
 		GetElementSize(0.1f, 1.0f),
 		Alignment::TOP_LEFT,
-		resolution,
 		"Set",
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -48,7 +46,6 @@ void SliderAndInputLine::Initialize(unsigned int focusID, Vector2 resolution) {
 		GetElementPosition(0.0f, 0.1f),
 		GetElementSize(0.75f, 0.8f),
 		Alignment::TOP_LEFT,
-		resolution,
 		true,
 		10.0f
 		);
@@ -92,13 +89,12 @@ void SliderAndInputLine::SetSliderValue() const {
 	m_slider->SetButtonPosition(percent);
 }
 
-SliderAndInputLine::SliderAndInputLine(unsigned int focusID, Vector2 pos, 
-	Vector2 size, Alignment alignment, Vector2 resolution,
+SliderAndInputLine::SliderAndInputLine(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
 	int minValue, int maxValue, int initialValue)
-	: Scene{ pos, size, alignment, resolution }, m_minValue{ minValue }, m_maxValue{ maxValue } {
+	: Scene{ pos, size, alignment }, m_minValue{ minValue }, m_maxValue{ maxValue } {
 	
 	m_currentValue = initialValue;
-	Initialize(focusID, resolution);
+	Initialize(focusID);
 }
 
 void SliderAndInputLine::CheckAndUpdate(Vector2 const& mousePosition,

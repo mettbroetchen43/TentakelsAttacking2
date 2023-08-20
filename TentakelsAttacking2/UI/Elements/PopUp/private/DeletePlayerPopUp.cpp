@@ -8,10 +8,9 @@
 #include "HGeneral.h"
 #include "HFocusEvents.h"
 
-void DeletePlayerPopUp::Initialize(AppContext_ty_c appContext,
-	Vector2 resolution) {
+void DeletePlayerPopUp::Initialize() {
 
-	auto acceptBtn = InitializeAcceptButton(appContext, resolution);
+	auto acceptBtn = InitializeAcceptButton();
 	acceptBtn->SetOnClick([this]() {this->SetValue();});
 
 	auto inputLine = std::make_shared<InputLine<int>>(
@@ -19,7 +18,6 @@ void DeletePlayerPopUp::Initialize(AppContext_ty_c appContext,
 		GetElementPosition(m_pos, m_size, 0.5f, 0.45f),
 		GetElementSize(m_size, 0.5f, 0.1f),
 		Alignment::TOP_MID,
-		resolution,
 		5
 		);
 	inputLine->SetPlaceholderText("Player ID");
@@ -38,13 +36,11 @@ void DeletePlayerPopUp::SetValue() {
 	SetShouldClose();
 }
 
-DeletePlayerPopUp::DeletePlayerPopUp(Vector2 pos, Vector2 size,
-	Alignment alignment, Vector2 resolution,
-	std::string const& title, AssetType inputTexture,
-	std::function<void(unsigned int)> onClick)
-	: CellPopUp{ pos, size, alignment, resolution,
-		title, inputTexture }, m_onClick{ onClick } {
-	Initialize(AppContext::GetInstance(), resolution);
+DeletePlayerPopUp::DeletePlayerPopUp(Vector2 pos, Vector2 size, Alignment alignment,
+	std::string const& title, AssetType inputTexture, std::function<void(unsigned int)> onClick)
+	: CellPopUp{ pos, size, alignment, title, inputTexture }, m_onClick{ onClick } {
+	
+	Initialize();
 
 	if (IsKeyReleased(KEY_ENTER)
 		or IsKeyReleased(KEY_KP_ENTER)) {

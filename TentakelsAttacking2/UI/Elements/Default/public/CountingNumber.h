@@ -70,7 +70,7 @@ private:
 	void UpdateColor();
 
 public:
-	CountingNumber(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	CountingNumber(Vector2 pos, Vector2 size, Alignment alignment,
 		Alignment textAlignment, float textHeight, int startNumber);
 	
 	/**
@@ -120,5 +120,5 @@ public:
 	/**
 	 * 
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appCntext) override;
+	void Resize(AppContext_ty_c appCntext) override;
 };

@@ -12,14 +12,12 @@
 #include "AppContext.h"
 #include <string>
 
-void PopUp::Initialize(std::string const& title, std::string& subTitle,
-	AssetType infoTexture, Vector2 resolution) {
+void PopUp::Initialize(std::string const& title, std::string& subTitle, AssetType infoTexture) {
 	
 	auto icon = std::make_shared<Picture>(
 		GetElementPosition(m_pos, m_size, 0.15f, 0.05f),
 		GetElementSize(m_size, 0.25f, 0.3f),
 		Alignment::TOP_MID,
-		resolution,
 		infoTexture
 		);
 	m_elements.push_back(icon);
@@ -28,17 +26,17 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		GetElementPosition(m_pos, m_size, 0.6f, 0.1f),
 		GetElementSize(m_size, 0.7f, 0.2f),
 		Alignment::TOP_MID,
-		resolution,
 		Alignment::TOP_MID,
 		GetElementTextHeight(m_size, 0.18f),
 		title
 		);
 	m_elements.push_back(textTitle);
 
+	Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 	float textHeight = GetElementTextHeight(m_size, 0.1f);
 	BreakText(
 		subTitle,
-		textHeight * m_resolution.y,
+		textHeight * resolution.y,
 		m_size.x * resolution.x * 0.9f,
 		AppContext::GetInstance()
 	);
@@ -47,7 +45,6 @@ void PopUp::Initialize(std::string const& title, std::string& subTitle,
 		GetElementPosition(m_pos, m_size, 0.5f, 0.4f),
 		GetElementSize(m_size, 0.9f, 0.4f),
 		Alignment::TOP_MID,
-		resolution,
 		Alignment::TOP_MID,
 		textHeight,
 		subTitle
@@ -82,11 +79,11 @@ Rectangle PopUp::GetColliderWithMaxValues(Texture2D* texture, float maxWidth, fl
 }
 
 
-PopUp::PopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+PopUp::PopUp(Vector2 pos, Vector2 size, Alignment alignment,
 	std::string const& title, std::string& subTitle, AssetType infoTexture)
-	: UIElement{ pos, size, alignment, resolution } {
+	: UIElement{ pos, size, alignment } {
 	
-	Initialize(title, subTitle, infoTexture, resolution);
+	Initialize(title, subTitle, infoTexture);
 
 	if (IsConfirmInputDown()) {
 		m_firstEnter = true;
@@ -106,12 +103,13 @@ void PopUp::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c appCont
 	}
 }
 void PopUp::Render(AppContext_ty_c appContext) {
+	Resolution_ty_c resolution{ appContext.GetResolution() };
 	DrawRectangleRec(
 		Rectangle(
 			0.0f,
 			0.0f,
-			m_resolution.x,
-			m_resolution.y
+			resolution.x,
+			resolution.y
 		),
 		GREY_50
 	);
@@ -127,8 +125,8 @@ void PopUp::Render(AppContext_ty_c appContext) {
 		PURPLE
 	);
 }
-void PopUp::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+void PopUp::Resize(AppContext_ty_c appContext) {
 	for (auto const& e : m_elements) {
-		e->Resize(resolution, appContext);
+		e->Resize(appContext);
 	}
 }

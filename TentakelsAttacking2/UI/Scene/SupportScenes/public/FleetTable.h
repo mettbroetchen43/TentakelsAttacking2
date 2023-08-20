@@ -28,7 +28,7 @@ public:
 	/**
 	 * ctor and calls to initialize
 	 */
-	FleetAndTargetPointTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy_ty_raw galaxy, PlayerData currentPlayer);
+	FleetAndTargetPointTable(Vector2 pos, Vector2 size, Alignment alignment, Galaxy_ty_raw galaxy, PlayerData currentPlayer);
 	/**
 	 * sets if the scene is currently active.
 	 * calls set focus active.

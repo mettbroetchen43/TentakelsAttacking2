@@ -12,7 +12,7 @@
 #include <cmath>
 
 
-void ColorPicker::Initialize(Vector2 resolution) {
+void ColorPicker::Initialize() {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
 	auto const colors{ appContext.colors.GetColors() };
@@ -38,7 +38,6 @@ void ColorPicker::Initialize(Vector2 resolution) {
 				GetElementPosition(m_pos, m_size, posX, posY),
 				GetElementSize(m_size, sizeX, sizeY),
 				Alignment::MID_MID,
-				resolution,
 				color,
 				this
 				));
@@ -82,11 +81,10 @@ void ColorPicker::CheckForValidColor(AppContext_ty_c appContext) {
 	SetColor(appContext.playerCollection.GetPossibleColor());
 }
 
-ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size,
-	Alignment alignment, Vector2 resolution, bool isPopUp)
-	: Focusable{ ID }, UIElement{ pos, size, alignment, resolution }, m_isPopUp{ isPopUp } {
+ColorPicker::ColorPicker(unsigned int ID, Vector2 pos, Vector2 size, Alignment alignment, bool isPopUp)
+	: Focusable{ ID }, UIElement{ pos, size, alignment }, m_isPopUp{ isPopUp } {
 
-	Initialize(resolution);
+	Initialize();
 }
 ColorPicker::~ColorPicker() {
 	if (!m_isNestedFocus) {
@@ -237,12 +235,12 @@ void ColorPicker::Render(AppContext_ty_c appContext) {
 		);
 	}
 }
-void ColorPicker::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+void ColorPicker::Resize(AppContext_ty_c appContext) {
 
-	UIElement::Resize(resolution, appContext);
+	UIElement::Resize(appContext);
 
 	for (auto const& c : m_cells) {
-		c->Resize(resolution, appContext);
+		c->Resize(appContext);
 	}
 }
 

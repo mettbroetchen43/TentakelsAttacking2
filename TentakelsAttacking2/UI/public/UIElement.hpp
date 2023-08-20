@@ -11,6 +11,7 @@
 #include "HVector2Operator.h"
 #include "CustomRaylib.h"
 #include "HUIAlias.hpp"
+#include "AppContext.h"
 #include <cmath>
 #include <numbers>
 
@@ -29,7 +30,6 @@ protected:
 	};
 	MoveType m_moveType{ MoveType::NONE }; ///< contains the current movement type.
 	Vector2 m_pos, m_size; ///< contains the relative position (top left) and size on the screen
-	Vector2 m_resolution; ///< contains the current resolution of the window
 	
 	Vector2 m_targetPosition{ 0.0f,0.0f }; ///< contains the target position the element is moving to
 	Vector2 m_startingPosition{ 0.0f,0.0f }; ///< contains the atsrting position the element is moving from
@@ -43,24 +43,26 @@ protected:
 	 * calculates the absolute position and size out of the relative position and size and the current resolution.
 	 */
 	virtual void UpdateCollider() {
+		Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 		m_collider = {
-			m_pos.x * m_resolution.x,
-			m_pos.y * m_resolution.y,
-			m_size.x * m_resolution.x,
-			m_size.y * m_resolution.y
+			m_pos.x  * resolution.x,
+			m_pos.y  * resolution.y,
+			m_size.x * resolution.x,
+			m_size.y * resolution.y
 		};
 	}
 	/**
 	 * calculates the relative position and size out of the absolute position and size and the current resolution.
 	 */
 	virtual void UpdateColliderReverse() {
+		Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 		m_pos = {
-			m_collider.x / m_resolution.x,
-			m_collider.y / m_resolution.y
+			m_collider.x / resolution.x,
+			m_collider.y / resolution.y
 		};
 		m_size = {
-			m_collider.width / m_resolution.x,
-			m_collider.height / m_resolution.y
+			m_collider.width  / resolution.x,
+			m_collider.height / resolution.y
 		};
 	}
 
@@ -150,10 +152,10 @@ public:
 	 * ctor.
 	 * calls the aligned collider.
 	 */
-	UIElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
-		: m_pos{ pos }, m_size{ size }, m_alignment{ alignment }, m_resolution{ resolution } {
+	UIElement(Vector2 pos, Vector2 size, Alignment alignment)
+		: m_pos{ pos }, m_size{ size }, m_alignment{ alignment } {
 		
-		m_collider = GetAlignedCollider(m_pos, m_size, alignment, resolution);
+		m_collider = GetAlignedCollider(m_pos, m_size, alignment);
 	}
 	/**
 	 * default virtual dtor.
@@ -178,7 +180,7 @@ public:
 	 */
 	virtual void SetPosition(Vector2 pos) {
 		m_pos = pos;
-		m_collider = GetAlignedCollider(m_pos, m_size, m_alignment, m_resolution);
+		m_collider = GetAlignedCollider(m_pos, m_size, m_alignment);
 	}
 	/**
 	 * sets a new relative position.
@@ -207,19 +209,6 @@ public:
 	 */
 	[[nodiscard]] Vector2 GetSize() const {
 		return m_size;
-	}
-	/**
-	 * sets a new resolution.
-	 */
-	void SetResolution(Vector2 resolution) {
-		m_resolution = resolution;
-		UpdateCollider();
-	}
-	/**
-	 *  returns the current resolution.
-	 */
-	[[nodiscard]] Vector2 GetResolution() const {
-		return m_resolution;
 	}
 	/**
 	 * sets a new absolute position and size.
@@ -325,8 +314,7 @@ public:
 	 * sets new resolution.
 	 * calls update collider.
 	 */
-	virtual void Resize(Vector2 resolution, AppContext_ty_c) {
-		m_resolution = resolution;
+	virtual void Resize(AppContext_ty_c) {
 		UpdateCollider();
 	};
 };

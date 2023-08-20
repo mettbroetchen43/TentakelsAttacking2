@@ -41,7 +41,7 @@ public:
 	 * ctor.
 	 * create toRender.
 	 */
-	DropDownElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	DropDownElement(Vector2 pos, Vector2 size, Alignment alignment,
 		unsigned int focusID, unsigned int ID, std::string const& text, std::function<Rectangle(Rectangle)> getTemoraryCollider);
 
 	/**

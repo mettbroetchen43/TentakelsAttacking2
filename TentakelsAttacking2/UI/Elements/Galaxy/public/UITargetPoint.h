@@ -21,7 +21,7 @@ public:
 	 * ctor.
 	 * converts the id to a string.
 	 */
-	UITargetPoint(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution,
+	UITargetPoint(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, 
 		Vector2 colliderPos, TargetPoint_ty_raw_c targetPoint);
 
 	/**

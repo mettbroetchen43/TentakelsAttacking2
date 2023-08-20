@@ -18,15 +18,13 @@ class PopUpManager final : public EventListener {
 private:
 	std::vector<std::unique_ptr<PopUp>> m_popUps; ///< contains all popups
 	std::vector<PopUp*> m_toDelete; ///< contains the popups that should be deleted but not able to do so yet
-	AppContext* m_appContext; ///< contains an AppContext pointer
-	Vector2 m_resolution; ///< contains the current resolution
 
 public:
 	/**
 	 * ctor.
 	 * adds this as an event listener.
 	 */
-	PopUpManager(Vector2 resolution);
+	PopUpManager();
 	/**
 	 * removes the event listener
 	 */
@@ -78,14 +76,14 @@ public:
 	 */
 	template<typename T, typename eventType>
 	void NewTableCellPopUp(eventType const* event) {
+		AppContext_ty_c appContext{ AppContext::GetInstance() };
 		NewFocusPopUpLayerEvent const focusEvent;
-		m_appContext->eventManager.InvokeEvent(focusEvent);
+		appContext.eventManager.InvokeEvent(focusEvent);
 
 		m_popUps.push_back(std::make_unique<PrivativeCellPopUp<T>>(
 			Vector2(0.5f, 0.5f),
 			Vector2(0.7f, 0.7f),
 			Alignment::MID_MID,
-			m_resolution,
 			event->GetTitle(),
 			AssetType::LOGO,
 			event->GetCurrentValue(),
@@ -119,5 +117,5 @@ public:
 	/**
 	 * calls all popups to update.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext);
+	void Resize(AppContext_ty_c appContext);
 };

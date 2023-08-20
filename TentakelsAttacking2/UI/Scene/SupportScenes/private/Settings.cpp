@@ -19,16 +19,13 @@ void SettingsScene::Initialize() {
 		GetElementPosition(0.5f, 0.025f),
 		GetElementSize(0.8f, 0.25f),
 		Alignment::TOP_MID,
-		m_resolution,
-		false,
-		appContext
+		false
 		));
 
 	// line
 	m_elements.push_back(std::make_shared<Line>(
 		GetElementPosition(0.5f, 0.3f),
 		GetElementPosition(0.5f, 0.95f),
-		m_resolution,
 		2.0f,
 		WHITE
 	));
@@ -39,7 +36,6 @@ void SettingsScene::Initialize() {
 		GetElementPosition(0.75f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
-		m_resolution,
 		appContext.languageManager.Text("scene_settings_continue_btn"),
 		SoundType::ACCEPTED
 	);
@@ -56,7 +52,6 @@ void SettingsScene::Initialize() {
 		GetElementPosition(0.25f, 0.95f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
-		m_resolution,
 		appContext.languageManager.Text("scene_settings_main_menu_btn"),
 		SoundType::CLICKED_RELEASE_STD
 		);
@@ -69,8 +64,8 @@ void SettingsScene::Initialize() {
 	m_elements.push_back(backBtn);
 }
 
-SettingsScene::SettingsScene(Vector2 resolution)
-	:Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT, resolution } {
+SettingsScene::SettingsScene()
+	:Scene{ { 0.0f,0.0f }, { 1.0f,1.0f }, Alignment::DEFAULT } {
 	Initialize();
 }
 
@@ -80,6 +75,6 @@ void SettingsScene::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_c
 void SettingsScene::Render(AppContext_ty_c appContext) {
 	Scene::Render(appContext);
 }
-void SettingsScene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	Scene::Resize(resolution, appContext);
+void SettingsScene::Resize(AppContext_ty_c appContext) {
+	Scene::Resize(appContext);
 }

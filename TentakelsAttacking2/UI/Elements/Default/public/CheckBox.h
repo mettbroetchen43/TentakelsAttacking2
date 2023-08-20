@@ -35,8 +35,7 @@ public:
 	 * recalculates the collider.
 	 * handles the textures.
 	 */
-	CheckBox(unsigned int focusID, Vector2 pos, float height,
-		Alignment alignment, Vector2 resolution, unsigned int checkBoxID);
+	CheckBox(unsigned int focusID, Vector2 pos, float height, Alignment alignment, unsigned int checkBoxID);
 
 	/**
 	 * sets the onCheck lambda that gets called when the checkbox gets checked.
@@ -82,5 +81,5 @@ public:
 	 * resizes the checkbox and calls the ui-element to resize.
 	 * updates horizontal size.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 };

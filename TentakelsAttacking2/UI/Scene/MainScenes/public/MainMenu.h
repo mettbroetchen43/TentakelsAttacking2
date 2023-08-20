@@ -15,11 +15,11 @@ private:
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize(Vector2 resolution, AppContext_ty appContext);
+	void Initialize();
 
 public:
 	/**
 	 * initialization.
 	 */
-	MainMenu(Vector2 resolution);
+	MainMenu();
 };

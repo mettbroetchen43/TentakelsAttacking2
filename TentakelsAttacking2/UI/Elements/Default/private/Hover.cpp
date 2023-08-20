@@ -9,9 +9,10 @@
 #include "HTextProcessing.h"
 
 void Hover::CalculateDefault(AppContext_ty_c appContext) {
+	Resolution_ty_c resolution{ appContext.GetResolution() };
 	Vector2 const textOffset {
-		m_resolution.x * 0.01f,
-		m_resolution.y * 0.01f,
+		resolution.x * 0.01f,
+		resolution.y * 0.01f,
 	};
 
 	Vector2 const measure{ MeasureTextEx(
@@ -35,24 +36,28 @@ void Hover::CalculateDefault(AppContext_ty_c appContext) {
 	};
 }
 
-Hover::Hover(float height, std::string text, Color color, Vector2 hoverOffset, Vector2 resolution)
-	: UIElement(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), Alignment::BOTTOM_LEFT, resolution), m_color(color),
-	m_hoverOffset{ hoverOffset }, m_text{ text }, m_textHeight{ height * resolution.y } {
+Hover::Hover(float height, std::string text, Color color, Vector2 hoverOffset)
+	: UIElement{ { 0.0f, 0.0f }, { 0.0f, 0.0f }, Alignment::BOTTOM_LEFT }, m_color(color),
+	m_hoverOffset{ hoverOffset }, m_text{ text }, m_textHeight{ 0.0f } {
 
 	AppContext_ty appContext{ AppContext::GetInstance() };
+	Resolution_ty_c resolution{ appContext.GetResolution() };
+	m_textHeight = { height * resolution.y };
 
 	CalculateDefault(appContext);
 
+
 	m_absoluteHoverOffset = {
-		hoverOffset.x * m_resolution.x,
-		hoverOffset.y * m_resolution.y
+		hoverOffset.x * resolution.x,
+		hoverOffset.y * resolution.y
 	};
 }
 
 Vector2 Hover::GetRenderOffset() const {
+	Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 	Vector2 renderOffset{ 0, 0 };
-	if (m_collider.x + m_collider.width > m_resolution.x) {
-		renderOffset.x = m_collider.x + m_collider.width - m_resolution.x;
+	if (m_collider.x + m_collider.width > resolution.x) {
+		renderOffset.x = m_collider.x + m_collider.width - resolution.x;
 	}
 	if (m_collider.y < 0) {
 		renderOffset.y = -m_collider.y;
@@ -109,7 +114,7 @@ float Hover::RenderOffset(AppContext_ty_c, Vector2 const& offset) const {
 	return m_collider.height;
 }
 
-void Hover::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	UIElement::Resize(resolution, appContext);
+void Hover::Resize(AppContext_ty_c appContext) {
+	UIElement::Resize(appContext);
 	CalculateDefault(appContext);
 }

@@ -23,7 +23,7 @@ public:
 	 * ctor
 	 */
 	ToggleButton(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution, std::string const& text, SoundType releaseSound);
+		std::string const& text, SoundType releaseSound);
 
 	/**
 	 * logic.

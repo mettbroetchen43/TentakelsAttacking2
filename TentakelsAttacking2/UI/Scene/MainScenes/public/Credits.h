@@ -20,12 +20,43 @@ private:
 	int m_speedLevel{ 1 }; ///< contains the current speed level.
 	std::vector<std::shared_ptr<UIElement>> m_movingElements; ///< contains the elements that are moving during the credits
 
+
+	using creditEntries = std::vector<std::vector<std::string>>;
+	static inline creditEntries const libVec = {
+		{"raylib", "", "www.raylib.com", "https://www.raylib.com"},
+		{"random lib", "", "www.github.com/mgerhold", "https://www.github.com/mgerhold"},
+	};
+	static inline creditEntries const inspirationVec = {
+		{"my Dad"},
+		{"coder2k"},
+	};
+	static inline creditEntries const testerVec = {
+		{"Kiki3578"},
+		{"TODO"},
+	};
+	static inline creditEntries const specialThanksVec = {
+		{"coder2k"},
+		{"r00tifant"},
+		{"Clemens"},
+		{"CrazyNightowl01"},
+		{"NECROMENZER"},
+		{"german coding commuinty on twitch"},
+		{"the discord of coder2k"},
+		{"TODO: more to come"},
+	};
+	static inline creditEntries const contactVec = {
+		{"discord", "", "www.discord.gg/JG5fsFZqEE", "https://www.discord.gg/JG5fsFZqEE"},
+		{"twitch", "", "www.twitch.tv/codingPurpurTentakel", "https://www.twitch.tv/codingpurpurtentakel"},
+		{"gitHub", "", "www.github.com/PurpurTentakel97", "https://www.github.com/PurpurTentakel97"},
+	};
+
+
 	/**
 	 * initializes all ui elements.
 	 * contains all the text.
 	 * connects the actions.
 	 */
-	void Initialize(Vector2 resolution);
+	void Initialize();
 	/**
 	 * adds an element ass moving element an into the normal elements.
 	 */
@@ -53,7 +84,7 @@ public:
 	 * ctor
 	 * only initialization.
 	 */
-	CreditsScene(Vector2 resolution);
+	CreditsScene();
 
 	/**
 	 * sets moving to true when the title is fully animated.
@@ -64,5 +95,5 @@ public:
 	 * sets the new resolution.
 	 * calls all elements zu resize.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 };

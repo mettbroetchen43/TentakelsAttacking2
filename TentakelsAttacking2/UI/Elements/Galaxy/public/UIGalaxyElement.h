@@ -31,8 +31,7 @@ public:
 	 * ctor.
 	 * converts the id to a string.
 	 */
-	UIGalaxyElement(unsigned int focusID, unsigned int ID, Vector2 size, PlayerData player, Vector2 pos, Vector2 resolution,
-		Vector2 colliderPos);
+	UIGalaxyElement(unsigned int focusID, unsigned int ID, Vector2 size, PlayerData player, Vector2 pos, Vector2 colliderPos);
 
 	/**
 	 * Updates the position with the collider position.
@@ -109,5 +108,5 @@ public:
 	 * resizes the planet.
 	 * calls the hover text to resize.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 };

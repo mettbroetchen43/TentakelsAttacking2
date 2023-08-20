@@ -299,7 +299,7 @@ void LoadConfig() {
 	}
 	// window
 	if (nlohmann::json window; loadSection(load, window, ConfigTypes::WINDOW, constants.window.configEntryCount)) {
-		if (int  out;  loadInt(window, out, ConfigTypes::RESOLUTION_AS_ENUM))     { constants.window.current_resolution = static_cast<Resolution>(out); }
+		if (int  out;  loadInt(window, out, ConfigTypes::RESOLUTION_AS_ENUM))     { constants.window.currentResolutionEnum = static_cast<Resolution>(out); }
 		if (bool out; loadBool(window, out, ConfigTypes::FULL_SCREEN_BOOL)) { constants.window.isFullScreen                     = out ; }
 		if (int  out;  loadInt(window, out, ConfigTypes::TARGET_FPS))             { constants.window.FPS                                        = out ; }
 	}
@@ -341,7 +341,7 @@ void LoadConfig() {
 #ifdef _DEBUG
 	constants.window.isFullScreen = false;
 	Print(PrintType::DEBUG, "set full screen to false");
-	constants.window.current_resolution = Resolution::HD;
+	constants.window.currentResolutionEnum = Resolution::HD;
 	Print(PrintType::DEBUG, "set resolution ro HD");
 #endif // _DEBUG
 
@@ -405,7 +405,7 @@ void SaveConfig() {
 		{ CToS(ConfigTypes::VERSION_GAME),        constants.global.gameVersion   },
 	};
 	save[CToS(ConfigTypes::WINDOW)] = {
-		{ CToS(ConfigTypes::RESOLUTION_AS_ENUM),       static_cast<size_t>(constants.window.current_resolution)     },
+		{ CToS(ConfigTypes::RESOLUTION_AS_ENUM),       static_cast<size_t>(constants.window.currentResolutionEnum)     },
 		{ CToS(ConfigTypes::FULL_SCREEN_BOOL),                       constants.window.isFullScreen  },
 		{ CToS(ConfigTypes::TARGET_FPS),                                   constants.window.FPS                     },
 	};

@@ -15,7 +15,6 @@ void Slider::CalculateInitialButton() {
 		m_pos,
 		Vector2(sizeX, sizeY),
 		Alignment::TOP_LEFT,
-		m_resolution,
 		"",
 		SoundType::CLICKED_RELEASE_STD
 	);
@@ -146,9 +145,9 @@ void Slider::SetOffset(Vector2 mousePosition) {
 	}
 }
 
-Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, 
+Slider::Slider(Vector2 pos, Vector2 size, Alignment alignment, 
 	bool isHorizontal, float absoluteDimension)
-	: UIElement{ pos, size, alignment, resolution }, m_isHorizontal{ isHorizontal },
+	: UIElement{ pos, size, alignment }, m_isHorizontal{ isHorizontal },
 	m_absoluteDimension{ absoluteDimension } {
 
 	CalculateInitialButton();
@@ -180,11 +179,11 @@ void Slider::Render(AppContext_ty_c appContext) {
 	);
 	m_btn.Render(appContext);
 }
-void Slider::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+void Slider::Resize(AppContext_ty_c appContext) {
 
-	UIElement::Resize(resolution, appContext);
+	UIElement::Resize(appContext);
 
-	m_btn.Resize(resolution, appContext);
+	m_btn.Resize(appContext);
 }
 
 void Slider::SetOnSlide(std::function<void(float)> onSlide) {

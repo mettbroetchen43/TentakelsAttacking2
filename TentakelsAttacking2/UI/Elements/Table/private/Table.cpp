@@ -231,12 +231,13 @@ void Table::CheckAndUpdateScroll(Vector2 const& mousePosition) {
 	float const mouseWheel{ GetMouseWheelMove() };
 	if (mouseWheel == 0.0f) { return; }
 
+	Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 	Vector2 offset{ 0.0f,0.0f };
 	if (IsKeyDown(KEY_LEFT_SHIFT)) {
-		offset.x = mouseWheel * m_scroll_speed * m_resolution.x;
+		offset.x = mouseWheel * m_scroll_speed * resolution.x;
 	}
 	else {
-		offset.y = mouseWheel * m_scroll_speed * m_resolution.y;
+		offset.y = mouseWheel * m_scroll_speed * resolution.y;
 	}
 
 	ClampScrollOffset(offset);
@@ -486,9 +487,9 @@ void Table::RenderOutline() const {
 	);
 }
 
-Table::Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID,
+Table::Table(Vector2 pos, Vector2 size, Alignment alignment, unsigned int focusID,
 	int rowCount, int columnCount, Vector2 minCellSize, float scrollSpeed)
-	: UIElement{ pos, size, alignment, resolution }, Focusable{ focusID },
+	: UIElement{ pos, size, alignment }, Focusable{ focusID },
 	m_rowCount{ rowCount }, m_columnCount{ columnCount }, m_minCellSize{ minCellSize }, m_scroll_speed{ scrollSpeed } {
 
 
@@ -509,7 +510,6 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 				Vector2(m_pos.x + cellWidth * column, m_pos.y + cellHeight * row),
 				Vector2(cellWidth, cellHeight),
 				Alignment::TOP_LEFT,
-				m_resolution,
 				row * columnCount + column,
 				"",
 				[this](AbstractTableCell const* cell, std::string oldValue, std::string newValue)
@@ -530,7 +530,6 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		GetElementPosition(m_pos, m_size, 0.995f, 0.5f),
 		GetElementSize(m_size, 0.01f, 0.9f),
 		Alignment::MID_RIGHT,
-		m_resolution,
 		false,
 		20.0f
 	);
@@ -541,7 +540,6 @@ Table::Table(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
 		GetElementPosition(m_pos, m_size, 0.5f, 0.99f),
 		GetElementSize(m_size, 0.9f, 0.02f),
 		Alignment::BOTTOM_MID,
-		m_resolution,
 		true,
 		20.0f
 	);

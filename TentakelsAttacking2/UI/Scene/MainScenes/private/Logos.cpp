@@ -20,7 +20,6 @@ void LogoScene::Initialize() {
 		GetElementPosition(0.5f, 0.1f),
 		GetElementSize(0.0f, 0.5f),
 		Alignment::TOP_MID,
-		m_resolution,
 		AssetType::LOGO
 		);
 	m_elements.push_back(logo);
@@ -29,7 +28,6 @@ void LogoScene::Initialize() {
 		GetElementPosition(0.5f, 0.65f),
 		GetElementSize(1.0f, 0.1f),
 		Alignment::TOP_MID,
-		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
 		appContext.languageManager.Text("scene_logo_subtitle","Purpur Tentakel")
@@ -41,7 +39,6 @@ void LogoScene::Initialize() {
 		GetElementPosition(0.99f, 0.97f),
 		GetElementSize(0.2f, 0.03f),
 		Alignment::BOTTOM_RIGHT,
-		m_resolution,
 		Alignment::BOTTOM_RIGHT,
 		0.03f,
 		appContext.languageManager.Text("scene_logo_skip", "[ESC]")
@@ -50,8 +47,8 @@ void LogoScene::Initialize() {
 	m_elements.push_back(skipText);
 }
 
-LogoScene::LogoScene(Vector2 resolution)
-	:Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT, resolution },
+LogoScene::LogoScene()
+	:Scene{ {0.0f, 0.0f}, {1.0f, 1.0f}, Alignment::DEFAULT },
 	m_time{ GetTime() } {
 	Initialize();
 }
@@ -75,8 +72,8 @@ void LogoScene::Render(AppContext_ty_c appContext) {
 		e->Render(appContext);
 	}
 }
-void LogoScene::Resize(Vector2 resolution, AppContext_ty_c appContext){
+void LogoScene::Resize(AppContext_ty_c appContext){
 	for (auto e : m_elements) {
-		e->Resize(resolution, appContext);
+		e->Resize(appContext);
 	}
 }

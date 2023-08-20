@@ -18,7 +18,6 @@ void CreditTableScene::Initialize(std::string const& headline,
 		GetElementPosition(0.5f, 0.0f),
 		GetElementSize(0.8f, 0.15f),
 		Alignment::TOP_MID,
-		m_resolution,
 		Alignment::TOP_MID,
 		0.15f * m_size.y,
 		headline
@@ -29,7 +28,6 @@ void CreditTableScene::Initialize(std::string const& headline,
 	auto headlineLine = std::make_shared<Line>(
 		GetElementPosition(0.15f, 0.15f),
 		GetElementPosition(0.85f, 0.15f),
-		m_resolution,
 		3.0f,
 		WHITE
 	);
@@ -51,7 +49,6 @@ void CreditTableScene::Initialize(std::string const& headline,
 				GetElementPosition(0.49f, 0.2f + textHeight * i),
 				GetElementSize(0.5f, textHeight),
 				Alignment::TOP_RIGHT,
-				m_resolution,
 				Alignment::TOP_RIGHT,
 				textHeight * m_size.y,
 				e.at(position)
@@ -69,7 +66,6 @@ void CreditTableScene::Initialize(std::string const& headline,
 				GetElementPosition(0.51f, 0.2f + textHeight * i),
 				GetElementSize(0.5f, textHeight),
 				Alignment::TOP_LEFT,
-				m_resolution,
 				Alignment::TOP_LEFT,
 				textHeight * m_size.y,
 				e.at(position)
@@ -88,7 +84,6 @@ void CreditTableScene::Initialize(std::string const& headline,
 				GetElementPosition(0.5f, 0.23f + textHeight * i),
 				GetElementSize(1.0f, textHeight),
 				Alignment::MID_MID,
-				m_resolution,
 				Alignment::MID_MID,
 				textHeight * m_size.y,
 				e.at(position)
@@ -105,9 +100,8 @@ void CreditTableScene::Initialize(std::string const& headline,
 	}
 }
 
-CreditTableScene::CreditTableScene(Vector2 pos, Vector2 size, Alignment alignment,
-	Vector2 resolution, std::string const& headline, creditEntries const& entries,
-	bool containsLink)
-	: Scene{ pos, size, alignment, resolution } {
+CreditTableScene::CreditTableScene(Vector2 pos, Vector2 size, Alignment alignment, std::string const& headline,
+	creditEntries const& entries, bool containsLink)
+	: Scene{ pos, size, alignment } {
 	Initialize(headline, entries, containsLink);
 }

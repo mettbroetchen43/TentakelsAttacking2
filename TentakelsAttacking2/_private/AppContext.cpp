@@ -88,6 +88,10 @@ void AppContext::OnEvent(Event const& event) {
 	}
 }
 
+Vector2 AppContext::GetResolution() const {
+	return constants.window.currentResolutionVec;
+}
+
 AppContext::AppContext() {
 	eventManager.AddListener(&soundManager);
 	eventManager.AddListener(&playerCollection);

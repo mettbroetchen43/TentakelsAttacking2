@@ -22,7 +22,7 @@ public:
 	 * ctor.
 	 * only initialization.
 	 */
-	SettingsScene(Vector2 resolution);
+	SettingsScene();
 
 	/**
 	 * updates all elements in elements.
@@ -35,5 +35,5 @@ public:
 	/**
 	 * resizes all elements in elements and elements out update.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 };

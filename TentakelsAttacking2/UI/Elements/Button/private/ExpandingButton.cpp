@@ -19,7 +19,6 @@ void ExpandingButton::Initialize(int focusID, std::string const& btnText) {
 		m_pos,
 		m_size,
 		Alignment::DEFAULT,
-		m_resolution,
 		btnText,
 		SoundType::CLICKED_RELEASE_STD
 	);
@@ -70,9 +69,9 @@ bool ExpandingButton::IsBtnMoving() const {
 	return false;
 }
 
-ExpandingButton::ExpandingButton(int focusID, Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+ExpandingButton::ExpandingButton(int focusID, Vector2 pos, Vector2 size, Alignment alignment,
 	Direction direction, float spacing, float expandingSpeed, std::string const& btnText)
-	: UIElement{ pos, size, alignment, resolution }, m_direction{ direction }, m_spacing{ spacing }, m_expandingSpeed{ expandingSpeed } {
+	: UIElement{ pos, size, alignment }, m_direction{ direction }, m_spacing{ spacing }, m_expandingSpeed{ expandingSpeed } {
 	
 	Initialize(focusID, btnText);
 }
@@ -154,11 +153,12 @@ void ExpandingButton::UpdateCollider() {
 		return;
 	}
 
+	Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
 	auto defaultCollider{ m_mainButton->GetCollider() };
-	Vector2 extraCollider{ m_spacing * m_resolution.x, m_spacing * m_resolution.y };
+	Vector2 extraCollider{ m_spacing * resolution.x, m_spacing * resolution.y };
 	for (auto const& btn : m_buttons) {
-		extraCollider.x += m_spacing * m_resolution.x + btn.btn->GetCollider().width;
-		extraCollider.y += m_spacing * m_resolution.y + btn.btn->GetCollider().height;
+		extraCollider.x += m_spacing * resolution.x + btn.btn->GetCollider().width;
+		extraCollider.y += m_spacing * resolution.y + btn.btn->GetCollider().height;
 	}
 
 	switch (m_direction) {
@@ -235,10 +235,10 @@ void ExpandingButton::Render(AppContext_ty_c appContext) {
 
 	m_mainButton->Render(appContext);
 }
-void ExpandingButton::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	UIElement::Resize(resolution, appContext);
+void ExpandingButton::Resize(AppContext_ty_c appContext) {
+	UIElement::Resize(appContext);
 
 	for (auto const& btn : m_buttons) {
-		btn.btn->Resize(resolution,appContext);
+		btn.btn->Resize(appContext);
 	}
 }

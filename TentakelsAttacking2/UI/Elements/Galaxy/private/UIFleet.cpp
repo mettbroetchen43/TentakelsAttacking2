@@ -9,14 +9,13 @@
 #include "ShipCountRing.h"
 #include "UIGalaxyElement.h"
 
-UIFleet::UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end, Vector2 resolution, Vector2 relativeStart, Vector2 relativeEnd,
+UIFleet::UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end, Vector2 relativeStart, Vector2 relativeEnd,
     Fleet_ty_raw_c fleet, std::function<bool(Vector2 const&)> isInGalaxyCollider)
-    : UIElement{ start, { 0.005f,0.01f }, Alignment::MID_MID, resolution }, m_ID{ ID }, m_player{ player },
+    : UIElement{ start, { 0.005f,0.01f }, Alignment::MID_MID }, m_ID{ ID }, m_player{ player },
     m_relativeStart{ relativeStart }, m_relativeEnd{ relativeEnd }, m_fleet { fleet }, m_isInGalaxyCollider{ isInGalaxyCollider },
     m_line{
         start,
         end,
-        resolution,
         1.0f,
         player.color
     },
@@ -24,8 +23,7 @@ UIFleet::UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end,
         0.03f,
         "",
         player.color,
-        Vector2(0.01f,0.01f),
-        resolution
+        Vector2(0.01f,0.01f)
     } {
 
     m_ring = std::make_shared<CountRing>(
@@ -35,7 +33,6 @@ UIFleet::UIFleet(unsigned int ID, PlayerData player, Vector2 start, Vector2 end,
         },
         m_size,
         Alignment::MID_MID,
-        m_resolution,
         m_size.x,
         m_size.x * 3.0f,
         static_cast<int>(m_fleet->GetShipCount()),
@@ -58,15 +55,16 @@ bool UIFleet::IsColliding(Vector2 const& mousePosition) const {
         return CheckCollisionPointRec(mousePosition, m_collider);
     }
 
+    Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
     auto const& lineStart{ m_line.GetStart() };
     auto const& lineEnd{ m_line.GetEnd() };
     Vector2 const start{
-        lineStart.x * m_resolution.x,
-        lineStart.y * m_resolution.y
+        lineStart.x * resolution.x,
+        lineStart.y * resolution.y
     };
     Vector2 const end{
-        lineEnd.x * m_resolution.x,
-        lineEnd.y * m_resolution.y,
+        lineEnd.x * resolution.x,
+        lineEnd.y * resolution.y,
     };
 
     return CheckCollisionPointLine(mousePosition, start, end, 5);
@@ -84,13 +82,14 @@ void UIFleet::UpdateHoverText() {
 }
 void UIFleet::UpdatePositions(Rectangle newCollider) {
     // update line
+    Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
     Vector2 const start{
-        (newCollider.x + newCollider.width * m_relativeStart.x) / m_resolution.x,
-        (newCollider.y + newCollider.height * m_relativeStart.y) / m_resolution.y
+        (newCollider.x + newCollider.width * m_relativeStart.x) /  resolution.x,
+        (newCollider.y + newCollider.height * m_relativeStart.y) / resolution.y
     };
     Vector2 const end{
-        (newCollider.x + newCollider.width  * m_relativeEnd.x) / m_resolution.x,
-        (newCollider.y + newCollider.height * m_relativeEnd.y) / m_resolution.y
+        (newCollider.x + newCollider.width  * m_relativeEnd.x) / resolution.x,
+        (newCollider.y + newCollider.height * m_relativeEnd.y) / resolution.y
     };
 
     m_line.SetStart(start);
@@ -138,9 +137,10 @@ void UIFleet::Render(AppContext_ty_c appContext) {
 void UIFleet::RenderRing(AppContext_ty_c appContext) {
     m_ring->Render(appContext);
 }
-void UIFleet::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-    UIElement::Resize(resolution, appContext);
-    m_line.Resize(resolution, appContext);
-    m_hover.Resize(resolution, appContext);
-    m_ring->Resize(resolution, appContext);
+void UIFleet::Resize(AppContext_ty_c appContext) {
+    UIElement::Resize(appContext);
+    m_line.Resize(appContext);
+    m_hover.Resize(appContext);
+    m_ring->Resize(appContext);
 }
+

@@ -34,7 +34,7 @@ public:
 	 * ctor.
 	 * only initialization.
 	 */
-	Intro(Vector2 resolution);
+	Intro();
 
 	/**
 	 * calls title to animate, then enables and moves the button.
@@ -48,7 +48,7 @@ public:
 	/**
 	 * calls all elements to resize.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 	/**
 	 * sets scene active.
 	 * selects the button as focus.

@@ -72,8 +72,8 @@ Focusable_ty_raw Scene::GetFocusableByFocusID(unsigned int ID) const {
 }
 
 	
-Scene::Scene(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution)
-	:UIElement(pos, size, alignment, resolution) { }
+Scene::Scene(Vector2 pos, Vector2 size, Alignment alignment)
+	:UIElement(pos, size, alignment) { }
 
 bool Scene::IsActive() const {
 	return m_active;
@@ -159,12 +159,12 @@ void Scene::Render(AppContext_ty_c appContext) {
 		element->Render(appContext);
 	}
 }
-void Scene::Resize(Vector2 resolution, AppContext_ty_c appContext) {
+void Scene::Resize(AppContext_ty_c appContext) {
 
-	UIElement::Resize(resolution, appContext);
+	UIElement::Resize(appContext);
 
 	for (auto& element : m_elements) {
-		element->Resize(resolution, appContext);
+		element->Resize(appContext);
 	}
 }
 

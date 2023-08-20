@@ -47,7 +47,17 @@ public:
 /**
  * use this to trigger the appContext to toggle full screen.
  */
-class ToggleFullscreenEvent final : public Event { };
+class ToggleFullscreenEvent final : public Event {
+private:
+	bool m_isNextFullscreen;
+public:
+	ToggleFullscreenEvent(bool const isNextFullscreen) 
+		: m_isNextFullscreen{ isNextFullscreen } { }
+
+	[[nodiscard]] bool IsNextFullscreen() const {
+		return m_isNextFullscreen;
+	}
+};
 /**
  * use this for setting a new resolution the AppContext.
  */

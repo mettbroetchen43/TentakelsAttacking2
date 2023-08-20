@@ -21,7 +21,7 @@ public:
 	 * ctor.
 	 * converts the id to a string.
 	 */
-	UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution, 
+	UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, 
 		Vector2 colliderPos, Planet_ty_raw_c planet);
 
 	/**

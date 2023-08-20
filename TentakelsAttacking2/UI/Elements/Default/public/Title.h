@@ -14,7 +14,7 @@
  */
 class Title final : public UIElement {
 private:
-	std::array<std::string, 10> const m_postFixes{ ///< contains the moving part if the animation
+	static inline std::array<std::string, 10> const m_postFixes{ ///< contains the moving part if the animation
 	"  /-\\-",
 	"  \\--/",
 	"  -/--/",
@@ -51,7 +51,7 @@ private:
 	/**
 	 * calculates the collider out of the title length and position.
 	 */
-	void SetCollider(AppContext_ty_c appContext, Vector2 const& resolution);
+	void SetCollider(AppContext_ty_c appContext);
 
 	/**
 	 * sets the title finished.
@@ -65,8 +65,7 @@ public:
 	 * measures the title length.
 	 * sets collider.
 	 */
-	Title(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-		bool drawTitle, AppContext_ty appContext);
+	Title(Vector2 pos, Vector2 size, Alignment alignment, bool drawTitle);
 
 	/**
 	 * title logic.
@@ -79,7 +78,7 @@ public:
 	/**
 	 * resizes the title.
 	 */
-	void Resize(Vector2 resolution, AppContext_ty_c appContext) override;
+	void Resize(AppContext_ty_c appContext) override;
 
 	/**
 	 * returns if the title animation has finished.

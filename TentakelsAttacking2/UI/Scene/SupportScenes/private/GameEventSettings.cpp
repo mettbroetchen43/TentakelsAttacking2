@@ -13,7 +13,7 @@
 #include <cassert>
 
 
-void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
+void GameEventSettings::Initialize(unsigned int focusID) {
 
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
@@ -22,7 +22,6 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 		GetElementPosition(0.5f, 0.0f),
 		GetElementSize(0.8f, 0.2f),
 		Alignment::TOP_MID,
-		resolution,
 		Alignment::TOP_MID,
 		0.07f,
 		appContext.languageManager.Text("ui_game_event_settings_title")
@@ -34,7 +33,6 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 	m_elements.push_back(std::make_shared<Line>(
 		GetElementPosition(0.3f, 0.15f),
 		GetElementPosition(0.7f, 0.15f),
-		resolution,
 		3.0f,
 		WHITE
 	));
@@ -51,7 +49,6 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 			GetElementPosition(textX, firstRow + row * i * 2),
 			GetElementSize(textX + 0.15f, row * 3),
 			Alignment::MID_RIGHT,
-			resolution,
 			Alignment::MID_RIGHT,
 			row,
 			m_text.at(i).second
@@ -64,7 +61,6 @@ void GameEventSettings::Initialize(Vector2 resolution, unsigned int focusID) {
 			GetElementPosition(cbX, firstRow + row * i * 2),
 			GetElementSize(0.0f, row * 1.5f).y,
 			Alignment::MID_LEFT,
-			resolution,
 			i
 		);
 		element->SetOnCheck([this](unsigned int index, bool isChecked) {
@@ -87,11 +83,10 @@ void GameEventSettings::SetChecked(unsigned int index, bool isChecked) {
 	}
 }
 
-GameEventSettings::GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 size,
-	Alignment alignment, Vector2 resolution)
-	: Scene{ pos, size, alignment, resolution } {
+GameEventSettings::GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment)
+	: Scene{ pos, size, alignment } {
 
-	Initialize(resolution, focusID);
+	Initialize(focusID);
 }
 
 

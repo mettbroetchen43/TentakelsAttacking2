@@ -9,9 +9,10 @@
 #include "AppContext.h"
 
 void DropDownElement::CreateToRender() {
+    Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
     m_toRender = m_text;
     StripString(m_toRender);
-    m_fontSize = GetElementTextHeight(m_size, m_resolution.y);
+    m_fontSize = GetElementTextHeight(m_size, resolution.y);
     m_toRender = GetPrintableTextInCollider(m_toRender, m_fontSize, m_collider, AppContext::GetInstance());
 
     m_textPosition = {
@@ -29,10 +30,9 @@ void DropDownElement::UpdateColliderReverse() {
     CreateToRender();
 }
 
-DropDownElement::DropDownElement(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
-    unsigned int focusID, unsigned int ID, std::string const& text,
-    std::function<Rectangle(Rectangle)> getTemporaryCollider)
-    : UIElement{ pos, size, alignment, resolution }, Focusable{ focusID }, m_ID{ ID }, m_text{ text },
+DropDownElement::DropDownElement(Vector2 pos, Vector2 size, Alignment alignment,
+    unsigned int focusID, unsigned int ID, std::string const& text, std::function<Rectangle(Rectangle)> getTemporaryCollider)
+    : UIElement{ pos, size, alignment }, Focusable{ focusID }, m_ID{ ID }, m_text{ text },
     m_getTemporaryCollider{ getTemporaryCollider } {
 
     CreateToRender();

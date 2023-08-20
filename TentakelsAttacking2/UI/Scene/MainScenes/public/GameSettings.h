@@ -12,5 +12,5 @@ private:
 	void Initialize();
 	
 public:
-	GameSettingsScene(Vector2 resolution);
+	GameSettingsScene();
 };

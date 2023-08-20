@@ -18,12 +18,7 @@ public:
 	 * only initialisation
 	 */
 	ClassicButton(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution, std::string const& text, SoundType releaseSound);
-	ClassicButton(ClassicButton const&) = default;
-	ClassicButton(ClassicButton&& old) = default;
-	ClassicButton& operator= (ClassicButton const&) = default;
-	ClassicButton& operator= (ClassicButton&&) = default;
-	~ClassicButton() = default;
+		std::string const& text, SoundType releaseSound);
 
 	/**
 	 * returns if the button is enabled.

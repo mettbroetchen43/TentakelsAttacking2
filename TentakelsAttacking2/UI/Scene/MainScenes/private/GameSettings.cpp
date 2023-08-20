@@ -20,7 +20,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(0.5f, 0.2f),
 		GetElementSize(0.3f, 0.1f),
 		Alignment::TOP_MID,
-		m_resolution,
 		Alignment::TOP_MID,
 		0.07f,
 		appContext.languageManager.Text("helper_game_settings")
@@ -32,7 +31,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(0.25f, 0.81f),
 		GetElementSize(0.15f, 0.1f),
 		Alignment::BOTTOM_MID,
-		m_resolution,
 		appContext.languageManager.Text("scene_settings_end_game_btn"),
 		SoundType::CLICKED_RELEASE_STD
 	);
@@ -77,8 +75,7 @@ void GameSettingsScene::Initialize() {
 		id,
 		GetElementPosition(0.25f, y),
 		GetElementSize(width, 0.5f),
-		Alignment::TOP_MID,
-		m_resolution
+		Alignment::TOP_MID
 	);
 	eventSettings->SetActive(true, appContext);
 	m_elements.push_back(eventSettings);
@@ -89,7 +86,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		a,
 		height,
 		appContext.languageManager.Text("scene_settings_fleet_speed_subheadline", ":")
@@ -103,7 +99,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		static_cast<int>(appContext.constants.fleet.minFleetSpeed),
 		static_cast<int>(appContext.constants.fleet.maxFleetSpeed),
 		static_cast<int>(appContext.constants.fleet.currentFleetSpeed)
@@ -123,7 +118,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		a,
 		height,
 		appContext.languageManager.Text("scene_settings_last_round_subheadline", ":")
@@ -137,7 +131,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		static_cast<int>(appContext.constants.global.minRounds),
 		static_cast<int>(appContext.constants.global.maxRounds),
 		static_cast<int>(appContext.constants.global.currentTargetRound)
@@ -159,7 +152,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(0.0f,height).y,
 		Alignment::MID_LEFT,
-		m_resolution,
 		1
 	);
 	playerShuffleCB->SetChecked(appContext.constants.player.shuffle);
@@ -175,7 +167,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rxwo, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		a,
 		height,
 		appContext.languageManager.Text("helper_shuffle_players")
@@ -189,7 +180,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(width, height),
 		a,
-		m_resolution,
 		a,
 		height,
 		appContext.languageManager.Text("ui_game_settings_fights", ':')
@@ -203,7 +193,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(0.0f,heightS).y,
 		Alignment::MID_LEFT,
-		m_resolution,
 		1
 	);
 	fightPlanetFleetCB->SetChecked(appContext.constants.fight.isFightPlanetFleet);
@@ -219,7 +208,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rxwoS, y),
 		GetElementSize(width, heightS),
 		a,
-		m_resolution,
 		a,
 		heightS,
 		appContext.languageManager.Text("ui_game_settings_fight_planet_fleet", ':')
@@ -231,7 +219,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rx2, y),
 		GetElementSize(0.0f,heightS).y,
 		Alignment::MID_LEFT,
-		m_resolution,
 		1
 	);
 	fightPlanetTargetPointCB->SetChecked(appContext.constants.fight.isFightPlanetTargetPoint);
@@ -247,7 +234,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rx2woS, y),
 		GetElementSize(width, heightS),
 		a,
-		m_resolution,
 		a,
 		heightS,
 		appContext.languageManager.Text("ui_game_settings_planet_target_point", ':')
@@ -261,7 +247,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rx, y),
 		GetElementSize(0.0f,heightS).y,
 		Alignment::MID_LEFT,
-		m_resolution,
 		1
 	);
 	fightTargetPointFleetCB->SetChecked(appContext.constants.fight.isFightTargetPointFleet);
@@ -277,7 +262,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rxwoS, y),
 		GetElementSize(width, heightS),
 		a,
-		m_resolution,
 		a,
 		heightS,
 		appContext.languageManager.Text("ui_game_settings_target_point_fleet",':')
@@ -289,7 +273,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rx2, y),
 		GetElementSize(0.0f,heightS).y,
 		Alignment::MID_LEFT,
-		m_resolution,
 		1
 	);
 	fightTargetPointTargetPointCB->SetChecked(appContext.constants.fight.isFightTargetPointTargetPoint);
@@ -305,7 +288,6 @@ void GameSettingsScene::Initialize() {
 		GetElementPosition(rx2woS, y),
 		GetElementSize(width, heightS),
 		a,
-		m_resolution,
 		a,
 		heightS,
 		appContext.languageManager.Text("ui_game_settings_target_point_target_point", ':')
@@ -313,8 +295,8 @@ void GameSettingsScene::Initialize() {
 	m_elements.push_back(fightTargetPointTargetPointCBText);
 }
 
-GameSettingsScene::GameSettingsScene(Vector2 resolution)
-	: SettingsScene { resolution } {
+GameSettingsScene::GameSettingsScene()
+	: SettingsScene { } {
 	
 	Initialize();
 }

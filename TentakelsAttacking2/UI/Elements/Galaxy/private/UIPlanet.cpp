@@ -9,9 +9,9 @@
 #include "Planet.h"
 #include "ShipCountRing.h"
 
-UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos, Vector2 resolution,
+UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vector2 pos,
 	Vector2 colliderPos, Planet_ty_raw_c planet)
-	:UIGalaxyElement{ focusID, ID, { 0.015f, 0.025f }, player, pos, resolution, colliderPos }, m_planet{ planet } {
+	:UIGalaxyElement{ focusID, ID, { 0.015f, 0.025f }, player, pos, colliderPos }, m_planet{ planet } {
 	
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	auto const textSize{ MeasureTextEx(
@@ -30,7 +30,6 @@ UIPlanet::UIPlanet(unsigned int focusID, unsigned int ID, PlayerData player, Vec
 		m_pos,
 		m_size,
 		Alignment::DEFAULT,
-		m_resolution,
 		m_size.x / 2.0f,
 		m_size.x * 1.5f,
 		static_cast<int>(m_planet->GetShipCount()),

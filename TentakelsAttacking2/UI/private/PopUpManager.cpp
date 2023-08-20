@@ -7,14 +7,13 @@
 #include "HFocusEvents.h"
 #include "HPrint.h"
 
-PopUpManager::PopUpManager(Vector2 resolution)
-	: m_appContext{ &(AppContext::GetInstance()) }, m_resolution{ resolution } {
-	m_appContext->eventManager.AddListener(this);
+PopUpManager::PopUpManager() {
+	AppContext::GetInstance().eventManager.AddListener(this);
 	Print(PrintType::INITIALIZE, "PopUpManager");
 }
 
 PopUpManager::~PopUpManager() {
-	m_appContext->eventManager.RemoveListener(this);
+	AppContext::GetInstance().eventManager.RemoveListener(this);
 }
 
 bool PopUpManager::IsActivePopUp() const {
@@ -89,7 +88,6 @@ void PopUpManager::NewMessagePopUp(ShowMessagePopUpEvent const* event) {
 		Vector2(0.5f, 0.5f),
 		Vector2(0.5f, 0.5f),
 		Alignment::MID_MID,
-		m_resolution,
 		event->GetTitle(),
 		const_cast<std::string&>(event->GetSubTitle()),
 		AssetType::EXCLAMATION_MARK,
@@ -104,7 +102,6 @@ void PopUpManager::NewDeletePlayerPopUp(ShowDeletePlayerPopUpEvent const* event)
 		Vector2(0.5f, 0.5f),
 		Vector2(0.5f, 0.5f),
 		Alignment::MID_MID,
-		m_resolution,
 		event->GetTitle(),
 		AssetType::QUESTION_MARK,
 		event->GetOnClick()
@@ -117,7 +114,6 @@ void PopUpManager::NewValidatePopUp(ShowValidatePopUp const* event) {
 		Vector2(0.5f, 0.5f),
 		Vector2(0.5f, 0.5f),
 		Alignment::MID_MID,
-		m_resolution,
 		event->GetTitle(),
 		const_cast<std::string&>(event->GetSubTitle()),
 		AssetType::QUESTION_MARK,
@@ -126,14 +122,14 @@ void PopUpManager::NewValidatePopUp(ShowValidatePopUp const* event) {
 	);
 }
 void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	NewFocusPopUpLayerEvent focusEvent;
-	m_appContext->eventManager.InvokeEvent(focusEvent);
+	appContext.eventManager.InvokeEvent(focusEvent);
 
 	m_popUps.push_back(std::make_unique<ColorCellPopUp>(
 		Vector2(0.5f, 0.5f),
 		Vector2(0.7f, 0.7f),
 		Alignment::MID_MID,
-		m_resolution,
 		event->GetTitle(),
 		AssetType::LOGO,
 		event->GetCurrentValue(),
@@ -142,28 +138,28 @@ void PopUpManager::NewColorCellPopUp(ShowCellPopUpEvent<Color> const* event) {
 	);
 }
 void PopUpManager::NewSoundLevelPopUp(ShowInitialSoundLevelPopUpEvent const* event) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	NewFocusPopUpLayerEvent focusEvent;
-	m_appContext->eventManager.InvokeEvent(focusEvent);
+	appContext.eventManager.InvokeEvent(focusEvent);
 
 	m_popUps.push_back(std::make_unique<SoundLevelPopUp>(
 		Vector2(0.5f,0.5f),
 		Vector2(0.5f,0.5f),
 		Alignment::MID_MID,
-		m_resolution,
 		event->GetTitle(),
 		const_cast<std::string&>(event->GetSubTitle())
 		)
 	);
 }
 void PopUpManager::NewFightResultPopUp(ShowFightResultEvent const* event) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	NewFocusLayerEvent focusEvent;
-	m_appContext->eventManager.InvokeEvent(focusEvent);
+	appContext.eventManager.InvokeEvent(focusEvent);
 
 	m_popUps.push_back(std::make_unique<FightResultPopup>(
 		Vector2(0.5f, 0.5f),
 		Vector2(0.8f, 0.8f),
 		Alignment::MID_MID,
-		m_resolution,
 		event->GetResult(),
 		event->GetCallback()
 		)
@@ -229,9 +225,8 @@ void PopUpManager::Render(AppContext_ty_c appContext) {
 		p->Render(appContext);
 	}
 }
-void PopUpManager::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	m_resolution = resolution;
+void PopUpManager::Resize(AppContext_ty_c appContext) {
 	for (auto& e : m_popUps) {
-		e->Resize(resolution, appContext);
+		e->Resize(appContext);
 	}
 }

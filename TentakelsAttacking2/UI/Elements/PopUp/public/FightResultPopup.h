@@ -54,5 +54,6 @@ public:
 	/**
 	 * ctor.
 	 */
-	FightResultPopup(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, HFightResult const result, callback_ty callback);
+	FightResultPopup(Vector2 pos, Vector2 size, Alignment alignment,
+		HFightResult const result, callback_ty callback);
 };

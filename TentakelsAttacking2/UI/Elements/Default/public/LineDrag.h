@@ -20,9 +20,7 @@ public:
 	 * sets default values.
 	 * most will be overwritten in CheckAndUpdate.
 	 */
-	LineDrag(Vector2 resolution, float thick, Color color, std::function<void(Vector2, Vector2)> callback)
-		: UIElement{ {0.0f,0.0f}, {0.0f,0.0f}, Alignment::DEFAULT, resolution },
-		m_start{ 0.0f,0.0f }, m_end{ 0.0f,0.0f }, m_thick{ thick }, m_color{ color }, m_callback{ callback } { }
+	LineDrag(float thick, Color color, std::function<void(Vector2, Vector2)> callback);
 
 	/**
 	 * returns the relative start position on the screen.

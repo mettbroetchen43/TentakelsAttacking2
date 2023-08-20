@@ -7,8 +7,8 @@
 #include "AbstractTableCell.h"
 
 
-AbstractTableCell::AbstractTableCell(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID)
-	: UIElement{ pos, size, alignment, resolution }, Focusable{ focusID }, m_textSize{ 0.0f }, m_textPosition{ 0.0f,0.0f } { }
+AbstractTableCell::AbstractTableCell(Vector2 pos, Vector2 size, Alignment alignment, unsigned int focusID)
+	: UIElement{ pos, size, alignment }, Focusable{ focusID }, m_textSize{ 0.0f }, m_textPosition{ 0.0f,0.0f } { }
 
 void AbstractTableCell::SetBackgroundColor(Color color) {
 	m_backgroundColor = color;

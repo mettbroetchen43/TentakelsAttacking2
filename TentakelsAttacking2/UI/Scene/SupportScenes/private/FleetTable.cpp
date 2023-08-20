@@ -22,7 +22,6 @@ void FleetAndTargetPointTable::Initialization(PlayerData currentPlayer) {
 		GetElementPosition(0.0f, 0.0f),
 		GetElementSize(1.0f, 1.0f),
 		Alignment::TOP_LEFT,
-		m_resolution,
 		1000,
 		tableSize,
 		4,
@@ -180,8 +179,9 @@ std::string FleetAndTargetPointTable::GetStringFromPosition(vec2pos_ty position,
 	return stream.str();
 }
 
-FleetAndTargetPointTable::FleetAndTargetPointTable(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, Galaxy_ty_raw galaxy, PlayerData currentPlayer)
-	: Scene{ pos, size, alignment, resolution } , m_galaxy{ galaxy } {
+FleetAndTargetPointTable::FleetAndTargetPointTable(Vector2 pos, Vector2 size, Alignment alignment, Galaxy_ty_raw galaxy,
+	PlayerData currentPlayer)
+	: Scene{ pos, size, alignment } , m_galaxy{ galaxy } {
 
 	Initialization(currentPlayer);
 }

@@ -27,19 +27,18 @@ private:
 	SceneManager m_sceneManager; ///< contains the scene manager.
 	GameManager m_gameManager; ///< contains the game logic
 	HoverRender m_hover;
-	Vector2 m_resolution; ///< contains the current resolution of the window
 	bool m_closeWindow{ false }; ///< contains if the game will quit at the end of the tick
-	bool m_toggleFullScreen{ false }; ///< contains if the next frame fill toggle fullscreen
+	bool m_isNextFullScreen{ false }; ///< contains if the next frame fill toggle fullscreen
 	Resolution m_nextResolution; ///< contains the resolution of the next frame
 
 	/**
 	 * sets a bool so that the next frame will toggle full screen.
 	 */
-	void ToggleFullScreen();
+	void SetFullScreen();
 	/**
 	 * Toggles between full screen and window mode.
 	 */
-	void CheckAndSetToggleFullScreen(bool first = false);
+	void CheckAndSetToggleFullScreen();
 
 	/**
 	 * converts and updates the resolution in Window mode.
@@ -63,9 +62,14 @@ private:
 	void Render();
 
 	/**
+	 * sets the window size to the native screen size.
+	 * does not update anything because the current size need to be set after toggle.
+	 */
+	void SetNativeWindowSize();
+	/**
 	 * sets the current window size from the config to raylib.
 	 */
-	void SetWindowSize(bool fullscreen);
+	void SetWindowSize(bool force = false);
 	/**
 	 * sets the pint ow position if in window mode.
 	 */
@@ -112,10 +116,6 @@ public:
 	 * receives all events and calls the member functions.
 	 */
 	void OnEvent(Event const& event);
-	/**
-	 * return the current resolution.
-	 */
-	[[nodiscard]] Vector2 GetResolution() const;
 	/**
 	 * returns an reference if the current focus instance.
 	 */

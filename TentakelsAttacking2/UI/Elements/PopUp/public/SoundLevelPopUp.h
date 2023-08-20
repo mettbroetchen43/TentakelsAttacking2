@@ -22,14 +22,14 @@ private:
 	/**
 	 * initializes all ui elements.
 	 */
-	void Initialize(Vector2 resolution);
+	void Initialize();
 
 public:
 	/**
 	 * ctor.
 	 * only initialisation.
 	 */
-	SoundLevelPopUp(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+	SoundLevelPopUp(Vector2 pos, Vector2 size, Alignment alignment,
 		std::string const& title, std::string& subTitle);
 
 	/**

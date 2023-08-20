@@ -29,7 +29,7 @@ private:
 	 * initializes all ui elements.
 	 * connects the actions.
 	 */
-	void Initialize(Vector2 resoluton, unsigned int focusID);
+	void Initialize(unsigned int focusID);
 
 	/**
 	 * sets the checkbox checkt with the provided id via event.
@@ -43,8 +43,7 @@ public:
 	 * add an event listener.
 	 * triggers logic to send the initial data via event.
  	 */
-	GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment,
-		Vector2 resolution);
+	GameEventSettings(unsigned int focusID, Vector2 pos, Vector2 size, Alignment alignment);
 
 	/**
 	 * sets random values for every checkbox except for the global checkbox.

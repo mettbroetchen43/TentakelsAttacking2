@@ -39,8 +39,8 @@ public:
 	/**
 	 * ctor
 	 */
-	TableCell(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution, unsigned int focusID, T value, std::function<void(TableCell*, T, T)> updated)
-		: AbstractTableCell{ pos, size, alignment, resolution, focusID }, m_value{ value }, m_updated{ updated } {
+	TableCell(Vector2 pos, Vector2 size, Alignment alignment, unsigned int focusID, T value, std::function<void(TableCell*, T, T)> updated)
+		: AbstractTableCell{ pos, size, alignment, focusID }, m_value{ value }, m_updated{ updated } {
 		SetStringValue();
 		CalculateTextSize();
 	}

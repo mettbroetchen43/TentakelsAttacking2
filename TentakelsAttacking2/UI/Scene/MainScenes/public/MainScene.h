@@ -124,7 +124,7 @@ public:
 	 * ctor.
 	 * add an event listener.
 	 */
-	MainScene(Vector2 resolution);
+	MainScene();
 	/**
 	 * removes the event listener.
 	 */

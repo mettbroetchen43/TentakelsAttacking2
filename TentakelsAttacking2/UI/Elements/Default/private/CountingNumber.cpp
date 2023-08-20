@@ -78,16 +78,15 @@ void CountingNumber::UpdateColor() {
 	}
 }
 
-CountingNumber::CountingNumber(Vector2 pos, Vector2 size, Alignment alignment, Vector2 resolution,
+CountingNumber::CountingNumber(Vector2 pos, Vector2 size, Alignment alignment,
 	Alignment textAlignment, float textHeight, int startNumber) 
-	: UIElement(pos, size, alignment, resolution),
+	: UIElement{ pos, size, alignment },
 	m_startNumber{ startNumber }, m_currentNumber { startNumber }, m_targetNumber{ startNumber }
 {
 	m_text = std::make_shared<Text>(
 		pos,
 		size,
 		alignment,
-		resolution,
 		textAlignment,
 		textHeight,
 		std::to_string(startNumber)
@@ -146,7 +145,7 @@ void CountingNumber::CheckAndUpdate(Vector2 const& mousePosition, AppContext_ty_
 void CountingNumber::Render(AppContext_ty_c appContext) {
 	m_text->Render(appContext);
 }
-void CountingNumber::Resize(Vector2 resolution, AppContext_ty_c appContext) {
-	UIElement::Resize(resolution, appContext);
-	m_text->Resize(resolution, appContext);
+void CountingNumber::Resize(AppContext_ty_c appContext) {
+	UIElement::Resize(appContext);
+	m_text->Resize(appContext);
 }
