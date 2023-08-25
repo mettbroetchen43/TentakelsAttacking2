@@ -16,7 +16,7 @@ private:
 	std::vector<CheckBox_ty> m_checkBoxes; ///< contains all check boxes
 
 	std::array<std::pair<HGameEventType, std::string>, 7> m_text{{
-		{ HGameEventType::GLOBAL,         AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_global")          },
+		{ HGameEventType::GLOBAL,         AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_all")             },
 		{ HGameEventType::PIRATES,        AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_pirates")         },
 		{ HGameEventType::REVOLTS,        AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_revolts")         },
 		{ HGameEventType::RENEGADE_SHIPS, AppContext::GetInstance().languageManager.Text("ui_game_events_settings_event_renegade_ships")  },
