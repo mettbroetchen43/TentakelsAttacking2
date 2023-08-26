@@ -802,6 +802,7 @@ std::vector<HMergeResult> Galaxy::CheckMergingFriendlyFleets() {
 			};
 
 			if (mergable){
+				mergeResult.emplace_back(fleet_lhs->GetPlayer(), fleet_lhs, fleet_rhs, fleet_rhs->GetShipCount());
 				fleet_lhs->TransferShipsFrom(fleet_rhs.get());
 
 				Print(
