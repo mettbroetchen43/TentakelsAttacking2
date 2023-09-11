@@ -316,10 +316,9 @@ void GameManager::NextRound(bool valid) {
 		);
 	}
 
-	appContext.eventManager.InvokeEvent(ShowNextRoundEvent());
+	appContext.eventManager.InvokeEvent(ShowEvaluationEvent());
 }
 void GameManager::NextTurn(bool valid) {
-
 
 	if (!valid) { return; }
 
@@ -328,7 +327,6 @@ void GameManager::NextTurn(bool valid) {
 	m_currentRoundPlayers.pop_back();
 
 	m_galaxyManager.CopyGalaxies(CopyGalaxyType::COPY_START);
-
 
 	SendCurrentPlayerID();
 	SendNextPlayerID();

@@ -161,7 +161,7 @@ class ShowNextTurnEvent final : public Event { };
 /**
  * use this to trigger the ui to show the next round.
  */
-class ShowNextRoundEvent final : public Event { };
+class ShowEvaluationEvent final : public Event { };
 
 /**
  * use this to get the update evaluation.

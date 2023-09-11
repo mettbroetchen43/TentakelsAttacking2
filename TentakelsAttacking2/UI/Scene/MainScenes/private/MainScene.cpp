@@ -641,7 +641,7 @@ void MainScene::OnEvent(Event const& event) {
 		NextTurn();
 		return;
 	}
-	if (auto const* playerEvent = dynamic_cast<ShowNextRoundEvent const*>(&event)) {
+	if (auto const* playerEvent = dynamic_cast<ShowEvaluationEvent const*>(&event)) {
 		SwitchSceneEvent sendEvent{ SceneType::UPDATE_EVALUATION };
 		AppContext::GetInstance().eventManager.InvokeEvent(sendEvent);
 		return;
