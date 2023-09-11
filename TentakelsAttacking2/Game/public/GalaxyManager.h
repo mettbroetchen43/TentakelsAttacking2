@@ -61,6 +61,11 @@ public:
 	[[nodiscard]] bool AddFleet(SendFleetInstructionEvent const* event, Player_ty currentPlayer);
 	
 	/**
+	 * returns if the provided player has any moves left.  
+	 */
+	[[nodiscard]] bool HasMovesLeft(Player_ty_c player) const;
+
+	/**
 	 * updates the main galaxy
 	 */
 	[[nodiscard]] UpdateResult_ty Update();

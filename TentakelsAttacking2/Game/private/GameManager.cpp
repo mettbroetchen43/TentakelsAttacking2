@@ -301,7 +301,7 @@ void GameManager::NextRound(bool valid) {
 
 	++appContext.constants.global.currentRound;
 
-	Player_ty player { } ;
+	Player_ty player{ };
 	if (not GetCurrentPlayer(player)) {
 		Print(
 			PrintType::ONLY_DEBUG,
@@ -332,7 +332,9 @@ void GameManager::NextTurn(bool valid) {
 	SendNextPlayerID();
 
 	Player_ty player { };
-	if (not GetCurrentPlayer(player)) {
+	bool validPlayer{ GetCurrentPlayer(player) };
+
+	if (not validPlayer) {
 		Print(
 			PrintType::ONLY_DEBUG,
 			"next turn started -> can't get current player"
@@ -347,6 +349,7 @@ void GameManager::NextTurn(bool valid) {
 	}
 
 	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextTurnEvent());
+
 }
 void GameManager::ValidateNextTurn() {
 
@@ -373,6 +376,20 @@ void GameManager::ValidateNextTurn() {
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
+
+void GameManager::SendHasCurrentPlayerMovesLeft() const {
+	Player_ty player{ };
+	if (not GetCurrentPlayer(player)) {
+		AppContext::GetInstance().eventManager.InvokeEvent(ReturnHasCurrentPlayerAnyMovesEvent(false));
+		Print(
+			PrintType::ERROR,
+			"not able to get the current player while checking if any moves are left. retuned false"
+		);
+	} else {
+		AppContext::GetInstance().eventManager.InvokeEvent(ReturnHasCurrentPlayerAnyMovesEvent(m_galaxyManager.HasMovesLeft(player)));
+	}
+}
+
 
 // Fleet
 void GameManager::AddFleet(SendFleetInstructionEvent const* event) {
@@ -610,6 +627,10 @@ void GameManager::OnEvent(Event const& event) {
 	}
 	if (auto const* gameEvent = dynamic_cast<TriggerNextTurnEvent const*> (&event)) {
 		ValidateNextTurn();
+		return;
+	}
+	if (auto const* gameEvent = dynamic_cast<HasCurrentPlayerAnyMovesEvent const*>(&event)) {
+		SendHasCurrentPlayerMovesLeft();
 		return;
 	}
 	if (auto const* gameEvent = dynamic_cast<GetUpdateEvaluation const*> (&event)) {

@@ -8,7 +8,7 @@
         "hit_chance": 0.30000001192092896
     },
     "fleet": {
-        "fleet_speed_current": 5,
+        "fleet_speed_current": 8,
         "fleet_speed_max": 20,
         "fleet_speed_min": 1
     },
@@ -56,11 +56,11 @@
         "target_fps": 60
     },
     "world": {
-        "dimension_x_current": 150,
+        "dimension_x_current": 60,
         "dimension_x_max": 300,
         "dimension_x_min": 60,
         "dimension_x_show_galaxy": 200,
-        "dimension_y_current": 80,
+        "dimension_y_current": 20,
         "dimension_y_max": 160,
         "dimension_y_min": 20,
         "dimension_y_show_galaxy": 150,

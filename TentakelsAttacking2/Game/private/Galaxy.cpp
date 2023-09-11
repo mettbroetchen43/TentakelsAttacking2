@@ -1186,6 +1186,15 @@ bool Galaxy::IsValidSpaceObjectID(unsigned int ID) const {
 	return false;
 }
 
+bool Galaxy::HasMovesLeft(Player_ty_c player) const {
+	for (auto const& object : m_objects) {
+		if (object->GetPlayer()->GetID() == player->GetID()) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void Galaxy::SetFiltered(bool isFiltered) {
 	m_isFiltered = isFiltered;
 }

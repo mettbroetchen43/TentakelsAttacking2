@@ -113,6 +113,10 @@ bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, Player_ty c
 	return true;
 }
 
+bool GalaxyManager::HasMovesLeft(Player_ty_c player) const {
+	return m_mainGalaxy->HasMovesLeft(player);
+}
+
 UpdateResult_ty GalaxyManager::Update() {
 	return m_mainGalaxy->Update();
 }

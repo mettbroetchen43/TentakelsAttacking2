@@ -124,6 +124,11 @@ private:
 	 */
 	void ValidateNextTurn();
 
+	/**
+	 * sends an event that provides if the current player has any moves left.
+	 */
+	void SendHasCurrentPlayerMovesLeft() const;
+
 	// fleet
 	/**
 	 * calls validation

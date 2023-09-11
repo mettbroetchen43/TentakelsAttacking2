@@ -458,14 +458,31 @@ void MainScene::NextTurn() {
 	InitializeFleetTable();
 	ClearInputLines();
 
-	ShowMessagePopUpEvent event{
-		appContext.languageManager.Text("scene_main_scene_popup_text_turn_title"),
-		appContext.languageManager.Text("scene_main_scene_popup_text_turn_text", m_currentPlayer.GetName(), "\n"),
-		[this]() {
-			this->Switch(MainSceneType::GALAXY);
-		}
-	};
-	appContext.eventManager.InvokeEvent(event);
+	appContext.eventManager.InvokeEvent(HasCurrentPlayerAnyMovesEvent{ });
+}
+
+void MainScene::NextTurnPopup(bool skip) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	if (skip){
+		ShowMessagePopUpEvent event {
+			appContext.languageManager.Text("scene_main_scene_popup_text_turn_title"),
+			"no possible moves left for player X",
+			[](){
+				AppContext::GetInstance().eventManager.InvokeEvent(TriggerNextTurnEvent());
+			}
+		};
+		appContext.eventManager.InvokeEvent(event);
+	}
+	else{
+		ShowMessagePopUpEvent event {
+			appContext.languageManager.Text("scene_main_scene_popup_text_turn_title"),
+			appContext.languageManager.Text("scene_main_scene_popup_text_turn_text", m_currentPlayer.GetName(), "\n"),
+			[this]() {
+				this->Switch(MainSceneType::GALAXY);
+			}
+		};
+		appContext.eventManager.InvokeEvent(event);
+	}
 }
 
 void MainScene::SetPlayerText() {
@@ -645,6 +662,9 @@ void MainScene::OnEvent(Event const& event) {
 		SwitchSceneEvent sendEvent{ SceneType::UPDATE_EVALUATION };
 		AppContext::GetInstance().eventManager.InvokeEvent(sendEvent);
 		return;
+	}
+	if (auto const* playerEvent = dynamic_cast<ReturnHasCurrentPlayerAnyMovesEvent const*>(&event)) {
+		NextTurnPopup(not playerEvent->HasMoves());
 	}
 
 	// Fleet Instruction
