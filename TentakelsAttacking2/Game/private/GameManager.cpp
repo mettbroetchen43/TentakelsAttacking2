@@ -199,6 +199,18 @@ void GameManager::ResetPlayer() {
 }
 void GameManager::CheckPlayerCount() const {
 
+	auto const l{ [this](bool valid) {
+			if (valid) {
+				StopGameEvent const eventRet{ };
+				AppContext::GetInstance().eventManager.InvokeEvent(eventRet);
+				this->CheckPlayerCount();
+			}
+		}
+	};
+	if (not CheckValidAddRemovePlayer(l)) { 
+		return;
+	}
+
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	bool valid;
 
