@@ -230,8 +230,9 @@ void GameManager::CheckPlayerCount() const {
 void GameManager::ShuffleCurrentRoundPlayer() {
 	if (not AppContext::GetInstance().constants.player.shuffle){ return; }
 
+	std::erase_if(m_currentRoundPlayers, [](Player_ty_c player){ return not player->IsAlive(); });
 	std::shuffle(m_currentRoundPlayers.begin(), m_currentRoundPlayers.end(), m_random);
-	
+
 	Print(
 		PrintType::ONLY_DEBUG,
 		"player shuffled"
@@ -293,6 +294,12 @@ void GameManager::NextRound(bool valid) {
 
 	m_currentRoundPlayers = m_players;
 	ShuffleCurrentRoundPlayer();
+	if (m_currentRoundPlayers.size() <= 0) {
+		Print(
+			PrintType::TODO,
+			"no possible moves for any player left. game should be over now."
+		);
+	}
 
 	m_galaxyManager.CopyGalaxies(CopyGalaxyType::COPY_ALL);
 
@@ -302,7 +309,8 @@ void GameManager::NextRound(bool valid) {
 	++appContext.constants.global.currentRound;
 
 	Player_ty player{ };
-	if (not GetCurrentPlayer(player)) {
+	bool validPlayer{ GetCurrentPlayer(player) };
+	if (not validPlayer) {
 		Print(
 			PrintType::ONLY_DEBUG,
 			"next round started -> can't get current player"
@@ -314,6 +322,14 @@ void GameManager::NextRound(bool valid) {
 			"next round started -> player {}",
 			player->GetID()
 		);
+	}
+
+	if (validPlayer) {
+		if (not m_galaxyManager.HasMovesLeft(player)) {
+			player->Kill();
+			AppContext::GetInstance().eventManager.InvokeEvent(ShowSkipTurnEvent{ });
+			return;
+		}
 	}
 
 	appContext.eventManager.InvokeEvent(ShowEvaluationEvent());
@@ -340,12 +356,20 @@ void GameManager::NextTurn(bool valid) {
 			"next turn started -> can't get current player"
 		);
 	}
-	else{
+	else {
 		Print(
 			PrintType::ONLY_DEBUG,
 			"next turn started -> player {}",
 			player->GetID()
 		);
+	}
+
+	if (validPlayer) {
+		if (not m_galaxyManager.HasMovesLeft(player)) {
+			player->Kill();
+			AppContext::GetInstance().eventManager.InvokeEvent(ShowSkipTurnEvent{ });
+			return;
+		}
 	}
 
 	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextTurnEvent());
@@ -627,10 +651,6 @@ void GameManager::OnEvent(Event const& event) {
 	}
 	if (auto const* gameEvent = dynamic_cast<TriggerNextTurnEvent const*> (&event)) {
 		ValidateNextTurn();
-		return;
-	}
-	if (auto const* gameEvent = dynamic_cast<HasCurrentPlayerAnyMovesEvent const*>(&event)) {
-		SendHasCurrentPlayerMovesLeft();
 		return;
 	}
 	if (auto const* gameEvent = dynamic_cast<GetUpdateEvaluation const*> (&event)) {

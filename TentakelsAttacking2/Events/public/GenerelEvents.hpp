@@ -159,6 +159,10 @@ class TriggerNextTurnEvent final : public Event { };
  */
 class ShowNextTurnEvent final : public Event { };
 /**
+ * use this to skip the next turn.
+ */
+class ShowSkipTurnEvent final : public Event { };
+/**
  * use this to trigger the ui to show the next round.
  */
 class ShowEvaluationEvent final : public Event { };

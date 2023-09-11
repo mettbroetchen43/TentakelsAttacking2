@@ -27,6 +27,7 @@ enum class PrintType {
 	BUILD,
 	ONLY_DEBUG,
 	DEBUG,
+	TODO,
 };
 static PrintType longestType{PrintType::EXPECTED_ERROR};
 
@@ -50,6 +51,8 @@ static PrintType longestType{PrintType::EXPECTED_ERROR};
 		return "[ONLY_DEBUG]";
 	case PrintType::DEBUG:
 		return "[DEBUG]";
+	case PrintType::TODO:
+		return "[TODO]";
 	}
 }
 /**
