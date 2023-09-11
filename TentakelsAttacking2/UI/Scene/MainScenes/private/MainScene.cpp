@@ -462,8 +462,8 @@ void MainScene::NextTurnPopup(bool skip) {
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	if (skip){
 		ShowMessagePopUpEvent event {
-			appContext.languageManager.Text("scene_main_scene_popup_text_turn_title"),
-			"no possible moves left for player X",
+			appContext.languageManager.Text("scene_main_scene_popup_text_skip_turn_title"),
+			appContext.languageManager.Text("scene_main_scene_popup_text_skip_turn_subtitle", m_currentPlayer.GetName(), '\n'),
 			[this]() {
 				this->Switch(MainSceneType::GALAXY);
 				AppContext::GetInstance().eventManager.InvokeEvent(TriggerNextTurnEvent());

@@ -18,7 +18,6 @@ void HLanguageManager::InitializeLanguage() {
 		);
 	}
 	ChanceLanguage(AppContext::GetInstance().constants.global.currentLanguageName);
-	Print(PrintType::INITIALIZE, "Language");
 }
 void HLanguageManager::InitializeAvailableLanguages() {
 	std::string const directory{ "Assets/Languages" };
@@ -179,7 +178,7 @@ bool HLanguageManager::LoadLanguage(std::string const& language, bool const defa
 		AppContext::GetInstance().constants.global.currentLanguageName = language;
 	
 		Print(
-			PrintType::INFO,
+			PrintType::INITIALIZE,
 			"current language loaded -> \"{}\"",
 			language
 		);
@@ -227,7 +226,7 @@ bool HLanguageManager::LoadLanguage(std::string const& language, bool const defa
 		if (version == AppContext::GetInstance().constants.global.languageVersion) {
 			if (defaultLanguage) {
 				Print(
-					PrintType::INITIALIZE,
+					PrintType::INFO,
 					"loaded language version matches the expected version -> \"{}\" -> \"{}\"",
 					language,
 					version
