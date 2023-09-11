@@ -14,6 +14,8 @@ class Player final {
 private:
 	unsigned int m_ID; ///< contains the unique player id
 	PlayerType m_playerType; ///< contains the player type like HUMAN
+	bool m_isAlive{ true }; ///< contains if the player is alive
+
 public:
 	/**
 	 * ctor.
@@ -30,6 +32,21 @@ public:
 	 * returns the unique player id.
 	 */
 	[[nodiscard]] unsigned int GetID() const;
+
+	/**
+	 * returns if the player is alive.
+	 */
+	[[nodiscard]] bool IsAlive() const;
+
+	/**
+	 * sets the alive bool to false.
+	 */
+	void Kill();
+
+	/**
+	 * sets the alive bool to true.
+	 */
+	void Revive();
 
 	/**
 	 * compares 2 players by their id.

@@ -77,6 +77,11 @@ private:
 	void NextTurn();
 
 	/**
+	 * handles the next turn popup.
+	 */
+	void NextTurnPopup(bool skip);
+
+	/**
 	 * updates player text and color.
 	 */
 	void SetPlayerText();

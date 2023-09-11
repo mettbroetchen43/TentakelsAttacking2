@@ -219,6 +219,11 @@ public:
 	[[nodiscard]] bool IsValidSpaceObjectID(unsigned int ID) const;
 
 	/**
+	 * returns if the provided player has any move left.
+	 */
+	[[nodiscard]] bool HasMovesLeft(Player_ty_c player) const;
+
+	/**
 	 * sets if the galaxy was filtered.
 	 */
 	void SetFiltered(bool isFiltered);

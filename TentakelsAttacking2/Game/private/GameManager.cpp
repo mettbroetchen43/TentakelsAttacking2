@@ -227,11 +227,11 @@ void GameManager::CheckPlayerCount() const {
 	ValidatePlayerCountResultEvent const event{ valid };
 	appContext.eventManager.InvokeEvent(event);
 }
-void GameManager::ShuffleCurrentRoundPlayer() {
+void GameManager::ShuffleCurrentRoundPlayer() {	
 	if (not AppContext::GetInstance().constants.player.shuffle){ return; }
 
 	std::shuffle(m_currentRoundPlayers.begin(), m_currentRoundPlayers.end(), m_random);
-	
+
 	Print(
 		PrintType::ONLY_DEBUG,
 		"player shuffled"
@@ -292,7 +292,14 @@ void GameManager::NextRound(bool valid) {
 	Update();
 
 	m_currentRoundPlayers = m_players;
+	std::erase_if(m_currentRoundPlayers, [](Player_ty_c player){ return not player->IsAlive(); });
 	ShuffleCurrentRoundPlayer();
+	if (m_currentRoundPlayers.size() <= 0) {
+		Print(
+			PrintType::TODO,
+			"no possible moves for any player left. game should be over now."
+		);
+	}
 
 	m_galaxyManager.CopyGalaxies(CopyGalaxyType::COPY_ALL);
 
@@ -301,8 +308,9 @@ void GameManager::NextRound(bool valid) {
 
 	++appContext.constants.global.currentRound;
 
-	Player_ty player { } ;
-	if (not GetCurrentPlayer(player)) {
+	Player_ty player{ };
+	bool validPlayer{ GetCurrentPlayer(player) };
+	if (not validPlayer) {
 		Print(
 			PrintType::ONLY_DEBUG,
 			"next round started -> can't get current player"
@@ -316,10 +324,17 @@ void GameManager::NextRound(bool valid) {
 		);
 	}
 
-	appContext.eventManager.InvokeEvent(ShowNextRoundEvent());
+	if (validPlayer) {
+		if (not m_galaxyManager.HasMovesLeft(player)) {
+			player->Kill();
+			AppContext::GetInstance().eventManager.InvokeEvent(ShowSkipTurnEvent{ });
+			return;
+		}
+	}
+
+	appContext.eventManager.InvokeEvent(ShowEvaluationEvent());
 }
 void GameManager::NextTurn(bool valid) {
-
 
 	if (!valid) { return; }
 
@@ -329,18 +344,19 @@ void GameManager::NextTurn(bool valid) {
 
 	m_galaxyManager.CopyGalaxies(CopyGalaxyType::COPY_START);
 
-
 	SendCurrentPlayerID();
 	SendNextPlayerID();
 
 	Player_ty player { };
-	if (not GetCurrentPlayer(player)) {
+	bool validPlayer{ GetCurrentPlayer(player) };
+
+	if (not validPlayer) {
 		Print(
 			PrintType::ONLY_DEBUG,
 			"next turn started -> can't get current player"
 		);
 	}
-	else{
+	else {
 		Print(
 			PrintType::ONLY_DEBUG,
 			"next turn started -> player {}",
@@ -348,7 +364,16 @@ void GameManager::NextTurn(bool valid) {
 		);
 	}
 
+	if (validPlayer) {
+		if (not m_galaxyManager.HasMovesLeft(player)) {
+			player->Kill();
+			AppContext::GetInstance().eventManager.InvokeEvent(ShowSkipTurnEvent{ });
+			return;
+		}
+	}
+
 	AppContext::GetInstance().eventManager.InvokeEvent(ShowNextTurnEvent());
+
 }
 void GameManager::ValidateNextTurn() {
 

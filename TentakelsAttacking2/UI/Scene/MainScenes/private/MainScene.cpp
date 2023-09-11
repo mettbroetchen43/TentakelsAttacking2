@@ -450,22 +450,37 @@ void MainScene::InitializeFleetTable() {
 }
 
 void MainScene::NextTurn() {
-	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	Switch(MainSceneType::CLEAR);
 	SetPlayerText();
 	InitializeGalaxy();
 	InitializePlanetTable();
 	InitializeFleetTable();
 	ClearInputLines();
+}
 
-	ShowMessagePopUpEvent event{
-		appContext.languageManager.Text("scene_main_scene_popup_text_turn_title"),
-		appContext.languageManager.Text("scene_main_scene_popup_text_turn_text", m_currentPlayer.GetName(), "\n"),
-		[this]() {
-			this->Switch(MainSceneType::GALAXY);
-		}
-	};
-	appContext.eventManager.InvokeEvent(event);
+void MainScene::NextTurnPopup(bool skip) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	if (skip){
+		ShowMessagePopUpEvent event {
+			appContext.languageManager.Text("scene_main_scene_popup_text_skip_turn_title"),
+			appContext.languageManager.Text("scene_main_scene_popup_text_skip_turn_subtitle", m_currentPlayer.GetName(), '\n'),
+			[this]() {
+				this->Switch(MainSceneType::GALAXY);
+				AppContext::GetInstance().eventManager.InvokeEvent(TriggerNextTurnEvent());
+			}
+		};
+		appContext.eventManager.InvokeEvent(event);
+	}
+	else{
+		ShowMessagePopUpEvent event {
+			appContext.languageManager.Text("scene_main_scene_popup_text_turn_title"),
+			appContext.languageManager.Text("scene_main_scene_popup_text_turn_text", m_currentPlayer.GetName(), "\n"),
+			[this]() {
+				this->Switch(MainSceneType::GALAXY);
+			}
+		};
+		appContext.eventManager.InvokeEvent(event);
+	}
 }
 
 void MainScene::SetPlayerText() {
@@ -618,6 +633,7 @@ MainScene::MainScene()
 	InitializeFleetTable();
 	NextTurn();
 	SetAcceptButton();
+	NextTurnPopup(false);
 }
 MainScene::~MainScene() {
 	AppContext::GetInstance().eventManager.RemoveListener(this);
@@ -639,9 +655,15 @@ void MainScene::OnEvent(Event const& event) {
 	// turns and rounds
 	if (auto const* playerEvent = dynamic_cast<ShowNextTurnEvent const*>(&event)) {
 		NextTurn();
+		NextTurnPopup(false);
 		return;
 	}
-	if (auto const* playerEvent = dynamic_cast<ShowNextRoundEvent const*>(&event)) {
+	if (auto const* playerEvent = dynamic_cast<ShowSkipTurnEvent const*>(&event)) {
+		NextTurn();
+		NextTurnPopup(true);
+		return;
+	}
+	if (auto const* playerEvent = dynamic_cast<ShowEvaluationEvent const*>(&event)) {
 		SwitchSceneEvent sendEvent{ SceneType::UPDATE_EVALUATION };
 		AppContext::GetInstance().eventManager.InvokeEvent(sendEvent);
 		return;
