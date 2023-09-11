@@ -25,6 +25,10 @@ CountRing::CountRing(Vector2 pos, Vector2 size, Alignment alignment,
     Update();
 }
 
+bool CountRing::IsOverlapping(Rectangle const& rect) const {
+    return CheckCollisionCircleRec(m_absolutePos, m_absoluteRingSize, rect);
+}
+
 void CountRing::Update() {
     Resolution_ty_c resolution{ AppContext::GetInstance().GetResolution() };
     m_absolutePos = {

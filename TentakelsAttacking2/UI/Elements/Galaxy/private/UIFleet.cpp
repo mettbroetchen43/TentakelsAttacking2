@@ -70,6 +70,10 @@ bool UIFleet::IsColliding(Vector2 const& mousePosition) const {
     return CheckCollisionPointLine(mousePosition, start, end, 5);
 }
 
+bool UIFleet::IsRingOverlappingWithRectangle(Rectangle const& rect) const {
+    return m_ring->IsOverlapping(rect);
+}
+
 PlayerData UIFleet::GetPlayer() const {
     return m_player;
 }
@@ -124,8 +128,8 @@ void UIFleet::Render(AppContext_ty_c appContext) {
 
     if (m_isDisplayAsPoint) {
         DrawCircle(
-            static_cast<int>(m_collider.x + m_collider.width / 2),
-            static_cast<int>(m_collider.y + m_collider.height / 2),
+            static_cast<int>(m_collider.x),
+            static_cast<int>(m_collider.y),
             m_collider.width / 2,
             m_player.color
         );

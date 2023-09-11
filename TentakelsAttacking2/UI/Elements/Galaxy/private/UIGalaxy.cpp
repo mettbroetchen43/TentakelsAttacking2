@@ -538,16 +538,17 @@ void UIGalaxy::Render(AppContext_ty_c appContext) {
 			e->RenderRing(appContext);
 		}
 	}
-
+	for (auto const& f : m_uiFleets) {
+		if (f->IsRingOverlappingWithRectangle(m_collider)) {
+			f->RenderRing(appContext);
+		}
+	}
 	BeginScissorMode(
 		static_cast<int>(m_collider.x),
 		static_cast<int>(m_collider.y),
 		static_cast<int>(m_collider.width),
 		static_cast<int>(m_collider.height)
 	);
-	for (auto const& f : m_uiFleets) {
-		f->RenderRing(appContext);
-	}
 
 	for (auto const& f : m_uiFleets) {
 		f->Render(appContext);

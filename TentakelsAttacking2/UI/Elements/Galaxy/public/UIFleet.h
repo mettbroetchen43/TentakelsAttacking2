@@ -36,6 +36,10 @@ public:
 	 */
 	[[nodiscard]] bool IsColliding(Vector2 const& mousePosition) const;
 	/**
+	 * checks if the ring is colliding with a rectangle.
+	 */
+	[[nodiscard]] bool IsRingOverlappingWithRectangle(Rectangle const& rect) const;
+	/**
 	 * returns the player of the uifleet.
 	 */
 	[[nodiscard]] PlayerData GetPlayer() const;
