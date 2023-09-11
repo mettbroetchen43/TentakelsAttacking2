@@ -16,6 +16,18 @@ unsigned int Player::GetID() const {
 	return m_ID;
 }
 
+bool Player::IsAlive() const {
+	return m_isAlive;
+}
+
+void Player::Kill() {
+	m_isAlive = false;
+}
+
+void Player::Revive() {
+	m_isAlive = false;
+}
+
 bool operator==(Player const& lhs, Player const& rhs) {
 	return lhs.m_ID == rhs.m_ID;
 }
