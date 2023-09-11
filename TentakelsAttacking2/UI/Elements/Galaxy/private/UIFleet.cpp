@@ -70,6 +70,10 @@ bool UIFleet::IsColliding(Vector2 const& mousePosition) const {
     return CheckCollisionPointLine(mousePosition, start, end, 5);
 }
 
+bool UIFleet::IsRingOverlappingWithRectangle(Rectangle const& rect) const {
+    return m_ring->IsOverlapping(rect);
+}
+
 PlayerData UIFleet::GetPlayer() const {
     return m_player;
 }

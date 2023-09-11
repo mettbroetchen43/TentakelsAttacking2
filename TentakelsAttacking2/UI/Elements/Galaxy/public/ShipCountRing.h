@@ -29,6 +29,11 @@ public:
 		float innerSize, float ringSize, int currentCount, int maxCount);
 
 	/**
+	 * returns if the ring is overlapping with a rectangle
+	 */
+	[[nodiscard]] bool IsOverlapping(Rectangle const& rect) const;
+
+	/**
 	 * calls the Ring to set ne new values.
 	 */
 	void Update();
