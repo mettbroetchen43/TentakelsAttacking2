@@ -450,15 +450,12 @@ void MainScene::InitializeFleetTable() {
 }
 
 void MainScene::NextTurn() {
-	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	Switch(MainSceneType::CLEAR);
 	SetPlayerText();
 	InitializeGalaxy();
 	InitializePlanetTable();
 	InitializeFleetTable();
 	ClearInputLines();
-
-	appContext.eventManager.InvokeEvent(HasCurrentPlayerAnyMovesEvent{ });
 }
 
 void MainScene::NextTurnPopup(bool skip) {
@@ -467,7 +464,8 @@ void MainScene::NextTurnPopup(bool skip) {
 		ShowMessagePopUpEvent event {
 			appContext.languageManager.Text("scene_main_scene_popup_text_turn_title"),
 			"no possible moves left for player X",
-			[](){
+			[this]() {
+				this->Switch(MainSceneType::GALAXY);
 				AppContext::GetInstance().eventManager.InvokeEvent(TriggerNextTurnEvent());
 			}
 		};
@@ -635,6 +633,7 @@ MainScene::MainScene()
 	InitializeFleetTable();
 	NextTurn();
 	SetAcceptButton();
+	NextTurnPopup(false);
 }
 MainScene::~MainScene() {
 	AppContext::GetInstance().eventManager.RemoveListener(this);
@@ -656,15 +655,18 @@ void MainScene::OnEvent(Event const& event) {
 	// turns and rounds
 	if (auto const* playerEvent = dynamic_cast<ShowNextTurnEvent const*>(&event)) {
 		NextTurn();
+		NextTurnPopup(false);
+		return;
+	}
+	if (auto const* playerEvent = dynamic_cast<ShowSkipTurnEvent const*>(&event)) {
+		NextTurn();
+		NextTurnPopup(true);
 		return;
 	}
 	if (auto const* playerEvent = dynamic_cast<ShowEvaluationEvent const*>(&event)) {
 		SwitchSceneEvent sendEvent{ SceneType::UPDATE_EVALUATION };
 		AppContext::GetInstance().eventManager.InvokeEvent(sendEvent);
 		return;
-	}
-	if (auto const* playerEvent = dynamic_cast<ReturnHasCurrentPlayerAnyMovesEvent const*>(&event)) {
-		NextTurnPopup(not playerEvent->HasMoves());
 	}
 
 	// Fleet Instruction

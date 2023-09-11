@@ -168,25 +168,6 @@ class ShowSkipTurnEvent final : public Event { };
 class ShowEvaluationEvent final : public Event { };
 
 /**
- * use this to get a bool if the current player has any moves.  
- */
-class HasCurrentPlayerAnyMovesEvent final : public Event { };
-/**
- * returns if the current player has any moves.
- */
-class ReturnHasCurrentPlayerAnyMovesEvent final : public Event{
-private:
-	bool m_hasMoves;
-
-public:
-	ReturnHasCurrentPlayerAnyMovesEvent(bool const hasMoves) : m_hasMoves{ hasMoves } { }
-
-	[[nodiscard]] bool HasMoves() const {
-		return m_hasMoves;
-	}
-};
-
-/**
  * use this to get the update evaluation.
  */
 class GetUpdateEvaluation final : public Event { };

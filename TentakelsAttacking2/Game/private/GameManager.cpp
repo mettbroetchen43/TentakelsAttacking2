@@ -227,10 +227,9 @@ void GameManager::CheckPlayerCount() const {
 	ValidatePlayerCountResultEvent const event{ valid };
 	appContext.eventManager.InvokeEvent(event);
 }
-void GameManager::ShuffleCurrentRoundPlayer() {
+void GameManager::ShuffleCurrentRoundPlayer() {	
 	if (not AppContext::GetInstance().constants.player.shuffle){ return; }
 
-	std::erase_if(m_currentRoundPlayers, [](Player_ty_c player){ return not player->IsAlive(); });
 	std::shuffle(m_currentRoundPlayers.begin(), m_currentRoundPlayers.end(), m_random);
 
 	Print(
@@ -293,6 +292,7 @@ void GameManager::NextRound(bool valid) {
 	Update();
 
 	m_currentRoundPlayers = m_players;
+	std::erase_if(m_currentRoundPlayers, [](Player_ty_c player){ return not player->IsAlive(); });
 	ShuffleCurrentRoundPlayer();
 	if (m_currentRoundPlayers.size() <= 0) {
 		Print(
@@ -400,20 +400,6 @@ void GameManager::ValidateNextTurn() {
 		AppContext::GetInstance().eventManager.InvokeEvent(event);
 	}
 }
-
-void GameManager::SendHasCurrentPlayerMovesLeft() const {
-	Player_ty player{ };
-	if (not GetCurrentPlayer(player)) {
-		AppContext::GetInstance().eventManager.InvokeEvent(ReturnHasCurrentPlayerAnyMovesEvent(false));
-		Print(
-			PrintType::ERROR,
-			"not able to get the current player while checking if any moves are left. retuned false"
-		);
-	} else {
-		AppContext::GetInstance().eventManager.InvokeEvent(ReturnHasCurrentPlayerAnyMovesEvent(m_galaxyManager.HasMovesLeft(player)));
-	}
-}
-
 
 // Fleet
 void GameManager::AddFleet(SendFleetInstructionEvent const* event) {
