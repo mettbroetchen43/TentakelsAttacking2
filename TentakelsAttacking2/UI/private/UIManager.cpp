@@ -12,7 +12,7 @@ Focus& UIManager::GetFocus() {
 	return m_focus;
 }
 void UIManager::SetFullScreen() {
-	m_isNextFullScreen = true;
+	m_isNextFullScreen = !m_isNextFullScreen;
 }
 void UIManager::CheckAndSetToggleFullScreen() {
 	Window_ty window{ m_appContext.constants.window };
@@ -187,6 +187,8 @@ void UIManager::StartUI() {
 	} else {
 		m_nextResolution = window.currentResolutionEnum;
 		window.currentResolutionEnum = Resolution::LAST;
+		m_isNextFullScreen = window.isFullScreen;
+		window.isFullScreen = false;
 
 		if (!window.IsPossibleResolution(m_nextResolution)) {
 			Print(
@@ -199,8 +201,6 @@ void UIManager::StartUI() {
 		}
 	}
 
-	CheckAndSetToggleFullScreen();
-	CheckAndSetNewResolution();
 	Print(PrintType::INFO, "\"UI\" started");
 }
 
@@ -208,6 +208,11 @@ void UIManager::StartUILoop() {
 
 	SwitchSceneEvent event{ SceneType::LOGO };
 	m_appContext.eventManager.InvokeEvent(event);
+
+	m_sceneManager.SwitchSceneManual();
+
+	CheckAndSetToggleFullScreen();
+	CheckAndSetNewResolution();
 
 	Print(PrintType::INFO, "\"UI Loop\" started");
 

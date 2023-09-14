@@ -275,7 +275,7 @@ public:
 	/**
 	 * handles the changes of the FleetResult.
 	 */
-	void HandleFleetResult(HFleetResult const& fleetResult);
+	void HandleFleetResult(HFleetResult const& fleetResult, Player_ty_c currentPlayer);
 
 	// update
 
