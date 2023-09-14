@@ -25,7 +25,7 @@ void Player::Kill() {
 }
 
 void Player::Revive() {
-	m_isAlive = false;
+	m_isAlive = true;
 }
 
 bool operator==(Player const& lhs, Player const& rhs) {
