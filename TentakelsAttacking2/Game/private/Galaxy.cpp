@@ -1363,7 +1363,7 @@ void Galaxy::FilterByPlayer(unsigned int currentPlayerID) {
 	m_isFiltered = true;
 }
 
-void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
+void Galaxy::HandleFleetResult(HFleetResult const& fleetResult, Player_ty_c currentPlayer) {
 	auto add = [this](SpaceObject_ty_c obj) {
 		if (obj->IsPlanet()) {
 			auto const* planet = dynamic_cast<Planet_ty_raw>(obj.get());
@@ -1403,7 +1403,9 @@ void Galaxy::HandleFleetResult(HFleetResult const& fleetResult) {
 			this->m_targetPoints.push_back(newDest);
 		}
 	};
-	auto handle = [this, add](SpaceObject_ty_c obj) {
+	auto handle = [this, add, currentPlayer](SpaceObject_ty_c obj) {
+		if (currentPlayer->GetID() != obj->GetPlayer()->GetID()) { return; }
+
 		if (obj) {
 			auto& my_obj{ this->GetSpaceObjectByID(obj->GetID()) };
 			if (my_obj) {

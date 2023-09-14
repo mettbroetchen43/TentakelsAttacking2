@@ -108,7 +108,7 @@ bool GalaxyManager::AddFleet(SendFleetInstructionEvent const* event, Player_ty c
 		AppContext::GetInstance().eventManager.InvokeEvent(returnEvent);
 		return false;
 	}
-	m_currentGalaxy->HandleFleetResult(result);
+	m_currentGalaxy->HandleFleetResult(result, currentPlayer);
 
 	return true;
 }
