@@ -45,6 +45,11 @@ public:
 	SceneManager();
 
 	/**
+	 * switches the scenes manually if a new scene should be loaded.
+	 */
+	void SwitchSceneManual();
+
+	/**
 	 * calls switch scene.
 	 * calls update popups if active popup.
 	 * else calls current scene to update.

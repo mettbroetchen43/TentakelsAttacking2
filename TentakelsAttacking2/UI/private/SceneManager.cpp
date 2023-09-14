@@ -95,6 +95,10 @@ SceneManager::SceneManager() {
 	Print(PrintType::INITIALIZE, "SceneManager");
 }
 
+void SceneManager::SwitchSceneManual() {
+	SwitchScene(AppContext::GetInstance());
+}
+
 void SceneManager::CheckAndUpdate(Vector2 const& mousePosition,
 	AppContext_ty_c appContext) {
 
@@ -111,7 +115,6 @@ void SceneManager::Render(AppContext_ty_c appContext) {
 }
 void SceneManager::Resize(AppContext_ty_c appContext) {
 	m_currentScene->Resize(appContext);
-
 	m_popUpManager.Resize(appContext);
 }
 
