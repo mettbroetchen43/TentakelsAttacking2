@@ -83,6 +83,10 @@ class ResetPlayerEvent final : public Event { };
  * use this to load the current player data.
  */
 class LoadCurrentPlayerEvent final : public Event { };
+/**
+ * use this to kill the current player manually
+ */
+class KillCurrentPlayerEvent final : public Event { };
 
 /**
  * "callback event" from AddPlayerEvent.
