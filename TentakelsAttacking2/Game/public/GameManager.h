@@ -83,6 +83,10 @@ private:
 	 */
 	void ResetPlayer();
 	/**
+	 * kills the provided player
+	 */
+	void KillPlayer(Player_ty player);
+	/**
 	 * checks if the player count is valid.
 	 * sends the result via event into the ui.
 	 */

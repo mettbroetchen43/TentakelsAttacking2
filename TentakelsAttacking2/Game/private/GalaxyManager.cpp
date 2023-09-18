@@ -117,6 +117,20 @@ bool GalaxyManager::HasMovesLeft(Player_ty_c player) const {
 	return m_mainGalaxy->HasMovesLeft(player);
 }
 
+void GalaxyManager::KillPlayer(Player_ty_c player, Player_ty_c neutralPlayer) {
+	auto filter{[&](auto const& objects) {
+		for (auto e : objects) {
+			if (e->GetPlayer()->GetID() == player->GetID()) {
+				e->SetPlayer(neutralPlayer);
+			}
+		}	
+	}};
+
+	filter(m_mainGalaxy->GetPlanets());
+	filter(m_mainGalaxy->GetTargetPoints());
+	filter(m_mainGalaxy->GetFleets());
+}
+
 UpdateResult_ty GalaxyManager::Update() {
 	return m_mainGalaxy->Update();
 }

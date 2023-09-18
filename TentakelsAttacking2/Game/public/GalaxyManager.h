@@ -66,6 +66,11 @@ public:
 	[[nodiscard]] bool HasMovesLeft(Player_ty_c player) const;
 
 	/**
+	 * sets the provided player to neutral player.
+	 */
+	void KillPlayer(Player_ty_c player, Player_ty_c neutral_player);
+
+	/**
 	 * updates the main galaxy
 	 */
 	[[nodiscard]] UpdateResult_ty Update();

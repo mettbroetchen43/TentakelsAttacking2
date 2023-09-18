@@ -10,6 +10,7 @@
 #include "CopyGalaxyType.hpp"
 #include "HLogicAlias.hpp"
 #include "SceneType.h"
+#include "Galaxy.h"
 #include <cassert>
 #include <algorithm>
 #include <stdexcept>
@@ -74,7 +75,7 @@ bool GameManager::GetNextPlayer(Player_ty& nextPlayer) const {
 
 void GameManager::AddPlayer(AddPlayerEvent const* event) {
 
-	auto name { event->GetName() };
+	auto name { event->GetName()  };
 	auto color{ event->GetColor() };
 	AppContext_ty_c appContext{ AppContext::GetInstance() };
 
@@ -196,6 +197,23 @@ void GameManager::ResetPlayer() {
 
 	ResetPlayerUIEvent const event{ };
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
+}
+void GameManager::KillPlayer(Player_ty player) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
+	player->Kill();
+	m_galaxyManager.KillPlayer(player, m_npcs[PlayerType::NEUTRAL]);
+	ShowMessagePopUpEvent msg{
+		appContext.languageManager.Text("ui_popup_player_removed_title"),
+		appContext.languageManager.Text("ui_popup_player_removed_subtitle"),
+		[this](){
+			if (this->m_currentRoundPlayers.size() <= 1) {
+				this->NextRound(true);
+			} else {
+				this->NextTurn(true);
+			}
+		}
+	};
+	appContext.eventManager.InvokeEvent(msg);
 }
 void GameManager::CheckPlayerCount() const {
 
@@ -485,6 +503,9 @@ void GameManager::StartGame() {
 	ShuffleCurrentRoundPlayer();
 	SendCurrentPlayerID();
 	SendNextPlayerID();
+	for (auto p : m_players) {
+		p->Revive();
+	}
 
 	appContext.constants.global.currentRound  = 0    ;
 	appContext.constants.global.isGameRunning = true ;
@@ -608,6 +629,23 @@ void GameManager::OnEvent(Event const& event) {
 	if (auto const* playerEvent = dynamic_cast<LoadCurrentPlayerEvent const*>(&event)) {
 		SendCurrentPlayerID();
 		SendNextPlayerID();
+		return;
+	}
+	if (auto const* PlayerEvent = dynamic_cast<KillCurrentPlayerEvent const*>(&event)) {
+		AppContext_ty_c appContext{ AppContext::GetInstance() };
+		auto msgEvent{ ShowValidatePopUp{
+			appContext.languageManager.Text("ui_popup_resign_title", '?'),
+			appContext.languageManager.Text("ui_popup_resign_subtitle"),
+			[this](bool valid) {
+				if (not valid) { return; }
+				Player_ty player;
+				if (not this->GetCurrentPlayer(player)) {
+					return;
+				}
+				this->KillPlayer(player);
+			}
+		} };
+		appContext.eventManager.InvokeEvent(msgEvent);
 		return;
 	}
 

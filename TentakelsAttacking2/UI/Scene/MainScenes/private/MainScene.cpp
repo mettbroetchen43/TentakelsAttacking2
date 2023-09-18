@@ -106,6 +106,20 @@ void MainScene::Initialize() {
 		}
 	);
 	settingsBtn->Add(mainMenuBtn, true);
+
+	auto resignBtn = std::make_shared<ClassicButton>(
+		207,
+		Vector2 { 0.0f,0.0f },
+		Vector2 { 0.0f,0.0f },
+		Alignment::DEFAULT,
+		appContext.languageManager.Text("scene_main_scene_resign_btn"),
+		SoundType::CLICKED_RELEASE_STD
+	);
+	resignBtn->SetOnClick([settingsBtn](){
+			settingsBtn->Collapse();
+			AppContext::GetInstance().eventManager.InvokeEvent(KillCurrentPlayerEvent());
+		});
+	settingsBtn->Add(resignBtn, true);
 	settingsBtn->Update();
 
 	auto galaxyBtn = std::make_shared<ClassicButton>(
@@ -253,8 +267,9 @@ void MainScene::Initialize() {
 	m_elements.push_back(m_nextPlayerName);
 
 	// ship input
+	auto ship_x{ 0.35f };
 	auto text = std::make_shared<Text>(
-		GetElementPosition(0.99f, 0.3f),
+		GetElementPosition(0.99f, ship_x),
 		GetElementSize(0.2f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
 		Alignment::BOTTOM_RIGHT,
@@ -265,7 +280,7 @@ void MainScene::Initialize() {
 
 	m_origin = std::make_shared<InputLine<int>>(
 		1,
-		GetElementPosition(0.99f, 0.3f),
+		GetElementPosition(0.99f, ship_x),
 		GetElementSize(0.08f, 0.04f),
 		Alignment::TOP_RIGHT,
 		3
@@ -280,8 +295,10 @@ void MainScene::Initialize() {
 	m_origin->SetShouldClearByFocus(true);
 	m_elements.push_back(m_origin);
 
+	ship_x += 0.08f;
+
 	text = std::make_shared<Text>(
-		GetElementPosition(0.99f, 0.37f),
+		GetElementPosition(0.99f,ship_x),
 		GetElementSize(0.2f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
 		Alignment::BOTTOM_RIGHT,
@@ -292,7 +309,7 @@ void MainScene::Initialize() {
 
 	m_destination = std::make_shared<InputLine<int>>(
 		2,
-		GetElementPosition(0.99f, 0.37f),
+		GetElementPosition(0.99f, ship_x),
 		GetElementSize(0.08f, 0.04f),
 		Alignment::TOP_RIGHT,
 		3
@@ -308,9 +325,11 @@ void MainScene::Initialize() {
 	m_destination->SetShouldClearByFocus(true);
 	m_elements.push_back(m_destination);
 
+	ship_x += 0.05f;
+
 	m_destinationX = std::make_shared<InputLine<int>>(
 		3,
-		GetElementPosition(0.949f, 0.42f),
+		GetElementPosition(0.949f, ship_x),
 		GetElementSize(0.039f, 0.04f),
 		Alignment::TOP_RIGHT,
 		3
@@ -327,7 +346,7 @@ void MainScene::Initialize() {
 
 	m_destinationY = std::make_shared<InputLine<int>>(
 		4,
-		GetElementPosition(0.99f, 0.42f),
+		GetElementPosition(0.99f, ship_x),
 		GetElementSize(0.039f, 0.04f),
 		Alignment::TOP_RIGHT,
 		3
@@ -342,8 +361,10 @@ void MainScene::Initialize() {
 	m_destinationY->SetShouldClearByFocus(true);
 	m_elements.push_back(m_destinationY);
 
+	ship_x += 0.08f;
+
 	text = std::make_shared<Text>(
-		GetElementPosition(0.99f, 0.5f),
+		GetElementPosition(0.99f, ship_x),
 		GetElementSize(0.2f, 0.05f),
 		Alignment::BOTTOM_RIGHT,
 		Alignment::BOTTOM_RIGHT,
@@ -354,7 +375,7 @@ void MainScene::Initialize() {
 
 	m_shipCount = std::make_shared<InputLine<int>>(
 		5,
-		GetElementPosition(0.99f, 0.5f),
+		GetElementPosition(0.99f, ship_x),
 		GetElementSize(0.08f, 0.04f),
 		Alignment::TOP_RIGHT,
 		4
@@ -369,9 +390,11 @@ void MainScene::Initialize() {
 	m_shipCount->SetShouldClearByFocus(true);
 	m_elements.push_back(m_shipCount);
 
+	ship_x += 0.07f;
+
 	m_acceptBtn = std::make_shared<ClassicButton>(
 		6,
-		GetElementPosition(0.99f, 0.57f),
+		GetElementPosition(0.99f, ship_x),
 		GetElementSize(0.04f, 0.04f),
 		Alignment::TOP_RIGHT,
 		"+",
@@ -384,7 +407,7 @@ void MainScene::Initialize() {
 
 	m_resetBtn = std::make_shared<ClassicButton>(
 		7,
-		GetElementPosition(0.95f, 0.57f),
+		GetElementPosition(0.95f, ship_x),
 		GetElementSize(0.04f, 0.04f),
 		Alignment::TOP_RIGHT,
 		"X",

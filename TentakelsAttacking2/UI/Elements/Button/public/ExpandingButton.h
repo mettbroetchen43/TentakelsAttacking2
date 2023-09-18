@@ -79,6 +79,15 @@ public:
 	void Remove(int ind);
 
 	/**
+	 * expands the button if it is not expended.
+	 */
+	void Expand();
+	/**
+	 * collapses the button if it is not collapsed.
+	 */
+	void Collapse();
+
+	/**
 	 * returns the time the button waits until it will collapse while moving the mouse out of the collider.
 	 * does not apply when the button was entered with key input. 
 	 */
