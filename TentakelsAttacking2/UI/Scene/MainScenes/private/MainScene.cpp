@@ -112,7 +112,7 @@ void MainScene::Initialize() {
 		Vector2 { 0.0f,0.0f },
 		Vector2 { 0.0f,0.0f },
 		Alignment::DEFAULT,
-		"resign",
+		appContext.languageManager.Text("scene_main_scene_resign_btn"),
 		SoundType::CLICKED_RELEASE_STD
 	);
 	resignBtn->SetOnClick([](){

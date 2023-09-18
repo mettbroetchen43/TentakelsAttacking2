@@ -199,11 +199,12 @@ void GameManager::ResetPlayer() {
 	AppContext::GetInstance().eventManager.InvokeEvent(event);
 }
 void GameManager::KillPlayer(Player_ty player) {
+	AppContext_ty_c appContext{ AppContext::GetInstance() };
 	player->Kill();
 	m_galaxyManager.KillPlayer(player, m_npcs[PlayerType::NEUTRAL]);
 	ShowMessagePopUpEvent msg{
-		"removed",
-		"2.removed",
+		appContext.languageManager.Text("ui_popup_player_removed_title"),
+		appContext.languageManager.Text("ui_popup_player_removed_subtitle"),
 		[this](){
 			if (this->m_currentRoundPlayers.size() <= 1) {
 				this->NextRound(true);
@@ -212,7 +213,7 @@ void GameManager::KillPlayer(Player_ty player) {
 			}
 		}
 	};
-	AppContext::GetInstance().eventManager.InvokeEvent(msg);
+	appContext.eventManager.InvokeEvent(msg);
 }
 void GameManager::CheckPlayerCount() const {
 
@@ -631,9 +632,10 @@ void GameManager::OnEvent(Event const& event) {
 		return;
 	}
 	if (auto const* PlayerEvent = dynamic_cast<KillCurrentPlayerEvent const*>(&event)) {
+		AppContext_ty_c appContext{ AppContext::GetInstance() };
 		auto msgEvent{ ShowValidatePopUp{
-			"test",
-			"subtest",
+			appContext.languageManager.Text("ui_popup_resign_title", '?'),
+			appContext.languageManager.Text("ui_popup_resign_subtitle"),
 			[this](bool valid) {
 				if (not valid) { return; }
 				Player_ty player;
@@ -643,7 +645,7 @@ void GameManager::OnEvent(Event const& event) {
 				this->KillPlayer(player);
 			}
 		} };
-		AppContext::GetInstance().eventManager.InvokeEvent(msgEvent);
+		appContext.eventManager.InvokeEvent(msgEvent);
 		return;
 	}
 
