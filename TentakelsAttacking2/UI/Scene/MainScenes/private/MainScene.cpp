@@ -115,7 +115,8 @@ void MainScene::Initialize() {
 		appContext.languageManager.Text("scene_main_scene_resign_btn"),
 		SoundType::CLICKED_RELEASE_STD
 	);
-	resignBtn->SetOnClick([](){
+	resignBtn->SetOnClick([settingsBtn](){
+			settingsBtn->Collapse();
 			AppContext::GetInstance().eventManager.InvokeEvent(KillCurrentPlayerEvent());
 		});
 	settingsBtn->Add(resignBtn, true);

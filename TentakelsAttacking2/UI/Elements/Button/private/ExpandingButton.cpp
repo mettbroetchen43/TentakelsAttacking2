@@ -97,6 +97,16 @@ void ExpandingButton::Remove(int ind) {
 	m_buttons.erase(m_buttons.begin() + ind);
 }
 
+void ExpandingButton::Expand() {
+	HandleExpandChance(true, true);
+	m_mainButton->SetToggleButton(true);
+}
+
+void ExpandingButton::Collapse() {
+	HandleExpandChance(false,true);
+	m_mainButton->SetToggleButton(false);
+}
+
 double ExpandingButton::GetDelayedCollapseTime() const {
 	return m_delayedCollapseTime;
 }
