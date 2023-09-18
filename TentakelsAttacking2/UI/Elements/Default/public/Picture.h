@@ -17,6 +17,11 @@ private:
 	Texture2D* m_texture{ nullptr }; ///< contains a pointer to the picture
 	bool m_isScaleToFit{ true }; ///< contains if the picture scales itself to fit.
 
+	/**
+	 * scales the picture if scale to fit is true.
+	 */
+	void ScaleToFit();
+
 public:
 	/**
 	 * ctor.
@@ -29,4 +34,9 @@ public:
 	 * renders the picture.
 	 */
 	void Render(AppContext_ty_c appContext);
+
+	/**
+	 * resizes the picture.
+	 */
+	void Resize(AppContext_ty_c appContext) override;
 };
